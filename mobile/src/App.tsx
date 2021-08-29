@@ -1,16 +1,25 @@
-import { DialPad } from "./components/dial-pad";
-import { Timer } from "./components/timer";
-import { CheckInPlayer } from "./components/check-in-player";
-import { useState } from "react";
-import { Status } from "./components/status";
-import { map, filter, startsWith, splitAt, compose, last, equals, length } from "ramda";
-import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
 import { allPlayers } from "./player";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { CheckInPlayer } from "./components/check-in-player";
+import {
+    compose,
+    equals,
+    filter,
+    last,
+    length,
+    map,
+    splitAt,
+    startsWith
+    } from "ramda";
+import { DialPad } from "./components/dial-pad";
 import { PlayersGrid } from "./components/players-grid";
 import { PlayersList } from "./components/players-list";
-import { StopWatchMode } from "./stopwatch-mode";
+import { Status } from "./components/status";
+import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
+import { Timer } from "./components/timer";
+import { useState } from "react";
 
-const allPlayersNumbers = allPlayers.map((x) => x.number.toString());
+const allPlayersNumbers = allPlayers.map(x => x.number.toString());
 
 const getAvailablePlayers = (playerNumber: string) =>
     filter(
@@ -20,26 +29,35 @@ const getAvailablePlayers = (playerNumber: string) =>
 
 function App() {
     const [player, setPlayer] = useState("");
-    const [stopWatchMode, setStopWatchMode] = useState<StopWatchMode>("list");
+    // const [stopWatchMode, setStopWatchMode] = useState<StopWatchMode>("list");
 
     return (
-        <div className="bg-orange-100 flex flex-col h-screen w-screen text-white">
-            <Status measurementPoint="Start" />
-            <div className="flex flex-col justify-center px-10 py-5 bg-gray-600">
-                <Timer />
-                <StopWatchModeSwitch onModeChange={setStopWatchMode} mode={stopWatchMode} />
+        <Router>
+            <div className="bg-orange-100 flex flex-col h-screen w-screen text-white">
+                <Status measurementPoint="Start" />
+                <div className="flex flex-col justify-center px-10 py-5 bg-gray-600">
+                    <Timer />
+                    <StopWatchModeSwitch mode={"list"} />
+                </div>
+
+                <div className="px-20 flex-grow overflow-y-auto">
+                    <Switch>
+                        <Route exact path="/list">
+                            <PlayersList measurementPoint="Start" players={allPlayers} />
+                        </Route>
+                        <Route exact path="/grid">
+                            <PlayersGrid players={allPlayers} />
+                        </Route>
+                        <Route exact path="/pad">
+                            <div>
+                                <CheckInPlayer player={player} />
+                                <DialPad availableDigits={getAvailablePlayers(player)} onPlayerChange={setPlayer} />
+                            </div>
+                        </Route>
+                    </Switch>
+                </div>
             </div>
-            <div className="px-20 flex-grow overflow-y-auto">
-                {stopWatchMode === "list" && <PlayersList measurementPoint="Start" players={allPlayers} />}
-                {stopWatchMode === "grid" && <PlayersGrid players={allPlayers} />}
-                {stopWatchMode === "pad" && (
-                    <div>
-                        <CheckInPlayer player={player} />
-                        <DialPad availableDigits={getAvailablePlayers(player)} onPlayerChange={setPlayer} />
-                    </div>
-                )}
-            </div>
-        </div>
+        </Router>
     );
 }
 
