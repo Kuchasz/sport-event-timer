@@ -1,3 +1,9 @@
+# TODO
+
+-   reassign clock out time to different player
+-   reset clocked out time
+-   clocked time adjustments by <button +0.1 sec /> | <button -0.1 sec />
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
