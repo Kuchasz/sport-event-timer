@@ -1,12 +1,7 @@
+import { formatTime } from "../utils";
 import { useEffect, useState } from "react";
 
-const formatNumber = (n: number, precision = 2) => n.toLocaleString("en-US", { minimumIntegerDigits: precision });
-
-const Time = ({ time }: { time: Date }) => (
-    <div className="text-6xl">{`${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}:${formatNumber(
-        time.getSeconds()
-    )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`}</div>
-);
+const Time = ({ time }: { time: Date }) => <div className="text-6xl">{formatTime(time)}</div>;
 
 export const Timer = () => {
     const [time, setTime] = useState<Date>(new Date());

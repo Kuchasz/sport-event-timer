@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "yarn workspaces run build",
+        "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'"
+    },
+    "workspaces": {
+        "packages": [
+            "mobile/**",
+            "timer/**"
+        ]
+    }
+}
