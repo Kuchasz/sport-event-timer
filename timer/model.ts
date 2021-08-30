@@ -44,11 +44,14 @@ export const getNextId = <T extends { id: number }>(items: T[]) => {
     return newId(items);
 };
 
+export const removeById = <T extends { id: number }>(items: T[], id: number) =>
+    R.remove(R.findIndex(R.propEq("id", id))(items), 1, items);
+
 export const register = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
     R.append({ ...newPlayer, id: getNextId(players) }, players);
 
 export const changeInfo = (players: Player[], modifiedPlayer: Player): Player[] => {
-    const player = players.find(x => x.id === modifiedPlayer.id);
+    const player = players.find((x) => x.id === modifiedPlayer.id);
 
     return player ? R.update(R.indexOf(player)(players), { ...modifiedPlayer }, players) : players;
 };
@@ -56,8 +59,9 @@ export const changeInfo = (players: Player[], modifiedPlayer: Player): Player[] 
 export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
     R.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }, timeKeepers);
 
-export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] =>
-    R.remove(R.findIndex(R.propEq("id", id))(timeKeepers), 1, timeKeepers);
+export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
 
 export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp, "id">): TimeStamp[] =>
     R.append({ ...timeStamp, id: getNextId(timeStamps) }, timeStamps);
+
+export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);

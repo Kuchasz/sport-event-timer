@@ -1,4 +1,4 @@
-import { add } from "@set/timer/slices/time-stamps";
+import { add, reset } from "@set/timer/slices/time-stamps";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { CheckInPlayer } from "./components/check-in-player";
 import {
@@ -28,16 +28,16 @@ const getAvailablePlayers = (playerNumber: string, allPlayersNumbers: string[]) 
 
 function App() {
     const [player, setPlayer] = useState("");
-    const allPlayers = useAppSelector(x => x.players);
-    const allTimeStamps = useAppSelector(x => x.timeStamps);
-    const allPlayersNumbers = allPlayers.map(x => x.number.toString());
+    const allPlayers = useAppSelector((x) => x.players);
+    const allTimeStamps = useAppSelector((x) => x.timeStamps);
+    const allPlayersNumbers = allPlayers.map((x) => x.number.toString());
     const dispatch = useAppDispatch();
 
-    const playersWithTimesOnStart = allPlayers.map(x => ({
+    const playersWithTimesOnStart = allPlayers.map((x) => ({
         name: x.name,
         id: x.id,
         number: x.number,
-        time: allTimeStamps.filter(a => a.playerId === x.id)[0]?.time
+        timeStamp: allTimeStamps.find((a) => a.playerId === x.id)
     }));
 
     return (
@@ -52,9 +52,10 @@ function App() {
                     <Switch>
                         <Route exact path="/list">
                             <PlayersList
-                                onPlayerClick={playerId =>
+                                onTimeRecord={(playerId) =>
                                     dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
                                 }
+                                onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
                                 timeKeeperName="Start"
                                 players={playersWithTimesOnStart}
                             />

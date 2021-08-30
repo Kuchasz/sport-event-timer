@@ -12,10 +12,13 @@ export const timeStampsSlice = createSlice({
     reducers: {
         add: (state, action: PayloadAction<Omit<m.TimeStamp, "id">>) => {
             return m.addTimeStamp(state, action.payload);
+        },
+        reset: (state, action: PayloadAction<Pick<m.TimeStamp, "id">>) => {
+            return m.resetTimeStamp(state, action.payload.id);
         }
     }
 });
 
-export const { add } = timeStampsSlice.actions;
+export const { add, reset } = timeStampsSlice.actions;
 
 export default timeStampsSlice.reducer;

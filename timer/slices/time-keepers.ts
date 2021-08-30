@@ -12,8 +12,8 @@ export const timeKeepersSlice = createSlice({
         add: (state, action: PayloadAction<Omit<m.TimeKeeper, "id">>) => {
             return m.addTimeKeeper(state, action.payload);
         },
-        remove: (state, action: PayloadAction<number>) => {
-            return m.removeTimeKeeper(state, action.payload);
+        remove: (state, action: PayloadAction<Pick<m.TimeKeeper, "id">>) => {
+            return m.removeTimeKeeper(state, action.payload.id);
         }
     }
 });
