@@ -1,17 +1,8 @@
 import { add, reset } from "@set/timer/slices/time-stamps";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { CheckInPlayer } from "./components/check-in-player";
-import {
-    compose,
-    equals,
-    filter,
-    last,
-    length,
-    map,
-    splitAt,
-    startsWith
-    } from "ramda";
 import { DialPad } from "./components/dial-pad";
+import { getAvailableDigits } from "./utils";
 import { PlayersGrid } from "./components/players-grid";
 import { PlayersList } from "./components/players-list";
 import { Status } from "./components/status";
@@ -19,12 +10,6 @@ import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
 import { Timer } from "./components/timer";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { useState } from "react";
-
-const getAvailablePlayers = (playerNumber: string, allPlayersNumbers: string[]) =>
-    filter(
-        compose(equals(1), length as () => number),
-        map(last, map(splitAt(playerNumber.length), filter(startsWith(playerNumber), allPlayersNumbers)))
-    ) as string[];
 
 function App() {
     const [player, setPlayer] = useState("");
@@ -67,7 +52,7 @@ function App() {
                             <div>
                                 <CheckInPlayer player={player} />
                                 <DialPad
-                                    availableDigits={getAvailablePlayers(player, allPlayersNumbers)}
+                                    availableDigits={getAvailableDigits(player, allPlayersNumbers)}
                                     onPlayerChange={setPlayer}
                                 />
                             </div>

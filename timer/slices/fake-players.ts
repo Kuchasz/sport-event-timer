@@ -352,5 +352,13 @@ export const fakePlayers = [
         number: 44,
         birthYear: 1998,
         gender: "female"
+    },
+    {
+        id: 45,
+        name: "Janoosh",
+        lastName: "Polack",
+        number: 451,
+        birthYear: 1958,
+        gender: "male"
     }
 ] as Player[];

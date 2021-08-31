@@ -40,6 +40,7 @@ const RecordTimeStamp = ({ timeKeeperName, onRecord }: RecordTimeStampProps) => 
 
 export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset }: PlayersListProps) => {
     const onReset = (id: number) => () => onTimeReset(id);
+    const onRecord = (id: number) => () => onTimeRecord(id);
     return (
         <div className="text-black">
             {players.map((p) => (
@@ -50,7 +51,7 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
                         {p.timeStamp ? (
                             <PlayerTimeStamp time={p.timeStamp.time} onReset={onReset(p.timeStamp.id)} />
                         ) : (
-                            <RecordTimeStamp timeKeeperName={timeKeeperName} onRecord={() => onTimeRecord(p.id)} />
+                            <RecordTimeStamp timeKeeperName={timeKeeperName} onRecord={onRecord(p.id)} />
                         )}
                     </span>
                 </div>
