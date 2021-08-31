@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "./hooks";
 import { useState } from "react";
 
 function App() {
-    const [player, setPlayer] = useState("");
+    const [playerNumber, setPlayerNumber] = useState("");
     const allPlayers = useAppSelector((x) => x.players);
     const allTimeStamps = useAppSelector((x) => x.timeStamps);
     const allPlayersNumbers = allPlayers.map((x) => x.number.toString());
@@ -50,10 +50,15 @@ function App() {
                         </Route>
                         <Route exact path="/pad">
                             <div>
-                                <CheckInPlayer player={player} />
+                                <CheckInPlayer
+                                    playerNumber={playerNumber}
+                                    playerExists={
+                                        allPlayers.find((p) => p.number === parseInt(playerNumber)) !== undefined
+                                    }
+                                />
                                 <DialPad
-                                    availableDigits={getAvailableDigits(player, allPlayersNumbers)}
-                                    onPlayerChange={setPlayer}
+                                    availableDigits={getAvailableDigits(playerNumber, allPlayersNumbers)}
+                                    onNumberChange={setPlayerNumber}
                                 />
                             </div>
                         </Route>

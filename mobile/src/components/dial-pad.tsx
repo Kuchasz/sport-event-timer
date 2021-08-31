@@ -9,7 +9,7 @@ type Button = {
 const padActions = {
     addDigit: (digit: string) => (player: string) => player.concat(digit),
     back: (player: string) => player.slice(0, -1),
-    reset: (player: string) => "",
+    reset: (player: string) => ""
 };
 
 const buttons: Button[] = [
@@ -24,7 +24,7 @@ const buttons: Button[] = [
     { char: "9", action: padActions.addDigit("9") },
     { char: "↺", action: padActions.reset, alwaysEnabled: true },
     { char: "0", action: padActions.addDigit("0") },
-    { char: "←", action: padActions.back, alwaysEnabled: true },
+    { char: "←", action: padActions.back, alwaysEnabled: true }
 ];
 
 type PadButtonProps = {
@@ -44,7 +44,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
 );
 
 type DialPadProps = {
-    onPlayerChange: (number: string) => void;
+    onNumberChange: (number: string) => void;
     availableDigits: string[];
 };
 type DialPadState = { player: string };
@@ -54,7 +54,7 @@ export class DialPad extends React.Component<DialPadProps, DialPadState> {
     onPadButtonClick = (button: Button) => {
         this.setState(
             (state) => ({ player: button.action(state.player) }),
-            () => this.props.onPlayerChange(this.state.player)
+            () => this.props.onNumberChange(this.state.player)
         );
     };
 
