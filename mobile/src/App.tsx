@@ -15,15 +15,16 @@ function App() {
     const [playerNumber, setPlayerNumber] = useState("");
     const allPlayers = useAppSelector((x) => x.players);
     const allTimeStamps = useAppSelector((x) => x.timeStamps);
-    const allPlayersNumbers = allPlayers.map((x) => x.number.toString());
+
     const dispatch = useAppDispatch();
 
-    const playersWithTimesOnStart = allPlayers.map((x) => ({
-        name: x.name,
-        id: x.id,
-        number: x.number,
+    const playersWithTimeStamps = allPlayers.map((x) => ({
+        ...x,
         timeStamp: allTimeStamps.find((a) => a.playerId === x.id)
     }));
+
+    const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
+    const playersNumbersWithoutTimeStamps = playersWithoutTimeStamps.map((x) => x.number.toString());
 
     return (
         <Router>
@@ -42,22 +43,25 @@ function App() {
                                 }
                                 onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
                                 timeKeeperName="Start"
-                                players={playersWithTimesOnStart}
+                                players={playersWithTimeStamps}
                             />
                         </Route>
                         <Route exact path="/grid">
                             <PlayersGrid players={allPlayers} />
                         </Route>
                         <Route exact path="/pad">
-                            <div>
+                            <div className="flex flex-col">
                                 <CheckInPlayer
+                                    onPlayerCheckIn={(playerId) => {
+                                        dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
+                                        setPlayerNumber("");
+                                    }}
                                     playerNumber={playerNumber}
-                                    playerExists={
-                                        allPlayers.find((p) => p.number === parseInt(playerNumber)) !== undefined
-                                    }
+                                    player={playersWithoutTimeStamps.find((p) => p.number === parseInt(playerNumber))}
                                 />
                                 <DialPad
-                                    availableDigits={getAvailableDigits(playerNumber, allPlayersNumbers)}
+                                    availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
+                                    number={playerNumber}
                                     onNumberChange={setPlayerNumber}
                                 />
                             </div>

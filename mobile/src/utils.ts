@@ -9,13 +9,11 @@ export const formatTime = (time: Date) =>
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
 export const getAvailableDigits = (typedNumbers: string, allNumbers: string[]): string[] => {
-    const unc = <any>(
-        R.compose(
-            R.map(R.compose(R.head, R.last)),
-            R.map(R.splitAt(typedNumbers.length)),
-            R.filter<string, "array">(R.startsWith(typedNumbers))
-        )
-    );
+    const func = R.compose(
+        R.map(R.compose(R.head, R.last)),
+        R.map(R.splitAt(typedNumbers.length)),
+        R.filter<string, "array">(R.startsWith(typedNumbers))
+    ) as any;
 
-    return unc(allNumbers);
+    return func(allNumbers);
 };

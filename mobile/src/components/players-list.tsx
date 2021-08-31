@@ -1,8 +1,6 @@
 import { formatTime } from "../utils";
-type PlayerWithTimeStamp = {
-    id: number;
-    number: number;
-    name: string;
+import { Player } from "@set/timer/model";
+type PlayerWithTimeStamp = Player & {
     timeStamp?: {
         id: number;
         time: number;
