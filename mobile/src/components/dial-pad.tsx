@@ -37,7 +37,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="disabled:opacity-50 px-10 py-3 rounded-md bg-gray-600 hover:bg-orange-500 font-white m-1.5"
+        className="disabled:opacity-10 transition-opacity px-10 py-3 rounded-md bg-gray-600 hover:bg-orange-500 font-white m-1.5"
     >
         {char}
     </button>

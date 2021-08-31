@@ -11,14 +11,17 @@ export type Player = {
     gender: Gender;
 };
 
+export type TimeKeeperType = "start" | "checkpoint" | "end";
+
 export type TimeKeeper = {
     id: number;
     name: string;
+    type: TimeKeeperType;
 };
 
 export type TimeStamp = {
     id: number;
-    playerId: number;
+    playerId?: number;
     timeKeeperId: number;
     time: number;
 };

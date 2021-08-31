@@ -25,7 +25,7 @@ export const CheckInPlayer = ({ playerNumber, player, onPlayerCheckIn }: CheckIn
             </div>
         </button>
     ) : (
-        <span className="bg-gray-500 flex justify-center rounded-md m-8 text-2xl h-16 font-bold py-4">
+        <span className="border-2 border-dashed text-gray-600 border-gray-600 flex justify-center rounded-md m-8 text-2xl h-16 font-bold py-4">
             {playerNumber}
         </span>
     );

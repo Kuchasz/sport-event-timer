@@ -1,9 +1,10 @@
 import * as m from "../model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fakeTimeKeepers } from "./fake-time-keepers";
 
 export type TimeKeepersState = m.TimeKeeper[];
 
-const initialState: TimeKeepersState = [];
+const initialState: TimeKeepersState = fakeTimeKeepers;
 
 export const timeKeepersSlice = createSlice({
     name: "timeKeepers",

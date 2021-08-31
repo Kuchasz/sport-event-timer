@@ -5,6 +5,7 @@ import { DialPad } from "./components/dial-pad";
 import { getAvailableDigits } from "./utils";
 import { PlayersGrid } from "./components/players-grid";
 import { PlayersList } from "./components/players-list";
+import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
 import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
 import { Timer } from "./components/timer";
@@ -15,6 +16,7 @@ function App() {
     const [playerNumber, setPlayerNumber] = useState("");
     const allPlayers = useAppSelector((x) => x.players);
     const allTimeStamps = useAppSelector((x) => x.timeStamps);
+    const allTimeKeepers = useAppSelector((x) => x.timeKeepers);
 
     const dispatch = useAppDispatch();
 
@@ -42,7 +44,7 @@ function App() {
                                     dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
                                 }
                                 onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
-                                timeKeeperName="Start"
+                                timeKeeperName={allTimeKeepers[0].name}
                                 players={playersWithTimeStamps}
                             />
                         </Route>
@@ -65,6 +67,9 @@ function App() {
                                     onNumberChange={setPlayerNumber}
                                 />
                             </div>
+                        </Route>
+                        <Route exact path="/times">
+                            <PlayersTimes />
                         </Route>
                     </Switch>
                 </div>

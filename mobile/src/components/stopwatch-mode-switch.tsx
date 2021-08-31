@@ -16,5 +16,6 @@ export const StopWatchModeSwitch = ({ mode }: StopWatchModeSwitchProps) => (
         <StopWatchModeSwitchButton mode="list" text="List" />
         <StopWatchModeSwitchButton mode="grid" text="Grid" />
         <StopWatchModeSwitchButton mode="pad" text="Pad" />
+        <StopWatchModeSwitchButton mode="times" text="Times" />
     </div>
 );
