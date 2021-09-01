@@ -4,7 +4,7 @@ import { fakeStamps } from "./fake-stamps";
 
 export type TimeStampsState = m.TimeStamp[];
 
-const initialState: TimeStampsState = []; //fakeStamps;
+const initialState: TimeStampsState = fakeStamps;
 
 export const timeStampsSlice = createSlice({
     name: "timeStamps",

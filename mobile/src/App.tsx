@@ -28,6 +28,11 @@ function App() {
     const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
     const playersNumbersWithoutTimeStamps = playersWithoutTimeStamps.map((x) => x.number.toString());
 
+    const timeStampsWithPlayers = allTimeStamps.map((s) => ({
+        ...s,
+        player: allPlayers.find((p) => s.playerId === p.id)
+    }));
+
     return (
         <Router>
             <div className="bg-orange-100 flex flex-col h-screen w-screen text-white">
@@ -69,7 +74,12 @@ function App() {
                             </div>
                         </Route>
                         <Route exact path="/times">
-                            <PlayersTimes />
+                            <PlayersTimes
+                                onAddTime={() => {
+                                    dispatch(add({ timeKeeperId: 0, time: new Date().getTime() }));
+                                }}
+                                times={timeStampsWithPlayers}
+                            />
                         </Route>
                     </Switch>
                 </div>
