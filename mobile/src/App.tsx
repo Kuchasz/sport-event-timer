@@ -35,53 +35,60 @@ function App() {
 
     return (
         <Router>
-            <div className="bg-orange-100 flex flex-col h-screen w-screen text-white">
+            <div className="bg-orange-100 flex flex-col overflow-hidden h-screen w-screen text-white">
                 <Status timeKeeperName="Start" />
                 <div className="flex flex-col justify-center px-10 py-5 bg-gray-600">
                     <Timer />
                     <StopWatchModeSwitch mode={"list"} />
                 </div>
-                <div className="px-20 flex-grow overflow-y-auto">
-                    <Switch>
-                        <Route exact path="/list">
-                            <PlayersList
-                                onTimeRecord={(playerId) =>
-                                    dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
-                                }
-                                onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
-                                timeKeeperName={allTimeKeepers[0].name}
-                                players={playersWithTimeStamps}
-                            />
-                        </Route>
-                        <Route exact path="/grid">
-                            <PlayersGrid players={allPlayers} />
-                        </Route>
-                        <Route exact path="/pad">
-                            <div className="flex flex-col">
-                                <CheckInPlayer
-                                    onPlayerCheckIn={(playerId) => {
-                                        dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
-                                        setPlayerNumber("");
+                <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
+                    <div className="px-20 h-full flex-1 overflow-y-scroll">
+                        <Switch>
+                            <Route exact path="/list">
+                                <PlayersList
+                                    onTimeRecord={(playerId) =>
+                                        dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
+                                    }
+                                    onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
+                                    timeKeeperName={allTimeKeepers[0].name}
+                                    players={playersWithTimeStamps}
+                                />
+                            </Route>
+                            <Route exact path="/grid">
+                                <PlayersGrid players={allPlayers} />
+                            </Route>
+                            <Route exact path="/pad">
+                                <div className="flex flex-col">
+                                    <CheckInPlayer
+                                        onPlayerCheckIn={(playerId) => {
+                                            dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
+                                            setPlayerNumber("");
+                                        }}
+                                        playerNumber={playerNumber}
+                                        player={playersWithoutTimeStamps.find(
+                                            (p) => p.number === parseInt(playerNumber)
+                                        )}
+                                    />
+                                    <DialPad
+                                        availableDigits={getAvailableDigits(
+                                            playerNumber,
+                                            playersNumbersWithoutTimeStamps
+                                        )}
+                                        number={playerNumber}
+                                        onNumberChange={setPlayerNumber}
+                                    />
+                                </div>
+                            </Route>
+                            <Route exact path="/times">
+                                <PlayersTimes
+                                    onAddTime={() => {
+                                        dispatch(add({ timeKeeperId: 0, time: new Date().getTime() }));
                                     }}
-                                    playerNumber={playerNumber}
-                                    player={playersWithoutTimeStamps.find((p) => p.number === parseInt(playerNumber))}
+                                    times={timeStampsWithPlayers}
                                 />
-                                <DialPad
-                                    availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
-                                    number={playerNumber}
-                                    onNumberChange={setPlayerNumber}
-                                />
-                            </div>
-                        </Route>
-                        <Route exact path="/times">
-                            <PlayersTimes
-                                onAddTime={() => {
-                                    dispatch(add({ timeKeeperId: 0, time: new Date().getTime() }));
-                                }}
-                                times={timeStampsWithPlayers}
-                            />
-                        </Route>
-                    </Switch>
+                            </Route>
+                        </Switch>
+                    </div>
                 </div>
             </div>
         </Router>
