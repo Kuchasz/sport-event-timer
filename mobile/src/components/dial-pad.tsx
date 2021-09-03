@@ -33,15 +33,20 @@ type PadButtonProps = {
     enabled: boolean;
     alwaysEnabled?: boolean;
 };
-const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) => (
-    <button
-        onClick={padClick}
-        disabled={!alwaysEnabled && !enabled}
-        className="disabled:bg-orange-100 transition-colors px-10 py-3 rounded-md bg-gray-600 hover:bg-orange-500 font-white m-1.5"
-    >
-        {char}
-    </button>
-);
+const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =>
+    alwaysEnabled || enabled ? (
+        <button
+            onClick={padClick}
+            disabled={!alwaysEnabled && !enabled}
+            className="disabled:text-gray-200 border-gray-600 border-dashed text-5xl transition-colors px-10 py-3 rounded-md text-gray-600 hover:text-white hover:bg-orange-500 m-1.5 "
+        >
+            {char}
+        </button>
+    ) : (
+        <p className="flex items-center justify-center text-gray-200 border-gray-600 border-dashed text-5xl transition-colors px-10 py-3 rounded-md m-1.5 ">
+            {char}
+        </p>
+    );
 
 type DialPadProps = {
     onNumberChange: (number: string) => void;
