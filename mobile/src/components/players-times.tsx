@@ -1,6 +1,9 @@
 import usePortal from "react-useportal";
+import { assignPlayer } from "@set/timer/slices/time-stamps";
 import { formatTime } from "../utils";
 import { Player, TimeStamp } from "@set/timer/model";
+import { PlayersDialPad } from "./players-dial-pad";
+import { useAppDispatch } from "../hooks";
 import { useState } from "react";
 
 type TimeStampWithPlayer = TimeStamp & {
@@ -15,15 +18,20 @@ type PlayersTimesProps = {
 const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time - a.time);
 
 export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
-    const [showAssignPlayer, setShowAssignPlayer] = useState<boolean>(false);
+    const [timeStampToAssign, setTimeStampToAssign] = useState<number>();
     const { Portal } = usePortal({ bindTo: document.getElementById("module-holder") as HTMLElement });
+    const dispatch = useAppDispatch();
 
     return (
         <div>
-            {showAssignPlayer && (
+            {timeStampToAssign !== undefined && (
                 <Portal>
-                    <div className="absolute inset-0 h-full w-full bg-red-700">
-                        <h1>HELLO_MAMMA!!!</h1>
+                    <div className="absolute inset-0 h-full w-full bg-opacity-95 bg-orange-100">
+                        <PlayersDialPad
+                            onPlayerCheckIn={(playerId) => {
+                                dispatch(assignPlayer({ playerId, id: timeStampToAssign }));
+                            }}
+                        />
                     </div>
                 </Portal>
             )}
@@ -39,7 +47,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                         <div className="rounded-md text-center w-40 bg-gray-500 py-2 px-4">{t.player.number}</div>
                     ) : (
                         <button
-                            onClick={() => setShowAssignPlayer(true)}
+                            onClick={() => setTimeStampToAssign(t.id)}
                             className="hover:bg-orange-500 hover:text-white hover:border-transparent rounded-md text-center w-40 border-dashed border-2 font-semibold text-gray-500 border-gray-500 py-2 px-4"
                         >
                             CHOOSE PLAYER

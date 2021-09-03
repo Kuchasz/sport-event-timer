@@ -1,4 +1,5 @@
 import * as R from "ramda";
+import timeStamps from "./slices/time-stamps";
 
 export type Gender = "male" | "female";
 
@@ -68,3 +69,14 @@ export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp,
     R.append({ ...timeStamp, id: getNextId(timeStamps) }, timeStamps);
 
 export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);
+
+export const assignPlayer = (
+    timeStamps: TimeStamp[],
+    modifiedTimeStamp: Pick<TimeStamp, "id" | "playerId">
+): TimeStamp[] => {
+    const timeStamp = timeStamps.find((x) => x.id === modifiedTimeStamp.id);
+
+    return timeStamp
+        ? R.update(R.indexOf(timeStamp)(timeStamps), { ...timeStamp, ...modifiedTimeStamp }, timeStamps)
+        : timeStamps;
+};
