@@ -32,10 +32,9 @@ function App() {
                 <Status timeKeeperName="Start" />
                 <div className="flex flex-col justify-center px-10 py-5 bg-gray-600">
                     <Timer />
-                    <StopWatchModeSwitch mode={"list"} />
                 </div>
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
-                    <div className="px-20 h-full flex-1 overflow-y-scroll">
+                    <div className="px-5 h-full flex-1 overflow-y-scroll">
                         <Switch>
                             <Route exact path="/list">
                                 <PlayersList
@@ -67,6 +66,9 @@ function App() {
                             </Route>
                         </Switch>
                     </div>
+                </div>
+                <div>
+                    <StopWatchModeSwitch />
                 </div>
             </div>
         </Router>

@@ -30,6 +30,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                         <PlayersDialPad
                             onPlayerCheckIn={(playerId) => {
                                 dispatch(assignPlayer({ playerId, id: timeStampToAssign }));
+                                setTimeStampToAssign(undefined);
                             }}
                         />
                     </div>
