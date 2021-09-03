@@ -21,7 +21,7 @@ export const StopWatchModeSwitch = () => {
     const location = useLocation();
     const mode = location.pathname.slice(1) as StopWatchMode;
     return (
-        <div className="flex justify-around text-black mt-5">
+        <div className="flex justify-around text-black">
             <StopWatchModeSwitchButton mode="list" text="List" icon={iconFormatListNumbered} chosenMode={mode} />
             <StopWatchModeSwitchButton mode="grid" text="Grid" icon={iconDotsGrid} chosenMode={mode} />
             <StopWatchModeSwitchButton mode="pad" text="Pad" icon={iconDialPad} chosenMode={mode} />

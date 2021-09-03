@@ -26,7 +26,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
         <div>
             {timeStampToAssign !== undefined && (
                 <Portal>
-                    <div className="absolute inset-0 h-full w-full bg-opacity-95 bg-orange-100">
+                    <div className="absolute inset-0 h-full w-full bg-orange-100">
                         <PlayersDialPad
                             onPlayerCheckIn={(playerId) => {
                                 dispatch(assignPlayer({ playerId, id: timeStampToAssign }));

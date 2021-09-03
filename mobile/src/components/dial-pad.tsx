@@ -38,12 +38,12 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
         <button
             onClick={padClick}
             disabled={!alwaysEnabled && !enabled}
-            className="disabled:text-gray-200 border-gray-600 font-medium border-dashed text-2xl transition-colors rounded-md text-gray-600 hover:text-white hover:bg-orange-500 m-1.5 "
+            className="disabled:text-gray-200 border-gray-600 font-medium border-dashed text-2xl transition-colors rounded-md text-gray-800 m-1.5 "
         >
             {char}
         </button>
     ) : (
-        <p className="flex items-center justify-center font-medium text-gray-200 text-2xl m-1.5">{char}</p>
+        <p className="flex items-center justify-center font-medium text-gray-400 text-2xl m-1.5">{char}</p>
     );
 
 type DialPadProps = {
