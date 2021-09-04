@@ -1,5 +1,8 @@
-import * as R from "ramda";
-import timeStamps from "./slices/time-stamps";
+import * as Arr from "fp-ts/Array";
+import * as N from "fp-ts/number";
+import * as Option from "fp-ts/Option";
+import * as Ord from "fp-ts/Ord";
+import { flow, increment, pipe } from "fp-ts/function";
 
 export type Gender = "male" | "female";
 
@@ -40,43 +43,76 @@ export type RaceResult = {
 
 export type RaceResults = RaceResult[];
 
-export const getNextId = <T extends { id: number }>(items: T[]) => {
-    const getLastItem = R.last as (arr: T[]) => T;
-    const sortDescById = R.sortBy(R.prop("id")) as (arr: T[]) => T[];
-
-    const newId = R.compose(R.inc, R.propOr(-1, "id"), getLastItem, sortDescById);
-    return newId(items);
-};
+export const getNextId = flow(
+    Arr.sortBy([
+        pipe(
+            N.Ord,
+            Ord.contramap((e: { id: number }) => e.id)
+        )
+    ]),
+    Arr.last,
+    Option.map((e) => e.id),
+    Option.fold(() => 0, increment)
+);
 
 export const removeById = <T extends { id: number }>(items: T[], id: number) =>
-    R.remove(R.findIndex(R.propEq("id", id))(items), 1, items);
+    pipe(
+        items,
+        Arr.filter((e) => e.id === id)
+    );
 
 export const register = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
-    R.append({ ...newPlayer, id: getNextId(players) }, players);
+    pipe(players, Arr.append({ ...newPlayer, id: getNextId(players) }));
 
-export const changeInfo = (players: Player[], modifiedPlayer: Player): Player[] => {
-    const player = players.find((x) => x.id === modifiedPlayer.id);
-
-    return player ? R.update(R.indexOf(player)(players), { ...modifiedPlayer }, players) : players;
-};
+export const changeInfo = (players: Player[], modifiedPlayer: Player): Player[] =>
+    pipe(
+        players,
+        Arr.updateAt(
+            pipe(
+                players,
+                Arr.findIndex((e) => e.id === modifiedPlayer.id),
+                Option.fold(
+                    () => -1,
+                    (e) => e
+                )
+            ),
+            modifiedPlayer
+        ),
+        Option.fold(
+            () => players,
+            (e) => e
+        )
+    );
 
 export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
-    R.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }, timeKeepers);
+    pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
 
 export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
 
 export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp, "id">): TimeStamp[] =>
-    R.append({ ...timeStamp, id: getNextId(timeStamps) }, timeStamps);
+    pipe(timeStamps, Arr.append({ ...timeStamp, id: getNextId(timeStamps) }));
 
 export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);
 
 export const assignPlayer = (
     timeStamps: TimeStamp[],
     modifiedTimeStamp: Pick<TimeStamp, "id" | "playerId">
-): TimeStamp[] => {
-    const timeStamp = timeStamps.find((x) => x.id === modifiedTimeStamp.id);
-
-    return timeStamp
-        ? R.update(R.indexOf(timeStamp)(timeStamps), { ...timeStamp, ...modifiedTimeStamp }, timeStamps)
-        : timeStamps;
-};
+): TimeStamp[] =>
+    pipe(
+        timeStamps,
+        Arr.modifyAt(
+            pipe(
+                timeStamps,
+                Arr.findIndex((e) => e.id === modifiedTimeStamp.id),
+                Option.fold(
+                    () => -1,
+                    (e) => e
+                )
+            ),
+            (e) => ({ ...e, ...modifiedTimeStamp })
+        ),
+        Option.fold(
+            () => timeStamps,
+            (e) => e
+        )
+    );

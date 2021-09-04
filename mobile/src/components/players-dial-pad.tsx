@@ -31,7 +31,7 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
                 playerNumber={playerNumber}
                 player={playersWithoutTimeStamps.find((p) => p.number === parseInt(playerNumber))}
             />
-            {/* <div className="flex-auto h-2/5 bg-red-900"></div> */}
+            <div className="flex-auto h-2/5 bg-red-900"></div>
             <DialPad
                 availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                 number={playerNumber}
