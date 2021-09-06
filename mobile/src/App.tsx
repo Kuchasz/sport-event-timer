@@ -27,7 +27,7 @@ function App() {
 
     return (
         <Router>
-            <div className="bg-orange-100 flex flex-col overflow-hidden h-screen w-screen text-white">
+            <div className="bg-orange-100 flex flex-col overflow-hidden h-full w-screen text-white">
                 <Status timeKeeperName="Start" />
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                     <div className="px-5 h-full flex-1 overflow-y-scroll">
