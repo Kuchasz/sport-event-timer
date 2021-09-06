@@ -6,7 +6,6 @@ import { PlayersList } from "./components/players-list";
 import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
 import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
-import { Timer } from "./components/timer";
 import { useAppDispatch, useAppSelector } from "./hooks";
 
 function App() {
@@ -30,9 +29,6 @@ function App() {
         <Router>
             <div className="bg-orange-100 flex flex-col overflow-hidden h-screen w-screen text-white">
                 <Status timeKeeperName="Start" />
-                <div className="flex flex-col justify-center px-10 py-5 bg-gray-600">
-                    <Timer />
-                </div>
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                     <div className="px-5 h-full flex-1 overflow-y-scroll">
                         <Switch>

@@ -12,9 +12,9 @@ type TypedPlayerProps = {
     playerNumber: string;
 };
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <span className="text-gray-600 border-gray-600 flex justify-center text-2xl h-16 font-regular py-4">
-        {playerNumber}
-    </span>
+    <div className="text-gray-600 border-gray-600 flex justify-center text-2xl font-regular py-4">
+        {playerNumber}&nbsp;
+    </div>
 );
 
 type CheckInPlayerProps = {
@@ -24,7 +24,7 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.id)}
-        className="disabled:bg-gray-500 bg-orange-500 flex mb-2 px-4 py-2 items-center shadow-md rounded-md h-16"
+        className="bg-orange-500 flex mb-2 px-4 py-2 items-center shadow-md rounded-md"
     >
         <div className="font-bold text-2xl mr-4">{player.number}</div>
         <div>
