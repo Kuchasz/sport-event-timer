@@ -2,7 +2,7 @@
   "name": "@set/mobile",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kuchasz.github.io/sport-event-timer",
+  "homepage": "https://kuchasz.github.io/sport-event-timer/",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@reduxjs/toolkit": "^1.6.1",
