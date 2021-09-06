@@ -1,5 +1,6 @@
 {
     "private": true,
+    "homepage": "https://kuchasz.github.io/sport-event-timer",
     "scripts": {
         "build": "yarn workspaces run build",
         "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'"
