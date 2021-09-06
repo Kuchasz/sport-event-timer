@@ -24,7 +24,7 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.id)}
-        className="bg-orange-500 flex mb-2 px-4 py-2 items-center shadow-md rounded-md"
+        className="bg-orange-500 flex mb-2 w-full px-4 py-2 items-center shadow-md rounded-md"
     >
         <div className="font-bold text-2xl mr-4">{player.number}</div>
         <div>
@@ -54,9 +54,9 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
     const availablePlayers = playersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.number));
 
     return (
-        <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col px-12">
             <TypedPlayer playerNumber={playerNumber} />
-            <div className="flex-auto flex flex-col items-stretch px-8 overflow-y-auto h-2/5">
+            <div className="flex-auto flex flex-col flex-wrap items-stretch overflow-hidden h-2/5">
                 {availablePlayers.map((p) => (
                     <CheckInPlayer
                         key={p.id}
