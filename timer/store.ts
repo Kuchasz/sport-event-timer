@@ -1,4 +1,5 @@
 import players from "./slices/players";
+import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
 import { configureStore } from "@reduxjs/toolkit";
@@ -7,7 +8,8 @@ export const store = configureStore({
     reducer: {
         players,
         timeKeepers,
-        timeStamps
+        timeStamps,
+        raceCategories
     }
 });
 

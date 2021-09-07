@@ -5,6 +5,9 @@
   "homepage": "https://kuchasz.github.io/sport-event-timer/",
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@mdi/font": "^6.1.95",
+    "@mdi/js": "^6.1.95",
+    "@mdi/react": "^1.5.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@set/timer": "*",
     "@testing-library/jest-dom": "^5.11.4",

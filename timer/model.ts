@@ -15,6 +15,14 @@ export type Player = {
     gender: Gender;
 };
 
+export type RaceCategory = {
+    id: number;
+    name: string;
+    minAge?: number;
+    maxAge?: number;
+    gender?: Gender;
+};
+
 export type TimeKeeperType = "start" | "checkpoint" | "end";
 
 export type TimeKeeper = {
@@ -116,3 +124,11 @@ export const assignPlayer = (
             (e) => e
         )
     );
+
+export const addRaceCategory = (
+    raceCategories: RaceCategory[],
+    raceCategory: Omit<RaceCategory, "id">
+): RaceCategory[] => pipe(raceCategories, Arr.append({ ...raceCategory, id: getNextId(raceCategories) }));
+
+export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
+    removeById(raceCategories, id);

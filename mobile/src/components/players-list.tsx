@@ -1,4 +1,11 @@
-import { formatTime } from "../utils";
+import Icon from "@mdi/react";
+import { formatNumber, formatTime } from "../utils";
+import {
+    mdiAccountSupervisor,
+    mdiAlarmCheck,
+    mdiAlarmOff,
+    mdiWrench
+    } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 
 type PlayerWithTimeStamp = Player & {
@@ -18,10 +25,9 @@ type PlayerTimeStampProps = {
 };
 
 const PlayerTimeStamp = ({ time, onReset }: PlayerTimeStampProps) => (
-    <span>
-        <span className="font-semibold pr-4">{time && formatTime(new Date(time))}</span>
-        <button onClick={onReset}>↺</button>
-    </span>
+    <button onClick={onReset}>
+        <Icon path={mdiAlarmOff} size={1} color="white" />
+    </button>
 );
 
 type RecordTimeStampProps = {
@@ -29,27 +35,45 @@ type RecordTimeStampProps = {
     onRecord: () => void;
 };
 const RecordTimeStamp = ({ timeKeeperName, onRecord }: RecordTimeStampProps) => (
-    <span>
-        <button onClick={onRecord}>{timeKeeperName}</button>
-    </span>
+    <button onClick={onRecord}>
+        <Icon path={mdiAlarmCheck} size={1} color="white" />
+    </button>
 );
 
 export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset }: PlayersListProps) => {
     const onReset = (id: number) => () => onTimeReset(id);
     const onRecord = (id: number) => () => onTimeRecord(id);
     return (
-        <div className="text-black">
+        <div className="px-4 text-black">
             {players.map((p) => (
-                <div key={p.number} className="py-5 flex ">
-                    <span className="font-semibold pr-4">{p.number}</span>
-                    <span className="flex-grow">{p.name}</span>
-                    <span className="bg-gray-600 rounded-md px-8 py-3 text-white">
+                <div key={p.number} className="py-5 flex">
+                    <span className="text-3xl mr-4">{formatNumber(p.number, 3)}</span>
+                    <span className="flex-grow">
+                        <div className="text-lg font-semibold ">
+                            <span>{p.timeStamp ? formatTime(new Date(p.timeStamp.time)) : "- - - - - - -"}</span>
+                        </div>
+                        <div className="opacity-50 text-sm">
+                            {p.name} {p.lastName}
+                        </div>
+                    </span>
+                    <span className="bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
                         {p.timeStamp ? (
                             <PlayerTimeStamp time={p.timeStamp.time} onReset={onReset(p.timeStamp.id)} />
                         ) : (
                             <RecordTimeStamp timeKeeperName={timeKeeperName} onRecord={onRecord(p.id)} />
                         )}
                     </span>
+                    {p.timeStamp && (
+                        <>
+                            {" "}
+                            <span className="ml-1 bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
+                                <Icon path={mdiWrench} size={1} color="white" />
+                            </span>
+                            <span className="ml-1 bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
+                                <Icon path={mdiAccountSupervisor} size={1} color="white" />
+                            </span>
+                        </>
+                    )}
                 </div>
             ))}
         </div>
