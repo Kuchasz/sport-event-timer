@@ -8,7 +8,7 @@ import { StopWatchMode } from "../stopwatch-mode";
 type StopWatchModeSwitchButtonProps = { text: string; mode: StopWatchMode; icon: string; chosenMode: StopWatchMode };
 
 const StopWatchModeSwitchButton = ({ text, mode, icon, chosenMode }: StopWatchModeSwitchButtonProps) => {
-    const opacity = mode === chosenMode ? "opacity-100" : "opacity-50";
+    const opacity = mode === chosenMode ? "opacity-100" : "opacity-20";
     return (
         <Link
             to={`${process.env.PUBLIC_URL}/${mode}`}
@@ -22,7 +22,8 @@ const StopWatchModeSwitchButton = ({ text, mode, icon, chosenMode }: StopWatchMo
 
 export const StopWatchModeSwitch = () => {
     const location = useLocation();
-    const mode = location.pathname.slice(1) as StopWatchMode;
+    const mode = location.pathname.split(process.env.PUBLIC_URL)[1].slice(1) as StopWatchMode;
+
     return (
         <div className="flex justify-around text-black">
             <StopWatchModeSwitchButton mode="list" text="List" icon={iconFormatListNumbered} chosenMode={mode} />
