@@ -26,7 +26,7 @@ function App() {
     }));
 
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <div className="bg-orange-100 flex flex-col overflow-hidden h-full w-screen text-white">
                 <Status timeKeeperName="Start" />
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
