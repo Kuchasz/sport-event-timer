@@ -7,7 +7,6 @@ import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
 import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
 import { useAppDispatch, useAppSelector } from "./hooks";
-
 function App() {
     const allPlayers = useAppSelector((x) => x.players);
     const allTimeStamps = useAppSelector((x) => x.timeStamps);
@@ -32,7 +31,7 @@ function App() {
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                     <div className="px-5 h-full flex-1 overflow-y-scroll">
                         <Switch>
-                            <Route exact path="list">
+                            <Route exact path={`${process.env.PUBLIC_URL}/list`}>
                                 <PlayersList
                                     onTimeRecord={(playerId) =>
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
@@ -42,17 +41,17 @@ function App() {
                                     players={playersWithTimeStamps}
                                 />
                             </Route>
-                            <Route exact path="grid">
+                            <Route exact path={`${process.env.PUBLIC_URL}/grid`}>
                                 <PlayersGrid players={allPlayers} />
                             </Route>
-                            <Route exact path="pad">
+                            <Route exact path={`${process.env.PUBLIC_URL}/pad`}>
                                 <PlayersDialPad
                                     onPlayerCheckIn={(playerId) => {
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
                                     }}
                                 />
                             </Route>
-                            <Route exact path="times">
+                            <Route exact path={`${process.env.PUBLIC_URL}/times`}>
                                 <PlayersTimes
                                     onAddTime={() => {
                                         dispatch(add({ timeKeeperId: 0, time: new Date().getTime() }));
