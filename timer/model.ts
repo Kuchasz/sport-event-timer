@@ -58,7 +58,7 @@ export const getNextId = flow(
 export const removeById = <T extends { id: number }>(items: T[], id: number) =>
     pipe(
         items,
-        Arr.filter((e) => e.id === id)
+        Arr.filter((e) => e.id !== id)
     );
 
 export const register = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
