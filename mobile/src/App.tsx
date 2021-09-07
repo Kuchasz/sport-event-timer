@@ -32,7 +32,7 @@ function App() {
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                     <div className="px-5 h-full flex-1 overflow-y-scroll">
                         <Switch>
-                            <Route exact path="/list">
+                            <Route exact path={`list`}>
                                 <PlayersList
                                     onTimeRecord={(playerId) =>
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
@@ -42,17 +42,17 @@ function App() {
                                     players={playersWithTimeStamps}
                                 />
                             </Route>
-                            <Route exact path="/grid">
+                            <Route exact path="grid">
                                 <PlayersGrid players={allPlayers} />
                             </Route>
-                            <Route exact path="/pad">
+                            <Route exact path="pad">
                                 <PlayersDialPad
                                     onPlayerCheckIn={(playerId) => {
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
                                     }}
                                 />
                             </Route>
-                            <Route exact path="/times">
+                            <Route exact path="times">
                                 <PlayersTimes
                                     onAddTime={() => {
                                         dispatch(add({ timeKeeperId: 0, time: new Date().getTime() }));
