@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/sport-event-timer/static/css/main.d70e0fbe.chunk.css",
-    "main.js": "/sport-event-timer/static/js/main.3f93ab6e.chunk.js",
-    "main.js.map": "/sport-event-timer/static/js/main.3f93ab6e.chunk.js.map",
+    "main.js": "/sport-event-timer/static/js/main.aa892206.chunk.js",
+    "main.js.map": "/sport-event-timer/static/js/main.aa892206.chunk.js.map",
     "runtime-main.js": "/sport-event-timer/static/js/runtime-main.cbd60fb7.js",
     "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.cbd60fb7.js.map",
     "static/js/2.282114e7.chunk.js": "/sport-event-timer/static/js/2.282114e7.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.cbd60fb7.js",
     "static/js/2.282114e7.chunk.js",
     "static/css/main.d70e0fbe.chunk.css",
-    "static/js/main.3f93ab6e.chunk.js"
+    "static/js/main.aa892206.chunk.js"
   ]
 }
