@@ -33,18 +33,19 @@ type PadButtonProps = {
     enabled: boolean;
     alwaysEnabled?: boolean;
 };
-const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =>
-    alwaysEnabled || enabled ? (
-        <button
-            onClick={padClick}
-            disabled={!alwaysEnabled && !enabled}
-            className="disabled:text-gray-200 border-gray-600 font-medium border-dashed text-2xl transition-colors rounded-md text-gray-800 m-1.5 "
-        >
-            {char}
-        </button>
-    ) : (
-        <p className="flex items-center justify-center font-medium text-gray-400 text-2xl m-1.5">{char}</p>
-    );
+const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) => (
+    // alwaysEnabled || enabled ? (
+    <button
+        onClick={padClick}
+        disabled={!alwaysEnabled && !enabled}
+        className="disabled:opacity-20 border-gray-600 font-medium border-dashed text-2xl transition-opacity rounded-md text-gray-800 m-1.5 "
+    >
+        {char}
+    </button>
+);
+// ) : (
+//     <p className="flex items-center justify-center font-medium text-gray-400 text-2xl m-1.5">{char}</p>
+// );
 
 type DialPadProps = {
     onNumberChange: (number: string) => void;

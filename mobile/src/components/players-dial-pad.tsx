@@ -54,9 +54,9 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
     const availablePlayers = playersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.number));
 
     return (
-        <div className="flex h-full flex-col px-12">
+        <div className="flex h-full flex-col">
             <TypedPlayer playerNumber={playerNumber} />
-            <div className="flex-auto flex flex-col flex-wrap items-stretch overflow-hidden h-2/5">
+            <div className="flex-auto flex mx-12 flex-col flex-wrap items-stretch overflow-hidden h-2/5">
                 {availablePlayers.map((p) => (
                     <CheckInPlayer
                         key={p.id}
