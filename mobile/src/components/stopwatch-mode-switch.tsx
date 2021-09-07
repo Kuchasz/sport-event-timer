@@ -12,7 +12,7 @@ const StopWatchModeSwitchButton = ({ text, mode, icon, chosenMode }: StopWatchMo
     return (
         <Link
             to={`${process.env.PUBLIC_URL}/${mode}`}
-            className={`${opacity} flex flex-col items-center px-4 py-2 mr-4`}
+            className={`${opacity} transition-opacity flex flex-col items-center px-4 py-2 mr-4`}
         >
             <img src={icon} height="20" width="20" alt=""></img>
             <p className="text-xs font-semibold">{text}</p>
