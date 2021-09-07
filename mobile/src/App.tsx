@@ -32,7 +32,7 @@ function App() {
                 <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                     <div className="px-5 h-full flex-1 overflow-y-scroll">
                         <Switch>
-                            <Route exact path={`list`}>
+                            <Route exact path="list">
                                 <PlayersList
                                     onTimeRecord={(playerId) =>
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
