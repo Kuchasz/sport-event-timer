@@ -12,7 +12,7 @@ type TypedPlayerProps = {
     playerNumber: string;
 };
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-gray-600 border-gray-600 flex justify-center text-2xl font-regular py-4">
+    <div className="text-gray-600 border-gray-600 flex justify-center text-2xl font-regular py-2">
         {playerNumber}&nbsp;
     </div>
 );
@@ -55,8 +55,7 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
 
     return (
         <div className="flex h-full flex-col">
-            <TypedPlayer playerNumber={playerNumber} />
-            <div className="flex-auto flex mx-12 flex-col flex-wrap items-stretch overflow-hidden h-2/5">
+            <div className="flex-auto flex flex-col-reverse mx-12 mt-2 flex-wrap items-stretch overflow-hidden h-3/5">
                 {availablePlayers.map((p) => (
                     <CheckInPlayer
                         key={p.id}
@@ -68,6 +67,7 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
                     />
                 ))}
             </div>
+            <TypedPlayer playerNumber={playerNumber} />
             <DialPad
                 availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                 number={playerNumber}

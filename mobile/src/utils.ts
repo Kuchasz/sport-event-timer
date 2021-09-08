@@ -11,7 +11,7 @@ export const formatTime = (time: Date) =>
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
 export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]): number[] =>
-    pipe(allNumbers, Arr.filter(flow(String, S.startsWith(typedNumbers))));
+    typedNumbers !== "" ? pipe(allNumbers, Arr.filter(flow(String, S.startsWith(typedNumbers)))) : [];
 
 export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): string[] =>
     pipe(

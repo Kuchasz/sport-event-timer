@@ -55,7 +55,7 @@ export const DialPad = (props: DialPadProps) => {
     };
 
     return (
-        <div className="grid h-3/5 flex-auto grid-cols-3 grid-rows-4">
+        <div className="grid h-2/5 self-center w-4/5 grid-cols-3 grid-rows-4">
             {buttons.map((b) => (
                 <PadButton
                     alwaysEnabled={b.alwaysEnabled}
