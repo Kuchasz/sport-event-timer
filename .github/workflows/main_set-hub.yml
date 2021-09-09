@@ -18,7 +18,6 @@ jobs:
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
-        with:
         node-version: '14.x'
 
       - name: npm install, build, and test
@@ -29,7 +28,6 @@ jobs:
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
-        with:
         name: node-app
         path: .
 
@@ -43,13 +41,11 @@ jobs:
     steps:
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
-      with:
       name: node-app
 
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
-      with:
       app-name: 'set-hub'
       slot-name: 'production'
       publish-profile: ${{ secrets.AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
