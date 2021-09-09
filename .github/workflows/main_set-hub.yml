@@ -16,6 +16,8 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
+            - uses: c-hive/gha-yarn-cache@v1
+
             - name: Set up Node.js version
               uses: actions/setup-node@v1
               with:
@@ -23,15 +25,14 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  npm install
-                  npm run build --if-present
-                  npm run test --if-present
+                  cd ./hub
+                  yarn install
 
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
               with:
                   name: node-app
-                  path: .
+                  path: ./hub
 
     deploy:
         runs-on: ubuntu-latest
@@ -45,6 +46,7 @@ jobs:
               uses: actions/download-artifact@v2
               with:
                   name: node-app
+                  path: ./hub
 
             - name: "Deploy to Azure Web App"
               id: deploy-to-webapp
