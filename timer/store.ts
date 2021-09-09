@@ -2,15 +2,24 @@ import players from "./slices/players";
 import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
-import { configureStore } from "@reduxjs/toolkit";
+import {
+    configureStore,
+    Dispatch,
+    Middleware,
+    MiddlewareArray
+    } from "@reduxjs/toolkit";
 
-export const store = configureStore({
-    reducer: {
-        players,
-        timeKeepers,
-        timeStamps,
-        raceCategories
-    }
+const reducer = { players, timeKeepers, timeStamps, raceCategories };
+
+export const createStore = (middlewares: Middleware<{}, RootState, AppDispatch>[]) =>
+    configureStore({
+        reducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)
+    });
+
+//store created only for typechecking
+const store = configureStore({
+    reducer
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

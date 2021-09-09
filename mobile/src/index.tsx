@@ -2,9 +2,32 @@ import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
+import { AppDispatch, createStore, RootState } from "@set/timer/store";
+import { io } from "socket.io-client";
+import { Middleware } from "redux";
 import { Provider } from "react-redux";
-import { store } from "@set/timer/store";
 import "./index.scss";
+
+const socket = io("https://set-hub.azurewebsites.net", { transports: ["websocket"] });
+socket.on("connect", () => {
+    console.log(socket.id);
+});
+
+socket.on("disconnect", (r) => {
+    console.log("DISCONNECTED", r);
+});
+
+socket.on("receive-action", (action) => store.dispatch({ ...action, __remote: true }));
+
+export const exampleMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
+    // const state = storeApi.getState();
+    console.log(action);
+    if (!action.__remote && socket.connected) socket.emit("post-action", action);
+
+    next(action);
+};
+
+const store = createStore([exampleMiddleware]);
 
 ReactDOM.render(
     <React.StrictMode>

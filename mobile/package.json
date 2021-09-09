@@ -20,6 +20,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.8",
+    "@types/socket.io-client": "^3.0.0",
     "autoprefixer": "^9",
     "fp-ts": "^2.11.1",
     "node-sass": "^5.0.0",
@@ -31,6 +32,7 @@
     "react-router-dom": "^5.2.1",
     "react-scripts": "4.0.3",
     "react-useportal": "^1.0.14",
+    "socket.io-client": "^4.2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
