@@ -55,4 +55,4 @@ jobs:
                   app-name: "set-hub"
                   slot-name: "production"
                   publish-profile: ${{ secrets.secrets_AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
-                  package: .
+                  package: ./hub
