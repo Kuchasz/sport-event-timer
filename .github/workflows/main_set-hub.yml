@@ -39,7 +39,7 @@ jobs:
         needs: build
         environment:
             name: "production"
-            url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+            url: ${{ steps_deploy_to_webapp_outputs_webapp_url }}
 
         steps:
             - name: Download artifact from build job
@@ -54,5 +54,5 @@ jobs:
               with:
                   app-name: "set-hub"
                   slot-name: "production"
-                  publish-profile: ${{ secrets.AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
+                  publish-profile: ${{ secrets_AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
                   package: .
