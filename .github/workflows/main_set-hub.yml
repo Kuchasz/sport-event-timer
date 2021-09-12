@@ -28,18 +28,23 @@ jobs:
                   cd ./hub
                   npm install
                   npm run build
-                  zip -r package.zip .
-                  mv package.zip ../package.zip
 
-            # - uses: montudor/action-zip@v1
-            #   with:
-            #       args: zip -qq -r package.zip . -i hub/*
-
-            - name: Upload artifact for deployment job
-              uses: actions/upload-artifact@v2
+            - uses: montudor/action-zip@v1
               with:
-                  name: node-app
-                  path: package.zip
+                  args: zip -qq -r set-hub-package.zip ./hub
+
+            - run: |
+                mkdir package
+                mv set-hub-package.zip package/set-hub-package.zip
+
+            - name: upload artifact to staging
+                uses: SamKirkland/FTP-Deploy-Action@4.0.0
+                with:
+                server: ${{ secrets.ftp_server }}
+                username: ${{ secrets.ftp_username }}
+                password: ${{ secrets.ftp_password }}
+                local-dir: ./package/
+                server-dir: domains/artifacts/
 
     deploy:
         runs-on: ubuntu-latest
@@ -48,18 +53,18 @@ jobs:
             name: "production"
             url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-        steps:
-            - name: Download artifact from build job
-              uses: actions/download-artifact@v2
-              with:
-                  name: node-app
-                  path: .
-
-            - name: "Deploy to Azure Web App"
-              id: deploy-to-webapp
-              uses: azure/webapps-deploy@v2
-              with:
-                  app-name: "set-hub"
-                  slot-name: "production"
-                  publish-profile: ${{ secrets.secrets_AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
-                  package: package.zip
+            steps:
+            - name: publish
+                uses: garygrossgarten/github-action-ssh@release
+                with:
+                host: ${{ secrets.ssh_host }}
+                username: ${{ secrets.ssh_username }}
+                password: ${{ secrets.ssh_password }}
+                tryKeyboard: true
+                command: |
+                    cd domains/set-hub.pyszstudio.pl/
+                    rm -rf node_modules
+                    rm -rf public_nodejs
+                    unzip -q ../artifacts/set-hub-package.zip
+                    mv hub public_nodejs
+                    devil www restart set-hub.pyszstudio.pl

@@ -8,7 +8,7 @@ import { Middleware } from "redux";
 import { Provider } from "react-redux";
 import "./index.scss";
 
-const socket = io("https://set-hub.azurewebsites.net", { transports: ["websocket"] });
+const socket = io("wss://set-hub.azurewebsites.net:8080", { transports: ["websocket"] });
 socket.on("connect", () => {
     console.log(socket.id);
 });
