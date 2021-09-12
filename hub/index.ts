@@ -25,7 +25,7 @@ io.on("connection", (socket: Socket) => {
     });
 
     socket.on("disconnect", () => {
-        console.log(`CLIENT_DISCONNECTED: ${socket.id}`);
+        console.log(`CLIENT_DISCONNECTED: ${socket.id} `);
         clients.splice(clients.indexOf(socket), 1);
     });
 });
