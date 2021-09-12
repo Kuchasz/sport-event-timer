@@ -25,15 +25,13 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  cd ./hub
                   yarn install
-                  rsync ../node_modules/ node_modules/
 
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
               with:
                   name: node-app
-                  path: ./hub
+                  path: .
 
     deploy:
         runs-on: ubuntu-latest
@@ -47,7 +45,7 @@ jobs:
               uses: actions/download-artifact@v2
               with:
                   name: node-app
-                  path: ./hub
+                  path: .
 
             - name: "Deploy to Azure Web App"
               id: deploy-to-webapp
@@ -56,4 +54,4 @@ jobs:
                   app-name: "set-hub"
                   slot-name: "production"
                   publish-profile: ${{ secrets.secrets_AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
-                  package: ./hub
+                  package: .
