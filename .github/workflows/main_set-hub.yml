@@ -27,11 +27,15 @@ jobs:
               run: |
                   yarn install
 
+            - uses: montudor/action-zip@v0.1.0
+              with:
+                  args: zip -qq -r package.zip .
+
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
               with:
                   name: node-app
-                  path: .
+                  path: package.zip
 
     deploy:
         runs-on: ubuntu-latest
@@ -46,10 +50,6 @@ jobs:
               with:
                   name: node-app
                   path: .
-
-            - uses: montudor/action-zip@v0.1.0
-              with:
-                  args: zip -qq -r package.zip .
 
             - name: "Deploy to Azure Web App"
               id: deploy-to-webapp
