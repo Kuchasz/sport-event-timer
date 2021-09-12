@@ -5,13 +5,93 @@ object-assign
 */
 
 /*!
+ * Socket.IO v4.2.0
+ * (c) 2014-2021 Guillermo Rauch
+ * Released under the MIT License.
+ */
+
+/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
  */
 
+/*! ../globalThis */
+
+/*! ../transport */
+
+/*! ../util */
+
+/*! ./binary */
+
+/*! ./common */
+
+/*! ./commons */
+
+/*! ./decodePacket */
+
+/*! ./encodePacket */
+
+/*! ./globalThis */
+
+/*! ./is-binary */
+
+/*! ./manager */
+
+/*! ./on */
+
+/*! ./polling */
+
+/*! ./polling-jsonp */
+
+/*! ./polling-xhr */
+
+/*! ./socket */
+
+/*! ./transport */
+
+/*! ./transports/index */
+
+/*! ./typed-events */
+
+/*! ./url */
+
+/*! ./util */
+
+/*! ./websocket */
+
+/*! ./websocket-constructor */
+
+/*! backo2 */
+
+/*! base64-arraybuffer */
+
+/*! component-emitter */
+
+/*! debug */
+
+/*! engine.io-client */
+
+/*! engine.io-client/lib/util */
+
+/*! engine.io-parser */
+
+/*! has-cors */
+
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! ms */
+
+/*! parseqs */
+
+/*! parseuri */
+
+/*! socket.io-parser */
+
+/*! xmlhttprequest-ssl */
+
+/*! yeast */
 
 /** @license React v0.20.2
  * scheduler.production.min.js
