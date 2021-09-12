@@ -8,7 +8,7 @@ import { Middleware } from "redux";
 import { Provider } from "react-redux";
 import "./index.scss";
 
-const socket = io("wss://wss.set-hub.pyszstudio.pl", { transports: ["websocket"] });
+const socket = io("ws://wss.set-hub.pyszstudio.pl", { transports: ["websocket"] });
 socket.on("connect", () => {
     console.log(socket.id);
 });

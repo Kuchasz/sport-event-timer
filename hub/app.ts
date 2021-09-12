@@ -1,8 +1,12 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 
-const httpServer = createServer();
-const io = new Server(httpServer, {
+const server = createServer(function (req, res) {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("hello world!\n");
+});
+
+const io = new Server(server, {
     serveClient: false,
     pingTimeout: 2000,
     pingInterval: 5000,
@@ -30,6 +34,6 @@ io.on("connection", (socket: Socket) => {
     });
 });
 
-httpServer.listen(21822, "localhost", () => {
+server.listen(21822, "localhost", () => {
     console.log("SERVER_STARTED_LISTENING");
 });
