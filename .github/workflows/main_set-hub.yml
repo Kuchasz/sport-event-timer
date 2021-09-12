@@ -27,6 +27,7 @@ jobs:
               run: |
                   cd ./hub
                   npm install
+                  npm run build
                   zip -r package.zip .
                   mv package.zip ../package.zip
 
