@@ -25,11 +25,12 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  yarn install
+                  cd ./hub
+                  npm install
 
             - uses: montudor/action-zip@v0.1.0
               with:
-                  args: zip -qq -r package.zip .
+                  args: zip -qq -r package.zip ./hub
 
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
