@@ -34,17 +34,17 @@ jobs:
                   args: zip -qq -r set-hub-package.zip ./hub
 
             - run: |
-                mkdir package
-                mv set-hub-package.zip package/set-hub-package.zip
+                  mkdir package
+                  mv set-hub-package.zip package/set-hub-package.zip
 
             - name: upload artifact to staging
               uses: SamKirkland/FTP-Deploy-Action@4.0.0
               with:
-                server: ${{ secrets.ftp_server }}
-                username: ${{ secrets.ftp_username }}
-                password: ${{ secrets.ftp_password }}
-                local-dir: ./package/
-                server-dir: domains/artifacts/
+                  server: ${{ secrets.ftp_server }}
+                  username: ${{ secrets.ftp_username }}
+                  password: ${{ secrets.ftp_password }}
+                  local-dir: ./package/
+                  server-dir: domains/artifacts/
 
     deploy:
         runs-on: ubuntu-latest
@@ -54,17 +54,17 @@ jobs:
             url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
             steps:
-            - name: publish
-                uses: garygrossgarten/github-action-ssh@release
-                with:
-                    host: ${{ secrets.ssh_host }}
-                    username: ${{ secrets.ssh_username }}
-                    password: ${{ secrets.ssh_password }}
-                    tryKeyboard: true
-                    command: |
-                        cd domains/set-hub.pyszstudio.pl/
-                        rm -rf node_modules
-                        rm -rf public_nodejs
-                        unzip -q ../artifacts/set-hub-package.zip
-                        mv hub public_nodejs
-                        devil www restart set-hub.pyszstudio.pl
+                - name: publish
+                  uses: garygrossgarten/github-action-ssh@release
+                  with:
+                      host: ${{ secrets.ssh_host }}
+                      username: ${{ secrets.ssh_username }}
+                      password: ${{ secrets.ssh_password }}
+                      tryKeyboard: true
+                      command: |
+                          cd domains/set-hub.pyszstudio.pl/
+                          rm -rf node_modules
+                          rm -rf public_nodejs
+                          unzip -q ../artifacts/set-hub-package.zip
+                          mv hub public_nodejs
+                          devil www restart set-hub.pyszstudio.pl
