@@ -4,8 +4,7 @@
     "scripts": {
         "build": "yarn workspaces run build",
         "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'",
-        "start": "yarn workspace @set/hub start",
-        "postinstall": "yarn install"
+        "start": "yarn workspace @set/hub start"
     },
     "workspaces": {
         "packages": [
