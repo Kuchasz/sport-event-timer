@@ -20,7 +20,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.8",
-    "@types/socket.io-client": "^3.0.0",
+    "@types/socket.io-client": "Kuchasz/socket.io-client#fix_common_js_issue_when_mixing_import_with_exports_build",
     "autoprefixer": "^9",
     "fp-ts": "^2.11.1",
     "node-sass": "^5.0.0",
