@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ESNext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,8 +21,10 @@
     "jsx": "react-jsx"
   },
   "paths": {
-    "@set/timer/*": ["../timer/*"]
-  },    
+    "@set/timer/*": [
+      "../timer/*"
+    ]
+  },
   "include": [
     "src"
   ]

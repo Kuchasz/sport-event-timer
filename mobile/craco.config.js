@@ -17,6 +17,12 @@ module.exports = {
                 const include = Array.isArray(match.loader.include) ? match.loader.include : [match.loader.include];
                 match.loader.include = include.concat[timerModulePath];
             }
+
+            webpackConfig.module.rules.concat({
+                test: /\.js$/,
+                loader: "webpack-remove-debug" // remove "debug" package
+            });
+
             return webpackConfig;
         }
     }

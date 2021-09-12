@@ -3,10 +3,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { AppDispatch, createStore, RootState } from "@set/timer/store";
-import { io } from "socket.io-client";
+import { io as ioClient } from "socket.io-client";
 import { Middleware } from "redux";
 import { Provider } from "react-redux";
 import "./index.scss";
+const io = require("socket.io-client/dist/socket.io") as typeof ioClient;
 
 const socket = io("wss://wss.set-hub.pyszstudio.pl", { transports: ["websocket"] });
 socket.on("connect", () => {
