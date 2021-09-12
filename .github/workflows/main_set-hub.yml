@@ -51,20 +51,20 @@ jobs:
         needs: build
         # environment:
         #     name: "production"
-            # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+        # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
         steps:
             - name: publish
-                uses: garygrossgarten/github-action-ssh@release
-                with:
-                    host: ${{ secrets.ssh_host }}
-                    username: ${{ secrets.ssh_username }}
-                    password: ${{ secrets.ssh_password }}
-                    tryKeyboard: true
-                    command: |
-                        cd domains/set-hub.pyszstudio.pl/
-                        rm -rf node_modules
-                        rm -rf public_nodejs
-                        unzip -q ../artifacts/set-hub-package.zip
-                        mv hub public_nodejs
-                        devil www restart set-hub.pyszstudio.pl
+              uses: garygrossgarten/github-action-ssh@release
+              with:
+                  host: ${{ secrets.ssh_host }}
+                  username: ${{ secrets.ssh_username }}
+                  password: ${{ secrets.ssh_password }}
+                  tryKeyboard: true
+                  command: |
+                      cd domains/set-hub.pyszstudio.pl/
+                      rm -rf node_modules
+                      rm -rf public_nodejs
+                      unzip -q ../artifacts/set-hub-package.zip
+                      mv hub public_nodejs
+                      devil www restart set-hub.pyszstudio.pl
