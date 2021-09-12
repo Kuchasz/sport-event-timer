@@ -47,6 +47,10 @@ jobs:
                   name: node-app
                   path: .
 
+            - uses: montudor/action-zip@v0.1.0
+              with:
+                  args: zip -qq -r package.zip .
+
             - name: "Deploy to Azure Web App"
               id: deploy-to-webapp
               uses: azure/webapps-deploy@v2
@@ -54,4 +58,4 @@ jobs:
                   app-name: "set-hub"
                   slot-name: "production"
                   publish-profile: ${{ secrets.secrets_AzureAppService_PublishProfile_ceaa0b3f8dd742c192833f6112fd7437 }}
-                  package: .
+                  package: package.zip
