@@ -30,6 +30,6 @@ io.on("connection", (socket: Socket) => {
     });
 });
 
-httpServer.listen(process.env.PORT ?? "3001", () => {
+httpServer.listen("21822", () => {
     console.log("SERVER_STARTED_LISTENING");
 });
