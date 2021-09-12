@@ -2,11 +2,11 @@
   "name": "@set/hub",
   "private": "true",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "ts-node index.ts",
-    "build": "tsc index.ts"
+    "start": "node app.js",
+    "start:dev": "ts-node app.ts",
+    "build": "tsc app.ts"
   },
   "license": "MIT",
   "dependencies": {
