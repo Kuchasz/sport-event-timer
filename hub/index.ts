@@ -30,6 +30,6 @@ io.on("connection", (socket: Socket) => {
     });
 });
 
-httpServer.listen(21822, () => {
+httpServer.listen(21822, "localhost", () => {
     console.log("SERVER_STARTED_LISTENING");
 });
