@@ -4,8 +4,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "ts-node index.ts",
+    "start": "ts-node index.ts",
     "build": "tsc index.ts"
   },
   "license": "MIT",

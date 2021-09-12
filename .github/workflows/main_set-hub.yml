@@ -27,7 +27,7 @@ jobs:
               run: |
                   cd ./hub
                   yarn install
-                  yarn build
+                  rsync ../node_modules/ node_modules/
 
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v2
