@@ -30,6 +30,6 @@ io.on("connection", (socket: Socket) => {
     });
 });
 
-httpServer.listen("21822", () => {
+httpServer.listen(21822, "ws.set-hub.pyszstudio.pl", () => {
     console.log("SERVER_STARTED_LISTENING");
 });
