@@ -18,6 +18,10 @@ socket.on("disconnect", (r) => {
     console.log("DISCONNECTED", r);
 });
 
+socket.on("connect_failed", () => {
+    alert("CONNECION failed");
+});
+
 socket.on("receive-action", (action) => store.dispatch({ ...action, __remote: true }));
 
 export const exampleMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
