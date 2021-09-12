@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/sport-event-timer/static/css/main.f59031fd.chunk.css",
+    "main.css": "/sport-event-timer/static/css/main.e74a1eaf.chunk.css",
     "main.js": "/sport-event-timer/static/js/main.ed61411d.chunk.js",
     "main.js.map": "/sport-event-timer/static/js/main.ed61411d.chunk.js.map",
     "runtime-main.js": "/sport-event-timer/static/js/runtime-main.590e0e78.js",
     "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.590e0e78.js.map",
-    "static/js/2.6126eef2.chunk.js": "/sport-event-timer/static/js/2.6126eef2.chunk.js",
-    "static/js/2.6126eef2.chunk.js.map": "/sport-event-timer/static/js/2.6126eef2.chunk.js.map",
+    "static/js/2.83404c0c.chunk.js": "/sport-event-timer/static/js/2.83404c0c.chunk.js",
+    "static/js/2.83404c0c.chunk.js.map": "/sport-event-timer/static/js/2.83404c0c.chunk.js.map",
     "static/js/3.b1fb8ae9.chunk.js": "/sport-event-timer/static/js/3.b1fb8ae9.chunk.js",
     "static/js/3.b1fb8ae9.chunk.js.map": "/sport-event-timer/static/js/3.b1fb8ae9.chunk.js.map",
     "index.html": "/sport-event-timer/index.html",
-    "static/css/main.f59031fd.chunk.css.map": "/sport-event-timer/static/css/main.f59031fd.chunk.css.map",
-    "static/js/2.6126eef2.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.6126eef2.chunk.js.LICENSE.txt",
+    "static/css/main.e74a1eaf.chunk.css.map": "/sport-event-timer/static/css/main.e74a1eaf.chunk.css.map",
+    "static/js/2.83404c0c.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.83404c0c.chunk.js.LICENSE.txt",
     "static/media/dialpad.d813f511.svg": "/sport-event-timer/static/media/dialpad.d813f511.svg",
     "static/media/dots-grid.57b82462.svg": "/sport-event-timer/static/media/dots-grid.57b82462.svg",
     "static/media/format-list-numbered.942f2bdf.svg": "/sport-event-timer/static/media/format-list-numbered.942f2bdf.svg",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.590e0e78.js",
-    "static/js/2.6126eef2.chunk.js",
-    "static/css/main.f59031fd.chunk.css",
+    "static/js/2.83404c0c.chunk.js",
+    "static/css/main.e74a1eaf.chunk.css",
     "static/js/main.ed61411d.chunk.js"
   ]
 }
