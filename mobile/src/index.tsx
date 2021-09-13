@@ -3,36 +3,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { AppDispatch, createStore, RootState } from "@set/timer/store";
-import { io as ioClient } from "socket.io-client";
 import { Middleware } from "redux";
 import { Provider } from "react-redux";
+import { socket } from "./connection";
 import "./index.scss";
-const io = require("socket.io-client/dist/socket.io") as typeof ioClient;
-
-const socket = io("wss://wss.set-hub.pyszstudio.pl", { transports: ["websocket"] });
-socket.on("connect", () => {
-    console.log(socket.id);
-});
-
-socket.on("disconnect", (r) => {
-    console.log("DISCONNECTED", r);
-});
-
-socket.on("connect_failed", () => {
-    alert("CONNECION failed");
-});
 
 socket.on("receive-action", (action) => store.dispatch({ ...action, __remote: true }));
 
-export const exampleMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
-    // const state = storeApi.getState();
-    console.log(action);
+export const postActionsMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
     if (!action.__remote && socket.connected) socket.emit("post-action", action);
 
     next(action);
 };
 
-const store = createStore([exampleMiddleware]);
+const store = createStore([postActionsMiddleware]);
 
 ReactDOM.render(
     <React.StrictMode>
