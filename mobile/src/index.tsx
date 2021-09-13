@@ -9,7 +9,7 @@ import { socket } from "./connection";
 import "./index.scss";
 
 socket.on("receive-action", (action) => store.dispatch({ ...action, __remote: true }));
-
+socket.on("receive-state", (state) => store.dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 export const postActionsMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
     if (!action.__remote && socket.connected) socket.emit("post-action", action);
 

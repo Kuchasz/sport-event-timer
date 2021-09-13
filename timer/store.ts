@@ -3,17 +3,24 @@ import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
 import {
+    AnyAction,
+    combineReducers,
     configureStore,
-    Dispatch,
-    Middleware,
-    MiddlewareArray
+    Middleware
     } from "@reduxjs/toolkit";
 
-const reducer = { players, timeKeepers, timeStamps, raceCategories };
+const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories });
+
+const resettableRootReducer = (state: RootState, action: AnyAction) => {
+    if (action.type === "REPLACE_STATE") {
+        return action.state as RootState;
+    }
+    return reducer(state, action) as RootState;
+};
 
 export const createStore = (middlewares: Middleware<{}, RootState, AppDispatch>[]) =>
     configureStore({
-        reducer,
+        reducer: resettableRootReducer as any,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)
     });
 
