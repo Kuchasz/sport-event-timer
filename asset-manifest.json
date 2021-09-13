@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/sport-event-timer/static/css/main.bff03262.chunk.css",
-    "main.js": "/sport-event-timer/static/js/main.a1f35a55.chunk.js",
-    "main.js.map": "/sport-event-timer/static/js/main.a1f35a55.chunk.js.map",
-    "runtime-main.js": "/sport-event-timer/static/js/runtime-main.9a06f3ef.js",
-    "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.9a06f3ef.js.map",
-    "static/js/2.dfd78d04.chunk.js": "/sport-event-timer/static/js/2.dfd78d04.chunk.js",
-    "static/js/2.dfd78d04.chunk.js.map": "/sport-event-timer/static/js/2.dfd78d04.chunk.js.map",
-    "static/js/3.7aaf332c.chunk.js": "/sport-event-timer/static/js/3.7aaf332c.chunk.js",
-    "static/js/3.7aaf332c.chunk.js.map": "/sport-event-timer/static/js/3.7aaf332c.chunk.js.map",
+    "main.js": "/sport-event-timer/static/js/main.62641f0d.chunk.js",
+    "main.js.map": "/sport-event-timer/static/js/main.62641f0d.chunk.js.map",
+    "runtime-main.js": "/sport-event-timer/static/js/runtime-main.52c56757.js",
+    "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.52c56757.js.map",
+    "static/js/2.046906f6.chunk.js": "/sport-event-timer/static/js/2.046906f6.chunk.js",
+    "static/js/2.046906f6.chunk.js.map": "/sport-event-timer/static/js/2.046906f6.chunk.js.map",
+    "static/js/3.9422587a.chunk.js": "/sport-event-timer/static/js/3.9422587a.chunk.js",
+    "static/js/3.9422587a.chunk.js.map": "/sport-event-timer/static/js/3.9422587a.chunk.js.map",
     "index.html": "/sport-event-timer/index.html",
     "static/css/main.bff03262.chunk.css.map": "/sport-event-timer/static/css/main.bff03262.chunk.css.map",
-    "static/js/2.dfd78d04.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.dfd78d04.chunk.js.LICENSE.txt",
+    "static/js/2.046906f6.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.046906f6.chunk.js.LICENSE.txt",
     "static/media/dialpad.d813f511.svg": "/sport-event-timer/static/media/dialpad.d813f511.svg",
     "static/media/dots-grid.57b82462.svg": "/sport-event-timer/static/media/dots-grid.57b82462.svg",
     "static/media/format-list-numbered.942f2bdf.svg": "/sport-event-timer/static/media/format-list-numbered.942f2bdf.svg",
     "static/media/timetable.ff6bd1a7.svg": "/sport-event-timer/static/media/timetable.ff6bd1a7.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9a06f3ef.js",
-    "static/js/2.dfd78d04.chunk.js",
+    "static/js/runtime-main.52c56757.js",
+    "static/js/2.046906f6.chunk.js",
     "static/css/main.bff03262.chunk.css",
-    "static/js/main.a1f35a55.chunk.js"
+    "static/js/main.62641f0d.chunk.js"
   ]
 }
