@@ -25,7 +25,10 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  cd ./hub
+                  cd ./timer
+                  yarn install
+                  yarn run build
+                  cd ../hub
                   npm install
                   npm run build
 

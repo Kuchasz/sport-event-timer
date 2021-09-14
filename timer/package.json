@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node store.ts"
+    "start": "ts-node store.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
