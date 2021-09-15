@@ -44,7 +44,7 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
     const onReset = (id: number) => () => onTimeReset(id);
     const onRecord = (id: number) => () => onTimeRecord(id);
     return (
-        <div className="px-4 text-black">
+        <div className="px-4 text-white">
             {players.map((p) => (
                 <div key={p.number} className="py-5 flex">
                     <span className="text-3xl mr-4">{formatNumber(p.number, 3)}</span>
@@ -56,7 +56,7 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
                             {p.name} {p.lastName}
                         </div>
                     </span>
-                    <span className="bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
+                    <span className="bg-gradient-to-r from-orange-500 to-red-500 flex items-center rounded-md px-2 py-1 self-center text-white">
                         {p.timeStamp ? (
                             <PlayerTimeStamp time={p.timeStamp.time} onReset={onReset(p.timeStamp.id)} />
                         ) : (
@@ -65,11 +65,10 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
                     </span>
                     {p.timeStamp && (
                         <>
-                            {" "}
-                            <span className="ml-1 bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
+                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">
                                 <Icon path={mdiWrench} size={1} color="white" />
                             </span>
-                            <span className="ml-1 bg-gray-300 flex items-center rounded-md px-2 py-1 self-center text-white">
+                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">
                                 <Icon path={mdiAccountSupervisor} size={1} color="white" />
                             </span>
                         </>

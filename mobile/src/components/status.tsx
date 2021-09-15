@@ -1,10 +1,11 @@
 import Icon from "@mdi/react";
 import { ConnectionState, onConnectionStateChanged } from "../connection";
 import {
-    mdiWifi,
-    mdiWifiOff,
-    mdiWifiStrengthAlertOutline,
-    mdiWifiSync
+    mdiCloudOffOutline,
+    mdiCloudOutline,
+    mdiCloudSyncOutline,
+    mdiSync,
+    mdiWeatherCloudyAlert
     } from "@mdi/js";
 import { Timer } from "./timer";
 import { useEffect, useState } from "react";
@@ -12,13 +13,13 @@ import { useEffect, useState } from "react";
 const getIconFromConnectionState = (state: ConnectionState) => {
     switch (state) {
         case "connected":
-            return mdiWifi;
+            return mdiCloudOutline;
         case "disconnected":
-            return mdiWifiOff;
+            return mdiCloudOffOutline;
         case "error":
-            return mdiWifiStrengthAlertOutline;
+            return mdiWeatherCloudyAlert;
         case "reconnecting":
-            return mdiWifiSync;
+            return mdiCloudSyncOutline;
         default:
             throw new Error("not handled connection state");
     }
