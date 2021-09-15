@@ -41,7 +41,6 @@ io.on("connection", (socket: Socket) => {
     clients.push(socket);
 
     socket.on("post-action", (action) => {
-        console.log(`ACTION: ${action.type}`);
         store.dispatch(action);
         socket.broadcast.emit("receive-action", action);
     });
