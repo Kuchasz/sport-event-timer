@@ -20,7 +20,8 @@ const StopWatchModeSwitchButton = ({ text, mode, icon, chosenMode }: StopWatchMo
 
 export const StopWatchModeSwitch = () => {
     const location = useLocation();
-    const mode = location.pathname.split(process.env.PUBLIC_URL)[1].slice(1) as StopWatchMode;
+    // const mode = location.pathname.split('process.env.PUBLIC_URL')[1].slice(1) as StopWatchMode;
+    const mode = "";
 
     return (
         <div className="flex justify-around text-black">
