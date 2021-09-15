@@ -1,5 +1,4 @@
 import Icon from "@mdi/react";
-import { formatNumber } from "../utils";
 import {
     mdiAccountSupervisor,
     mdiAlarmCheck,
@@ -7,8 +6,8 @@ import {
     mdiWrench
     } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
+import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { PrimaryActionButton } from "./action-button";
-import { TimeStampDisplay } from "./time-stamp-display";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -26,14 +25,8 @@ export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListP
     return (
         <div className="px-4 text-white">
             {players.map((p) => (
-                <div key={p.number} className="py-5 flex">
-                    <span className="text-3xl mr-4">{formatNumber(p.number, 3)}</span>
-                    <span className="flex-grow">
-                        <TimeStampDisplay timeStamp={p.timeStamp} />
-                        <div className="opacity-50 text-sm">
-                            {p.name} {p.lastName}
-                        </div>
-                    </span>
+                <div key={p.number} className="py-5 flex items-center">
+                    <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
                     {p.timeStamp ? (
                         <PrimaryActionButton icon={mdiAlarmOff} onClick={onReset(p.timeStamp.id)} />
                     ) : (
@@ -41,10 +34,10 @@ export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListP
                     )}
                     {p.timeStamp && (
                         <>
-                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">
+                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 text-white">
                                 <Icon path={mdiWrench} size={1} color="white" />
                             </span>
-                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">
+                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 text-white">
                                 <Icon path={mdiAccountSupervisor} size={1} color="white" />
                             </span>
                         </>

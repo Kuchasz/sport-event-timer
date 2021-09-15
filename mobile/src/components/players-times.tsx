@@ -6,7 +6,7 @@ import { Icon } from "@mdi/react";
 import { mdiAccountAlertOutline, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayersDialPad } from "./players-dial-pad";
-import { TimeStampDisplay } from "./time-stamp-display";
+import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { useState } from "react";
 import { useTimerDispatch } from "../hooks";
 
@@ -50,18 +50,16 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                 </button>
             </div>
             {sort(times).map((t) => (
-                <div key={t.id} className="flex py-5">
-                    <span className="flex-grow">
-                        <TimeStampDisplay timeStamp={t} />
-                    </span>
-                    {t.player ? (
-                        <ActionButton
-                            contents={<span className="font-medium">{formatNumber(t.player.number, 3)}</span>}
-                            onClick={() => {
-                                dispatch(reset({ id: t.id }));
-                            }}
-                        />
-                    ) : (
+                <div key={t.id} className="flex py-5 items-center">
+                    <PlayerWithTimeStampDisplay
+                        playerWithTimeStamp={{
+                            timeStamp: t,
+                            number: t.player?.number,
+                            name: t.player?.name,
+                            lastName: t.player?.lastName
+                        }}
+                    />
+                    {!t.player && (
                         <PrimaryActionButton onClick={() => setTimeStampToAssign(t.id)} icon={mdiAccountAlertOutline} />
                     )}
                     <span className="ml-1">
