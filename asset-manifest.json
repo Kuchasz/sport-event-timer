@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/sport-event-timer/static/css/main.dd8d27d9.chunk.css",
-    "main.js": "/sport-event-timer/static/js/main.c8b26b4c.chunk.js",
-    "main.js.map": "/sport-event-timer/static/js/main.c8b26b4c.chunk.js.map",
+    "main.css": "/sport-event-timer/static/css/main.fdf261f6.chunk.css",
+    "main.js": "/sport-event-timer/static/js/main.1fe80e00.chunk.js",
+    "main.js.map": "/sport-event-timer/static/js/main.1fe80e00.chunk.js.map",
     "runtime-main.js": "/sport-event-timer/static/js/runtime-main.52c56757.js",
     "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.52c56757.js.map",
-    "static/js/2.819a4263.chunk.js": "/sport-event-timer/static/js/2.819a4263.chunk.js",
-    "static/js/2.819a4263.chunk.js.map": "/sport-event-timer/static/js/2.819a4263.chunk.js.map",
+    "static/js/2.fe1c7a0d.chunk.js": "/sport-event-timer/static/js/2.fe1c7a0d.chunk.js",
+    "static/js/2.fe1c7a0d.chunk.js.map": "/sport-event-timer/static/js/2.fe1c7a0d.chunk.js.map",
     "static/js/3.9422587a.chunk.js": "/sport-event-timer/static/js/3.9422587a.chunk.js",
     "static/js/3.9422587a.chunk.js.map": "/sport-event-timer/static/js/3.9422587a.chunk.js.map",
     "index.html": "/sport-event-timer/index.html",
-    "static/css/main.dd8d27d9.chunk.css.map": "/sport-event-timer/static/css/main.dd8d27d9.chunk.css.map",
-    "static/js/2.819a4263.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.819a4263.chunk.js.LICENSE.txt"
+    "static/css/main.fdf261f6.chunk.css.map": "/sport-event-timer/static/css/main.fdf261f6.chunk.css.map",
+    "static/js/2.fe1c7a0d.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.fe1c7a0d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.52c56757.js",
-    "static/js/2.819a4263.chunk.js",
-    "static/css/main.dd8d27d9.chunk.css",
-    "static/js/main.c8b26b4c.chunk.js"
+    "static/js/2.fe1c7a0d.chunk.js",
+    "static/css/main.fdf261f6.chunk.css",
+    "static/js/main.1fe80e00.chunk.js"
   ]
 }
