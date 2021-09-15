@@ -24,7 +24,7 @@ export const StopWatchModeSwitch = () => {
 
     return (
         <div className="flex justify-around text-black">
-            <StopWatchModeSwitchButton mode="list" text="List" icon={mdiFormatListNumberedRtl} chosenMode={mode} />
+            <StopWatchModeSwitchButton mode="list" text="Players" icon={mdiFormatListNumberedRtl} chosenMode={mode} />
             <StopWatchModeSwitchButton mode="pad" text="Pad" icon={mdiDialpad} chosenMode={mode} />
             <StopWatchModeSwitchButton mode="times" text="Times" icon={mdiTimetable} chosenMode={mode} />
         </div>
