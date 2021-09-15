@@ -1,9 +1,9 @@
 import { createServer } from "http";
 import { createStore } from "@set/timer/store";
-import { fakePlayers } from "../timer/slices/fake-players";
-import { fakeRaceCategories } from "../timer/slices/fake-race-categories";
-import { fakeTimeKeepers } from "../timer/slices/fake-time-keepers";
-import { fakeTimeStamps } from "../timer/slices/fake-stamps";
+import { fakePlayers } from "@set/timer/slices/fake-players";
+import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
+import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
+import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
 import { Server, Socket } from "socket.io";
 
 const server = createServer(function (req, res) {
