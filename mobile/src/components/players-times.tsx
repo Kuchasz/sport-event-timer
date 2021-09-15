@@ -1,7 +1,9 @@
 import usePortal from "react-useportal";
-import { assignPlayer } from "@set/timer/slices/time-stamps";
+import { ActionButton, PrimaryActionButton } from "./action-button";
+import { assignPlayer, reset } from "@set/timer/slices/time-stamps";
+import { formatNumber } from "../utils";
 import { Icon } from "@mdi/react";
-import { mdiAccountAlertOutline, mdiPlusCircleOutline } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayersDialPad } from "./players-dial-pad";
 import { TimeStampDisplay } from "./time-stamp-display";
@@ -34,7 +36,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                                 dispatch(assignPlayer({ playerId, id: timeStampToAssign }));
                                 setTimeStampToAssign(undefined);
                             }}
-                            title="Assign player to time"
+                            title="Assign time to player"
                         />
                     </div>
                 </Portal>
@@ -48,18 +50,29 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                 </button>
             </div>
             {sort(times).map((t) => (
-                <div key={t.id} className="flex justify-between my-2">
-                    <TimeStampDisplay timeStamp={t} />
+                <div key={t.id} className="flex my-2">
+                    <span className="flex-grow">
+                        <TimeStampDisplay timeStamp={t} />
+                    </span>
                     {t.player ? (
-                        <div className="rounded-md text-center w-20 bg-gray-600 py-2 px-4">{t.player.number}</div>
+                        <ActionButton
+                            text={formatNumber(t.player.number, 3)}
+                            onClick={() => {
+                                dispatch(reset({ id: t.id }));
+                            }}
+                        />
                     ) : (
-                        <button
-                            onClick={() => setTimeStampToAssign(t.id)}
-                            className="hover:bg-orange-500 hover:text-white hover:border-transparent rounded-md flex justify-center w-20 border-dashed border-2 font-semibold py-2 px-4"
-                        >
-                            <Icon path={mdiAccountAlertOutline} size={1} />
-                        </button>
+                        <PrimaryActionButton onClick={() => setTimeStampToAssign(t.id)} icon={mdiAccountAlertOutline} />
                     )}
+                    <span className="ml-1">
+                        {" "}
+                        <ActionButton
+                            icon={mdiDeleteOutline}
+                            onClick={() => {
+                                dispatch(reset({ id: t.id }));
+                            }}
+                        />
+                    </span>
                 </div>
             ))}
         </div>

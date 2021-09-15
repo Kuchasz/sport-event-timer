@@ -7,6 +7,7 @@ import {
     mdiWrench
     } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
+import { PrimaryActionButton } from "./action-button";
 import { TimeStampDisplay } from "./time-stamp-display";
 
 type PlayerWithTimeStamp = Player & {
@@ -15,33 +16,11 @@ type PlayerWithTimeStamp = Player & {
 
 type PlayersListProps = {
     players: PlayerWithTimeStamp[];
-    timeKeeperName: string;
     onTimeRecord: (playerId: number) => void;
     onTimeReset: (timeStampId: number) => void;
 };
 
-type PlayerTimeStampProps = {
-    time: number;
-    onReset: () => void;
-};
-
-const PlayerTimeStamp = ({ time, onReset }: PlayerTimeStampProps) => (
-    <button onClick={onReset}>
-        <Icon path={mdiAlarmOff} size={1} color="white" />
-    </button>
-);
-
-type RecordTimeStampProps = {
-    timeKeeperName: string;
-    onRecord: () => void;
-};
-const RecordTimeStamp = ({ timeKeeperName, onRecord }: RecordTimeStampProps) => (
-    <button onClick={onRecord}>
-        <Icon path={mdiAlarmCheck} size={1} color="white" />
-    </button>
-);
-
-export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset }: PlayersListProps) => {
+export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListProps) => {
     const onReset = (id: number) => () => onTimeReset(id);
     const onRecord = (id: number) => () => onTimeRecord(id);
     return (
@@ -55,13 +34,11 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
                             {p.name} {p.lastName}
                         </div>
                     </span>
-                    <span className="bg-gradient-to-r from-orange-500 to-red-500 flex items-center rounded-md px-2 py-1 self-center text-white">
-                        {p.timeStamp ? (
-                            <PlayerTimeStamp time={p.timeStamp.time} onReset={onReset(p.timeStamp.id)} />
-                        ) : (
-                            <RecordTimeStamp timeKeeperName={timeKeeperName} onRecord={onRecord(p.id)} />
-                        )}
-                    </span>
+                    {p.timeStamp ? (
+                        <PrimaryActionButton icon={mdiAlarmOff} onClick={onReset(p.timeStamp.id)} />
+                    ) : (
+                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={onRecord(p.id)} />
+                    )}
                     {p.timeStamp && (
                         <>
                             <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">

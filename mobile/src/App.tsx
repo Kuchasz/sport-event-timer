@@ -9,7 +9,7 @@ import { useTimerDispatch, useTimerSelector } from "./hooks";
 function App() {
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
+    // const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
 
     const dispatch = useTimerDispatch();
 
@@ -36,7 +36,6 @@ function App() {
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }))
                                     }
                                     onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
-                                    timeKeeperName={allTimeKeepers[0].name}
                                     players={playersWithTimeStamps}
                                 />
                             </Route>
