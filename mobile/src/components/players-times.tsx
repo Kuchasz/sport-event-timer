@@ -50,13 +50,13 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                 </button>
             </div>
             {sort(times).map((t) => (
-                <div key={t.id} className="flex my-2">
+                <div key={t.id} className="flex py-5">
                     <span className="flex-grow">
                         <TimeStampDisplay timeStamp={t} />
                     </span>
                     {t.player ? (
                         <ActionButton
-                            text={formatNumber(t.player.number, 3)}
+                            contents={<span className="font-medium">{formatNumber(t.player.number, 3)}</span>}
                             onClick={() => {
                                 dispatch(reset({ id: t.id }));
                             }}

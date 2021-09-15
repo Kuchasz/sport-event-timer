@@ -58,7 +58,7 @@ export const PlayersDialPad = ({ onPlayerCheckIn, title }: PlayersDialPadProps) 
     return (
         <div className="flex h-full flex-col">
             {title && <h1 className="text-2xl text-center py-4">{title}</h1>}
-            <div className="flex-auto flex flex-col-reverse mx-12 mt-2 flex-wrap items-stretch overflow-hidden h-3/5">
+            <div className="flex-auto flex flex-col-reverse mx-12 overflow-y-auto mt-2 items-stretch h-3/5">
                 {availablePlayers.map((p) => (
                     <CheckInPlayer
                         key={p.id}

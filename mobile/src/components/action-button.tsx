@@ -9,9 +9,17 @@ export const PrimaryActionButton = ({ onClick, icon }: { onClick: () => void; ic
     </button>
 );
 
-export const ActionButton = ({ onClick, icon, text }: { onClick: () => void; icon?: string; text?: string }) => (
+export const ActionButton = ({
+    onClick,
+    icon,
+    contents
+}: {
+    onClick: () => void;
+    icon?: string;
+    contents?: JSX.Element;
+}) => (
     <button onClick={onClick} className="bg-gray-600 flex items-center rounded-md px-2 py-1 self-center text-white">
         {icon && <Icon path={icon} size={1} color="white" />}
-        {text}
+        {contents}
     </button>
 );
