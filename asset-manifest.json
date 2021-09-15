@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/sport-event-timer/static/css/main.d9e09df7.chunk.css",
-    "main.js": "/sport-event-timer/static/js/main.0eeddbeb.chunk.js",
-    "main.js.map": "/sport-event-timer/static/js/main.0eeddbeb.chunk.js.map",
+    "main.css": "/sport-event-timer/static/css/main.00b379c3.chunk.css",
+    "main.js": "/sport-event-timer/static/js/main.8d54534a.chunk.js",
+    "main.js.map": "/sport-event-timer/static/js/main.8d54534a.chunk.js.map",
     "runtime-main.js": "/sport-event-timer/static/js/runtime-main.52c56757.js",
     "runtime-main.js.map": "/sport-event-timer/static/js/runtime-main.52c56757.js.map",
     "static/js/2.fe1c7a0d.chunk.js": "/sport-event-timer/static/js/2.fe1c7a0d.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.9422587a.chunk.js": "/sport-event-timer/static/js/3.9422587a.chunk.js",
     "static/js/3.9422587a.chunk.js.map": "/sport-event-timer/static/js/3.9422587a.chunk.js.map",
     "index.html": "/sport-event-timer/index.html",
-    "static/css/main.d9e09df7.chunk.css.map": "/sport-event-timer/static/css/main.d9e09df7.chunk.css.map",
+    "static/css/main.00b379c3.chunk.css.map": "/sport-event-timer/static/css/main.00b379c3.chunk.css.map",
     "static/js/2.fe1c7a0d.chunk.js.LICENSE.txt": "/sport-event-timer/static/js/2.fe1c7a0d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.52c56757.js",
     "static/js/2.fe1c7a0d.chunk.js",
-    "static/css/main.d9e09df7.chunk.css",
-    "static/js/main.0eeddbeb.chunk.js"
+    "static/css/main.00b379c3.chunk.css",
+    "static/js/main.8d54534a.chunk.js"
   ]
 }
