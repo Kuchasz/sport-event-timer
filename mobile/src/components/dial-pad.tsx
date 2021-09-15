@@ -37,7 +37,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="disabled:opacity-20 border-gray-600 font-medium border-dashed text-2xl transition-opacity rounded-md text-gray-800 m-1.5 "
+        className="disabled:opacity-20 text-2xl transition-opacity rounded-md text-white m-1.5 "
     >
         {char}
     </button>
@@ -55,7 +55,7 @@ export const DialPad = (props: DialPadProps) => {
     };
 
     return (
-        <div className="grid h-2/5 self-center w-4/5 grid-cols-3 grid-rows-4">
+        <div className="grid h-2/5 self-center w-5/6 grid-cols-3 py-2 grid-rows-4">
             {buttons.map((b) => (
                 <PadButton
                     alwaysEnabled={b.alwaysEnabled}

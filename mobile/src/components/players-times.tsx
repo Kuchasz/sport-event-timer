@@ -3,8 +3,8 @@ import { assignPlayer } from "@set/timer/slices/time-stamps";
 import { formatTime } from "../utils";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayersDialPad } from "./players-dial-pad";
-import { useAppDispatch } from "../hooks";
 import { useState } from "react";
+import { useTimerDispatch } from "../hooks";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -20,10 +20,10 @@ const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time 
 export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
     const [timeStampToAssign, setTimeStampToAssign] = useState<number>();
     const { Portal } = usePortal({ bindTo: document.getElementById("module-holder") as HTMLElement });
-    const dispatch = useAppDispatch();
+    const dispatch = useTimerDispatch();
 
     return (
-        <div>
+        <div className="px-4">
             {timeStampToAssign !== undefined && (
                 <Portal>
                     <div className="absolute inset-0 h-full w-full bg-orange-100">
@@ -49,7 +49,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                     ) : (
                         <button
                             onClick={() => setTimeStampToAssign(t.id)}
-                            className="hover:bg-orange-500 hover:text-white hover:border-transparent rounded-md text-center w-40 border-dashed border-2 font-semibold text-gray-500 border-gray-500 py-2 px-4"
+                            className="hover:bg-orange-500 hover:text-white hover:border-transparent rounded-md text-center w-40 border-dashed border-2 font-semibold text-black border-black py-2 px-4"
                         >
                             CHOOSE PLAYER
                         </button>

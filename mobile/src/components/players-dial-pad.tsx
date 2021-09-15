@@ -1,8 +1,8 @@
 import { DialPad } from "./dial-pad";
 import { getAvailableDigits, getAvailableNumbers } from "../utils";
 import { Player, TimeStamp } from "@set/timer/model";
-import { useAppSelector } from "../hooks";
 import { useState } from "react";
+import { useTimerSelector } from "../hooks";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -12,8 +12,8 @@ type TypedPlayerProps = {
     playerNumber: string;
 };
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-gray-600 border-gray-600 flex justify-center text-2xl font-regular py-2">
-        {playerNumber}&nbsp;
+    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">
+        {playerNumber}
     </div>
 );
 
@@ -24,7 +24,7 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.id)}
-        className="bg-orange-500 flex mb-2 w-full px-4 py-2 items-center shadow-md rounded-md"
+        className="bg-gradient-to-r from-orange-500 to-red-500 mt-2 flex w-full px-4 py-2 items-center shadow-md rounded-md"
     >
         <div className="font-bold text-2xl mr-4">{player.number}</div>
         <div>
@@ -39,8 +39,8 @@ type PlayersDialPadProps = {
 
 export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
-    const allPlayers = useAppSelector((x) => x.players);
-    const allTimeStamps = useAppSelector((x) => x.timeStamps);
+    const allPlayers = useTimerSelector((x) => x.players);
+    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
 
     const playersWithTimeStamps = allPlayers.map((x) => ({
         ...x,

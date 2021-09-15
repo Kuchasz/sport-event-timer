@@ -1,1 +1,1 @@
-export type StopWatchMode = "list" | "grid" | "pad" | "times";
+export type StopWatchMode = "list" | "pad" | "times";

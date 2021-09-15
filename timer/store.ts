@@ -11,14 +11,14 @@ import {
 
 const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories });
 
-const resettableRootReducer = (state: RootState, action: AnyAction) => {
+const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     if (action.type === "REPLACE_STATE") {
-        return action.state as RootState;
+        return action.state as TimerState;
     }
-    return reducer(state, action) as RootState;
+    return reducer(state, action) as TimerState;
 };
 
-export const createStore = (middlewares: Middleware<{}, RootState, AppDispatch>[]) =>
+export const createStore = (middlewares: Middleware<{}, TimerState, TimerDispatch>[]) =>
     configureStore({
         reducer: resettableRootReducer as any,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)
@@ -29,7 +29,7 @@ const store = configureStore({
     reducer
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
+// Infer the `TimerState` and `TimerDispatch` types from the store itself
+export type TimerState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
+export type TimerDispatch = typeof store.dispatch;

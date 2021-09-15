@@ -2,7 +2,7 @@ import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { AppDispatch, createStore, RootState } from "@set/timer/store";
+import { createStore, TimerDispatch, TimerState } from "@set/timer/store";
 import { Middleware } from "redux";
 import { Provider } from "react-redux";
 import { socket } from "./connection";
@@ -10,7 +10,7 @@ import "./index.scss";
 
 socket.on("receive-action", (action) => store.dispatch({ ...action, __remote: true }));
 socket.on("receive-state", (state) => store.dispatch({ type: "REPLACE_STATE", state, __remote: true }));
-export const postActionsMiddleware: Middleware<{}, RootState, AppDispatch> = (storeApi) => (next) => (action) => {
+export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
     if (!action.__remote && socket.connected) socket.emit("post-action", action);
 
     next(action);
