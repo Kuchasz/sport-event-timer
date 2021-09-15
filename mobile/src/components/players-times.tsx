@@ -1,7 +1,6 @@
 import usePortal from "react-useportal";
 import { ActionButton, PrimaryActionButton } from "./action-button";
 import { assignPlayer, reset } from "@set/timer/slices/time-stamps";
-import { formatNumber } from "../utils";
 import { Icon } from "@mdi/react";
 import { mdiAccountAlertOutline, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
@@ -63,7 +62,6 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                         <PrimaryActionButton onClick={() => setTimeStampToAssign(t.id)} icon={mdiAccountAlertOutline} />
                     )}
                     <span className="ml-1">
-                        {" "}
                         <ActionButton
                             icon={mdiDeleteOutline}
                             onClick={() => {
