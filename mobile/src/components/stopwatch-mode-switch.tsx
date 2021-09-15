@@ -1,7 +1,8 @@
 import { Icon } from "@mdi/react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiTimetable } from "@mdi/js";
 import { StopWatchMode } from "../stopwatch-mode";
+// import { Link, useLocation } from "react-router-dom";
 
 type StopWatchModeSwitchButtonProps = { text: string; mode: StopWatchMode; icon: string; chosenMode: StopWatchMode };
 
