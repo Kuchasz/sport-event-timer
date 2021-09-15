@@ -45,6 +45,7 @@ function App() {
                                     onPlayerCheckIn={(playerId) => {
                                         dispatch(add({ playerId, timeKeeperId: 0, time: new Date().getTime() }));
                                     }}
+                                    title={"Clock in player"}
                                 />
                             </Route>
                             <Route exact path={`${process.env.PUBLIC_URL}/times`}>

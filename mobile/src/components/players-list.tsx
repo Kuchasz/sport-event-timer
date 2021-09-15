@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { formatNumber, formatTime } from "../utils";
+import { formatNumber } from "../utils";
 import {
     mdiAccountSupervisor,
     mdiAlarmCheck,
@@ -7,6 +7,7 @@ import {
     mdiWrench
     } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
+import { TimeStampDisplay } from "./time-stamp-display";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -49,9 +50,7 @@ export const PlayersList = ({ players, timeKeeperName, onTimeRecord, onTimeReset
                 <div key={p.number} className="py-5 flex">
                     <span className="text-3xl mr-4">{formatNumber(p.number, 3)}</span>
                     <span className="flex-grow">
-                        <div className="text-lg font-semibold ">
-                            <span>{p.timeStamp ? formatTime(new Date(p.timeStamp.time)) : "- - - - - - -"}</span>
-                        </div>
+                        <TimeStampDisplay timeStamp={p.timeStamp} />
                         <div className="opacity-50 text-sm">
                             {p.name} {p.lastName}
                         </div>

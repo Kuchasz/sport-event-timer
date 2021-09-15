@@ -4,7 +4,6 @@ import {
     mdiCloudOffOutline,
     mdiCloudOutline,
     mdiCloudSyncOutline,
-    mdiSync,
     mdiWeatherCloudyAlert
     } from "@mdi/js";
 import { Timer } from "./timer";

@@ -11,6 +11,7 @@ type PlayerWithTimeStamp = Player & {
 type TypedPlayerProps = {
     playerNumber: string;
 };
+
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
     <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">
         {playerNumber}
@@ -35,9 +36,10 @@ export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) =
 
 type PlayersDialPadProps = {
     onPlayerCheckIn: (playerId: number) => void;
+    title?: string;
 };
 
-export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
+export const PlayersDialPad = ({ onPlayerCheckIn, title }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
@@ -55,6 +57,7 @@ export const PlayersDialPad = ({ onPlayerCheckIn }: PlayersDialPadProps) => {
 
     return (
         <div className="flex h-full flex-col">
+            {title && <h1 className="text-2xl text-center py-4">{title}</h1>}
             <div className="flex-auto flex flex-col-reverse mx-12 mt-2 flex-wrap items-stretch overflow-hidden h-3/5">
                 {availablePlayers.map((p) => (
                     <CheckInPlayer
