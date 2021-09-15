@@ -1,10 +1,9 @@
 import * as m from "../model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fakePlayers } from "./fake-players";
 
 export type PlayersState = m.Player[];
 
-const initialState: PlayersState = fakePlayers;
+const initialState: PlayersState = [];
 
 export const playersSlice = createSlice({
     name: "players",

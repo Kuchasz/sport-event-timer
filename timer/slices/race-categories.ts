@@ -1,10 +1,9 @@
 import * as m from "../model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fakeRaceCategories } from "./fake-race-categories";
 
 export type RaceCategoriesState = m.RaceCategory[];
 
-const initialState: RaceCategoriesState = fakeRaceCategories;
+const initialState: RaceCategoriesState = [];
 
 export const raceCategoriesSlice = createSlice({
     name: "raceCategories",

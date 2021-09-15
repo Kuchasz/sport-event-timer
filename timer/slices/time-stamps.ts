@@ -1,10 +1,9 @@
 import * as m from "../model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fakeStamps } from "./fake-stamps";
 
 export type TimeStampsState = m.TimeStamp[];
 
-const initialState: TimeStampsState = fakeStamps;
+const initialState: TimeStampsState = [];
 
 export const timeStampsSlice = createSlice({
     name: "timeStamps",

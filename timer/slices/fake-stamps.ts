@@ -1,4 +1,4 @@
-export const fakeStamps = [
+export const fakeTimeStamps = [
     {
         id: 0,
         playerId: 0,

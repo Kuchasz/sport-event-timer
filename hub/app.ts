@@ -1,5 +1,9 @@
 import { createServer } from "http";
 import { createStore } from "@set/timer/store";
+import { fakePlayers } from "../timer/slices/fake-players";
+import { fakeRaceCategories } from "../timer/slices/fake-race-categories";
+import { fakeTimeKeepers } from "../timer/slices/fake-time-keepers";
+import { fakeTimeStamps } from "../timer/slices/fake-stamps";
 import { Server, Socket } from "socket.io";
 
 const server = createServer(function (req, res) {
@@ -19,6 +23,16 @@ const io = new Server(server, {
 });
 
 const store = createStore([]);
+
+store.dispatch({
+    type: "REPLACE_STATE",
+    state: {
+        players: fakePlayers,
+        timeKeepers: fakeTimeKeepers,
+        timeStamps: fakeTimeStamps,
+        raceCategories: fakeRaceCategories
+    }
+});
 
 const clients: Socket[] = [];
 
