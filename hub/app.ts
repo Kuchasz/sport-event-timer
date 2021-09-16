@@ -1,3 +1,4 @@
+import express from "express";
 import { createServer } from "http";
 import { createStore } from "@set/timer/store";
 import { fakePlayers } from "@set/timer/slices/fake-players";
@@ -6,9 +7,11 @@ import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
 import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
 import { Server, Socket } from "socket.io";
 
-const server = createServer(function (req, res) {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("hello world!\n");
+const app = express();
+const server = createServer(app);
+
+app.get("/", (_, res) => {
+    res.send("<h1>Hello world</h1>");
 });
 
 const io = new Server(server, {

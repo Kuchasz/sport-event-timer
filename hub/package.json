@@ -10,10 +10,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@set/timer": "*",
+    "@types/express": "^4.17.13",
     "@types/socket.io": "^3.0.2",
+    "express": "^4.17.1",
     "socket.io": "^4.2.0",
     "ts-node": "^10.2.1",
-    "@set/timer": "*",
     "typescript": "^4.4.2"
   }
 }
