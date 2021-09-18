@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "start:dev": "ts-node app.ts",
-    "build": "tsc app.ts"
+    "build": "tsc index.ts"
   },
   "license": "MIT",
   "dependencies": {

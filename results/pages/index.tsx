@@ -17,6 +17,8 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(ttime.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
+const tdClassName = "flex flex-1 p-2 justify-center";
+
 type Props = {
     state: TimerState;
 };
@@ -26,16 +28,16 @@ const Index = ({ state }: Props) => {
         <>
             <Layout>
                 <Head>
-                    <title>Next.js Blog Example</title>
+                    <title>Results</title>
                 </Head>
                 <table className="flex flex-col border-1 border-gray-600 border-solid">
                     <thead className="text-white bg-green-700">
                         <tr className="flex">
-                            <th className="flex flex-1 p-2">Number</th>
-                            <th className="flex flex-1 p-2">Name</th>
-                            <th className="flex flex-1 p-2">Last Name</th>
+                            <th className={tdClassName}>Number</th>
+                            <th className={tdClassName}>Name</th>
+                            <th className={tdClassName}>Last Name</th>
                             {state.timeKeepers.map((tk) => (
-                                <th key={tk.id} className="flex flex-1 p-2">
+                                <th key={tk.id} className={tdClassName}>
                                     {tk.name}
                                 </th>
                             ))}
@@ -44,11 +46,11 @@ const Index = ({ state }: Props) => {
                     <tbody>
                         {state.players.map((p) => (
                             <tr key={p.id} className="flex">
-                                <td className="flex flex-1 p-2">{p.number}</td>
-                                <td className="flex flex-1 p-2">{p.name}</td>
-                                <td className="flex flex-1 p-2">{p.lastName}</td>
+                                <td className={tdClassName}>{p.number}</td>
+                                <td className={tdClassName}>{p.name}</td>
+                                <td className={tdClassName}>{p.lastName}</td>
                                 {state.timeKeepers.map((tk) => (
-                                    <td key={`${p.id}${tk.id}`} className="flex flex-1 p-2">
+                                    <td key={`${p.id}${tk.id}`} className={tdClassName}>
                                         {formatTime(
                                             state.timeStamps.find(
                                                 (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id

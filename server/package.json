@@ -1,0 +1,21 @@
+{
+  "name": "@set/server",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "ts-node app.ts",
+    "dev": "nodemon",
+    "build": "tsc app.ts"
+  },
+  "dependencies": {
+    "@set/hub": "*",
+    "@set/results": "*",
+    "tsc": "^2.0.3",
+    "typescript": "^4.4.3",
+    "nodemon": "^2.0.4",
+    "cross-env": "^7.0.2",
+    "ts-node": "^8.10.2"
+  }
+}

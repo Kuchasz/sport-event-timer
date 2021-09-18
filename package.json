@@ -9,7 +9,9 @@
         "packages": [
             "mobile",
             "timer",
-            "hub"
+            "hub",
+            "results",
+            "server"
         ]
     }
 }
