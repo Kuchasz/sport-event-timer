@@ -1,40 +1,65 @@
-import Container from "../components/container";
 import Head from "next/head";
-import HeroPost from "../components/hero-post";
-import Intro from "../components/intro";
 import Layout from "../components/layout";
-import MoreStories from "../components/more-stories";
-import Post from "../types/post";
-import { CMS_NAME } from "../lib/constants";
-import { getAllPosts } from "../lib/api";
+import { readFile } from "fs";
+import { resolve } from "path";
+import { TimerState } from "@set/timer/store";
 
-type Props = {
-    allPosts: Post[];
+export const formatNumber = (n: number, precision = 2) =>
+    n.toLocaleString("en-US", { minimumIntegerDigits: precision });
+
+export const formatTime = (time?: number) => {
+    if (time === undefined) return "--:--:--";
+
+    const ttime = new Date(time);
+
+    return `${formatNumber(ttime.getHours())}:${formatNumber(ttime.getMinutes())}:${formatNumber(
+        ttime.getSeconds()
+    )}.${formatNumber(ttime.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const Index = ({ allPosts }: Props) => {
-    const heroPost = allPosts[0];
-    const morePosts = allPosts.slice(1);
+type Props = {
+    state: TimerState;
+};
+
+const Index = ({ state }: Props) => {
     return (
         <>
             <Layout>
                 <Head>
-                    <title>Next.js Blog Example with {CMS_NAME}</title>
+                    <title>Next.js Blog Example</title>
                 </Head>
-                <Container>
-                    <Intro />
-                    {heroPost && (
-                        <HeroPost
-                            title={heroPost.title}
-                            coverImage={heroPost.coverImage}
-                            date={heroPost.date}
-                            author={heroPost.author}
-                            slug={heroPost.slug}
-                            excerpt={heroPost.excerpt}
-                        />
-                    )}
-                    {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-                </Container>
+                <table className="flex flex-col border-1 border-gray-600 border-solid">
+                    <thead className="text-white bg-green-700">
+                        <tr className="flex">
+                            <th className="flex flex-1 p-2">Number</th>
+                            <th className="flex flex-1 p-2">Name</th>
+                            <th className="flex flex-1 p-2">Last Name</th>
+                            {state.timeKeepers.map((tk) => (
+                                <th key={tk.id} className="flex flex-1 p-2">
+                                    {tk.name}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {state.players.map((p) => (
+                            <tr key={p.id} className="flex">
+                                <td className="flex flex-1 p-2">{p.number}</td>
+                                <td className="flex flex-1 p-2">{p.name}</td>
+                                <td className="flex flex-1 p-2">{p.lastName}</td>
+                                {state.timeKeepers.map((tk) => (
+                                    <td key={`${p.id}${tk.id}`} className="flex flex-1 p-2">
+                                        {formatTime(
+                                            state.timeStamps.find(
+                                                (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
+                                            )?.time
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </Layout>
         </>
     );
@@ -42,10 +67,13 @@ const Index = ({ allPosts }: Props) => {
 
 export default Index;
 
-export const getStaticProps = async () => {
-    const allPosts = getAllPosts(["title", "date", "slug", "author", "coverImage", "excerpt"]);
+export const getServerSideProps = async () => {
+    return new Promise((res, _) => {
+        readFile(resolve("../state.json"), (err, data) => {
+            if (err) throw err;
+            let state = JSON.parse(data as any);
 
-    return {
-        props: { allPosts }
-    };
+            res({ props: { state } });
+        });
+    });
 };

@@ -5,7 +5,9 @@ import { fakePlayers } from "@set/timer/slices/fake-players";
 import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
 import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
 import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
+import { resolve } from "path";
 import { Server, Socket } from "socket.io";
+import { writeFile } from "fs";
 
 const app = express();
 const server = createServer(app);
@@ -46,6 +48,15 @@ io.on("connection", (socket: Socket) => {
     socket.on("post-action", (action) => {
         store.dispatch(action);
         socket.broadcast.emit("receive-action", action);
+
+        const state = store.getState();
+        writeFile(resolve("../state.json"), JSON.stringify(state), (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("state written");
+            }
+        });
     });
 
     socket.on("disconnect", () => {
