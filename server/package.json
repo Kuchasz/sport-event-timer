@@ -7,7 +7,7 @@
   "scripts": {
     "start:dev": "ts-node app.ts",
     "dev": "nodemon",
-    "build": "tsc app.ts"
+    "build": "tsc app.ts --project tsconfig.json"
   },
   "dependencies": {
     "@set/hub": "*",
