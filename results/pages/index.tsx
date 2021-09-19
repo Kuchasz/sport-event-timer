@@ -44,7 +44,7 @@ const Index = ({ state }: Props) => {
                     <title>Results</title>
                 </Head>
                 <table className="flex flex-col border-1 border-gray-600 border-solid">
-                    <thead className="text-white bg-green-700">
+                    <thead className="text-white bg-gradient-to-r from-orange-500 to-red-500">
                         <tr className="flex">
                             <th className={tdClassName}>Number</th>
                             <th className={tdClassName}>Name</th>
