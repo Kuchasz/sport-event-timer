@@ -10,11 +10,11 @@ export const formatNumber = (n: number, precision = 2) =>
 export const formatTime = (time?: number) => {
     if (time === undefined) return "--:--:--";
 
-    const ttime = new Date(time);
+    const timeDate = new Date(time);
 
-    return `${formatNumber(ttime.getHours())}:${formatNumber(ttime.getMinutes())}:${formatNumber(
-        ttime.getSeconds()
-    )}.${formatNumber(ttime.getMilliseconds(), 3).slice(0, 1)}`;
+    return `${formatNumber(timeDate.getHours())}:${formatNumber(timeDate.getMinutes())}:${formatNumber(
+        timeDate.getSeconds()
+    )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
 const tdClassName = "flex flex-1 p-2 justify-center";
@@ -23,7 +23,20 @@ type Props = {
     state: TimerState;
 };
 
+const calculateFinalTime = (start?: number, end?: number) => {
+    if (!start || !end) return "--:--:--";
+
+    const timeDate = new Date(end - start);
+
+    return `${formatNumber(timeDate.getUTCHours())}:${formatNumber(timeDate.getUTCMinutes())}:${formatNumber(
+        timeDate.getUTCSeconds()
+    )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
+};
+
 const Index = ({ state }: Props) => {
+    const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
+    const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
+
     return (
         <>
             <Layout>
@@ -41,6 +54,7 @@ const Index = ({ state }: Props) => {
                                     {tk.name}
                                 </th>
                             ))}
+                            <th className={tdClassName}>Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +72,16 @@ const Index = ({ state }: Props) => {
                                         )}
                                     </td>
                                 ))}
+                                <td className={tdClassName}>
+                                    {calculateFinalTime(
+                                        state.timeStamps.find(
+                                            (ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id
+                                        )?.time,
+                                        state.timeStamps.find(
+                                            (ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id
+                                        )?.time
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

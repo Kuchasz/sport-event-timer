@@ -73,6 +73,7 @@ function App() {
                                                             );
                                                         }}
                                                         title={"Clock in player"}
+                                                        timeKeeperId={selectedTimeKeeper}
                                                     />
                                                 </Route>
                                                 <Route exact path={`${process.env.PUBLIC_URL}/times`}>

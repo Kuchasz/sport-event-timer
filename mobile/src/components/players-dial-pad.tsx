@@ -37,16 +37,17 @@ export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) =
 type PlayersDialPadProps = {
     onPlayerCheckIn: (playerId: number) => void;
     title?: string;
+    timeKeeperId?: number;
 };
 
-export const PlayersDialPad = ({ onPlayerCheckIn, title }: PlayersDialPadProps) => {
+export const PlayersDialPad = ({ onPlayerCheckIn, title, timeKeeperId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
 
     const playersWithTimeStamps = allPlayers.map((x) => ({
         ...x,
-        timeStamp: allTimeStamps.find((a) => a.playerId === x.id)
+        timeStamp: allTimeStamps.find((a) => a.playerId === x.id && a.timeKeeperId === timeKeeperId)
     }));
 
     const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
