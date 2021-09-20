@@ -128,7 +128,7 @@ jobs:
             - uses: actions/download-artifact@v2
               with:
                   name: results.dist
-                  path: ./results/dist
+                  path: ./results
 
             - uses: actions/download-artifact@v2
               with:
