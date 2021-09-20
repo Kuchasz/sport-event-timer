@@ -2,7 +2,7 @@ import { CurrentTimeKeeperContext } from "../contexts/current-time-keeper";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { useTimerSelector } from "../hooks";
 
-export const TimeKeeperSelector = () => {
+export const Config = () => {
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
 
     return (
