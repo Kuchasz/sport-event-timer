@@ -1,8 +1,7 @@
 import { Icon } from "@mdi/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiTimetable } from "@mdi/js";
 import { StopWatchMode } from "../stopwatch-mode";
-// import { Link, useLocation } from "react-router-dom";
 
 type StopWatchModeSwitchButtonProps = { text: string; mode: StopWatchMode; icon: string; chosenMode: StopWatchMode };
 
@@ -20,9 +19,8 @@ const StopWatchModeSwitchButton = ({ text, mode, icon, chosenMode }: StopWatchMo
 };
 
 export const StopWatchModeSwitch = () => {
-    // const location = useLocation();
-    // const mode = location.pathname.split('process.env.PUBLIC_URL')[1].slice(1) as StopWatchMode;
-    const mode = "" as StopWatchMode;
+    const location = useLocation();
+    const mode = location.pathname.split("process.env.PUBLIC_URL")[1].slice(1) as StopWatchMode;
 
     return (
         <div className="flex justify-around text-black">

@@ -15,6 +15,7 @@ const run = async () => {
     // });
 
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
+    app.get("/timer/*", (_, res) => res.sendFile(requireModule("@set/mobile/build/index.html")));
 
     await applyHub(server);
     await applyResults(app);
