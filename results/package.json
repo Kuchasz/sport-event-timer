@@ -4,8 +4,7 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "next build && tsc --project tsconfig.json",
-    "start": "cross-env NODE_ENV=production node dist/index.js"
+    "build": "next build && tsc --project tsconfig.json"
   },
   "dependencies": {
     "@set/timer": "*",

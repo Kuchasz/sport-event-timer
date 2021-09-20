@@ -80,7 +80,9 @@ jobs:
             - uses: actions/upload-artifact@v2
               with:
                   name: results.dist
-                  path: ./results/dist
+                  path: |
+                      ./results/dist
+                      ./results/.next
 
     build_mobile:
         runs-on: ubuntu-latest
