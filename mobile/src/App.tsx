@@ -1,6 +1,11 @@
 import { add, reset } from "@set/timer/slices/time-stamps";
 import { BottomMenu } from "./components/bottom-menu";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Redirect,
+    Route,
+    Switch
+    } from "react-router-dom";
 import { Config } from "./components/config";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
 import { PlayersDialPad } from "./components/players-dial-pad";
@@ -43,6 +48,9 @@ function App() {
                             <CurrentTimeKeeperContext.Consumer>
                                 {({ timeKeeperId }) => (
                                     <Switch>
+                                        <Route exact path={`${process.env.PUBLIC_URL}/`}>
+                                            <Redirect to={`${process.env.PUBLIC_URL}/config`} />
+                                        </Route>
                                         <Route exact path={`${process.env.PUBLIC_URL}/config`}>
                                             <Config></Config>
                                         </Route>
