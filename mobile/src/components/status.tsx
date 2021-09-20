@@ -1,4 +1,3 @@
-import usePortal from "react-useportal";
 import { ConnectionState, onConnectionStateChanged } from "../connection";
 import { CurrentTimeKeeperContext } from "../contexts/current-time-keeper";
 import { Icon } from "@mdi/react";
@@ -9,7 +8,6 @@ import {
     mdiWeatherCloudyAlert
     } from "@mdi/js";
 import { TimeKeeperIcon } from "./time-keeper-icon";
-import { TimeKeeperSelector } from "./time-keeper-selector";
 import { Timer } from "./timer";
 import { useEffect, useState } from "react";
 import { useTimerSelector } from "../hooks";
@@ -46,8 +44,6 @@ const getTextFromConnectionState = (state: ConnectionState) => {
 type StatusProps = { timeKeeperName?: string };
 export const Status = ({ timeKeeperName }: StatusProps) => {
     const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
-    const [showTimeKeeperSelector, setShowTimeKeeperSelector] = useState<boolean>(false);
-    const { Portal } = usePortal({ bindTo: document.getElementById("app-holder") as HTMLElement });
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
 
     useEffect(() => {
@@ -57,25 +53,13 @@ export const Status = ({ timeKeeperName }: StatusProps) => {
 
     return (
         <CurrentTimeKeeperContext.Consumer>
-            {({ timeKeeperId, setTimeKeeperId }) => (
+            {({ timeKeeperId }) => (
                 <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
-                    {showTimeKeeperSelector && (
-                        <Portal>
-                            <TimeKeeperSelector
-                                timeKeepers={allTimeKeepers}
-                                selectedTimeKeeper={allTimeKeepers.find((tk) => tk.id === timeKeeperId)}
-                                timeKeeperChosen={(timeKeeperId) => {
-                                    setShowTimeKeeperSelector(false);
-                                    setTimeKeeperId(timeKeeperId);
-                                }}
-                            ></TimeKeeperSelector>
-                        </Portal>
-                    )}
-                    <span className="flex" onClick={() => setShowTimeKeeperSelector(true)}>
+                    <span className="flex">
                         {timeKeeperId !== undefined && (
                             <TimeKeeperIcon type={allTimeKeepers.find((tk) => tk.id === timeKeeperId)!.type} />
                         )}
-                        <span>{timeKeeperName ?? "CHOOSE"}</span>
+                        <span>{timeKeeperName ?? "NO_TIMEKEPER"}</span>
                     </span>
                     <Timer />
                     <span className="text-xs flex items-center">

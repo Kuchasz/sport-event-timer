@@ -1,11 +1,12 @@
 import { add, reset } from "@set/timer/slices/time-stamps";
+import { BottomMenu } from "./components/bottom-menu";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
 import { PlayersDialPad } from "./components/players-dial-pad";
 import { PlayersList } from "./components/players-list";
 import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
-import { StopWatchModeSwitch } from "./components/stopwatch-mode-switch";
+import { TimeKeeperSelector } from "./components/time-keeper-selector";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "./hooks";
 function App() {
@@ -42,6 +43,9 @@ function App() {
                             <CurrentTimeKeeperContext.Consumer>
                                 {({ timeKeeperId }) => (
                                     <Switch>
+                                        <Route exact path={`${process.env.PUBLIC_URL}/config`}>
+                                            <TimeKeeperSelector></TimeKeeperSelector>
+                                        </Route>
                                         {timeKeeperId !== undefined && (
                                             <>
                                                 <Route exact path={`${process.env.PUBLIC_URL}/list`}>
@@ -92,7 +96,7 @@ function App() {
                         </div>
                     </div>
                     <div>
-                        <StopWatchModeSwitch />
+                        <BottomMenu />
                     </div>
                 </div>
             </Router>
