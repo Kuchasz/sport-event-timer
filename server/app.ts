@@ -14,7 +14,7 @@ const run = async () => {
     //     res.send("<h1>Hello world</h1>");
     // });
 
-    app.use("/timer", express.static(requireModule("@set/mobile")));
+    app.use("/timer", express.static(requireModule("@set/mobile/build")));
 
     await applyHub(server);
     await applyResults(app);
