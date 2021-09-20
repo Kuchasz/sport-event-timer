@@ -75,7 +75,7 @@ jobs:
               run: |
                   cd ./results
                   yarn install
-                  yarn run build
+                  yarn next build
 
             - uses: actions/upload-artifact@v2
               with:
