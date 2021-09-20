@@ -10,11 +10,129 @@ on:
     workflow_dispatch:
 
 jobs:
-    build:
+
+    build_timer:
         runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v2
+
+            - uses: c-hive/gha-yarn-cache@v1
+
+            - name: Set up Node.js version
+                uses: actions/setup-node@v2-beta
+                with:
+                    node-version: "12.x"
+
+            - name: npm install, build, and test
+                run: |
+                    cd ./timer
+                    yarn install
+                    yarn run build
+
+            - uses: actions/upload-artifact@v2
+            with:
+                name: timer.dist
+                path: ./timer
+
+    build_hub:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: c-hive/gha-yarn-cache@v1
+
+            - name: Set up Node.js version
+                uses: actions/setup-node@v2-beta
+                with:
+                    node-version: "12.x"
+
+            - name: npm install, build, and test
+                run: |
+                    cd ./hub
+                    yarn install
+                    yarn run build
+
+            - uses: actions/upload-artifact@v2
+            with:
+                name: hub.dist
+                path: ./hub
+
+    build_results:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: c-hive/gha-yarn-cache@v1
+
+            - name: Set up Node.js version
+                uses: actions/setup-node@v2-beta
+                with:
+                    node-version: "12.x"
+
+            - name: npm install, build, and test
+                run: |
+                    cd ./results
+                    yarn install
+                    yarn run build
+
+            - uses: actions/upload-artifact@v2
+            with:
+                name: results.dist
+                path: ./results
+
+    build_mobile:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: c-hive/gha-yarn-cache@v1
+
+            - name: Set up Node.js version
+                uses: actions/setup-node@v2-beta
+                with:
+                    node-version: "12.x"
+
+            - name: npm install, build, and test
+                run: |
+                    cd ./mobile
+                    yarn install
+                    yarn run build
+
+            - uses: actions/upload-artifact@v2
+            with:
+                name: mobile.dist
+                path: ./mobile
+
+    build_server:
+        needs: [build_timer, build_hub, build_results, build_mobile]
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: actions/download-artifact@v2
+                with:
+                    name: build_timer
+                    path: ./timer
+
+            - uses: actions/download-artifact@v2
+                with:
+                    name: build_hub
+                    path: ./hub
+
+            - uses: actions/download-artifact@v2
+                with:
+                    name: build_results
+                    path: ./results/dist
+
+            - uses: actions/download-artifact@v2
+                with:
+                    name: build_mobile
+                    path: ./mobile/dist
 
             - uses: c-hive/gha-yarn-cache@v1
 
