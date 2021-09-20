@@ -34,6 +34,9 @@ jobs:
                   cd ../results
                   yarn install
                   yarn run build
+                  cd ../mobile
+                  yarn install
+                  yarn run build
                   cd ../server
                   yarn install
                   yarn run build
