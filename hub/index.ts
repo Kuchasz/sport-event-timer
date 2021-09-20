@@ -15,7 +15,7 @@ export const apply = (server: HttpServer): Promise<void> => {
         pingInterval: 5000,
         transports: ["websocket"],
         cors: {
-            origin: "https://kuchasz.github.io/sport-event-timer",
+            origin: "https://wss.set-hub.pyszstudio.pl/timer",
             methods: ["GET", "POST"]
         }
     });

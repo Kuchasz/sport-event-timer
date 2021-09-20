@@ -2,7 +2,8 @@
   "name": "@set/mobile",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kuchasz.github.io/sport-event-timer/",
+  "homepage": "https://wss.set-hub.pyszstudio.pl/timer/",
+  "main": "build",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@mdi/font": "^6.1.95",

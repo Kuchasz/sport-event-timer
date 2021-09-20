@@ -1,6 +1,6 @@
 import { add, reset } from "@set/timer/slices/time-stamps";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { PlayersDialPad } from "./components/players-dial-pad";
 import { PlayersList } from "./components/players-list";
 import { PlayersTimes } from "./components/players-times";

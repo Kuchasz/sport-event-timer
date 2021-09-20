@@ -12,6 +12,7 @@
   "dependencies": {
     "@set/hub": "*",
     "@set/results": "*",
+    "@set/mobile": "*",
     "typescript": "^4.4.3",
     "nodemon": "^2.0.4",
     "cross-env": "^7.0.2",
