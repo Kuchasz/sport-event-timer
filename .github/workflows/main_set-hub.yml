@@ -115,22 +115,22 @@ jobs:
 
             - uses: actions/download-artifact@v2
               with:
-                  name: build_timer
+                  name: timer.dist
                   path: ./timer
 
             - uses: actions/download-artifact@v2
               with:
-                  name: build_hub
+                  name: hub.dist
                   path: ./hub
 
             - uses: actions/download-artifact@v2
               with:
-                  name: build_results
+                  name: results.dist
                   path: ./results/dist
 
             - uses: actions/download-artifact@v2
               with:
-                  name: build_mobile
+                  name: mobile.dist
                   path: ./mobile/dist
 
             - uses: c-hive/gha-yarn-cache@v1
