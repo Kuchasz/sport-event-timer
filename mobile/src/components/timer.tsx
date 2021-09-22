@@ -7,7 +7,8 @@ export const Timer = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
-        const interval = setInterval(() => setTime(Date.now() + offset), 10);
+        console.log(offset);
+        const interval = setInterval(() => setTime(Date.now() + offset), 100);
 
         return () => clearInterval(interval);
     }, [offset]);
