@@ -58,6 +58,8 @@ export const apply = (server: HttpServer): Promise<void> => {
         });
 
         socket.emit("receive-state", store.getState());
+
+        socket.emit("sync-time", Date.now());
     });
 
     return Promise.resolve();

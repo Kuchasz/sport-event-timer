@@ -12,8 +12,12 @@ import { PlayersDialPad } from "./components/players-dial-pad";
 import { PlayersList } from "./components/players-list";
 import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
+import { TimeOffsetContext } from "./contexts/time-offset";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "./hooks";
+
+const getCurrentTime = (offset: number) => Date.now() + offset;
+
 function App() {
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
@@ -45,62 +49,71 @@ function App() {
                     <Status timeKeeperName={allTimeKeepers.find((tk) => tk.id === selectedTimeKeeper)?.name} />
                     <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                         <div className="h-full flex-1 overflow-y-scroll">
-                            <CurrentTimeKeeperContext.Consumer>
-                                {({ timeKeeperId }) => (
-                                    <Switch>
-                                        <Route exact path={`${process.env.PUBLIC_URL}/`}>
-                                            <Redirect to={`${process.env.PUBLIC_URL}/config`} />
-                                        </Route>
-                                        <Route exact path={`${process.env.PUBLIC_URL}/config`}>
-                                            <Config></Config>
-                                        </Route>
-                                        {timeKeeperId !== undefined && (
-                                            <>
-                                                <Route exact path={`${process.env.PUBLIC_URL}/list`}>
-                                                    <PlayersList
-                                                        onTimeRecord={(playerId) =>
-                                                            dispatch(
-                                                                add({
-                                                                    playerId,
-                                                                    timeKeeperId,
-                                                                    time: new Date().getTime()
-                                                                })
-                                                            )
-                                                        }
-                                                        onTimeReset={(timeStampId) =>
-                                                            dispatch(reset({ id: timeStampId }))
-                                                        }
-                                                        players={playersWithTimeStamps(timeKeeperId)}
-                                                    />
+                            <TimeOffsetContext.Consumer>
+                                {({ offset }) => (
+                                    <CurrentTimeKeeperContext.Consumer>
+                                        {({ timeKeeperId }) => (
+                                            <Switch>
+                                                <Route exact path={`${process.env.PUBLIC_URL}/`}>
+                                                    <Redirect to={`${process.env.PUBLIC_URL}/config`} />
                                                 </Route>
-                                                <Route exact path={`${process.env.PUBLIC_URL}/pad`}>
-                                                    <PlayersDialPad
-                                                        onPlayerCheckIn={(playerId) => {
-                                                            dispatch(
-                                                                add({
-                                                                    playerId,
-                                                                    timeKeeperId,
-                                                                    time: new Date().getTime()
-                                                                })
-                                                            );
-                                                        }}
-                                                        title={"Clock in player"}
-                                                        timeKeeperId={selectedTimeKeeper}
-                                                    />
+                                                <Route exact path={`${process.env.PUBLIC_URL}/config`}>
+                                                    <Config></Config>
                                                 </Route>
-                                                <Route exact path={`${process.env.PUBLIC_URL}/times`}>
-                                                    <PlayersTimes
-                                                        onAddTime={() => {
-                                                            dispatch(add({ timeKeeperId, time: new Date().getTime() }));
-                                                        }}
-                                                        times={timeStampsWithPlayers(timeKeeperId)}
-                                                    />
-                                                </Route>
-                                            </>
+                                                {timeKeeperId !== undefined && (
+                                                    <>
+                                                        <Route exact path={`${process.env.PUBLIC_URL}/list`}>
+                                                            <PlayersList
+                                                                onTimeRecord={(playerId) =>
+                                                                    dispatch(
+                                                                        add({
+                                                                            playerId,
+                                                                            timeKeeperId,
+                                                                            time: getCurrentTime(offset)
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onTimeReset={(timeStampId) =>
+                                                                    dispatch(reset({ id: timeStampId }))
+                                                                }
+                                                                players={playersWithTimeStamps(timeKeeperId)}
+                                                            />
+                                                        </Route>
+                                                        <Route exact path={`${process.env.PUBLIC_URL}/pad`}>
+                                                            <PlayersDialPad
+                                                                onPlayerCheckIn={(playerId) => {
+                                                                    dispatch(
+                                                                        add({
+                                                                            playerId,
+                                                                            timeKeeperId,
+                                                                            time: getCurrentTime(offset)
+                                                                        })
+                                                                    );
+                                                                }}
+                                                                title={"Clock in player"}
+                                                                timeKeeperId={selectedTimeKeeper}
+                                                            />
+                                                        </Route>
+                                                        <Route exact path={`${process.env.PUBLIC_URL}/times`}>
+                                                            <PlayersTimes
+                                                                onAddTime={() => {
+                                                                    dispatch(
+                                                                        add({
+                                                                            timeKeeperId,
+                                                                            time: getCurrentTime(offset)
+                                                                        })
+                                                                    );
+                                                                }}
+                                                                times={timeStampsWithPlayers(timeKeeperId)}
+                                                            />
+                                                        </Route>
+                                                    </>
+                                                )}
+                                            </Switch>
                                         )}
-                                    </Switch>
+                                    </CurrentTimeKeeperContext.Consumer>
                                 )}
-                            </CurrentTimeKeeperContext.Consumer>
+                            </TimeOffsetContext.Consumer>
                         </div>
                     </div>
                     <div>
