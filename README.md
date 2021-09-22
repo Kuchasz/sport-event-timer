@@ -7,7 +7,7 @@
 -   autocomplete based on times from previous timekeepers :heavy_check_mark:
 -   DNF/DSQ support
 -   mobile friendly results list
--   fetch time from server
+-   fetch time from server :heavy_check_mark:
 
 # Getting Started with Create React App
 
