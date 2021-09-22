@@ -15,7 +15,7 @@ export const ServerConnectionHandler = ({
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
         socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
         socket.on("sync-time", (time) => {
-            const newTimeOffset = Date.now() - time;
+            const newTimeOffset = -(Date.now() - time);
             console.log("timeOffset: ", newTimeOffset, "ms");
             setTimeOffset(newTimeOffset);
         });
