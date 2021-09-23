@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Layout from "../components/layout";
+import { Fragment } from "react";
 import { readFile } from "fs";
 import { resolve } from "path";
 import { TimerState } from "@set/timer/store";
@@ -43,36 +44,41 @@ const Index = ({ state }: Props) => {
                 <Head>
                     <title>Results</title>
                 </Head>
-                <table className="flex flex-col border-1 border-gray-600 border-solid">
-                    <thead className="text-white bg-gradient-to-r from-orange-500 to-red-500">
-                        <tr className="flex">
-                            <th className={tdClassName}>Number</th>
-                            <th className={tdClassName}>Name</th>
-                            <th className={tdClassName}>Last Name</th>
-                            {state.timeKeepers.map((tk) => (
-                                <th key={tk.id} className={tdClassName}>
-                                    {tk.name}
-                                </th>
-                            ))}
-                            <th className={tdClassName}>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div className="border-1 border-gray-600 border-solid">
+                    <div className="grid grid-cols-5 sm:grid-cols-7 text-gray-600 bg-gradient-to-r from-orange-500 to-red-500">
+                        <div className={tdClassName}>Number</div>
+                        <div className={tdClassName}>Name</div>
+                        {state.timeKeepers.map((tk) => (
+                            <div
+                                key={tk.id}
+                                className={`${tdClassName} ${tk.type === "checkpoint" ? "hidden sm:block" : ""}`}
+                            >
+                                {tk.name}
+                            </div>
+                        ))}
+                        <div className={tdClassName}>Total</div>
+
                         {state.players.map((p) => (
-                            <tr key={p.id} className="flex">
-                                <td className={tdClassName}>{p.number}</td>
-                                <td className={tdClassName}>{p.name}</td>
-                                <td className={tdClassName}>{p.lastName}</td>
+                            <Fragment key={p.id}>
+                                <div className={tdClassName}>{p.number}</div>
+                                <div className={tdClassName}>
+                                    {p.name} {p.lastName}
+                                </div>
                                 {state.timeKeepers.map((tk) => (
-                                    <td key={`${p.id}${tk.id}`} className={tdClassName}>
+                                    <div
+                                        key={`${p.id}${tk.id}`}
+                                        className={`${tdClassName} ${
+                                            tk.type === "checkpoint" ? "hidden sm:block" : ""
+                                        }`}
+                                    >
                                         {formatTime(
                                             state.timeStamps.find(
                                                 (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
                                             )?.time
                                         )}
-                                    </td>
+                                    </div>
                                 ))}
-                                <td className={tdClassName}>
+                                <div className={tdClassName}>
                                     {calculateFinalTime(
                                         state.timeStamps.find(
                                             (ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id
@@ -81,11 +87,11 @@ const Index = ({ state }: Props) => {
                                             (ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id
                                         )?.time
                                     )}
-                                </td>
-                            </tr>
+                                </div>
+                            </Fragment>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </Layout>
         </>
     );

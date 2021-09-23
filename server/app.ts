@@ -10,10 +10,6 @@ const app = express();
 const server = createServer(app);
 
 const run = async () => {
-    // app.get("/", (_, res) => {
-    //     res.send("<h1>Hello world</h1>");
-    // });
-
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
     app.get("/timer/*", (_, res) => res.sendFile(requireModule("@set/mobile/build/index.html")));
 
