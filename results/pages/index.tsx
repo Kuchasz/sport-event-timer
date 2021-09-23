@@ -46,7 +46,7 @@ const Index = ({ state }: Props) => {
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
                     <div className="grid grid-cols-5 sm:grid-cols-7 text-gray-600">
-                        <div className="col-span-5 sm:col-span-7 grid grid-cols-5 sm:grid-cols-7 bg-gradient-to-r from-orange-500 to-red-500">
+                        <div className="text-white font-medium col-span-5 sm:col-span-7 grid grid-cols-5 sm:grid-cols-7 bg-gradient-to-r from-orange-500 to-red-500">
                             <div className={tdClassName}>Number</div>
                             <div className={tdClassName}>Name</div>
                             {state.timeKeepers.map((tk) => (
