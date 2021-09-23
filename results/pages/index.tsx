@@ -45,18 +45,20 @@ const Index = ({ state }: Props) => {
                     <title>Results</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
-                    <div className="grid grid-cols-5 sm:grid-cols-7 text-gray-600 bg-gradient-to-r from-orange-500 to-red-500">
-                        <div className={tdClassName}>Number</div>
-                        <div className={tdClassName}>Name</div>
-                        {state.timeKeepers.map((tk) => (
-                            <div
-                                key={tk.id}
-                                className={`${tdClassName} ${tk.type === "checkpoint" ? "hidden sm:block" : ""}`}
-                            >
-                                {tk.name}
-                            </div>
-                        ))}
-                        <div className={tdClassName}>Total</div>
+                    <div className="grid grid-cols-5 sm:grid-cols-7 text-gray-600">
+                        <div className="col-span-5 sm:col-span-7 grid grid-cols-5 sm:grid-cols-7 bg-gradient-to-r from-orange-500 to-red-500">
+                            <div className={tdClassName}>Number</div>
+                            <div className={tdClassName}>Name</div>
+                            {state.timeKeepers.map((tk) => (
+                                <div
+                                    key={tk.id}
+                                    className={`${tdClassName} ${tk.type === "checkpoint" ? "hidden sm:flex" : ""}`}
+                                >
+                                    {tk.name}
+                                </div>
+                            ))}
+                            <div className={tdClassName}>Total</div>
+                        </div>
 
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
@@ -67,9 +69,7 @@ const Index = ({ state }: Props) => {
                                 {state.timeKeepers.map((tk) => (
                                     <div
                                         key={`${p.id}${tk.id}`}
-                                        className={`${tdClassName} ${
-                                            tk.type === "checkpoint" ? "hidden sm:block" : ""
-                                        }`}
+                                        className={`${tdClassName} ${tk.type === "checkpoint" ? "hidden sm:flex" : ""}`}
                                     >
                                         {formatTime(
                                             state.timeStamps.find(
