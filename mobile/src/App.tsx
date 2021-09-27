@@ -115,6 +115,7 @@ function App() {
                                                                     );
                                                                 }}
                                                                 times={timeStampsWithPlayers(timeKeeperId)}
+                                                                timeKeeperId={selectedTimeKeeper}
                                                             />
                                                         </Route>
                                                     </>

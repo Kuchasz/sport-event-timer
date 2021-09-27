@@ -1,4 +1,8 @@
-# TODO
+# sport-event-timer
+
+Application for making time measurements
+
+## TODO
 
 -   reassign clock out time to different player
 -   clock out from dialpad :heavy_check_mark:
@@ -11,6 +15,6 @@
 -   disable pull to refresh :heavy_check_mark:
 -   persist selected timekeeper :heavy_check_mark:
 
-# Nice - to - have
+## Nice - to - have
 
 -   imeplement NTP protocol

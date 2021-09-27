@@ -1,10 +1,5 @@
 import Icon from "@mdi/react";
-import {
-    mdiAccountSupervisor,
-    mdiAlarmCheck,
-    mdiAlarmOff,
-    mdiWrench
-    } from "@mdi/js";
+import { mdiAlarmCheck, mdiAlarmOff, mdiWrench } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { PrimaryActionButton } from "./action-button";
@@ -36,9 +31,6 @@ export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListP
                         <>
                             <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 text-white">
                                 <Icon path={mdiWrench} size={1} color="white" />
-                            </span>
-                            <span className="ml-1 bg-gray-600 flex items-center rounded-md px-2 py-1 text-white">
-                                <Icon path={mdiAccountSupervisor} size={1} color="white" />
                             </span>
                         </>
                     )}

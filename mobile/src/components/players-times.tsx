@@ -2,7 +2,12 @@ import usePortal from "react-useportal";
 import { ActionButton, PrimaryActionButton } from "./action-button";
 import { assignPlayer, reset } from "@set/timer/slices/time-stamps";
 import { Icon } from "@mdi/react";
-import { mdiAccountAlertOutline, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
+import {
+    mdiAccountAlertOutline,
+    mdiAccountSupervisor,
+    mdiDeleteOutline,
+    mdiPlusCircleOutline
+    } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayersDialPad } from "./players-dial-pad";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
@@ -16,11 +21,12 @@ type TimeStampWithPlayer = TimeStamp & {
 type PlayersTimesProps = {
     times: TimeStampWithPlayer[];
     onAddTime: () => void;
+    timeKeeperId?: number;
 };
 
 const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time - a.time);
 
-export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
+export const PlayersTimes = ({ times, onAddTime, timeKeeperId }: PlayersTimesProps) => {
     const [timeStampToAssign, setTimeStampToAssign] = useState<number>();
     const { Portal } = usePortal({ bindTo: document.getElementById("module-holder") as HTMLElement });
     const dispatch = useTimerDispatch();
@@ -36,6 +42,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                                 setTimeStampToAssign(undefined);
                             }}
                             title="Assign time to player"
+                            timeKeeperId={timeKeeperId}
                         />
                     </div>
                 </Portal>
@@ -58,17 +65,18 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                             lastName: t.player?.lastName
                         }}
                     />
-                    {!t.player && (
+                    {!t.player ? (
                         <PrimaryActionButton onClick={() => setTimeStampToAssign(t.id)} icon={mdiAccountAlertOutline} />
+                    ) : (
+                        <ActionButton icon={mdiAccountSupervisor} onClick={() => setTimeStampToAssign(t.id)} />
                     )}
-                    <span className="ml-1">
-                        <ActionButton
-                            icon={mdiDeleteOutline}
-                            onClick={() => {
-                                dispatch(reset({ id: t.id }));
-                            }}
-                        />
-                    </span>
+
+                    <ActionButton
+                        icon={mdiDeleteOutline}
+                        onClick={() => {
+                            dispatch(reset({ id: t.id }));
+                        }}
+                    />
                 </div>
             ))}
         </div>
