@@ -1,6 +1,4 @@
-import usePortal from "react-useportal";
 import { ActionButton, PrimaryActionButton } from "./action-button";
-import { assignPlayer, reset } from "@set/timer/slices/time-stamps";
 import { Icon } from "@mdi/react";
 import {
     mdiAccountAlertOutline,
@@ -9,9 +7,9 @@ import {
     mdiPlusCircleOutline
     } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
-import { PlayersDialPad } from "./players-dial-pad";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
-import { useState } from "react";
+import { reset } from "@set/timer/slices/time-stamps";
+import { useHistory } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 
 type TimeStampWithPlayer = TimeStamp & {
@@ -26,27 +24,12 @@ type PlayersTimesProps = {
 
 const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time - a.time);
 
-export const PlayersTimes = ({ times, onAddTime, timeKeeperId }: PlayersTimesProps) => {
-    const [timeStampToAssign, setTimeStampToAssign] = useState<number>();
-    const { Portal } = usePortal({ bindTo: document.getElementById("module-holder") as HTMLElement });
+export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
     const dispatch = useTimerDispatch();
+    const history = useHistory();
 
     return (
         <div className="px-4">
-            {timeStampToAssign !== undefined && (
-                <Portal>
-                    <div className="absolute inset-0 h-full w-full bg-gray-800">
-                        <PlayersDialPad
-                            onPlayerCheckIn={(playerId) => {
-                                dispatch(assignPlayer({ playerId, id: timeStampToAssign }));
-                                setTimeStampToAssign(undefined);
-                            }}
-                            title="Assign time to player"
-                            timeKeeperId={timeKeeperId}
-                        />
-                    </div>
-                </Portal>
-            )}
             <div className="flex flex-col mt-2">
                 <button
                     onClick={onAddTime}
@@ -66,9 +49,19 @@ export const PlayersTimes = ({ times, onAddTime, timeKeeperId }: PlayersTimesPro
                         }}
                     />
                     {!t.player ? (
-                        <PrimaryActionButton onClick={() => setTimeStampToAssign(t.id)} icon={mdiAccountAlertOutline} />
+                        <PrimaryActionButton
+                            onClick={() => {
+                                history.push(`${process.env.PUBLIC_URL}/assign/${t.id}`);
+                            }}
+                            icon={mdiAccountAlertOutline}
+                        />
                     ) : (
-                        <ActionButton icon={mdiAccountSupervisor} onClick={() => setTimeStampToAssign(t.id)} />
+                        <ActionButton
+                            icon={mdiAccountSupervisor}
+                            onClick={() => {
+                                history.push(`${process.env.PUBLIC_URL}/reassign/${t.id}`);
+                            }}
+                        />
                     )}
 
                     <ActionButton

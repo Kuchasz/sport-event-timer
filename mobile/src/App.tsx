@@ -8,8 +8,11 @@ import {
     } from "react-router-dom";
 import { Config } from "./components/config";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
+import { getCurrentTime } from "./utils";
+import { PlayersAssignTime } from "./components/players-assign-time";
 import { PlayersDialPad } from "./components/players-dial-pad";
 import { PlayersList } from "./components/players-list";
+import { PlayersReassignTime } from "./components/players-reassign-time";
 import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
 import { TimeOffsetContext } from "./contexts/time-offset";
@@ -18,9 +21,8 @@ import { useTimerDispatch, useTimerSelector } from "./hooks";
 
 const selectedTimeKeeperStorageKey = "state.selectedTimeKeeper";
 
-const storedSelectedTimeKeeper = Number.parseInt(localStorage.getItem(selectedTimeKeeperStorageKey) || "") || undefined;
-
-const getCurrentTime = (offset: number) => Date.now() + offset;
+const storedSelectedTimeKeeper =
+    Number.parseInt(String(localStorage.getItem(selectedTimeKeeperStorageKey))) || undefined;
 
 function App() {
     const allPlayers = useTimerSelector((x) => x.players);
@@ -50,7 +52,7 @@ function App() {
                 timeKeeperId: allTimeKeepers.find((tk) => tk.id === selectedTimeKeeper)?.id,
                 setTimeKeeperId: (timeKeeperId) => {
                     setSelectedTimeKeeper(timeKeeperId);
-                    localStorage.setItem(selectedTimeKeeperStorageKey, (timeKeeperId || "").toString());
+                    localStorage.setItem(selectedTimeKeeperStorageKey, timeKeeperId.toString());
                 }
             }}
         >
@@ -91,19 +93,34 @@ function App() {
                                                         </Route>
                                                         <Route exact path={`${process.env.PUBLIC_URL}/pad`}>
                                                             <PlayersDialPad
-                                                                onPlayerCheckIn={(playerId) => {
-                                                                    dispatch(
-                                                                        add({
-                                                                            playerId,
-                                                                            timeKeeperId,
-                                                                            time: getCurrentTime(offset)
-                                                                        })
-                                                                    );
-                                                                }}
-                                                                title={"Clock in player"}
-                                                                timeKeeperId={selectedTimeKeeper}
+                                                                offset={offset}
+                                                                timeKeeperId={timeKeeperId}
                                                             />
                                                         </Route>
+                                                        <Route
+                                                            exact
+                                                            path={`${process.env.PUBLIC_URL}/assign/:timeStampToAssignId`}
+                                                            render={(props) => (
+                                                                <PlayersAssignTime
+                                                                    timeStampToAssign={parseInt(
+                                                                        props.match.params.timeStampToAssignId
+                                                                    )}
+                                                                    timeKeeperId={timeKeeperId}
+                                                                />
+                                                            )}
+                                                        ></Route>
+                                                        <Route
+                                                            exact
+                                                            path={`${process.env.PUBLIC_URL}/reassign/:timeStampToAssignId`}
+                                                            render={(props) => (
+                                                                <PlayersReassignTime
+                                                                    timeStampToAssign={parseInt(
+                                                                        props.match.params.timeStampToAssignId
+                                                                    )}
+                                                                    timeKeeperId={timeKeeperId}
+                                                                />
+                                                            )}
+                                                        ></Route>
                                                         <Route exact path={`${process.env.PUBLIC_URL}/times`}>
                                                             <PlayersTimes
                                                                 onAddTime={() => {

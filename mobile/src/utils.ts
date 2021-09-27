@@ -22,3 +22,5 @@ export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): 
         Arr.map(S.slice(0, 1)),
         Arr.filter((s) => !!s)
     );
+
+export const getCurrentTime = (offset: number) => Date.now() + offset;

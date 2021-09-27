@@ -37,7 +37,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="disabled:opacity-20 text-2xl transition-opacity rounded-md text-white m-1.5 "
+        className="select-none disabled:opacity-20 text-2xl transition-opacity rounded-md text-white m-1.5 "
     >
         {char}
     </button>
