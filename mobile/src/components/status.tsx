@@ -62,7 +62,7 @@ export const Status = ({ timeKeeperName }: StatusProps) => {
                                 {timeKeeperId !== undefined && (
                                     <TimeKeeperIcon type={allTimeKeepers.find((tk) => tk.id === timeKeeperId)!.type} />
                                 )}
-                                <span>{timeKeeperName ?? "NO_TIMEKEPER"}</span>
+                                <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>
                             </span>
                             <Timer offset={offset} />
                             <span className="text-xs flex items-center">

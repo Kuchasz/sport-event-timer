@@ -16,12 +16,16 @@ import { TimeOffsetContext } from "./contexts/time-offset";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "./hooks";
 
+const selectedTimeKeeperStorageKey = "state.selectedTimeKeeper";
+
+const storedSelectedTimeKeeper = Number.parseInt(localStorage.getItem(selectedTimeKeeperStorageKey) || "") || undefined;
+
 const getCurrentTime = (offset: number) => Date.now() + offset;
 
 function App() {
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const [selectedTimeKeeper, setSelectedTimeKeeper] = useState<number>();
+    const [selectedTimeKeeper, setSelectedTimeKeeper] = useState<number | undefined>(storedSelectedTimeKeeper);
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
 
     const dispatch = useTimerDispatch();
@@ -42,7 +46,13 @@ function App() {
 
     return (
         <CurrentTimeKeeperContext.Provider
-            value={{ timeKeeperId: selectedTimeKeeper, setTimeKeeperId: setSelectedTimeKeeper }}
+            value={{
+                timeKeeperId: allTimeKeepers.find((tk) => tk.id === selectedTimeKeeper)?.id,
+                setTimeKeeperId: (timeKeeperId) => {
+                    setSelectedTimeKeeper(timeKeeperId);
+                    localStorage.setItem(selectedTimeKeeperStorageKey, (timeKeeperId || "").toString());
+                }
+            }}
         >
             <Router>
                 <div id="app-holder" className="flex flex-col overflow-hidden bg-gray-800 h-full w-screen text-white">
