@@ -22,7 +22,9 @@ import { useTimerDispatch, useTimerSelector } from "./hooks";
 const selectedTimeKeeperStorageKey = "state.selectedTimeKeeper";
 
 const storedSelectedTimeKeeper =
-    Number.parseInt(String(localStorage.getItem(selectedTimeKeeperStorageKey))) || undefined;
+    Number.parseInt(String(localStorage.getItem(selectedTimeKeeperStorageKey))) ?? undefined;
+
+console.log("timekeeper", storedSelectedTimeKeeper);
 
 function App() {
     const allPlayers = useTimerSelector((x) => x.players);
