@@ -8,6 +8,8 @@
 -   DNF/DSQ support
 -   mobile friendly results list
 -   fetch time from server :heavy_check_mark:
+-   disable pull to refresh
+-   persist selected timekeeper
 
 # Nice - to - have
 
