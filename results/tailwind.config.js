@@ -24,15 +24,18 @@ module.exports = {
         },
         extend: {
             gridTemplateColumns: {
-                "results-grid-cols-1": "minmax(0, 1fr)",
-                "results-grid-cols-2": "auto repeat(1, minmax(0, 1fr))",
-                "results-grid-cols-3": "auto repeat(2, minmax(0, 1fr))",
-                "results-grid-cols-4": "auto repeat(3, minmax(0, 1fr))",
-                "results-grid-cols-5": "auto repeat(4, minmax(0, 1fr))",
-                "results-grid-cols-6": "auto repeat(5, minmax(0, 1fr))",
-                "results-grid-cols-7": "auto repeat(6, minmax(0, 1fr))",
-                "results-grid-cols-8": "auto repeat(7, minmax(0, 1fr))",
-                "results-grid-cols-9": "auto repeat(8, minmax(0, 1fr))"
+                "results-1": "minmax(0, 1fr)",
+                "results-2": "auto repeat(1, minmax(0, 1fr))",
+                "results-3": "auto repeat(2, minmax(0, 1fr))",
+                "results-4": "auto repeat(3, minmax(0, 1fr))",
+                "results-5": "auto repeat(4, minmax(0, 1fr))",
+                "results-6": "auto repeat(5, minmax(0, 1fr))",
+                "results-7": "auto repeat(6, minmax(0, 1fr))",
+                "results-8": "auto repeat(7, minmax(0, 1fr))",
+                "results-9": "auto repeat(8, minmax(0, 1fr))",
+                "results-10": "auto repeat(9, minmax(0, 1fr))",
+                "results-11": "auto repeat(10, minmax(0, 1fr))",
+                "results-12": "auto repeat(11, minmax(0, 1fr))"
             }
         }
     }
