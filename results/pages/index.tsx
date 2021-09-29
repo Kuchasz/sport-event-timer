@@ -18,7 +18,7 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const tdClassName = "flex flex-1 p-2 justify-center";
+const tdClassName = "flex flex-1 py-2 justify-center";
 
 type Props = {
     state: TimerState;
@@ -51,20 +51,20 @@ const Index = ({ state }: Props) => {
                     <title>Results</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
-                    <div className={`grid grid-cols-results-5 ${fullNumberColumns} font-semibold`}>
-                        <div className={tdClassName + " bg-orange-600 text-white"}>#</div>
-                        <div className={tdClassName + " bg-orange-600 text-white"}>Name</div>
+                    <div className={`grid grid-cols-results-5 ${fullNumberColumns}`}>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>#</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Name</div>
                         {state.timeKeepers.map((tk) => (
                             <div
                                 key={tk.id}
-                                className={`${tdClassName + " bg-orange-600 text-white"} ${
+                                className={`${tdClassName + " bg-orange-600 text-white font-semibold"} ${
                                     tk.type === "checkpoint" ? "hidden sm:flex" : ""
                                 }`}
                             >
                                 {tk.name}
                             </div>
                         ))}
-                        <div className={tdClassName + " bg-orange-600 text-white"}>Result</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Result</div>
 
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
