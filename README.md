@@ -4,7 +4,7 @@ Application for making time measurements
 
 ## TODO
 
--   reassign clock out time to different player
+-   reassign clock out time to different player :heavy_check_mark:
 -   clock out from dialpad :heavy_check_mark:
 -   reset clocked out time :heavy_check_mark:
 -   clocked time adjustments by <button +0.1 sec /> | <button -0.1 sec />
