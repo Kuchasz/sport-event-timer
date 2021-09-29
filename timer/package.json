@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "ts-node store.ts",
-    "build": "tsc"
+    "build": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",

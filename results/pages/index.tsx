@@ -53,7 +53,7 @@ const Index = ({ state }: Props) => {
                         <div
                             className={`text-white font-medium col-span-5 ${fullNumberColumnsSpan} grid grid-cols-5 ${fullNumberColumns} bg-gradient-to-r from-orange-500 to-red-500`}
                         >
-                            <div className={tdClassName}>Number</div>
+                            <div className={tdClassName}>#</div>
                             <div className={tdClassName}>Name</div>
                             {state.timeKeepers.map((tk) => (
                                 <div
@@ -69,8 +69,11 @@ const Index = ({ state }: Props) => {
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
                                 <div className={tdClassName}>{p.number}</div>
-                                <div className={tdClassName}>
+                                <div className={`${tdClassName} hidden sm:block`}>
                                     {p.name} {p.lastName}
+                                </div>
+                                <div className={`${tdClassName} block sm:hidden`}>
+                                    {p.name.slice(0, 1)}. {p.lastName}
                                 </div>
                                 {state.timeKeepers.map((tk) => (
                                     <div
