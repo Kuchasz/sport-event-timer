@@ -1,11 +1,14 @@
+import parse from "csv-parse/lib/sync";
 import { createStore } from "@set/timer/store";
 import { fakePlayers } from "@set/timer/slices/fake-players";
 import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
 import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
 import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
+import { Player } from "@set/timer/model";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
+import { upload } from "@set/timer/slices/players";
 import { writeFile } from "fs";
 
 export const apply = (server: HttpServer): Promise<void> => {
@@ -35,7 +38,6 @@ export const apply = (server: HttpServer): Promise<void> => {
     const clients: Socket[] = [];
 
     io.on("connection", (socket: Socket) => {
-        console.log(`CLIENT_CONNECTED: ${socket.id}`);
         clients.push(socket);
 
         socket.on("post-action", (action) => {
@@ -47,13 +49,29 @@ export const apply = (server: HttpServer): Promise<void> => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("state written");
                 }
             });
         });
 
+        socket.on("upload-players", (playersCSV) => {
+            const parsedPlayers = parse(playersCSV, { columns: true }) as any[];
+            const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
+
+            const players: Player[] = parsedPlayers.map((p, i) => ({
+                id: i,
+                name: p["Imię"],
+                lastName: p["Nazwisko"],
+                gender: getGender(p["Płeć"]),
+                birthYear: new Date(p["Data urodzenia"]).getFullYear(),
+                number: i //p["Nr zawodnika"]!!!!!!!!!!!!!!!!!!!
+            }));
+
+            store.dispatch(upload(players));
+
+            io.emit("receive-state", store.getState());
+        });
+
         socket.on("disconnect", () => {
-            console.log(`CLIENT_DISCONNECTED: ${socket.id} `);
             clients.splice(clients.indexOf(socket), 1);
         });
 

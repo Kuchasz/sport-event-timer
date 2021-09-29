@@ -14,10 +14,13 @@ export const playersSlice = createSlice({
         },
         changeInfo: (state, action: PayloadAction<m.Player>) => {
             return m.changeInfo(state, action.payload);
+        },
+        upload: (state, action: PayloadAction<m.Player[]>) => {
+            return m.upload(state, action.payload);
         }
     }
 });
 
-export const { register, changeInfo } = playersSlice.actions;
+export const { register, changeInfo, upload } = playersSlice.actions;
 
 export default playersSlice.reducer;
