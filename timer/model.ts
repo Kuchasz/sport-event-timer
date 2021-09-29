@@ -92,7 +92,7 @@ export const changeInfo = (players: Player[], modifiedPlayer: Player): Player[] 
         )
     );
 
-export const upload = (players: Player[], newPlayers: Player[]): Player[] => newPlayers;
+export const upload = (_players: Player[], newPlayers: Player[]): Player[] => newPlayers;
 
 export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
     pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
