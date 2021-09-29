@@ -34,6 +34,9 @@ const calculateFinalTime = (start?: number, end?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
+const getName = (name: string, lastName: string) => `${name} ${lastName}`;
+const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
+
 const Index = ({ state }: Props) => {
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
@@ -66,11 +69,9 @@ const Index = ({ state }: Props) => {
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
                                 <div className={tdClassName}>{p.number}</div>
-                                <div className={`${tdClassName} hidden sm:block`}>
-                                    {p.name} {p.lastName}
-                                </div>
+                                <div className={`${tdClassName} hidden sm:block`}>{getName(p.name, p.lastName)}</div>
                                 <div className={`${tdClassName} block sm:hidden`}>
-                                    {p.name.slice(0, 1)}. {p.lastName}
+                                    {getCompactName(p.name, p.lastName)}
                                 </div>
                                 {state.timeKeepers.map((tk) => (
                                     <div
