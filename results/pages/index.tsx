@@ -37,7 +37,9 @@ const calculateFinalTime = (start?: number, end?: number) => {
 const Index = ({ state }: Props) => {
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
-    const fullNumberColumns = `sm:grid-cols-${5 + state.timeKeepers.filter((tk) => tk.type === "checkpoint").length}`;
+    const fullNumberColumns = `sm:results-grid-cols-${
+        5 + state.timeKeepers.filter((tk) => tk.type === "checkpoint").length
+    }`;
 
     return (
         <>
@@ -46,7 +48,7 @@ const Index = ({ state }: Props) => {
                     <title>Results</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
-                    <div className={`grid grid-cols-5 ${fullNumberColumns} text-gray-600`}>
+                    <div className={`grid results-grid-cols-5 ${fullNumberColumns} text-gray-600`}>
                         <div className={tdClassName + " bg-orange-600"}>#</div>
                         <div className={tdClassName + " bg-orange-600"}>Name</div>
                         {state.timeKeepers.map((tk) => (
