@@ -51,20 +51,20 @@ const Index = ({ state }: Props) => {
                     <title>Results</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
-                    <div className={`grid grid-cols-results-5 ${fullNumberColumns} text-white font-semibold`}>
-                        <div className={tdClassName + " bg-orange-600"}>#</div>
-                        <div className={tdClassName + " bg-orange-600"}>Name</div>
+                    <div className={`grid grid-cols-results-5 ${fullNumberColumns} font-semibold`}>
+                        <div className={tdClassName + " bg-orange-600 text-white"}>#</div>
+                        <div className={tdClassName + " bg-orange-600 text-white"}>Name</div>
                         {state.timeKeepers.map((tk) => (
                             <div
                                 key={tk.id}
-                                className={`${tdClassName + " bg-orange-600"} ${
+                                className={`${tdClassName + " bg-orange-600 text-white"} ${
                                     tk.type === "checkpoint" ? "hidden sm:flex" : ""
                                 }`}
                             >
                                 {tk.name}
                             </div>
                         ))}
-                        <div className={tdClassName + " bg-orange-600"}>Result</div>
+                        <div className={tdClassName + " bg-orange-600 text-white"}>Result</div>
 
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
