@@ -2,10 +2,10 @@
   "name": "@set/hub",
   "private": "true",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "build": "tsc index.ts"
+    "start": "node index.js",
+    "build": "tsc --project tsconfig.json"
   },
   "license": "MIT",
   "dependencies": {
