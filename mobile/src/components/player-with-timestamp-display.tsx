@@ -12,7 +12,7 @@ export const PlayerWithTimeStampDisplay = ({
 }) => (
     <span className="flex flex-grow h-12">
         <span className="text-3xl mr-4">
-            {playerWithTimeStamp.number ? formatNumber(playerWithTimeStamp.number, 3) : "- - -"}
+            {playerWithTimeStamp.number !== undefined ? formatNumber(playerWithTimeStamp.number, 3) : "- - -"}
         </span>
         <span className="flex-grow">
             <div className="text-lg font-semibold ">

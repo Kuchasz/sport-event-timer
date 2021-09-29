@@ -29,7 +29,7 @@ export const BottomMenu = () => {
     const mode = location.pathname.split(process.env.PUBLIC_URL)[1].slice(1) as Paths;
 
     return (
-        <div className="flex justify-around text-black">
+        <div className="flex justify-around select-none text-black">
             <BottomMenuButton path="config" text="Config" icon={mdiCog} chosenPath={mode} />
             <BottomMenuButton path="list" text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
             <BottomMenuButton path="pad" text="Pad" icon={mdiDialpad} chosenPath={mode} />
