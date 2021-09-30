@@ -3,7 +3,6 @@ import * as N from "fp-ts/number";
 import * as Option from "fp-ts/Option";
 import * as Ord from "fp-ts/Ord";
 import { flow, increment, pipe } from "fp-ts/function";
-import { string } from "fp-ts";
 
 export type Gender = "male" | "female";
 

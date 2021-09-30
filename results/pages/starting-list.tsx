@@ -18,7 +18,7 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const tdClassName = "flex flex-1 py-2 justify-center even:bg-gray-100 border border-gray-200 p-1";
+const tdClassName = "flex flex-1 py-2 text-base justify-center even:bg-gray-100 border border-gray-200 p-1";
 
 type Props = {
     state: TimerState;
@@ -55,7 +55,7 @@ const StartingList = ({ state }: Props) => {
                     <div
                         className={`grid grid-cols-results-5 ${fullNumberColumns}`}
                         style={{
-                            gridTemplateColumns: "auto minmax(auto, 2fr) auto minmax(auto, 2fr) minmax(auto, 1fr)"
+                            gridTemplateColumns: "auto minmax(auto, 2fr) auto minmax(auto, 3fr) minmax(auto, 1fr)"
                         }}
                     >
                         <div className={tdClassName + " font-bold"}>Numer</div>
@@ -69,11 +69,8 @@ const StartingList = ({ state }: Props) => {
                                 <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
                                     {p.number}
                                 </div>
-                                <div style={{ pageBreakInside: "avoid" }} className={`${tdClassName} hidden sm:block`}>
+                                <div style={{ pageBreakInside: "avoid" }} className={`${tdClassName}`}>
                                     {getName(p.name, p.lastName)}
-                                </div>
-                                <div style={{ pageBreakInside: "avoid" }} className={`${tdClassName} block sm:hidden`}>
-                                    {getCompactName(p.name, p.lastName)}
                                 </div>
                                 <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
                                     {p.raceCategory}
