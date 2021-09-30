@@ -37,6 +37,11 @@ module.exports = {
                 "results-11": "auto repeat(10, minmax(auto, 1fr))",
                 "results-12": "auto repeat(11, minmax(auto, 1fr))"
             }
+        },
+        variants: {
+            extend: {
+                backgroundColor: ["even", "odd"]
+            }
         }
     }
 };

@@ -5,11 +5,11 @@ import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
 import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
 import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
 import { Player } from "@set/timer/model";
+import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
 import { upload } from "@set/timer/slices/players";
-import { writeFile } from "fs";
 
 export const apply = (server: HttpServer): Promise<void> => {
     const io = new Server(server, {
@@ -25,14 +25,23 @@ export const apply = (server: HttpServer): Promise<void> => {
 
     const store = createStore([]);
 
-    store.dispatch({
-        type: "REPLACE_STATE",
-        state: {
-            players: fakePlayers,
-            timeKeepers: fakeTimeKeepers,
-            timeStamps: fakeTimeStamps,
-            raceCategories: fakeRaceCategories
+    readFile(resolve("../state.json"), { encoding: "utf8", flag: "r" }, (err, res) => {
+        let state;
+        if (err) {
+            state = {
+                players: fakePlayers,
+                timeKeepers: fakeTimeKeepers,
+                timeStamps: fakeTimeStamps,
+                raceCategories: fakeRaceCategories
+            };
+        } else {
+            state = JSON.parse(res.toString());
         }
+
+        store.dispatch({
+            type: "REPLACE_STATE",
+            state
+        });
     });
 
     const clients: Socket[] = [];
@@ -54,17 +63,22 @@ export const apply = (server: HttpServer): Promise<void> => {
         });
 
         socket.on("upload-players", (playersCSV) => {
+            console.log("upload-players");
             const parsedPlayers = parse(playersCSV, { columns: true }) as any[];
             const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
 
-            const players: Player[] = parsedPlayers.map((p, i) => ({
-                id: i,
-                name: p["Imię"],
-                lastName: p["Nazwisko"],
-                gender: getGender(p["Płeć"]),
-                birthYear: new Date(p["Data urodzenia"]).getFullYear(),
-                number: i //p["Nr zawodnika"]!!!!!!!!!!!!!!!!!!!
-            }));
+            const players: Player[] = parsedPlayers
+                .filter((p) => p["Nr zawodnika"] !== "0")
+                .map((p, i) => ({
+                    id: i,
+                    name: p["Imię"],
+                    lastName: p["Nazwisko"],
+                    gender: getGender(p["Płeć"]),
+                    birthYear: new Date(p["Data urodzenia"]).getFullYear(),
+                    number: p["Nr zawodnika"],
+                    raceCategory: p["Kategoria"],
+                    team: p["Nazwa klubu"]
+                }));
 
             store.dispatch(upload(players));
 
