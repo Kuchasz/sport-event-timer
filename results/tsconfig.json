@@ -23,7 +23,10 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@set/timer/*":["../timer/*"]
+    }
   },
   "exclude": [
     "dist",
