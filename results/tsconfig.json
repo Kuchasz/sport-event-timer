@@ -28,11 +28,11 @@
       "@set/timer/*":["../timer/*"]
     }
   },
-  "references": [
-    {
-      "path": "../timer"
-    }
-  ],
+  // "references": [
+  //   {
+  //     "path": "../timer"
+  //   }
+  // ],
   "exclude": [
     "dist",
     ".next",
