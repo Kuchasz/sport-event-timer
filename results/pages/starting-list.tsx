@@ -38,7 +38,7 @@ const calculateStartTime = (startNumber: number) => {
 };
 
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
-const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
+// const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
 const StartingList = ({ state }: Props) => {
     const fullNumberColumns = `sm:grid-cols-results-${
