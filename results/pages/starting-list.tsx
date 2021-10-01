@@ -2,10 +2,10 @@ import Head from "next/head";
 import Layout from "../components/layout";
 import { Fragment, useEffect } from "react";
 import { getState } from "api";
-import { readFile } from "fs";
-import { resolve } from "path";
 import { TimerState } from "@set/timer/store";
 import { useState } from "react";
+// import { readFile } from "fs";
+// import { resolve } from "path";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
