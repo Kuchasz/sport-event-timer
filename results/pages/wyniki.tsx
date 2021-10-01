@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "../components/layout";
 import { Fragment, useEffect, useState } from "react";
 import { getState } from "../api";
+import { Loader } from "../components/loader";
 import { TimerState } from "@set/timer/store";
 // import { readFile } from "fs";
 // import { resolve } from "path";
@@ -43,7 +44,13 @@ const Index = ({}: Props) => {
     useEffect(() => {
         getState().then(setState);
     }, []);
-    if (!state) return <div>Ładowanie danych</div>;
+    if (!state)
+        return (
+            <div className="min-w-screen min-h-screen flex justify-center items-center">
+                Smarujemy łańcuch...
+                <Loader />
+            </div>
+        );
 
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");

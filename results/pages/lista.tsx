@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "../components/layout";
 import { Fragment, useEffect } from "react";
 import { getPlayers, getPlayersDate } from "api";
+import { Loader } from "../components/loader";
 import { Player } from "../../timer/model";
 import { TimerState } from "@set/timer/store";
 import { useState } from "react";
@@ -49,7 +50,13 @@ const StartingList = ({}: Props) => {
         getPlayers().then(setState);
         getPlayersDate().then(setPlayersDate);
     }, []);
-    if (state === undefined || playersDate === undefined) return <div>Ładowanie danych</div>;
+    if (state === undefined || playersDate === undefined)
+        return (
+            <div className="min-w-screen min-h-screen flex justify-center items-center">
+                Smarujemy łańcuch...
+                <Loader />
+            </div>
+        );
 
     return (
         <>

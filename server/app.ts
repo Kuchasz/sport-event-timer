@@ -32,6 +32,9 @@ const run = async () => {
             res.json(err ? 0 : stats.mtimeMs);
         });
     });
+    app.get("/current-time", (_, res) => {
+        res.json(Date.now());
+    });
 
     await applyHub(server);
     // await applyResults(app);
