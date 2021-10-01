@@ -4,7 +4,6 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "start": "next",
     "build": "next build && tsc --project tsconfig.json"
   },
   "dependencies": {
