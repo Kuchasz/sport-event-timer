@@ -16,7 +16,7 @@ export const formatTime = (time?: number) => {
 
     return `${formatNumber(timeDate.getHours())}:${formatNumber(timeDate.getMinutes())}:${formatNumber(
         timeDate.getSeconds()
-    )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
+    )}`;
 };
 
 const tdClassName = "flex flex-1 py-2 justify-center items-center even:bg-gray-100 border border-gray-200 p-1";
@@ -35,7 +35,7 @@ const calculateStartTime = (startNumber: number) => {
 
     return `${formatNumber(startTime.getHours())}:${formatNumber(startTime.getMinutes())}:${formatNumber(
         startTime.getSeconds()
-    )}.${formatNumber(startTime.getMilliseconds(), 3).slice(0, 1)}`;
+    )}`;
 };
 
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
@@ -60,19 +60,28 @@ const StartingList = ({}: Props) => {
                 <div className="border-1 border-gray-600 border-solid">
                     <div className="px-4 py-2">Ostatnia aktualizacja: {new Date(playersDate).toLocaleString()}</div>
                     <div
-                        className="grid grid-cols-results-5"
+                        className="grid grid-cols-results-6"
                         style={{
-                            gridTemplateColumns: "auto minmax(auto, 2fr) auto minmax(auto, 3fr) minmax(auto, 1fr)"
+                            gridTemplateColumns: "auto auto minmax(auto, 2fr) auto minmax(auto, 3fr) minmax(auto, 1fr)"
                         }}
                     >
+                        <div className={tdClassName + " text-xs text-gray-400"}>Lp.</div>
                         <div className={tdClassName + " font-bold"}>Numer</div>
-                        <div className={tdClassName + " font-bold"}>Imię i nazwisko</div>
+                        <div className={tdClassName + " text-xs sm:text-base text-center font-bold"}>
+                            Imię i nazwisko
+                        </div>
                         <div className={tdClassName + " font-bold"}>Kat.</div>
                         <div className={tdClassName + " font-bold"}>Drużyna</div>
                         <div className={tdClassName + " font-bold"}>Start</div>
 
-                        {state.map((p) => (
+                        {state.map((p, i) => (
                             <Fragment key={p.id}>
+                                <div
+                                    style={{ pageBreakInside: "avoid" }}
+                                    className={`text-xs text-gray-400 ${tdClassName}`}
+                                >
+                                    {i + 1}
+                                </div>
                                 <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
                                     {p.number}
                                 </div>
@@ -90,7 +99,7 @@ const StartingList = ({}: Props) => {
                                 </div>
                                 <div
                                     style={{ pageBreakInside: "avoid" }}
-                                    className={`${tdClassName} text-xs sm:text-base`}
+                                    className={`${tdClassName} text-center text-xs sm:text-base`}
                                 >
                                     {p.team}
                                 </div>
