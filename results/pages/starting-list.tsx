@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Layout from "../components/layout";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { getState } from "api";
 import { readFile } from "fs";
 import { resolve } from "path";
 import { TimerState } from "@set/timer/store";
+import { useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
@@ -40,7 +42,13 @@ const calculateStartTime = (startNumber: number) => {
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 // const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-const StartingList = ({ state }: Props) => {
+const StartingList = ({}: Props) => {
+    const [state, setState] = useState<TimerState>();
+    useEffect(() => {
+        getState().then(setState);
+    }, []);
+    if (!state) return <div>Ładowanie danych</div>;
+
     const fullNumberColumns = `sm:grid-cols-results-${
         5 + state.timeKeepers.filter((tk) => tk.type === "checkpoint").length
     }`;
@@ -92,13 +100,13 @@ const StartingList = ({ state }: Props) => {
 
 export default StartingList;
 
-export const getServerSideProps = async () => {
-    return new Promise((res, _) => {
-        readFile(resolve("../state.json"), (err, data) => {
-            if (err) throw err;
-            let state = JSON.parse(data as any);
+// export const getServerSideProps = async () => {
+//     return new Promise((res, _) => {
+//         readFile(resolve("../state.json"), (err, data) => {
+//             if (err) throw err;
+//             let state = JSON.parse(data as any);
 
-            res({ props: { state } });
-        });
-    });
-};
+//             res({ props: { state } });
+//         });
+//     });
+// };
