@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Layout from "../components/layout";
 import { Fragment, useEffect } from "react";
-import { getPlayers, getPlayersDate } from "../api";
-import { getState } from "api";
+import { getPlayers, getPlayersDate } from "api";
 import { Player } from "../../timer/model";
 import { TimerState } from "@set/timer/store";
 import { useState } from "react";
