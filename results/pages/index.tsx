@@ -27,14 +27,15 @@ const Index = ({}: Props) => {
                     <title>Rura na Kocierz</title>
                 </Head>
 
-                <div className="h-full w-full">
+                <div className="min-h-screen min-w-screen">
                     <img
                         className="h-full w-full absolute object-center object-cover top-0 -z-1 blur filter"
                         src="assets/blog/compressed-background.jpg"
                     ></img>
-                    {/* <div className="h-full w-full text-xl text-black flex">
-                        <h1 className="min-h-full min-w-full text-xl text-black">Rura na Kocierz</h1>
-                    </div> */}
+                    <div className="min-h-screen min-w-screen text-xl text-black flex items-center justify-center">
+                        {/* <h1 className="text-6xl font-semibold text-white">Rura na Kocierz</h1> */}
+                        <img width="400px" src="assets/blog/logo.png"></img>
+                    </div>
                 </div>
             </Layout>
         </>
