@@ -23,6 +23,9 @@ module.exports = {
             "2xl": "1536px"
         },
         extend: {
+            zIndex: {
+                "-1": "-1"
+            },
             gridTemplateColumns: {
                 "results-1": "minmax(0, 1fr)",
                 "results-2": "auto repeat(1, minmax(auto, 1fr))",
