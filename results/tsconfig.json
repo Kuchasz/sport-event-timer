@@ -24,9 +24,9 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "paths": {
-      "@set/timer/*":["../timer/*"]
-    }
+    // "paths": {
+    //   "@set/timer/*":["../timer/*"]
+    // }
   },
   // "references": [
   //   {
