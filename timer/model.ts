@@ -13,8 +13,10 @@ export type Player = {
     number: number;
     birthYear: number;
     gender: Gender;
+    city: string;
     raceCategory: string;
     team: string;
+    country: string;
 };
 
 export type RaceCategory = {

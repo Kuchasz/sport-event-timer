@@ -20,7 +20,7 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const tdClassName = "flex flex-1 py-2 justify-center";
+const tdClassName = "flex border flex-1 p-2 text-sm";
 
 type Props = {
     state: TimerState;
@@ -54,9 +54,8 @@ const Index = ({}: Props) => {
 
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
-    const fullNumberColumns = `sm:grid-cols-results-${
-        5 + state.timeKeepers.filter((tk) => tk.type === "checkpoint").length
-    }`;
+    const fullNumberColumns =
+        "auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
     return (
         <>
@@ -65,9 +64,14 @@ const Index = ({}: Props) => {
                     <title>Wyniki na żywo</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
-                    <div className={`grid grid-cols-results-5 ${fullNumberColumns}`}>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>#</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię i nazwisko</div>
+                    <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejscowość</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Klub</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
                         {state.timeKeepers.map((tk) => (
                             <div
                                 key={tk.id}
@@ -78,7 +82,7 @@ const Index = ({}: Props) => {
                                 {tk.name}
                             </div>
                         ))}
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Result</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Wynik</div>
 
                         {state.players.map((p) => (
                             <Fragment key={p.id}>
@@ -87,6 +91,11 @@ const Index = ({}: Props) => {
                                 <div className={`${tdClassName} block sm:hidden`}>
                                     {getCompactName(p.name, p.lastName)}
                                 </div>
+                                <div className={tdClassName}>{p.city}</div>
+                                <div className={tdClassName}>{p.team}</div>
+                                <div className={tdClassName}>{p.country}</div>
+                                <div className={tdClassName}>{p.birthYear}</div>
+                                <div className={tdClassName}>{p.raceCategory}</div>
                                 {state.timeKeepers.map((tk) => (
                                     <div
                                         key={`${p.id}${tk.id}`}

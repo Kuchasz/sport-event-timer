@@ -80,10 +80,12 @@ export const apply = (server: HttpServer): Promise<void> => {
                     name: p["Imię"],
                     lastName: p["Nazwisko"],
                     gender: getGender(p["Płeć"]),
-                    birthYear: new Date(p["Data urodzenia"]).getFullYear(),
-                    number: p["Nr zawodnika"],
+                    birthYear: Number(p["Data urodzenia"].split(".")[2]),
+                    number: Number(p["Nr zawodnika"]),
                     raceCategory: p["Kategoria"],
-                    team: p["Nazwa klubu"]
+                    team: p["Nazwa klubu"],
+                    city: p["Miasto"],
+                    country: p["Państwo"]
                 }));
 
             store.dispatch(upload(players));

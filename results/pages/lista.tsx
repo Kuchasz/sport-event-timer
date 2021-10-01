@@ -74,9 +74,7 @@ const StartingList = ({}: Props) => {
                     >
                         <div className={tdClassName + " text-xs text-gray-400"}>Lp.</div>
                         <div className={tdClassName + " font-bold"}>Numer</div>
-                        <div className={tdClassName + " text-xs sm:text-base text-center font-bold"}>
-                            Imię i nazwisko
-                        </div>
+                        <div className={tdClassName + " text-xs sm:text-base text-center font-bold"}>Imię Nazwisko</div>
                         <div className={tdClassName + " font-bold"}>Kat.</div>
                         <div className={tdClassName + " font-bold"}>Drużyna</div>
                         <div className={tdClassName + " font-bold"}>Start</div>
