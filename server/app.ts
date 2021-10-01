@@ -21,6 +21,12 @@ const run = async () => {
             res.json(JSON.parse(data as any));
         });
     });
+    app.get("/players", (_, res) => {
+        readFile(resolve("../players.json"), (err, data) => {
+            const players = err ? [] : JSON.parse(data as any);
+            res.json(players);
+        });
+    });
 
     await applyHub(server);
     await applyResults(app);

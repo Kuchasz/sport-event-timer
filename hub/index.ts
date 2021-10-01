@@ -11,6 +11,15 @@ import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
 import { upload } from "@set/timer/slices/players";
 
+const writeJson = <T>(content: T, path: string) => {
+    writeFile(resolve(path), JSON.stringify(content), (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+        }
+    });
+};
+
 export const apply = (server: HttpServer): Promise<void> => {
     const io = new Server(server, {
         serveClient: false,
@@ -54,12 +63,7 @@ export const apply = (server: HttpServer): Promise<void> => {
             socket.broadcast.emit("receive-action", action);
 
             const state = store.getState();
-            writeFile(resolve("../state.json"), JSON.stringify(state), (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                }
-            });
+            writeJson(state, "../state.json");
         });
 
         socket.on("upload-players", (playersCSV) => {
@@ -81,6 +85,7 @@ export const apply = (server: HttpServer): Promise<void> => {
                 }));
 
             store.dispatch(upload(players));
+            writeJson(players, "../players.json");
 
             io.emit("receive-state", store.getState());
         });
