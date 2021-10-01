@@ -1,4 +1,3 @@
-import Icon from "@mdi/react";
 import { ActionButton, PrimaryActionButton } from "./action-button";
 import { mdiAlarmCheck, mdiAlarmOff, mdiWrench } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
