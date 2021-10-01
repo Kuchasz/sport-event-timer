@@ -8,7 +8,7 @@ export const fakeTimeKeepers = [
     },
     {
         id: 1,
-        name: "Finish",
+        name: "Meta",
         type: "end"
     }
 ] as TimeKeeper[];

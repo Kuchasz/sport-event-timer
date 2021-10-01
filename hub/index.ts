@@ -38,10 +38,10 @@ export const apply = (server: HttpServer): Promise<void> => {
         let state;
         if (err) {
             state = {
-                players: fakePlayers,
+                players: [],
                 timeKeepers: fakeTimeKeepers,
-                timeStamps: fakeTimeStamps,
-                raceCategories: fakeRaceCategories
+                timeStamps: [],
+                raceCategories: []
             };
         } else {
             state = JSON.parse(res.toString());
@@ -51,6 +51,8 @@ export const apply = (server: HttpServer): Promise<void> => {
             type: "REPLACE_STATE",
             state
         });
+
+        writeJson(state, "../state.json");
     });
 
     const clients: Socket[] = [];

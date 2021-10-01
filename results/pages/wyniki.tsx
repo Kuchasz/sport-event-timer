@@ -67,7 +67,7 @@ const Index = ({}: Props) => {
                 <div className="border-1 border-gray-600 border-solid">
                     <div className={`grid grid-cols-results-5 ${fullNumberColumns}`}>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>#</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Name</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię i nazwisko</div>
                         {state.timeKeepers.map((tk) => (
                             <div
                                 key={tk.id}
