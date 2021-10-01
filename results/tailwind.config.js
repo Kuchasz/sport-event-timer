@@ -26,6 +26,9 @@ module.exports = {
             zIndex: {
                 "-1": "-1"
             },
+            dropShadow: {
+                "3xl": "0 25px 25px rgba(0, 0, 0, 0.5)"
+            },
             gridTemplateColumns: {
                 "results-1": "minmax(0, 1fr)",
                 "results-2": "auto repeat(1, minmax(auto, 1fr))",

@@ -52,7 +52,7 @@ const StartingList = ({}: Props) => {
     }, []);
     if (state === undefined || playersDate === undefined)
         return (
-            <div className="min-w-screen min-h-screen flex justify-center items-center">
+            <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                 Smarujemy łańcuch...
                 <Loader />
             </div>

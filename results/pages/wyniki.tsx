@@ -46,7 +46,7 @@ const Index = ({}: Props) => {
     }, []);
     if (!state)
         return (
-            <div className="min-w-screen min-h-screen flex justify-center items-center">
+            <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                 Smarujemy łańcuch...
                 <Loader />
             </div>
@@ -62,7 +62,7 @@ const Index = ({}: Props) => {
         <>
             <Layout>
                 <Head>
-                    <title>Results</title>
+                    <title>Wyniki na żywo</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
                     <div className={`grid grid-cols-results-5 ${fullNumberColumns}`}>

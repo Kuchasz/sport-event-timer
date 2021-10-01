@@ -86,6 +86,8 @@ export const apply = (server: HttpServer): Promise<void> => {
 
             store.dispatch(upload(players));
             writeJson(players, "../players.json");
+            const state = store.getState();
+            writeJson(state, "../state.json");
 
             io.emit("receive-state", store.getState());
         });

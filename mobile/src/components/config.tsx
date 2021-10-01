@@ -29,7 +29,7 @@ export const Config = () => {
 
     return (
         <CurrentTimeKeeperContext.Consumer>
-            {({ setTimeKeeperId }) => (
+            {({ timeKeeperId, setTimeKeeperId }) => (
                 <div className="flex h-full w-full justify-center items-center bg-gray-800 flex-col">
                     <input
                         type="file"
@@ -47,7 +47,7 @@ export const Config = () => {
                     {allTimeKeepers.map((tk) => (
                         <button
                             onClick={() => setTimeKeeperId(tk.id)}
-                            className="flex items-center py-4 px-4 my-2"
+                            className={`flex items-center py-4 px-4 my-2 ${timeKeeperId === tk.id ? "" : "opacity-25"}`}
                             key={tk.id}
                         >
                             <TimeKeeperIcon type={tk.type} />

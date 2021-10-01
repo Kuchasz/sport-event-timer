@@ -1,5 +1,6 @@
+import { ConnectionState, onConnectionStateChanged, socket } from "./connection";
+import { OfflineContext } from "./contexts/offline";
 import { ReactNode, useEffect, useState } from "react";
-import { socket } from "./connection";
 import { TimeOffsetContext } from "./contexts/time-offset";
 
 export const ServerConnectionHandler = ({
@@ -10,6 +11,7 @@ export const ServerConnectionHandler = ({
     children: ReactNode;
 }) => {
     const [timeOffset, setTimeOffset] = useState<number>(0);
+    const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
 
     useEffect(() => {
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
@@ -18,7 +20,14 @@ export const ServerConnectionHandler = ({
             const newTimeOffset = -(Date.now() - time);
             setTimeOffset(newTimeOffset);
         });
+        onConnectionStateChanged(setConnectionState);
     }, [dispatch]);
 
-    return <TimeOffsetContext.Provider value={{ offset: timeOffset }}>{children}</TimeOffsetContext.Provider>;
+    return (
+        <TimeOffsetContext.Provider value={{ offset: timeOffset }}>
+            <OfflineContext.Provider value={{ isOffline: connectionState !== "connected" }}>
+                {children}
+            </OfflineContext.Provider>
+        </TimeOffsetContext.Provider>
+    );
 };

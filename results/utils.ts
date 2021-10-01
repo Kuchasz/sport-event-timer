@@ -6,4 +6,8 @@ export const formatTime = (time: Date) =>
         time.getSeconds()
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
+export const formatTimeNoSec = (time: Date) => `${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}`;
+
+export const formatTimeSeconds = (timeMs: number) => `${formatNumber(Math.floor(timeMs / 1000), 1)}`;
+
 export const getCurrentTime = (offset: number) => Date.now() + offset;
