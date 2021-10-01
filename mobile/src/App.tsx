@@ -1,4 +1,4 @@
-import { add, reset } from "@set/timer/slices/time-stamps";
+import { add, reset, update } from "@set/timer/slices/time-stamps";
 import { BottomMenu } from "./components/bottom-menu";
 import {
     BrowserRouter as Router,
@@ -17,6 +17,7 @@ import { PlayersReassignTime } from "./components/players-reassign-time";
 import { PlayersTimes } from "./components/players-times";
 import { Status } from "./components/status";
 import { TimeOffsetContext } from "./contexts/time-offset";
+import { TweakTimeStamps } from "./components/tweak-time-stamp";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "./hooks";
 
@@ -161,6 +162,20 @@ function App() {
                                                                             timeKeeperId={selectedTimeKeeper}
                                                                         />
                                                                     </Route>
+                                                                    <Route
+                                                                        exact
+                                                                        path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
+                                                                        render={(props) => (
+                                                                            <TweakTimeStamps
+                                                                                timeStampId={parseInt(
+                                                                                    props.match.params.timeStampId
+                                                                                )}
+                                                                                onSave={(timeStamp) => {
+                                                                                    dispatch(update(timeStamp));
+                                                                                }}
+                                                                            />
+                                                                        )}
+                                                                    />
                                                                 </>
                                                             )}
                                                         </Switch>

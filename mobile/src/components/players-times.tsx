@@ -6,6 +6,7 @@ import {
     mdiDeleteOutline,
     mdiPlusCircleOutline
     } from "@mdi/js";
+import { mdiWrench } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { reset } from "@set/timer/slices/time-stamps";
@@ -63,7 +64,12 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                             }}
                         />
                     )}
-
+                    <ActionButton
+                        icon={mdiWrench}
+                        onClick={() => {
+                            history.push(`${process.env.PUBLIC_URL}/tweak/${t.id}`);
+                        }}
+                    />
                     <ActionButton
                         icon={mdiDeleteOutline}
                         onClick={() => {

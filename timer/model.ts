@@ -106,10 +106,7 @@ export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp,
 
 export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);
 
-export const assignPlayer = (
-    timeStamps: TimeStamp[],
-    modifiedTimeStamp: Pick<TimeStamp, "id" | "playerId">
-): TimeStamp[] =>
+export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Pick<TimeStamp, "id">): TimeStamp[] =>
     pipe(
         timeStamps,
         Arr.modifyAt(

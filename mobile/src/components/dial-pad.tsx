@@ -9,7 +9,7 @@ type Button = {
 const padActions = {
     addDigit: (digit: string) => (player: string) => player.concat(digit),
     back: (player: string) => player.slice(0, -1),
-    reset: (player: string) => ""
+    reset: (_player: string) => ""
 };
 
 const buttons: Button[] = [

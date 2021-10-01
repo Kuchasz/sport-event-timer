@@ -12,8 +12,8 @@ export const timeStampsSlice = createSlice({
         add: (state, action: PayloadAction<Omit<m.TimeStamp, "id">>) => {
             return m.addTimeStamp(state, action.payload);
         },
-        assignPlayer: (state, action: PayloadAction<Pick<m.TimeStamp, "id" | "playerId">>) => {
-            return m.assignPlayer(state, action.payload);
+        update: (state, action: PayloadAction<Pick<m.TimeStamp, "id" | "playerId">>) => {
+            return m.updateTimeStamp(state, action.payload);
         },
         reset: (state, action: PayloadAction<Pick<m.TimeStamp, "id">>) => {
             return m.resetTimeStamp(state, action.payload.id);
@@ -21,6 +21,6 @@ export const timeStampsSlice = createSlice({
     }
 });
 
-export const { add, reset, assignPlayer } = timeStampsSlice.actions;
+export const { add, reset, update } = timeStampsSlice.actions;
 
 export default timeStampsSlice.reducer;
