@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "../components/layout";
 import { Fragment, useEffect } from "react";
-import { getPlayers } from "../api";
+import { getPlayers, getPlayersDate } from "../api";
 import { getState } from "api";
 import { Player } from "../../timer/model";
 import { TimerState } from "@set/timer/store";
@@ -44,10 +44,13 @@ const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}.
 
 const StartingList = ({}: Props) => {
     const [state, setState] = useState<Player[]>();
+    const [playersDate, setPlayersDate] = useState<number>();
+
     useEffect(() => {
         getPlayers().then(setState);
+        getPlayersDate().then(setPlayersDate);
     }, []);
-    if (!state) return <div>Ładowanie danych</div>;
+    if (state === undefined || playersDate === undefined) return <div>Ładowanie danych</div>;
 
     return (
         <>
@@ -56,6 +59,7 @@ const StartingList = ({}: Props) => {
                     <title>Lista zawodników</title>
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
+                    <div className="px-4 py-2">Ostatnia aktualizacja: {new Date(playersDate).toLocaleString()}</div>
                     <div
                         className="grid grid-cols-results-5"
                         style={{

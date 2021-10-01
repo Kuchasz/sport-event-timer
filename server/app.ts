@@ -3,7 +3,7 @@ import express from "express";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
 import { createServer } from "http";
-import { readFile } from "fs";
+import { readFile, stat } from "fs";
 import { resolve } from "path";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
@@ -25,6 +25,11 @@ const run = async () => {
         readFile(resolve("../players.json"), (err, data) => {
             const players = err ? [] : JSON.parse(data as any);
             res.json(players);
+        });
+    });
+    app.get("/players-date", (_, res) => {
+        stat(resolve("../players.json"), (err, stats) => {
+            res.json(err ? 0 : stats.mtimeMs);
         });
     });
 
