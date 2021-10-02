@@ -47,9 +47,7 @@ export const Config = () => {
                     {allTimeKeepers.map((tk) => (
                         <button
                             onClick={() => setTimeKeeperId(tk.id)}
-                            className={`flex items-center py-4 px-4 my-2 ${
-                                timeKeeperId === tk.id ? "" : "opacity-25w"
-                            }`}
+                            className={`flex items-center py-4 px-4 my-2 ${timeKeeperId === tk.id ? "" : "opacity-25"}`}
                             key={tk.id}
                         >
                             <TimeKeeperIcon type={tk.type} />

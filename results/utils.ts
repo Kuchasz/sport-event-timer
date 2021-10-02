@@ -11,3 +11,9 @@ export const formatTimeNoSec = (time: Date) => `${formatNumber(time.getHours())}
 export const formatTimeSeconds = (timeMs: number) => `${formatNumber(Math.floor(timeMs / 1000), 1)}`;
 
 export const getCurrentTime = (offset: number) => Date.now() + offset;
+
+export function sort<T>(items: T[], func: (item: T) => number): T[] {
+    const i = [...items];
+
+    return i.sort((a, b) => func(a) - func(b));
+}
