@@ -1,13 +1,11 @@
 import Head from "next/head";
-import Layout from "../../components/layout";
-import Link from "next/link";
+import Layout from "../components/layout";
 import { Fragment, useEffect, useState } from "react";
-import { getState } from "../../api";
-import { Loader } from "../../components/loader";
-import { Player } from "../../../timer/model";
-import { sort } from "../../utils";
+import { getState } from "../api";
+import { Loader } from "../components/loader";
+import { Player } from "@set/timer/model";
+import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
-import { useRouter } from "next/dist/client/router";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
@@ -57,14 +55,18 @@ const filterByType = (type: Types) => (player: Player) => {
     return player.raceCategory == type;
 };
 
-const ResultLink = ({ type, text }: { type: Types; text: string }) => (
-    <Link href={type ? `/wyniki/${type}` : "/wyniki"}>
-        <a className="flex-grow px-4 py-2 text-center text-bold block m-1 text-white bg-orange-600">{text}</a>
-    </Link>
+const ResultLink = ({ type, text, setType }: { type: Types; text: string; setType: (type: Types) => void }) => (
+    <a
+        onClick={() => setType(type)}
+        className="flex-grow cursor-pointer px-4 py-2 text-center text-bold block m-1 text-white bg-orange-600"
+    >
+        {text}
+    </a>
 );
 
 const Index = ({}: Props) => {
     const [state, setState] = useState<TimerState>();
+    const [type, setType] = useState<Types>("");
     useEffect(() => {
         getState().then(setState);
     }, []);
@@ -75,9 +77,6 @@ const Index = ({}: Props) => {
                 <Loader />
             </div>
         );
-
-    const router = useRouter();
-    const { type } = router.query;
 
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
@@ -120,16 +119,16 @@ const Index = ({}: Props) => {
                 </Head>
                 <div className="border-1 border-gray-600 border-solid">
                     <div className="flex flex-wrap">
-                        <ResultLink type={""} text="WSZYSCY" />
-                        <ResultLink type={"open-k"} text="OPEN KOBIET" />
-                        <ResultLink type={"open-m"} text="OPEN MĘŻCZYZN" />
-                        <ResultLink type={"K1"} text="K1" />
-                        <ResultLink type={"K2"} text="K2" />
-                        <ResultLink type={"K3"} text="K3" />
-                        <ResultLink type={"M1"} text="M1" />
-                        <ResultLink type={"M2"} text="M2" />
-                        <ResultLink type={"M3"} text="M3" />
-                        <ResultLink type={"M4"} text="M4" />
+                        <ResultLink setType={setType} type={""} text="WSZYSCY" />
+                        <ResultLink setType={setType} type={"open-k"} text="OPEN KOBIET" />
+                        <ResultLink setType={setType} type={"open-m"} text="OPEN MĘŻCZYZN" />
+                        <ResultLink setType={setType} type={"K1"} text="K1" />
+                        <ResultLink setType={setType} type={"K2"} text="K2" />
+                        <ResultLink setType={setType} type={"K3"} text="K3" />
+                        <ResultLink setType={setType} type={"M1"} text="M1" />
+                        <ResultLink setType={setType} type={"M2"} text="M2" />
+                        <ResultLink setType={setType} type={"M3"} text="M3" />
+                        <ResultLink setType={setType} type={"M4"} text="M4" />
                     </div>
 
                     <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
