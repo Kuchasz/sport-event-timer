@@ -4,8 +4,6 @@ import { Fragment, useEffect, useState } from "react";
 import { getState } from "../api";
 import { Loader } from "../components/loader";
 import { TimerState } from "@set/timer/store";
-// import { readFile } from "fs";
-// import { resolve } from "path";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
@@ -20,7 +18,7 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const tdClassName = "flex border flex-1 p-2 text-sm";
+const tdClassName = "flex border border-white flex-1 p-2 text-sm";
 
 type Props = {
     state: TimerState;
@@ -71,32 +69,39 @@ const Index = ({}: Props) => {
                             </div>
                         ))}
 
-                        {state.players.map((p) => (
-                            <Fragment key={p.id}>
-                                <div className={tdClassName}>{p.number}</div>
-                                <div className={`${tdClassName} hidden sm:block`}>{getName(p.name, p.lastName)}</div>
-                                <div className={`${tdClassName} block sm:hidden`}>
-                                    {getCompactName(p.name, p.lastName)}
-                                </div>
-                                <div className={tdClassName}>{p.city}</div>
-                                <div className={tdClassName}>{p.team}</div>
-                                <div className={tdClassName}>{p.country}</div>
-                                <div className={tdClassName}>{p.birthYear}</div>
-                                <div className={tdClassName}>{p.raceCategory}</div>
-                                {state.timeKeepers.map((tk) => (
-                                    <div
-                                        key={`${p.id}${tk.id}`}
-                                        className={`${tdClassName} ${tk.type === "checkpoint" ? "hidden sm:flex" : ""}`}
-                                    >
-                                        {formatTime(
-                                            state.timeStamps.find(
-                                                (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
-                                            )?.time
-                                        )}
+                        {state.players.map((p, i) => {
+                            const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
+                            return (
+                                <Fragment key={p.id}>
+                                    <div className={`${tdClassName} ${bg}`}>{p.number}</div>
+                                    <div className={`${tdClassName} ${bg} hidden sm:block`}>
+                                        {getName(p.name, p.lastName)}
                                     </div>
-                                ))}
-                            </Fragment>
-                        ))}
+                                    <div className={`${tdClassName} ${bg} block sm:hidden`}>
+                                        {getCompactName(p.name, p.lastName)}
+                                    </div>
+                                    <div className={`${tdClassName} ${bg}`}>{p.city}</div>
+                                    <div className={`${tdClassName} ${bg}`}>{p.team}</div>
+                                    <div className={`${tdClassName} ${bg}`}>{p.country}</div>
+                                    <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
+                                    <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
+                                    {state.timeKeepers.map((tk) => (
+                                        <div
+                                            key={`${p.id}${tk.id}`}
+                                            className={`${tdClassName} ${bg} ${
+                                                tk.type === "checkpoint" ? "hidden sm:flex" : ""
+                                            }`}
+                                        >
+                                            {formatTime(
+                                                state.timeStamps.find(
+                                                    (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
+                                                )?.time
+                                            )}
+                                        </div>
+                                    ))}
+                                </Fragment>
+                            );
+                        })}
                     </div>
                 </div>
             </Layout>
