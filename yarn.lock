@@ -8211,6 +8211,11 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lightgallery@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/lightgallery/-/lightgallery-2.2.1.tgz#a1e40d8db0c1a1be17596db440cee466670bedd9"
+  integrity sha512-6eDdqyQsQhxHYccMxWRNsHGkY1tITFHheR89ivlyQsDPYVt2yH/fIoJpipT1pMc8bCti/Pv7X0vU0QLMdnHehg==
+
 lilconfig@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/lilconfig/-/lilconfig-2.0.3.tgz#68f3005e921dafbd2a2afb48379986aa6d2579fd"
