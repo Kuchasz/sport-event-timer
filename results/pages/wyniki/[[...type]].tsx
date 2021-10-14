@@ -63,7 +63,7 @@ const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: T
     <Link href={`/wyniki/${type}`}>
         <a
             className={classNames(
-                "flex-grow cursor-pointer rounded-md px-4 py-2 text-center text-bold block m-1 text-white font-medium bg-gray-600",
+                "flex-grow cursor-pointer rounded-md px-4 py-2 text-center text-bold block m-1 text-white text-xs font-medium bg-gray-600",
                 { ["bg-orange-600"]: selectedType == type }
             )}
         >
