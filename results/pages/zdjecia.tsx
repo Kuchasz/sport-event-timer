@@ -51,9 +51,16 @@ function Zdjecia() {
             <Head>
                 <title>Zdjęcia</title>
             </Head>
-            {directories.length !== 0
-                ? directories.map((d) => <DynamicPhotosComponent key={d.dir} directory={d} />)
-                : null}
+            <div className="flex bg-gray-900 text-white p-4 flex-col items-center">
+                <img width="300" className="m-12" src="assets/blog/logo.png"></img>
+                <div className="p-4 bg-gray-700 rounded-md">
+                    <strong>INFO: </strong>Każde zdjęcie można pobrać w wysokiej rozdzielczości za pomocą odpowiedniego
+                    przycisku.
+                </div>
+                {directories.length !== 0
+                    ? directories.map((d) => <DynamicPhotosComponent key={d.dir} directory={d} />)
+                    : null}
+            </div>
         </Layout>
     );
 }
