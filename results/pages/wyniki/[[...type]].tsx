@@ -1,11 +1,16 @@
+import classNames from "classnames";
 import Head from "next/head";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
+import Link from "next/link";
+import React from "react";
+import { classnames } from "tailwindcss-classnames";
 import { Fragment, useEffect, useState } from "react";
-import { getState } from "../api";
-import { Loader } from "../components/loader";
+import { getState } from "../../api";
+import { Loader } from "../../components/loader";
 import { Player } from "@set/timer/model";
-import { sort } from "../utils";
+import { sort } from "../../utils";
 import { TimerState } from "@set/timer/store";
+import { useRouter } from "next/dist/client/router";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
@@ -55,21 +60,27 @@ const filterByType = (type: Types) => (player: Player) => {
     return player.raceCategory == type;
 };
 
-const ResultLink = ({ type, text, setType }: { type: Types; text: string; setType: (type: Types) => void }) => (
-    <a
-        onClick={() => setType(type)}
-        className="flex-grow cursor-pointer px-4 py-2 text-center text-bold block m-1 text-white bg-orange-600"
-    >
-        {text}
-    </a>
+const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: Types; text: string }) => (
+    <Link href={`/wyniki/${type}`}>
+        <a
+            className={classNames(
+                "flex-grow cursor-pointer rounded-md px-4 py-2 text-center text-bold block m-1 text-white font-medium bg-gray-600",
+                { ["bg-orange-600"]: selectedType == type }
+            )}
+        >
+            {text}
+        </a>
+    </Link>
 );
 
 const Index = ({}: Props) => {
     const [state, setState] = useState<TimerState>();
-    const [type, setType] = useState<Types>("");
+    const router = useRouter();
+
     useEffect(() => {
         getState().then(setState);
     }, []);
+
     if (!state)
         return (
             <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
@@ -78,13 +89,19 @@ const Index = ({}: Props) => {
             </div>
         );
 
+    const { type } = router.query as { type: Types[] };
+    const types = type || [];
+    const passedType = (types[0] || "") as Types;
+
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
     const fullNumberColumns =
         "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
+    console.log(passedType);
+
     const playersWithTimes = state.players
-        .filter(filterByType(type as Types))
+        .filter(filterByType(passedType))
         .filter(
             (p) =>
                 state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time &&
@@ -115,23 +132,23 @@ const Index = ({}: Props) => {
         <>
             <Layout>
                 <Head>
-                    <title>Wyniki {type ? `- ${type}` : ""}</title>
+                    <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
                 </Head>
-                <div className="border-1 border-gray-600 border-solid">
+                <div className="border-1 flex flex-col border-gray-600 h-full overflow-y-hidden">
                     <div className="flex flex-wrap">
-                        <ResultLink setType={setType} type={""} text="WSZYSCY" />
-                        <ResultLink setType={setType} type={"open-k"} text="OPEN KOBIET" />
-                        <ResultLink setType={setType} type={"open-m"} text="OPEN MĘŻCZYZN" />
-                        <ResultLink setType={setType} type={"K1"} text="K1" />
-                        <ResultLink setType={setType} type={"K2"} text="K2" />
-                        <ResultLink setType={setType} type={"K3"} text="K3" />
-                        <ResultLink setType={setType} type={"M1"} text="M1" />
-                        <ResultLink setType={setType} type={"M2"} text="M2" />
-                        <ResultLink setType={setType} type={"M3"} text="M3" />
-                        <ResultLink setType={setType} type={"M4"} text="M4" />
+                        <ResultLink selectedType={passedType} type={""} text="WSZYSCY" />
+                        <ResultLink selectedType={passedType} type={"open-k"} text="OPEN KOBIET" />
+                        <ResultLink selectedType={passedType} type={"open-m"} text="OPEN MĘŻCZYZN" />
+                        <ResultLink selectedType={passedType} type={"K1"} text="K1" />
+                        <ResultLink selectedType={passedType} type={"K2"} text="K2" />
+                        <ResultLink selectedType={passedType} type={"K3"} text="K3" />
+                        <ResultLink selectedType={passedType} type={"M1"} text="M1" />
+                        <ResultLink selectedType={passedType} type={"M2"} text="M2" />
+                        <ResultLink selectedType={passedType} type={"M3"} text="M3" />
+                        <ResultLink selectedType={passedType} type={"M4"} text="M4" />
                     </div>
 
-                    <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
+                    <div className="grid overflow-y-scroll" style={{ gridTemplateColumns: fullNumberColumns }}>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejsce</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>

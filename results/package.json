@@ -6,6 +6,7 @@
     "scripts": {
         "build": "next build && tsc --project tsconfig.json",
         "export": "next build && next export",
+        "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "start:dev": "next dev"
     },
     "dependencies": {
@@ -24,6 +25,7 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "tailwindcss": "^2.1.2",
+        "tailwindcss-classnames": "^2.2.4",
         "typescript": "^4.2.4"
     }
 }
