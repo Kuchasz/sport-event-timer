@@ -77,14 +77,13 @@ jobs:
                   yarn install
                   yarn build
                   mv .next dist/.next
+                  mv public dist/results/public
 
             - uses: actions/upload-artifact@v2
               with:
                   name: results.dist
                   path: |
                       ./results/dist
-                      ./results/.next
-                      ./results/public
 
     build_mobile:
         runs-on: ubuntu-latest
