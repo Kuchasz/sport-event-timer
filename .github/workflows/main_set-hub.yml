@@ -84,6 +84,8 @@ jobs:
                   name: results.dist
                   path: |
                       ./results/dist
+                      ./results/.next
+                      ./results/public
 
     build_mobile:
         runs-on: ubuntu-latest
