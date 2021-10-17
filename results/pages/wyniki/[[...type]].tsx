@@ -24,7 +24,7 @@ export const formatTime = (time?: number) => {
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
 
-const tdClassName = "flex border border-white flex-1 p-2 text-sm";
+const tdClassName = "flex flex-1 p-2 py-3 text-sm";
 
 type Props = {
     state: TimerState;
@@ -63,8 +63,8 @@ const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: T
     <Link href={`/wyniki/${type}`}>
         <a
             className={classNames(
-                "flex-grow cursor-pointer rounded-md px-4 py-2 text-center text-bold block m-1 text-white text-xs font-medium bg-gray-600",
-                { ["bg-orange-600"]: selectedType == type }
+                "cursor-pointer rounded-md px-2 py-2 text-center text-bold m-1 text-gray-600 text-xs font-medium",
+                { ["text-orange-600"]: selectedType == type }
             )}
         >
             {text}
@@ -96,8 +96,6 @@ const Index = ({}: Props) => {
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
     const fullNumberColumns =
         "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
-
-    console.log(passedType);
 
     const playersWithTimes = state.players
         .filter(filterByType(passedType))
@@ -133,8 +131,8 @@ const Index = ({}: Props) => {
                 <Head>
                     <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
                 </Head>
-                <div className="border-1 flex flex-col border-gray-600 h-full overflow-y-hidden">
-                    <div className="flex flex-wrap">
+                <div className="flex flex-col h-full text-gray-600 overflow-y-hidden">
+                    <div className="pb-2">
                         <ResultLink selectedType={passedType} type={""} text="WSZYSCY" />
                         <ResultLink selectedType={passedType} type={"open-k"} text="OPEN KOBIET" />
                         <ResultLink selectedType={passedType} type={"open-m"} text="OPEN MĘŻCZYZN" />
@@ -156,7 +154,7 @@ const Index = ({}: Props) => {
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Tempo km/h</div>
+                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>VŚr km/h</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Wynik</div>
                         <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Strata</div>
 
@@ -166,10 +164,10 @@ const Index = ({}: Props) => {
                                 <Fragment key={p.id}>
                                     <div className={`${tdClassName} ${bg}`}>{i + 1}</div>
                                     <div className={`${tdClassName} ${bg}`}>{p.number}</div>
-                                    <div className={`${tdClassName} ${bg} hidden sm:block`}>
+                                    <div className={`${tdClassName} ${bg} hidden font-semibold sm:block`}>
                                         {getName(p.name, p.lastName)}
                                     </div>
-                                    <div className={`${tdClassName} ${bg} block sm:hidden`}>
+                                    <div className={`${tdClassName} ${bg} block font-semibold sm:hidden`}>
                                         {getCompactName(p.name, p.lastName)}
                                     </div>
                                     <div className={`${tdClassName} ${bg}`}>{p.city}</div>
@@ -181,7 +179,7 @@ const Index = ({}: Props) => {
                                     <div className={`${tdClassName} ${bg}`}>
                                         {Math.round((13330 / (p.result / 1000 / 60 / 60) / 1000) * 100) / 100}
                                     </div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.resultStr}</div>
+                                    <div className={`${tdClassName} ${bg} font-semibold`}>{p.resultStr}</div>
                                     <div className={`${tdClassName} ${bg}`}>{p.diff === 0 ? "" : "+ " + p.diffStr}</div>
                                 </Fragment>
                             );
