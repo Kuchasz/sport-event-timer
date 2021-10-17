@@ -25,6 +25,8 @@ export const formatTime = (time?: number) => {
 };
 
 const tdClassName = "flex flex-1 p-2 py-3 text-sm";
+const headerClassName =
+    tdClassName + " border-b-2 border-orange-500 bg-gray-100 font-semibold cursor-pointer sticky top-0";
 
 type Props = {
     state: TimerState;
@@ -63,8 +65,8 @@ const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: T
     <Link href={`/wyniki/${type}`}>
         <a
             className={classNames(
-                "cursor-pointer rounded-md px-2 py-2 text-center text-bold m-1 text-gray-600 text-xs font-medium",
-                { ["text-orange-600"]: selectedType == type }
+                "cursor-pointer px-2 mx-2 py-2 border-orange-500 text-center text-bold m-1 text-gray-400 text-sm font-medium",
+                { ["text-gray-800 border-b-2"]: selectedType == type }
             )}
         >
             {text}
@@ -132,7 +134,8 @@ const Index = ({}: Props) => {
                     <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
                 </Head>
                 <div className="flex flex-col h-full text-gray-600 overflow-y-hidden">
-                    <div className="pb-2">
+                    <div className="flex px-2 py-4">
+                        <img width="100px" src="assets/blog/logo.png"></img>
                         <ResultLink selectedType={passedType} type={""} text="WSZYSCY" />
                         <ResultLink selectedType={passedType} type={"open-k"} text="OPEN KOBIET" />
                         <ResultLink selectedType={passedType} type={"open-m"} text="OPEN MĘŻCZYZN" />
@@ -145,18 +148,21 @@ const Index = ({}: Props) => {
                         <ResultLink selectedType={passedType} type={"M4"} text="M4" />
                     </div>
 
-                    <div className="grid overflow-y-scroll" style={{ gridTemplateColumns: fullNumberColumns }}>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejsce</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejscowość</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Klub</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>VŚr km/h</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Wynik</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Strata</div>
+                    <div
+                        className="grid flex-grow overflow-y-scroll auto-rows-min bg-gray-100"
+                        style={{ gridTemplateColumns: fullNumberColumns }}
+                    >
+                        <div className={headerClassName}>Miejsce</div>
+                        <div className={headerClassName}>Nr. zaw.</div>
+                        <div className={headerClassName}>Imię Nazwisko</div>
+                        <div className={headerClassName}>Miejscowość</div>
+                        <div className={headerClassName}>Klub</div>
+                        <div className={headerClassName}>Kraj</div>
+                        <div className={headerClassName}>Rok urodz.</div>
+                        <div className={headerClassName}>Kat.</div>
+                        <div className={headerClassName}>VŚr km/h</div>
+                        <div className={headerClassName}>Wynik</div>
+                        <div className={headerClassName}>Strata</div>
 
                         {result.map((p, i) => {
                             const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
