@@ -65,7 +65,7 @@ const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: T
     <Link href={`/wyniki/${type}`}>
         <a
             className={classNames(
-                "cursor-pointer px-2 mx-2 py-2 border-orange-500 text-center text-bold m-1 text-gray-400 text-sm font-medium",
+                "cursor-pointer px-1 md:px-2 md:mx-2 md:py-2 border-orange-500 text-center text-bold text-gray-400 text-sm font-medium",
                 { ["text-gray-800 border-b-2"]: selectedType == type }
             )}
         >
@@ -134,11 +134,10 @@ const Index = ({}: Props) => {
                     <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
                 </Head>
                 <div className="flex flex-col h-full text-gray-600 overflow-y-hidden">
-                    <div className="flex px-2 py-4">
-                        <img width="100px" src="assets/blog/logo.png"></img>
+                    <div className="flex flex-wrap px-2 py-4">
                         <ResultLink selectedType={passedType} type={""} text="WSZYSCY" />
-                        <ResultLink selectedType={passedType} type={"open-k"} text="OPEN KOBIET" />
-                        <ResultLink selectedType={passedType} type={"open-m"} text="OPEN MĘŻCZYZN" />
+                        <ResultLink selectedType={passedType} type={"open-k"} text="OPEN K" />
+                        <ResultLink selectedType={passedType} type={"open-m"} text="OPEN M" />
                         <ResultLink selectedType={passedType} type={"K1"} text="K1" />
                         <ResultLink selectedType={passedType} type={"K2"} text="K2" />
                         <ResultLink selectedType={passedType} type={"K3"} text="K3" />
