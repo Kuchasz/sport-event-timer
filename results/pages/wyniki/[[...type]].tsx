@@ -1,11 +1,13 @@
 import classNames from "classnames";
 import Head from "next/head";
+import Icon from "@mdi/react";
 import Layout from "../../components/layout";
 import Link from "next/link";
 import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import { getState } from "../../api";
 import { Loader } from "../../components/loader";
+import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { sort } from "../../utils";
 import { TimerState } from "@set/timer/store";
@@ -61,18 +63,185 @@ const filterByType = (type: Types) => (player: Player) => {
     return player.raceCategory == type;
 };
 
-const ResultLink = ({ type, selectedType, text }: { type: Types; selectedType: Types; text: string }) => (
+const ResultLink = ({
+    type,
+    selectedType,
+    text,
+    onOpen
+}: {
+    type: Types;
+    selectedType: Types;
+    text: string;
+    onOpen: () => void;
+}) => (
     <Link href={`/wyniki/${type}`}>
         <a
+            onClick={onOpen}
             className={classNames(
-                "cursor-pointer px-1 md:px-2 md:mx-2 md:py-2 border-orange-500 text-center text-bold text-gray-400 text-sm font-medium",
-                { ["text-gray-800 border-b-2"]: selectedType == type }
+                "cursor-pointer border-b-2 px-2 md:mx-2 self-center my-2 md:my-0 py-2 text-center text-gray-400 text-sm font-medium",
+                { ["text-gray-800 border-orange-500"]: selectedType == type },
+                { ["border-white"]: selectedType != type }
             )}
         >
             {text}
         </a>
     </Link>
 );
+
+const namesForTypes = {
+    "": "WSZYSCY",
+    "open-k": "OPEN K",
+    "open-m": "OPEN M",
+    K1: "K1",
+    K2: "K2",
+    K3: "K3",
+    M1: "M1",
+    M2: "M2",
+    M3: "M3",
+    M4: "M4"
+};
+
+const ResultLinks = ({ passedType }: { passedType: Types }) => {
+    const [collapsed, setCollapsed] = useState<boolean>(true);
+    return (
+        <>
+            <div className="md:hidden">
+                <div
+                    className={classNames("flex flex-col absolute top-0 z-10 h-full w-full bg-white px-2 py-4", {
+                        ["hidden"]: collapsed
+                    })}
+                >
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={""}
+                        text={namesForTypes[""]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"open-k"}
+                        text={namesForTypes["open-k"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"open-m"}
+                        text={namesForTypes["open-m"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"K1"}
+                        text={namesForTypes["K1"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"K2"}
+                        text={namesForTypes["K2"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"K3"}
+                        text={namesForTypes["K3"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"M1"}
+                        text={namesForTypes["M1"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"M2"}
+                        text={namesForTypes["M2"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"M3"}
+                        text={namesForTypes["M3"]}
+                    />
+                    <ResultLink
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={"M4"}
+                        text={namesForTypes["M4"]}
+                    />
+                </div>
+                <div onClick={() => setCollapsed(false)} className={classNames("flex p-2", { ["hidden"]: !collapsed })}>
+                    <Icon size={1} path={mdiMenu}></Icon>
+                    <p className="ml-2 font-medium">{namesForTypes[passedType]}</p>
+                </div>
+            </div>
+            <div className="hidden md:flex flex-wrap px-2 py-4">
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={""}
+                    text={namesForTypes[""]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"open-k"}
+                    text={namesForTypes["open-k"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"open-m"}
+                    text={namesForTypes["open-m"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"K1"}
+                    text={namesForTypes["K1"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"K2"}
+                    text={namesForTypes["K2"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"K3"}
+                    text={namesForTypes["K3"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"M1"}
+                    text={namesForTypes["M1"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"M2"}
+                    text={namesForTypes["M2"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"M3"}
+                    text={namesForTypes["M3"]}
+                />
+                <ResultLink
+                    onOpen={() => setCollapsed(true)}
+                    selectedType={passedType}
+                    type={"M4"}
+                    text={namesForTypes["M4"]}
+                />
+            </div>
+        </>
+    );
+};
 
 const Index = ({}: Props) => {
     const [state, setState] = useState<TimerState>();
@@ -134,18 +303,7 @@ const Index = ({}: Props) => {
                     <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
                 </Head>
                 <div className="flex flex-col h-full text-gray-600 overflow-y-hidden">
-                    <div className="flex flex-wrap px-2 py-4">
-                        <ResultLink selectedType={passedType} type={""} text="WSZYSCY" />
-                        <ResultLink selectedType={passedType} type={"open-k"} text="OPEN K" />
-                        <ResultLink selectedType={passedType} type={"open-m"} text="OPEN M" />
-                        <ResultLink selectedType={passedType} type={"K1"} text="K1" />
-                        <ResultLink selectedType={passedType} type={"K2"} text="K2" />
-                        <ResultLink selectedType={passedType} type={"K3"} text="K3" />
-                        <ResultLink selectedType={passedType} type={"M1"} text="M1" />
-                        <ResultLink selectedType={passedType} type={"M2"} text="M2" />
-                        <ResultLink selectedType={passedType} type={"M3"} text="M3" />
-                        <ResultLink selectedType={passedType} type={"M4"} text="M4" />
-                    </div>
+                    <ResultLinks passedType={passedType} />
 
                     <div
                         className="grid flex-grow overflow-y-scroll auto-rows-min bg-gray-100"
