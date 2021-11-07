@@ -45,66 +45,64 @@ const Index = ({}: Props) => {
 
     return (
         <>
-            <Layout>
-                <Head>
-                    <title>Wyniki na żywo</title>
-                </Head>
-                <div className="border-1 border-gray-600 border-solid">
-                    <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejscowość</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Klub</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
-                        <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
-                        {state.timeKeepers.map((tk) => (
-                            <div
-                                key={tk.id}
-                                className={`${tdClassName + " bg-orange-600 text-white font-semibold"} ${
-                                    tk.type === "checkpoint" ? "hidden sm:flex" : ""
-                                }`}
-                            >
-                                {tk.name}
-                            </div>
-                        ))}
+            <Head>
+                <title>Wyniki na żywo</title>
+            </Head>
+            <div className="border-1 border-gray-600 border-solid">
+                <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejscowość</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Klub</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
+                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
+                    {state.timeKeepers.map((tk) => (
+                        <div
+                            key={tk.id}
+                            className={`${tdClassName + " bg-orange-600 text-white font-semibold"} ${
+                                tk.type === "checkpoint" ? "hidden sm:flex" : ""
+                            }`}
+                        >
+                            {tk.name}
+                        </div>
+                    ))}
 
-                        {state.players.map((p, i) => {
-                            const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
-                            return (
-                                <Fragment key={p.id}>
-                                    <div className={`${tdClassName} ${bg}`}>{p.number}</div>
-                                    <div className={`${tdClassName} ${bg} hidden sm:block`}>
-                                        {getName(p.name, p.lastName)}
+                    {state.players.map((p, i) => {
+                        const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
+                        return (
+                            <Fragment key={p.id}>
+                                <div className={`${tdClassName} ${bg}`}>{p.number}</div>
+                                <div className={`${tdClassName} ${bg} hidden sm:block`}>
+                                    {getName(p.name, p.lastName)}
+                                </div>
+                                <div className={`${tdClassName} ${bg} block sm:hidden`}>
+                                    {getCompactName(p.name, p.lastName)}
+                                </div>
+                                <div className={`${tdClassName} ${bg}`}>{p.city}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.team}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.country}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
+                                {state.timeKeepers.map((tk) => (
+                                    <div
+                                        key={`${p.id}${tk.id}`}
+                                        className={`${tdClassName} ${bg} ${
+                                            tk.type === "checkpoint" ? "hidden sm:flex" : ""
+                                        }`}
+                                    >
+                                        {formatTime(
+                                            state.timeStamps.find(
+                                                (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
+                                            )?.time
+                                        )}
                                     </div>
-                                    <div className={`${tdClassName} ${bg} block sm:hidden`}>
-                                        {getCompactName(p.name, p.lastName)}
-                                    </div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.city}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.team}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.country}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
-                                    {state.timeKeepers.map((tk) => (
-                                        <div
-                                            key={`${p.id}${tk.id}`}
-                                            className={`${tdClassName} ${bg} ${
-                                                tk.type === "checkpoint" ? "hidden sm:flex" : ""
-                                            }`}
-                                        >
-                                            {formatTime(
-                                                state.timeStamps.find(
-                                                    (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
-                                                )?.time
-                                            )}
-                                        </div>
-                                    ))}
-                                </Fragment>
-                            );
-                        })}
-                    </div>
+                                ))}
+                            </Fragment>
+                        );
+                    })}
                 </div>
-            </Layout>
+            </div>
         </>
     );
 };

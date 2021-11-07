@@ -79,7 +79,7 @@ const ResultLink = ({
             onClick={onOpen}
             className={classNames(
                 "cursor-pointer border-b-2 px-2 md:mx-2 self-center my-2 md:my-0 py-2 text-center text-gray-400 text-sm font-medium",
-                { ["text-gray-800 border-orange-500"]: selectedType == type },
+                { ["text-orange-500 border-orange-500"]: selectedType == type },
                 { ["border-white"]: selectedType != type }
             )}
         >
@@ -253,7 +253,7 @@ const Index = ({}: Props) => {
 
     if (!state)
         return (
-            <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
+            <div className="flex font-semibold justify-center items-center">
                 Smarujemy łańcuch...
                 <Loader />
             </div>
@@ -298,58 +298,56 @@ const Index = ({}: Props) => {
 
     return (
         <>
-            <Layout>
-                <Head>
-                    <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
-                </Head>
-                <div className="flex flex-col h-full text-gray-600 overflow-y-hidden">
-                    <ResultLinks passedType={passedType} />
+            <Head>
+                <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
+            </Head>
+            <div className="flex flex-col text-gray-600">
+                <ResultLinks passedType={passedType} />
 
-                    <div
-                        className="grid flex-grow overflow-y-scroll auto-rows-min bg-gray-100"
-                        style={{ gridTemplateColumns: fullNumberColumns }}
-                    >
-                        <div className={headerClassName}>Miejsce</div>
-                        <div className={headerClassName}>Nr. zaw.</div>
-                        <div className={headerClassName}>Imię Nazwisko</div>
-                        <div className={headerClassName}>Miejscowość</div>
-                        <div className={headerClassName}>Klub</div>
-                        <div className={headerClassName}>Kraj</div>
-                        <div className={headerClassName}>Rok urodz.</div>
-                        <div className={headerClassName}>Kat.</div>
-                        <div className={headerClassName}>VŚr km/h</div>
-                        <div className={headerClassName}>Wynik</div>
-                        <div className={headerClassName}>Strata</div>
+                <div
+                    className="grid flex-grow auto-rows-min bg-gray-100"
+                    style={{ gridTemplateColumns: fullNumberColumns }}
+                >
+                    <div className={headerClassName}>Miejsce</div>
+                    <div className={headerClassName}>Nr. zaw.</div>
+                    <div className={headerClassName}>Imię Nazwisko</div>
+                    <div className={headerClassName}>Miejscowość</div>
+                    <div className={headerClassName}>Klub</div>
+                    <div className={headerClassName}>Kraj</div>
+                    <div className={headerClassName}>Rok urodz.</div>
+                    <div className={headerClassName}>Kat.</div>
+                    <div className={headerClassName}>VŚr km/h</div>
+                    <div className={headerClassName}>Wynik</div>
+                    <div className={headerClassName}>Strata</div>
 
-                        {result.map((p, i) => {
-                            const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
-                            return (
-                                <Fragment key={p.id}>
-                                    <div className={`${tdClassName} ${bg}`}>{i + 1}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.number}</div>
-                                    <div className={`${tdClassName} ${bg} hidden font-semibold sm:block`}>
-                                        {getName(p.name, p.lastName)}
-                                    </div>
-                                    <div className={`${tdClassName} ${bg} block font-semibold sm:hidden`}>
-                                        {getCompactName(p.name, p.lastName)}
-                                    </div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.city}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.team}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.country}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
+                    {result.map((p, i) => {
+                        const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
+                        return (
+                            <Fragment key={p.id}>
+                                <div className={`${tdClassName} ${bg}`}>{i + 1}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.number}</div>
+                                <div className={`${tdClassName} ${bg} hidden font-semibold sm:block`}>
+                                    {getName(p.name, p.lastName)}
+                                </div>
+                                <div className={`${tdClassName} ${bg} block font-semibold sm:hidden`}>
+                                    {getCompactName(p.name, p.lastName)}
+                                </div>
+                                <div className={`${tdClassName} ${bg}`}>{p.city}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.team}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.country}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
 
-                                    <div className={`${tdClassName} ${bg}`}>
-                                        {Math.round((13330 / (p.result / 1000 / 60 / 60) / 1000) * 100) / 100}
-                                    </div>
-                                    <div className={`${tdClassName} ${bg} font-semibold`}>{p.resultStr}</div>
-                                    <div className={`${tdClassName} ${bg}`}>{p.diff === 0 ? "" : "+ " + p.diffStr}</div>
-                                </Fragment>
-                            );
-                        })}
-                    </div>
+                                <div className={`${tdClassName} ${bg}`}>
+                                    {Math.round((13330 / (p.result / 1000 / 60 / 60) / 1000) * 100) / 100}
+                                </div>
+                                <div className={`${tdClassName} ${bg} font-semibold`}>{p.resultStr}</div>
+                                <div className={`${tdClassName} ${bg}`}>{p.diff === 0 ? "" : "+ " + p.diffStr}</div>
+                            </Fragment>
+                        );
+                    })}
                 </div>
-            </Layout>
+            </div>
         </>
     );
 };
