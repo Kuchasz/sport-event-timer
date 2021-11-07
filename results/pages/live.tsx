@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { Fragment, useEffect, useState } from "react";
 import { getState } from "../api";
 import { Loader } from "../components/loader";
+import { Table } from "../components/table";
 import { TimerState } from "@set/timer/store";
+import { useEffect, useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
@@ -16,8 +17,6 @@ export const formatTime = (time?: number) => {
         timeDate.getSeconds()
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
-
-const tdClassName = "flex border border-white flex-1 p-2 text-sm";
 
 type Props = {
     state: TimerState;
@@ -39,8 +38,13 @@ const Index = ({}: Props) => {
             </div>
         );
 
-    const fullNumberColumns =
-        "auto minmax(auto, 2fr) minmax(auto, 2fr) minmax(auto, 2fr) auto auto auto minmax(auto, 1fr) minmax(auto, 1fr)";
+    const result = state.players;
+
+    type itemsType = typeof result[0];
+
+    const headers = ["Nr. zaw.", "Imię Nazwisko", "Miejscowość", "Klub", "Kraj", "Rok urodz.", "Kat."].concat(
+        state.timeKeepers.map((tk) => tk.name)
+    );
 
     return (
         <>
@@ -48,59 +52,42 @@ const Index = ({}: Props) => {
                 <title>Wyniki na żywo</title>
             </Head>
             <div className="border-1 border-gray-600 border-solid">
-                <div className={`grid`} style={{ gridTemplateColumns: fullNumberColumns }}>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Nr. zaw.</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Imię Nazwisko</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Miejscowość</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Klub</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kraj</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Rok urodz.</div>
-                    <div className={tdClassName + " bg-orange-600 text-white font-semibold"}>Kat.</div>
-                    {state.timeKeepers.map((tk) => (
-                        <div
-                            key={tk.id}
-                            className={`${tdClassName + " bg-orange-600 text-white font-semibold"} ${
-                                tk.type === "checkpoint" ? "hidden sm:flex" : ""
-                            }`}
-                        >
-                            {tk.name}
-                        </div>
-                    ))}
-
-                    {state.players.map((p, i) => {
-                        const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
-                        return (
-                            <Fragment key={p.id}>
-                                <div className={`${tdClassName} ${bg}`}>{p.number}</div>
-                                <div className={`${tdClassName} ${bg} hidden sm:block`}>
-                                    {getName(p.name, p.lastName)}
+                <Table headers={headers} rows={result} getKey={(r) => String(r.id)}>
+                    <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <>
+                                <div className="hidden font-semibold sm:block">{getName(r.name, r.lastName)}</div>
+                                <div className="block font-semibold sm:hidden">
+                                    {getCompactName(r.name, r.lastName)}
                                 </div>
-                                <div className={`${tdClassName} ${bg} block sm:hidden`}>
-                                    {getCompactName(p.name, p.lastName)}
-                                </div>
-                                <div className={`${tdClassName} ${bg}`}>{p.city}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.team}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.country}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
-                                {state.timeKeepers.map((tk) => (
-                                    <div
-                                        key={`${p.id}${tk.id}`}
-                                        className={`${tdClassName} ${bg} ${
-                                            tk.type === "checkpoint" ? "hidden sm:flex" : ""
-                                        }`}
-                                    >
-                                        {formatTime(
-                                            state.timeStamps.find(
-                                                (ts) => ts.playerId === p.id && ts.timeKeeperId === tk.id
-                                            )?.time
-                                        )}
-                                    </div>
-                                ))}
-                            </Fragment>
-                        );
-                    })}
-                </div>
+                            </>
+                        )}
+                    ></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.city}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.country}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.birthYear}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <div>
+                                {formatTime(
+                                    state.timeStamps.find((ts) => ts.playerId === r.id && ts.timeKeeperId === 0)?.time
+                                )}
+                            </div>
+                        )}
+                    ></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <div>
+                                {formatTime(
+                                    state.timeStamps.find((ts) => ts.playerId === r.id && ts.timeKeeperId === 1)?.time
+                                )}
+                            </div>
+                        )}
+                    ></Table.Item>
+                </Table>
             </div>
         </>
     );

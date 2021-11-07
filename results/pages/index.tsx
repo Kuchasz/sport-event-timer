@@ -28,7 +28,7 @@ const Index = ({}: Props) => {
             <div>
                 <div
                     style={{ backgroundImage: "url('assets/kocierz.jpg')" }}
-                    className="w-full h-96 bg-bottom bg-cover"
+                    className="w-full h-128 bg-bottom bg-cover"
                 ></div>
             </div>
         </>

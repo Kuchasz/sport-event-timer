@@ -59,11 +59,11 @@ const Header = () => {
             <div className="flex">
                 <div className="w-full h-0.5 bg-gray-700"></div>
             </div>
-            <div className="flex justify-center py-4 bg-gray-900 text-white">
+            <div className="flex justify-center py-3 bg-gray-900 text-white">
                 <div className="w-full max-w-5xl flex justify-between">
                     <div>
                         {menuItems.map((mi) => (
-                            <MenuButton activePath={router.asPath} to={mi.path}>
+                            <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
                                 {mi.label}
                             </MenuButton>
                         ))}

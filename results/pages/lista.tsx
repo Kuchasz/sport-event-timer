@@ -3,6 +3,7 @@ import { Fragment, useEffect } from "react";
 import { getPlayers, getPlayersDate } from "api";
 import { Loader } from "../components/loader";
 import { Player } from "../../timer/model";
+import { Table } from "../components/table";
 import { TimerState } from "@set/timer/store";
 import { useState } from "react";
 
@@ -18,8 +19,6 @@ export const formatTime = (time?: number) => {
         timeDate.getSeconds()
     )}`;
 };
-
-const tdClassName = "flex flex-1 py-2 justify-center items-center even:bg-gray-100 border border-gray-200 p-1";
 
 type Props = {
     state: TimerState;
@@ -57,6 +56,11 @@ const StartingList = ({}: Props) => {
             </div>
         );
 
+    const result = state.map((s, i) => ({ ...s, index: i + 1, startTime: calculateStartTime(s.number) }));
+    type itemsType = typeof result[0];
+
+    const headers = ["Lp.", "Numer", "Imię Nazwisko", "Kat.", "Kraj", "Drużyna", "Start"];
+
     return (
         <>
             <Head>
@@ -64,54 +68,25 @@ const StartingList = ({}: Props) => {
             </Head>
             <div className="border-1 border-gray-600 border-solid">
                 <div className="px-4 py-2">Ostatnia aktualizacja: {new Date(playersDate).toLocaleString()}</div>
-                <div
-                    className="grid grid-cols-results-6"
-                    style={{
-                        gridTemplateColumns: "auto auto minmax(auto, 2fr) auto minmax(auto, 3fr) minmax(auto, 1fr)"
-                    }}
-                >
-                    <div className={tdClassName + " text-xs text-gray-400"}>Lp.</div>
-                    <div className={tdClassName + " font-bold"}>Numer</div>
-                    <div className={tdClassName + " text-xs sm:text-base text-center font-bold"}>Imię Nazwisko</div>
-                    <div className={tdClassName + " font-bold"}>Kat.</div>
-                    <div className={tdClassName + " font-bold"}>Drużyna</div>
-                    <div className={tdClassName + " font-bold"}>Start</div>
 
-                    {state.map((p, i) => (
-                        <Fragment key={p.id}>
-                            <div
-                                style={{ pageBreakInside: "avoid" }}
-                                className={`text-xs text-gray-400 ${tdClassName}`}
-                            >
-                                {i + 1}
-                            </div>
-                            <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
-                                {p.number}
-                            </div>
-                            <div style={{ pageBreakInside: "avoid" }} className={`${tdClassName} hidden sm:flex`}>
-                                {getName(p.name, p.lastName)}
-                            </div>
-                            <div
-                                style={{ pageBreakInside: "avoid" }}
-                                className={`${tdClassName} text-xs sm:text-base flex sm:hidden`}
-                            >
-                                {getCompactName(p.name, p.lastName)}
-                            </div>
-                            <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
-                                {p.raceCategory}
-                            </div>
-                            <div
-                                style={{ pageBreakInside: "avoid" }}
-                                className={`${tdClassName} text-center text-xs sm:text-base`}
-                            >
-                                {p.team}
-                            </div>
-                            <div style={{ pageBreakInside: "avoid" }} className={tdClassName}>
-                                {calculateStartTime(p.number)}
-                            </div>
-                        </Fragment>
-                    ))}
-                </div>
+                <Table headers={headers} rows={result} getKey={(r) => String(r.number)}>
+                    <Table.Item render={(r: itemsType) => <div>{r.index}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <>
+                                <div className="hidden font-semibold sm:block">{getName(r.name, r.lastName)}</div>
+                                <div className="block font-semibold sm:hidden">
+                                    {getCompactName(r.name, r.lastName)}
+                                </div>
+                            </>
+                        )}
+                    ></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.country}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.startTime}</div>}></Table.Item>
+                </Table>
             </div>
         </>
     );
