@@ -1,5 +1,6 @@
+import Footer from "./footer";
+import Header from "./header";
 import Meta from "./meta";
-// import Footer from "./footer";
 
 type Props = {
     preview?: boolean;
@@ -10,10 +11,9 @@ const Layout = ({ children }: Props) => {
     return (
         <>
             <Meta />
-            <div className="h-full">
-                <main className="h-full">{children}</main>
-            </div>
-            {/* <Footer /> */}
+            <Header />
+            <main className="flex-grow text-gray-900">{children}</main>
+            <Footer />
         </>
     );
 };

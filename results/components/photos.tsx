@@ -16,9 +16,9 @@ type Props = {
 
 const Photos = ({ directory }: Props) => {
     return (
-        <div className="flex bg-gray-900 text-white p-4 flex-col items-center">
+        <div className="flex p-4 flex-col items-center">
             <h1 className="text-6xl font-bold mt-20 mb-10">{directory.title}</h1>
-            <h2 className="text-2xl text-gray-300 font-light mb-10">{directory.description}</h2>
+            <h2 className="text-2xl text-gray-500 font-light mb-10">{directory.description}</h2>
             <LightGallery
                 elementClassNames="flex flex-wrap justify-center"
                 thumbnail={true}
@@ -38,7 +38,7 @@ const Photos = ({ directory }: Props) => {
             >
                 {directory.items.map((i) => (
                     <a
-                        className="gallery-item block hover:opacity-50 drop-shadow-w-2xl justify-center h-32 w-32 cursor-pointer m-4"
+                        className="gallery-item block hover:opacity-50 drop-shadow-w-2xl justify-center h-24 w-24 cursor-pointer m-3"
                         data-download-url={i.full}
                         data-src={i.big}
                         data-thumb={i.thumb}

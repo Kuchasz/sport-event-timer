@@ -47,13 +47,12 @@ function Zdjecia() {
     }, []);
 
     return (
-        <Layout>
+        <>
             <Head>
                 <title>Zdjęcia</title>
             </Head>
-            <div className="flex bg-gray-900 text-white p-4 flex-col items-center">
-                <img width="300" className="m-12" src="assets/blog/logo.png"></img>
-                <div className="p-4 bg-gray-700 rounded-md">
+            <div className="flex p-4 flex-col items-center">
+                <div className="p-4 text-white bg-gray-700 rounded-md">
                     <strong>INFO: </strong>Każde zdjęcie można pobrać w wysokiej rozdzielczości za pomocą odpowiedniego
                     przycisku.
                 </div>
@@ -61,7 +60,7 @@ function Zdjecia() {
                     ? directories.map((d) => <DynamicPhotosComponent key={d.dir} directory={d} />)
                     : null}
             </div>
-        </Layout>
+        </>
     );
 }
 

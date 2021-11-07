@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Layout from "../components/layout";
 import React from "react";
 import { Countdown } from "components/countdown";
-import { FullscreenBackground } from "../components/fullscreen-background";
 import { getCurrentTimeOffset } from "../api";
 import { Loader } from "../components/loader";
 import { Timer } from "../components/timer";
@@ -14,12 +12,11 @@ const Zegar = () => {
         getCurrentTimeOffset().then(setTimeOffset);
     }, []);
     return (
-        <Layout>
+        <>
             <Head>
                 <title>Zegar</title>
             </Head>
             <div className="h-full w-full relative overflow-hidden">
-                <FullscreenBackground />
                 {timeOffset === undefined ? (
                     <div className="min-w-screen min-h-screen flex text-white font-semibold justify-center items-center">
                         Smarujemy łańcuch...
@@ -34,7 +31,7 @@ const Zegar = () => {
                     </div>
                 )}
             </div>
-        </Layout>
+        </>
     );
 };
 
