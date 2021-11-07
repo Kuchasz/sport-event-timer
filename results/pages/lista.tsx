@@ -1,10 +1,10 @@
 import Head from "next/head";
-import { Fragment, useEffect } from "react";
 import { getPlayers, getPlayersDate } from "api";
 import { Loader } from "../components/loader";
 import { Player } from "../../timer/model";
 import { Table } from "../components/table";
 import { TimerState } from "@set/timer/store";
+import { useEffect } from "react";
 import { useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>
