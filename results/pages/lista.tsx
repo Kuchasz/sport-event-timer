@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Layout from "../components/layout";
 import { Fragment, useEffect } from "react";
 import { getPlayers, getPlayersDate } from "api";
 import { Loader } from "../components/loader";
