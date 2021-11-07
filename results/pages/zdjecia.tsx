@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import Layout from "../components/layout";
 import { useEffect, useState } from "react";
 
 const DynamicPhotosComponent = dynamic(() => import("../components/photos"), { ssr: false });
