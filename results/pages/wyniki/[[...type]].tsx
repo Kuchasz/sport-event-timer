@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import Layout from "../../components/layout";
 import Link from "next/link";
 import React from "react";
 import { Fragment, useEffect, useState } from "react";
