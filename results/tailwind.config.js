@@ -44,6 +44,9 @@ module.exports = {
                 "results-10": "auto repeat(9, minmax(auto, 1fr))",
                 "results-11": "auto repeat(10, minmax(auto, 1fr))",
                 "results-12": "auto repeat(11, minmax(auto, 1fr))"
+            },
+            height: {
+                128: "32rem"
             }
         },
         variants: {

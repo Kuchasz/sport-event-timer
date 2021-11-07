@@ -1,19 +1,28 @@
 import classNames from "classnames";
+import express from "express";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import { Fragment, useEffect, useState } from "react";
+import {
+    Fragment,
+    ReactNode,
+    useEffect,
+    useState
+    } from "react";
 import { getState } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { sort } from "../../utils";
+import { Table } from "../../components/table";
 import { TimerState } from "@set/timer/store";
 import { useRouter } from "next/dist/client/router";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
+
+export const formatSpeed = (result: number) => Math.round((13330 / (result / 1000 / 60 / 60) / 1000) * 100) / 100;
 
 export const formatTime = (time?: number) => {
     if (time === undefined) return "--:--:--";
@@ -24,10 +33,6 @@ export const formatTime = (time?: number) => {
         timeDate.getSeconds()
     )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
 };
-
-const tdClassName = "flex flex-1 p-2 py-3 text-sm";
-const headerClassName =
-    tdClassName + " border-b-2 border-orange-500 bg-gray-100 font-semibold cursor-pointer sticky top-0";
 
 type Props = {
     state: TimerState;
@@ -264,8 +269,6 @@ const Index = ({}: Props) => {
 
     const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
     const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
-    const fullNumberColumns =
-        "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
     const playersWithTimes = state.players
         .filter(filterByType(passedType))
@@ -289,11 +292,28 @@ const Index = ({}: Props) => {
     const sorted = sort(playersWithTimes, (p) => p.result);
     const first = sorted[0];
 
-    const result = sorted.map((s) => ({
+    const result = sorted.map((s, i) => ({
         ...s,
+        place: i + 1,
         diff: s.result - first.result,
         diffStr: formatTime(s.result - first.result)
     }));
+
+    type itemsType = typeof result[0];
+
+    const headers = [
+        "Miejsce",
+        "Nr. zaw.",
+        "Imię Nazwisko",
+        "Miejscowość",
+        "Klub",
+        "Kraj",
+        "Rok urodz.",
+        "Kat.",
+        "VŚr km/h",
+        "Wynik",
+        "Strata"
+    ];
 
     return (
         <>
@@ -303,49 +323,32 @@ const Index = ({}: Props) => {
             <div className="flex flex-col text-gray-600">
                 <ResultLinks passedType={passedType} />
 
-                <div
-                    className="grid flex-grow auto-rows-min bg-gray-100"
-                    style={{ gridTemplateColumns: fullNumberColumns }}
-                >
-                    <div className={headerClassName}>Miejsce</div>
-                    <div className={headerClassName}>Nr. zaw.</div>
-                    <div className={headerClassName}>Imię Nazwisko</div>
-                    <div className={headerClassName}>Miejscowość</div>
-                    <div className={headerClassName}>Klub</div>
-                    <div className={headerClassName}>Kraj</div>
-                    <div className={headerClassName}>Rok urodz.</div>
-                    <div className={headerClassName}>Kat.</div>
-                    <div className={headerClassName}>VŚr km/h</div>
-                    <div className={headerClassName}>Wynik</div>
-                    <div className={headerClassName}>Strata</div>
-
-                    {result.map((p, i) => {
-                        const bg = i % 2 === 0 ? "bg-gray-200" : "bg-gray-100";
-                        return (
-                            <Fragment key={p.id}>
-                                <div className={`${tdClassName} ${bg}`}>{i + 1}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.number}</div>
-                                <div className={`${tdClassName} ${bg} hidden font-semibold sm:block`}>
-                                    {getName(p.name, p.lastName)}
+                <Table headers={headers} rows={result} getKey={(r) => String(r.id)}>
+                    <Table.Item render={(r: itemsType) => <div>{r.place}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <>
+                                <div className="hidden font-semibold sm:block">{getName(r.name, r.lastName)}</div>
+                                <div className="block font-semibold sm:hidden">
+                                    {getCompactName(r.name, r.lastName)}
                                 </div>
-                                <div className={`${tdClassName} ${bg} block font-semibold sm:hidden`}>
-                                    {getCompactName(p.name, p.lastName)}
-                                </div>
-                                <div className={`${tdClassName} ${bg}`}>{p.city}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.team}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.country}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.birthYear}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.raceCategory}</div>
-
-                                <div className={`${tdClassName} ${bg}`}>
-                                    {Math.round((13330 / (p.result / 1000 / 60 / 60) / 1000) * 100) / 100}
-                                </div>
-                                <div className={`${tdClassName} ${bg} font-semibold`}>{p.resultStr}</div>
-                                <div className={`${tdClassName} ${bg}`}>{p.diff === 0 ? "" : "+ " + p.diffStr}</div>
-                            </Fragment>
-                        );
-                    })}
-                </div>
+                            </>
+                        )}
+                    ></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.city}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.country}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.birthYear}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{formatSpeed(r.result)}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div className="font-semibold">{r.resultStr}</div>}
+                    ></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div>{r.diff === 0 ? "" : "+ " + r.diffStr}</div>}
+                    ></Table.Item>
+                </Table>
             </div>
         </>
     );

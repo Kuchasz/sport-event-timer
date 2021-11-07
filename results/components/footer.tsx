@@ -24,7 +24,7 @@ const Footer = () => {
                 <div>RURA NA KOCIERZ © 2021</div>
                 <div>
                     {menuItems.map((mi) => (
-                        <MenuButton activePath={router.asPath} to={mi.path}>
+                        <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
                             {mi.label}
                         </MenuButton>
                     ))}
