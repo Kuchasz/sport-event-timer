@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { Fragment, ReactNode } from "react";
 import { Loader } from "./loader";
 
-const tdClassName = "flex flex-1 p-2 py-3 text-sm";
+const tdClassName = "p-2 py-3";
 
 type Item<T extends unknown> = React.ReactElement<{ item: T }>;
 
@@ -38,7 +38,7 @@ export const Table = <T extends {}>({ rows, headers, children, getKey }: TablePr
     // "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
     return (
-        <div className="grid flex-grow auto-rows-min bg-gray-100" style={{ gridTemplateColumns }}>
+        <div className="grid flex-grow auto-rows-min text-sm bg-gray-100" style={{ gridTemplateColumns }}>
             {headers.map((h) => (
                 <HeaderCell key={h}>{h}</HeaderCell>
             ))}
