@@ -30,7 +30,7 @@ const Footer = () => {
                         <div className="text-lg">
                             Ambasador <strong>Marta Lach</strong>
                         </div>
-                        <div>Mistrzyni Polski, Olimpijka Tokio 2020.</div>
+                        <div>Mistrzyni Polski, Olimpijka Tokio 2020</div>
                     </div>
                     <div className="flex items-center">
                         <div className="flex">

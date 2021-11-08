@@ -26,9 +26,8 @@ const Header = () => {
             <div className="bg-gray-800 text-gray-600 flex justify-center py-3 text-sm font-semibold">
                 <div className="w-full max-w-5xl flex">
                     <span className="mr-8">Rura na kocierz</span>
-                    <span className="mr-8">09-10/04/2022</span>
-                    <span className="mr-8">Jazda indywidualna na czas</span>
-                    <span className="mr-8">Wyścig ze startu wspólnego</span>
+                    <span className="mr-8">09.04.2022 Time Trial</span>
+                    <span className="mr-8">10.04.2022 Wyścig ze startu wspólnego</span>
                 </div>
             </div>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
