@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
+import { Email } from "./email";
 import { mdiEmailOpenOutline, mdiFacebook, mdiHumanMaleChild } from "@mdi/js";
 import { menuItems } from "./menu-items";
 import { ReactNode } from "react";
@@ -16,12 +17,6 @@ const MenuButton = ({ activePath = "", to, children }: { activePath: string; to:
             {children}
         </button>
     </Link>
-);
-
-const Email = ({ children }: { children: string }) => (
-    <a className="hover:text-orange-500 transition-colors" href={`mailto:${children}`}>
-        {children}
-    </a>
 );
 
 const Header = () => {

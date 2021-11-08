@@ -8,6 +8,8 @@ import { resolve } from "path";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const app = express();
 app.use(cors());
 const server = createServer(app);
@@ -37,7 +39,8 @@ const run = async () => {
     });
 
     await applyHub(server);
-    await applyResults(app);
+
+    if (!isDevelopment) await applyResults(app);
 
     server.listen(21822, "localhost", () => {
         console.log("SERVER_STARTED_LISTENING");
