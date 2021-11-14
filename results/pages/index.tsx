@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Icon from "@mdi/react";
+import { mdiClockTimeFourOutline } from "@mdi/js";
 import { TimerState } from "@set/timer/store";
 
 const fakeContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et mattis enim. Vivamus malesuada sapien mauris, sed dictum metus placerat a. Morbi et sollicitudin sapien. Phasellus fringilla augue a erat imperdiet, sit amet sodales lectus condimentum. Mauris et ante vulputate massa consequat placerat ac tempus lorem. Praesent id est ligula. Vivamus arcu tortor, imperdiet ut venenatis laoreet, condimentum vel velit. Duis urna erat, posuere sit amet quam vitae, bibendum tincidunt lorem. Aliquam pretium mattis mattis. Phasellus volutpat consequat magna, eu sagittis tellus blandit sed. Morbi vulputate, arcu eget pulvinar consectetur, felis felis lacinia risus, at porttitor felis mi ac est. Etiam congue cursus nibh, non ornare elit feugiat vel. Aenean tincidunt magna purus, nec rhoncus tellus ornare in. Suspendisse non iaculis enim. Nullam porta congue accumsan.
@@ -51,7 +53,10 @@ const Slogan = ({ article }: { article: typeof fakeNews[0] }) => (
         className="flex w-full h-128 uppercase text-white bg-bottom bg-cover justify-center"
     >
         <div className="w-full max-w-6xl flex flex-col items-start justify-center">
-            <span className="font-semibold">{article.date.toLocaleDateString()}</span>
+            <div className="flex">
+                <Icon className="text-orange-500" size={1} path={mdiClockTimeFourOutline}></Icon>
+                <span className="ml-2 font-semibold">{article.date.toLocaleDateString()}</span>
+            </div>
             <div className="text-5xl font-semibold">{article.title}</div>
             <span className="mt-4 font-semibold">{article.excerpt}</span>
             <span className="mt-4 text-sm transition-colors duration-500 cursor-pointer border-2 hover:bg-orange-500 hover:border-orange-500 font-semibold px-8 py-2 border-white rounded-md">
@@ -74,11 +79,14 @@ const SneakPeak = ({ article }: { article: typeof fakeNews[0] }) => (
             style={{ backgroundImage: `url(assets/posts/${article.photo})`, zIndex: -1 }}
         ></div>
         <div className="p-6 pt-40 flex flex-col text-white">
-            <span className="font-semibold">{article.date.toLocaleDateString()}</span>
             <h3 className="font-bold self-start duration-500 w-auto uppercase transition-colors cursor-pointer hover:text-orange-500 text-2xl">
                 {article.title}
             </h3>
-            <h4 className="mt-4">{article.excerpt}</h4>
+            <h4 className="my-4">{article.excerpt}</h4>
+            <div className="flex">
+                <Icon className="text-orange-500" size={1} path={mdiClockTimeFourOutline}></Icon>
+                <span className="ml-2 font-semibold">{article.date.toLocaleDateString()}</span>
+            </div>
         </div>
     </div>
 );
