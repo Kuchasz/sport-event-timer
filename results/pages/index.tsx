@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { DateAdded } from "../components/date-added";
-import { posts } from "./artykul/posts";
+import { posts } from "../posts";
 import { TimerState } from "@set/timer/store";
 
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
