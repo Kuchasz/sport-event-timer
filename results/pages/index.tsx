@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { TimerState } from "@set/timer/store";
 
-
 const fakeContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et mattis enim. Vivamus malesuada sapien mauris, sed dictum metus placerat a. Morbi et sollicitudin sapien. Phasellus fringilla augue a erat imperdiet, sit amet sodales lectus condimentum. Mauris et ante vulputate massa consequat placerat ac tempus lorem. Praesent id est ligula. Vivamus arcu tortor, imperdiet ut venenatis laoreet, condimentum vel velit. Duis urna erat, posuere sit amet quam vitae, bibendum tincidunt lorem. Aliquam pretium mattis mattis. Phasellus volutpat consequat magna, eu sagittis tellus blandit sed. Morbi vulputate, arcu eget pulvinar consectetur, felis felis lacinia risus, at porttitor felis mi ac est. Etiam congue cursus nibh, non ornare elit feugiat vel. Aenean tincidunt magna purus, nec rhoncus tellus ornare in. Suspendisse non iaculis enim. Nullam porta congue accumsan.
 
 Praesent efficitur placerat velit, sed egestas leo bibendum at. Praesent pulvinar nisi mauris, et suscipit dolor iaculis vitae. Donec ut lectus ac justo maximus molestie. Vestibulum ultricies gravida ornare. Vestibulum et velit id libero rhoncus fringilla at vel quam. Nam nibh lacus, aliquet at neque scelerisque, suscipit scelerisque ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed in metus ut arcu dignissim bibendum. Nullam sed magna venenatis, hendrerit libero sit amet, imperdiet odio. Morbi non leo dapibus, tempor mauris quis, auctor massa. Pellentesque eget ex lacinia, consectetur dui sit amet, pellentesque orci. Etiam eget sodales dolor. Duis tincidunt dignissim ullamcorper. Pellentesque vitae dui sed neque luctus egestas sit amet id orci. Nunc pellentesque magna orci, porttitor lacinia nunc ultricies at. Fusce convallis felis tellus, id viverra libero faucibus molestie.
@@ -13,51 +12,91 @@ Vivamus tellus ipsum, blandit sed ante eget, porttitor rhoncus odio. Nunc vitae 
 Curabitur eleifend in augue in ultricies. Aliquam feugiat volutpat sapien, nec finibus neque iaculis et. Donec facilisis leo ligula, eget faucibus tellus maximus non. Donec a tortor eget urna pellentesque consequat. Praesent quis magna in neque porta gravida ut vel tellus. Sed pretium sit amet arcu nec varius. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lacus felis, iaculis eget ultricies in, scelerisque non elit. Etiam euismod metus cursus libero sodales, a commodo ex dictum. Phasellus at neque fermentum, convallis nibh vel, tincidunt lacus. Vivamus id egestas elit, ac posuere nibh. Suspendisse quis nunc ante. Suspendisse arcu est, rutrum a lobortis sed, sollicitudin eget est.`;
 
 const fakeNews = [
-    { date: new Date(Date.parse('2021-11-01 15:28')), title: "Ruszaja zapisy do zawodow 2022", content: fakeContent, excerpt: "Rura na kocierz w przyszlym roku odbedzie sie na wiosne dlatego zapisu uruchamiamy juz teraz!" },
-    { date: new Date(Date.parse('2021-11-07 06:13')), title: "Film z prezentacji trasy", content: fakeContent, excerpt: "Mapki i slowo pisane nie do wszystkich przemawiaja, przygotowalismy video prezentacje tegorocznej trasy wyscigu!" },
-    { date: new Date(Date.parse('2021-11-12 18:09')), title: "Nowy sponsor zawodow - XYZ.com", content: fakeContent, excerpt: "Po negocjacjach w koncu udalo nam sie dojsc do konsensusu, nawiazalismy wspolprace z kolejnym sponsorem - tym razem jest to XYZ.com" }];
+    {
+        date: new Date(Date.parse("2021-10-25 12:57")),
+        photo: "rusza-edycja-2022.jpg",
+        title: "Rusza edycja 2022!",
+        content: fakeContent,
+        excerpt:
+            "Keszcze więcej wrażeń, jeszcze większy rozmach. W 2022 roku widzimy się dwa dni z rzędu! 09.04 - Time Trial, 10.04 - Wyścig ze startu wspólnego"
+    },
+    {
+        date: new Date(Date.parse("2021-11-01 15:28")),
+        photo: "ruszaja-zapisy-do-zawodow-2022.jpg",
+        title: "Ruszaja zapisy do zawodów 2022",
+        content: fakeContent,
+        excerpt: "Rura na kocierz w przyszlym roku odbedzie sie na wiosne dlatego zapisu uruchamiamy juz teraz!"
+    },
+    {
+        date: new Date(Date.parse("2021-11-07 06:13")),
+        photo: "film-z-prezentacji-trasy.jpg",
+        title: "Film z prezentacji trasy",
+        content: fakeContent,
+        excerpt:
+            "Mapki i slowo pisane nie do wszystkich przemawiaja, przygotowalismy video prezentacje tegorocznej trasy wyscigu!"
+    },
+    {
+        date: new Date(Date.parse("2021-11-12 18:09")),
+        photo: "nowy-sponsor-zawodow-xyz-com.jpg",
+        title: "Nowy sponsor zawodów - XYZ.com",
+        content: fakeContent,
+        excerpt:
+            "Po negocjacjach w koncu udalo nam sie dojsc do konsensusu, nawiazalismy wspolprace z kolejnym sponsorem - tym razem jest to XYZ.com"
+    }
+];
 
-const Slogan = () => (
+const Slogan = ({ article }: { article: typeof fakeNews[0] }) => (
     <div
-        style={{ backgroundImage: "url('assets/kocierz.jpg')" }}
+        style={{ backgroundImage: `url(assets/posts/${article.photo})` }}
         className="flex w-full h-128 uppercase text-white bg-bottom bg-cover justify-center"
     >
         <div className="w-full max-w-5xl flex flex-col items-start justify-center">
-            <div className="text-5xl font-semibold">rusza edycja 2022!</div>
-            <span className="mt-2 mb-8 font-semibold">
-                Jeszcze więcej wrażeń, jeszcze większy rozmach. W 2022 roku widzimy się dwa dni z rzędu!
-            </span>
-            <div className="text-3xl drop-shadow-xl">
+            <span className="font-semibold">{article.date.toLocaleDateString()}</span>
+            <div className="text-5xl font-semibold">{article.title}</div>
+            <span className="mt-2 mb-8 font-semibold">{article.excerpt}</span>
+            {/* <div className="text-3xl drop-shadow-xl">
                 <strong>09.04.2022</strong> <span className="text-xl">Time Trial</span>
             </div>
             <div className="text-3xl drop-shadow-xl">
                 <strong>10.04.2022</strong> <span className="text-xl">Wyścig ze startu wspólnego</span>
-            </div>
+            </div> */}
         </div>
     </div>
 );
 
-const SneakPeak = ({ article }: { article: typeof fakeNews[0] }) => <div className="w-1/3 m-4 p-4 bg-center bg-cover" style={{backgroundImage:"url(https://picsum.photos/500/500)"}}>
-    <span>{article.date.toLocaleString()}</span>
-    <h3 className="text-3xl">{article.title}</h3>
-    <h4 className="mt-4 text-xl">{article.excerpt}</h4>
-</div>
+const SneakPeak = ({ article }: { article: typeof fakeNews[0] }) => (
+    <div className="w-1/2 flex flex-col group overflow-hidden justify-end mx-4 my-4 relative">
+        <div
+            className="absolute w-full transition-transform group-hover:scale-105 duration-500 h-full bg-center bg-cover brightness-50"
+            style={{ backgroundImage: `url(assets/posts/${article.photo})`, zIndex: -1 }}
+        ></div>
+        <div className="p-6 pt-40 flex flex-col text-white">
+            <span className="font-semibold">{article.date.toLocaleDateString()}</span>
+            <h3 className="font-bold self-start w-auto uppercase transition-colors cursor-pointer hover:text-orange-500 text-2xl">
+                {article.title}
+            </h3>
+            <h4 className="mt-4">{article.excerpt}</h4>
+        </div>
+    </div>
+);
 
 type Props = {
     state: TimerState;
 };
 
-const Index = ({ }: Props) => {
+const Index = ({}: Props) => {
     return (
         <>
             <Head>
-                <title>Rura na Kocierz</title>
+                <title>Aktualności</title>
             </Head>
 
-            <Slogan />
+            <Slogan article={fakeNews[0]} />
             <div className="flex w-full justify-center">
-                <div className="w-full max-w-5xl flex">
-                    {fakeNews.map(n => <SneakPeak key={n.title} article={n} />)}
+                <div className="w-full flex py-4 px-12">
+                    {fakeNews.slice(1, 4).map((n) => (
+                        <SneakPeak key={n.title} article={n} />
+                    ))}
                 </div>
             </div>
         </>
