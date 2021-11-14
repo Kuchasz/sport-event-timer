@@ -50,7 +50,7 @@ const Slogan = ({ article }: { article: typeof fakeNews[0] }) => (
         style={{ backgroundImage: `url(assets/posts/${article.photo})` }}
         className="flex w-full h-128 uppercase text-white bg-bottom bg-cover justify-center"
     >
-        <div className="w-full max-w-5xl flex flex-col items-start justify-center">
+        <div className="w-full max-w-6xl flex flex-col items-start justify-center">
             <span className="font-semibold">{article.date.toLocaleDateString()}</span>
             <div className="text-5xl font-semibold">{article.title}</div>
             <span className="mt-2 mb-8 font-semibold">{article.excerpt}</span>
@@ -65,7 +65,7 @@ const Slogan = ({ article }: { article: typeof fakeNews[0] }) => (
 );
 
 const SneakPeak = ({ article }: { article: typeof fakeNews[0] }) => (
-    <div className="w-1/2 flex flex-col group overflow-hidden justify-end mx-4 my-4 relative">
+    <div className="w-1/2 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative">
         <div
             className="absolute w-full transition-transform group-hover:scale-105 duration-500 h-full bg-center bg-cover brightness-50"
             style={{ backgroundImage: `url(assets/posts/${article.photo})`, zIndex: -1 }}
