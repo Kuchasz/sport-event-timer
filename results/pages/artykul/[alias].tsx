@@ -1,5 +1,5 @@
 import { DateAdded } from "components/date-added";
-import { posts } from "./posts";
+import { posts } from "../../posts";
 import { useRouter } from "next/router";
 
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
