@@ -7,11 +7,23 @@ import { menuItems } from "./menu-items";
 import { ReactNode } from "react";
 import { useRouter } from "next/dist/client/router";
 
-const MenuButton = ({ activePath = "", to, children }: { activePath: string; to: string; children: ReactNode }) => (
+const MenuButton = ({
+    activePath = "",
+    to,
+    children,
+    isLast
+}: {
+    activePath: string;
+    to: string;
+    children: ReactNode;
+    isLast: boolean;
+}) => (
     <Link href={to}>
         <button
-            className={classNames("font-semibold transition-colors mr-8 uppercase", {
-                ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to)
+            className={classNames("font-semibold transition-colors uppercase", {
+                ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to),
+                ["mr-0"]: isLast,
+                ["mr-8"]: !isLast
             })}
         >
             {children}
@@ -24,7 +36,7 @@ const Footer = () => {
     return (
         <footer>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
-                <div className="w-full max-w-5xl flex text-sm items-center">
+                <div className="w-full max-w-6xl flex text-sm items-center">
                     <img className="mr-10" width="150px" src="assets/logo-sm.png"></img>
                     <div className="flex-grow text-gray-400">
                         <div className="text-lg">
@@ -52,11 +64,16 @@ const Footer = () => {
                 </div>
             </div>
             <div className="bg-gray-800 text-gray-600 flex justify-center py-12 text-xs font-semibold">
-                <div className="w-full max-w-5xl flex justify-between">
+                <div className="w-full max-w-6xl flex justify-between">
                     <div>RURA NA KOCIERZ © 2021</div>
                     <div>
-                        {menuItems.map((mi) => (
-                            <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
+                        {menuItems.map((mi, i) => (
+                            <MenuButton
+                                key={mi.path}
+                                activePath={router.asPath}
+                                to={mi.path}
+                                isLast={i + 1 === menuItems.length}
+                            >
                                 {mi.label}
                             </MenuButton>
                         ))}

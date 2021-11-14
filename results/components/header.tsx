@@ -24,14 +24,14 @@ const Header = () => {
     return (
         <header className="flex flex-col">
             <div className="bg-gray-800 text-gray-600 flex justify-center py-3 text-sm font-semibold">
-                <div className="w-full max-w-5xl flex">
+                <div className="w-full max-w-6xl flex">
                     <span className="mr-8">Rura na kocierz</span>
                     <span className="mr-8">09.04.2022 Time Trial</span>
                     <span className="mr-8">10.04.2022 Wyścig ze startu wspólnego</span>
                 </div>
             </div>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
-                <div className="w-full max-w-5xl flex text-sm items-center">
+                <div className="w-full max-w-6xl flex text-sm items-center">
                     <img className="mr-40" width="150px" src="assets/logo-sm.png"></img>
                     <div className="flex">
                         <Icon className="text-orange-500" size={1.5} path={mdiHumanMaleChild}></Icon>
@@ -54,7 +54,7 @@ const Header = () => {
                 <div className="w-full h-0.5 bg-gray-700"></div>
             </div>
             <div className="flex justify-center py-3 bg-gray-900 text-white">
-                <div className="w-full max-w-5xl flex justify-between">
+                <div className="w-full max-w-6xl flex justify-between">
                     <div>
                         {menuItems.map((mi) => (
                             <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
