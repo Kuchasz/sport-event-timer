@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { DateAdded } from "../components/date-added";
 import { posts } from "../posts";
+import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
 
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
@@ -51,16 +52,18 @@ type Props = {
 };
 
 const Index = ({}: Props) => {
+    const sortedPosts = sort(posts, (p) => p.date.getTime()).reverse();
+
     return (
         <>
             <Head>
                 <title>Aktualności</title>
             </Head>
 
-            <Slogan article={posts[0]} />
+            <Slogan article={sortedPosts[0]} />
             <div className="flex w-full justify-center">
                 <div className="w-full flex py-4 px-12">
-                    {posts.slice(1, 4).map((n) => (
+                    {sortedPosts.slice(1, 4).map((n) => (
                         <SneakPeak key={n.title} article={n} />
                     ))}
                 </div>
