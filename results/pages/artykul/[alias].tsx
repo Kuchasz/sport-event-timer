@@ -39,7 +39,7 @@ const Article = () => {
                                     ></span>
                                     <DateAdded date={post.date} />
                                 </div>
-                                <span>{post.content}</span>
+                                <span dangerouslySetInnerHTML={{ __html: post.content }}></span>
                             </div>
                         </div>
                     </div>
