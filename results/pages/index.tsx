@@ -6,10 +6,18 @@ import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
 
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
-    <div
-        style={{ backgroundImage: `url(/assets/posts/${article.photo})` }}
-        className="flex w-full h-128 uppercase text-white bg-bottom bg-cover justify-center"
-    >
+    <div className="flex w-full h-128 uppercase text-white bg-bottom bg-contain relative justify-center overflow-hidden">
+        {/* <img
+            width="100%"
+            height="100%"
+            src={`/assets/posts/${article.photo}`}
+            className="absolute w-full h-full object-contain"
+            style={{ zIndex: -1 }}
+        /> */}
+        <div
+            style={{ zIndex: -2, backgroundImage: `url(/assets/posts/${article.photo})` }}
+            className="absolute w-full h-full bg-contain bg-center"
+        ></div>
         <div className="w-full max-w-6xl flex flex-col items-start justify-center">
             <DateAdded date={article.date} />
             <div className="text-5xl font-semibold">{article.title}</div>

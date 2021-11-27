@@ -1,0 +1,30 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app - prod
+
+on: workflow_dispatch
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build_server
+        # environment:
+        #     name: "production"
+        # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+        steps:
+            - name: publish
+              uses: garygrossgarten/github-action-ssh@release
+              with:
+                  host: ${{ secrets.ssh_host }}
+                  username: ${{ secrets.ssh_username }}
+                  password: ${{ secrets.ssh_password }}
+                  tryKeyboard: true
+                  command: |
+                      cd domains/rura.cc/
+                      rm -rf node_modules
+                      rm -rf public_nodejs
+                      unzip -q ../artifacts/set-hub-package.zip
+                      mv server public_nodejs
+                      devil www restart rura.cc
