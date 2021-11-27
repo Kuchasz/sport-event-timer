@@ -16,7 +16,7 @@ const Slogan = ({ article }: { article: typeof posts[0] }) => (
         /> */}
         <div
             style={{ zIndex: -2, backgroundImage: `url(/assets/posts/${article.photo})` }}
-            className="absolute w-full h-full bg-contain bg-center"
+            className="absolute w-full h-full bg-cover bg-center"
         ></div>
         <div className="w-full max-w-6xl flex flex-col items-start justify-center">
             <DateAdded date={article.date} />
