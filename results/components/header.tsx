@@ -32,7 +32,9 @@ const Header = () => {
             </div>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
                 <div className="w-full max-w-6xl flex text-sm items-center">
-                    <img className="mr-40" width="150px" src="/assets/logo-sm.png"></img>
+                    <Link href="/">
+                        <img className="cursor-pointer mr-40" width="150px" src="/assets/logo-sm.png"></img>
+                    </Link>
                     <div className="flex">
                         <Icon className="text-orange-500" size={1.5} path={mdiHumanMaleChild}></Icon>
                         <div className="ml-4">
