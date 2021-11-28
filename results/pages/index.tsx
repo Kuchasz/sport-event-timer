@@ -19,7 +19,7 @@ const Slogan = ({ article }: { article: typeof posts[0] }) => (
             style={{ zIndex: -2, backgroundImage: `url(/assets/posts/${article.photo})` }}
             className="absolute w-full h-full bg-cover bg-center"
         ></div>
-        <div className="w-full max-w-6xl flex flex-col items-start justify-center">
+        <div className="w-full max-w-6xl flex drop-shadow-3xl flex-col items-start justify-center">
             <DateAdded date={article.date} />
             <div className="text-5xl font-semibold">{article.title}</div>
             <span className="mt-4 font-semibold">{article.excerpt}</span>
