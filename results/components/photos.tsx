@@ -38,14 +38,14 @@ const Photos = ({ directory }: Props) => {
             >
                 {directory.items.map((i) => (
                     <a
-                        className="gallery-item block hover:opacity-50 drop-shadow-w-2xl h-24 w-24 cursor-pointer m-3"
+                        className="gallery-item block hover:opacity-50 h-48 w-48 cursor-pointer m-3"
                         data-download-url={i.full}
                         data-src={i.big}
                         data-thumb={i.thumb}
                         key={i.big}
                     >
                         <img
-                            className="img-responsive rounded w-full h-full object-cover"
+                            className="img-responsive border rounded-md w-full h-full object-cover"
                             src={i.thumb}
                             loading="lazy"
                         />
