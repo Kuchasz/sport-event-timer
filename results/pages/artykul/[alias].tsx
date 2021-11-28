@@ -1,4 +1,4 @@
-import { DateAdded } from "components/date-added";
+import { PostDetails } from "../../components/post-details";
 import { posts } from "../../posts";
 import { useRouter } from "next/router";
 
@@ -31,14 +31,7 @@ const Article = () => {
                         <div className="max-w-6xl my-14">
                             <div className="bg-white border border-gray-300 rounded-sm p-10">
                                 <h2 className="text-2xl uppercase font-semibold">{post.title}</h2>
-                                <div className="uppercase flex my-4 text-sm items-center font-semibold">
-                                    <span>{post.author}</span>
-                                    <span
-                                        style={{ width: "2px", height: "20px" }}
-                                        className="inline-block mx-4 bg-gray-300"
-                                    ></span>
-                                    <DateAdded date={post.date} />
-                                </div>
+                                <PostDetails date={post.date} author={post.author} />
                                 <span dangerouslySetInnerHTML={{ __html: post.content }}></span>
                             </div>
                         </div>

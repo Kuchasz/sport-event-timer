@@ -55,7 +55,7 @@ export const posts = [
         author: "administrator",
         photo: "rusza-edycja-2022.jpg",
         title: "Rusza edycja 2022!",
-        alias: "nowy-sponsor-zawodow-xyz-com",
+        alias: "rusza-edycja-2022",
         content: `Po niewątpliwym sukcesie Rury na Kocierz postanowiliśmy pójść za ciosem: wzorem najlepszych sequeli filmowych będzie mocniej, szybciej i dłużej. Wiemy doskonale, że otwieracie już swoje jaskinie wytopu, odpalając pierwsze plany treningowe z mozołem przygotowywane przez Waszych trenerów 📊.
         <br/><br/>Wobec tego możecie już obrać sobie pierwszy cel na przyszły rok, bo 9 kwietnia 2022 r. widzimy się na otwarciu sezonu! To będzie dwudniowe kolarskie święto. Pierwszego dnia naszej etapówki będziecie mieli do wyboru dwa dystanse: Fun (52 km/ 1120 m) Pro (104 km/ 2340 m).
         <br/><br/>W drugi dzień natomiast zaprosimy was na samotną walkę z czasem: będziecie wtedy mogli odrobić ewentualne straty w klasyfikacji generalnej… lub je powiększyć. Czasówka ma długość 11 km i 380 m przewyższeń. Już teraz możecie zaplanować weekend 9-10 kwietnia wraz ze swoją rodziną.
@@ -63,5 +63,16 @@ export const posts = [
         <br/><br/>Szczegółowe informacje będziemy sukcesywnie publikować na naszych social mediach, wkrótce ruszą też zapisy. `,
         excerpt:
             "Jeszcze więcej wrażeń, jeszcze większy rozmach. W 2022 widzimy się dwa dni z rzędu! 09.04 - Time Trial, 10.04 - Wyścig ze startu wspólnego"
+    },
+    {
+        date: new Date(Date.parse("2021-11-18 22:23")),
+        author: "administrator",
+        photo: "zapisy-2022.jpg",
+        title: "Ruszaaaają zapisy na Rurę 2022!",
+        alias: "ruszaja-zapisy-2022",
+        content: `🖤Otwórzmy sezon 2022 wspólnie na największej kolarskiej imprezie w tej części Polski 🚵🔥. 
+        <br/><br/>Bez przedłużania, link do zapisów znajduje się poniżej 👇
+        <br/><a target="_blank" href="https://dostartu.pl/rura-na-kocierz-v6591">https://dostartu.pl/rura-na-kocierz-v6591</a>`,
+        excerpt: "Uruchamiamy zapisy na edycję 2022"
     }
 ];

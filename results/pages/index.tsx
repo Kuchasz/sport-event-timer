@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { DateAdded } from "../components/date-added";
+import { PostDetails } from "../components/post-details";
 import { posts } from "../posts";
 import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
 
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
-    <div className="flex w-full h-128 uppercase text-white bg-bottom bg-contain relative justify-center overflow-hidden">
+    <div className="flex w-full h-128 uppercase text-white bg-center bg-contain relative justify-center overflow-hidden">
         {/* <img
             width="100%"
             height="100%"
@@ -73,6 +74,22 @@ const Index = ({}: Props) => {
                 <div className="w-full flex py-4 px-12">
                     {sortedPosts.slice(1, 4).map((n) => (
                         <SneakPeak key={n.title} article={n} />
+                    ))}
+                </div>
+            </div>
+            <div className="flex w-full relative justify-center overflow-hidden">
+                <div className="w-full my-12 max-w-6xl flex flex-col items-start justify-center">
+                    {sortedPosts.slice(4).map((p) => (
+                        <Link href={`artykul/${p.alias}`}>
+                            <div className="cursor-pointer flex mb-4">
+                                <img className="w-96 object-cover object-center" src={`assets/posts/${p.photo}`}></img>
+                                <div className="px-4 flex flex-col">
+                                    <div className="font-semibold text-lg uppercase">{p.title}</div>
+                                    <h4 className="my-4">{p.excerpt}</h4>
+                                    <PostDetails date={p.date} author={p.author} />
+                                </div>
+                            </div>
+                        </Link>
                     ))}
                 </div>
             </div>
