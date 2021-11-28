@@ -3,40 +3,9 @@ import Link from "next/link";
 import { DateAdded } from "../components/date-added";
 import { PostDetails } from "../components/post-details";
 import { posts } from "../posts";
+import { Slogan } from "../components/slogan";
 import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
-
-const Slogan = ({ article }: { article: typeof posts[0] }) => (
-    <div className="flex w-full h-128 uppercase text-white bg-center bg-contain relative justify-center overflow-hidden">
-        {/* <img
-            width="100%"
-            height="100%"
-            src={`/assets/posts/${article.photo}`}
-            className="absolute w-full h-full object-contain"
-            style={{ zIndex: -1 }}
-        /> */}
-        <div
-            style={{ zIndex: -2, backgroundImage: `url(/assets/posts/${article.photo})` }}
-            className="absolute w-full h-full bg-cover bg-center"
-        ></div>
-        <div className="w-full max-w-6xl flex drop-shadow-3xl flex-col items-start justify-center">
-            <DateAdded date={article.date} />
-            <div className="text-5xl font-semibold">{article.title}</div>
-            <span className="mt-4 font-semibold">{article.excerpt}</span>
-            <Link href={`artykul/${article.alias}`}>
-                <span className="mt-4 text-sm transition-colors duration-500 cursor-pointer border-2 hover:bg-orange-500 hover:border-orange-500 font-semibold px-8 py-2 border-white rounded-md">
-                    CZYTAJ WIĘCEJ
-                </span>
-            </Link>
-            {/* <div className="text-3xl drop-shadow-xl">
-                <strong>09.04.2022</strong> <span className="text-xl">Time Trial</span>
-            </div>
-            <div className="text-3xl drop-shadow-xl">
-                <strong>10.04.2022</strong> <span className="text-xl">Wyścig ze startu wspólnego</span>
-            </div> */}
-        </div>
-    </div>
-);
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
     <div className="flex-1 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative">
@@ -62,14 +31,14 @@ type Props = {
 
 const Index = ({}: Props) => {
     const sortedPosts = sort(posts, (p) => p.date.getTime()).reverse();
+    const mainPost = sortedPosts[0];
 
     return (
         <>
             <Head>
                 <title>Aktualności</title>
             </Head>
-
-            <Slogan article={sortedPosts[0]} />
+            <Slogan {...mainPost} link={mainPost.alias} photo={`assets/posts/${mainPost.photo}`} />
             <div className="flex w-full justify-center">
                 <div className="w-full flex flex-col sm:flex-row py-4 px-12">
                     {sortedPosts.slice(1, 4).map((n) => (

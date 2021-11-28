@@ -1,18 +1,7 @@
 import { PostDetails } from "../../components/post-details";
 import { posts } from "../../posts";
+import { Slogan } from "../../components/slogan";
 import { useRouter } from "next/router";
-
-const Slogan = ({ article }: { article: typeof posts[0] }) => (
-    <div
-        style={{ backgroundImage: `url(/assets/posts/${article.photo})` }}
-        className="flex w-full h-128 uppercase text-white bg-center bg-cover justify-center"
-    >
-        <div className="w-full max-w-6xl drop-shadow-3xl flex flex-col items-start justify-center">
-            <div className="text-5xl font-semibold">{article.title}</div>
-            <span className="mt-4 font-semibold">{article.excerpt}</span>
-        </div>
-    </div>
-);
 
 const Article = () => {
     const router = useRouter();
@@ -26,7 +15,7 @@ const Article = () => {
                 <div>POST DOES NOT EXIST</div>
             ) : (
                 <div>
-                    <Slogan article={post} />
+                    <Slogan {...post} photo={`/assets/posts/${post.photo}`} />
                     <div className="flex w-full bg-gray-200 justify-center">
                         <div className="max-w-6xl my-14">
                             <div className="bg-white border border-gray-300 rounded-sm p-10">
