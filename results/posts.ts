@@ -70,9 +70,11 @@ export const posts = [
         photo: "zapisy-2022.jpg",
         title: "Ruszaaaają zapisy na Rurę 2022!",
         alias: "ruszaja-zapisy-2022",
-        content: `🖤Otwórzmy sezon 2022 wspólnie na największej kolarskiej imprezie w tej części Polski 🚵🔥. 
+        content: `Otwórzmy sezon 2022 wspólnie na największej kolarskiej imprezie w tej części Polski. Po wielu zapytaniach uruchamiamy zapisy do kolejnej edycji 🚵🔥
         <br/><br/>Bez przedłużania, link do zapisów znajduje się poniżej 👇
-        <br/><a target="_blank" href="https://dostartu.pl/rura-na-kocierz-v6591">https://dostartu.pl/rura-na-kocierz-v6591</a>`,
+        <br/><a target="_blank" href="https://dostartu.pl/rura-na-kocierz-v6591">https://dostartu.pl/rura-na-kocierz-v6591</a>
+        <br/><br/>
+        <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FHotelKocierz%2Fvideos%2F328634038948375%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
         excerpt: "Uruchamiamy zapisy na edycję 2022"
     }
 ];
