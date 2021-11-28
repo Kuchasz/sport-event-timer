@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Slogan = ({ article }: { article: typeof posts[0] }) => (
     <div
         style={{ backgroundImage: `url(/assets/posts/${article.photo})` }}
-        className="flex w-full h-128 uppercase text-white bg-bottom bg-cover justify-center"
+        className="flex w-full h-128 uppercase text-white bg-center bg-cover justify-center"
     >
         <div className="w-full max-w-6xl flex flex-col items-start justify-center">
             <div className="text-5xl font-semibold">{article.title}</div>
