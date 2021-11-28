@@ -54,7 +54,7 @@ export const posts = [
         date: new Date(Date.parse("2021-10-22 17:11")),
         author: "administrator",
         photo: "podsumowanie-rura-2021.jpg",
-        title: "Relacja z Rury na Kocierez",
+        title: "Relacja z Rury na Kocierz",
         alias: "relacja-rura-na-kocierz-2021",
         content: `Oprócz fotografów na miejscy zawodów można było zauważyć także pana operatora video 🎥, poniżej przedstawiamy filmowe podsumowanie Rury na Kocierz
         <br/><br/>
