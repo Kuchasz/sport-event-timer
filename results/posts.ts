@@ -36,7 +36,7 @@ export const posts = [
         <br/><a target="_blank" href="https://www.facebook.com/Eurostempel/">Eurostempel </a>
         <br/><a target="_blank" href="https://www.facebook.com/ADAMEDSmartUP/">ADAMED SmartUP </a>
         <br/><a target="_blank" href="https://www.facebook.com/agropunktstarawies/">Agropunkt - Stara Wieś </a>`,
-        excerpt: "Przestawiamy sponsorów rury na kocierz"
+        excerpt: "Opowiadamy o nagrodach oraz przedstawiamy sponsorów rury na kocierz"
     },
     {
         date: new Date(Date.parse("2021-10-03 06:13")),
@@ -49,6 +49,17 @@ export const posts = [
         <br/><br/>Link do zdjęć:
         <a href="/zdjecia">https://innergy.cc/zdjecia</a>`,
         excerpt: "Udostępniamy do bezpłatnego pobrania zdjęcia wykonane przez rozstawionych na trasie fotografów"
+    },
+    {
+        date: new Date(Date.parse("2021-10-22 17:11")),
+        author: "administrator",
+        photo: "podsumowanie-rura-2021.jpg",
+        title: "Relacja z Rury na Kocierez",
+        alias: "relacja-rura-na-kocierz-2021",
+        content: `Oprócz fotografów na miejscy zawodów można było zauważyć także pana operatora video 🎥, poniżej przedstawiamy filmowe podsumowanie Rury na Kocierz
+        <br/><br/>
+        <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fruranakocierz%2Fvideos%2F1572026283131056%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+        excerpt: "Filmowa relacja z tego, co działo się 2.10.2021r"
     },
     {
         date: new Date(Date.parse("2021-11-12 18:09")),
