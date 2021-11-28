@@ -39,7 +39,7 @@ const Slogan = ({ article }: { article: typeof posts[0] }) => (
 );
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
-    <div className="w-1/2 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative">
+    <div className="flex-1 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative">
         <div
             className="absolute w-full transition-transform group-hover:scale-105 duration-500 h-full bg-center bg-cover brightness-50"
             style={{ backgroundImage: `url(/assets/posts/${article.photo})`, zIndex: -1 }}
@@ -71,7 +71,7 @@ const Index = ({}: Props) => {
 
             <Slogan article={sortedPosts[0]} />
             <div className="flex w-full justify-center">
-                <div className="w-full flex py-4 px-12">
+                <div className="w-full flex flex-col sm:flex-row py-4 px-12">
                     {sortedPosts.slice(1, 4).map((n) => (
                         <SneakPeak key={n.title} article={n} />
                     ))}

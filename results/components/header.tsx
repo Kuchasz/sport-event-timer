@@ -31,7 +31,7 @@ const Header = () => {
                 </div>
             </div>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
-                <div className="w-full max-w-6xl flex text-sm items-center">
+                <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center">
                     <Link href="/">
                         <img className="cursor-pointer mr-40" width="150px" src="/assets/logo-sm.png"></img>
                     </Link>

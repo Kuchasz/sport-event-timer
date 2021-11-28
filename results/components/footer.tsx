@@ -36,7 +36,7 @@ const Footer = () => {
     return (
         <footer>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
-                <div className="w-full max-w-6xl flex text-sm items-center">
+                <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center">
                     <img className="mr-10" width="150px" src="/assets/logo-sm.png"></img>
                     <div className="flex-grow text-gray-400">
                         <div className="text-lg">
@@ -44,7 +44,7 @@ const Footer = () => {
                         </div>
                         <div>Mistrzyni Polski, Olimpijka Tokio 2020</div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex flex-col sm:flex-row  items-center">
                         <div className="flex">
                             <Icon className="text-orange-500" size={1.5} path={mdiHumanMaleChild}></Icon>
                             <div className="ml-4">
