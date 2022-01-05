@@ -87,5 +87,19 @@ export const posts = [
         <br/><br/>
         <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FHotelKocierz%2Fvideos%2F328634038948375%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
         excerpt: "Uruchamiamy zapisy na edycję 2022"
+    },
+    {
+        date: new Date(Date.parse("2022-01-05 16:43")),
+        author: "administrator",
+        photo: "konferencja-2022-kocierz.jpg",
+        title: "Zapraszamy na konferencję prasową",
+        alias: "konferencja-2022-zaprosznie",
+        content: `Już w niedzielę 9.01.2022 odkryjemy wszystkie karty. Zaprezentujemy trasę wyścigu, sponsorów i koszulki dla zwycięzców wyścigu. Wpadajcie! 
+        <br/><br/>Dla tych którzy nie będą mogli się zjawić osobiście mamy dobrą wiadomość - po konferencji zostanie udostępniona relacja video.
+        <br/><br/>09.01.2022, godzina 16:00
+        <br/>Kocierz Hotel&Spa, Sala kocierzanka
+        <br/><br/>
+        <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fruranakocierz%2Fvideos%2F1115167789222554%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+        excerpt: "Konferencja prasowa rury na kocierz 2022"
     }
 ];
