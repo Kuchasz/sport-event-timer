@@ -73,7 +73,7 @@ export const posts = [
         <br/><br/>Naprzeciw wychodzi Wam niezawodny <a target="_blank" href="https://www.facebook.com/HotelKocierz">Kocierz Hotel & SPA</a> z ofertą rabatu 15% na pobyt w trakcie naszego szalonego weekendu! 
         <br/><br/>Szczegółowe informacje będziemy sukcesywnie publikować na naszych social mediach, wkrótce ruszą też zapisy. `,
         excerpt:
-            "Jeszcze więcej wrażeń, jeszcze większy rozmach. W 2022 widzimy się dwa dni z rzędu! 09.04 - Time Trial, 10.04 - Wyścig ze startu wspólnego"
+            "Jeszcze więcej wrażeń, jeszcze większy rozmach. W 2022 widzimy się dwa dni z rzędu! 09.04 - Wyścig ze startu wspólnego, 10.04 - Time Trial"
     },
     {
         date: new Date(Date.parse("2021-11-18 22:23")),
