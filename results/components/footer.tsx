@@ -65,7 +65,7 @@ const Footer = () => {
             </div>
             <div className="bg-gray-800 text-gray-600 flex justify-center py-12 text-xs font-semibold">
                 <div className="w-full max-w-6xl flex justify-between">
-                    <div>RURA NA KOCIERZ © 2021</div>
+                    <div>RURA NA KOCIERZ © 2022</div>
                     <div>
                         {menuItems.map((mi, i) => (
                             <MenuButton
