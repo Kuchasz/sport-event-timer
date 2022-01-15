@@ -47,7 +47,7 @@ export const posts = [
         content: `Dla tych, którzy lubią pamiątki w postaci zdjęć mamy dobrą informację. Na trasie zawodów polowali na was fotografowie. Wszystkie zdjęcia zostają udostępnione do pobrania. Będziecie mogli mogli je wywołać, postawić na kominku i wspominać, gdy zimą za oknem będzie można jeździć pługiem 😅.
         <br/><br/>Strzelali z aparatu Oliwia Kamińska oraz Ignacy Grubka.
         <br/><br/>Link do zdjęć:
-        <a href="/zdjecia">https://innergy.cc/zdjecia</a>`,
+        <a href="/zdjecia">https://rura.cc/zdjecia</a>`,
         excerpt: "Udostępniamy do bezpłatnego pobrania zdjęcia wykonane przez rozstawionych na trasie fotografów"
     },
     {
@@ -101,5 +101,16 @@ export const posts = [
         <br/><br/>
         <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fruranakocierz%2Fvideos%2F1115167789222554%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
         excerpt: "Konferencja prasowa rury na kocierz 2022"
+    },
+    {
+        date: new Date(Date.parse("2022-01-14 15:22")),
+        author: "administrator",
+        photo: "konferencja-2022-rura-relacja.jpg",
+        title: "Konferencja prasowa Rura na Kocierz 2022",
+        alias: "konferencja-2022-relacja",
+        content: `09.01.2022 Odbyła się konferacja prasowa Rury na Kocierz 2022. Przygotowaliśmy relację video ⬇️ dla tych, którzy nie mogli w niej uczestniczyć.
+        <br/><br/>
+        <iframe width="100%" height="480" src="https://www.youtube.com/embed/Sg3yUnn6Fps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+        excerpt: "Relacja video z konferencji prasowej"
     }
 ];
