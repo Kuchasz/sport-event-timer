@@ -2277,6 +2277,13 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
+"@types/simple-react-lightbox@^3.6.1":
+  version "3.6.1"
+  resolved "https://registry.npmjs.org/@types/simple-react-lightbox/-/simple-react-lightbox-3.6.1.tgz#d2fffaa02449b61deffab0e968931990e8c65097"
+  integrity sha512-iizqoJJuxIvzLWdnfqo9pGG4d5HfQa407Bk4e8Tgf1kS5Fkes8b/5Kdhzwhxa/4XWEpv1mQBCVwfwS87dNYQ8Q==
+  dependencies:
+    "@types/react" "*"
+
 "@types/socket.io-client@^3.0.0":
   version "3.0.0"
   resolved "https://registry.npmjs.org/@types/socket.io-client/-/socket.io-client-3.0.0.tgz#d0b8ea22121b7c1df68b6a923002f9c8e3cefb42"
@@ -8433,11 +8440,6 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
-
-lightgallery@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/lightgallery/-/lightgallery-2.2.1.tgz#a1e40d8db0c1a1be17596db440cee466670bedd9"
-  integrity sha512-6eDdqyQsQhxHYccMxWRNsHGkY1tITFHheR89ivlyQsDPYVt2yH/fIoJpipT1pMc8bCti/Pv7X0vU0QLMdnHehg==
 
 lilconfig@^2.0.3:
   version "2.0.3"
