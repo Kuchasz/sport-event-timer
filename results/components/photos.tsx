@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { SRLWrapper } from "simple-react-lightbox";
 
 type Item = {
