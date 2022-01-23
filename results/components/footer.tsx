@@ -100,7 +100,9 @@ const Footer = () => {
             </div>
             <div className="flex justify-center py-8 bg-gray-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center">
-                    <img className="mr-10" width="150px" src="/assets/logo-sm.png"></img>
+                    <Link href="/">
+                        <img className="cursor-pointer mr-10" width="150px" src="/assets/logo-sm.png"></img>
+                    </Link>
                     <div className="flex-grow text-gray-400">
                         <div className="text-lg">
                             Ambasador <strong>Marta Lach</strong>
