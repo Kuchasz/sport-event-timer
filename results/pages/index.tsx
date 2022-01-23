@@ -8,21 +8,23 @@ import { sort } from "../utils";
 import { TimerState } from "@set/timer/store";
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
-    <div className="flex-1 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative">
-        <div
-            className="absolute w-full transition-transform group-hover:scale-105 duration-500 h-full bg-center bg-cover brightness-50"
-            style={{ backgroundImage: `url(/assets/posts/${article.photo})`, zIndex: -1 }}
-        ></div>
-        <div className="p-6 pt-40 flex flex-col text-white">
-            <Link href={`artykul/${article.alias}`}>
-                <h3 className="font-bold self-start duration-500 w-auto uppercase transition-colors cursor-pointer hover:text-orange-500 text-2xl">
+    <Link href={`artykul/${article.alias}`}>
+        <div className="flex-1 flex flex-col rounded-md group overflow-hidden justify-end mx-4 my-4 relative cursor-pointer">
+            <div
+                className="absolute w-full transition-transform group-hover:scale-105 duration-500 h-full bg-center bg-cover brightness-50"
+                style={{ backgroundImage: `url(/assets/posts/${article.photo})`, zIndex: -1 }}
+            ></div>
+
+            <div className="p-6 pt-40 flex flex-col text-white">
+                <h3 className="font-bold self-start duration-500 w-auto uppercase transition-colors hover:text-orange-500 text-2xl">
                     {article.title}
                 </h3>
-            </Link>
-            <h4 className="my-4">{article.excerpt}</h4>
-            <DateAdded date={article.date} />
+
+                <h4 className="my-4">{article.excerpt}</h4>
+                <DateAdded date={article.date} />
+            </div>
         </div>
-    </div>
+    </Link>
 );
 
 type Props = {
