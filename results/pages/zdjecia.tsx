@@ -2,7 +2,6 @@ import Head from "next/head";
 import Photos from "../components/photos";
 import { useEffect, useState } from "react";
 
-
 type Item = {
     thumb: string;
     big: string;
@@ -16,7 +15,7 @@ type Directory = {
     items: Item[];
 };
 
-const rura = (url: string) => `https://wedding-galleries.azurewebsites.net/rura/${url}`;
+const rura = (url: string) => `https://galleries.azureedge.net/rura/${url}`;
 
 function Zdjecia() {
     console.log("zdjecia.render");
