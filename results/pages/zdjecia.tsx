@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import Photos from "../components/photos";
 import { useEffect, useState } from "react";
 
 type Item = {
@@ -33,6 +32,7 @@ function Zdjecia() {
                             .then((x: string[]) =>
                                 Promise.resolve({
                                     ...d,
+                                    date: d.date.replace(/-/g, "."),
                                     items: x.map((i) => ({
                                         thumb: rura(`${d.dir}/thumb/${i}`),
                                         big: rura(`${d.dir}/big/${i}`),
