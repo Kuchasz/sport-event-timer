@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import Photos from "../components/photos";
 import { useEffect, useState } from "react";
 
@@ -20,8 +21,6 @@ type Directory = {
 const rura = (url: string) => `https://galleries.azureedge.net/rura/${url}`;
 
 function Zdjecia() {
-    console.log("zdjecia.render");
-
     const [directories, setDirectories] = useState<Directory[]>([]);
     useEffect(() => {
         fetch(rura("index.json"))
@@ -53,29 +52,25 @@ function Zdjecia() {
                 <title>Zdjęcia</title>
             </Head>
             <div className="flex p-4 flex-col items-center">
-                <div className="p-4 mb-4 text-white bg-gray-700 rounded-md">
-                    <strong>INFO: </strong>Każde zdjęcie można pobrać w wysokiej rozdzielczości za pomocą odpowiedniego
-                    przycisku.
-                </div>
-
-                {/* {directories.length !== 0 ? directories.map((d) => <Photos key={d.dir} directory={d} />) : null} */}
                 <div className="flex flex-wrap">
                     {directories.length !== 0
                         ? directories.map((d) => (
-                              <div className="relative min-w-96 flex-grow h-96">
-                                  <img
-                                      className="absolute z-[-10] top-0 w-full h-full object-center object-cover"
-                                      src={d.items[0].big}
-                                  />
-                                  <div className="absolute z-[-9] top-0 w-full h-full bg-black opacity-50"></div>
-                                  <div className="text-white font-semibold h-full flex flex-col justify-between p-4">
-                                      <div className="flex flex-col">
-                                          <span>{d.date}</span>
-                                          <span>fot. {d.author}</span>
+                              <Link href={`zdjecia/${d.dir}`}>
+                                  <div className="relative w-full md:w-1/3 cursor-pointer flex-grow h-96">
+                                      <img
+                                          className="absolute z-[-10] top-0 w-full hover:scale-105 h-full object-center object-cover"
+                                          src={d.items[0].big}
+                                      />
+                                      <div className="absolute z-[-9] top-0 w-full h-full bg-black opacity-50"></div>
+                                      <div className="text-white font-semibold h-full flex flex-col justify-between p-4">
+                                          <div className="flex flex-col">
+                                              <span>{d.date}</span>
+                                              <span>fot. {d.author}</span>
+                                          </div>
+                                          <div className="text-3xl">{d.title}</div>
                                       </div>
-                                      <div className="text-3xl">{d.title}</div>
                                   </div>
-                              </div>
+                              </Link>
                           ))
                         : null}
                 </div>
