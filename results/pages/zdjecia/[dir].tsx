@@ -27,6 +27,7 @@ function Zdjecia() {
     const [directory, setDirectory] = useState<Directory>();
 
     useEffect(() => {
+        if (dir === undefined) return;
         fetch(rura("index.json"))
             .then((x) => x.json())
             .then((dirs: Directory[]) => {
@@ -46,7 +47,7 @@ function Zdjecia() {
                     );
             })
             .then(setDirectory);
-    }, []);
+    }, [dir]);
 
     return (
         <>
