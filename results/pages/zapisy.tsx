@@ -7,7 +7,7 @@ const Zapisy = () => {
             <Head>
                 <title>Zapisy</title>
             </Head>
-            <div className="flex h-full flex-1 items-center justify-center">
+            <div className="flex h-full p-16 flex-1 items-center justify-center">
                 <a
                     className="bg-gray-200 hover:bg-gray-300"
                     target="_blank"

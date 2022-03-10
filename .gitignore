@@ -30,4 +30,4 @@ yarn-error.log*
 *.log
 
 state.json
-players.json
+players*.json
