@@ -10,7 +10,7 @@ import { useRouter } from "next/dist/client/router";
 const MenuButton = ({ activePath = "", to, children }: { activePath: string; to: string; children: ReactNode }) => (
     <Link href={to}>
         <button
-            className={classNames("text-sm font-semibold transition-colors px-2 py-1 mx-5 uppercase", {
+            className={classNames("text-xs md:text-sm font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase", {
                 ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to)
             })}
         >
