@@ -25,7 +25,7 @@ const Photos = ({ directory }: Props) => {
                 <div className="w-100 flex flex-wrap justify-center">
                     {directory.items.map((i) => (
                         <a
-                            className="gallery-item block hover:opacity-50 h-48 w-48 cursor-pointer m-3"
+                            className="gallery-item block hover:opacity-50 h-24 w-24 md:h-48 md:w-48 cursor-pointer m-1 md:m-3"
                             data-download-url={i.full}
                             href={i.big}
                             key={i.big}
