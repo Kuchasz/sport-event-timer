@@ -13,8 +13,8 @@ export const Slogan = ({ photo, title, excerpt, link, linkText }: SloganProps) =
             style={{ zIndex: -2, backgroundImage: `url(${photo})` }}
             className="absolute w-full h-full bg-cover bg-center"
         ></div>
-        <div className="w-full max-w-6xl flex drop-shadow-3xl flex-col items-start justify-center">
-            <div className="text-5xl font-semibold">{title}</div>
+        <div className="w-full max-w-6xl flex drop-shadow-3xl p-4 flex-col items-center md:items-start justify-center">
+            <div className="text-center md:text-left text-5xl font-semibold">{title}</div>
             <span className="mt-4 font-semibold">{excerpt}</span>
             {link && (
                 <Link href={`artykul/${link}`}>
