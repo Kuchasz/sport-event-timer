@@ -33,10 +33,10 @@ const Header = () => {
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center justify-between">
                     <div className="flex items-center">
                         <Link href="/">
-                            <img className="cursor-pointer mr-10" width="150px" src="/assets/logo-sm.png"></img>
+                            <img className="cursor-pointer mr-2 md:mr-10" width="200px" src="/assets/logo-sm.png"></img>
                         </Link>
                         <div className="flex-grow text-gray-400">
-                            <div className="text-lg">
+                            <div className="text-base">
                                 Ambasador <strong>Marta Lach</strong>
                             </div>
                             <div className="text-xs">Mistrzyni Polski, Olimpijka Tokio 2020</div>
