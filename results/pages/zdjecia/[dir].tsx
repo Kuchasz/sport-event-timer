@@ -55,7 +55,7 @@ function Zdjecia() {
                 <title>Zdjęcia</title>
             </Head>
             <div className="flex p-4 flex-col items-center">
-                <div className="p-4 mb-4 text-white bg-gray-700 rounded-md">
+                <div className="p-4 text-white bg-gray-700 rounded-md">
                     <strong>INFO: </strong>Każde zdjęcie można pobrać w wysokiej rozdzielczości za pomocą odpowiedniego
                     przycisku.
                 </div>
