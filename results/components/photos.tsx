@@ -19,8 +19,8 @@ const options = {
 const Photos = ({ directory }: Props) => {
     return (
         <div className="flex p-4 flex-col items-center">
-            <h1 className="text-6xl font-bold mt-20 mb-10">{directory.title}</h1>
-            <h2 className="text-2xl text-gray-500 font-light mb-10">{directory.description}</h2>
+            <h1 className="text-4xl text-center font-bold my-10">{directory.title}</h1>
+            <h2 className="text-xl text-center text-gray-500 mb-10">{directory.description}</h2>
             <SRLWrapper options={options}>
                 <div className="w-100 flex flex-wrap justify-center">
                     {directory.items.map((i) => (
