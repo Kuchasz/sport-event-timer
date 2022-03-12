@@ -47,6 +47,9 @@ module.exports = {
             },
             height: {
                 128: "32rem"
+            },
+            fontSize: {
+                "2xs": [".65rem", { lineHeight: "0.75rem" }]
             }
         },
         variants: {

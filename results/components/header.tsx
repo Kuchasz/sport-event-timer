@@ -39,7 +39,7 @@ const Header = () => {
                             <div className="text-base">
                                 Ambasador <strong>Marta Lach</strong>
                             </div>
-                            <div className="text-xs">Mistrzyni Polski, Olimpijka Tokio 2020</div>
+                            <div className="text-2xs">Mistrzyni Polski, Olimpijka Tokio 2020</div>
                         </div>
                     </div>
                     <div className="flex items-center my-3 md:my-0">
