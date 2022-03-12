@@ -59,7 +59,7 @@ export const posts = [
         content: `Oprócz fotografów na miejscy zawodów można było zauważyć także pana operatora video 🎥, poniżej przedstawiamy filmowe podsumowanie Rury na Kocierz
         <br/><br/>
         <iframe width="100%" height="560" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fruranakocierz%2Fvideos%2F1572026283131056%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
-        excerpt: "Filmowa relacja z tego, co działo się 2.10.2021r"
+        excerpt: "Filmowa relacja z tego, co działo się 2.10.2021"
     },
     {
         date: new Date(Date.parse("2021-11-12 18:09")),
@@ -106,7 +106,7 @@ export const posts = [
         date: new Date(Date.parse("2022-01-14 15:22")),
         author: "administrator",
         photo: "konferencja-2022-rura-relacja.jpg",
-        title: "Konferencja prasowa Rura na Kocierz 2022",
+        title: "Konferencja prasowa Rury na Kocierz 2022",
         alias: "konferencja-2022-relacja",
         content: `09.01.2022 Odbyła się konferacja prasowa Rury na Kocierz 2022. Przygotowaliśmy relację video ⬇️ dla tych, którzy nie mogli w niej uczestniczyć.
         <br/><br/>
