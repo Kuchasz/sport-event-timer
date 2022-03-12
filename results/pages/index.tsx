@@ -59,7 +59,7 @@ const Index = ({}: Props) => {
                                 ></img>
                                 <div className="px-4 flex flex-col">
                                     <div className="font-semibold text-lg uppercase">{p.title}</div>
-                                    <h4 className="my-4">{p.excerpt}</h4>
+                                    <h4>{p.excerpt}</h4>
                                     <PostDetails date={p.date} author={p.author} />
                                 </div>
                             </div>
