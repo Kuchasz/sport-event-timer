@@ -33,7 +33,7 @@ type Props = {
 
 const Index = ({}: Props) => {
     const sortedPosts = sort(posts, (p) => p.date.getTime()).reverse();
-    const mainPost = sortedPosts[0];
+    const [mainPost] = sortedPosts;
 
     return (
         <>
@@ -52,8 +52,11 @@ const Index = ({}: Props) => {
                 <div className="w-full my-12 max-w-6xl flex flex-col items-start justify-center">
                     {sortedPosts.slice(4).map((p) => (
                         <Link href={`artykul/${p.alias}`}>
-                            <div className="cursor-pointer flex mb-4">
-                                <img className="w-96 object-cover object-center" src={`assets/posts/${p.photo}`}></img>
+                            <div className="cursor-pointer flex flex-col md:flex-row mb-4">
+                                <img
+                                    className="w-full md:w-96 object-cover object-center"
+                                    src={`assets/posts/${p.photo}`}
+                                ></img>
                                 <div className="px-4 flex flex-col">
                                     <div className="font-semibold text-lg uppercase">{p.title}</div>
                                     <h4 className="my-4">{p.excerpt}</h4>
