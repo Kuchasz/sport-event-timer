@@ -12,6 +12,8 @@ const isDevelopment = process.env.NODE_ENV === "development";
 
 const app = express();
 app.use(cors());
+app.use(express.urlencoded());
+app.use(express.json());
 const server = createServer(app);
 
 const run = async () => {

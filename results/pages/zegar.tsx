@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     useEffect(() => {
-        const ts = create({ server: timeSyncUrl, interval: 5000 });
+        const ts = create({ server: timeSyncUrl, interval: 5000, delay: 5000 });
 
         // ts.sync();
 
