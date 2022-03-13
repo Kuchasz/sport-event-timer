@@ -102,7 +102,11 @@ export const apply = (server: HttpServer): Promise<void> => {
 
         socket.emit("receive-state", store.getState());
 
-        socket.emit("sync-time", Date.now());
+        socket.on("sync-time.req", (clientTime) => {
+            const serverTime = Date.now();
+            const diff = serverTime - clientTime;
+            socket.emit("sync-time.res", { diff, serverTime });
+        });
     });
 
     return Promise.resolve();

@@ -1,4 +1,5 @@
 import { ConnectionState, onConnectionStateChanged, socket } from "./connection";
+import { getCurrentTimeOffset } from "./api";
 import { OfflineContext } from "./contexts/offline";
 import { ReactNode, useEffect, useState } from "react";
 import { TimeOffsetContext } from "./contexts/time-offset";
@@ -16,10 +17,9 @@ export const ServerConnectionHandler = ({
     useEffect(() => {
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
         socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
-        socket.on("sync-time", (time) => {
-            const newTimeOffset = -(Date.now() - time);
-            setTimeOffset(newTimeOffset);
-        });
+
+        getCurrentTimeOffset().then(setTimeOffset);
+
         onConnectionStateChanged(setConnectionState);
     }, [dispatch]);
 
