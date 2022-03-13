@@ -1,17 +1,30 @@
 import Head from "next/head";
 import React from "react";
 import { Countdown } from "components/countdown";
-import { getCurrentTimeOffset } from "../api";
+import { create } from "timesync";
 import { Loader } from "../components/loader";
 import { Timer } from "../components/timer";
+import { timeSyncUrl } from "../api";
 import { useEffect, useState } from "react";
+// import { getCurrentTimeOffset, timeSyncUrl } from '../api';
 
 const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     useEffect(() => {
-        getCurrentTimeOffset().then(setTimeOffset);
+        const ts = create({ server: timeSyncUrl, interval: 5000 });
 
-        setTimeout(() => getCurrentTimeOffset().then(setTimeOffset), 5000);
+        // ts.sync();
+
+        ts.on("change", console.log);
+
+        setInterval(() => {
+            setTimeOffset(Date.now() - ts.now());
+        }, 5000);
+
+        // setInterval(() => setTimeOffset(ts.now()), 5000);
+        // console.log();
+        // getCurrentTimeOffset().then(setTimeOffset);
+        // setTimeout(() => getCurrentTimeOffset().then(setTimeOffset), 5000);
     }, []);
     return (
         <>
