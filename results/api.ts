@@ -12,6 +12,10 @@ export const getCurrentTimeOffset = (): Promise<number> => {
         const { serverTime } = await fetch(`${hubUrl}/current-time`).then((x) => x.json());
         const reqBackTime = Date.now();
 
+        console.log(
+            `clientTime: ${clientTime}, serverTime: ${serverTime}, reqSendTime: ${reqSendTime}, reqBackTime: ${reqBackTime}`
+        );
+
         const delay = (reqBackTime - reqSendTime) / 2;
 
         res(clientTime - (serverTime + delay));
