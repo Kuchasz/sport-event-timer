@@ -10,6 +10,21 @@ const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     useEffect(() => {
         getCurrentTimeOffset().then(setTimeOffset);
+
+        document.addEventListener("readystatechange", (event: any) => {
+            // When HTML/DOM elements are ready:
+            if (event.target.readyState === "interactive") {
+                //does same as:  ..addEventListener("DOMContentLoaded"..
+                alert("hi 1");
+            }
+
+            // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
+            if (event.target.readyState === "complete") {
+                alert("hi 2");
+            }
+        });
+
+        setTimeout(() => getCurrentTimeOffset().then(setTimeOffset), 5000);
     }, []);
     return (
         <>
@@ -34,5 +49,7 @@ const Zegar = () => {
         </>
     );
 };
+
+Zegar.getLayout = () => <Zegar />;
 
 export default Zegar;
