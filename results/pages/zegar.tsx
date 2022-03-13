@@ -15,11 +15,15 @@ const Zegar = () => {
 
         // ts.sync();
 
-        ts.on("change", console.log);
+        ts.on("sync", (e) => {
+            if (e === "end") {
+                setTimeOffset(Date.now() - ts.now());
+            }
+        });
 
-        setInterval(() => {
-            setTimeOffset(Date.now() - ts.now());
-        }, 5000);
+        // setInterval(() => {
+        //     setTimeOffset(Date.now() - ts.now());
+        // }, 5000);
 
         // setInterval(() => setTimeOffset(ts.now()), 5000);
         // console.log();
