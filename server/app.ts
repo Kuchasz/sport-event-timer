@@ -34,12 +34,10 @@ const run = async () => {
             res.json(err ? 0 : stats.mtimeMs);
         });
     });
-    app.get("/current-time/:clientTime", (req, res) => {
-        const clientTime = Number(req.params.clientTime);
-        const serverTime = Date.now();
-        const diff = serverTime - clientTime;
-
-        res.json({ diff, serverTime });
+    app.get("/current-time/:t0", (req, res) => {
+        const t0 = Number(req.params.t0);
+        const t1 = Date.now();
+        res.json({ t0, t1 });
     });
 
     await applyHub(server);
