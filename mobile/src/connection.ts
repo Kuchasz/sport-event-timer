@@ -4,8 +4,11 @@ const io = (
     process.env.NODE_ENV === "production" ? require("socket.io-client/dist/socket.io") : require("socket.io-client")
 ) as typeof ioClient;
 
-const hubUrl = process.env.NODE_ENV === "production" ? "wss://wss.set-hub.pyszstudio.pl" : "ws://localhost:21822";
+export const hubUrl =
+    process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
 
+export const wsHubUrl =
+    process.env.NODE_ENV === "production" ? "wss://wss.set-hub.pyszstudio.pl" : "ws://localhost:21822";
 export const socket = io(hubUrl, { transports: ["websocket"] });
 
 export type ConnectionState = "connected" | "reconnecting" | "disconnected" | "error";
