@@ -55,19 +55,19 @@ function Zdjecia() {
                 <div className="flex flex-wrap">
                     {directories.length !== 0
                         ? directories.map((d) => (
-                              <Link href={`zdjecia/${d.dir}`}>
+                              <Link key={d.dir} href={`zdjecia/${d.dir}`}>
                                   <div className="relative w-full md:w-1/3 cursor-pointer h-96">
                                       <img
                                           className="absolute z-[-10] top-0 w-full h-full object-center object-cover"
                                           src={d.items[0].big}
                                       />
                                       <div className="bg-gradient-to-b from-black via-transparent to-black absolute z-[-9] top-0 w-full h-full opacity-75"></div>
-                                      <div className="text-white group font-semibold h-full flex flex-col justify-between p-4">
+                                      <div className="group text-white font-semibold h-full flex flex-col justify-between p-4">
                                           <div className="flex flex-col">
                                               <span>{d.date}</span>
                                               <span>fot. {d.author}</span>
                                           </div>
-                                          <div className="transition-transform group-hover:translate-x-2 text-3xl">
+                                          <div className="transform transition-transform group-hover:translate-x-2 text-3xl">
                                               {d.title}
                                           </div>
                                       </div>
