@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { formatTimeSeconds } from "../utils";
 import { useEffect, useState } from "react";
 
@@ -6,9 +7,17 @@ const Time = ({ time }: { time: number }) => {
 
     const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
 
+    const formatedTime = Number(formatTimeSeconds(t));
+
     return (
-        <div style={{ fontSize: "90vh", lineHeight: "1" }} className="text-white">
-            {formatTimeSeconds(t)}
+        <div
+            style={{ fontSize: "90vh", lineHeight: "1" }}
+            className={classNames(["font-mono font-black"], {
+                ["text-white"]: formatedTime > 10,
+                ["text-red-700"]: formatedTime <= 10
+            })}
+        >
+            {formatedTime !== 0 ? formatedTime : "RURA!"}
         </div>
     );
 };
