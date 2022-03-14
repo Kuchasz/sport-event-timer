@@ -35,8 +35,8 @@ const Footer = () => {
     const router = useRouter();
     return (
         <footer>
-            <div className="flex flex-col items-center py-8 bg-gray-100 text-white">
-                <div className="text-gray-700 font-semibold text-2xl">ORGANIZATORZY</div>
+            <div className="flex flex-col items-center py-8 bg-zinc-100 text-white">
+                <div className="text-zinc-700 font-semibold text-2xl">ORGANIZATORZY</div>
                 <div className="h-1 w-10 bg-orange-500 my-6"></div>
                 <div className="max-w-6xl flex flex-col md:flex-row flex-wrap justify-center items-center">
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-innergy-racing-team.png"></img>
@@ -44,7 +44,7 @@ const Footer = () => {
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-gmina-lekawica.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-gmina-porabka.png"></img>
                 </div>
-                <div className="text-gray-700 font-semibold text-2xl mt-20">SPONSORZY</div>
+                <div className="text-zinc-700 font-semibold text-2xl mt-20">SPONSORZY</div>
                 <div className="h-1 w-10 bg-orange-500 my-6"></div>
                 <div className="max-w-6xl flex flex-col md:flex-row flex-wrap justify-center items-center">
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-maspex.png"></img>
@@ -60,7 +60,7 @@ const Footer = () => {
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-euro-stempel.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-trek.png"></img>
                 </div>
-                <div className="text-gray-700 font-semibold text-2xl mt-20">PATRONI MEDIALNI</div>
+                <div className="text-zinc-700 font-semibold text-2xl mt-20">PATRONI MEDIALNI</div>
                 <div className="h-1 w-10 bg-orange-500 my-6"></div>
                 <div className="max-w-6xl flex flex-col md:flex-row flex-wrap justify-center items-center">
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-kolarsko-pl.png"></img>
@@ -69,13 +69,13 @@ const Footer = () => {
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-naszosie-pl.png"></img>
                 </div>
             </div>
-            <div className="flex justify-center py-8 bg-gray-900 text-white">
+            <div className="flex justify-center py-8 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm justify-between items-center">
                     <div className="flex items-center">
                         <Link href="/">
                             <img className="cursor-pointer mr-2 md:mr-10" width="200px" src="/assets/logo-sm.png"></img>
                         </Link>
-                        <div className="flex-grow text-gray-400">
+                        <div className="flex-grow text-zinc-400">
                             <div className="text-base">
                                 Ambasador <strong>Marta Lach</strong>
                             </div>
@@ -85,19 +85,19 @@ const Footer = () => {
                     <div className="flex items-center my-3 md:my-0">
                         <Icon className="text-orange-500" size={1.5} path={mdiHumanMaleChild}></Icon>
                         <div className="ml-4">
-                            <div className="text-gray-700 font-bold">ZAWODY DLA DZIECI</div>
+                            <div className="text-zinc-700 font-bold">ZAWODY DLA DZIECI</div>
                             <Email>zawodydzieci@rura.cc</Email>
                         </div>
-                        <div className="h-8 inline-block mx-4 md:mx-12 w-0.5 bg-gray-700"></div>
+                        <div className="h-8 inline-block mx-4 md:mx-12 w-0.5 bg-zinc-700"></div>
                         <Icon className="text-orange-500" size={1.5} path={mdiEmailOpenOutline}></Icon>
                         <div className="ml-4">
-                            <div className="text-gray-700 font-bold">KONTAKT</div>
+                            <div className="text-zinc-700 font-bold">KONTAKT</div>
                             <Email>biuro@rura.cc</Email>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-800 text-gray-600 flex justify-center py-4 md:py-12 text-xs font-semibold">
+            <div className="bg-zinc-800 text-zinc-600 flex justify-center py-4 md:py-12 text-xs font-semibold">
                 <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row justify-between">
                     <div className="mx-2">RURA NA KOCIERZ © 2022</div>
                     <div>

@@ -23,19 +23,19 @@ const Header = () => {
     const router = useRouter();
     return (
         <header className="flex flex-col">
-            <div className="bg-gray-800 text-gray-600 flex justify-center py-3 text-sm font-semibold">
+            <div className="bg-zinc-800 text-zinc-600 flex justify-center py-3 text-sm font-semibold">
                 <div className="w-full max-w-6xl flex justify-center">
                     <span className="mr-8">09.04.2022 Wyścig ze startu wspólnego</span>
                     <span className="mr-8">10.04.2022 Time Trial</span>
                 </div>
             </div>
-            <div className="flex justify-center py-4 md:py-8 bg-gray-900 text-white">
+            <div className="flex justify-center py-4 md:py-8 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center justify-between">
                     <div className="flex items-center">
                         <Link href="/">
                             <img className="cursor-pointer mr-2 md:mr-10" width="200px" src="/assets/logo-sm.png"></img>
                         </Link>
-                        <div className="flex-grow text-gray-400">
+                        <div className="flex-grow text-zinc-400">
                             <div className="text-base">
                                 Ambasador <strong>Marta Lach</strong>
                             </div>
@@ -45,22 +45,22 @@ const Header = () => {
                     <div className="flex items-center my-3 md:my-0">
                         <Icon className="text-orange-500" size={1.5} path={mdiHumanMaleChild}></Icon>
                         <div className="ml-4">
-                            <div className="text-gray-700 font-bold">ZAWODY DLA DZIECI</div>
+                            <div className="text-zinc-700 font-bold">ZAWODY DLA DZIECI</div>
                             <Email>zawodydzieci@rura.cc</Email>
                         </div>
-                        <div className="h-8 inline-block mx-4 md:mx-12 w-0.5 bg-gray-700"></div>
+                        <div className="h-8 inline-block mx-4 md:mx-12 w-0.5 bg-zinc-700"></div>
                         <Icon className="text-orange-500" size={1.5} path={mdiEmailOpenOutline}></Icon>
                         <div className="ml-4">
-                            <div className="text-gray-700 font-bold">KONTAKT</div>
+                            <div className="text-zinc-700 font-bold">KONTAKT</div>
                             <Email>biuro@rura.cc</Email>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="flex">
-                <div className="w-full h-0.5 bg-gray-700"></div>
+                <div className="w-full h-0.5 bg-zinc-700"></div>
             </div>
-            <div className="flex justify-center py-3 bg-gray-900 text-white">
+            <div className="flex justify-center py-3 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex justify-between">
                     <div>
                         {menuItems.map((mi) => (

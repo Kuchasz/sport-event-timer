@@ -76,7 +76,7 @@ const ResultLink = ({
         <a
             onClick={onOpen}
             className={classNames(
-                "cursor-pointer border-b-2 px-2 md:mx-2 self-center my-2 md:my-0 py-2 text-center text-gray-400 text-sm font-medium",
+                "cursor-pointer border-b-2 px-2 md:mx-2 self-center my-2 md:my-0 py-2 text-center text-zinc-400 text-sm font-medium",
                 { ["text-orange-500 border-orange-500"]: selectedType == type },
                 { ["border-white"]: selectedType != type }
             )}
@@ -314,7 +314,7 @@ const Index = ({}: Props) => {
             <Head>
                 <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
             </Head>
-            <div className="flex flex-col text-gray-600">
+            <div className="flex flex-col text-zinc-600">
                 <ResultLinks passedType={passedType} />
 
                 <Table headers={headers} rows={result} getKey={(r) => String(r.id)}>

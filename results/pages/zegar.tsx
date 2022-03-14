@@ -35,7 +35,7 @@ const Zegar = () => {
             <Head>
                 <title>Zegar</title>
             </Head>
-            <div className="bg-gray-300 h-full w-full relative overflow-hidden">
+            <div className="bg-zinc-300 h-full w-full relative overflow-hidden">
                 {timeOffset === undefined ? (
                     <div className="min-w-screen min-h-screen flex text-white font-semibold justify-center items-center">
                         Smarujemy łańcuch...

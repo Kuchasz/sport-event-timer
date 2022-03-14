@@ -14,7 +14,8 @@ module.exports = {
             yellow: colors.amber,
             orange: colors.orange,
             black: colors.black,
-            white: colors.white
+            white: colors.white,
+            zinc: colors.zinc
         },
         screens: {
             sm: "640px",

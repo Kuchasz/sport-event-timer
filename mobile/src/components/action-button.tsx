@@ -27,7 +27,7 @@ export const ActionButton = ({
     icon?: string;
     contents?: JSX.Element;
 }) => (
-    <button onClick={onClick} className="mx-0.5 bg-gray-600 flex items-center rounded-md px-2 py-1 text-white">
+    <button onClick={onClick} className="mx-0.5 bg-zinc-600 flex items-center rounded-md px-2 py-1 text-white">
         {icon && <Icon path={icon} size={1} color="white" />}
         {contents}
     </button>

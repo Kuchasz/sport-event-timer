@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
         <>
             <Meta />
             <Header />
-            <main className="flex-grow text-gray-900">{children}</main>
+            <main className="flex-grow text-zinc-900">{children}</main>
             <Footer />
         </>
     );

@@ -30,7 +30,7 @@ export const Config = () => {
     return (
         <CurrentTimeKeeperContext.Consumer>
             {({ timeKeeperId, setTimeKeeperId }) => (
-                <div className="flex h-full w-full justify-center items-center bg-gray-800 flex-col">
+                <div className="flex h-full w-full justify-center items-center bg-zinc-800 flex-col">
                     <input
                         type="file"
                         id="file"
