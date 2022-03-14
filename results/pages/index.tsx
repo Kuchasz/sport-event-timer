@@ -51,7 +51,7 @@ const Index = ({}: Props) => {
             <div className="flex w-full relative justify-center overflow-hidden">
                 <div className="w-full my-12 max-w-6xl flex flex-col items-start justify-center">
                     {sortedPosts.slice(4).map((p) => (
-                        <Link href={`artykul/${p.alias}`}>
+                        <Link key={p.alias} href={`artykul/${p.alias}`}>
                             <div className="cursor-pointer flex flex-col md:flex-row mb-4">
                                 <img
                                     className="w-full md:w-96 object-cover object-center"
