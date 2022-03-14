@@ -59,7 +59,7 @@ function App() {
             }}
         >
             <Router>
-                <div id="app-holder" className="flex flex-col overflow-hidden bg-gray-800 h-full w-screen text-white">
+                <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-800 h-full w-screen text-white">
                     <Status timeKeeperName={allTimeKeepers.find((tk) => tk.id === selectedTimeKeeper)?.name} />
                     <div id="module-holder" className="relative overflow-hidden flex-col flex-1">
                         <div className="h-full flex-1 overflow-y-scroll">
