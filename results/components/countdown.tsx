@@ -13,12 +13,21 @@ const Time = ({ time }: { time: number }) => {
     );
 };
 
+let lastPlayMinute: number;
+
 export const Countdown = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
-        console.log(offset);
-        const interval = setInterval(() => setTime(Date.now() + offset), 100);
+        const interval = setInterval(() => {
+            const now = new Date();
+            if (now.getSeconds() === 56 && lastPlayMinute !== now.getMinutes()) {
+                lastPlayMinute = now.getMinutes();
+                new Audio("/assets/sport-beep.wav").play();
+            }
+
+            setTime(Date.now() + offset);
+        }, 100);
 
         return () => clearInterval(interval);
     }, [offset]);
