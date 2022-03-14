@@ -67,7 +67,7 @@ function Zdjecia() {
                                               <span>{d.date}</span>
                                               <span>fot. {d.author}</span>
                                           </div>
-                                          <div className="transform transition-transform group-hover:translate-x-2 text-3xl">
+                                          <div className="transition-transform group-hover:translate-x-2 text-3xl">
                                               {d.title}
                                           </div>
                                       </div>
