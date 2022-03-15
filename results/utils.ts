@@ -19,7 +19,7 @@ export function sort<T>(items: T[], func: (item: T) => number): T[] {
 }
 
 export const createBeep = () => {
-    if (typeof window === "undefined") return (freq = 520, duration = 500, vol = 100) => undefined;
+    if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
     const context = new AudioContext();
     return (freq = 520, duration = 500, vol = 100) => {
         const oscillator = context.createOscillator();
