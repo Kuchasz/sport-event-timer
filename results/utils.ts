@@ -17,3 +17,19 @@ export function sort<T>(items: T[], func: (item: T) => number): T[] {
 
     return i.sort((a, b) => func(a) - func(b));
 }
+
+export const createBeep = () => {
+    if (typeof window === "undefined") return (freq = 520, duration = 500, vol = 100) => undefined;
+    const context = new AudioContext();
+    return (freq = 520, duration = 500, vol = 100) => {
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.connect(gain);
+        oscillator.frequency.value = freq;
+        oscillator.type = "square";
+        gain.connect(context.destination);
+        gain.gain.value = vol * 0.01;
+        oscillator.start(context.currentTime);
+        oscillator.stop(context.currentTime + duration * 0.001);
+    };
+};

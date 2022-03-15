@@ -14,10 +14,12 @@ const Zegar = () => {
         const ts = create({ server: timeSyncUrl, interval: 5000, delay: 5000 });
 
         // ts.sync();
+        // let synced = false;
 
         ts.on("sync", (e) => {
             if (e === "end") {
                 setTimeOffset(Date.now() - ts.now());
+                // synced = true;
             }
         });
 
@@ -42,11 +44,10 @@ const Zegar = () => {
                         <Loader light={true} />
                     </div>
                 ) : (
-                    <div className="h-full filter drop-shadow-3xl w-full flex items-center justify-center">
+                    <div className="w-full h-full filter drop-shadow-3xl flex items-center justify-center">
                         <Timer offset={timeOffset} />
-                        <div>
-                            <Countdown offset={timeOffset} />
-                        </div>
+
+                        <Countdown offset={timeOffset} />
                     </div>
                 )}
             </div>

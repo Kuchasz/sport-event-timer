@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { formatTimeSeconds } from "../utils";
+import { createBeep, formatTimeSeconds } from "../utils";
 import { useEffect, useState } from "react";
 
 const Time = ({ time }: { time: number }) => {
@@ -17,12 +17,15 @@ const Time = ({ time }: { time: number }) => {
                 ["text-red-700"]: formatedTime <= 10
             })}
         >
-            {formatedTime !== 0 ? formatedTime : "RURA!"}
+            {formatedTime}
         </div>
     );
 };
 
-let lastPlayMinute: number;
+const beep = createBeep();
+
+const secondsToPlay = [56, 57, 58, 59];
+const clockTimeout = 100;
 
 export const Countdown = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
@@ -30,13 +33,17 @@ export const Countdown = ({ offset }: { offset: number }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date();
-            if (now.getSeconds() === 56 && lastPlayMinute !== now.getMinutes()) {
-                lastPlayMinute = now.getMinutes();
-                new Audio("/assets/sport-beep.wav").play();
+
+            const seconds = now.getSeconds();
+            const miliseconds = now.getMilliseconds();
+
+            if (secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
+                const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
+                beep(frequency, 500);
             }
 
             setTime(Date.now() + offset);
-        }, 100);
+        }, clockTimeout);
 
         return () => clearInterval(interval);
     }, [offset]);
