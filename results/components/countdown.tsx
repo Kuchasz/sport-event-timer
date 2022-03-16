@@ -31,6 +31,12 @@ export const Countdown = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
+        const ro = new ResizeObserver((e) => {
+            console.log(e);
+        });
+
+        ro.observe(document.body);
+
         const interval = setInterval(() => {
             const now = new Date();
 
@@ -38,8 +44,9 @@ export const Countdown = ({ offset }: { offset: number }) => {
             const miliseconds = now.getMilliseconds();
 
             if (secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
-                const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                beep(frequency, 500);
+                console.log(seconds);
+                // const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
+                // beep(frequency, 500);
             }
 
             setTime(Date.now() + offset);

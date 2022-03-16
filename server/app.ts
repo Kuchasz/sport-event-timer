@@ -36,12 +36,8 @@ const run = async () => {
             res.json(err ? 0 : stats.mtimeMs);
         });
     });
-    app.post("/timesync", (req, res) => {
-        const data = {
-            id: req?.body?.id,
-            result: Date.now()
-        };
-        res.json(data);
+    app.get("/timesync", (req, res) => {
+        res.json(Date.now());
     });
 
     await applyHub(server);
