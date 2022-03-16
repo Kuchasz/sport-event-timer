@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { createBeep, formatTimeSeconds } from "../utils";
+import { formatTimeSeconds } from "../utils";
 import { useEffect, useState } from "react";
 
 const Time = ({ time }: { time: number }) => {
@@ -22,7 +22,7 @@ const Time = ({ time }: { time: number }) => {
     );
 };
 
-const beep = createBeep();
+// const beep = createBeep();
 
 const secondsToPlay = [56, 57, 58, 59];
 const clockTimeout = 100;
