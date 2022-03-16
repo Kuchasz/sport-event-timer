@@ -28,7 +28,7 @@ const Zegar = () => {
         req.onloadstart = () => {
             loadStartTime = Date.now();
         };
-        req.onloadend = (e) => {
+        req.onloadend = (_) => {
             loadEndTime = Date.now();
 
             const currentServerTime = Number(req.response) + (loadEndTime - loadStartTime) / 2;
