@@ -31,7 +31,7 @@ const Zegar = () => {
         req.onloadend = (e) => {
             loadEndTime = Date.now();
 
-            const currentServerTime = req.response - (loadEndTime - loadStartTime) / 2;
+            const currentServerTime = Number(req.response) + (loadEndTime - loadStartTime) / 2;
             const offset = loadEndTime - currentServerTime;
             console.log(offset);
             setTimeOffset(offset);
