@@ -49,7 +49,7 @@ const Footer = () => {
                 <div className="max-w-6xl flex flex-col md:flex-row flex-wrap justify-center items-center">
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-maspex.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-ceratizit.png"></img>
-                    <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-decathlon.png"></img>
+                    {/* <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-decathlon.png"></img> */}
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-eurowafel.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-czaniecki-makaron.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-agropunkt.png"></img>
