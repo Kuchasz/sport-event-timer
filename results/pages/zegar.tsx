@@ -1,27 +1,69 @@
 import Head from "next/head";
 import React from "react";
 import { Countdown } from "components/countdown";
-import { create } from "timesync";
 import { Loader } from "../components/loader";
 import { Timer } from "../components/timer";
 import { timeSyncUrl } from "../api";
 import { useEffect, useState } from "react";
+// import { create } from "timesync";
 // import { getCurrentTimeOffset, timeSyncUrl } from '../api';
 
 const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     useEffect(() => {
-        const ts = create({ server: timeSyncUrl, interval: 5000, delay: 5000 });
+        const req = new XMLHttpRequest();
 
+        // for (var i = 0; i < 100; i++) {
+        //     fetch("https://jsonplaceholder.typicode.com/todos/1");
+        // }
+
+        req.onreadystatechange = (e) => {
+            console.log(req.readyState);
+            console.log(e);
+        };
+
+        let loadStartTime: number;
+        let loadEndTime: number;
+
+        req.onloadstart = () => {
+            loadStartTime = Date.now();
+        };
+        req.onloadend = (e) => {
+            loadEndTime = Date.now();
+
+            const currentServerTime = req.response - (loadEndTime - loadStartTime) / 2;
+            const offset = loadEndTime - currentServerTime;
+            console.log(offset);
+            setTimeOffset(offset);
+        };
+
+        req.open("GET", timeSyncUrl);
+        req.send();
+
+        // console.log("create!");
+        // const ts = create({ server: timeSyncUrl, interval: 5000, delay: 5000 });
+
+        // let previousTimeOffset = Date.now();
         // ts.sync();
         // let synced = false;
 
-        ts.on("sync", (e) => {
-            if (e === "end") {
-                setTimeOffset(Date.now() - ts.now());
-                // synced = true;
-            }
-        });
+        // ts.on("sync", (e) => {
+        //     if (e === "end") {
+        //         const offset = Math.abs(Date.now() - ts.now());
+        //         if (offset < previousTimeOffset) {
+        //             console.log(offset);
+        //             previousTimeOffset = offset;
+        //             setTimeOffset(offset);
+        //         }
+
+        //         if (offset < 100) {
+        //             console.log("destroy!");
+        //             ts.destroy();
+        //         }
+
+        //         // synced = true;
+        //     }
+        // });
 
         // setInterval(() => {
         //     setTimeOffset(Date.now() - ts.now());
