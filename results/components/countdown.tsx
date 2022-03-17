@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 const Time = ({ time }: { time: number }) => {
     const currentTime = new Date(time);
 
-    const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
+    //const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
+    const t = currentTime.getSeconds() * 1000;
 
     const formatedTime = Number(formatTimeSeconds(t));
 
@@ -52,7 +53,10 @@ export const Countdown = ({ offset }: { offset: number }) => {
             setTime(Date.now() + offset);
         }, clockTimeout);
 
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(interval);
+            ro.disconnect();
+        };
     }, [offset]);
 
     return <Time time={time} />;
