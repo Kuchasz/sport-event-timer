@@ -97,16 +97,18 @@ const Zegar = () => {
             <Head>
                 <title>Zegar</title>
             </Head>
-            <div className="bg-zinc-300 h-full w-full relative overflow-hidden">
+            <div className="bg-black h-full w-full text-white relative overflow-hidden">
                 {timeOffset === undefined ? (
-                    <div className="min-w-screen min-h-screen flex text-white font-semibold justify-center items-center">
+                    <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
                         <Loader light={true} />
                     </div>
                 ) : (
-                    <div className="w-full h-full filter drop-shadow-3xl flex items-center justify-center">
+                    <div className="w-full h-full flex flex-col items-center">
                         <Timer offset={timeOffset} />
                         <Countdown offset={timeOffset} />
+                        <div className="text-8xl">John Doe</div>
+                        <div className="text-4xl mb-4">Następny: John Doe</div>
                     </div>
                 )}
             </div>

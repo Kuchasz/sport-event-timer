@@ -12,10 +12,10 @@ const Time = ({ time }: { time: number }) => {
 
     return (
         <div
-            style={{ fontSize: "90vh", lineHeight: "1" }}
-            className={classNames(["font-mono font-black"], {
+            style={{ fontSize: "90vh", lineHeight: "0.7" }}
+            className={classNames(["font-mono flex flex-grow flex-col justify-center font-black"], {
                 ["text-white"]: formatedTime > 10,
-                ["text-red-700"]: formatedTime <= 10
+                ["text-orange-700"]: formatedTime <= 10
             })}
         >
             {formatedTime}
@@ -45,7 +45,7 @@ export const Countdown = ({ offset }: { offset: number }) => {
             const miliseconds = now.getMilliseconds();
 
             if (secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
-                console.log(seconds);
+                // console.log(seconds);
                 // const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
                 // beep(frequency, 500);
             }
