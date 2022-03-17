@@ -28,7 +28,7 @@ socket.on("connect", () => {
     runStateChangedHandlers("connected");
 });
 
-socket.on("disconnect", (r) => {
+socket.on("disconnect", () => {
     runStateChangedHandlers("disconnected");
 });
 
