@@ -1,8 +1,6 @@
 import { io as ioClient } from "socket.io-client";
 
-const io = (
-    process.env.NODE_ENV === "production" ? require("socket.io-client/dist/socket.io") : require("socket.io-client")
-) as typeof ioClient;
+const io = require("socket.io-client") as typeof ioClient;
 
 export const hubUrl =
     process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
