@@ -100,12 +100,10 @@ export const apply = (server: HttpServer): Promise<void> => {
             clients.splice(clients.indexOf(socket), 1);
         });
 
-        socket.emit("receive-state", store.getState());
+        // socket.emit("receive-state", store.getState());
 
-        socket.on("sync-time.req", (clientTime) => {
-            const serverTime = Date.now();
-            const diff = serverTime - clientTime;
-            socket.emit("sync-time.res", { diff, serverTime });
+        socket.on("TQ", () => {
+            socket.emit("TR", Date.now());
         });
     });
 
