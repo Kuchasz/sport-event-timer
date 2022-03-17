@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 const Time = ({ time }: { time: number }) => {
     const currentTime = new Date(time);
 
-    //const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
-    const t = currentTime.getSeconds() * 1000;
+    const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
+    // const t = currentTime.getSeconds() * 1000;
 
     const formatedTime = Number(formatTimeSeconds(t));
 
