@@ -4,8 +4,8 @@ import { Countdown } from "components/countdown";
 import { Loader } from "../components/loader";
 import { socket } from "../connection";
 import { Timer } from "../components/timer";
-import { timeSyncUrl } from "../api";
 import { useEffect, useState } from "react";
+// import { timeSyncUrl } from "../api";
 // import { create } from "timesync";
 // import { getCurrentTimeOffset, timeSyncUrl } from '../api';
 
