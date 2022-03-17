@@ -2,9 +2,7 @@ import { formatTimeNoSec } from "../utils";
 import { useEffect, useState } from "react";
 
 const Time = ({ time }: { time: number }) => (
-    <div className="absolute left-0 right-0 top-0 text-white text-center text-8xl">
-        {formatTimeNoSec(new Date(time))}
-    </div>
+    <div className="text-white text-center text-8xl">{formatTimeNoSec(new Date(time))}</div>
 );
 
 export const Timer = ({ offset }: { offset: number }) => {
