@@ -46,7 +46,7 @@ const Zegar = () => {
             const latency = loadEndTime - loadStartTime;
             console.log("latency", latency);
 
-            setTimeOffset(loadEndTime - (serverTime + latency / 2));
+            setTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
             if (latency <= 50) {
                 clearInterval(interval);
                 socket.close();
