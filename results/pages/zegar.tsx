@@ -8,6 +8,8 @@ import {
     mdiEyeOffOutline,
     mdiFormatFontSizeDecrease,
     mdiFormatFontSizeIncrease,
+    mdiVolumeHigh,
+    mdiVolumeOff,
     mdiWindowClose
     } from "@mdi/js";
 import { Meta } from "../components/meta";
@@ -82,6 +84,9 @@ const ConfigMenuOption = ({
 const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
+    const [soundEnabled, setSoundEnabled] = useState(false);
+
+    const toggleSoundEnabled = () => setSoundEnabled(!soundEnabled);
 
     const textActions = (prop: keyof Omit<ClockSettings, "showSettings">, step: number = 1): TextActions => ({
         enlargeFont: () => {
@@ -211,10 +216,13 @@ const Zegar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <div onClick={toggleMenu} className="absolute top-0 left-0 p-4">
+                            <div onClick={toggleMenu} className="cursor-pointer absolute top-0 left-0 p-4">
                                 <Icon size={2} path={mdiCog} />
                             </div>
                         )}
+                        <div onClick={toggleSoundEnabled} className="cursor-pointer absolute top-0 right-0 p-4">
+                            <Icon size={2} path={soundEnabled ? mdiVolumeHigh : mdiVolumeOff} />
+                        </div>
                     </div>
                 )}
             </div>

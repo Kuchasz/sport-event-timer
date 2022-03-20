@@ -14,8 +14,8 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
         <div
             style={{ fontSize: `${fontSize}vh`, lineHeight: "0.7" }}
             className={classNames(["font-mono flex flex-grow flex-col justify-center font-black transition-all"], {
-                ["text-white"]: formatedTime > 10,
-                ["text-orange-700"]: formatedTime <= 10
+                ["text-white"]: formatedTime > 3,
+                ["text-orange-500"]: formatedTime <= 3
             })}
         >
             {formatedTime}
@@ -28,16 +28,19 @@ const beep = createBeep();
 const secondsToPlay = [56, 57, 58, 59];
 const clockTimeout = 100;
 
-export const Countdown = ({ offset, fontSize }: { offset: number; fontSize: number }) => {
+export const Countdown = ({
+    offset,
+    fontSize,
+    soundEnabled
+}: {
+    offset: number;
+    fontSize: number;
+    soundEnabled: boolean;
+}) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
-        const ro = new ResizeObserver((e) => {
-            console.log(e);
-        });
-
-        ro.observe(document.body);
-
+        if (soundEnabled) return () => {};
         const interval = setInterval(() => {
             const now = new Date();
 
@@ -54,9 +57,8 @@ export const Countdown = ({ offset, fontSize }: { offset: number; fontSize: numb
 
         return () => {
             clearInterval(interval);
-            ro.disconnect();
         };
-    }, [offset]);
+    }, [offset, soundEnabled]);
 
     return <Time time={time} fontSize={fontSize} />;
 };
