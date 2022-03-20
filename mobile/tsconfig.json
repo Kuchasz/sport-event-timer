@@ -16,10 +16,5 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    // "paths": {
-    //   "@set/timer/*": [
-    //     "../timer/*"
-    //   ]
-    // },
     "include": ["src"]
 }
