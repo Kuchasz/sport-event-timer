@@ -12,7 +12,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
 
     return (
         <div
-            style={{ fontSize: `${fontSize}vh`, lineHeight: "0.7" }}
+            style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
             className={classNames(["font-mono flex flex-grow flex-col justify-center font-black transition-all"], {
                 ["text-white"]: formatedTime > 3,
                 ["text-orange-500"]: formatedTime <= 3
@@ -40,14 +40,13 @@ export const Countdown = ({
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
-        if (soundEnabled) return () => {};
         const interval = setInterval(() => {
             const now = new Date();
 
             const seconds = now.getSeconds();
             const miliseconds = now.getMilliseconds();
 
-            if (secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
+            if (soundEnabled && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
                 beep(frequency, 500);
             }
