@@ -16,9 +16,6 @@ import { Meta } from "../components/meta";
 import { socket } from "../connection";
 import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
-// import { timeSyncUrl } from "../api";
-// import { create } from "timesync";
-// import { getCurrentTimeOffset, timeSyncUrl } from '../api';
 
 type TextSettings = {
     enabled: boolean;
@@ -66,7 +63,6 @@ const ConfigMenuOption = ({
     showDivider: boolean;
 }) => (
     <div>
-        {/* <div>{name}</div> */}
         <div className="flex flex-col p-2">
             {showDivider && (
                 <div className="relative flex py-5 items-center">
@@ -156,7 +152,7 @@ const Zegar = () => {
             <Head>
                 <title>Zegar</title>
             </Head>
-            <div className="bg-black h-full w-full text-white relative overflow-hidden">
+            <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {timeOffset === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
