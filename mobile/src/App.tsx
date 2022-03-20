@@ -118,11 +118,10 @@ function App() {
                                                                     </Route>
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/assign/:timeStampToAssignId`}
-                                                                        children={(props) => (
+                                                                        children={({ match }: { match: any }) => (
                                                                             <PlayersAssignTime
                                                                                 timeStampToAssign={parseInt(
-                                                                                    props.match.params
-                                                                                        .timeStampToAssignId
+                                                                                    match.params.timeStampToAssignId
                                                                                 )}
                                                                                 timeKeeperId={timeKeeperId}
                                                                             />
@@ -130,11 +129,10 @@ function App() {
                                                                     ></Route>
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/reassign/:timeStampToAssignId`}
-                                                                        children={(props) => (
+                                                                        children={({ match }: { match: any }) => (
                                                                             <PlayersReassignTime
                                                                                 timeStampToAssign={parseInt(
-                                                                                    props.match.params
-                                                                                        .timeStampToAssignId
+                                                                                    match.params.timeStampToAssignId
                                                                                 )}
                                                                                 timeKeeperId={timeKeeperId}
                                                                             />
@@ -156,10 +154,10 @@ function App() {
                                                                     </Route>
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
-                                                                        children={(props) => (
+                                                                        children={({ match }: { match: any }) => (
                                                                             <TweakTimeStamps
                                                                                 timeStampId={parseInt(
-                                                                                    props.match.params.timeStampId
+                                                                                    match.params.timeStampId
                                                                                 )}
                                                                                 onSave={(timeStamp) => {
                                                                                     dispatch(update(timeStamp));
