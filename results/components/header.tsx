@@ -19,7 +19,7 @@ const MenuButton = ({ activePath = "", to, children }: { activePath: string; to:
     </Link>
 );
 
-const Header = () => {
+export const Header = () => {
     const router = useRouter();
     return (
         <header className="flex flex-col">
@@ -79,5 +79,3 @@ const Header = () => {
         </header>
     );
 };
-
-export default Header;

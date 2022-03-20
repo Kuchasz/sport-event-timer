@@ -31,7 +31,7 @@ const MenuButton = ({
     </Link>
 );
 
-const Footer = () => {
+export const Footer = () => {
     const router = useRouter();
     return (
         <footer>
@@ -117,5 +117,3 @@ const Footer = () => {
         </footer>
     );
 };
-
-export default Footer;

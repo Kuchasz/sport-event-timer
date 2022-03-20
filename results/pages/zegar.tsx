@@ -10,6 +10,7 @@ import {
     mdiFormatFontSizeIncrease,
     mdiWindowClose
     } from "@mdi/js";
+import { Meta } from "../components/meta";
 import { socket } from "../connection";
 import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
@@ -221,6 +222,11 @@ const Zegar = () => {
     );
 };
 
-Zegar.getLayout = () => <Zegar />;
+Zegar.getLayout = () => (
+    <>
+        <Meta />
+        <Zegar />
+    </>
+);
 
 export default Zegar;
