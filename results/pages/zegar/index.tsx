@@ -7,12 +7,8 @@ import { Loader } from "../../components/loader";
 import {
     mdiChevronDoubleRight,
     mdiCog,
-    mdiEyeOffOutline,
-    mdiFormatFontSizeDecrease,
-    mdiFormatFontSizeIncrease,
     mdiVolumeHigh,
-    mdiVolumeOff,
-    mdiWindowClose
+    mdiVolumeOff
     } from "@mdi/js";
 import { Meta } from "../../components/meta";
 import { socket } from "../../connection";
