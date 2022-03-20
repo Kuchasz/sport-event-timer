@@ -25,7 +25,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
 
 const beep = createBeep();
 
-const secondsToPlay = [56, 57, 58, 59];
+const secondsToPlay = [55, 56, 57, 58, 59];
 const clockTimeout = 100;
 
 export const Countdown = ({
@@ -48,7 +48,7 @@ export const Countdown = ({
 
             if (soundEnabled && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                beep(frequency, 500);
+                beep(frequency, 500, seconds === 55 ? 0 : 100);
             }
 
             setTime(Date.now() + offset);
