@@ -10,11 +10,11 @@ export const PlayerWithTimeStampDisplay = ({
 }: {
     playerWithTimeStamp: Partial<PlayerWithTimeStamp>;
 }) => (
-    <span className="flex flex-grow h-12">
+    <span className="flex grow h-12">
         <span className="text-3xl mr-4">
             {playerWithTimeStamp.number !== undefined ? formatNumber(playerWithTimeStamp.number, 3) : "- - -"}
         </span>
-        <span className="flex-grow">
+        <span className="grow">
             <div className="text-lg font-semibold ">
                 <span>
                     {playerWithTimeStamp.timeStamp

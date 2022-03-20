@@ -29,7 +29,7 @@ const ConfigMenuOption = ({
         <div className="flex flex-col p-2">
             {showDivider && (
                 <div className="relative flex py-5 items-center">
-                    <div className="flex-grow border-t"></div>
+                    <div className="grow border-t"></div>
                 </div>
             )}
             <span>{name}</span>

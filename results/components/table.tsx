@@ -38,7 +38,7 @@ export const Table = <T extends {}>({ rows, headers, children, getKey }: TablePr
     // "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
     return (
-        <div className="grid flex-grow auto-rows-min text-sm bg-zinc-100" style={{ gridTemplateColumns }}>
+        <div className="grid grow auto-rows-min text-sm bg-zinc-100" style={{ gridTemplateColumns }}>
             {headers.map((h) => (
                 <HeaderCell key={h}>{h}</HeaderCell>
             ))}

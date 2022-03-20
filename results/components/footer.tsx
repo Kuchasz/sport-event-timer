@@ -75,7 +75,7 @@ export const Footer = () => {
                         <Link href="/">
                             <img className="cursor-pointer mr-2 md:mr-10" width="200px" src="/assets/logo-sm.png"></img>
                         </Link>
-                        <div className="flex-grow text-zinc-400">
+                        <div className="grow text-zinc-400">
                             <div className="text-base">
                                 Ambasador <strong>Marta Lach</strong>
                             </div>

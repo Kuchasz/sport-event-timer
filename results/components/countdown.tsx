@@ -13,7 +13,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
     return (
         <div
             style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
-            className={classNames(["font-mono flex flex-grow flex-col justify-center font-black transition-all"], {
+            className={classNames(["font-mono flex grow flex-col justify-center font-black transition-all"], {
                 ["text-white"]: formatedTime > 3,
                 ["text-orange-500"]: formatedTime <= 3
             })}
