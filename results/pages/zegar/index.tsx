@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { ConfigMenu } from "./config-menu";
+import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
 import { Loader } from "../../components/loader";
 import {

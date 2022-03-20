@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { ClockSettings, TextActions } from ".";
+import { ClockSettings, TextActions } from "../pages/zegar";
 import {
     mdiEyeOffOutline,
     mdiFormatFontSizeDecrease,
