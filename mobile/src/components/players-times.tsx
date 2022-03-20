@@ -10,7 +10,7 @@ import { mdiWrench } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/model";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { reset } from "@set/timer/slices/time-stamps";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 
 type TimeStampWithPlayer = TimeStamp & {
@@ -27,7 +27,7 @@ const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time 
 
 export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
     const dispatch = useTimerDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <div className="px-4">
@@ -52,7 +52,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                     {!t.player ? (
                         <PrimaryActionButton
                             onClick={() => {
-                                history.push(`${process.env.PUBLIC_URL}/assign/${t.id}`);
+                                navigate(`${process.env.PUBLIC_URL}/assign/${t.id}`);
                             }}
                             icon={mdiAccountAlertOutline}
                         />
@@ -60,14 +60,14 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                         <ActionButton
                             icon={mdiAccountSupervisor}
                             onClick={() => {
-                                history.push(`${process.env.PUBLIC_URL}/reassign/${t.id}`);
+                                navigate(`${process.env.PUBLIC_URL}/reassign/${t.id}`);
                             }}
                         />
                     )}
                     <ActionButton
                         icon={mdiWrench}
                         onClick={() => {
-                            history.push(`${process.env.PUBLIC_URL}/tweak/${t.id}`);
+                            navigate(`${process.env.PUBLIC_URL}/tweak/${t.id}`);
                         }}
                     />
                     <ActionButton

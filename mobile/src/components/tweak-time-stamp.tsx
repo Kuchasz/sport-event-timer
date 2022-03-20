@@ -4,7 +4,7 @@ import { formatNumber } from "../utils";
 import { mdiFloppy, mdiMinus, mdiPlus } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { TimeStamp } from "../../../timer/model";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useTimerSelector } from "../hooks";
 
@@ -52,7 +52,7 @@ export const TweakTimeStamps = ({ onSave, timeStampId }: TweakTimeStampProps) =>
     const timeStamp = allTimeStamps.find((x) => x.id === timeStampId);
     const player = allPlayers.find((x) => x.id === timeStamp?.playerId);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [currentTime, setCurrentTime] = useState<number>(timeStamp!.time);
 
@@ -94,7 +94,7 @@ export const TweakTimeStamps = ({ onSave, timeStampId }: TweakTimeStampProps) =>
             <button
                 onClick={() => {
                     onSave({ ...timeStamp!, time: currentTime });
-                    history.goBack();
+                    navigate(-1);
                 }}
                 className="rounded-md mt-6 text-center bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
             >
