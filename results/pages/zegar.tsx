@@ -166,17 +166,24 @@ const Zegar = () => {
                     <div className="w-full h-full flex flex-col items-center">
                         {clockState.clock.enabled && <Timer fontSize={clockState.clock.size} offset={timeOffset} />}
                         {clockState.countdown.enabled && (
-                            <Countdown fontSize={clockState.countdown.size} offset={timeOffset} />
+                            <Countdown
+                                soundEnabled={soundEnabled}
+                                fontSize={clockState.countdown.size}
+                                offset={timeOffset}
+                            />
                         )}
                         {clockState.currentPlayer.enabled && (
-                            <div style={{ fontSize: `${clockState.currentPlayer.size}rem` }} className="transition-all">
+                            <div
+                                style={{ fontSize: `${clockState.currentPlayer.size}rem` }}
+                                className="leading-none transition-all"
+                            >
                                 John Doe
                             </div>
                         )}
                         {clockState.nextPlayer.enabled && (
                             <div
                                 style={{ fontSize: `${clockState.nextPlayer.size}rem` }}
-                                className="mb-4 transition-all"
+                                className="leading-none mb-4 transition-all"
                             >
                                 Następny: John Doe
                             </div>
