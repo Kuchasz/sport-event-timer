@@ -3,7 +3,7 @@ import { ActionButton } from "./action-button";
 import { formatNumber } from "../utils";
 import { mdiFloppy, mdiMinus, mdiPlus } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
-import { TimeStamp } from "../../../timer/model";
+import { TimeStamp } from "@set/timer/model";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useTimerSelector } from "../hooks";
