@@ -25,7 +25,7 @@
         "autoprefixer": "^9",
         "fp-ts": "^2.11.1",
         "node-sass": "^6.0.1",
-        "postcss": "^8",
+        "postcss": "8.4.12",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-redux": "^7.2.4",
