@@ -21,20 +21,15 @@ export function sort<T>(items: T[], func: (item: T) => number): T[] {
 export const createBeep = () => {
     if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
     const context = new AudioContext();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-
-    oscillator.type = "square";
-
-    oscillator.connect(gain);
-    oscillator.start(context.currentTime);
-
     return (freq = 520, duration = 500, vol = 100) => {
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.connect(gain);
         oscillator.frequency.value = freq;
-        gain.gain.value = vol * 0.01;
-
+        oscillator.type = "square";
         gain.connect(context.destination);
-        setTimeout(() => gain.disconnect(context.destination), duration);
-        // oscillator.stop(context.currentTime + duration * 0.001);
+        gain.gain.value = vol * 0.01;
+        oscillator.start(context.currentTime);
+        oscillator.stop(context.currentTime + duration * 0.001);
     };
 };
