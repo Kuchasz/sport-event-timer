@@ -2,9 +2,9 @@ import { add, reset, update } from "@set/timer/slices/time-stamps";
 import { BottomMenu } from "./components/bottom-menu";
 import {
     BrowserRouter as Router,
-    Redirect,
+    Navigate,
     Route,
-    Switch
+    Routes
     } from "react-router-dom";
 import { Config } from "./components/config";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
@@ -82,19 +82,16 @@ function App() {
                                                             </div>
                                                         </div>
                                                     ) : (
-                                                        <Switch>
-                                                            <Route exact path={`${process.env.PUBLIC_URL}/`}>
-                                                                <Redirect to={`${process.env.PUBLIC_URL}/config`} />
+                                                        <Routes>
+                                                            <Route path={`${process.env.PUBLIC_URL}/`}>
+                                                                <Navigate to={`${process.env.PUBLIC_URL}/config`} />
                                                             </Route>
-                                                            <Route exact path={`${process.env.PUBLIC_URL}/config`}>
+                                                            <Route path={`${process.env.PUBLIC_URL}/config`}>
                                                                 <Config></Config>
                                                             </Route>
                                                             {timeKeeperId !== undefined && (
                                                                 <>
-                                                                    <Route
-                                                                        exact
-                                                                        path={`${process.env.PUBLIC_URL}/list`}
-                                                                    >
+                                                                    <Route path={`${process.env.PUBLIC_URL}/list`}>
                                                                         <PlayersList
                                                                             onTimeRecord={(playerId) =>
                                                                                 dispatch(
@@ -113,16 +110,15 @@ function App() {
                                                                             )}
                                                                         />
                                                                     </Route>
-                                                                    <Route exact path={`${process.env.PUBLIC_URL}/pad`}>
+                                                                    <Route path={`${process.env.PUBLIC_URL}/pad`}>
                                                                         <PlayersDialPad
                                                                             offset={offset}
                                                                             timeKeeperId={timeKeeperId}
                                                                         />
                                                                     </Route>
                                                                     <Route
-                                                                        exact
                                                                         path={`${process.env.PUBLIC_URL}/assign/:timeStampToAssignId`}
-                                                                        render={(props) => (
+                                                                        children={(props) => (
                                                                             <PlayersAssignTime
                                                                                 timeStampToAssign={parseInt(
                                                                                     props.match.params
@@ -133,9 +129,8 @@ function App() {
                                                                         )}
                                                                     ></Route>
                                                                     <Route
-                                                                        exact
                                                                         path={`${process.env.PUBLIC_URL}/reassign/:timeStampToAssignId`}
-                                                                        render={(props) => (
+                                                                        children={(props) => (
                                                                             <PlayersReassignTime
                                                                                 timeStampToAssign={parseInt(
                                                                                     props.match.params
@@ -145,10 +140,7 @@ function App() {
                                                                             />
                                                                         )}
                                                                     ></Route>
-                                                                    <Route
-                                                                        exact
-                                                                        path={`${process.env.PUBLIC_URL}/times`}
-                                                                    >
+                                                                    <Route path={`${process.env.PUBLIC_URL}/times`}>
                                                                         <PlayersTimes
                                                                             onAddTime={() => {
                                                                                 dispatch(
@@ -163,9 +155,8 @@ function App() {
                                                                         />
                                                                     </Route>
                                                                     <Route
-                                                                        exact
                                                                         path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
-                                                                        render={(props) => (
+                                                                        children={(props) => (
                                                                             <TweakTimeStamps
                                                                                 timeStampId={parseInt(
                                                                                     props.match.params.timeStampId
@@ -178,7 +169,7 @@ function App() {
                                                                     />
                                                                 </>
                                                             )}
-                                                        </Switch>
+                                                        </Routes>
                                                     )
                                                 }
                                             </OfflineContext.Consumer>

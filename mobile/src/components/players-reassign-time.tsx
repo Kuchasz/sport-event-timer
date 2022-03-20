@@ -1,6 +1,6 @@
 import { PlayersCheckIn } from "./players-check-in";
 import { update } from "@set/timer/slices/time-stamps";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 
 type PlayersReassignTimeProps = {
@@ -10,13 +10,13 @@ type PlayersReassignTimeProps = {
 
 export const PlayersReassignTime = ({ timeKeeperId, timeStampToAssign }: PlayersReassignTimeProps) => {
     const dispatch = useTimerDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <PlayersCheckIn
             onPlayerCheckIn={(playerId) => {
                 dispatch(update({ playerId, id: timeStampToAssign }));
-                history.goBack();
+                navigate(-1);
             }}
             title="Reassign time to player"
             timeKeeperId={timeKeeperId}
