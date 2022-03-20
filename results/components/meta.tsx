@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Meta = () => {
+export const Meta = () => {
     return (
         <Head>
             <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
@@ -13,9 +13,7 @@ const Meta = () => {
             <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
             <meta name="theme-color" content="#000" />
             <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-            <meta name="description" content={`A statically generated blog example using Next.js.`} />
+            <meta name="description" content={`Rura.cc - etapowy wyścig kolarski`} />
         </Head>
     );
 };
-
-export default Meta;
