@@ -1,6 +1,6 @@
 import { TimeKeeper } from "../model";
 
-export const fakeTimeKeepers = [
+export const staticTimeKeppers = [
     {
         id: 0,
         name: "Start",

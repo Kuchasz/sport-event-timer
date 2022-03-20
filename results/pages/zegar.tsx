@@ -1,18 +1,18 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { ConfigMenu } from "../../components/config-menu";
+import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
-import { Loader } from "../../components/loader";
+import { Loader } from "../components/loader";
 import {
     mdiChevronDoubleRight,
     mdiCog,
     mdiVolumeHigh,
     mdiVolumeOff
     } from "@mdi/js";
-import { Meta } from "../../components/meta";
-import { socket } from "../../connection";
-import { Timer } from "../../components/timer";
+import { Meta } from "../components/meta";
+import { socket } from "../connection";
+import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
 
 export type TextSettings = {
