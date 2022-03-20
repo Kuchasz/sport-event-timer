@@ -2,13 +2,13 @@ import parse from "csv-parse/lib/sync";
 import { createStore } from "@set/timer/store";
 import { fakePlayers } from "@set/timer/slices/fake-players";
 import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
-import { fakeTimeKeepers } from "@set/timer/slices/fake-time-keepers";
 import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
 import { Player } from "@set/timer/model";
 import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
+import { staticTimeKeppers } from "@set/timer/slices/fake-time-keepers";
 import { upload } from "@set/timer/slices/players";
 
 const writeJson = <T>(content: T, path: string) => {
@@ -39,7 +39,7 @@ export const apply = (server: HttpServer): Promise<void> => {
         if (err) {
             state = {
                 players: [],
-                timeKeepers: fakeTimeKeepers,
+                timeKeepers: staticTimeKeppers,
                 timeStamps: [],
                 raceCategories: []
             };
