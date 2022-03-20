@@ -4073,7 +4073,7 @@ babel-loader@8.1.0:
     pify "^4.0.1"
     schema-utils "^2.6.5"
 
-babel-loader@^8.2.3:
+babel-loader@8.1.0:
   version "8.2.3"
   resolved "https://registry.npmjs.org/babel-loader/-/babel-loader-8.2.3.tgz#8986b40f1a64cacfcb4b8429320085ef68b1342d"
   integrity sha512-n4Zeta8NC3QAsuyiizu0GkmRcQ6clkV9WFUnUf1iXP//IeSKbWjofW3UHyZVwlOB4y039YQKefawyTn64Zwbuw==
@@ -10240,7 +10240,7 @@ next-pwa@^5.4.6:
   resolved "https://registry.npmjs.org/next-pwa/-/next-pwa-5.4.6.tgz#67db147631e67076e2767555ab07324e60f4e7cf"
   integrity sha512-cJVxfn4a1DqwKGP+zhqE9QikqFuUhCYi7wiaucxhFLeShC6DVX1Gy5Qh3HAs1i6VHQcEOnaOwfk0Q9Z08yRkCg==
   dependencies:
-    babel-loader "^8.2.3"
+    babel-loader "8.1.0"
     clean-webpack-plugin "^4.0.0"
     globby "^11.0.4"
     terser-webpack-plugin "^5.3.1"
