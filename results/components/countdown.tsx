@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { formatTimeSeconds } from "../utils";
+import { createBeep, formatTimeSeconds } from "../utils";
 import { useEffect, useState } from "react";
 
-const Time = ({ time }: { time: number }) => {
+const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
     const currentTime = new Date(time);
 
     const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
@@ -12,8 +12,8 @@ const Time = ({ time }: { time: number }) => {
 
     return (
         <div
-            style={{ fontSize: "90vh", lineHeight: "0.7" }}
-            className={classNames(["font-mono flex flex-grow flex-col justify-center font-black"], {
+            style={{ fontSize: `${fontSize}vh`, lineHeight: "0.7" }}
+            className={classNames(["font-mono flex flex-grow flex-col justify-center font-black transition-all"], {
                 ["text-white"]: formatedTime > 10,
                 ["text-orange-700"]: formatedTime <= 10
             })}
@@ -23,12 +23,12 @@ const Time = ({ time }: { time: number }) => {
     );
 };
 
-// const beep = createBeep();
+const beep = createBeep();
 
 const secondsToPlay = [56, 57, 58, 59];
 const clockTimeout = 100;
 
-export const Countdown = ({ offset }: { offset: number }) => {
+export const Countdown = ({ offset, fontSize }: { offset: number; fontSize: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
     useEffect(() => {
@@ -45,9 +45,8 @@ export const Countdown = ({ offset }: { offset: number }) => {
             const miliseconds = now.getMilliseconds();
 
             if (secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
-                // console.log(seconds);
-                // const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                // beep(frequency, 500);
+                const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
+                beep(frequency, 500);
             }
 
             setTime(Date.now() + offset);
@@ -59,5 +58,5 @@ export const Countdown = ({ offset }: { offset: number }) => {
         };
     }, [offset]);
 
-    return <Time time={time} />;
+    return <Time time={time} fontSize={fontSize} />;
 };
