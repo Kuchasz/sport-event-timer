@@ -4,6 +4,7 @@
     "private": true,
     "homepage": "https://wss.set-hub.pyszstudio.pl/timer/",
     "main": "build",
+    "sourceType": "module",
     "dependencies": {
         "@craco/craco": "@craco/craco@7.0.0-alpha.3",
         "@mdi/font": "^6.5.95",
@@ -23,6 +24,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@types/socket.io-client": "^3.0.0",
         "autoprefixer": "^10",
+        "babel-preset-es2015": "^6.24.1",
         "fp-ts": "^2.11.9",
         "node-sass": "^7.0.1",
         "postcss": "8.4.12",
@@ -40,9 +42,9 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "craco start",
-        "build": "craco build",
-        "test": "craco test",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
