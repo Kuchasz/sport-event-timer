@@ -36,7 +36,7 @@ const run = async () => {
             res.json(err ? 0 : stats.mtimeMs);
         });
     });
-    app.get("/timesync", (req, res) => {
+    app.get("/timesync", (_, res) => {
         res.json(Date.now());
     });
 

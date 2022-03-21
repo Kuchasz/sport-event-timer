@@ -83,39 +83,49 @@ function App() {
                                                         </div>
                                                     ) : (
                                                         <Routes>
-                                                            <Route path={`${process.env.PUBLIC_URL}/`}>
-                                                                <Navigate to={`${process.env.PUBLIC_URL}/config`} />
-                                                            </Route>
-                                                            <Route path={`${process.env.PUBLIC_URL}/config`}>
-                                                                <Config></Config>
-                                                            </Route>
+                                                            <Route
+                                                                path={`${process.env.PUBLIC_URL}/`}
+                                                                element={
+                                                                    <Navigate to={`${process.env.PUBLIC_URL}/config`} />
+                                                                }
+                                                            />
+                                                            <Route
+                                                                path={`${process.env.PUBLIC_URL}/config`}
+                                                                element={<Config />}
+                                                            />
                                                             {timeKeeperId !== undefined && (
                                                                 <>
-                                                                    <Route path={`${process.env.PUBLIC_URL}/list`}>
-                                                                        <PlayersList
-                                                                            onTimeRecord={(playerId) =>
-                                                                                dispatch(
-                                                                                    add({
-                                                                                        playerId,
-                                                                                        timeKeeperId,
-                                                                                        time: getCurrentTime(offset)
-                                                                                    })
-                                                                                )
-                                                                            }
-                                                                            onTimeReset={(timeStampId) =>
-                                                                                dispatch(reset({ id: timeStampId }))
-                                                                            }
-                                                                            players={playersWithTimeStamps(
-                                                                                timeKeeperId
-                                                                            )}
-                                                                        />
-                                                                    </Route>
-                                                                    <Route path={`${process.env.PUBLIC_URL}/pad`}>
-                                                                        <PlayersDialPad
-                                                                            offset={offset}
-                                                                            timeKeeperId={timeKeeperId}
-                                                                        />
-                                                                    </Route>
+                                                                    <Route
+                                                                        path={`${process.env.PUBLIC_URL}/list`}
+                                                                        element={
+                                                                            <PlayersList
+                                                                                onTimeRecord={(playerId) =>
+                                                                                    dispatch(
+                                                                                        add({
+                                                                                            playerId,
+                                                                                            timeKeeperId,
+                                                                                            time: getCurrentTime(offset)
+                                                                                        })
+                                                                                    )
+                                                                                }
+                                                                                onTimeReset={(timeStampId) =>
+                                                                                    dispatch(reset({ id: timeStampId }))
+                                                                                }
+                                                                                players={playersWithTimeStamps(
+                                                                                    timeKeeperId
+                                                                                )}
+                                                                            />
+                                                                        }
+                                                                    />
+                                                                    <Route
+                                                                        path={`${process.env.PUBLIC_URL}/pad`}
+                                                                        element={
+                                                                            <PlayersDialPad
+                                                                                offset={offset}
+                                                                                timeKeeperId={timeKeeperId}
+                                                                            />
+                                                                        }
+                                                                    />
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/assign/:timeStampToAssignId`}
                                                                         children={({ match }: { match: any }) => (
@@ -138,20 +148,25 @@ function App() {
                                                                             />
                                                                         )}
                                                                     ></Route>
-                                                                    <Route path={`${process.env.PUBLIC_URL}/times`}>
-                                                                        <PlayersTimes
-                                                                            onAddTime={() => {
-                                                                                dispatch(
-                                                                                    add({
-                                                                                        timeKeeperId,
-                                                                                        time: getCurrentTime(offset)
-                                                                                    })
-                                                                                );
-                                                                            }}
-                                                                            times={timeStampsWithPlayers(timeKeeperId)}
-                                                                            timeKeeperId={selectedTimeKeeper}
-                                                                        />
-                                                                    </Route>
+                                                                    <Route
+                                                                        path={`${process.env.PUBLIC_URL}/times`}
+                                                                        element={
+                                                                            <PlayersTimes
+                                                                                onAddTime={() => {
+                                                                                    dispatch(
+                                                                                        add({
+                                                                                            timeKeeperId,
+                                                                                            time: getCurrentTime(offset)
+                                                                                        })
+                                                                                    );
+                                                                                }}
+                                                                                times={timeStampsWithPlayers(
+                                                                                    timeKeeperId
+                                                                                )}
+                                                                                timeKeeperId={selectedTimeKeeper}
+                                                                            />
+                                                                        }
+                                                                    />
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
                                                                         children={({ match }: { match: any }) => (
