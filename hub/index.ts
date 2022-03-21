@@ -36,6 +36,7 @@ export const apply = (server: HttpServer): Promise<void> => {
 
     readFile(resolve("../state.json"), { encoding: "utf8", flag: "r" }, (err, res) => {
         let state;
+
         if (err) {
             state = {
                 players: [],
