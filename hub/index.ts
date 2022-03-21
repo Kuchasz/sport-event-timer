@@ -100,7 +100,7 @@ export const apply = (server: HttpServer): Promise<void> => {
             clients.splice(clients.indexOf(socket), 1);
         });
 
-        // socket.emit("receive-state", store.getState());
+        socket.emit("receive-state", store.getState());
 
         socket.on("TQ", () => {
             socket.emit("TR", Date.now());

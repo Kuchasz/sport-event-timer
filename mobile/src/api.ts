@@ -2,11 +2,14 @@ import { hubUrl } from "./connection";
 
 export const getCurrentTimeOffset = (): Promise<number> => {
     return new Promise<number>(async (res) => {
-        const clientSendTime = Date.now();
-        const { diff, serverTime } = await fetch(`${hubUrl}/current-time/${clientSendTime}`).then((x) => x.json());
-        const clientResponseTime = Date.now();
-        const serverClientResponseDiffTime = clientResponseTime - serverTime;
+        const loadStartTime = Date.now();
+        const serverTime = await fetch(`${hubUrl}/timesync`)
+            .then((x) => x.json())
+            .then(Number);
+        const loadEndTime = Date.now();
 
-        res((diff - clientResponseTime + clientSendTime - serverClientResponseDiffTime) / 2);
+        const latency = loadEndTime - loadStartTime;
+
+        res(-(loadEndTime - (serverTime + latency / 2)));
     });
 };
