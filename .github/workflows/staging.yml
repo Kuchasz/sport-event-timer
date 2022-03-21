@@ -16,7 +16,15 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - uses: c-hive/gha-yarn-cache@v1
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
@@ -40,7 +48,15 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - uses: c-hive/gha-yarn-cache@v1
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
@@ -64,7 +80,15 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - uses: c-hive/gha-yarn-cache@v1
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
@@ -94,7 +118,15 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
-            - uses: c-hive/gha-yarn-cache@v1
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
@@ -144,7 +176,15 @@ jobs:
                   name: mobile.dist
                   path: ./mobile/build
 
-            - uses: c-hive/gha-yarn-cache@v1
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
