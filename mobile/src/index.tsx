@@ -35,7 +35,7 @@ const LoginApp = () => {
                     <div className="bg-white rounded-xl flex">
                         <Icon size={1} path={mdiAccountOutline} className="text-red-500 m-3" />
                         <input
-                            className="focus:outline-none"
+                            className="focus:outline-none text-red-500 font-semibold"
                             onChange={(e) => setLoginState({ ...loginState, login: e.target.value })}
                         />
                     </div>
@@ -45,7 +45,8 @@ const LoginApp = () => {
                     <div className="bg-white rounded-xl flex">
                         <Icon size={1} path={mdiLockOutline} className="text-red-500 m-3" />
                         <input
-                            className="focus:outline-none"
+                            type="password"
+                            className="focus:outline-none text-red-500 font-semibold"
                             onChange={(e) => setLoginState({ ...loginState, password: e.target.value })}
                         />
                     </div>
