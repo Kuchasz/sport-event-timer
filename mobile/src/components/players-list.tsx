@@ -1,6 +1,6 @@
 import { ActionButton, PrimaryActionButton } from "./action-button";
 import { mdiAlarmCheck, mdiAlarmOff, mdiWrench } from "@mdi/js";
-import { Player, TimeStamp } from "@set/timer/model";
+import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { useNavigate } from "react-router";
 

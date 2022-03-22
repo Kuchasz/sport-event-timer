@@ -40,15 +40,15 @@ socket.io.on("error", () => {
     runStateChangedHandlers("error");
 });
 
-socket.io.on("reconnect", (attempt) => {
+socket.io.on("reconnect", () => {
     runStateChangedHandlers("connected");
 });
 
-socket.io.on("reconnect_error", (error) => {
+socket.io.on("reconnect_error", () => {
     runStateChangedHandlers("reconnecting");
 });
 
-socket.io.on("reconnect_attempt", (attempt) => {
+socket.io.on("reconnect_attempt", () => {
     runStateChangedHandlers("reconnecting");
 });
 

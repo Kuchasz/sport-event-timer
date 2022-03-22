@@ -1,5 +1,5 @@
 import { PlayersCheckIn } from "./players-check-in";
-import { update } from "@set/timer/slices/time-stamps";
+import { update } from "@set/timer/dist/slices/time-stamps";
 import { useNavigate } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 

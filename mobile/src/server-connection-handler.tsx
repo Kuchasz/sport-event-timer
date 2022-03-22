@@ -20,7 +20,7 @@ export const ServerConnectionHandler = ({
 
         getCurrentTimeOffset().then(setTimeOffset);
 
-        onConnectionStateChanged(setConnectionState);
+        return onConnectionStateChanged(setConnectionState);
     }, [dispatch]);
 
     return (

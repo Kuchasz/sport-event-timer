@@ -1,4 +1,4 @@
-import { add } from "@set/timer/slices/time-stamps";
+import { add } from "@set/timer/dist/slices/time-stamps";
 import { getCurrentTime } from "../utils";
 import { PlayersCheckIn } from "./players-check-in";
 import { useTimerDispatch } from "../hooks";
