@@ -1,4 +1,4 @@
-import { add, reset, update } from "@set/timer/slices/time-stamps";
+import { add, reset, update } from "@set/timer/dist/slices/time-stamps";
 import { BottomMenu } from "./components/bottom-menu";
 import {
     BrowserRouter as Router,

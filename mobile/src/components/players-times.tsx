@@ -7,9 +7,9 @@ import {
     mdiPlusCircleOutline
     } from "@mdi/js";
 import { mdiWrench } from "@mdi/js";
-import { Player, TimeStamp } from "@set/timer/model";
+import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
-import { reset } from "@set/timer/slices/time-stamps";
+import { reset } from "@set/timer/dist/slices/time-stamps";
 import { useNavigate } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 

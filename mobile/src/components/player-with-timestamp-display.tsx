@@ -1,5 +1,5 @@
 import { formatNumber, formatTime } from "../utils";
-import { Player, TimeStamp } from "@set/timer/model";
+import { Player, TimeStamp } from "@set/timer/dist/model";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;

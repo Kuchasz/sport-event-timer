@@ -48,8 +48,7 @@ export const Status = ({ timeKeeperName }: StatusProps) => {
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
 
     useEffect(() => {
-        const unregister = onConnectionStateChanged(setConnectionState);
-        return () => unregister();
+        return onConnectionStateChanged(setConnectionState);
     }, []);
 
     return (
