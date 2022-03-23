@@ -10,7 +10,8 @@
             "timer",
             "hub",
             "results",
-            "server"
+            "server",
+            "shared"
         ]
     }
 }

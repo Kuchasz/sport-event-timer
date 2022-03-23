@@ -1,0 +1,10 @@
+{
+    "name": "@set/shared",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc --project tsconfig.json"
+    },
+    "dependencies": {
+        "typescript": "^4.6.2"
+    }
+}

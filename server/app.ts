@@ -4,15 +4,18 @@ import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
 import { config } from "./config";
 import { createServer } from "http";
+import { login } from "./auth";
 import { readFile, stat } from "fs";
 import { resolve } from "path";
+import { Response } from "express";
+import { UserCredentials } from "@set/shared/dist/index";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
 export interface TypedRequestBody<T> extends Express.Request {
-    body: T
+    body: T;
 }
 
 const app = express();
@@ -44,22 +47,26 @@ const run = async () => {
     app.get("/timesync", (_, res) => {
         res.json(Date.now());
     });
-    app.post('/log-in', (req: TypedRequestBody<{login: string, password: string}>, res: Express.Response) => {
-        let result: string;
-    
+    app.post("/log-in", async (req: TypedRequestBody<UserCredentials>, res: Response) => {
         try {
             const tokens = await login(req.body);
-            result = tokens.encodedToken;
-            res.cookie(config.auth.cookieName, result.result!.authToken, {
+            const result = {
+                authToken: tokens.encodedToken,
+                issuedAt: tokens.iat,
+                expireDate: tokens.exp
+            };
+            res.cookie(config.auth.cookieName, result.authToken, {
                 httpOnly: true,
-                maxAge: config.auth.maxAge * 1000,
-            }); //secure the cookie!!
+                maxAge: config.auth.maxAge * 1000
+            });
+            res.json(result);
+            return;
         } catch (err) {
             console.log(err);
         }
-    
-        res.json(result);
-    };);
+
+        res.sendStatus(401);
+    });
 
     await applyHub(server);
 

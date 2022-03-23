@@ -5,6 +5,7 @@ import { mdiFloppy, mdiMinus, mdiPlus } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useTimerSelector } from "../hooks";
 
@@ -42,14 +43,14 @@ const Digit = ({ number }: { number: string }) => <div className="text-6xl mb-2 
 
 type TweakTimeStampProps = {
     onSave: (timeStamp: TimeStamp) => void;
-    timeStampId: number;
 };
 
-export const TweakTimeStamps = ({ onSave, timeStampId }: TweakTimeStampProps) => {
+export const TweakTimeStamps = ({ onSave }: TweakTimeStampProps) => {
+    const { timeStampId } = useParams();
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const allPlayers = useTimerSelector((x) => x.players);
 
-    const timeStamp = allTimeStamps.find((x) => x.id === timeStampId);
+    const timeStamp = allTimeStamps.find((x) => x.id === parseInt(timeStampId!));
     const player = allPlayers.find((x) => x.id === timeStamp?.playerId);
 
     const navigate = useNavigate();
