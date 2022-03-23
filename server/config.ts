@@ -20,9 +20,9 @@ const exampleConfig: Config = {
 
 const envConfig: Config = {
     auth: {
-        cookieName: process.env.AUTH_COOKIE_NAME,
-        maxAge: Number(process.env.AUTH_MAX_AGE),
-        secretKey: process.env.AUTH_SECRET_KEY
+        cookieName: process.env.AUTH_COOKIE_NAME || "",
+        maxAge: Number(process.env.AUTH_MAX_AGE || "0"),
+        secretKey: process.env.AUTH_SECRET_KEY || ""
     }
 };
 

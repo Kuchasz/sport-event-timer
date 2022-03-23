@@ -12,6 +12,7 @@
     "dependencies": {
         "@set/hub": "*",
         "@set/mobile": "*",
+        "@set/shared": "*",
         "@set/results": "*",
         "@types/jsonwebtoken": "^8.5.8",
         "cors": "^2.8.5",

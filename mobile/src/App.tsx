@@ -9,6 +9,7 @@ import {
 import { Config } from "./components/config";
 import { CurrentTimeKeeperContext } from "./contexts/current-time-keeper";
 import { getCurrentTime } from "./utils";
+import { History } from "./components/history";
 import { OfflineContext } from "./contexts/offline";
 import { PlayersAssignTime } from "./components/players-assign-time";
 import { PlayersDialPad } from "./components/players-dial-pad";
@@ -93,6 +94,10 @@ function App() {
                                                                 path={`${process.env.PUBLIC_URL}/config`}
                                                                 element={<Config />}
                                                             />
+                                                            <Route
+                                                                path={`${process.env.PUBLIC_URL}/history`}
+                                                                element={<History />}
+                                                            />
                                                             {timeKeeperId !== undefined && (
                                                                 <>
                                                                     <Route
@@ -128,25 +133,19 @@ function App() {
                                                                     />
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/assign/:timeStampToAssignId`}
-                                                                        children={({ match }: { match: any }) => (
+                                                                        element={
                                                                             <PlayersAssignTime
-                                                                                timeStampToAssign={parseInt(
-                                                                                    match.params.timeStampToAssignId
-                                                                                )}
                                                                                 timeKeeperId={timeKeeperId}
                                                                             />
-                                                                        )}
+                                                                        }
                                                                     ></Route>
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/reassign/:timeStampToAssignId`}
-                                                                        children={({ match }: { match: any }) => (
+                                                                        element={
                                                                             <PlayersReassignTime
-                                                                                timeStampToAssign={parseInt(
-                                                                                    match.params.timeStampToAssignId
-                                                                                )}
                                                                                 timeKeeperId={timeKeeperId}
                                                                             />
-                                                                        )}
+                                                                        }
                                                                     ></Route>
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/times`}
@@ -169,16 +168,13 @@ function App() {
                                                                     />
                                                                     <Route
                                                                         path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
-                                                                        children={({ match }: { match: any }) => (
+                                                                        element={
                                                                             <TweakTimeStamps
-                                                                                timeStampId={parseInt(
-                                                                                    match.params.timeStampId
-                                                                                )}
                                                                                 onSave={(timeStamp) => {
                                                                                     dispatch(update(timeStamp));
                                                                                 }}
                                                                             />
-                                                                        )}
+                                                                        }
                                                                     />
                                                                 </>
                                                             )}

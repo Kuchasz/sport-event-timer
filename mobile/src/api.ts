@@ -1,4 +1,5 @@
 import { hubUrl } from "./connection";
+import { LoginResult, UserCredentials } from "@set/shared";
 
 export const getCurrentTimeOffset = (): Promise<number> => {
     return new Promise<number>(async (res) => {
@@ -27,6 +28,4 @@ export const f = {
     get: <T>(url: string) => fetch(hubUrl + url).then((resp) => resp.json() as Promise<T>)
 };
 
-export type UserCredentials = { login: string; password: string };
-
-export const logIn = (credentials: UserCredentials) => f.post<string>("/log-in", credentials);
+export const logIn = (credentials: UserCredentials) => f.post<LoginResult>("/log-in", credentials);
