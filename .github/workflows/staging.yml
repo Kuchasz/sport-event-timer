@@ -64,6 +64,11 @@ jobs:
               with:
                   node-version: "14.x"
 
+            - uses: actions/download-artifact@v2
+              with:
+                  name: timer.dist
+                  path: ./timer
+
             - name: npm install, build, and test
               run: |
                   cd ./hub
@@ -96,6 +101,11 @@ jobs:
               uses: actions/setup-node@v2-beta
               with:
                   node-version: "14.x"
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: timer.dist
+                  path: ./timer
 
             - name: npm install, build, and test
               run: |
