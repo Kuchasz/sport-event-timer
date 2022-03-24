@@ -5,8 +5,8 @@ import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { staticTimeKeppers } from "@set/timer/slices/fake-time-keepers";
-import { upload } from "@set/timer/slices/players";
+import { staticTimeKeppers } from "@set/timer/dist/slices/fake-time-keepers";
+import { upload } from "@set/timer/dist/slices/players";
 
 const writeJson = <T>(content: T, path: string) => {
     writeFile(resolve(path), JSON.stringify(content), (err) => {
