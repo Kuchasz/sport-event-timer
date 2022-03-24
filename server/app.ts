@@ -8,7 +8,7 @@ import { login } from "./auth";
 import { readFile, stat } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
-import { UserCredentials } from "@set/shared/dist/index";
+import { UserCredentials } from "@set/shared";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 

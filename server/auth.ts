@@ -1,7 +1,7 @@
 import * as jwt from "./jwt";
 import { config } from "./config";
 import { NextFunction, Request, Response } from "express";
-import { UserCredentials } from "@set/shared/dist/index";
+import { UserCredentials } from "@set/shared";
 
 const admin_username = "admin"; //process.env.ADMIN_USER;
 const admin_password = "admin"; //process.env.ADMIN_PASSWORD;
