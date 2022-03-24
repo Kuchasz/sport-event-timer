@@ -16,7 +16,8 @@ Application for making time measurements
 -   fetch time from server :heavy_check_mark:
 -   disable pull to refresh :heavy_check_mark:
 -   persist selected timekeeper :heavy_check_mark:
-
-## Nice - to - have
-
--   imeplement NTP protocol
+-   NTP protocol implementation
+-   actions log
+-   authentication
+-   real-time starting list sync
+-   easier starting list fillout
