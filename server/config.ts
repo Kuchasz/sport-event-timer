@@ -1,6 +1,7 @@
 import { config as readEnvConfig } from "dotenv";
+import { resolve } from "path";
 
-readEnvConfig();
+readEnvConfig({ path: resolve("../.env") });
 
 type Config = {
     auth: {
