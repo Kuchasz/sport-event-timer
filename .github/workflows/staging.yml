@@ -43,6 +43,7 @@ jobs:
                   path: ./timer
 
     build_hub:
+        needs: [build_timer]
         runs-on: ubuntu-latest
 
         steps:
@@ -75,6 +76,7 @@ jobs:
                   path: ./hub
 
     build_results:
+        needs: [build_timer]
         runs-on: ubuntu-latest
 
         steps:

@@ -5,7 +5,7 @@ import { PostDetails } from "../components/post-details";
 import { posts } from "../posts";
 import { Slogan } from "../components/slogan";
 import { sort } from "../utils";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
     <Link href={`artykul/${article.alias}`}>
