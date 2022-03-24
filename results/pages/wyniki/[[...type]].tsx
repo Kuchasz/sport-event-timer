@@ -9,7 +9,7 @@ import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { sort } from "../../utils";
 import { Table } from "../../components/table";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 

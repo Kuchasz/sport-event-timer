@@ -1,7 +1,4 @@
-import { createStore } from "@set/timer/store";
-import { fakePlayers } from "@set/timer/slices/fake-players";
-import { fakeRaceCategories } from "@set/timer/slices/fake-race-categories";
-import { fakeTimeStamps } from "@set/timer/slices/fake-stamps";
+import { createStore } from "@set/timer/dist/store";
 import { parse } from "csv-parse/sync";
 import { Player } from "@set/timer/model";
 import { readFile, writeFile } from "fs";
