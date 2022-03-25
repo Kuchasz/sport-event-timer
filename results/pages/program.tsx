@@ -12,7 +12,7 @@ const Program = () => {
                 <Slogan
                     title="Program Rura na Kocierz"
                     excerpt="Program zawodów Rura na Kocierz 2022"
-                    photo="assets/mapka-trasa-2022.jpg"
+                    photo="assets/plan-zawodow-2022.jpg"
                 />
                 <div className="flex w-full bg-zinc-200 justify-center">
                     <div className="max-w-6xl my-14">
