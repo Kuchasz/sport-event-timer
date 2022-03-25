@@ -10,7 +10,7 @@ import { useRouter } from "next/dist/client/router";
 const MenuButton = ({ activePath = "", to, children }: { activePath: string; to: string; children: ReactNode }) => (
     <Link href={to}>
         <button
-            className={classNames("text-xs md:text-sm font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase", {
+            className={classNames("text-sm md:text-base font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase", {
                 ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to)
             })}
         >
@@ -23,12 +23,6 @@ export const Header = () => {
     const router = useRouter();
     return (
         <header className="flex flex-col">
-            <div className="bg-zinc-800 text-zinc-600 flex justify-center py-3 text-sm font-semibold">
-                <div className="w-full max-w-6xl flex justify-center">
-                    <span className="mr-8">09.04.2022 Wyścig ze startu wspólnego</span>
-                    <span className="mr-8">10.04.2022 Time Trial</span>
-                </div>
-            </div>
             <div className="flex justify-center py-4 md:py-8 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center justify-between">
                     <div className="flex items-center">
@@ -61,19 +55,26 @@ export const Header = () => {
                 <div className="w-full h-0.5 bg-zinc-700"></div>
             </div>
             <div className="flex justify-center py-3 bg-zinc-900 text-white">
-                <div className="w-full max-w-6xl flex justify-between">
-                    <div>
+                <div className="w-full max-w-6xl flex flex-col md:flex-row justify-between">
+                    <div className="flex justify-between md:justify-start">
                         {menuItems.map((mi) => (
                             <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
                                 {mi.label}
                             </MenuButton>
                         ))}
                     </div>
-                    <div>
+                    <a
+                        target="_blank"
+                        href="https://dostartu.pl/rura-na-kocierz-v6591"
+                        className="self-center cursor-pointer text-center bg-orange-500 hover:bg-white hover:text-orange-500 font-bold rounded-full px-4 font-mono py-1"
+                    >
+                        REJESTRACJA
+                    </a>
+                    {/* <div>
                         <a target="_blank" href="https://www.facebook.com/ruranakocierz">
                             <Icon size={1} path={mdiFacebook} />
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </header>
