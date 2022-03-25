@@ -11,13 +11,13 @@ type Config = {
     };
 };
 
-const exampleConfig: Config = {
-    auth: {
-        cookieName: "sessionID",
-        maxAge: 600,
-        secretKey: "8c29adc2865a3633b4d5101399759b0172641de91f3b11b63249c9d70fe1ab35"
-    }
-};
+// const exampleConfig: Config = {
+//     auth: {
+//         cookieName: "sessionID",
+//         maxAge: 600,
+//         secretKey: "8c29adc2865a3633b4d5101399759b0172641de91f3b11b63249c9d70fe1ab35"
+//     }
+// };
 
 const envConfig: Config = {
     auth: {
@@ -29,4 +29,4 @@ const envConfig: Config = {
 
 console.log(envConfig);
 
-export const config = process.env.NODE_ENV === "development" ? exampleConfig : envConfig;
+export const config = envConfig;
