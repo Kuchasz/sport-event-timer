@@ -70,7 +70,7 @@ export const Footer = () => {
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-naszosie-pl.png"></img>
                 </div>
             </div>
-            <div className="flex justify-center py-8 bg-zinc-900 text-white">
+            <div className="flex justify-center py-4 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm justify-between items-center">
                     <div className="flex items-center">
                         <Link href="/">
@@ -98,7 +98,7 @@ export const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-zinc-800 text-zinc-600 flex justify-center py-4 md:py-12 text-xs font-semibold">
+            <div className="bg-zinc-800 text-zinc-600 flex justify-center py-4 text-xs font-semibold">
                 <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row justify-between">
                     <div className="mx-2">RURA NA KOCIERZ © 2022</div>
                     <div>

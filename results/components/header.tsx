@@ -23,7 +23,7 @@ export const Header = () => {
     const router = useRouter();
     return (
         <header className="flex flex-col">
-            <div className="flex justify-center py-4 md:py-8 bg-zinc-900 text-white">
+            <div className="flex justify-center py-4 bg-zinc-900 text-white">
                 <div className="w-full max-w-6xl flex flex-col sm:flex-row text-sm items-center justify-between">
                     <div className="flex items-center">
                         <Link href="/">
