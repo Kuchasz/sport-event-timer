@@ -14,8 +14,8 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
         <div
             style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
             className={classNames(["font-mono flex grow flex-col justify-center font-black transition-all"], {
-                ["text-white"]: formatedTime > 3,
-                ["text-orange-500"]: formatedTime <= 3
+                ["text-white"]: formatedTime > 4,
+                ["text-orange-500"]: formatedTime <= 4
             })}
         >
             {formatedTime}
@@ -25,7 +25,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
 
 const beep = createBeep();
 
-const secondsToPlay = [55, 56, 57, 58, 59];
+const secondsToPlay = [54, 55, 56, 57, 58, 59];
 const clockTimeout = 100;
 
 export const Countdown = ({
@@ -48,7 +48,7 @@ export const Countdown = ({
 
             if (soundEnabled && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                beep(frequency, 500, seconds === 55 ? 1 : 100);
+                beep(frequency, seconds === 59 ? 1000 : 500, seconds === 54 ? 1 : 100);
             }
 
             setTime(Date.now() + offset);
