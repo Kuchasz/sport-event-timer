@@ -47,6 +47,7 @@ const Trasa = () => {
                                     <a target="_blank" href="https://www.strava.com/routes/2897229113276376702">
                                         <img src="assets/trasa-start-wspolny-fun.jpg" />
                                     </a>
+                                    <img src="assets/wysokosciowka-start-wspolny-fun.png" />
                                 </div>
                                 <div className="mt-24 mb-2 flex flex-col items-start">
                                     <span className="flex items-baseline">
@@ -70,6 +71,7 @@ const Trasa = () => {
                                     <a target="_blank" href="https://www.strava.com/routes/2897239559631378416">
                                         <img src="assets/trasa-start-wspolny-pro.jpg" />
                                     </a>
+                                    <img src="assets/wysokosciowka-start-wspolny-pro.png" />
                                 </div>
                                 <div className="mt-24 mb-2 flex flex-col items-start">
                                     <span className="flex items-baseline">
@@ -93,6 +95,7 @@ const Trasa = () => {
                                     <a target="_blank" href="https://www.strava.com/routes/2897239796664260592">
                                         <img src="assets/trasa-time-trial.jpg" />
                                     </a>
+                                    <img src="assets/wysokosciowka-time-trial.png" />
                                 </div>
                             </span>
                         </div>
