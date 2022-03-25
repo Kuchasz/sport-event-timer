@@ -26,39 +26,11 @@ const Trasa = () => {
                                 <br />
                                 <br />
                                 <div className="mt-12 mb-2 flex flex-col items-start">
-                                    <span className="flex items-baseline">
-                                        <h3 className="font-semibold text-xl">Start wspólny - FUN</h3>
-                                        <div className="ml-2">52km / 1120m przewyższenia</div>
+                                    <span className="items-baseline">
+                                        <h3 className="font-semibold text-4xl">Start wspólny - PRO</h3>
+                                        <div className="font-semibold text-xl">104km / 2340m przewyższenia</div>
                                     </span>
-                                    <span>
-                                        Start honorowy z Kozubnika, po 5km wjeżdżamy na 20-kilometrową pętlę. Pętlę
-                                        przejeżdżamy w całości jeden raz, na 48km nie wracamy już w kierunku Porąbki
-                                        tylko odbijamy w kierunku Kocierza
-                                    </span>
-                                    <div className="my-2 flex">
-                                        <Anchor href="/gpsies/rura_na_kocierz_2022_start_wspolny_fun.gpx">
-                                            Pobierz plik .GPX
-                                        </Anchor>
-                                        <Anchor href="https://www.strava.com/routes/2897229113276376702">
-                                            Zobacz w
-                                            <img className="ml-2 self-center" src="assets/strava-logo-small.jpg" />
-                                        </Anchor>
-                                    </div>
-                                    <a
-                                        className="w-full"
-                                        target="_blank"
-                                        href="https://www.strava.com/routes/2897229113276376702"
-                                    >
-                                        <img className="w-full" src="assets/trasa-start-wspolny-fun.jpg" />
-                                    </a>
-                                    <img src="assets/wysokosciowka-start-wspolny-fun.png" />
-                                </div>
-                                <div className="mt-24 mb-2 flex flex-col items-start">
-                                    <span className="flex items-baseline">
-                                        <h3 className="font-semibold text-xl">Start wspólny - PRO</h3>
-                                        <div className="ml-2">104km / 2340m przewyższenia</div>
-                                    </span>
-                                    <span>
+                                    <span className="my-4">
                                         Start honorowy z Kozubnika, po 5km wjeżdżamy na 20-kilometrową pętlę. Pętlę
                                         przejeżdżamy w całości trzy razy, na 100km nie wracamy już w kierunku Porąbki
                                         tylko lecimy Rurę na Kocierz 💨💨💨
@@ -82,11 +54,39 @@ const Trasa = () => {
                                     <img src="assets/wysokosciowka-start-wspolny-pro.png" />
                                 </div>
                                 <div className="mt-24 mb-2 flex flex-col items-start">
-                                    <span className="flex items-baseline">
-                                        <h3 className="font-semibold text-xl">Time Trial</h3>
-                                        <div className="ml-2">11km / 380m przewyższenia</div>
+                                    <span className="items-baseline">
+                                        <h3 className="font-semibold text-4xl">Start wspólny - FUN</h3>
+                                        <div className="font-semibold text-xl">52km / 1120m przewyższenia</div>
                                     </span>
-                                    <span>
+                                    <span className="my-4">
+                                        Start honorowy z Kozubnika, po 5km wjeżdżamy na 20-kilometrową pętlę. Pętlę
+                                        przejeżdżamy w całości jeden raz, na 48km nie wracamy już w kierunku Porąbki
+                                        tylko odbijamy w kierunku Kocierza
+                                    </span>
+                                    <div className="my-2 flex">
+                                        <Anchor href="/gpsies/rura_na_kocierz_2022_start_wspolny_fun.gpx">
+                                            Pobierz plik .GPX
+                                        </Anchor>
+                                        <Anchor href="https://www.strava.com/routes/2897229113276376702">
+                                            Zobacz w
+                                            <img className="ml-2 self-center" src="assets/strava-logo-small.jpg" />
+                                        </Anchor>
+                                    </div>
+                                    <a
+                                        className="w-full"
+                                        target="_blank"
+                                        href="https://www.strava.com/routes/2897229113276376702"
+                                    >
+                                        <img className="w-full" src="assets/trasa-start-wspolny-fun.jpg" />
+                                    </a>
+                                    <img src="assets/wysokosciowka-start-wspolny-fun.png" />
+                                </div>
+                                <div className="mt-24 mb-2 flex flex-col items-start">
+                                    <span className="items-baseline">
+                                        <h3 className="font-semibold text-4xl">Time Trial</h3>
+                                        <div className="font-semibold text-xl">11km / 380m przewyższenia</div>
+                                    </span>
+                                    <span className="my-4">
                                         Wymagająca, górska trasa wyścigu indywidualnej jazdy na czas. Startujemy w parku
                                         w Gminie Łękawica, na zawodników czeka 11km i 380m wzniosu. Po drodze
                                         przejedziemy ekstra atrakcję, ul. Widokową
