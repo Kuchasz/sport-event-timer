@@ -49,6 +49,11 @@ export const Header = () => {
                             <Email>biuro@rura.cc</Email>
                         </div>
                     </div>
+                    <div>
+                        <a target="_blank" href="https://www.facebook.com/ruranakocierz">
+                            <Icon size={1.5} path={mdiFacebook} />
+                        </a>
+                    </div>
                 </div>
             </div>
             <div className="flex">
@@ -70,11 +75,6 @@ export const Header = () => {
                     >
                         REJESTRACJA
                     </a>
-                    {/* <div>
-                        <a target="_blank" href="https://www.facebook.com/ruranakocierz">
-                            <Icon size={1} path={mdiFacebook} />
-                        </a>
-                    </div> */}
                 </div>
             </div>
         </header>

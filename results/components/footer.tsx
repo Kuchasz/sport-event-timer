@@ -2,7 +2,7 @@ import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import { Email } from "./email";
-import { mdiEmailOpenOutline, mdiHumanMaleChild } from "@mdi/js";
+import { mdiEmailOpenOutline, mdiFacebook, mdiHumanMaleChild } from "@mdi/js";
 import { menuItems } from "./menu-items";
 import { ReactNode } from "react";
 import { useRouter } from "next/dist/client/router";
@@ -95,6 +95,11 @@ export const Footer = () => {
                             <div className="text-zinc-700 font-bold">KONTAKT</div>
                             <Email>biuro@rura.cc</Email>
                         </div>
+                    </div>
+                    <div>
+                        <a target="_blank" href="https://www.facebook.com/ruranakocierz">
+                            <Icon size={1.5} path={mdiFacebook} />
+                        </a>
                     </div>
                 </div>
             </div>
