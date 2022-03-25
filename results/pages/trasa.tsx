@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import { Anchor } from "components/anchor";
 import { Slogan } from "../components/slogan";
 
 const Trasa = () => {
@@ -35,20 +36,13 @@ const Trasa = () => {
                                         tylko odbijamy w kierunku Kocierza
                                     </span>
                                     <div className="my-2 flex">
-                                        <a
-                                            href="/gpsies/rura_na_kocierz_2022_start_wspolny_fun.gpx"
-                                            className="border py-2 px-4 border-gray-200"
-                                        >
+                                        <Anchor href="/gpsies/rura_na_kocierz_2022_start_wspolny_fun.gpx">
                                             Pobierz plik .GPX
-                                        </a>
-                                        <a
-                                            target="_blank"
-                                            href="https://www.strava.com/routes/2897229113276376702"
-                                            className="ml-2 border py-2 px-4 border-gray-200 flex"
-                                        >
+                                        </Anchor>
+                                        <Anchor href="https://www.strava.com/routes/2897229113276376702">
                                             Zobacz w
                                             <img className="ml-2 self-center" src="assets/strava-logo-small.jpg" />
-                                        </a>
+                                        </Anchor>
                                     </div>
                                     <a target="_blank" href="https://www.strava.com/routes/2897229113276376702">
                                         <img src="assets/trasa-start-wspolny-fun.jpg" />
@@ -65,20 +59,13 @@ const Trasa = () => {
                                         tylko lecimy Rurę na Kocierz 💨💨💨
                                     </span>
                                     <div className="my-2 flex">
-                                        <a
-                                            href="/gpsies/rura_na_kocierz_2022_start_wspolny_pro.gpx"
-                                            className="border py-2 px-4 border-gray-200"
-                                        >
+                                        <Anchor href="/gpsies/rura_na_kocierz_2022_start_wspolny_pro.gpx">
                                             Pobierz plik .GPX
-                                        </a>
-                                        <a
-                                            target="_blank"
-                                            href="https://www.strava.com/routes/2897239559631378416"
-                                            className="ml-2 border py-2 px-4 border-gray-200 flex"
-                                        >
+                                        </Anchor>
+                                        <Anchor href="https://www.strava.com/routes/2897239559631378416">
                                             Zobacz w
                                             <img className="ml-2 self-center" src="assets/strava-logo-small.jpg" />
-                                        </a>
+                                        </Anchor>
                                     </div>
                                     <a target="_blank" href="https://www.strava.com/routes/2897239559631378416">
                                         <img src="assets/trasa-start-wspolny-pro.jpg" />
@@ -95,20 +82,13 @@ const Trasa = () => {
                                         przejedziemy ekstra atrakcję, ul. Widokową
                                     </span>
                                     <div className="my-2 flex">
-                                        <a
-                                            href="/gpsies/rura_na_kocierz_2022_time_trial.gpx"
-                                            className="border py-2 px-4 border-gray-200"
-                                        >
+                                        <Anchor href="/gpsies/rura_na_kocierz_2022_time_trial.gpx">
                                             Pobierz plik .GPX
-                                        </a>
-                                        <a
-                                            target="_blank"
-                                            href="https://www.strava.com/routes/2897239796664260592"
-                                            className="ml-2 border py-2 px-4 border-gray-200 flex"
-                                        >
+                                        </Anchor>
+                                        <Anchor href="https://www.strava.com/routes/2897239796664260592">
                                             Zobacz w
                                             <img className="ml-2 self-center" src="assets/strava-logo-small.jpg" />
-                                        </a>
+                                        </Anchor>
                                     </div>
                                     <a target="_blank" href="https://www.strava.com/routes/2897239796664260592">
                                         <img src="assets/trasa-time-trial.jpg" />
