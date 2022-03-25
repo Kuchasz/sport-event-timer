@@ -10,7 +10,7 @@ const Program = () => {
             </Head>
             <div>
                 <Slogan
-                    title="Program Rura na Kocierz"
+                    title="Program Rury na Kocierz"
                     excerpt="Program zawodów Rura na Kocierz 2022"
                     photo="assets/plan-zawodow-2022.jpg"
                 />
