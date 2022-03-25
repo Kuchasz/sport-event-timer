@@ -27,4 +27,6 @@ const envConfig: Config = {
     }
 };
 
+console.log(envConfig);
+
 export const config = process.env.NODE_ENV === "development" ? exampleConfig : envConfig;
