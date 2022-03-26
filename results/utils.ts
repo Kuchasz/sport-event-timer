@@ -23,7 +23,10 @@ export const createBeep = () => {
     if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
 
     console.log("create.beep");
-    const context = new AudioContext();
+
+    const ContextConstructor = window.AudioContext || (window as any).webkitAudioContext;
+
+    const context = new ContextConstructor();
 
     return ((freq = 520, duration = 500, vol = 100) => {
         console.log("run.beep");
