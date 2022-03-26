@@ -3,7 +3,7 @@ import { getPlayers, getPlayersDate } from "api";
 import { Loader } from "../components/loader";
 import { Player } from "../../timer/model";
 import { Table } from "../components/table";
-import { TimerState } from "@set/timer/dist/store";
+import { TimerState } from "@set/timer/store";
 import { useEffect } from "react";
 import { useState } from "react";
 

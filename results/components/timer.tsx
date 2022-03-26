@@ -1,4 +1,4 @@
-import { formatTimeNoSec } from "../utils";
+import { formatTimeNoSec } from "@set/shared/dist";
 import { useEffect, useState } from "react";
 
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (

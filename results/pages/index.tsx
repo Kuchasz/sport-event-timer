@@ -4,8 +4,8 @@ import { DateAdded } from "../components/date-added";
 import { PostDetails } from "../components/post-details";
 import { posts } from "../posts";
 import { Slogan } from "../components/slogan";
-import { sort } from "../utils";
-import { TimerState } from "@set/timer/dist/store";
+import { sort } from "@set/shared/dist";
+import { TimerState } from "@set/timer/store";
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
     <Link href={`artykul/${article.alias}`}>

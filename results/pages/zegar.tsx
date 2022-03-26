@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep, unreliablyGetIsMobile } from "../utils";
+import { BeepFunction, createBeep } from "../utils";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
 import { Loader } from "../components/loader";
@@ -14,6 +14,7 @@ import {
 import { Meta } from "../components/meta";
 import { socket } from "../connection";
 import { Timer } from "../components/timer";
+import { unreliablyGetIsMobile } from "@set/shared/dist";
 import { useEffect, useState } from "react";
 
 export type TextSettings = {

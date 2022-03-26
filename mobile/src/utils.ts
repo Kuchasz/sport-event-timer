@@ -13,12 +13,14 @@ export const formatTime = (time: Date) =>
 export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]): number[] =>
     typedNumbers !== "" ? pipe(allNumbers, Arr.filter(flow(String, S.startsWith(typedNumbers)))) : [];
 
+export const sliceFrom = (start: number) => (string: string) => string.slice(start);
+
 export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): string[] =>
     pipe(
         allNumbers,
         Arr.map(String),
         Arr.filter(S.startsWith(typedNumbers)),
-        Arr.map((e) => S.slice(typedNumbers.length, e.length)(e)),
+        Arr.map(sliceFrom(typedNumbers.length)),
         Arr.map(S.slice(0, 1)),
         Arr.filter((s) => !!s)
     );

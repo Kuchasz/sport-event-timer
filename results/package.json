@@ -13,6 +13,7 @@
         "@mdi/js": "^6.5.95",
         "@mdi/react": "^1.5.0",
         "@set/timer": "*",
+        "@set/shared": "*",
         "@types/classnames": "2.3.1",
         "@types/express": "4.17.13",
         "@types/jest": "27.4.1",
