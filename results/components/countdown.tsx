@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { createBeep, formatTimeSeconds } from "../utils";
+import { formatTimeSeconds } from "../utils";
 import { useEffect, useState } from "react";
 
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
@@ -23,19 +23,17 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
     );
 };
 
-const beep = createBeep();
-
 const secondsToPlay = [54, 55, 56, 57, 58, 59];
 const clockTimeout = 100;
 
 export const Countdown = ({
     offset,
     fontSize,
-    soundEnabled
+    beep
 }: {
     offset: number;
     fontSize: number;
-    soundEnabled: boolean;
+    beep?: (freq?: number, duration?: number, vol?: number) => void;
 }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
 
@@ -46,7 +44,8 @@ export const Countdown = ({
             const seconds = now.getSeconds();
             const miliseconds = now.getMilliseconds();
 
-            if (soundEnabled && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
+            if (beep && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
+                console.log(seconds);
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
                 beep(frequency, seconds === 59 ? 1000 : 500, seconds === 54 ? 1 : 100);
             }
@@ -57,7 +56,7 @@ export const Countdown = ({
         return () => {
             clearInterval(interval);
         };
-    }, [offset, soundEnabled]);
+    }, [offset, beep]);
 
     return <Time time={time} fontSize={fontSize} />;
 };
