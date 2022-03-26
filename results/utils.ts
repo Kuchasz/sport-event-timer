@@ -41,3 +41,8 @@ export const createBeep = () => {
         oscillator.stop(context.currentTime + duration * 0.001);
     }) as BeepFunction;
 };
+
+export const unreliablyGetIsMobile = () => {
+    if (typeof window === "undefined") return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
