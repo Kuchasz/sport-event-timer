@@ -2,8 +2,10 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
 import { BeepFunction, createBeep } from "../utils";
+import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
+import { getTimerPlayers } from "../api";
 import { Loader } from "../components/loader";
 import {
     mdiChevronDoubleRight,
@@ -26,7 +28,7 @@ export type ClockSettings = {
     showSettings: boolean;
     clock: TextSettings;
     countdown: TextSettings;
-    players: TextSettings;
+    players: TextSettings & { count: number };
 };
 
 export type TextActions = {
@@ -40,16 +42,16 @@ export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 40 },
-          players: { enabled: true, size: 14 }
+          players: { enabled: true, size: 14, count: 1 }
       }
     : {
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 90 },
-          players: { enabled: true, size: 24 }
+          players: { enabled: true, size: 24, count: 5 }
       };
 
-const NextPlayer = ({ player }: { player: { number: number; name: string } }) => (
+const NextPlayer = ({ player }: { player: ClockListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
         <Icon size="2em" path={mdiChevronDoubleRight} />
         <div
@@ -60,7 +62,7 @@ const NextPlayer = ({ player }: { player: { number: number; name: string } }) =>
         >
             {player.number}
         </div>
-        {player.name}
+        {player.name} {player.lastName}
     </span>
 );
 
@@ -68,10 +70,10 @@ const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
+    const [players, setPlayers] = useState<ClockListPlayer[]>([]);
 
     const toggleSoundEnabled = () => {
-        setBeep(beep !== undefined ? undefined : createBeep);
-        // setSoundEnabled(!soundEnabled)
+        setBeep(beep ? undefined : createBeep);
     };
 
     const toggleMenu = () => {
@@ -91,6 +93,8 @@ const Zegar = () => {
                 socket.close();
             }
         });
+
+        getTimerPlayers().then(setPlayers);
 
         const interval = setInterval(() => {
             loadStartTime = Date.now();
@@ -120,11 +124,7 @@ const Zegar = () => {
                                 className="leading-none transition-all w-full"
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
-                                    {[
-                                        { number: 6, name: "Jacek Kowalczyk" },
-                                        { number: 71, name: "Monika Tralala" },
-                                        { number: 118, name: "Roman Romanowowić" }
-                                    ].map((p) => (
+                                    {players.slice(0, clockState.players.count).map((p) => (
                                         <NextPlayer key={p.number} player={p} />
                                     ))}
                                 </div>
