@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep } from "../utils";
+import { BeepFunction, createBeep, unreliablyGetIsMobile } from "../utils";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
 import { Loader } from "../components/loader";
@@ -34,12 +34,19 @@ export type TextActions = {
     toggle: () => void;
 };
 
-export const defaultClockSettings: ClockSettings = {
-    showSettings: false,
-    clock: { enabled: true, size: 6 },
-    countdown: { enabled: true, size: 90 },
-    players: { enabled: true, size: 24 }
-};
+export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
+    ? {
+          showSettings: false,
+          clock: { enabled: true, size: 6 },
+          countdown: { enabled: true, size: 40 },
+          players: { enabled: true, size: 14 }
+      }
+    : {
+          showSettings: false,
+          clock: { enabled: true, size: 6 },
+          countdown: { enabled: true, size: 90 },
+          players: { enabled: true, size: 24 }
+      };
 
 const NextPlayer = ({ player }: { player: { number: number; name: string } }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
