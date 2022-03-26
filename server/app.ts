@@ -1,14 +1,15 @@
+import * as m from "@set/timer/model";
 import cors from "cors";
 import express from "express";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
+import { ClockListPlayer, sort, UserCredentials } from "@set/shared";
 import { config } from "./config";
 import { createServer } from "http";
 import { login } from "./auth";
 import { readFile, stat } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
-import { UserCredentials } from "@set/shared";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -23,6 +24,15 @@ app.use(cors());
 app.use(express.urlencoded());
 app.use(express.json());
 const server = createServer(app);
+
+const minutesAgo = (minutes: number) => {
+    const currentTime = new Date(Date.now());
+    currentTime.setMilliseconds(0);
+    currentTime.setSeconds(0);
+
+    const currentTimeMinutesAgo = new Date(currentTime.getTime() - minutes * 60_000);
+    return currentTimeMinutesAgo.getTime();
+};
 
 const run = async () => {
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
@@ -46,6 +56,22 @@ const run = async () => {
     });
     app.get("/timesync", (_, res) => {
         res.json(Date.now());
+    });
+    app.get("/clock-players", (_, res) => {
+        readFile(resolve("../players.json"), (err, text: any) => {
+            const players: m.Player[] = err ? [] : JSON.parse(text);
+            const firstPlayerStart = minutesAgo(30);
+            const startTimeFromNumber = (number: number) => firstPlayerStart + 60_000 * number;
+
+            const clockPlayers: ClockListPlayer[] = sort(players, (p) => p.number).map((p) => ({
+                number: p.number,
+                name: p.name,
+                lastName: p.lastName,
+                startTime: startTimeFromNumber(p.number)
+            }));
+
+            res.json(clockPlayers);
+        });
     });
     app.post("/log-in", async (req: TypedRequestBody<UserCredentials>, res: Response) => {
         try {

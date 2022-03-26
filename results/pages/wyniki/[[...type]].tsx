@@ -7,9 +7,9 @@ import { getState } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
-import { sort } from "../../utils";
+import { sort } from "@set/shared/dist";
 import { Table } from "../../components/table";
-import { TimerState } from "@set/timer/dist/store";
+import { TimerState } from "@set/timer/store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 

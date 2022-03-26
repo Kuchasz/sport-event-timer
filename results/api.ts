@@ -1,5 +1,5 @@
 import { Player } from "@set/timer/model";
-import { TimerState } from "@set/timer/dist/store";
+import { TimerState } from "@set/timer/store";
 
 const hubUrl = process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
 export const getState = (): Promise<TimerState> => fetch(`${hubUrl}/state`).then((x) => x.json());

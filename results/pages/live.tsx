@@ -2,7 +2,7 @@ import Head from "next/head";
 import { getState } from "../api";
 import { Loader } from "../components/loader";
 import { Table } from "../components/table";
-import { TimerState } from "@set/timer/dist/store";
+import { TimerState } from "@set/timer/store";
 import { useEffect, useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>
