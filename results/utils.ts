@@ -18,10 +18,15 @@ export function sort<T>(items: T[], func: (item: T) => number): T[] {
     return i.sort((a, b) => func(a) - func(b));
 }
 
+export type BeepFunction = (freq?: number, duration?: number, vol?: number) => void;
 export const createBeep = () => {
     if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
+
+    console.log("create.beep");
     const context = new AudioContext();
-    return (freq = 520, duration = 500, vol = 100) => {
+
+    return ((freq = 520, duration = 500, vol = 100) => {
+        console.log("run.beep");
         const oscillator = context.createOscillator();
         const gain = context.createGain();
         oscillator.connect(gain);
@@ -31,5 +36,5 @@ export const createBeep = () => {
         gain.gain.value = vol * 0.01;
         oscillator.start(context.currentTime);
         oscillator.stop(context.currentTime + duration * 0.001);
-    };
+    }) as BeepFunction;
 };

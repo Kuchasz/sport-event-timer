@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
+import { BeepFunction, createBeep } from "../utils";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
 import { Loader } from "../components/loader";
@@ -58,9 +59,12 @@ const NextPlayer = ({ player }: { player: { number: number; name: string } }) =>
 const Zegar = () => {
     const [timeOffset, setTimeOffset] = useState<number>();
     const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
-    const [soundEnabled, setSoundEnabled] = useState(false);
+    const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
 
-    const toggleSoundEnabled = () => setSoundEnabled(!soundEnabled);
+    const toggleSoundEnabled = () => {
+        setBeep(beep !== undefined ? undefined : createBeep);
+        // setSoundEnabled(!soundEnabled)
+    };
 
     const toggleMenu = () => {
         setClockState({ ...clockState, showSettings: !clockState.showSettings });
@@ -100,11 +104,7 @@ const Zegar = () => {
                     <div className="w-full h-full flex flex-col items-center">
                         {clockState.clock.enabled && <Timer fontSize={clockState.clock.size} offset={timeOffset} />}
                         {clockState.countdown.enabled && (
-                            <Countdown
-                                soundEnabled={soundEnabled}
-                                fontSize={clockState.countdown.size}
-                                offset={timeOffset}
-                            />
+                            <Countdown beep={beep} fontSize={clockState.countdown.size} offset={timeOffset} />
                         )}
                         {clockState.players.enabled && (
                             <div
@@ -130,7 +130,7 @@ const Zegar = () => {
                             </div>
                         )}
                         <div onClick={toggleSoundEnabled} className="cursor-pointer absolute top-0 right-0 p-4">
-                            <Icon size={2} path={soundEnabled ? mdiVolumeHigh : mdiVolumeOff} />
+                            <Icon size={2} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
                         </div>
                     </div>
                 )}
