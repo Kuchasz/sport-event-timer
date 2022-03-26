@@ -45,7 +45,6 @@ export const Countdown = ({
             const miliseconds = now.getMilliseconds();
 
             if (beep && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
-                console.log(seconds);
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
                 beep(frequency, seconds === 59 ? 1000 : 500, seconds === 54 ? 1 : 100);
             }
