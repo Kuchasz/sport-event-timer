@@ -36,7 +36,8 @@ export const Countdown = ({
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const now = new Date(getCountdownTime(Date.now()));
+            const offsetTime = Date.now() + offset;
+            const now = new Date(getCountdownTime(offsetTime));
 
             const seconds = now.getSeconds();
             const miliseconds = 1_000 - now.getMilliseconds();
@@ -47,7 +48,7 @@ export const Countdown = ({
                 beep(frequency, seconds === 0 ? 1000 : 500, seconds === 5 ? 0.1 : 100);
             }
 
-            setTime(Date.now() + offset);
+            setTime(offsetTime);
         }, clockTimeout);
 
         return () => {
