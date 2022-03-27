@@ -42,7 +42,7 @@ export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 40 },
-          players: { enabled: true, size: 14, count: 1 }
+          players: { enabled: true, size: 14, count: 3 }
       }
     : {
           showSettings: false,
