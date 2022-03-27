@@ -16,9 +16,20 @@ const MenuText = ({ text }: { text: string }) => (
     <span className="text-sm md:text-base font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase">{text}</span>
 );
 
-const MenuButton = ({ activePath = "", to, text }: { activePath: string; to: string; text: string }) => (
+const MenuButton = ({
+    onClick,
+    activePath = "",
+    to,
+    text
+}: {
+    onClick?: () => void;
+    activePath: string;
+    to: string;
+    text: string;
+}) => (
     <Link href={to}>
         <button
+            onClick={onClick}
             className={classNames({
                 ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to)
             })}
@@ -31,6 +42,7 @@ const MenuButton = ({ activePath = "", to, text }: { activePath: string; to: str
 export const Header = () => {
     const router = useRouter();
     const [menuRevealed, setMenuRevealed] = useState(false);
+    console.log(router.asPath);
     return (
         <header className="flex flex-col">
             <div className="flex justify-center py-4 bg-zinc-900 text-white">
@@ -79,7 +91,13 @@ export const Header = () => {
                         </div>
                         <div onClick={() => setMenuRevealed(!menuRevealed)} className="flex sm:hidden items-center">
                             <Icon size={1.5} path={mdiMenu} />
-                            <MenuText text="MENU" />
+                            <MenuText
+                                text={
+                                    menuItems.find((mi) =>
+                                        mi.path === "/" ? router.asPath === mi.path : router.asPath.startsWith(mi.path)
+                                    )?.label ?? "MENU"
+                                }
+                            />
                         </div>
                         <a
                             target="_blank"
@@ -93,7 +111,13 @@ export const Header = () => {
                         className={classNames("flex-col ml-2 items-start", menuRevealed ? "flex sm:hidden" : "hidden")}
                     >
                         {menuItems.map((mi) => (
-                            <MenuButton key={mi.path} activePath={router.asPath} to={mi.path} text={mi.label} />
+                            <MenuButton
+                                onClick={() => setMenuRevealed(false)}
+                                key={mi.path}
+                                activePath={router.asPath}
+                                to={mi.path}
+                                text={mi.label}
+                            />
                         ))}
                     </div>
                 </div>
