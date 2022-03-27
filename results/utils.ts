@@ -12,6 +12,8 @@ export const createBeep = () => {
         console.log(context.state);
     };
 
+    console.log("context.state", context.state);
+
     return ((freq = 520, duration = 500, vol = 100) => {
         console.log("run.beep");
         const oscillator = context.createOscillator();
