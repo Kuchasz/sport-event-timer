@@ -14,10 +14,7 @@ export const createBeep = () => {
 
     console.log("context.state", context.state);
 
-    return ((freq = 520, duration = 500, vol = 100) => {
-        if (context.state !== "running") {
-            context.resume();
-        }
+    const runBeep = (freq: number, duration: number, vol: number) => {
         console.log("run.beep");
         const oscillator = context.createOscillator();
         const gain = context.createGain();
@@ -28,5 +25,11 @@ export const createBeep = () => {
         gain.gain.value = vol * 0.01;
         oscillator.start(context.currentTime);
         oscillator.stop(context.currentTime + duration * 0.001);
+    };
+
+    return ((freq = 520, duration = 500, vol = 100) => {
+        if (context.state !== "running") {
+            context.resume().then(() => runBeep(freq, duration, vol));
+        }
     }) as BeepFunction;
 };
