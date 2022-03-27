@@ -2,25 +2,35 @@ import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import { Email } from "./email";
-import { mdiEmailOpenOutline, mdiFacebook, mdiHumanMaleChild } from "@mdi/js";
+import {
+    mdiEmailOpenOutline,
+    mdiFacebook,
+    mdiHumanMaleChild,
+    mdiMenu
+    } from "@mdi/js";
 import { menuItems } from "./menu-items";
-import { ReactNode } from "react";
 import { useRouter } from "next/dist/client/router";
+import { useState } from "react";
 
-const MenuButton = ({ activePath = "", to, children }: { activePath: string; to: string; children: ReactNode }) => (
+const MenuText = ({ text }: { text: string }) => (
+    <span className="text-sm md:text-base font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase">{text}</span>
+);
+
+const MenuButton = ({ activePath = "", to, text }: { activePath: string; to: string; text: string }) => (
     <Link href={to}>
         <button
-            className={classNames("text-sm md:text-base font-semibold transition-colors py-1 mx-2 md:mx-5 uppercase", {
+            className={classNames({
                 ["text-orange-500 "]: to === "/" ? activePath === to : activePath.startsWith(to)
             })}
         >
-            {children}
+            <MenuText text={text} />
         </button>
     </Link>
 );
 
 export const Header = () => {
     const router = useRouter();
+    const [menuRevealed, setMenuRevealed] = useState(false);
     return (
         <header className="flex flex-col">
             <div className="flex justify-center py-4 bg-zinc-900 text-white">
@@ -60,21 +70,32 @@ export const Header = () => {
                 <div className="w-full h-0.5 bg-zinc-700"></div>
             </div>
             <div className="flex justify-center py-3 bg-zinc-900 text-white">
-                <div className="w-full max-w-6xl flex flex-col md:flex-row justify-between">
-                    <div className="flex flex-wrap justify-between md:justify-start">
+                <div className="w-full max-w-6xl flex-col flex">
+                    <div className="mx-4 sm:mx-0 flex justify-between">
+                        <div className="hidden sm:flex justify-between md:justify-start">
+                            {menuItems.map((mi) => (
+                                <MenuButton key={mi.path} activePath={router.asPath} to={mi.path} text={mi.label} />
+                            ))}
+                        </div>
+                        <div onClick={() => setMenuRevealed(!menuRevealed)} className="flex sm:hidden items-center">
+                            <Icon size={1.5} path={mdiMenu} />
+                            <MenuText text="MENU" />
+                        </div>
+                        <a
+                            target="_blank"
+                            href="https://dostartu.pl/rura-na-kocierz-v6591"
+                            className="self-center cursor-pointer text-center bg-orange-500 hover:bg-white hover:text-orange-500 font-bold rounded-full px-4 font-mono py-1"
+                        >
+                            REJESTRACJA
+                        </a>
+                    </div>
+                    <div
+                        className={classNames("flex-col ml-2 items-start", menuRevealed ? "flex sm:hidden" : "hidden")}
+                    >
                         {menuItems.map((mi) => (
-                            <MenuButton key={mi.path} activePath={router.asPath} to={mi.path}>
-                                {mi.label}
-                            </MenuButton>
+                            <MenuButton key={mi.path} activePath={router.asPath} to={mi.path} text={mi.label} />
                         ))}
                     </div>
-                    <a
-                        target="_blank"
-                        href="https://dostartu.pl/rura-na-kocierz-v6591"
-                        className="self-center cursor-pointer text-center bg-orange-500 hover:bg-white hover:text-orange-500 font-bold rounded-full px-4 font-mono py-1"
-                    >
-                        REJESTRACJA
-                    </a>
                 </div>
             </div>
         </header>
