@@ -50,7 +50,7 @@ export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 90 },
-          players: { enabled: true, size: 24, count: 5 }
+          players: { enabled: true, size: 24, count: 3 }
       };
 
 const NextPlayer = ({ player }: { player: ClockListPlayer }) => (
