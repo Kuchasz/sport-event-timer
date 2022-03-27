@@ -27,6 +27,4 @@ const envConfig: Config = {
     }
 };
 
-console.log(envConfig);
-
 export const config = envConfig;
