@@ -7,6 +7,7 @@ export const createBeep = () => {
     const ContextConstructor = window.AudioContext || (window as any).webkitAudioContext;
 
     const context = new ContextConstructor();
+    context.resume();
 
     context.onstatechange = function () {
         console.log(context.state);
