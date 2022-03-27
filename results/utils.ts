@@ -28,7 +28,8 @@ export const createBeep = () => {
     };
 
     return ((freq = 520, duration = 500, vol = 100) => {
-        // if (context.state !== "running") {
+        if (context.state !== "running") context.resume();
+        // {
         //     context.resume().then(() => runBeep(freq, duration, vol));
         // } else {
         runBeep(freq, duration, vol);
