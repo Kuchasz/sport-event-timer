@@ -5,17 +5,17 @@ import { useEffect, useState } from "react";
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
     // const t = currentTime.getSeconds() * 1000;
     const countdownSeconds = getCountdownTime(time);
-    const formatedTime = timeSeconds(countdownSeconds);
+    const seconds = timeSeconds(countdownSeconds);
 
     return (
         <div
             style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
             className={classNames(["font-mono flex grow flex-col justify-center font-black transition-all"], {
-                ["text-white"]: countdownSeconds > 4,
-                ["text-orange-500"]: countdownSeconds <= 4
+                ["text-white"]: seconds > 4,
+                ["text-orange-500"]: seconds <= 4
             })}
         >
-            {formatedTime}
+            {seconds}
         </div>
     );
 };
@@ -44,7 +44,6 @@ export const Countdown = ({
 
             if (beep && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
                 const frequency = secondsToPlay[0] === seconds ? 784 : 523;
-                console.log(seconds);
                 beep(frequency, seconds === 0 ? 1000 : 500, seconds === 5 ? 0.1 : 100);
             }
 
