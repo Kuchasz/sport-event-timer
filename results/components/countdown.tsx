@@ -25,14 +25,31 @@ export const Countdown = ({
     }, [seconds, beep]);
 
     return (
-        <div
-            style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
-            className={classNames(["font-mono flex grow flex-col justify-center font-black transition-all"], {
-                ["text-white"]: seconds > 4,
-                ["text-orange-500"]: seconds <= 4
-            })}
-        >
-            {seconds}
-        </div>
+        <>
+            <div
+                style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
+                className={classNames(
+                    ["hidden wide:flex font-mono grow flex-col justify-center font-black transition-all"],
+                    {
+                        ["text-white"]: seconds > 4,
+                        ["text-orange-500"]: seconds <= 4
+                    }
+                )}
+            >
+                {seconds}
+            </div>
+            <div
+                style={{ fontSize: `${fontSize}vw`, lineHeight: 0.5 }}
+                className={classNames(
+                    ["hidden tall:flex font-mono grow flex-col justify-center font-black transition-all"],
+                    {
+                        ["text-white"]: seconds > 4,
+                        ["text-orange-500"]: seconds <= 4
+                    }
+                )}
+            >
+                {seconds}
+            </div>
+        </>
     );
 };

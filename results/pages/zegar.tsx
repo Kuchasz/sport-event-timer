@@ -53,7 +53,7 @@ export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
           players: { enabled: true, size: 24, count: 3 }
       };
 
-const NextPlayer = ({ player }: { player: ClockListPlayer }) => (
+const NextPlayers = ({ player }: { player: ClockListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
         <Icon size="2em" path={mdiChevronDoubleRight} />
         <div
@@ -70,6 +70,7 @@ const NextPlayer = ({ player }: { player: ClockListPlayer }) => (
 
 const Zegar = () => {
     const [globalTimeOffset, setGlobalTimeOffset] = useState<number>();
+    const [globalTime, setGlobalTime] = useState<number>();
     const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const [players, setPlayers] = useState<ClockListPlayer[]>([]);
@@ -84,10 +85,6 @@ const Zegar = () => {
     const toggleMenu = () => {
         setClockState({ ...clockState, showSettings: !clockState.showSettings });
     };
-
-    //     const t = currentTime.getSeconds() * 1000;
-    //     const countdownSeconds = getCountdownTime(time);
-    //     const seconds = timeSeconds(countdownSeconds);
 
     useEffect(() => {
         if (globalTimeOffset === undefined) return;
@@ -112,6 +109,7 @@ const Zegar = () => {
                 console.log(globalTime);
 
                 setSecondsToNextPlayer(Math.floor(nextPlayer.timeToStart / 1_000));
+                setGlobalTime(globalTime);
             }
         }, clockTimeout);
 
@@ -147,16 +145,14 @@ const Zegar = () => {
                 <title>Zegar</title>
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
-                {globalTimeOffset === undefined ? (
+                {globalTimeOffset === undefined && globalTime === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
                         <Loader light={true} />
                     </div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
-                        {clockState.clock.enabled && (
-                            <Timer fontSize={clockState.clock.size} offset={globalTimeOffset} />
-                        )}
+                        {clockState.clock.enabled && <Timer fontSize={clockState.clock.size} time={globalTime!} />}
                         {clockState.countdown.enabled && (
                             <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
                         )}
@@ -167,7 +163,7 @@ const Zegar = () => {
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
                                     {nextPlayers.map((p) => (
-                                        <NextPlayer key={p.number} player={p} />
+                                        <NextPlayers key={p.number} player={p} />
                                     ))}
                                 </div>
                             </div>
