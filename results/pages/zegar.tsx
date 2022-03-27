@@ -37,7 +37,7 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 100;
+const clockTimeout = 1000;
 
 export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
     ? {
@@ -90,7 +90,7 @@ const Zegar = () => {
     //     const seconds = timeSeconds(countdownSeconds);
 
     useEffect(() => {
-        if (!globalTimeOffset) return;
+        if (globalTimeOffset === undefined) return;
         const secondsToPlayerInterval = setInterval(() => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
@@ -108,6 +108,8 @@ const Zegar = () => {
                     setNextPlayerNumber(nextPlayer.player.number);
                     setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
                 }
+
+                console.log(globalTime);
 
                 setSecondsToNextPlayer(Math.floor(nextPlayer.timeToStart / 1_000));
             }
