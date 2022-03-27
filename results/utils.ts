@@ -8,6 +8,10 @@ export const createBeep = () => {
 
     const context = new ContextConstructor();
 
+    context.onstatechange = function () {
+        console.log(context.state);
+    };
+
     return ((freq = 520, duration = 500, vol = 100) => {
         console.log("run.beep");
         const oscillator = context.createOscillator();

@@ -46,7 +46,7 @@ export const Countdown = ({
 
             if (beep && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
                 const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                beep(frequency, seconds === 59 ? 1000 : 500); //;, seconds === 54 ? 1 : 100);
+                beep(frequency, seconds === 59 ? 1000 : 500, seconds === 54 ? 1 : 100);
             }
 
             setTime(Date.now() + offset);
