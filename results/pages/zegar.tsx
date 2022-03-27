@@ -5,7 +5,6 @@ import { BeepFunction, createBeep } from "../utils";
 import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
-import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { getTimerPlayers } from "../api";
 import { Loader } from "../components/loader";
 import {
@@ -16,6 +15,7 @@ import {
     } from "@mdi/js";
 import { Meta } from "../components/meta";
 import { socket } from "../connection";
+import { sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
 
