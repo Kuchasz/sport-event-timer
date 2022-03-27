@@ -1,21 +1,18 @@
 import classNames from "classnames";
-import { formatTimeSeconds } from "@set/shared/dist";
+import { getCountdownTime, timeSeconds } from "@set/shared/dist";
 import { useEffect, useState } from "react";
 
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
-    const currentTime = new Date(time);
-
-    const t = 60 * 1000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
     // const t = currentTime.getSeconds() * 1000;
-
-    const formatedTime = Number(formatTimeSeconds(t));
+    const countdownSeconds = getCountdownTime(time);
+    const formatedTime = timeSeconds(countdownSeconds);
 
     return (
         <div
             style={{ fontSize: `${fontSize}vh`, lineHeight: 0.5 }}
             className={classNames(["font-mono flex grow flex-col justify-center font-black transition-all"], {
-                ["text-white"]: formatedTime > 4,
-                ["text-orange-500"]: formatedTime <= 4
+                ["text-white"]: countdownSeconds > 4,
+                ["text-orange-500"]: countdownSeconds <= 4
             })}
         >
             {formatedTime}
@@ -23,7 +20,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => {
     );
 };
 
-const secondsToPlay = [54, 55, 56, 57, 58, 59];
+const secondsToPlay = [0, 1, 2, 3, 4, 5];
 const clockTimeout = 100;
 
 export const Countdown = ({
@@ -39,14 +36,15 @@ export const Countdown = ({
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const now = new Date();
+            const now = new Date(getCountdownTime(Date.now()));
 
             const seconds = now.getSeconds();
-            const miliseconds = now.getMilliseconds();
+            const miliseconds = 1_000 - now.getMilliseconds();
 
             if (beep && secondsToPlay.includes(seconds) && miliseconds <= clockTimeout) {
-                const frequency = secondsToPlay.slice(-1)[0] === seconds ? 784 : 523;
-                beep(frequency, seconds === 59 ? 1000 : 500, seconds === 54 ? 0 : 100);
+                const frequency = secondsToPlay[0] === seconds ? 784 : 523;
+                console.log(seconds);
+                beep(frequency, seconds === 0 ? 1000 : 500, seconds === 5 ? 0.1 : 100);
             }
 
             setTime(Date.now() + offset);
