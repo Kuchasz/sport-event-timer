@@ -2,7 +2,7 @@ import Icon from "@mdi/react";
 import { logIn } from "./api";
 import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
 import { setLogIn } from "./security";
-import { UserCredentials } from "@set/shared";
+import { UserCredentials } from "@set/shared/dist";
 import { useState } from "react";
 
 export const LoginApp = () => {

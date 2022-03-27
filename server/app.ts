@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
-import { ClockListPlayer, sort, UserCredentials } from "@set/shared";
+import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
 import { createServer } from "http";
 import { login } from "./auth";
