@@ -10,9 +10,15 @@ export const formatTime = (time: Date) =>
         time.getSeconds()
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
+export const getCountdownTime = (time: number) => {
+    const currentTime = new Date(time);
+
+    return 60_000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
+};
+
 export const formatTimeNoSec = (time: Date) => `${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}`;
 
-export const formatTimeSeconds = (timeMs: number) => `${formatNumber(Math.floor(timeMs / 1000), 1)}`;
+export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
 export const getCurrentTime = (offset: number) => Date.now() + offset;
 
