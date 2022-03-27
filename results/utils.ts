@@ -13,7 +13,7 @@ export const createBeep = () => {
         const oscillator = context.createOscillator();
         const gain = context.createGain();
         oscillator.connect(gain);
-        oscillator.frequency.value = freq;
+        oscillator.frequency.setValueAtTime(freq, context.currentTime);
         oscillator.type = "square";
         gain.connect(context.destination);
         gain.gain.value = vol * 0.01;
