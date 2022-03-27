@@ -1,5 +1,5 @@
 import { hubUrl } from "./connection";
-import { LoginResult, UserCredentials } from "@set/shared";
+import { LoginResult, UserCredentials } from "@set/shared/dist";
 
 export const getCurrentTimeOffset = (): Promise<number> => {
     return new Promise<number>(async (res) => {
