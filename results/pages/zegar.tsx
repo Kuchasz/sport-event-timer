@@ -5,6 +5,7 @@ import { BeepFunction, createBeep } from "../utils";
 import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
+import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { getTimerPlayers } from "../api";
 import { Loader } from "../components/loader";
 import {
@@ -16,7 +17,6 @@ import {
 import { Meta } from "../components/meta";
 import { socket } from "../connection";
 import { Timer } from "../components/timer";
-import { unreliablyGetIsMobile } from "@set/shared/dist";
 import { useEffect, useState } from "react";
 
 export type TextSettings = {
@@ -36,6 +36,8 @@ export type TextActions = {
     minifyFont: () => void;
     toggle: () => void;
 };
+
+const clockTimeout = 100;
 
 export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
     ? {
@@ -67,10 +69,13 @@ const NextPlayer = ({ player }: { player: ClockListPlayer }) => (
 );
 
 const Zegar = () => {
-    const [timeOffset, setTimeOffset] = useState<number>();
+    const [globalTimeOffset, setGlobalTimeOffset] = useState<number>();
     const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const [players, setPlayers] = useState<ClockListPlayer[]>([]);
+    const [nextPlayers, setNextPlayers] = useState<ClockListPlayer[]>([]);
+    const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
+    const [nextPlayerNumber, setNextPlayerNumber] = useState<number>();
 
     const toggleSoundEnabled = () => {
         setBeep(beep ? undefined : createBeep);
@@ -80,6 +85,39 @@ const Zegar = () => {
         setClockState({ ...clockState, showSettings: !clockState.showSettings });
     };
 
+    //     const t = currentTime.getSeconds() * 1000;
+    //     const countdownSeconds = getCountdownTime(time);
+    //     const seconds = timeSeconds(countdownSeconds);
+
+    useEffect(() => {
+        if (!globalTimeOffset) return;
+        const secondsToPlayerInterval = setInterval(() => {
+            const globalTime = Date.now() + globalTimeOffset;
+            const globalDateTime = new Date(globalTime);
+            const miliseconds = globalDateTime.getMilliseconds();
+
+            if (miliseconds <= clockTimeout) {
+                const playersWithPosiviteTimeToStart = players
+                    .map((p) => ({ player: p, timeToStart: p.startTime - globalTime }))
+                    .filter((p) => p.timeToStart > 0);
+
+                const nextPlayers = sort(playersWithPosiviteTimeToStart, (p) => p.timeToStart);
+                const nextPlayer = nextPlayers[0];
+
+                if (nextPlayer.player.number !== nextPlayerNumber) {
+                    setNextPlayerNumber(nextPlayer.player.number);
+                    setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
+                }
+
+                setSecondsToNextPlayer(Math.floor(nextPlayer.timeToStart / 1_000));
+            }
+        }, clockTimeout);
+
+        return () => {
+            clearInterval(secondsToPlayerInterval);
+        };
+    }, [globalTimeOffset, players]);
+
     useEffect(() => {
         let loadStartTime = Date.now();
         socket.on("TR", (serverTime) => {
@@ -87,16 +125,16 @@ const Zegar = () => {
             const latency = loadEndTime - loadStartTime;
             console.log("latency", latency);
 
-            setTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
+            setGlobalTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
             if (latency <= 50) {
-                clearInterval(interval);
+                clearInterval(timeSyncInterval);
                 socket.close();
             }
         });
 
         getTimerPlayers().then(setPlayers);
 
-        const interval = setInterval(() => {
+        const timeSyncInterval = setInterval(() => {
             loadStartTime = Date.now();
             socket.emit("TQ");
         }, 1000);
@@ -107,16 +145,18 @@ const Zegar = () => {
                 <title>Zegar</title>
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
-                {timeOffset === undefined ? (
+                {globalTimeOffset === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
                         <Loader light={true} />
                     </div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
-                        {clockState.clock.enabled && <Timer fontSize={clockState.clock.size} offset={timeOffset} />}
+                        {clockState.clock.enabled && (
+                            <Timer fontSize={clockState.clock.size} offset={globalTimeOffset} />
+                        )}
                         {clockState.countdown.enabled && (
-                            <Countdown beep={beep} fontSize={clockState.countdown.size} offset={timeOffset} />
+                            <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
                         )}
                         {clockState.players.enabled && (
                             <div
@@ -124,7 +164,7 @@ const Zegar = () => {
                                 className="leading-none transition-all w-full"
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
-                                    {players.slice(0, clockState.players.count).map((p) => (
+                                    {nextPlayers.map((p) => (
                                         <NextPlayer key={p.number} player={p} />
                                     ))}
                                 </div>
