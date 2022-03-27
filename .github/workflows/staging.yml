@@ -204,7 +204,7 @@ jobs:
                   path: ./mobile/build
 
     build_server:
-        needs: [build_timer, build_hub, build_results, build_mobile]
+        needs: [build_timer, build_hub, build_results, build_mobile, build_shared]
         runs-on: ubuntu-latest
 
         steps:
@@ -219,6 +219,11 @@ jobs:
               with:
                   name: hub.dist
                   path: ./hub
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: shared.dist
+                  path: ./shared
 
             - uses: actions/download-artifact@v2
               with:
