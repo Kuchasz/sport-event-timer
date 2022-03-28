@@ -9,15 +9,9 @@ export const playersSlice = createSlice({
     name: "players",
     initialState,
     reducers: {
-        register: (state, action: PayloadAction<Omit<m.Player, "id">>) => {
-            return m.register(state, action.payload);
-        },
-        changeInfo: (state, action: PayloadAction<m.Player>) => {
-            return m.changeInfo(state, action.payload);
-        },
-        upload: (state, action: PayloadAction<m.Player[]>) => {
-            return m.upload(state, action.payload);
-        }
+        register: (state, action: PayloadAction<Omit<m.Player, "id">>) => m.registerPlayer(state, action.payload),
+        changeInfo: (state, action: PayloadAction<m.Player>) => m.changePlayerInfo(state, action.payload),
+        upload: (state, action: PayloadAction<m.Player[]>) => m.uploadPlayers(state, action.payload)
     }
 });
 

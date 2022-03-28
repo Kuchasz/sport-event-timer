@@ -1,4 +1,4 @@
-import { add, reset, update } from "@set/timer/dist/slices/time-stamps";
+import { add, reset, tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { BottomMenu } from "./components/bottom-menu";
 import {
     BrowserRouter as Router,
@@ -171,7 +171,7 @@ function App() {
                                                                         element={
                                                                             <TweakTimeStamps
                                                                                 onSave={(timeStamp) => {
-                                                                                    dispatch(update(timeStamp));
+                                                                                    dispatch(tweakTimeStamp(timeStamp));
                                                                                 }}
                                                                             />
                                                                         }

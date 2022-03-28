@@ -1,5 +1,5 @@
+import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { PlayersCheckIn } from "./players-check-in";
-import { update } from "@set/timer/dist/slices/time-stamps";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTimerDispatch } from "../hooks";
 
@@ -15,7 +15,7 @@ export const PlayersAssignTime = ({ timeKeeperId }: PlayersAssignTimeProps) => {
     return (
         <PlayersCheckIn
             onPlayerCheckIn={(playerId) => {
-                dispatch(update({ playerId, id: parseInt(timeStampToAssignId!) }));
+                dispatch(assignTimeStamp({ playerId, id: parseInt(timeStampToAssignId!) }));
                 navigate(-1);
             }}
             title="Assign time to player"

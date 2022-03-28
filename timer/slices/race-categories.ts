@@ -9,12 +9,9 @@ export const raceCategoriesSlice = createSlice({
     name: "raceCategories",
     initialState,
     reducers: {
-        add: (state, action: PayloadAction<Omit<m.RaceCategory, "id">>) => {
-            return m.addRaceCategory(state, action.payload);
-        },
-        remove: (state, action: PayloadAction<Pick<m.RaceCategory, "id">>) => {
-            return m.removeRaceCategory(state, action.payload.id);
-        }
+        add: (state, action: PayloadAction<Omit<m.RaceCategory, "id">>) => m.addRaceCategory(state, action.payload),
+        remove: (state, action: PayloadAction<Pick<m.RaceCategory, "id">>) =>
+            m.removeRaceCategory(state, action.payload.id)
     }
 });
 

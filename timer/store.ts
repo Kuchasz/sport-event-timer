@@ -1,3 +1,4 @@
+import actionsHistory from "./slices/actions-history";
 import players from "./slices/players";
 import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
@@ -9,7 +10,7 @@ import {
     Middleware
     } from "@reduxjs/toolkit";
 
-const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories });
+const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories, actionsHistory });
 
 const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     if (action.type === "REPLACE_STATE") {
