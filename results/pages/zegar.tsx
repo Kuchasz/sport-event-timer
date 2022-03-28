@@ -5,6 +5,7 @@ import { BeepFunction, createBeep } from "../utils";
 import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
+import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { getTimerPlayers } from "../api";
 import { Loader } from "../components/loader";
 import {
@@ -15,7 +16,6 @@ import {
     } from "@mdi/js";
 import { Meta } from "../components/meta";
 import { socket } from "../connection";
-import { sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
 
@@ -76,7 +76,6 @@ const Zegar = () => {
     const [players, setPlayers] = useState<ClockListPlayer[]>([]);
     const [nextPlayers, setNextPlayers] = useState<ClockListPlayer[]>([]);
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
-    const [nextPlayerNumber, setNextPlayerNumber] = useState<number>();
 
     const toggleSoundEnabled = () => {
         setBeep(beep ? undefined : createBeep);
@@ -101,14 +100,14 @@ const Zegar = () => {
                 const nextPlayers = sort(playersWithPosiviteTimeToStart, (p) => p.timeToStart);
                 const nextPlayer = nextPlayers[0];
 
-                if (nextPlayer.player.number !== nextPlayerNumber) {
-                    setNextPlayerNumber(nextPlayer.player.number);
-                    setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
-                }
+                //it will re-render that react tree each second, too often
+                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
 
-                console.log(globalTime);
+                const secondsToNextStart = Math.floor(
+                    (nextPlayer?.timeToStart || getCountdownTime(globalTime)) / 1_000
+                );
 
-                setSecondsToNextPlayer(Math.floor(nextPlayer.timeToStart / 1_000));
+                setSecondsToNextPlayer(secondsToNextStart);
                 setGlobalTime(globalTime);
             }
         }, clockTimeout);
