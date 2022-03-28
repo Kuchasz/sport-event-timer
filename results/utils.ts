@@ -14,8 +14,6 @@ export const createBeep = () => {
     };
 
     const runBeep = (freq: number, duration: number, vol: number) => {
-        console.log("run.beep");
-        console.log("context.state", context.state);
         const oscillator = context.createOscillator();
         const gain = context.createGain();
         oscillator.connect(gain);
