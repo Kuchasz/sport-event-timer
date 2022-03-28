@@ -29,6 +29,6 @@ yarn-error.log*
 
 *.log
 
-state.json
+state*.json
 players*.json
 .env

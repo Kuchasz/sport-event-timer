@@ -144,7 +144,7 @@ const Zegar = () => {
                 <title>Zegar</title>
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
-                {globalTimeOffset === undefined || globalTime === undefined ? (
+                {globalTime === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
                         <Loader light={true} />
