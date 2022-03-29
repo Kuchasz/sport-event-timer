@@ -27,3 +27,4 @@ Application for making time measurements
 -   persist countdown watch settings
 -   auto teams classifications
 -   auto GC classification calculation
+-   SMS notification
