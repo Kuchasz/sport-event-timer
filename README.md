@@ -24,3 +24,4 @@ Application for making time measurements
 -   easier starting list fillout than passing .csv's
 -   beep in countdown watch
 -   more mobile-friendly results and starting list
+-   persist countdown watch settings
