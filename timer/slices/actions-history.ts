@@ -20,7 +20,7 @@ export const actionsHistorySlice = createSlice({
             .addMatcher(isLocalAction, (state, action) => {
                 return m.addHistoricAction(state, { type: action.type, issuer: "test" });
             })
-            .addDefaultCase((state, action) => state)
+            .addDefaultCase((state, _) => state)
 });
 
 export default actionsHistorySlice.reducer;
