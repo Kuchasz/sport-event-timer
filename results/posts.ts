@@ -110,7 +110,18 @@ export const posts = [
         alias: "konferencja-2022-relacja",
         content: `09.01.2022 Odbyła się konferacja prasowa Rury na Kocierz 2022. Przygotowaliśmy relację video ⬇️ dla tych, którzy nie mogli w niej uczestniczyć.
         <br/><br/>
-        <iframe width="100%" height="480" src="https://www.youtube.com/embed/Sg3yUnn6Fps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+        <iframe width="100%" height="620" src="https://www.youtube.com/embed/Sg3yUnn6Fps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
         excerpt: "Relacja video z konferencji prasowej"
+    },
+    {
+        date: new Date(Date.parse("2022-03-30 23:22")),
+        author: "administrator",
+        photo: "odprawa-techniczna-2022.jpg",
+        title: "Odprawa techniczna Rury na Kocierz 2022",
+        alias: "odprawa-techniczna-2022",
+        content: `Peleton rury na kocierz rusza 9.04.2022. Aby ułatwić nam wszystkim organizację na miejscu zawodów udostępniamy film z odprawą techniczną. W 8 minut na pewno nie da się opowiedzieć wszystkiego, jeśli odpowiedzi na nurtujące Was pytania nie znajdziecie w tej filmowej pigułce ani nigdzie na naszej stronie - łapcie nas na mailu lub na facebooku :)
+        <br/><br/>
+        <iframe width="100%" height="620" src="https://www.youtube.com/embed/SGnsd6mrm_A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+        excerpt: "Odprawa techniczna ON-LINE w wersji video"
     }
 ];
