@@ -9,7 +9,6 @@ interface LocalAction extends Action {}
 
 function isLocalAction(action: AnyAction): action is LocalAction {
     return !action.__remote;
-    //return action.type.endsWith('rejected')
 }
 
 export const actionsHistorySlice = createSlice({
@@ -19,7 +18,6 @@ export const actionsHistorySlice = createSlice({
     extraReducers: (builder) =>
         builder
             .addMatcher(isLocalAction, (state, action) => {
-                console.log(state, action);
                 return m.addHistoricAction(state, { type: action.type, issuer: "test" });
             })
             .addDefaultCase((state, action) => state)
