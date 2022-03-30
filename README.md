@@ -13,6 +13,7 @@ Application for making time measurements
 -   mobile friendly results list :heavy_check_mark:
 -   next and current player hint on watch
 -   confirmation to timestamp removal or separate view to remove timestamps
+-   option to re-activate removed timestamp
 -   fetch time from server :heavy_check_mark:
 -   disable pull to refresh :heavy_check_mark:
 -   persist selected timekeeper :heavy_check_mark:
@@ -20,4 +21,10 @@ Application for making time measurements
 -   actions log
 -   authentication
 -   real-time starting list sync
--   easier starting list fillout
+-   easier starting list fillout than passing .csv's
+-   beep in countdown watch
+-   more mobile-friendly results and starting list
+-   persist countdown watch settings
+-   auto teams classifications
+-   auto GC classification calculation
+-   SMS notification with the result
