@@ -1,7 +1,7 @@
 import { useTimerSelector } from "../hooks";
 
 export const History = () => {
-    const actionsHistory = useTimerSelector((x) => x.actionsHistory);
+    const actionsHistory = useTimerSelector((x) => x.actionsHistory || []);
 
     return (
         <div>
