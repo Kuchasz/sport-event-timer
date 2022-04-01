@@ -3,11 +3,10 @@ import { config } from "./config";
 import { NextFunction, Request, Response } from "express";
 import { UserCredentials } from "@set/shared/dist";
 
-const admin_username = "admin"; //process.env.ADMIN_USER;
+// const admin_username = "admin"; //process.env.ADMIN_USER;
 const admin_password = "admin"; //process.env.ADMIN_PASSWORD;
 
-const validateCredentials = (login: string, password: string) =>
-    login === admin_username && password === admin_password;
+const validateCredentials = (login: string, password: string) => login.length > 3 && password === admin_password;
 
 export const login = async ({ login, password }: UserCredentials) => {
     if (validateCredentials(login, password)) {

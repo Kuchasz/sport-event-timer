@@ -5,11 +5,16 @@ import { setLogIn } from "./security";
 import { UserCredentials } from "@set/shared/dist";
 import { useState } from "react";
 
-export const LoginApp = () => {
+type LoginAppProps = {
+    onLoggedIn?: () => void;
+};
+
+export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
     const [loginState, setLoginState] = useState<UserCredentials>({ login: "", password: "" });
     const requestLogIn = () => {
         logIn(loginState).then((result) => {
-            setLogIn(Date.now() + (result.expireDate - result.issuedAt) * 1000);
+            setLogIn(Date.now() + (result.expireDate - result.issuedAt) * 1000, loginState.login);
+            onLoggedIn && onLoggedIn();
         });
     };
 
@@ -18,21 +23,21 @@ export const LoginApp = () => {
             <div className="flex flex-col grow px-12">
                 <div className="my-2 shadow-xl ">
                     <label className="text-xs text-white font-semibold">LOGIN</label>
-                    <div className="bg-white rounded-xl flex">
+                    <div className="bg-white rounded-xl flex items-center">
                         <Icon size={1} path={mdiAccountOutline} className="text-red-500 m-3" />
                         <input
-                            className="focus:outline-none text-red-500 font-semibold"
+                            className="focus:outline-none text-red-500 font-semibold py-1 w-full"
                             onChange={(e) => setLoginState({ ...loginState, login: e.target.value })}
                         />
                     </div>
                 </div>
                 <div className="my-2 shadow-xl ">
                     <label className="text-xs text-white font-semibold">PASSWORD</label>
-                    <div className="bg-white rounded-xl flex">
+                    <div className="bg-white rounded-xl flex items-center">
                         <Icon size={1} path={mdiLockOutline} className="text-red-500 m-3" />
                         <input
                             type="password"
-                            className="focus:outline-none text-red-500 font-semibold"
+                            className="focus:outline-none text-red-500 font-semibold py-1 w-full"
                             onChange={(e) => setLoginState({ ...loginState, password: e.target.value })}
                         />
                     </div>
