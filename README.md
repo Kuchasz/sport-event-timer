@@ -11,8 +11,8 @@ Application for making time measurements
 -   autocomplete based on times from previous timekeepers :heavy_check_mark:
 -   DNF/DSQ support
 -   mobile friendly results list :heavy_check_mark:
--   next and current player hint on watch
--   confirmation to timestamp removal or separate view to remove timestamps
+-   next and current player hint on watch :heavy_check_mark:
+-   make it harder to remove the timestamps :heavy_check_mark:
 -   option to re-activate removed timestamp
 -   fetch time from server :heavy_check_mark:
 -   disable pull to refresh :heavy_check_mark:
@@ -22,7 +22,7 @@ Application for making time measurements
 -   authentication
 -   real-time starting list sync
 -   easier starting list fillout than passing .csv's
--   beep in countdown watch
+-   beep in countdown watch :heavy_check_mark:
 -   more mobile-friendly results and starting list
 -   persist countdown watch settings
 -   auto teams classifications
