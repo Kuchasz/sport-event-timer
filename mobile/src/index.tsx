@@ -3,12 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
-import { isLoggedIn } from "./security";
+import { getUser, isLoggedIn } from "./security";
 import { LoginApp } from "./login-app";
 import { Middleware } from "redux";
 import { Provider as ReduxStoreProdiver } from "react-redux";
 import { ServerConnectionHandler } from "./server-connection-handler";
 import { socket } from "./connection";
+import { useState } from "react";
 import "./index.scss";
 
 export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
@@ -18,22 +19,30 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
     next(action);
 };
 
-const store = createStore([postActionsMiddleware]);
+export const addIssuerMiddleware: (issuer: string) => Middleware<{}, TimerState, TimerDispatch> =
+    (issuer) => (_) => (next) => (action) => {
+        if (!action.__remote) action.__issuer = issuer;
 
-const loggedIn = isLoggedIn();
-console.log("loggedIn", loggedIn);
+        next(action);
+    };
+
+const LoggedApp = () => {
+    const [loggedIn, setLoggedIn] = useState<boolean>(isLoggedIn());
+    const store = createStore([addIssuerMiddleware(getUser()), postActionsMiddleware]);
+    return loggedIn ? (
+        <ReduxStoreProdiver store={store}>
+            <ServerConnectionHandler dispatch={store.dispatch}>
+                <App />
+            </ServerConnectionHandler>
+        </ReduxStoreProdiver>
+    ) : (
+        <LoginApp onLoggedIn={() => setLoggedIn(true)} />
+    );
+};
 
 ReactDOM.render(
     <React.StrictMode>
-        {loggedIn ? (
-            <ReduxStoreProdiver store={store}>
-                <ServerConnectionHandler dispatch={store.dispatch}>
-                    <App />
-                </ServerConnectionHandler>
-            </ReduxStoreProdiver>
-        ) : (
-            <LoginApp />
-        )}
+        <LoggedApp />
     </React.StrictMode>,
     document.getElementById("root")
 );

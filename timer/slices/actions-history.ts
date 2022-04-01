@@ -5,10 +5,12 @@ export type ActionsHistoryState = m.HistoricAction[];
 
 const initialState: ActionsHistoryState = [];
 
-interface LocalAction extends Action {}
+interface IssuedAction extends Action {
+    __issuer: string;
+}
 
-function isLocalAction(action: AnyAction): action is LocalAction {
-    return !action.__remote;
+function isIssuedAction(action: AnyAction): action is IssuedAction {
+    return !action.__remote && action.__issuer;
 }
 
 export const actionsHistorySlice = createSlice({
@@ -17,8 +19,8 @@ export const actionsHistorySlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>
         builder
-            .addMatcher(isLocalAction, (state, action) => {
-                return m.addHistoricAction(state, { type: action.type, issuer: "test" });
+            .addMatcher(isIssuedAction, (state, action) => {
+                return m.addHistoricAction(state, { type: action.type, issuer: action.__issuer });
             })
             .addDefaultCase((state, _) => state)
 });
