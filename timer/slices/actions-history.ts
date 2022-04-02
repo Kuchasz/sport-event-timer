@@ -7,10 +7,11 @@ const initialState: ActionsHistoryState = [];
 
 interface IssuedAction extends Action {
     __issuer: string;
+    __issuedAt: number;
 }
 
 function isIssuedAction(action: AnyAction): action is IssuedAction {
-    return !action.__remote && action.__issuer;
+    return !action.__remote && action.__issuer && action.__issuedAt;
 }
 
 export const actionsHistorySlice = createSlice({
@@ -20,7 +21,11 @@ export const actionsHistorySlice = createSlice({
     extraReducers: (builder) =>
         builder
             .addMatcher(isIssuedAction, (state, action) => {
-                return m.addHistoricAction(state, { type: action.type, issuer: action.__issuer });
+                return m.addHistoricAction(state, {
+                    type: action.type,
+                    issuer: action.__issuer,
+                    issuedAt: action.__issuedAt
+                });
             })
             .addDefaultCase((state, _) => state)
 });

@@ -37,6 +37,7 @@ export type TimeKeeper = {
 
 export type HistoricAction = {
     issuer: string;
+    issuedAt: number;
     type: string;
 };
 
