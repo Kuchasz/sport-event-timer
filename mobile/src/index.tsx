@@ -25,6 +25,7 @@ export const postActionsMiddleware: () => Middleware<{}, TimerState, TimerDispat
 export const addIssuerMiddleware: (issuer: string) => Middleware<{}, TimerState, TimerDispatch> =
     (issuer) => (_) => (next) => (action) => {
         if (!action.__remote) action.__issuer = issuer;
+        action.__issuedAt = Date.now(); //that is wrong! that time should be synced with server which is not synced at app startup :/
 
         next(action);
     };
