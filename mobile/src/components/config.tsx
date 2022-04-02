@@ -1,7 +1,7 @@
 import { CurrentTimeKeeperContext } from "../contexts/current-time-keeper";
+import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
-import { socket } from "../connection";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { useRef } from "react";
 import { useTimerSelector } from "../hooks";
@@ -20,6 +20,7 @@ export const Config = () => {
             const reader = new FileReader();
 
             reader.onload = (e: ProgressEvent<FileReader>) => {
+                const socket = getConnection();
                 socket.emit("upload-players", e.target?.result);
             };
 
