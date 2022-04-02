@@ -1,4 +1,4 @@
-import { ConnectionState, onConnectionStateChanged, socket } from "./connection";
+import { ConnectionState, getConnection, onConnectionStateChanged } from "./connection";
 import { getCurrentTimeOffset } from "./api";
 import { OfflineContext } from "./contexts/offline";
 import { ReactNode, useEffect, useState } from "react";
@@ -15,12 +15,19 @@ export const ServerConnectionHandler = ({
     const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
 
     useEffect(() => {
+        const socket = getConnection();
+
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
         socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
         getCurrentTimeOffset().then(setTimeOffset);
 
-        return onConnectionStateChanged(setConnectionState);
+        const connectionStateChangedUnsub = onConnectionStateChanged(setConnectionState);
+
+        return () => {
+            connectionStateChangedUnsub();
+            socket.disconnect();
+        };
     }, [dispatch]);
 
     return (

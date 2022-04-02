@@ -1,15 +1,22 @@
-import { io as ioClient } from "socket.io-client";
-
-const io = (
-    process.env.NODE_ENV === "production" ? require("socket.io-client") : require("socket.io-client")
-) as typeof ioClient;
+import { io, Socket } from "socket.io-client";
 
 export const hubUrl =
     process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
 
 export const wsHubUrl =
     process.env.NODE_ENV === "production" ? "wss://wss.set-hub.pyszstudio.pl" : "ws://localhost:21822";
-export const socket = io(hubUrl, { transports: ["websocket"] });
+
+let socket: ReturnType<typeof io>;
+
+export const getConnection = () => {
+    if (!socket) {
+        socket = io(hubUrl, { transports: ["websocket"] });
+    }
+
+    registerStateChangeHandlers(socket);
+
+    return socket;
+};
 
 export type ConnectionState = "connected" | "reconnecting" | "disconnected" | "error";
 
@@ -24,34 +31,36 @@ export const onConnectionStateChanged = (handler: ConnectionStateHandler) => {
 
 const runStateChangedHandlers = (s: ConnectionState) => onStateChangedHandlers.forEach((x) => x(s));
 
-socket.on("connect", () => {
-    runStateChangedHandlers("connected");
-});
+const registerStateChangeHandlers = (socket: Socket) => {
+    socket.on("connect", () => {
+        runStateChangedHandlers("connected");
+    });
 
-socket.on("disconnect", (r) => {
-    runStateChangedHandlers("disconnected");
-});
+    socket.on("disconnect", (r) => {
+        runStateChangedHandlers("disconnected");
+    });
 
-socket.on("connect_failed", () => {
-    runStateChangedHandlers("disconnected");
-});
+    socket.on("connect_failed", () => {
+        runStateChangedHandlers("disconnected");
+    });
 
-socket.io.on("error", () => {
-    runStateChangedHandlers("error");
-});
+    socket.io.on("error", () => {
+        runStateChangedHandlers("error");
+    });
 
-socket.io.on("reconnect", () => {
-    runStateChangedHandlers("connected");
-});
+    socket.io.on("reconnect", () => {
+        runStateChangedHandlers("connected");
+    });
 
-socket.io.on("reconnect_error", () => {
-    runStateChangedHandlers("reconnecting");
-});
+    socket.io.on("reconnect_error", () => {
+        runStateChangedHandlers("reconnecting");
+    });
 
-socket.io.on("reconnect_attempt", () => {
-    runStateChangedHandlers("reconnecting");
-});
+    socket.io.on("reconnect_attempt", () => {
+        runStateChangedHandlers("reconnecting");
+    });
 
-socket.io.on("reconnect_failed", () => {
-    runStateChangedHandlers("disconnected");
-});
+    socket.io.on("reconnect_failed", () => {
+        runStateChangedHandlers("disconnected");
+    });
+};
