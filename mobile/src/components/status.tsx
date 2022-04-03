@@ -1,5 +1,4 @@
 import { ConnectionState, onConnectionStateChanged } from "../connection";
-import { CurrentTimeKeeperContext } from "../contexts/current-time-keeper";
 import { Icon } from "@mdi/react";
 import {
     mdiCloudOffOutline,
@@ -8,7 +7,6 @@ import {
     mdiWeatherCloudyAlert
     } from "@mdi/js";
 import { TimeKeeperIcon } from "./time-keeper-icon";
-import { TimeOffsetContext } from "../contexts/time-offset";
 import { Timer } from "./timer";
 import { useEffect, useState } from "react";
 import { useTimerSelector } from "../hooks";
@@ -42,36 +40,31 @@ const getTextFromConnectionState = (state: ConnectionState) => {
     }
 };
 
-type StatusProps = { timeKeeperName?: string };
-export const Status = ({ timeKeeperName }: StatusProps) => {
+type StatusProps = {};
+export const Status = ({}: StatusProps) => {
     const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
+    const timeKeeperId = useTimerSelector((x) => x.timeKeeperConfig?.timeKeeperId);
+    const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
+    const timeKeeperName = allTimeKeepers.find((tk) => tk.id === timeKeeperId)?.name;
 
     useEffect(() => {
         return onConnectionStateChanged(setConnectionState);
     }, []);
 
     return (
-        <TimeOffsetContext.Consumer>
-            {({ offset }) => (
-                <CurrentTimeKeeperContext.Consumer>
-                    {({ timeKeeperId }) => (
-                        <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
-                            <span className="flex">
-                                {timeKeeperId !== undefined && (
-                                    <TimeKeeperIcon type={allTimeKeepers.find((tk) => tk.id === timeKeeperId)!.type} />
-                                )}
-                                <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>
-                            </span>
-                            <Timer offset={offset} />
-                            <span className="text-xs flex items-center">
-                                <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
-                                <Icon path={getIconFromConnectionState(connectionState)} size={1} />
-                            </span>
-                        </div>
-                    )}
-                </CurrentTimeKeeperContext.Consumer>
-            )}
-        </TimeOffsetContext.Consumer>
+        <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
+            <span className="flex">
+                {timeKeeperId !== undefined && (
+                    <TimeKeeperIcon type={allTimeKeepers.find((tk) => tk.id === timeKeeperId)!.type} />
+                )}
+                <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>
+            </span>
+            <Timer offset={offset!} />
+            <span className="text-xs flex items-center">
+                <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
+                <Icon path={getIconFromConnectionState(connectionState)} size={1} />
+            </span>
+        </div>
     );
 };
