@@ -10,13 +10,19 @@ import { Middleware } from "redux";
 import { Provider as ReduxStoreProdiver } from "react-redux";
 import { ServerConnectionHandler } from "./server-connection-handler";
 import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
+import { userConfigSlice } from "@set/timer/dist/slices/user-config";
 import { useState } from "react";
 import "./index.scss";
 
 export const postActionsMiddleware: () => Middleware<{}, TimerState, TimerDispatch> = () => {
     const socket = getConnection();
     return (storeApi) => (next) => (action) => {
-        if (!action.__remote && socket.connected && !action.type.includes(timeKeeperConfigSlice.name))
+        if (
+            !action.__remote &&
+            socket.connected &&
+            !action.type.includes(timeKeeperConfigSlice.name) &&
+            !action.type.includes(userConfigSlice.name)
+        )
             socket.emit("post-action", action);
 
         next(action);
@@ -33,8 +39,7 @@ export const addIssuerMiddleware: (issuer: string) => Middleware<{}, TimerState,
 
 export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
     next(action);
-    const config = storeApi.getState().timeKeeperConfig;
-    console.log(action.type, config);
+    const config = storeApi.getState().userConfig;
     const configState = JSON.stringify(config);
     localStorage.setItem("state.config", configState);
 };
@@ -44,7 +49,7 @@ const LoggedApp = () => {
     const stateString = localStorage.getItem("state.config");
     const store = loggedIn
         ? createStore([persistStateMiddleware, addIssuerMiddleware(getUser()), postActionsMiddleware()], {
-              timeKeeperConfig: JSON.parse(stateString || "")
+              userConfig: JSON.parse(stateString || "{}")
           })
         : undefined;
     return loggedIn ? (

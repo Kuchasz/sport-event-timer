@@ -44,7 +44,7 @@ type StatusProps = {};
 export const Status = ({}: StatusProps) => {
     const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
-    const timeKeeperId = useTimerSelector((x) => x.timeKeeperConfig?.timeKeeperId);
+    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
     const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
     const timeKeeperName = allTimeKeepers.find((tk) => tk.id === timeKeeperId)?.name;
 
