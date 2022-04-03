@@ -22,7 +22,7 @@ function App() {
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
-    const timeKeeperId = useTimerSelector((x) => x.timeKeeperConfig?.timeKeeperId);
+    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
     const isOffline = useTimerSelector((x) => x.timeKeeperConfig?.isOffline);
 
     const dispatch = useTimerDispatch();

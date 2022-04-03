@@ -36,10 +36,13 @@ export type TimeKeeper = {
 };
 
 export type TimeKeeperConfig = {
-    user?: string;
-    timeKeeperId?: number;
     timeOffset?: number;
     isOffline: boolean;
+};
+
+export type UserConfig = {
+    user?: string;
+    timeKeeperId?: number;
 };
 
 export type HistoricAction = {
@@ -148,11 +151,6 @@ export const addRaceCategory = (
 export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
     removeById(raceCategories, id);
 
-export const chooseTimeKeeper = (timeKeeperConfig: TimeKeeperConfig, timeKeeperId: number) => ({
-    ...timeKeeperConfig,
-    timeKeeperId
-});
-
 export const setIsOffline = (timeKeeperConfig: TimeKeeperConfig, isOffline: boolean) => ({
     ...timeKeeperConfig,
     isOffline
@@ -163,7 +161,12 @@ export const setTimeOffset = (timeKeeperConfig: TimeKeeperConfig, timeOffset: nu
     timeOffset
 });
 
-export const setUser = (timeKeeperConfig: TimeKeeperConfig, user: string) => ({
+export const setUser = (timeKeeperConfig: UserConfig, user: string) => ({
     ...timeKeeperConfig,
     user
+});
+
+export const chooseTimeKeeper = (timeKeeperConfig: UserConfig, timeKeeperId: number) => ({
+    ...timeKeeperConfig,
+    timeKeeperId
 });

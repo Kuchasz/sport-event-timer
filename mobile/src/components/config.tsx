@@ -1,4 +1,4 @@
-import { chooseTimeKeeper } from "@set/timer/dist/slices/time-keeper-config";
+import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
@@ -9,7 +9,7 @@ import { useTimerSelector } from "../hooks";
 export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
     const inputFile = useRef<HTMLInputElement>(null);
-    const timeKeeperId = useTimerSelector((x) => x.timeKeeperConfig?.timeKeeperId);
+    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
 
     const onButtonClick = () => {
         inputFile?.current?.click();
