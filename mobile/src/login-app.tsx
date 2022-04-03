@@ -1,7 +1,7 @@
 import Icon from "@mdi/react";
+import { getUser, setLogIn } from "./security";
 import { logIn } from "./api";
 import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
-import { setLogIn } from "./security";
 import { UserCredentials } from "@set/shared/dist";
 import { useState } from "react";
 
@@ -10,10 +10,12 @@ type LoginAppProps = {
 };
 
 export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
-    const [loginState, setLoginState] = useState<UserCredentials>({ login: "", password: "" });
+    const [login, setLogin] = useState<string>(getUser());
+    const [password, setPassword] = useState<string>("");
+
     const requestLogIn = () => {
-        logIn(loginState).then((result) => {
-            setLogIn(Date.now() + (result.expireDate - result.issuedAt) * 1000, loginState.login);
+        logIn({ login, password }).then((result) => {
+            setLogIn(Date.now() + (result.expireDate - result.issuedAt) * 1000, login);
             onLoggedIn && onLoggedIn();
         });
     };
@@ -27,7 +29,8 @@ export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
                         <Icon size={1} path={mdiAccountOutline} className="text-red-500 m-3" />
                         <input
                             className="focus:outline-none text-red-500 font-semibold py-1 w-full"
-                            onChange={(e) => setLoginState({ ...loginState, login: e.target.value })}
+                            onChange={(e) => setLogin(e.target.value)}
+                            value={login}
                         />
                     </div>
                 </div>
@@ -38,7 +41,7 @@ export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
                         <input
                             type="password"
                             className="focus:outline-none text-red-500 font-semibold py-1 w-full"
-                            onChange={(e) => setLoginState({ ...loginState, password: e.target.value })}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                 </div>

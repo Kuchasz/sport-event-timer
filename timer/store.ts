@@ -1,6 +1,7 @@
 import actionsHistory from "./slices/actions-history";
 import players from "./slices/players";
 import raceCategories from "./slices/race-categories";
+import timeKeeperConfig from "./slices/time-keeper-config";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
 import {
@@ -10,19 +11,23 @@ import {
     Middleware
     } from "@reduxjs/toolkit";
 
-const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories, actionsHistory });
+const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategories, actionsHistory, timeKeeperConfig });
 
 const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     if (action.type === "REPLACE_STATE") {
-        return action.state as TimerState;
+        return { ...state, ...action.state } as TimerState;
     }
     return reducer(state, action) as TimerState;
 };
 
-export const createStore = (middlewares: Middleware<{}, TimerState, TimerDispatch>[]) =>
+export const createStore = (
+    middlewares: Middleware<{}, TimerState, TimerDispatch>[],
+    preloadedState?: Partial<TimerState>
+) =>
     configureStore({
         reducer: resettableRootReducer as any,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares),
+        preloadedState
     });
 
 //store created only for typechecking

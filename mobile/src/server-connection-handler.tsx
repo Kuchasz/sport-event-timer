@@ -1,8 +1,7 @@
-import { ConnectionState, getConnection, onConnectionStateChanged } from "./connection";
+import { getConnection, onConnectionStateChanged } from "./connection";
 import { getCurrentTimeOffset } from "./api";
-import { OfflineContext } from "./contexts/offline";
-import { ReactNode, useEffect, useState } from "react";
-import { TimeOffsetContext } from "./contexts/time-offset";
+import { ReactNode, useEffect } from "react";
+import { setIsOffline, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -11,18 +10,21 @@ export const ServerConnectionHandler = ({
     dispatch: (action: any) => void;
     children: ReactNode;
 }) => {
-    const [timeOffset, setTimeOffset] = useState<number>(0);
-    const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
-
     useEffect(() => {
         const socket = getConnection();
 
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
         socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        getCurrentTimeOffset().then(setTimeOffset);
+        getCurrentTimeOffset().then((timeOffset) => {
+            //dispatch timeOffset
+            dispatch(setTimeOffset({ timeOffset }));
+        });
 
-        const connectionStateChangedUnsub = onConnectionStateChanged(setConnectionState);
+        const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
+            //dispatch connectionState !== "connected"
+            dispatch(setIsOffline({ isOffline: connectionState !== "connected" }));
+        });
 
         return () => {
             connectionStateChangedUnsub();
@@ -30,11 +32,5 @@ export const ServerConnectionHandler = ({
         };
     }, [dispatch]);
 
-    return (
-        <TimeOffsetContext.Provider value={{ offset: timeOffset }}>
-            <OfflineContext.Provider value={{ isOffline: connectionState !== "connected" }}>
-                {children}
-            </OfflineContext.Provider>
-        </TimeOffsetContext.Provider>
-    );
+    return <>{children}</>;
 };

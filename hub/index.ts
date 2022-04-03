@@ -5,7 +5,7 @@ import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
-import { staticTimeKeppers } from "@set/timer/dist/slices/fake-time-keepers";
+import { staticTimeKeppers } from "@set/timer/dist/slices/time-keepers";
 import { upload } from "@set/timer/dist/slices/players";
 
 const writeJson = <T>(content: T, path: string) => {

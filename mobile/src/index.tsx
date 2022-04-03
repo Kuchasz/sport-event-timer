@@ -9,30 +9,39 @@ import { LoginApp } from "./login-app";
 import { Middleware } from "redux";
 import { Provider as ReduxStoreProdiver } from "react-redux";
 import { ServerConnectionHandler } from "./server-connection-handler";
+import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
 import { useState } from "react";
 import "./index.scss";
 
 export const postActionsMiddleware: () => Middleware<{}, TimerState, TimerDispatch> = () => {
     const socket = getConnection();
     return (storeApi) => (next) => (action) => {
-        console.log(action);
-        if (!action.__remote && socket.connected) socket.emit("post-action", action);
+        if (!action.__remote && socket.connected && !action.type.includes(timeKeeperConfigSlice.name))
+            socket.emit("post-action", action);
 
         next(action);
     };
 };
 
 export const addIssuerMiddleware: (issuer: string) => Middleware<{}, TimerState, TimerDispatch> =
-    (issuer) => (_) => (next) => (action) => {
-        if (!action.__remote) action.__issuer = issuer;
-        action.__issuedAt = Date.now(); //that is wrong! that time should be synced with server which is not synced at app startup :/
+    (issuer) => (state) => (next) => (action) => {
+        if (!action.__remote && !action.type.includes(timeKeeperConfigSlice.name)) action.__issuer = issuer;
+        action.__issuedAt = Date.now() + (state.getState().timeKeeperConfig?.timeOffset || 0);
 
         next(action);
     };
 
+export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
+    next(action);
+    const configState = JSON.stringify(storeApi.getState().timeKeeperConfig);
+    localStorage.setItem("state.config", configState);
+};
+
 const LoggedApp = () => {
     const [loggedIn, setLoggedIn] = useState<boolean>(isLoggedIn());
-    const store = loggedIn ? createStore([addIssuerMiddleware(getUser()), postActionsMiddleware()]) : undefined;
+    const store = loggedIn
+        ? createStore([persistStateMiddleware, addIssuerMiddleware(getUser()), postActionsMiddleware()])
+        : undefined;
     return loggedIn ? (
         <ReduxStoreProdiver store={store!}>
             <ServerConnectionHandler dispatch={store!.dispatch}>
