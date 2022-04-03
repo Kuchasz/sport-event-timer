@@ -33,14 +33,19 @@ export const addIssuerMiddleware: (issuer: string) => Middleware<{}, TimerState,
 
 export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
     next(action);
-    const configState = JSON.stringify(storeApi.getState().timeKeeperConfig);
+    const config = storeApi.getState().timeKeeperConfig;
+    console.log(action.type, config);
+    const configState = JSON.stringify(config);
     localStorage.setItem("state.config", configState);
 };
 
 const LoggedApp = () => {
     const [loggedIn, setLoggedIn] = useState<boolean>(isLoggedIn());
+    const stateString = localStorage.getItem("state.config");
     const store = loggedIn
-        ? createStore([persistStateMiddleware, addIssuerMiddleware(getUser()), postActionsMiddleware()])
+        ? createStore([persistStateMiddleware, addIssuerMiddleware(getUser()), postActionsMiddleware()], {
+              timeKeeperConfig: JSON.parse(stateString || "")
+          })
         : undefined;
     return loggedIn ? (
         <ReduxStoreProdiver store={store!}>

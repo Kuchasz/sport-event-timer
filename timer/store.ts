@@ -15,7 +15,7 @@ const reducer = combineReducers({ players, timeKeepers, timeStamps, raceCategori
 
 const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     if (action.type === "REPLACE_STATE") {
-        return { ...state, ...action.state } as TimerState;
+        return { ...action.state, timeKeeperConfig: state.timeKeeperConfig } as TimerState;
     }
     return reducer(state, action) as TimerState;
 };
