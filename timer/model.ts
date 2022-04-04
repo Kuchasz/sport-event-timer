@@ -43,6 +43,7 @@ export type TimeKeeperConfig = {
 export type UserConfig = {
     user?: string;
     timeKeeperId?: number;
+    tokenExpire?: number;
 };
 
 export type HistoricAction = {
@@ -164,6 +165,11 @@ export const setTimeOffset = (timeKeeperConfig: TimeKeeperConfig, timeOffset: nu
 export const setUser = (timeKeeperConfig: UserConfig, user: string) => ({
     ...timeKeeperConfig,
     user
+});
+
+export const setTokenExpire = (timeKeeperConfig: UserConfig, tokenExpire: number) => ({
+    ...timeKeeperConfig,
+    tokenExpire
 });
 
 export const chooseTimeKeeper = (timeKeeperConfig: UserConfig, timeKeeperId: number) => ({
