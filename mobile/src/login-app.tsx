@@ -1,22 +1,24 @@
 import Icon from "@mdi/react";
-import { getUser, setLogIn } from "./security";
 import { logIn } from "./api";
 import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
-import { UserCredentials } from "@set/shared/dist";
+import { setUser } from "@set/timer/dist/slices/user-config";
 import { useState } from "react";
+import { useTimerDispatch, useTimerSelector } from "./hooks";
 
 type LoginAppProps = {
     onLoggedIn?: () => void;
 };
 
 export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
-    const [login, setLogin] = useState<string>(getUser());
+    const dispatch = useTimerDispatch();
+    const user = useTimerSelector((x) => x.userConfig.user);
+
+    const [login, setLogin] = useState<string>(user || "");
     const [password, setPassword] = useState<string>("");
 
     const requestLogIn = () => {
         logIn({ login, password }).then((result) => {
-            setLogIn(Date.now() + (result.expireDate - result.issuedAt) * 1000, login);
-            onLoggedIn && onLoggedIn();
+            dispatch(setUser({ user: login, tokenExpire: Date.now() + (result.expireDate - result.issuedAt) * 1000 }));
         });
     };
 

@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: m.UserConfig = {
     user: undefined,
-    timeKeeperId: undefined
+    timeKeeperId: undefined,
+    tokenExpire: undefined
 };
 
 export const userConfigSlice = createSlice({
@@ -12,7 +13,8 @@ export const userConfigSlice = createSlice({
     reducers: {
         chooseTimeKeeper: (state, action: PayloadAction<{ timeKeeperId: number }>) =>
             m.chooseTimeKeeper(state, action.payload.timeKeeperId),
-        setUser: (state, action: PayloadAction<{ user: string }>) => m.setUser(state, action.payload.user)
+        setUser: (state, action: PayloadAction<{ user: string; tokenExpire: number }>) =>
+            m.setUser(m.setTokenExpire(state, action.payload.tokenExpire), action.payload.user)
     }
 });
 
