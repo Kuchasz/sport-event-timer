@@ -59,7 +59,15 @@ const StartingList = ({}: Props) => {
     const result = state.map((s, i) => ({ ...s, index: i + 1, startTime: calculateStartTime(s.number) }));
     type itemsType = typeof result[0];
 
-    const headers = ["Lp.", "Numer", "Imię Nazwisko", "Kat.", "Kraj", "Drużyna", "Start"];
+    const headers = [
+        <div>Lp.</div>,
+        <div>Numer</div>,
+        <div>Zawodnik</div>,
+        <div>Kat.</div>,
+        <div>Kraj</div>,
+        <div>Drużyna</div>,
+        <div>Start</div>
+    ];
 
     return (
         <>

@@ -296,17 +296,17 @@ const Index = ({}: Props) => {
     type itemsType = typeof result[0];
 
     const headers = [
-        "Miejsce",
-        "Nr. zaw.",
-        "Imię Nazwisko",
-        "Miejscowość",
-        "Klub",
-        "Kraj",
-        "Rok urodz.",
-        "Kat.",
-        "VŚr km/h",
-        "Wynik",
-        "Strata"
+        <div>Miejsce</div>,
+        <div>Nr. zaw.</div>,
+        <div>Zawodnik</div>,
+        <div>Miejscowość</div>,
+        <div>Klub</div>,
+        <div>Kraj</div>,
+        <div>Rok urodz.</div>,
+        <div>Kat.</div>,
+        <div>VŚr km/h</div>,
+        <div>Wynik</div>,
+        <div>Strata</div>
     ];
 
     return (

@@ -8,12 +8,12 @@ type Item<T extends unknown> = React.ReactElement<{ item: T }>;
 
 type TableProps<T> = {
     rows: T[];
-    headers: string[];
+    headers: ReactNode[];
     children: Item<T>[];
     getKey: (item: T) => string;
 };
 
-const HeaderCell = ({ children }: { children: string }) => (
+const HeaderCell = ({ children }: { children: ReactNode }) => (
     <div
         className={tdClassName + " border-b-2 border-orange-500 bg-zinc-100 font-semibold cursor-pointer sticky top-0"}
     >
@@ -34,13 +34,13 @@ export const Table = <T extends {}>({ rows, headers, children, getKey }: TablePr
             </div>
         );
 
-    const gridTemplateColumns = children.map((_) => "auto").join(" ");
+    const gridTemplateColumns = `repeat(${children.length}, auto)`;
     // "auto auto minmax(auto, 1fr) minmax(auto, 1fr) minmax(auto, 1fr) auto auto auto auto auto auto";
 
     return (
         <div className="grid grow auto-rows-min text-sm bg-zinc-100" style={{ gridTemplateColumns }}>
-            {headers.map((h) => (
-                <HeaderCell key={h}>{h}</HeaderCell>
+            {headers.map((h, i) => (
+                <HeaderCell key={i}>{h}</HeaderCell>
             ))}
 
             {rows.map((row, i) => {

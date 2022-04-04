@@ -28,6 +28,12 @@ export function sort<T>(items: T[], func: (item: T) => number): T[] {
     return i.sort((a, b) => func(a) - func(b));
 }
 
+export function sortDesc<T>(items: T[], func: (item: T) => number): T[] {
+    const i = [...items];
+
+    return i.sort((a, b) => func(b) - func(a));
+}
+
 export type UserCredentials = { login: string; password: string };
 export type LoginResult = { authToken: string; issuedAt: number; expireDate: number };
 export type ClockListPlayer = { number: number; name: string; lastName: string; startTime: number };
