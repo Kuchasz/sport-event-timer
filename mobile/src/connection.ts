@@ -11,9 +11,8 @@ let socket: ReturnType<typeof io>;
 export const getConnection = () => {
     if (!socket) {
         socket = io(hubUrl, { transports: ["websocket"] });
+        registerStateChangeHandlers(socket);
     }
-
-    registerStateChangeHandlers(socket);
 
     return socket;
 };
@@ -29,7 +28,9 @@ export const onConnectionStateChanged = (handler: ConnectionStateHandler) => {
     };
 }; //possible memory leaks
 
-const runStateChangedHandlers = (s: ConnectionState) => onStateChangedHandlers.forEach((x) => x(s));
+const runStateChangedHandlers = (s: ConnectionState) => {
+    onStateChangedHandlers.forEach((x) => x(s));
+};
 
 const registerStateChangeHandlers = (socket: Socket) => {
     socket.on("connect", () => {

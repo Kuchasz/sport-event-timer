@@ -23,7 +23,7 @@ function App() {
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
     const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
-    const isOffline = useTimerSelector((x) => x.timeKeeperConfig?.isOffline);
+    const isOffline = useTimerSelector((x) => x.timeKeeperConfig?.connectionState !== "connected");
 
     const dispatch = useTimerDispatch();
 
