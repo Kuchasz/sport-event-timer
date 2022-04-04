@@ -1,7 +1,7 @@
 import { getConnection, onConnectionStateChanged } from "./connection";
 import { getCurrentTimeOffset } from "./api";
 import { ReactNode, useEffect } from "react";
-import { setIsOffline, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
+import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -10,6 +10,8 @@ export const ServerConnectionHandler = ({
     dispatch: (action: any) => void;
     children: ReactNode;
 }) => {
+    console.log("ServerConnectionHandler");
+
     useEffect(() => {
         const socket = getConnection();
 
@@ -23,11 +25,12 @@ export const ServerConnectionHandler = ({
 
         const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
             //dispatch connectionState !== "connected"
-            dispatch(setIsOffline({ isOffline: connectionState !== "connected" }));
+            dispatch(setConnectionState({ connectionState }));
         });
 
         return () => {
             connectionStateChangedUnsub();
+            socket.removeAllListeners();
             socket.disconnect();
         };
     }, [dispatch]);

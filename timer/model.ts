@@ -37,8 +37,10 @@ export type TimeKeeper = {
 
 export type TimeKeeperConfig = {
     timeOffset?: number;
-    isOffline: boolean;
+    connectionState: ConnectionState;
 };
+
+export type ConnectionState = "connected" | "reconnecting" | "disconnected" | "error";
 
 export type UserConfig = {
     user?: string;
@@ -152,9 +154,9 @@ export const addRaceCategory = (
 export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
     removeById(raceCategories, id);
 
-export const setIsOffline = (timeKeeperConfig: TimeKeeperConfig, isOffline: boolean) => ({
+export const setConnectionState = (timeKeeperConfig: TimeKeeperConfig, connectionState: ConnectionState) => ({
     ...timeKeeperConfig,
-    isOffline
+    connectionState
 });
 
 export const setTimeOffset = (timeKeeperConfig: TimeKeeperConfig, timeOffset: number) => ({

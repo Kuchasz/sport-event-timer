@@ -1,4 +1,4 @@
-import { ConnectionState, onConnectionStateChanged } from "../connection";
+import { ConnectionState } from "../connection";
 import { Icon } from "@mdi/react";
 import {
     mdiCloudOffOutline,
@@ -42,15 +42,11 @@ const getTextFromConnectionState = (state: ConnectionState) => {
 
 type StatusProps = {};
 export const Status = ({}: StatusProps) => {
-    const [connectionState, setConnectionState] = useState<ConnectionState>("disconnected");
+    const connectionState = useTimerSelector((x) => x.timeKeeperConfig.connectionState);
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
     const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
     const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
     const timeKeeperName = allTimeKeepers.find((tk) => tk.id === timeKeeperId)?.name;
-
-    useEffect(() => {
-        return onConnectionStateChanged(setConnectionState);
-    }, []);
 
     return (
         <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
