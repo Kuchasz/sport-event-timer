@@ -28,7 +28,7 @@ const Program = () => {
                                 <span className="flex items-baseline">
                                     <h3 className="py-2 font-semibold text-xl">9.04.2022, sobota</h3>
                                 </span>
-                                <span className="py-1">7:00-9:30 – odbieranie pakietów startowych</span>
+                                <span className="py-1">7:00-9:30 – odbieranie pakietów startowych, Kozubnik ul. Kochana 1</span>
                                 <span className="py-1">9:30-10:00 – odprawa techniczna</span>
                                 <span className="py-1">10:15 – start zawodów dla dzieci</span>
                                 <span className="py-1">10:45 – zakończenie zawodów dla dzieci</span>
