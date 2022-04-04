@@ -51,7 +51,7 @@ export type UserConfig = {
 export type HistoricAction = {
     issuer: string;
     issuedAt: number;
-    type: string;
+    action: { type: string; payload: any };
 };
 
 export type TimeStamp = {
