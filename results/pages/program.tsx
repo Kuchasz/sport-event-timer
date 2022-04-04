@@ -22,7 +22,7 @@ const Program = () => {
                                 <span className="flex items-baseline">
                                     <h3 className="py-2 font-semibold text-xl">8.04.2022, piątek</h3>
                                 </span>
-                                <span>18:00-21:00 – otwarcie Biura Zawodów, odbieranie pakietów startowych</span>
+                                <span>18:00-21:00 – otwarcie Biura Zawodów, odbieranie pakietów startowych, Kozubnik ul. Kochana 1</span>
                             </div>
                             <div className="mt-12 mb-2 flex flex-col items-start">
                                 <span className="flex items-baseline">
@@ -39,7 +39,7 @@ const Program = () => {
                                 <span className="flex items-baseline">
                                     <h3 className="py-2 font-semibold text-xl">10.04.2022, niedziela</h3>
                                 </span>
-                                <span className="py-1">7:00 - 9:30 – odbieranie pakietów startowych</span>
+                                <span className="py-1">7:00 - 9:30 – odbieranie pakietów startowych, Park w Łękawicy ul. Parkowa </span>
                                 <span className="py-1">9:30 - 10:00 – odprawa techniczna</span>
                                 <span className="py-1">11:00 – start RnK ITT</span>
                                 <span className="py-1">14:00 – start zawodów dla dzieci</span>
