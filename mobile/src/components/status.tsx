@@ -39,8 +39,7 @@ const getTextFromConnectionState = (state: ConnectionState) => {
     }
 };
 
-type StatusProps = {};
-export const Status = ({}: StatusProps) => {
+export const Status = () => {
     const connectionState = useTimerSelector((x) => x.timeKeeperConfig.connectionState);
     const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
     const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
