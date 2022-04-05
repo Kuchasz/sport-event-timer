@@ -296,17 +296,17 @@ const Index = ({}: Props) => {
     type itemsType = typeof result[0];
 
     const headers = [
-        <div>Miejsce</div>,
+        <div>M.</div>,
         <div>Nr. zaw.</div>,
         <div>Zawodnik</div>,
-        <div>Miejscowość</div>,
-        <div>Klub</div>,
-        <div>Kraj</div>,
-        <div>Rok urodz.</div>,
+        <div className="hidden md:block">Miejscowość</div>,
+        <div className="hidden sm:block">Klub</div>,
+        <div className="hidden sm:block">Kraj</div>,
+        <div className="hidden lg:block">Rok urodz.</div>,
         <div>Kat.</div>,
-        <div>VŚr km/h</div>,
+        <div className="hidden lg:block">VŚr km/h</div>,
         <div>Wynik</div>,
-        <div>Strata</div>
+        <div className="hidden sm:block">Strata</div>
     ];
 
     return (
@@ -330,17 +330,25 @@ const Index = ({}: Props) => {
                             </>
                         )}
                     ></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.city}</div>}></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.country}</div>}></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.birthYear}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div className="hidden md:block">{r.city}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div className="hidden sm:block">{r.team}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div className="hidden sm:block">{r.country}</div>}
+                    ></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div className="hidden lg:block">{r.birthYear}</div>}
+                    ></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{formatSpeed(r.result)}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div className="hidden lg:block">{formatSpeed(r.result)}</div>}
+                    ></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => <div className="font-semibold">{r.resultStr}</div>}
                     ></Table.Item>
                     <Table.Item
-                        render={(r: itemsType) => <div>{r.diff === 0 ? "" : "+ " + r.diffStr}</div>}
+                        render={(r: itemsType) => (
+                            <div className="hidden sm:block">{r.diff === 0 ? "" : "+ " + r.diffStr}</div>
+                        )}
                     ></Table.Item>
                 </Table>
             </div>
