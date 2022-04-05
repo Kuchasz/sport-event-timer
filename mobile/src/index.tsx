@@ -11,7 +11,6 @@ import { Provider as ReduxStoreProdiver } from "react-redux";
 import { ServerConnectionHandler } from "./server-connection-handler";
 import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
 import { userConfigSlice } from "@set/timer/dist/slices/user-config";
-import { useState } from "react";
 import { useTimerSelector } from "./hooks";
 import "./index.scss";
 
