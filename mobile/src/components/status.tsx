@@ -8,7 +8,6 @@ import {
     } from "@mdi/js";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
-import { useEffect, useState } from "react";
 import { useTimerSelector } from "../hooks";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
