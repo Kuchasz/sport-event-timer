@@ -37,7 +37,7 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 1000;
+const clockTimeout = 100;
 
 export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
     ? {
@@ -137,6 +137,10 @@ const Zegar = () => {
             loadStartTime = Date.now();
             socket.emit("TQ");
         }, 1000);
+
+        return () => {
+            clearInterval(timeSyncInterval);
+        };
     }, []);
     return (
         <>

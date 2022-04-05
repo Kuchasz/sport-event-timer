@@ -1,5 +1,4 @@
 import { getConnection, onConnectionStateChanged } from "./connection";
-import { getCurrentTimeOffset } from "./api";
 import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 
@@ -10,18 +9,30 @@ export const ServerConnectionHandler = ({
     dispatch: (action: any) => void;
     children: ReactNode;
 }) => {
-    console.log("ServerConnectionHandler");
-
     useEffect(() => {
         const socket = getConnection();
 
         socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
         socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        getCurrentTimeOffset().then((timeOffset) => {
-            //dispatch timeOffset
+        let loadStartTime = Date.now();
+        socket.on("TR", (serverTime) => {
+            const loadEndTime = Date.now();
+            const latency = loadEndTime - loadStartTime;
+
+            const timeOffset = -(loadEndTime - (serverTime + latency / 2));
+
             dispatch(setTimeOffset({ timeOffset }));
+
+            if (latency <= 50) {
+                clearInterval(timeSyncInterval);
+            }
         });
+
+        const timeSyncInterval = setInterval(() => {
+            loadStartTime = Date.now();
+            socket.emit("TQ");
+        }, 1000);
 
         const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
             //dispatch connectionState !== "connected"
@@ -29,9 +40,10 @@ export const ServerConnectionHandler = ({
         });
 
         return () => {
+            clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
             socket.removeAllListeners();
-            socket.disconnect();
+            // socket.disconnect();
         };
     }, [dispatch]);
 
