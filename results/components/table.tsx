@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { Fragment, ReactNode } from "react";
 import { Loader } from "./loader";
 
-const tdClassName = "p-2 py-3";
+const tdClassName = "p-1 lg:p-3";
 
 type Item<T extends unknown> = React.ReactElement<{ item: T }>;
 
