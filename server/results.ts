@@ -23,14 +23,9 @@ const timeStringToMiliseconds = (timeString: string): { time?: number; status: s
 };
 
 export const fetchTimeGoNewResults = (resultsUrl: string): Promise<PlayerResult[]> => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4500);
-
-    return fetch(resultsUrl, { signal: controller.signal })
+    return fetch(resultsUrl)
         .then((r) => r.text())
         .then((contents) => {
-            clearTimeout(timeoutId);
-
             const colTypes = {
                 name: "col-name",
                 time: "col-time"
