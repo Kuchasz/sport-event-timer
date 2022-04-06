@@ -3,11 +3,11 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import { getState } from "../../api";
+import { getPlayers, getRaceTimes, getState } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
-import { sort } from "@set/shared/dist";
+import { PlayerResult, sort } from "@set/shared/dist";
 import { Table } from "../../components/table";
 import { TimerState } from "@set/timer/store";
 import { useEffect, useState } from "react";
@@ -16,7 +16,10 @@ import { useRouter } from "next/dist/client/router";
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
 
-export const formatSpeed = (result: number) => Math.round((13330 / (result / 1000 / 60 / 60) / 1000) * 100) / 100;
+const raceDistanceInMeters = 13_330;
+
+export const formatSpeed = (result: number) =>
+    Math.round((raceDistanceInMeters / (result / 1000 / 60 / 60) / 1000) * 100) / 100;
 
 export const formatTime = (time?: number) => {
     if (time === undefined) return "--:--:--";
@@ -32,25 +35,6 @@ type Props = {
     state: TimerState;
 };
 
-const calculateFinalTimeStr = (start: number, end: number) => {
-    if (!start || !end) return "--:--:--";
-
-    const timeDate = new Date(end - start);
-
-    return `${formatNumber(timeDate.getUTCHours())}:${formatNumber(timeDate.getUTCMinutes())}:${formatNumber(
-        timeDate.getUTCSeconds()
-    )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
-};
-
-const calculateFinalTime = (start: number, end: number) => {
-    return new Date(end - start).getTime();
-};
-
-const getName = (name: string, lastName: string) => `${name} ${lastName}`;
-const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
-
-type Types = "" | "open-k" | "open-m" | "K1" | "K2" | "K3" | "M1" | "M2" | "M3" | "M4";
-
 const filterByType = (type: Types) => (player: Player) => {
     if (!type) return true;
 
@@ -60,6 +44,21 @@ const filterByType = (type: Types) => (player: Player) => {
 
     return player.raceCategory == type;
 };
+
+const calculateFinalTimeStr = (status: string, result?: number) => {
+    if (!result) return status ?? "--:--:--";
+
+    const timeDate = new Date(result);
+
+    return `${formatNumber(timeDate.getUTCHours())}:${formatNumber(timeDate.getUTCMinutes())}:${formatNumber(
+        timeDate.getUTCSeconds()
+    )}.${formatNumber(timeDate.getMilliseconds(), 3).slice(0, 1)}`;
+};
+
+const getName = (name: string, lastName: string) => `${name} ${lastName}`;
+const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
+
+type Types = "" | "open-k" | "open-m" | "K1" | "K2" | "K3" | "M1" | "M2" | "M3" | "M4";
 
 const ResultLink = ({
     type,
@@ -72,7 +71,7 @@ const ResultLink = ({
     text: string;
     onOpen: () => void;
 }) => (
-    <Link href={`/wyniki/${type}`}>
+    <Link href={`/wyniki_new/${type}`}>
         <a
             onClick={onOpen}
             className={classNames(
@@ -242,14 +241,16 @@ const ResultLinks = ({ passedType }: { passedType: Types }) => {
 };
 
 const Index = ({}: Props) => {
-    const [state, setState] = useState<TimerState>();
+    const [raceTimes, setRaceTimes] = useState<PlayerResult[]>();
+    const [players, setPlayers] = useState<Player[]>();
     const router = useRouter();
 
     useEffect(() => {
-        getState().then(setState);
+        getRaceTimes().then(setRaceTimes);
+        getPlayers().then(setPlayers);
     }, []);
 
-    if (!state)
+    if (!raceTimes || !players)
         return (
             <div className="flex font-semibold justify-center items-center">
                 Smarujemy łańcuch...
@@ -261,36 +262,23 @@ const Index = ({}: Props) => {
     const types = type || [];
     const passedType = (types[0] || "") as Types;
 
-    const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
-    const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
+    const playersWithTimes = raceTimes
+        .map((raceTime) => ({
+            ...raceTime,
+            ...players.find((p) => p.number === raceTime.number)!,
+            resultStr: calculateFinalTimeStr(raceTime.status, raceTime.result)
+        }))
+        .filter((p) => p.id !== undefined)
+        .filter(filterByType(passedType));
 
-    const playersWithTimes = state.players
-        .filter(filterByType(passedType))
-        .filter(
-            (p) =>
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time &&
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)?.time
-        )
-        .map((p) => ({
-            ...p,
-            result: calculateFinalTime(
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)!.time
-            ),
-            resultStr: calculateFinalTimeStr(
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)!.time
-            )
-        }));
-
-    const sorted = sort(playersWithTimes, (p) => p.result);
+    const sorted = sort(playersWithTimes, (p) => p.result || 3_600_600 * 12);
     const first = sorted[0];
 
     const result = sorted.map((s, i) => ({
         ...s,
         place: i + 1,
-        diff: s.result - first.result,
-        diffStr: formatTime(s.result - first.result)
+        diff: s.result ? s.result - first.result! : undefined,
+        diffStr: s.result ? formatTime(s.result! - first.result!) : undefined
     }));
 
     type itemsType = typeof result[0];
@@ -340,14 +328,18 @@ const Index = ({}: Props) => {
                     ></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
                     <Table.Item
-                        render={(r: itemsType) => <div className="hidden lg:block">{formatSpeed(r.result)}</div>}
+                        render={(r: itemsType) => (
+                            <div className="hidden lg:block">{r.result ? formatSpeed(r.result) : ""}</div>
+                        )}
                     ></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => <div className="font-semibold">{r.resultStr}</div>}
                     ></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => (
-                            <div className="hidden sm:block">{r.diff === 0 ? "" : "+ " + r.diffStr}</div>
+                            <div className="hidden sm:block">
+                                {r.diff === 0 || r.diff === undefined ? "" : "+ " + r.diffStr}
+                            </div>
                         )}
                     ></Table.Item>
                 </Table>
@@ -357,14 +349,3 @@ const Index = ({}: Props) => {
 };
 
 export default Index;
-
-// export const getServerSideProps = async () => {
-//     return new Promise((res, _) => {
-//         readFile(resolve("../state.json"), (err, data) => {
-//             if (err) throw err;
-//             let state = JSON.parse(data as any);
-
-//             res({ props: { state } });
-//         });
-//     });
-// };

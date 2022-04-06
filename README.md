@@ -17,7 +17,7 @@ Application for making time measurements
 -   fetch time from server :heavy_check_mark:
 -   disable pull to refresh :heavy_check_mark:
 -   persist selected timekeeper :heavy_check_mark:
--   NTP protocol implementation
+-   NTP protocol implementation :heavy_check_mark:
 -   actions log
 -   authentication
 -   real-time starting list sync
@@ -28,3 +28,4 @@ Application for making time measurements
 -   auto teams classifications
 -   auto GC classification calculation
 -   SMS notification with the result
+-   fetching results from external system

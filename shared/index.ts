@@ -34,6 +34,7 @@ export function sortDesc<T>(items: T[], func: (item: T) => number): T[] {
     return i.sort((a, b) => func(b) - func(a));
 }
 
+export type PlayerResult = { number: number; result?: number; status: string };
 export type UserCredentials = { login: string; password: string };
 export type LoginResult = { authToken: string; issuedAt: number; expireDate: number };
 export type ClockListPlayer = { number: number; name: string; lastName: string; startTime: number };
