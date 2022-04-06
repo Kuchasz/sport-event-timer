@@ -3,7 +3,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import { getPlayers, getRaceTimes, getState } from "../../api";
+import { getPlayers, getRaceTimes } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
