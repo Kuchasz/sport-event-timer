@@ -3,8 +3,7 @@ import { config } from "./config";
 import { NextFunction, Request, Response } from "express";
 import { UserCredentials } from "@set/shared/dist";
 
-// const admin_username = "admin"; //process.env.ADMIN_USER;
-const admin_password = "admin"; //process.env.ADMIN_PASSWORD;
+const admin_password = config.auth.password;
 
 const validateCredentials = (login: string, password: string) => login.length >= 3 && password === admin_password;
 

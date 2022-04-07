@@ -30,6 +30,16 @@ const writeCsv = <T>(content: T, path: string) => {
     });
 };
 
+const readCsv = <T>(path: string) => {
+    readFile(resolve(path), (err, res) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return parse(res.toString());
+        }
+    });
+};
+
 export const apply = (server: HttpServer): Promise<void> => {
     const io = new Server(server, {
         serveClient: false,

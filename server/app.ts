@@ -8,10 +8,13 @@ import { config } from "./config";
 import { createServer } from "http";
 import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 import { login } from "./auth";
+import { parse } from "csv-parse/sync";
 import { PlayerResult } from "../shared/index";
+import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
+import { ToStartPlayer } from "./to-start";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -36,13 +39,20 @@ const minutesAgo = (minutes: number) => {
     return currentTimeMinutesAgo.getTime();
 };
 
+const readFileAsync = promisify(readFile);
+
 const writeJson = <T>(content: T, path: string) => {
-    writeFile(resolve(path), JSON.stringify(content), (err) => {
+    writeFile(resolve(path), JSON.stringify(content), err => {
         if (err) {
             console.log(err);
         } else {
         }
     });
+};
+
+const readCsv = async <T>(path: string) => {
+    const data = await readFileAsync(resolve(path));
+    return parse(data.toString(), { columns: true }) as T;
 };
 
 const loadRaceResults = () => {
@@ -54,10 +64,10 @@ const loadRaceResults = () => {
     ];
 
     Promise.all(fetches)
-        .then((arr) => arr.reduce((acc, arr) => [...acc, ...arr], []))
-        .then((results) => {
+        .then(arr => arr.reduce((acc, arr) => [...acc, ...arr], []))
+        .then(results => {
             writeJson(
-                sort(results, (r) => r.number),
+                sort(results, r => r.number),
                 "../timegonewresults.json"
             );
             // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
@@ -67,7 +77,7 @@ const loadRaceResults = () => {
 
 const loadTimeTrialResults = () => {
     getTimeTrialResults()
-        .then((results) => {
+        .then(results => {
             writeJson(results, "../timetrialresults.json");
             // console.log(`timetrial.results.fetch.success [${new Date().toLocaleString()}]`);
         })
@@ -100,6 +110,21 @@ const run = async () => {
         });
     });
 
+    app.get("/fun-players", async (_, res) => {
+        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-fun-2022.csv");
+        res.json(funPlayers);
+    });
+
+    app.get("/pro-players", async (_, res) => {
+        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-pro-2022.csv");
+        res.json(funPlayers);
+    });
+
+    app.get("/timetrial-players", async (_, res) => {
+        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-tt-2022.csv");
+        res.json(funPlayers);
+    });
+
     app.get("/players", (_, res) => {
         readFile(resolve("../players.json"), (err, data) => {
             const players: m.Player[] = err ? [] : JSON.parse(data as any);
@@ -123,7 +148,7 @@ const run = async () => {
             const firstPlayerStart = minutesAgo(137);
             const startTimeFromNumber = (number: number) => firstPlayerStart + 60_000 * number;
 
-            const clockPlayers: ClockListPlayer[] = sort(players, (p) => p.number).map((p) => ({
+            const clockPlayers: ClockListPlayer[] = sort(players, p => p.number).map(p => ({
                 number: p.number,
                 name: p.name,
                 lastName: p.lastName,
