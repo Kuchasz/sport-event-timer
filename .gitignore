@@ -33,3 +33,4 @@ state*.json
 players*.json
 .env
 time*.json
+lista*.csv

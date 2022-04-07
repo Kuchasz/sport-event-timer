@@ -41,14 +41,14 @@ const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
 const StartingList = ({}: Props) => {
-    const [state, setState] = useState<Player[]>();
+    const [players, setPlayers] = useState<Player[]>();
     const [playersDate, setPlayersDate] = useState<number>();
 
     useEffect(() => {
-        getPlayers().then(setState);
+        getPlayers().then(setPlayers);
         getPlayersDate().then(setPlayersDate);
     }, []);
-    if (state === undefined || playersDate === undefined)
+    if (players === undefined || playersDate === undefined)
         return (
             <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                 Smarujemy łańcuch...
@@ -56,7 +56,7 @@ const StartingList = ({}: Props) => {
             </div>
         );
 
-    const result = state.map((s, i) => ({ ...s, index: i + 1, startTime: calculateStartTime(s.number) }));
+    const result = players.map((s, i) => ({ ...s, index: i + 1, startTime: calculateStartTime(s.number) }));
     type itemsType = typeof result[0];
 
     const headers = [
@@ -77,7 +77,7 @@ const StartingList = ({}: Props) => {
             <div className="border-1 border-gray-600 border-solid">
                 <div className="px-4 py-2">Ostatnia aktualizacja: {new Date(playersDate).toLocaleString()}</div>
 
-                <Table headers={headers} rows={result} getKey={(r) => String(r.number)}>
+                <Table headers={headers} rows={result} getKey={r => String(r.number)}>
                     <Table.Item render={(r: itemsType) => <div>{r.index}</div>}></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
                     <Table.Item

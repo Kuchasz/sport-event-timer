@@ -60,6 +60,7 @@ export const Footer = () => {
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-euro-stempel.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-trek.png"></img>
                     <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-bardomed.png"></img>
+                    <img className="scale-50 -m-4 md:-m-8" src="/assets/partners/logo-artgrawer.png"></img>
                 </div>
                 <div className="text-zinc-700 font-semibold text-2xl mt-20">PATRONI MEDIALNI</div>
                 <div className="h-1 w-10 bg-orange-500 my-6"></div>

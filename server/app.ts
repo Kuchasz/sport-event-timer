@@ -60,7 +60,7 @@ const loadRaceResults = () => {
                 sort(results, (r) => r.number),
                 "../timegonewresults.json"
             );
-            console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
+            // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
         })
         .catch(() => console.log(`race.results.fetch.fail [${new Date().toLocaleString()}]`));
 };
@@ -69,7 +69,7 @@ const loadTimeTrialResults = () => {
     getTimeTrialResults()
         .then((results) => {
             writeJson(results, "../timetrialresults.json");
-            console.log(`timetrial.results.fetch.success [${new Date().toLocaleString()}]`);
+            // console.log(`timetrial.results.fetch.success [${new Date().toLocaleString()}]`);
         })
         .catch(() => console.log(`timetrial.results.fetch.fail [${new Date().toLocaleString()}]`));
 };
