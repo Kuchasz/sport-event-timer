@@ -1,5 +1,5 @@
 import { createStore } from "@set/timer/dist/store";
-import { emptyToStartPlayer, ToStartPlayer } from "./to-start";
+import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 import { getAgeCategory } from "./players";
 import { parse } from "csv-parse/sync";
 import { Player } from "@set/timer/model";
@@ -93,10 +93,10 @@ export const apply = (server: HttpServer): Promise<void> => {
             console.log("upload-players");
             const parsedPlayers = parse(playersCSV, { columns: true }) as ToStartPlayer[];
 
+            if (parsedPlayers.length < 10) return;
+
             const getNumber = (potentialNumber: number) =>
                 String(potentialNumber < 179 ? potentialNumber : potentialNumber + 1);
-
-            const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
 
             const paidPlayers = parsedPlayers.filter(p => p["Status opłaty"] === "Opłacony");
 
@@ -157,55 +157,55 @@ export const apply = (server: HttpServer): Promise<void> => {
 
             //create staring list
 
-            const minProRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
-                .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
-            const minFunRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "RnK FUN")
-                .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
-            const minTimetrialRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
-                .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
-            writeCsv(
-                sort(minProRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-pro-2022.csv"
-            );
-            writeCsv(
-                sort(minFunRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-fun-2022.csv"
-            );
-            writeCsv(
-                sort(minTimetrialRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-tt-2022.csv"
+            const minProRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p), ...emptyToStartPlayer })),
+                p => Number(p["Nr zawodnika"]!)
             );
 
-            const proRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
-                .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p) }));
-
-            const funRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "RnK FUN")
-                .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p) }));
-
-            const ttRacePlayers = paidPlayersWithNumbers
-                .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
-                .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p) }));
-
-            writeCsv(
-                sort(proRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-pro-2022.csv"
+            const minFunRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "RnK FUN")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p), ...emptyToStartPlayer })),
+                p => Number(p["Nr zawodnika"]!)
             );
-            writeCsv(
-                sort(funRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-fun-2022.csv"
+
+            const minTimetrialRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p), ...emptyToStartPlayer })),
+                p => Number(p["Nr zawodnika"]!)
             );
-            writeCsv(
-                sort(ttRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-tt-2022.csv"
+
+            writeCsv(minProRacePlayers, "../ls-min-pro-2022.csv");
+            writeCsv(minFunRacePlayers, "../ls-min-fun-2022.csv");
+            writeCsv(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
+
+            const proRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p) })),
+                p => Number(p["Nr zawodnika"]!)
             );
+
+            const funRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "RnK FUN")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p) })),
+                p => Number(p["Nr zawodnika"]!)
+            );
+
+            const ttRacePlayers = sort(
+                paidPlayersWithNumbers
+                    .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
+                    .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p) })),
+                p => Number(p["Nr zawodnika"]!)
+            );
+
+            writeCsv(proRacePlayers, "../ls-pro-2022.csv");
+            writeCsv(funRacePlayers, "../ls-fun-2022.csv");
+            writeCsv(ttRacePlayers, "../ls-tt-2022.csv");
 
             // const csvPaidPlayers = stringify(
             //     sort(paidPlayersWithNumbers, p => p["Nr zawodnika"]!),
@@ -218,25 +218,14 @@ export const apply = (server: HttpServer): Promise<void> => {
             //     if (e) console.log("An error occured while saving starting list");
             // });
 
-            // .map((p, i) => ({
-            //     id: i,
-            //     name: p["Imię"],
-            //     lastName: p["Nazwisko"],
-            //     gender: getGender(p["Płeć"]),
-            //     birthYear: Number(p["Data urodzenia"].split(".")[2]),
-            //     number: Number(p["Nr zawodnika"]),
-            //     raceCategory: p["Kategoria"],
-            //     team: p["Nazwa klubu"],
-            //     city: p["Miasto"],
-            //     country: p["Państwo"]
-            // }));
+            const players = ttRacePlayers.map(toStartPlayerToPlayer);
 
-            // store.dispatch(upload(players));
-            // writeJson(players, "../players-2022.json");
-            // const state = store.getState();
-            // writeJson(state, "../state.json");
+            store.dispatch(upload(players));
+            writeJson(players, "../players.json");
+            const state = store.getState();
+            writeJson(state, "../state.json");
 
-            // io.emit("receive-state", store.getState());
+            io.emit("receive-state", store.getState());
 
             // console.log("upload-players");
             // const parsedPlayers = parse(playersCSV, { columns: true }) as any[];

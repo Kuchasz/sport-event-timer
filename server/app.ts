@@ -152,14 +152,14 @@ const run = async () => {
     app.get("/clock-players", (_, res) => {
         readFile(resolve("../players.json"), (err, text: any) => {
             const players: m.Player[] = err ? [] : JSON.parse(text);
-            const firstPlayerStart = minutesAgo(137);
+            const firstPlayerStart = minutesAgo(60);
             const startTimeFromNumber = (number: number) => firstPlayerStart + 60_000 * number;
 
-            const clockPlayers: ClockListPlayer[] = sort(players, p => p.number).map(p => ({
+            const clockPlayers: ClockListPlayer[] = sort(players, p => p.number).map((p, i) => ({
                 number: p.number,
                 name: p.name,
                 lastName: p.lastName,
-                startTime: startTimeFromNumber(p.number)
+                startTime: startTimeFromNumber(i)
             }));
 
             res.json(clockPlayers);
