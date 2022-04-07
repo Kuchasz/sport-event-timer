@@ -17,6 +17,7 @@
         "@types/jsonwebtoken": "^8.5.8",
         "cors": "^2.8.5",
         "cross-env": "^7.0.2",
+        "csv-parse": "^5.0.4",
         "dotenv": "^16.0.0",
         "jsonwebtoken": "^8.5.1",
         "node-html-parser": "^5.3.3",

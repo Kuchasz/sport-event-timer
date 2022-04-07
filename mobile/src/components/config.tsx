@@ -7,9 +7,9 @@ import { useRef } from "react";
 import { useTimerSelector } from "../hooks";
 
 export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
-    const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
+    const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
     const inputFile = useRef<HTMLInputElement>(null);
-    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
+    const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
 
     const onButtonClick = () => {
         inputFile?.current?.click();
@@ -34,7 +34,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     };
 
     return (
-        <div className="flex h-full w-full justify-center items-center bg-zinc-800 flex-col">
+        <div className="flex h-full w-full items-center bg-zinc-800 flex-col">
             <input
                 type="file"
                 id="file"
@@ -43,17 +43,25 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
                 ref={inputFile}
                 style={{ display: "none" }}
             />
-            <PrimaryActionButton onClick={onButtonClick} icon={mdiUpload} contents={<strong>UPLOAD PLAYERS</strong>} />
-            {allTimeKeepers.map((tk) => (
-                <button
-                    onClick={() => setTimeKeeperId(tk.id)}
-                    className={`flex items-center py-4 px-4 my-2 ${timeKeeperId === tk.id ? "" : "opacity-25"}`}
-                    key={tk.id}
-                >
-                    <TimeKeeperIcon type={tk.type} />
-                    <span className="ml-4 text-xl">{tk.name}</span>
-                </button>
-            ))}
+            <div className="py-4">
+                <PrimaryActionButton
+                    onClick={onButtonClick}
+                    icon={mdiUpload}
+                    contents={<strong>UPLOAD PLAYERS</strong>}
+                />
+            </div>
+            <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">
+                {allTimeKeepers.map(tk => (
+                    <button
+                        onClick={() => setTimeKeeperId(tk.id)}
+                        className={`flex items-center py-4 px-4 my-2 ${timeKeeperId === tk.id ? "" : "opacity-25"}`}
+                        key={tk.id}
+                    >
+                        <TimeKeeperIcon type={tk.type} />
+                        <span className="ml-4 text-xl">{tk.name}</span>
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };

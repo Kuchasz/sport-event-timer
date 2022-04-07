@@ -8,6 +8,7 @@ type Config = {
         cookieName: string;
         maxAge: number;
         secretKey: string;
+        password: string;
     };
 };
 
@@ -23,7 +24,8 @@ const envConfig: Config = {
     auth: {
         cookieName: process.env.AUTH_COOKIE_NAME || "",
         maxAge: Number(process.env.AUTH_MAX_AGE || "0"),
-        secretKey: process.env.AUTH_SECRET_KEY || ""
+        secretKey: process.env.AUTH_SECRET_KEY || "",
+        password: process.env.AUTH_PASSWORD || ""
     }
 };
 
