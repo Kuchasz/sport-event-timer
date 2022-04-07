@@ -34,3 +34,4 @@ players*.json
 .env
 time*.json
 ls*.csv
+hub/**/*.js

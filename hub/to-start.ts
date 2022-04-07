@@ -1,3 +1,4 @@
+import { Player } from "@set/timer/model";
 export type ToStartPlayer = {
     ["Nr zawodnika"]?: string;
     ["Nr chip"]: string;
@@ -56,7 +57,7 @@ export const emptyToStartPlayer = {
 
 const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
 
-export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number) => ({
+export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player => ({
     id: i,
     name: player["Imię"],
     lastName: player["Nazwisko"],
