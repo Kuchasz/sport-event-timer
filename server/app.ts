@@ -14,7 +14,7 @@ import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
-import { ToStartPlayer } from "./to-start";
+import { ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -111,18 +111,25 @@ const run = async () => {
     });
 
     app.get("/fun-players", async (_, res) => {
-        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-fun-2022.csv");
-        res.json(funPlayers);
+        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
+
+        const result = players.map(toStartPlayerToPlayer);
+
+        res.json(result);
     });
 
     app.get("/pro-players", async (_, res) => {
-        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-pro-2022.csv");
-        res.json(funPlayers);
+        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const result = players.map(toStartPlayerToPlayer);
+
+        res.json(result);
     });
 
     app.get("/timetrial-players", async (_, res) => {
-        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../lista-startowa-rnk-tt-2022.csv");
-        res.json(funPlayers);
+        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const result = players.map(toStartPlayerToPlayer);
+
+        res.json(result);
     });
 
     app.get("/players", (_, res) => {

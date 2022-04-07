@@ -1,47 +1,46 @@
-import { createStore } from "@set/timer/dist/store";
-import { emptyToStartPlayer, ToStartPlayer } from "./to-start";
-import { getAgeCategory } from "./players";
-import { parse } from "csv-parse/sync";
-import { Player } from "@set/timer/model";
-import { readFile, writeFile } from "fs";
-import { resolve } from "path";
-import { Server, Socket } from "socket.io";
-import { Server as HttpServer } from "http";
-import { sort } from "@set/shared/dist";
-import { staticTimeKeppers } from "@set/timer/dist/slices/time-keepers";
-import { stringify } from "csv-stringify/sync";
-import { upload } from "@set/timer/dist/slices/players";
-
-const writeJson = <T>(content: T, path: string) => {
-    writeFile(resolve(path), JSON.stringify(content), err => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.apply = void 0;
+const store_1 = require("@set/timer/dist/store");
+const to_start_1 = require("./to-start");
+const players_1 = require("./players");
+const sync_1 = require("csv-parse/sync");
+const fs_1 = require("fs");
+const path_1 = require("path");
+const socket_io_1 = require("socket.io");
+const dist_1 = require("@set/shared/dist");
+const time_keepers_1 = require("@set/timer/dist/slices/time-keepers");
+const sync_2 = require("csv-stringify/sync");
+const writeJson = (content, path) => {
+    (0, fs_1.writeFile)((0, path_1.resolve)(path), JSON.stringify(content), err => {
         if (err) {
             console.log(err);
-        } else {
+        }
+        else {
         }
     });
 };
-
-const writeCsv = <T>(content: T, path: string) => {
-    writeFile(resolve(path), stringify(content as any, { header: true }), err => {
+const writeCsv = (content, path) => {
+    (0, fs_1.writeFile)((0, path_1.resolve)(path), (0, sync_2.stringify)(content, { header: true }), err => {
         if (err) {
             console.log(err);
-        } else {
+        }
+        else {
         }
     });
 };
-
-const readCsv = <T>(path: string) => {
-    readFile(resolve(path), (err, res) => {
+const readCsv = (path) => {
+    (0, fs_1.readFile)((0, path_1.resolve)(path), (err, res) => {
         if (err) {
             console.log(err);
-        } else {
-            return parse(res.toString());
+        }
+        else {
+            return (0, sync_1.parse)(res.toString());
         }
     });
 };
-
-export const apply = (server: HttpServer): Promise<void> => {
-    const io = new Server(server, {
+const apply = (server) => {
+    const io = new socket_io_1.Server(server, {
         serveClient: false,
         pingTimeout: 2000,
         pingInterval: 5000,
@@ -51,173 +50,111 @@ export const apply = (server: HttpServer): Promise<void> => {
             methods: ["GET", "POST"]
         }
     });
-
-    const store = createStore([]);
-
-    readFile(resolve("../state.json"), { encoding: "utf8", flag: "r" }, (err, res) => {
+    const store = (0, store_1.createStore)([]);
+    (0, fs_1.readFile)((0, path_1.resolve)("../state.json"), { encoding: "utf8", flag: "r" }, (err, res) => {
         let state;
-
         if (err) {
             state = {
                 players: [],
-                timeKeepers: staticTimeKeppers,
+                timeKeepers: time_keepers_1.staticTimeKeppers,
                 timeStamps: [],
                 raceCategories: []
             };
-        } else {
+        }
+        else {
             state = JSON.parse(res.toString());
         }
-
         store.dispatch({
             type: "REPLACE_STATE",
             state
         });
-
         writeJson(state, "../state.json");
     });
-
-    const clients: Socket[] = [];
-
-    io.on("connection", (socket: Socket) => {
+    const clients = [];
+    io.on("connection", (socket) => {
         clients.push(socket);
-
         socket.on("post-action", action => {
             store.dispatch(action);
             socket.broadcast.emit("receive-action", action);
-
             const state = store.getState();
             writeJson(state, "../state.json");
         });
-
         socket.on("upload-players", playersCSV => {
             console.log("upload-players");
-            const parsedPlayers = parse(playersCSV, { columns: true }) as ToStartPlayer[];
-
-            const getNumber = (potentialNumber: number) =>
-                String(potentialNumber < 179 ? potentialNumber : potentialNumber + 1);
-
-            const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
-
+            const parsedPlayers = (0, sync_1.parse)(playersCSV, { columns: true });
+            const getNumber = (potentialNumber) => String(potentialNumber < 179 ? potentialNumber : potentialNumber + 1);
+            const getGender = (genderText) => (genderText === "M" ? "male" : "female");
             const paidPlayers = parsedPlayers.filter(p => p["Status opłaty"] === "Opłacony");
-
             const gcPlayers = paidPlayers.filter(p => p.Klasyfikacja === "GC");
             const nonGcPlayers = paidPlayers.filter(p => p.Klasyfikacja !== "GC");
             const proPlayers = paidPlayers.filter(p => p.Klasyfikacja === "RnK PRO");
             const funPlayers = paidPlayers.filter(p => p.Klasyfikacja === "RnK FUN");
             const ttPlayers = paidPlayers.filter(p => p.Klasyfikacja === "RnK TT");
-
             if (paidPlayers.filter(pp => pp["Adres email"] === undefined).length)
                 throw new Error("Any player does not have email");
-
             if (gcPlayers.filter(gp => nonGcPlayers.find(ngc => gp["Adres email"] === ngc["Adres email"])).length)
                 throw new Error("The same player paid in GC and any other classification");
-
             if (proPlayers.filter(pp => funPlayers.find(fp => pp["Adres email"] === fp["Adres email"])).length)
                 throw new Error("The same player paid in PRO and FUN classification");
-
             if (proPlayers.filter(pp => ttPlayers.find(tp => pp["Adres email"] === tp["Adres email"])).length)
                 throw new Error("The same player paid in PRO and TT classification");
-
-            const uniqueEmails = new Set<string>(paidPlayers.map(p => p["Adres email"]));
-            const emailsNumers = new Map<string, string>();
-
+            const uniqueEmails = new Set(paidPlayers.map(p => p["Adres email"]));
+            const emailsNumers = new Map();
             let lastIndex = 1;
-
             gcPlayers.forEach((p, i) => {
                 emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
             });
-
             lastIndex += gcPlayers.length + 10;
-
             proPlayers.forEach((p, i) => {
                 emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
             });
-
             lastIndex += proPlayers.length + 10;
-
             funPlayers.forEach((p, i) => {
                 emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
             });
-
             lastIndex += funPlayers.length + 10;
-
             ttPlayers
                 .filter(tp => emailsNumers.has(tp["Adres email"]) === false)
                 .forEach((p, i) => {
-                    emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
-                });
-
+                emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
+            });
             if (uniqueEmails.size !== emailsNumers.size)
                 throw new Error("Emails may not be used as ids, emails are not unique");
-
-            const paidPlayersWithNumbers = paidPlayers.map(p => ({
-                ...p,
-                ["Nr zawodnika"]: emailsNumers.get(p["Adres email"])
-            }));
-
+            const paidPlayersWithNumbers = paidPlayers.map(p => (Object.assign(Object.assign({}, p), { ["Nr zawodnika"]: emailsNumers.get(p["Adres email"]) })));
             //create staring list
-
             const minProRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
-                .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
+                .map(p => (Object.assign(Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK PRO", Kategoria: (0, players_1.getAgeCategory)(p) }), to_start_1.emptyToStartPlayer)));
             const minFunRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "RnK FUN")
-                .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
+                .map(p => (Object.assign(Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK FUN", Kategoria: (0, players_1.getAgeCategory)(p) }), to_start_1.emptyToStartPlayer)));
             const minTimetrialRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
-                .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p), ...emptyToStartPlayer }));
-
-            writeCsv(
-                sort(minProRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-pro-2022.csv"
-            );
-            writeCsv(
-                sort(minFunRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-fun-2022.csv"
-            );
-            writeCsv(
-                sort(minTimetrialRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-min-tt-2022.csv"
-            );
-
+                .map(p => (Object.assign(Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK TT", Kategoria: (0, players_1.getAgeCategory)(p) }), to_start_1.emptyToStartPlayer)));
+            writeCsv((0, dist_1.sort)(minProRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-min-pro-2022.csv");
+            writeCsv((0, dist_1.sort)(minFunRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-min-fun-2022.csv");
+            writeCsv((0, dist_1.sort)(minTimetrialRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-min-tt-2022.csv");
             const proRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
-                .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p) }));
-
+                .map(p => (Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK PRO", Kategoria: (0, players_1.getAgeCategory)(p) })));
             const funRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "RnK FUN")
-                .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p) }));
-
+                .map(p => (Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK FUN", Kategoria: (0, players_1.getAgeCategory)(p) })));
             const ttRacePlayers = paidPlayersWithNumbers
                 .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
-                .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p) }));
-
-            writeCsv(
-                sort(proRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-pro-2022.csv"
-            );
-            writeCsv(
-                sort(funRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-fun-2022.csv"
-            );
-            writeCsv(
-                sort(ttRacePlayers, p => Number(p["Nr zawodnika"]!)),
-                "../ls-tt-2022.csv"
-            );
-
+                .map(p => (Object.assign(Object.assign({}, p), { Klasyfikacja: "RnK TT", Kategoria: (0, players_1.getAgeCategory)(p) })));
+            writeCsv((0, dist_1.sort)(proRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-pro-2022.csv");
+            writeCsv((0, dist_1.sort)(funRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-fun-2022.csv");
+            writeCsv((0, dist_1.sort)(ttRacePlayers, p => Number(p["Nr zawodnika"])), "../ls-tt-2022.csv");
             // const csvPaidPlayers = stringify(
             //     sort(paidPlayersWithNumbers, p => p["Nr zawodnika"]!),
             //     {
             //         header: true
             //     }
             // );
-
             // writeFile(resolve("../lista-startowa-rura-2022.csv"), csvPaidPlayers, e => {
             //     if (e) console.log("An error occured while saving starting list");
             // });
-
             // .map((p, i) => ({
             //     id: i,
             //     name: p["Imię"],
@@ -230,18 +167,14 @@ export const apply = (server: HttpServer): Promise<void> => {
             //     city: p["Miasto"],
             //     country: p["Państwo"]
             // }));
-
             // store.dispatch(upload(players));
             // writeJson(players, "../players-2022.json");
             // const state = store.getState();
             // writeJson(state, "../state.json");
-
             // io.emit("receive-state", store.getState());
-
             // console.log("upload-players");
             // const parsedPlayers = parse(playersCSV, { columns: true }) as any[];
             // const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
-
             // const players: Player[] = parsedPlayers
             //     .filter((p) => p["Nr zawodnika"] !== "0")
             //     .map((p, i) => ({
@@ -256,25 +189,20 @@ export const apply = (server: HttpServer): Promise<void> => {
             //         city: p["Miasto"],
             //         country: p["Państwo"]
             //     }));
-
             // store.dispatch(upload(players));
             // writeJson(players, "../players-2022.json");
             // const state = store.getState();
             // writeJson(state, "../state.json");
-
             // io.emit("receive-state", store.getState());
         });
-
         socket.on("disconnect", () => {
             clients.splice(clients.indexOf(socket), 1);
         });
-
         socket.emit("receive-state", store.getState());
-
         socket.on("TQ", () => {
             socket.emit("TR", Date.now());
         });
     });
-
     return Promise.resolve();
 };
+exports.apply = apply;
