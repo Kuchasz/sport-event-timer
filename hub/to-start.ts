@@ -53,3 +53,18 @@ export const emptyToStartPlayer = {
     ["Notatka"]: undefined,
     ["Pliki"]: undefined
 };
+
+const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
+
+export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number) => ({
+    id: i,
+    name: player["Imię"],
+    lastName: player["Nazwisko"],
+    gender: getGender(player["Płeć"]),
+    birthYear: Number(player["Data urodzenia"].split(".")[2]),
+    number: Number(player["Nr zawodnika"]),
+    raceCategory: player["Kategoria"],
+    team: player["Nazwa klubu"],
+    city: player["Miasto"],
+    country: player["Państwo"]
+});

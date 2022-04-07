@@ -1,37 +1,19 @@
 import Head from "next/head";
-import { getPlayers, getPlayersDate } from "api";
+import { getFunRacePlayers } from "api";
 import { Loader } from "../components/loader";
 import { Player } from "@set/timer/model";
 import { Table } from "../components/table";
-import { TimerState } from "@set/timer/store";
 import { useEffect } from "react";
 import { useState } from "react";
-
-export const formatNumber = (n: number, precision = 2) =>
-    n.toLocaleString("en-US", { minimumIntegerDigits: precision });
-
-export const formatTime = (time?: number) => {
-    if (time === undefined) return "--:--:--";
-
-    const timeDate = new Date(time);
-
-    return `${formatNumber(timeDate.getHours())}:${formatNumber(timeDate.getMinutes())}:${formatNumber(
-        timeDate.getSeconds()
-    )}`;
-};
-
-type Props = {
-    state: TimerState;
-};
 
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-const StartingList = ({}: Props) => {
+const StartingList = () => {
     const [players, setPlayers] = useState<Player[]>();
 
     useEffect(() => {
-        getPlayers().then(setPlayers);
+        getFunRacePlayers().then(setPlayers);
     }, []);
     if (players === undefined)
         return (
