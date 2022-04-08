@@ -22,7 +22,8 @@ const Lista = () => {
                             <br />
                             <span>
                                 Zawodnicy startujący w klasyfikacji generalnej uwzględnieni zostali w wyścigach RnK PRO
-                                i RnK Time Trial
+                                i RnK Time Trial. Godziny startów w TT zawodników klasyfikacji generalnej zostaną
+                                uzupełnione po zakończeniu RnK PRO.
                                 <br />
                                 <br />
                                 <Anchor href={"/lista/pro"}>RnK PRO</Anchor>
