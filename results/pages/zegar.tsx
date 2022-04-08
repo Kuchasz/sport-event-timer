@@ -11,6 +11,8 @@ import { Loader } from "../components/loader";
 import {
     mdiChevronDoubleRight,
     mdiCog,
+    mdiFullscreen,
+    mdiFullscreenExit,
     mdiVolumeHigh,
     mdiVolumeOff
     } from "@mdi/js";
