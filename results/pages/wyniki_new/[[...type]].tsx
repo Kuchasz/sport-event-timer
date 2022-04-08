@@ -3,7 +3,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import { getPlayers, getRaceTimes } from "../../api";
+import { getPlayers, getProRaceResults } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
@@ -163,7 +163,7 @@ const Index = ({}: Props) => {
     const router = useRouter();
 
     useEffect(() => {
-        getRaceTimes().then(setRaceTimes);
+        getProRaceResults().then(setRaceTimes);
         getPlayers().then(setPlayers);
     }, []);
 

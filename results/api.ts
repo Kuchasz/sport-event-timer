@@ -4,7 +4,10 @@ import { TimerState } from "@set/timer/store";
 
 const hubUrl = process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
 export const getState = (): Promise<TimerState> => fetch(`${hubUrl}/state`).then(x => x.json());
-export const getRaceTimes = (): Promise<PlayerResult[]> => fetch(`${hubUrl}/race-results`).then(x => x.json());
+export const getProRaceResults = (): Promise<PlayerResult[]> => fetch(`${hubUrl}/pro-results`).then(x => x.json());
+export const getFunRaceResults = (): Promise<PlayerResult[]> => fetch(`${hubUrl}/fun-results`).then(x => x.json());
+export const getTimeTrialRaceResults = (): Promise<PlayerResult[]> =>
+    fetch(`${hubUrl}/timetrial-results`).then(x => x.json());
 export const getTimeTrialTimes = (): Promise<PlayerResult[]> =>
     fetch(`${hubUrl}/timetrial-results`).then(x => x.json());
 export const getPlayers = (): Promise<Player[]> => fetch(`${hubUrl}/players`).then(x => x.json());

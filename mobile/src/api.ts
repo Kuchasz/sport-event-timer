@@ -19,9 +19,7 @@ export const readPlayersStartTimes = () => {
     fetch(`${hubUrl}/read-start-times`, { method: "POST" });
 };
 
-export const calculateStartTimes = () => {
-    fetch(`${hubUrl}/calculate-start-times`, { method: "POST" });
-};
+export const calculateStartTimes = (includeGC: boolean) => f.post(`/calculate-start-times`, { includeGC });
 
 export const f = {
     post: <T>(url: string, body: any) =>

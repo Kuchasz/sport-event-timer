@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { formatTimeNoSec } from "@set/shared/dist";
 import { getFunRacePlayers, getProRacePlayers, getTimeTrialPlayers } from "api";
 import { Loader } from "../../components/loader";
 import { Player } from "@set/timer/model";
@@ -54,7 +55,8 @@ const StartingList = () => {
         <div className="hidden md:block">Miejscowość</div>,
         <div className="hidden sm:block">Kraj</div>,
         <div>Kat.</div>,
-        <div>Klub</div>
+        <div>Klub</div>,
+        race === "tt" ? <div>Start</div> : null
     ];
 
     return (
@@ -88,6 +90,7 @@ const StartingList = () => {
                         render={(r: itemsType) => <div className="whitespace-nowrap">{r.raceCategory}</div>}
                     ></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
+                    <Table.Item render={(r: itemsType) => <div>{formatTimeNoSec(r.startTime)}</div>}></Table.Item>
                 </Table>
             </div>
         </>
