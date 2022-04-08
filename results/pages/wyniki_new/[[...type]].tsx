@@ -38,9 +38,9 @@ type Props = {
 const filterByType = (type: Types) => (player: Player) => {
     if (!type) return true;
 
-    if (type == "open-m") return player.gender === "male";
+    // if (type == "open-m") return player.gender === "male";
 
-    if (type == "open-k") return player.gender === "female";
+    // if (type == "open-k") return player.gender === "female";
 
     return player.raceCategory == type;
 };
@@ -59,22 +59,15 @@ const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
 type Types =
-    | ""
-    | "open-k"
-    | "open-m"
-    | "K18-29"
-    | "K30-39"
-    | "K40-99"
-    | "M18-29"
-    | "M30-39"
-    | "M40-49"
-    | "M50-59"
-    | "M60-99";
+    // | ""
+    // | "open-k"
+    // | "open-m"
+    "K18-29" | "K30-39" | "K40-99" | "M18-29" | "M30-39" | "M40-49" | "M50-59" | "M60-99";
 
 const types: Types[] = [
-    "",
-    "open-k",
-    "open-m",
+    // "",
+    // "open-k",
+    // "open-m",
     "K18-29",
     "K30-39",
     "K40-99",
