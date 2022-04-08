@@ -91,7 +91,7 @@ export const apply = (server: HttpServer): Promise<void> => {
 
         socket.on("upload-players", playersCSV => {
             console.log("upload-players");
-            const parsedPlayers = parse(playersCSV, { columns: true }) as ToStartPlayer[];
+            const parsedPlayers: ToStartPlayer[] = parse(playersCSV, { columns: true });
 
             if (parsedPlayers.length < 10) return;
 
