@@ -3,12 +3,20 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import { getPlayers, getProRaceResults } from "../../api";
-import { Loader } from "../../components/loader";
+import {
+    getFunRacePlayers,
+    getFunRaceResults,
+    getPlayers,
+    getProRacePlayers,
+    getProRaceResults,
+    getTimeTrialPlayers,
+    getTimeTrialRaceResults
+    } from "../../../api";
+import { Loader } from "../../../components/loader";
 import { mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { PlayerResult, sort } from "@set/shared/dist";
-import { Table } from "../../components/table";
+import { Table } from "../../../components/table";
 import { TimerState } from "@set/timer/store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
@@ -16,9 +24,7 @@ import { useRouter } from "next/dist/client/router";
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
 
-const raceDistanceInMeters = 13_330;
-
-export const formatSpeed = (result: number) =>
+export const formatSpeed = (result: number, raceDistanceInMeters: number) =>
     Math.round((raceDistanceInMeters / (result / 1000 / 60 / 60) / 1000) * 100) / 100;
 
 export const formatTime = (time?: number) => {
@@ -35,7 +41,7 @@ type Props = {
     state: TimerState;
 };
 
-const filterByType = (type: Types) => (player: Player) => {
+const filterByCategory = (type: Categories) => (player: Player) => {
     if (!type) return true;
 
     // if (type == "open-m") return player.gender === "male";
@@ -43,6 +49,16 @@ const filterByType = (type: Types) => (player: Player) => {
     // if (type == "open-k") return player.gender === "female";
 
     return player.raceCategory == type;
+};
+
+type Races = "pro" | "fun" | "tt";
+
+const racesTypes: Races[] = ["pro", "fun", "tt"];
+
+const races = {
+    pro: { getList: getProRacePlayers, getResults: getProRaceResults, title: "RnK PRO", distance: 106_100 },
+    fun: { getList: getFunRacePlayers, getResults: getFunRaceResults, title: "RnK FUN", distance: 53_620 },
+    tt: { getList: getTimeTrialPlayers, getResults: getTimeTrialRaceResults, title: "RnK Time Trial", distance: 10_700 }
 };
 
 const calculateFinalTimeStr = (status: string, result?: number) => {
@@ -58,13 +74,13 @@ const calculateFinalTimeStr = (status: string, result?: number) => {
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-type Types =
+type Categories =
     // | ""
     // | "open-k"
     // | "open-m"
     "K18-29" | "K30-39" | "K40-99" | "M18-29" | "M30-39" | "M40-49" | "M50-59" | "M60-99";
 
-const types: Types[] = [
+const categories: Categories[] = [
     // "",
     // "open-k",
     // "open-m",
@@ -79,23 +95,25 @@ const types: Types[] = [
 ];
 
 const ResultLink = ({
-    type,
-    selectedType,
+    race,
+    category,
+    selectedCategory,
     text,
     onOpen
 }: {
-    type: Types;
-    selectedType: Types;
+    race: Races;
+    category: Categories;
+    selectedCategory: Categories;
     text: string;
     onOpen: () => void;
 }) => (
-    <Link href={`/wyniki_new/${type}`}>
+    <Link href={`/wyniki_new/${race}/${category}`}>
         <a
             onClick={onOpen}
             className={classNames(
                 "cursor-pointer border-b-2 px-2 md:mx-2 self-center my-2 md:my-0 py-2 text-center text-zinc-400 text-sm font-medium",
-                { ["text-orange-500 border-orange-500"]: selectedType == type },
-                { ["border-white"]: selectedType != type }
+                { ["text-orange-500 border-orange-500"]: selectedCategory == category },
+                { ["border-white"]: selectedCategory != category }
             )}
         >
             {text}
@@ -117,7 +135,7 @@ const namesForTypes = {
     "M60-99": "M60-99"
 };
 
-const ResultLinks = ({ passedType }: { passedType: Types }) => {
+const ResultLinks = ({ category, race }: { category: Categories; race: Races }) => {
     const [collapsed, setCollapsed] = useState<boolean>(true);
     return (
         <>
@@ -127,29 +145,31 @@ const ResultLinks = ({ passedType }: { passedType: Types }) => {
                         ["hidden"]: collapsed
                     })}
                 >
-                    {types.map(t => (
+                    {categories.map(c => (
                         <ResultLink
-                            key={t}
+                            key={c}
                             onOpen={() => setCollapsed(true)}
-                            selectedType={passedType}
-                            type={t}
-                            text={namesForTypes[t]}
+                            selectedCategory={category}
+                            category={c}
+                            race={race}
+                            text={namesForTypes[c]}
                         />
                     ))}
                 </div>
                 <div onClick={() => setCollapsed(false)} className={classNames("flex p-2", { ["hidden"]: !collapsed })}>
                     <Icon size={1} path={mdiMenu}></Icon>
-                    <p className="ml-2 font-medium">{namesForTypes[passedType]}</p>
+                    <p className="ml-2 font-medium">{namesForTypes[category]}</p>
                 </div>
             </div>
             <div className="hidden md:flex flex-wrap px-2 py-4">
-                {types.map(t => (
+                {categories.map(c => (
                     <ResultLink
-                        key={t}
+                        key={c}
                         onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={t}
-                        text={namesForTypes[t]}
+                        selectedCategory={category}
+                        category={c}
+                        race={race}
+                        text={namesForTypes[c]}
                     />
                 ))}
             </div>
@@ -158,14 +178,21 @@ const ResultLinks = ({ passedType }: { passedType: Types }) => {
 };
 
 const Index = ({}: Props) => {
-    const [raceTimes, setRaceTimes] = useState<PlayerResult[]>();
-    const [players, setPlayers] = useState<Player[]>();
     const router = useRouter();
 
+    const { race, category } = router.query as { race: Races; category: Categories };
+
+    const [raceTimes, setRaceTimes] = useState<PlayerResult[]>();
+    const [players, setPlayers] = useState<Player[]>();
+
     useEffect(() => {
-        getProRaceResults().then(setRaceTimes);
-        getPlayers().then(setPlayers);
-    }, []);
+        if (racesTypes.includes(race)) {
+            races[race].getResults().then(setRaceTimes);
+            races[race].getList().then(setPlayers);
+        }
+    }, [race]);
+
+    console.log(race, category);
 
     if (!raceTimes || !players)
         return (
@@ -175,10 +202,6 @@ const Index = ({}: Props) => {
             </div>
         );
 
-    const { type } = router.query as { type: Types[] };
-    const types = type || [];
-    const passedType = (types[0] || "") as Types;
-
     const playersWithTimes = raceTimes
         .map(raceTime => ({
             ...raceTime,
@@ -186,7 +209,7 @@ const Index = ({}: Props) => {
             resultStr: calculateFinalTimeStr(raceTime.status, raceTime.result)
         }))
         .filter(p => p.id !== undefined)
-        .filter(filterByType(passedType));
+        .filter(filterByCategory(category));
 
     const sorted = sort(playersWithTimes, p => p.result || 3_600_600 * 12);
     const first = sorted[0];
@@ -217,10 +240,14 @@ const Index = ({}: Props) => {
     return (
         <>
             <Head>
-                <title>Wyniki {passedType ? `- ${passedType}` : ""}</title>
+                <title>Wyniki {category ? `- ${category}` : ""}</title>
             </Head>
+            <div className="p-8 ">
+                <h2 className="text-4xl font-semibold">{races[race].title}</h2>
+                <span>{players.length} zawodników</span>
+            </div>
             <div className="flex flex-col text-zinc-600">
-                <ResultLinks passedType={passedType} />
+                <ResultLinks category={category} race={race} />
 
                 <Table headers={headers} rows={result} getKey={r => String(r.id)}>
                     <Table.Item render={(r: itemsType) => <div>{r.place}</div>}></Table.Item>
@@ -246,7 +273,9 @@ const Index = ({}: Props) => {
                     <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => (
-                            <div className="hidden lg:block">{r.result ? formatSpeed(r.result) : ""}</div>
+                            <div className="hidden lg:block">
+                                {r.result ? formatSpeed(r.result, races[race].distance) : ""}
+                            </div>
                         )}
                     ></Table.Item>
                     <Table.Item
