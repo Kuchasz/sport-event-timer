@@ -58,7 +58,32 @@ const calculateFinalTimeStr = (status: string, result?: number) => {
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-type Types = "" | "open-k" | "open-m" | "K1" | "K2" | "K3" | "M1" | "M2" | "M3" | "M4";
+type Types =
+    | ""
+    | "open-k"
+    | "open-m"
+    | "K18-29"
+    | "K30-39"
+    | "K40-99"
+    | "M18-29"
+    | "M30-39"
+    | "M40-49"
+    | "M50-59"
+    | "M60-99";
+
+const types: Types[] = [
+    "",
+    "open-k",
+    "open-m",
+    "K18-29",
+    "K30-39",
+    "K40-99",
+    "M18-29",
+    "M30-39",
+    "M40-49",
+    "M50-59",
+    "M60-99"
+];
 
 const ResultLink = ({
     type,
@@ -89,13 +114,14 @@ const namesForTypes = {
     "": "WSZYSCY",
     "open-k": "OPEN K",
     "open-m": "OPEN M",
-    K1: "K1",
-    K2: "K2",
-    K3: "K3",
-    M1: "M1",
-    M2: "M2",
-    M3: "M3",
-    M4: "M4"
+    "K18-29": "K18-29",
+    "K30-39": "K30-39",
+    "K40-99": "K40-99",
+    "M18-29": "M18-29",
+    "M30-39": "M30-39",
+    "M40-49": "M40-49",
+    "M50-59": "M50-59",
+    "M60-99": "M60-99"
 };
 
 const ResultLinks = ({ passedType }: { passedType: Types }) => {
@@ -108,66 +134,15 @@ const ResultLinks = ({ passedType }: { passedType: Types }) => {
                         ["hidden"]: collapsed
                     })}
                 >
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={""}
-                        text={namesForTypes[""]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"open-k"}
-                        text={namesForTypes["open-k"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"open-m"}
-                        text={namesForTypes["open-m"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"K1"}
-                        text={namesForTypes["K1"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"K2"}
-                        text={namesForTypes["K2"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"K3"}
-                        text={namesForTypes["K3"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"M1"}
-                        text={namesForTypes["M1"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"M2"}
-                        text={namesForTypes["M2"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"M3"}
-                        text={namesForTypes["M3"]}
-                    />
-                    <ResultLink
-                        onOpen={() => setCollapsed(true)}
-                        selectedType={passedType}
-                        type={"M4"}
-                        text={namesForTypes["M4"]}
-                    />
+                    {types.map(t => (
+                        <ResultLink
+                            key={t}
+                            onOpen={() => setCollapsed(true)}
+                            selectedType={passedType}
+                            type={t}
+                            text={namesForTypes[t]}
+                        />
+                    ))}
                 </div>
                 <div onClick={() => setCollapsed(false)} className={classNames("flex p-2", { ["hidden"]: !collapsed })}>
                     <Icon size={1} path={mdiMenu}></Icon>
@@ -175,66 +150,15 @@ const ResultLinks = ({ passedType }: { passedType: Types }) => {
                 </div>
             </div>
             <div className="hidden md:flex flex-wrap px-2 py-4">
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={""}
-                    text={namesForTypes[""]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"open-k"}
-                    text={namesForTypes["open-k"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"open-m"}
-                    text={namesForTypes["open-m"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"K1"}
-                    text={namesForTypes["K1"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"K2"}
-                    text={namesForTypes["K2"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"K3"}
-                    text={namesForTypes["K3"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"M1"}
-                    text={namesForTypes["M1"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"M2"}
-                    text={namesForTypes["M2"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"M3"}
-                    text={namesForTypes["M3"]}
-                />
-                <ResultLink
-                    onOpen={() => setCollapsed(true)}
-                    selectedType={passedType}
-                    type={"M4"}
-                    text={namesForTypes["M4"]}
-                />
+                {types.map(t => (
+                    <ResultLink
+                        key={t}
+                        onOpen={() => setCollapsed(true)}
+                        selectedType={passedType}
+                        type={t}
+                        text={namesForTypes[t]}
+                    />
+                ))}
             </div>
         </>
     );
@@ -263,15 +187,15 @@ const Index = ({}: Props) => {
     const passedType = (types[0] || "") as Types;
 
     const playersWithTimes = raceTimes
-        .map((raceTime) => ({
+        .map(raceTime => ({
             ...raceTime,
-            ...players.find((p) => p.number === raceTime.number)!,
+            ...players.find(p => p.number === raceTime.number)!,
             resultStr: calculateFinalTimeStr(raceTime.status, raceTime.result)
         }))
-        .filter((p) => p.id !== undefined)
+        .filter(p => p.id !== undefined)
         .filter(filterByType(passedType));
 
-    const sorted = sort(playersWithTimes, (p) => p.result || 3_600_600 * 12);
+    const sorted = sort(playersWithTimes, p => p.result || 3_600_600 * 12);
     const first = sorted[0];
 
     const result = sorted.map((s, i) => ({
@@ -305,7 +229,7 @@ const Index = ({}: Props) => {
             <div className="flex flex-col text-zinc-600">
                 <ResultLinks passedType={passedType} />
 
-                <Table headers={headers} rows={result} getKey={(r) => String(r.id)}>
+                <Table headers={headers} rows={result} getKey={r => String(r.id)}>
                     <Table.Item render={(r: itemsType) => <div>{r.place}</div>}></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
                     <Table.Item
