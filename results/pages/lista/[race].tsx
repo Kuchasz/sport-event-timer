@@ -62,7 +62,7 @@ const StartingList = () => {
                 <title>Lista zawodników</title>
             </Head>
             <div className="p-8 ">
-                <h2 className="text-2xl">{playersListsNames[race]}</h2>
+                <h2 className="text-4xl font-semibold">{playersListsNames[race]}</h2>
                 <span>{players.length} zawodników</span>
             </div>
             <div className="border-1 border-gray-600 border-solid">
