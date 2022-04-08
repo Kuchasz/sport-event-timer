@@ -12,7 +12,7 @@ import {
     getTimeTrialRaceResults
     } from "../../../api";
 import { Loader } from "../../../components/loader";
-import { mdiMenu } from "@mdi/js";
+import { mdiKeyboardBackspace, mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { PlayerResult, sort } from "@set/shared/dist";
 import { Table } from "../../../components/table";
@@ -40,9 +40,9 @@ type Props = {
     state: TimerState;
 };
 
-const filterByCategory = (type: Categories) => (player: Player) => {
-    if (!type) return true;
-    return player.raceCategory == type;
+const filterByCategory = (category: Categories) => (player: Player) => {
+    if (!category) return true;
+    return player.raceCategory == category;
 };
 
 type Races = "pro" | "fun" | "tt";
@@ -101,7 +101,7 @@ const ResultLink = ({
     text: string;
     onOpen: () => void;
 }) => (
-    <Link href={`/wyniki_new/${race}/${category}`}>
+    <Link href={`/wyniki/${race}/${category}`}>
         <a
             onClick={onOpen}
             className={classNames(
@@ -200,7 +200,6 @@ const Index = ({}: Props) => {
             ...players.find(p => p.number === raceTime.number)!,
             resultStr: calculateFinalTimeStr(raceTime.status, raceTime.result)
         }))
-        .filter(p => p.id !== undefined)
         .filter(filterByCategory(category));
 
     const sorted = sort(playersWithTimes, p => p.result || 3_600_600 * 12);
@@ -236,7 +235,12 @@ const Index = ({}: Props) => {
             </Head>
             <div className="p-8 ">
                 <h2 className="text-4xl font-semibold">{races[race].title}</h2>
-                <span>{players.length} zawodników</span>
+                <Link href="/wyniki">
+                    <span className="flex mt-2 cursor-pointer hover:text-orange-600">
+                        <Icon size={1} path={mdiKeyboardBackspace} />
+                        <span className="pl-2 font-semibold">Powrót do listy wyników</span>
+                    </span>
+                </Link>
             </div>
             <div className="flex flex-col text-zinc-600">
                 <ResultLinks category={category} race={race} />

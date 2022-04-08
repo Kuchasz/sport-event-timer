@@ -1,3 +1,5 @@
+import { Gender } from "@set/timer/dist/model";
+
 export type ToStartPlayer = {
     ["Nr zawodnika"]?: string;
     ["Nr chip"]: string;
@@ -54,7 +56,7 @@ export const emptyToStartPlayer = {
     ["Pliki"]: undefined
 };
 
-const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
+const getGender = (genderText: string): Gender => (genderText === "M" ? "male" : "female");
 
 export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number) => ({
     id: i,

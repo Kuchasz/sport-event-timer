@@ -15,9 +15,7 @@ export const getCurrentTimeOffset = (): Promise<number> => {
     });
 };
 
-export const readPlayersStartTimes = () => {
-    fetch(`${hubUrl}/read-start-times`, { method: "POST" });
-};
+export const readPlayersStartTimes = () => f.post("/read-start-times", {});
 
 export const calculateNonGCStartTimes = () => f.post(`/calculate-nongc-start-times`, {});
 export const calculateGCStartTimes = () => f.post(`/calculate-gc-start-times`, {});
