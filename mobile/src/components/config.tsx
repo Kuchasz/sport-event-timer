@@ -1,4 +1,9 @@
-import { calculateStartTimes, readPlayersStartTimes } from "../api";
+import {
+    calculateGCStartTimes,
+    calculateNonGCStartTimes,
+    readPlayersStartTimes,
+    stripLists
+    } from "../api";
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
@@ -34,12 +39,16 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
         readPlayersStartTimes();
     };
 
-    const handleCalculateTTStartTimes = () => {
-        calculateStartTimes(false);
+    const handleCalculateNonGCStartTimes = () => {
+        calculateNonGCStartTimes();
     };
 
-    const handleCalculateAllStartTimes = () => {
-        calculateStartTimes(true);
+    const handleCalculateGCStartTimes = () => {
+        calculateGCStartTimes();
+    };
+
+    const handleStripLists = () => {
+        stripLists();
     };
 
     const setTimeKeeperId = (timeKeeperId: number) => {
@@ -72,16 +81,23 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
             </div>
             <div className="py-4">
                 <PrimaryActionButton
-                    onClick={handleCalculateTTStartTimes}
+                    onClick={handleCalculateNonGCStartTimes}
                     icon={mdiUpload}
-                    contents={<strong>CALCULATE TT START TIMES</strong>}
+                    contents={<strong>CALCULATE NON GC START TIMES</strong>}
                 />
             </div>
             <div className="py-4">
                 <PrimaryActionButton
-                    onClick={handleCalculateAllStartTimes}
+                    onClick={handleCalculateGCStartTimes}
                     icon={mdiUpload}
-                    contents={<strong>CALCULATE ALL START TIMES</strong>}
+                    contents={<strong>CALCULATE GC START TIMES</strong>}
+                />
+            </div>
+            <div className="py-4">
+                <PrimaryActionButton
+                    onClick={handleStripLists}
+                    icon={mdiUpload}
+                    contents={<strong>STRIP LISTS FOR TIMEGONEW</strong>}
                 />
             </div>
             <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">
