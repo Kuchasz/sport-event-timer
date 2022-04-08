@@ -89,38 +89,18 @@ const readCsv = async <T>(path: string) => {
     return (await parseAsync(data, { columns: true })) as T;
 };
 
-const loadRaceResults = () => {
-    const funFetches = [
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=3"),
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=1")
-    ];
+const loadRaceResults = async () => {
+    const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
+    writeJson(
+        sort(funResults, r => r.number),
+        "../results-fun-2022.json"
+    );
 
-    Promise.all(funFetches)
-        .then(arr => arr.reduce((acc, arr) => [...acc, ...arr], []))
-        .then(results => {
-            writeJson(
-                sort(results, r => r.number),
-                "../results-fun-2022.json"
-            );
-            // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
-        })
-        .catch(() => console.log(`race.results.fetch.fail [${new Date().toLocaleString()}]`));
-
-    const proFetches = [
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=4"),
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=2")
-    ];
-
-    Promise.all(proFetches)
-        .then(arr => arr.reduce((acc, arr) => [...acc, ...arr], []))
-        .then(results => {
-            writeJson(
-                sort(results, r => r.number),
-                "../results-pro-2022.json"
-            );
-            // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
-        })
-        .catch(() => console.log(`race.results.fetch.fail [${new Date().toLocaleString()}]`));
+    const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
+    writeJson(
+        sort(proResults, r => r.number),
+        "../results-pro-2022.json"
+    );
 };
 
 const loadTimeTrialResults = () => {
