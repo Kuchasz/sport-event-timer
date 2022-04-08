@@ -147,6 +147,7 @@ const Zegar = () => {
         <>
             <Head>
                 <title>Zegar</title>
+                <link key="manifest" rel="manifest" href="/favicon/clock.webmanifest" />
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {globalTime === undefined ? (
