@@ -31,3 +31,4 @@ Application for making time measurements
 -   SMS notification with the result
 -   fetching results from external system
 -   fix gallery photo download :heavy_check_mark:
+-   fullscreen mode for timer
