@@ -22,6 +22,7 @@ import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { stringify } from "csv-stringify";
+import { TimerState } from "../timer/store";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -304,7 +305,16 @@ const run = async () => {
         await writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
     });
 
-    app.post("/read-start-times", (_, res) => {});
+    app.post("/read-start-times", async (_, res) => {
+        const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const players = toStartPlayers.map(toStartPlayerToPlayer);
+        const state = await readJsonAsync<TimerState>("../state.json");
+
+        state.players = players;
+
+        writeJson(players, "../players.json");
+        writeJson(state, "../state.json");
+    });
 
     app.get("/clock-players", (_, res) => {
         readFile(resolve("../players.json"), (err, text: any) => {

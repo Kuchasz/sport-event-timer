@@ -96,7 +96,19 @@ export const getTimeTrialResults = async () => {
             status: "OK"
         }));
 
-    return [...finishedPlayers, ...dnfPlayers, ...dnsPlayers];
+    const pendingPlayers: PlayerResult[] = state.players
+        .filter(
+            p =>
+                !state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time &&
+                !state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)?.time
+        )
+        .map(p => ({
+            number: p.number,
+            result: undefined,
+            status: ">>>"
+        }));
+
+    return [...finishedPlayers, ...pendingPlayers, ...dnfPlayers, ...dnsPlayers];
     // ,
     //     resultStr: calculateFinalTimeStr(
     //         state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,

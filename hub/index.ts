@@ -218,14 +218,14 @@ export const apply = (server: HttpServer): Promise<void> => {
             //     if (e) console.log("An error occured while saving starting list");
             // });
 
-            const players = ttRacePlayers.map(toStartPlayerToPlayer);
+            // const players = ttRacePlayers.map(toStartPlayerToPlayer);
 
-            store.dispatch(upload(players));
-            writeJson(players, "../players.json");
-            const state = store.getState();
-            writeJson(state, "../state.json");
+            // store.dispatch(upload(players));
+            // writeJson(players, "../players.json");
+            // const state = store.getState();
+            // writeJson(state, "../state.json");
 
-            io.emit("receive-state", store.getState());
+            // io.emit("receive-state", store.getState());
 
             // console.log("upload-players");
             // const parsedPlayers = parse(playersCSV, { columns: true }) as any[];

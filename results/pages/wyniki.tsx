@@ -25,19 +25,19 @@ const Lista = () => {
                                 i RnK Time Trial.
                                 <br />
                                 <br />
-                                <Anchor className="my-2" href={"/wyniki/pro"}>
+                                <Anchor className="my-2" href={"/wyniki/pro/K18-29"}>
                                     RnK PRO
                                 </Anchor>
-                                <Anchor className="my-2" href={"/wyniki/fun"}>
+                                <Anchor className="my-2" href={"/wyniki/fun/K18-29"}>
                                     RnK FUN
                                 </Anchor>
-                                <Anchor className="my-2" href={"/wyniki/tt"}>
+                                <Anchor className="my-2" href={"/wyniki/tt/K18-29"}>
                                     RnK Time Trial
                                 </Anchor>
                                 <Anchor className="my-2" href={"/wyniki/gc"}>
                                     RnK Klasyfikacja Generalna
                                 </Anchor>
-                                <Anchor className="my-2" href={"/wyniki/gc"}>
+                                <Anchor className="my-2" href={"/wyniki/team"}>
                                     RnK Klasyfikacja Drużynowa
                                 </Anchor>
                             </span>
