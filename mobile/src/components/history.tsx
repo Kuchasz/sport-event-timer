@@ -4,7 +4,6 @@ import { reset } from "@set/timer/dist/slices/time-stamps";
 import { useTimerSelector } from "../hooks";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
-    console.log(historicAction);
     if (reset.match(historicAction.action)) {
         // action.payload.
         return null;

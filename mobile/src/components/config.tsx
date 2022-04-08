@@ -1,3 +1,4 @@
+import { boolean } from "fp-ts";
 import {
     calculateGCStartTimes,
     calculateNonGCStartTimes,
@@ -9,13 +10,15 @@ import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
 import { TimeKeeperIcon } from "./time-keeper-icon";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTimerSelector } from "../hooks";
 
 export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
     const inputFile = useRef<HTMLInputElement>(null);
     const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
+    const [devModeEnabled, setDevModeEnabled] = useState<boolean>(false);
+    const [devModeClicks, setDevModeClicks] = useState<number>(0);
 
     const uploadPlayers = () => {
         inputFile?.current?.click();
@@ -55,51 +58,66 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
         dispatch(chooseTimeKeeper({ timeKeeperId }));
     };
 
+    const onHiddenClick = () => {
+        if (devModeClicks === 10) {
+            setDevModeEnabled(true);
+        } else {
+            setDevModeClicks(devModeClicks + 1);
+        }
+    };
+
     return (
         <div className="flex h-full w-full items-center bg-zinc-800 flex-col">
-            <input
-                type="file"
-                id="file"
-                accept=".csv"
-                onChange={handleFileChange}
-                ref={inputFile}
-                style={{ display: "none" }}
-            />
-            <div className="py-4">
-                <PrimaryActionButton
-                    onClick={uploadPlayers}
-                    icon={mdiUpload}
-                    contents={<strong>UPLOAD PLAYERS</strong>}
-                />
-            </div>
-            <div className="py-4">
-                <PrimaryActionButton
-                    onClick={handleReadPlayerStartTimes}
-                    icon={mdiUpload}
-                    contents={<strong>READ PLAYER START TIMES</strong>}
-                />
-            </div>
-            <div className="py-4">
-                <PrimaryActionButton
-                    onClick={handleCalculateNonGCStartTimes}
-                    icon={mdiUpload}
-                    contents={<strong>CALCULATE NON GC START TIMES</strong>}
-                />
-            </div>
-            <div className="py-4">
-                <PrimaryActionButton
-                    onClick={handleCalculateGCStartTimes}
-                    icon={mdiUpload}
-                    contents={<strong>CALCULATE GC START TIMES</strong>}
-                />
-            </div>
-            <div className="py-4">
-                <PrimaryActionButton
-                    onClick={handleStripLists}
-                    icon={mdiUpload}
-                    contents={<strong>STRIP LISTS FOR TIMEGONEW</strong>}
-                />
-            </div>
+            <div onClick={onHiddenClick} className="w-24 h-24 absolute t-0 r-0 self-end"></div>
+
+            {devModeEnabled ? (
+                <div>
+                    <input
+                        type="file"
+                        id="file"
+                        accept=".csv"
+                        onChange={handleFileChange}
+                        ref={inputFile}
+                        style={{ display: "none" }}
+                    />
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={uploadPlayers}
+                            icon={mdiUpload}
+                            contents={<strong>UPLOAD PLAYERS</strong>}
+                        />
+                    </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleReadPlayerStartTimes}
+                            icon={mdiUpload}
+                            contents={<strong>READ PLAYER START TIMES</strong>}
+                        />
+                    </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleCalculateNonGCStartTimes}
+                            icon={mdiUpload}
+                            contents={<strong>CALCULATE NON GC START TIMES</strong>}
+                        />
+                    </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleCalculateGCStartTimes}
+                            icon={mdiUpload}
+                            contents={<strong>CALCULATE GC START TIMES</strong>}
+                        />
+                    </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleStripLists}
+                            icon={mdiUpload}
+                            contents={<strong>STRIP LISTS FOR TIMEGONEW</strong>}
+                        />
+                    </div>
+                </div>
+            ) : null}
+
             <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">
                 {allTimeKeepers.map(tk => (
                     <button
