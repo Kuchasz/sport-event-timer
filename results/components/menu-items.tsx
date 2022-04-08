@@ -8,6 +8,6 @@ export const menuItems = [
     { path: "/regulamin", label: "regulamin" },
     { path: "/lista", label: "uczestnicy" },
     // { path: "/live", label: "na żywo" },
-    // { path: "/wyniki", label: "wyniki" },
+    { path: "/wyniki", label: "wyniki" },
     { path: "/zdjecia", label: "zdjęcia" }
 ];

@@ -6,7 +6,6 @@ import React from "react";
 import {
     getFunRacePlayers,
     getFunRaceResults,
-    getPlayers,
     getProRacePlayers,
     getProRaceResults,
     getTimeTrialPlayers,
@@ -43,11 +42,6 @@ type Props = {
 
 const filterByCategory = (type: Categories) => (player: Player) => {
     if (!type) return true;
-
-    // if (type == "open-m") return player.gender === "male";
-
-    // if (type == "open-k") return player.gender === "female";
-
     return player.raceCategory == type;
 };
 
@@ -191,8 +185,6 @@ const Index = ({}: Props) => {
             races[race].getList().then(setPlayers);
         }
     }, [race]);
-
-    console.log(race, category);
 
     if (!raceTimes || !players)
         return (

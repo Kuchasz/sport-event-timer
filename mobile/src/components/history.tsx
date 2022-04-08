@@ -4,8 +4,10 @@ import { reset } from "@set/timer/dist/slices/time-stamps";
 import { useTimerSelector } from "../hooks";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
+    console.log(historicAction);
     if (reset.match(historicAction.action)) {
         // action.payload.
+        return null;
     }
 
     return (
@@ -20,11 +22,11 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
 };
 
 export const History = () => {
-    const actionsHistory = useTimerSelector((x) => x.actionsHistory || []);
+    const actionsHistory = useTimerSelector(x => x.actionsHistory || []);
 
     return (
         <div className="px-4">
-            {sortDesc(actionsHistory, (a) => a.issuedAt).map((a, i) => (
+            {sortDesc(actionsHistory, a => a.issuedAt).map((a, i) => (
                 <ActionDisplay key={i} historicAction={a} />
             ))}
         </div>
