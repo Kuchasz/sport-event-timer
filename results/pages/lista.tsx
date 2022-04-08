@@ -13,7 +13,7 @@ const Lista = () => {
                 <Slogan
                     title="Lista zawodników"
                     excerpt="Lista zawodników z podziałem na dystanse"
-                    photo="assets/mapka-trasa-2022.jpg"
+                    photo="assets/lista-startowa-2022.jpg"
                 />
                 <div className="flex w-full bg-zinc-200 justify-center">
                     <div className="max-w-6xl my-14">
