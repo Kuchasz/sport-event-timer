@@ -87,11 +87,11 @@ const Zegar = () => {
 
     useEffect(() => {
         if (globalTimeOffset === undefined) return;
-        console.log("run.interval!");
+        const clockStartTimeLatency = new Date().getMilliseconds();
         const secondsToPlayerInterval = setInterval(() => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds();
+            const miliseconds = globalDateTime.getMilliseconds() - clockStartTimeLatency;
 
             if (miliseconds <= clockTimeout) {
                 const playersWithPosiviteTimeToStart = players
