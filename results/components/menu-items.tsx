@@ -4,8 +4,9 @@ export const menuItems = [
     { path: "/program", label: "program" },
     // { path: "/zapisy", label: "zapisy" },
     // { path: "/zegar", label: "zegar" },
+
     { path: "/regulamin", label: "regulamin" },
-    // { path: "/lista", label: "lista startowa" },
+    { path: "/lista", label: "uczestnicy" },
     // { path: "/live", label: "na żywo" },
     // { path: "/wyniki", label: "wyniki" },
     { path: "/zdjecia", label: "zdjęcia" }

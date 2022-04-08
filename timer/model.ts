@@ -17,6 +17,7 @@ export type Player = {
     raceCategory: string;
     team: string;
     country: string;
+    startTime?: number;
 };
 
 export type RaceCategory = {
@@ -82,14 +83,14 @@ export const getNextId = flow(
         )
     ]),
     Arr.last,
-    Option.map((e) => e.id),
+    Option.map(e => e.id),
     Option.fold(() => 0, increment)
 );
 
 export const removeById = <T extends { id: number }>(items: T[], id: number) =>
     pipe(
         items,
-        Arr.filter((e) => e.id !== id)
+        Arr.filter(e => e.id !== id)
     );
 
 export const registerPlayer = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
@@ -101,17 +102,17 @@ export const changePlayerInfo = (players: Player[], modifiedPlayer: Player): Pla
         Arr.updateAt(
             pipe(
                 players,
-                Arr.findIndex((e) => e.id === modifiedPlayer.id),
+                Arr.findIndex(e => e.id === modifiedPlayer.id),
                 Option.fold(
                     () => -1,
-                    (e) => e
+                    e => e
                 )
             ),
             modifiedPlayer
         ),
         Option.fold(
             () => players,
-            (e) => e
+            e => e
         )
     );
 
@@ -133,16 +134,16 @@ export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[]
 export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Pick<TimeStamp, "id">): TimeStamp[] =>
     pipe(
         timeStamps,
-        Arr.findIndex((e) => e.id === modifiedTimeStamp.id),
-        Option.chain((index) =>
+        Arr.findIndex(e => e.id === modifiedTimeStamp.id),
+        Option.chain(index =>
             pipe(
                 timeStamps,
-                Arr.modifyAt(index, (e) => ({ ...e, ...modifiedTimeStamp }))
+                Arr.modifyAt(index, e => ({ ...e, ...modifiedTimeStamp }))
             )
         ),
         Option.fold(
             () => timeStamps,
-            (e) => e
+            e => e
         )
     );
 
