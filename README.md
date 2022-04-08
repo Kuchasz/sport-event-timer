@@ -23,7 +23,8 @@ Application for making time measurements
 -   real-time starting list sync
 -   easier starting list fillout than passing .csv's
 -   beep in countdown watch :heavy_check_mark:
--   more mobile-friendly results and starting list
+-   more mobile-friendly results and starting list :heavy_check_mark:
+-   times on time trial starting list
 -   persist countdown watch settings
 -   auto teams classifications
 -   auto GC classification calculation
