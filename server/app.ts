@@ -134,6 +134,10 @@ const run = async () => {
 
         const officePlayers = [...playersNumbers.values()].map(n => {
             const races = allPlayers.filter(p => p["Nr zawodnika"] === n);
+            const playerClassifications = new Set(races.map(r => r.Klasyfikacja));
+
+            if (playerClassifications.size !== races.length) throw new Error("Something wrong is with starting lists");
+
             const [playerData] = races;
 
             const officePlayer = {
