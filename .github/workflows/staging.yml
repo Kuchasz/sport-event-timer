@@ -75,7 +75,7 @@ jobs:
                   path: ./timer
 
     build_hub:
-        needs: [build_timer]
+        needs: [build_timer, build_shared]
         runs-on: ubuntu-latest
 
         steps:
@@ -95,6 +95,11 @@ jobs:
               uses: actions/setup-node@v2-beta
               with:
                   node-version: "14.x"
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: shared.dist
+                  path: ./shared
 
             - uses: actions/download-artifact@v2
               with:
