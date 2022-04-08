@@ -8,7 +8,7 @@ import { config } from "./config";
 import { createServer } from "http";
 import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 import { login } from "./auth";
-import { parse } from "csv-parse/sync";
+import { parse } from "csv-parse";
 import { PlayerResult } from "../shared/index";
 import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
@@ -40,6 +40,12 @@ const minutesAgo = (minutes: number) => {
 };
 
 const readFileAsync = promisify(readFile);
+const parseAsync = (data: Buffer, options: any) =>
+    new Promise<any>((res, rej) =>
+        parse(data, options, (err, results) => {
+            res(results);
+        })
+    );
 
 const writeJson = <T>(content: T, path: string) => {
     writeFile(resolve(path), JSON.stringify(content), err => {
@@ -52,7 +58,7 @@ const writeJson = <T>(content: T, path: string) => {
 
 const readCsv = async <T>(path: string) => {
     const data = await readFileAsync(resolve(path));
-    return parse(data.toString(), { columns: true }) as T;
+    return (await parseAsync(data, { columns: true })) as T;
 };
 
 const loadRaceResults = () => {
