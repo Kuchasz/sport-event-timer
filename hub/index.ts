@@ -2,7 +2,7 @@ import { createStore } from "@set/timer/dist/store";
 import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 import { getAgeCategory } from "./players";
 import { parse } from "csv-parse/sync";
-import { Player } from "@set/timer/model";
+import { Player } from "@set/timer/dist/model";
 import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { Server, Socket } from "socket.io";
