@@ -10,6 +10,31 @@ type Props = {
     directory: { dir: string; title: string; description: string; items: Item[] };
 };
 
+const downloadImage = (downloadUrl: string) => {
+    console.log(downloadUrl);
+    fetch(downloadUrl + "?q=" + Math.random())
+        .then(resp => resp.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = downloadUrl.split("/").reverse()[0];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(() => console.warn(`DOWNLOAD OF: ${downloadUrl} failed.`));
+};
+
+const replaceDom = (selector: string): Node => {
+    const oldItem = document.querySelector(selector)!;
+    var newItem = oldItem.cloneNode(true);
+    oldItem.parentNode!.replaceChild(newItem, oldItem);
+
+    return newItem;
+};
+
 const Photos = ({ directory }: Props) => {
     const options = {
         currentSlide: { id: 0 },
@@ -25,27 +50,11 @@ const Photos = ({ directory }: Props) => {
             },
             onLightboxOpened: (e: any) => {
                 options.currentSlide = e.currentSlide;
-                const downloadButton = document.querySelector("button.SRLDownloadButton")!;
-                var newDownloadButton = downloadButton.cloneNode(true);
-                downloadButton.parentNode!.replaceChild(newDownloadButton, downloadButton);
+                const downloadButton = replaceDom("button.SRLDownloadButton");
 
-                newDownloadButton.addEventListener("click", () => {
+                downloadButton.addEventListener("click", () => {
                     const item = directory.items[Number(options.currentSlide.id)];
-
-                    fetch(item.full + "?q=" + Math.random())
-                        .then(resp => resp.blob())
-                        .then(blob => {
-                            const url = window.URL.createObjectURL(blob);
-                            const a = document.createElement("a");
-                            a.style.display = "none";
-                            a.href = url;
-                            // the filename you want
-                            a.download = item.full.split("/").reverse()[0];
-                            document.body.appendChild(a);
-                            a.click();
-                            window.URL.revokeObjectURL(url);
-                        })
-                        .catch(() => console.warn(`DOWNLOAD OF: ${item.full} failed.`));
+                    downloadImage(item.full);
                 });
             }
         }
