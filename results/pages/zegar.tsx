@@ -87,6 +87,7 @@ const Zegar = () => {
 
     useEffect(() => {
         if (globalTimeOffset === undefined) return;
+        console.log("run.interval!");
         const secondsToPlayerInterval = setInterval(() => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
@@ -94,14 +95,14 @@ const Zegar = () => {
 
             if (miliseconds <= clockTimeout) {
                 const playersWithPosiviteTimeToStart = players
-                    .map((p) => ({ player: p, timeToStart: p.startTime - globalTime }))
-                    .filter((p) => p.timeToStart > 0);
+                    .map(p => ({ player: p, timeToStart: p.startTime - globalTime }))
+                    .filter(p => p.timeToStart > 0);
 
-                const nextPlayers = sort(playersWithPosiviteTimeToStart, (p) => p.timeToStart);
+                const nextPlayers = sort(playersWithPosiviteTimeToStart, p => p.timeToStart);
                 const nextPlayer = nextPlayers[0];
 
                 //it will re-render that react tree each second, too often
-                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
+                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
 
                 const secondsToNextStart = Math.floor(
                     (nextPlayer?.timeToStart || getCountdownTime(globalTime)) / 1_000
@@ -119,7 +120,7 @@ const Zegar = () => {
 
     useEffect(() => {
         let loadStartTime = Date.now();
-        socket.on("TR", (serverTime) => {
+        socket.on("TR", serverTime => {
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
             console.log("latency", latency);
@@ -165,7 +166,7 @@ const Zegar = () => {
                                 className="leading-none transition-all w-full"
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
-                                    {nextPlayers.map((p) => (
+                                    {nextPlayers.map(p => (
                                         <NextPlayers key={p.number} player={p} />
                                     ))}
                                 </div>
