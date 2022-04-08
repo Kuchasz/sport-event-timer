@@ -152,7 +152,7 @@ const ResultLinks = ({ category, race }: { category: Categories; race: Races }) 
                 </div>
                 <div onClick={() => setCollapsed(false)} className={classNames("flex p-2", { ["hidden"]: !collapsed })}>
                     <Icon size={1} path={mdiMenu}></Icon>
-                    <p className="ml-2 font-medium">{namesForTypes[category]}</p>
+                    <p className="ml-2 font-medium">KATEGORIA {namesForTypes[category]}</p>
                 </div>
             </div>
             <div className="hidden md:flex flex-wrap px-2 py-4">
@@ -222,7 +222,6 @@ const Index = ({}: Props) => {
         <div className="hidden sm:block">Klub</div>,
         <div className="hidden sm:block">Kraj</div>,
         <div className="hidden lg:block">Rok urodz.</div>,
-        <div>Kat.</div>,
         <div className="hidden lg:block">VŚr km/h</div>,
         <div>Wynik</div>,
         <div className="hidden sm:block">Strata</div>
@@ -266,7 +265,6 @@ const Index = ({}: Props) => {
                     <Table.Item
                         render={(r: itemsType) => <div className="hidden lg:block">{r.birthYear}</div>}
                     ></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => (
                             <div className="hidden lg:block">

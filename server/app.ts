@@ -46,7 +46,7 @@ const minutesAgo = (minutes: number) => {
     const currentTimeMinutesAgo = new Date(currentTime.getTime() - minutes * 60_000);
     return currentTimeMinutesAgo.getTime();
 };
-
+type NumberTime = { number: Number; startTime: number };
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
@@ -92,14 +92,22 @@ const readCsv = async <T>(path: string) => {
 
 const loadRaceResults = async () => {
     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
+    const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
+
+    const finalFunResults = funResults.map(r => ({ ...r, ...funResultsOverrides.find(o => r.number === o.number) }));
+
     writeJson(
-        sort(funResults, r => r.number),
+        sort(finalFunResults, r => r.number),
         "../results-fun-2022.json"
     );
 
     const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
+    const proResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
+
+    const finalProResults = proResults.map(r => ({ ...r, ...proResultsOverrides.find(o => r.number === o.number) }));
+
     writeJson(
-        sort(proResults, r => r.number),
+        sort(finalProResults, r => r.number),
         "../results-pro-2022.json"
     );
 };
@@ -201,7 +209,7 @@ const run = async () => {
         const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
         const players = toStartPlayers.map(toStartPlayerToPlayer);
 
-        const startTimes = await readJsonAsync<{ number: Number; startTime: number }[]>("../start-tt-2022.json");
+        const startTimes = await readJsonAsync<NumberTime[]>("../start-tt-2022.json");
 
         const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
 
@@ -311,6 +319,8 @@ const run = async () => {
         const state = await readJsonAsync<TimerState>("../state.json");
 
         state.players = players;
+        state.timeStamps = [];
+        state.actionsHistory = [];
 
         writeJson(players, "../players.json");
         writeJson(state, "../state.json");
