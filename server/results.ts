@@ -24,8 +24,8 @@ const timeStringToMiliseconds = (timeString: string): { time?: number; status: s
 
 export const fetchTimeGoNewResults = (resultsUrl: string): Promise<PlayerResult[]> => {
     return fetch(resultsUrl)
-        .then((r) => r.text())
-        .then((contents) => {
+        .then(r => r.text())
+        .then(contents => {
             const colTypes = {
                 name: "col-name",
                 time: "col-time"
@@ -34,13 +34,13 @@ export const fetchTimeGoNewResults = (resultsUrl: string): Promise<PlayerResult[
             const tableDom = parse(contents).querySelector("table")!;
 
             const headerCells = tableDom.querySelectorAll("thead tr th");
-            const timeCallIndex = headerCells.findIndex((c) => c.classList.contains(colTypes.time));
-            const nameCallIndex = headerCells.findIndex((c) => c.classList.contains(colTypes.name));
+            const timeCallIndex = headerCells.findIndex(c => c.classList.contains(colTypes.time));
+            const nameCallIndex = headerCells.findIndex(c => c.classList.contains(colTypes.name));
 
             return tableDom
                 .querySelectorAll("tbody tr")
-                .map((tr) => tr.querySelectorAll("td"))
-                .map((tds) => {
+                .map(tr => tr.querySelectorAll("td"))
+                .map(tds => {
                     const [numberString] = tds[nameCallIndex].innerText.trim().split("]");
                     const number = Number(numberString.slice(1));
 
@@ -60,25 +60,43 @@ export const getTimeTrialResults = async () => {
 
     const state: TimerState = JSON.parse(stateJson.toString());
 
-    const startTimeKeeper = state.timeKeepers.find((x) => x.type === "start");
-    const stopTimeKeeper = state.timeKeepers.find((x) => x.type === "end");
+    const startTimeKeeper = state.timeKeepers.find(x => x.type === "start");
+    const stopTimeKeeper = state.timeKeepers.find(x => x.type === "end");
 
-    const playersWithTimes: PlayerResult[] = state.players
+    const dnfPlayers: PlayerResult[] = [];
+    // state.players
+    //     .filter(p => state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)?.time)
+    //     .map(p => ({
+    //         number: p.number,
+    //         result: undefined,
+    //         status: "DNF"
+    //     }));
+
+    const dnsPlayers: PlayerResult[] = [];
+    //  state.players
+    //     .filter(p => state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time)
+    //     .map(p => ({
+    //         number: p.number,
+    //         result: undefined,
+    //         status: "DNF"
+    //     }));
+
+    const finishedPlayers: PlayerResult[] = state.players
         .filter(
-            (p) =>
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time &&
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)?.time
+            p =>
+                state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)?.time &&
+                state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)?.time
         )
-        .map((p) => ({
+        .map(p => ({
             number: p.number,
             result: calculateFinalTime(
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,
-                state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)!.time
+                state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,
+                state.timeStamps.find(ts => ts.playerId === p.id && ts.timeKeeperId === stopTimeKeeper?.id)!.time
             ),
             status: "OK"
         }));
 
-    return playersWithTimes;
+    return [...finishedPlayers, ...dnfPlayers, ...dnsPlayers];
     // ,
     //     resultStr: calculateFinalTimeStr(
     //         state.timeStamps.find((ts) => ts.playerId === p.id && ts.timeKeeperId === startTimeKeeper?.id)!.time,
