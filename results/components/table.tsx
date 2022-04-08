@@ -14,9 +14,7 @@ type TableProps<T> = {
 };
 
 const HeaderCell = ({ children }: { children: ReactNode }) => (
-    <div
-        className={tdClassName + " border-b-2 border-orange-500 bg-zinc-100 font-semibold cursor-pointer sticky top-0"}
-    >
+    <div className={tdClassName + " border-b-2 border-orange-500 bg-zinc-100 font-semibold sticky top-0"}>
         {children}
     </div>
 );
