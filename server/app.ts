@@ -11,6 +11,7 @@ import {
     } from "@set/shared/dist";
 import { config } from "./config";
 import { createServer } from "http";
+import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 import { login } from "./auth";
 import { parse } from "csv-parse";
@@ -21,7 +22,6 @@ import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { stringify } from "csv-stringify";
-import { ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -47,17 +47,27 @@ const minutesAgo = (minutes: number) => {
 };
 
 const readFileAsync = promisify(readFile);
+const writeFileAsync = promisify(writeFile);
+
 const parseAsync = (data: Buffer, options: any) =>
     new Promise<any>((res, rej) =>
         parse(data, options, (err, results) => {
             res(results);
         })
     );
+
 const stringifyAsync = (data: any) =>
     new Promise<string>((res, rej) => {
         stringify(data, { header: true }, (err, str) => {
             res(str);
         });
+    });
+
+const writeCsvAsync = <T>(content: T, path: string) =>
+    new Promise<void>(async (res, rej) => {
+        const contentCsvString = await stringifyAsync(content);
+        await writeFileAsync(path, contentCsvString);
+        res();
     });
 
 const writeJson = <T>(content: T, path: string) => {
@@ -234,9 +244,7 @@ const run = async () => {
         res.json(Date.now());
     });
 
-    app.post("/calculate-start-times", async (req, res) => {
-        const { includeGC } = req.body as { includeGC?: boolean };
-
+    app.post("/calculate-nongc-start-times", async (req, res) => {
         const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
         const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
 
@@ -257,14 +265,39 @@ const run = async () => {
             startTime: raceStartTime + i * minute + Math.floor(i / 10) * minute
         }));
 
-        const lastNonGCStartTime = nonGCNumbersWithTimes.at(-1)?.startTime!;
+        writeJson(nonGCNumbersWithTimes, "../start-tt-2022.json");
+        res.json("ok");
+    });
 
-        const proResults = includeGC ? await readJsonAsync<PlayerResult[]>("../results-pro-2022.json") : [];
+    app.post("/calculate-gc-start-times", async (_, res) => {
+        const startTimes = await readJsonAsync<{ number: number; startTime: number }[]>("../start-tt-2022.json");
+        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+
+        const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
+        const nonGCPlayers = timeTrialPlayers.filter(
+            p => !gcPlayers.find(gp => p["Nr zawodnika"] === gp["Nr zawodnika"])
+        );
+
+        const nonGCNumbersWithTimes = nonGCPlayers.map(p => ({
+            number: Number(p["Nr zawodnika"]),
+            startTime: startTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
+        }));
+
+        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+
+        const lastNonGCStartTime = sort(nonGCNumbersWithTimes, t => t.startTime!).at(-1)?.startTime!;
+
+        const gcPlayersProResults = proResults.filter(p =>
+            gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"]))
+        );
 
         const GCSlowestFirst = sortDesc(
-            proResults.filter(p => p.status === "OK"),
+            gcPlayersProResults.filter(p => p.status === "OK"),
             r => r.result!
         );
+
+        const minute = 60_000;
 
         const GCNumbersWithTimes = GCSlowestFirst.map((p, i) => ({
             number: Number(p.number),
@@ -275,6 +308,20 @@ const run = async () => {
         writeJson(allTTStaringList, "../start-tt-2022.json");
 
         res.json("ok");
+    });
+
+    app.post("/strip-lists", async () => {
+        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
+
+        const minProRacePlayers = proPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
+        const minFunRacePlayers = funPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
+        const minTimetrialRacePlayers = timeTrialPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
+
+        await writeCsvAsync(minProRacePlayers, "../ls-min-pro-2022.csv");
+        await writeCsvAsync(minFunRacePlayers, "../ls-min-fun-2022.csv");
+        await writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
     });
 
     app.post("/read-start-times", (_, res) => {});

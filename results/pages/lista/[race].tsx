@@ -56,7 +56,7 @@ const StartingList = () => {
         <div className="hidden sm:block">Kraj</div>,
         <div>Kat.</div>,
         <div>Klub</div>,
-        race === "tt" ? <div>Start</div> : null
+        <div className={race === "tt" ? "block" : "hidden"}>Start</div>
     ];
 
     return (
@@ -90,7 +90,11 @@ const StartingList = () => {
                         render={(r: itemsType) => <div className="whitespace-nowrap">{r.raceCategory}</div>}
                     ></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{formatTimeNoSec(r.startTime)}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => (
+                            <div className={race === "tt" ? "block" : "hidden"}>{formatTimeNoSec(r.startTime)}</div>
+                        )}
+                    ></Table.Item>
                 </Table>
             </div>
         </>
