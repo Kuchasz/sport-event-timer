@@ -1,5 +1,4 @@
 import { SRLWrapper } from "simple-react-lightbox";
-import { useEffect } from "react";
 
 type Item = {
     thumb: string;
