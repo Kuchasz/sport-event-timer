@@ -197,10 +197,24 @@ const run = async () => {
         res.json(Date.now());
     });
 
+    app.post("/calculate-start-times", async (_, res) => {
+        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+
+        const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
+        const nonGcPlayers = timeTrialPlayers.filter(
+            p => !gcPlayers.find(gp => p["Nr zawodnika"] === gp["Nr zawodnika"])
+        );
+
+        console.log(gcPlayers.length, nonGcPlayers.length);
+    });
+
+    app.post("/read-start-times", (_, res) => {});
+
     app.get("/clock-players", (_, res) => {
         readFile(resolve("../players.json"), (err, text: any) => {
             const players: m.Player[] = err ? [] : JSON.parse(text);
-            const firstPlayerStart = minutesAgo(0);
+            const firstPlayerStart = minutesAgo(16);
             const startTimeFromNumber = (number: number) => firstPlayerStart + 8_000 * number;
 
             const clockPlayers: ClockListPlayer[] = sort(players, p => p.number).map((p, i) => ({

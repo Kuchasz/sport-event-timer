@@ -1,3 +1,4 @@
+import { calculateStartTimes, readPlayersStartTimes } from "../api";
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
@@ -11,7 +12,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const inputFile = useRef<HTMLInputElement>(null);
     const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
 
-    const onButtonClick = () => {
+    const uploadPlayers = () => {
         inputFile?.current?.click();
     };
 
@@ -27,6 +28,13 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
 
             reader.readAsText(file);
         }
+    };
+
+    const handleReadPlayerStartTimes = () => {
+        readPlayersStartTimes();
+    };
+    const handleCalculateStartTimes = () => {
+        calculateStartTimes();
     };
 
     const setTimeKeeperId = (timeKeeperId: number) => {
@@ -45,9 +53,23 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
             />
             <div className="py-4">
                 <PrimaryActionButton
-                    onClick={onButtonClick}
+                    onClick={uploadPlayers}
                     icon={mdiUpload}
                     contents={<strong>UPLOAD PLAYERS</strong>}
+                />
+            </div>
+            <div className="py-4">
+                <PrimaryActionButton
+                    onClick={handleReadPlayerStartTimes}
+                    icon={mdiUpload}
+                    contents={<strong>READ PLAYER START TIMES</strong>}
+                />
+            </div>
+            <div className="py-4">
+                <PrimaryActionButton
+                    onClick={handleCalculateStartTimes}
+                    icon={mdiUpload}
+                    contents={<strong>CALCULATE PLAYER START TIMES</strong>}
                 />
             </div>
             <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">

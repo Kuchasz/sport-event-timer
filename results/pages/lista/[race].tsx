@@ -44,10 +44,11 @@ const StartingList = () => {
             </div>
         );
 
-    const result = players;
+    const result = players.map((r, i) => ({ ...r, i: i + 1 }));
     type itemsType = typeof result[0];
 
     const headers = [
+        <div>Lp.</div>,
         <div>Nr.</div>,
         <div>Zawodnik</div>,
         <div className="hidden md:block">Miejscowość</div>,
@@ -65,8 +66,9 @@ const StartingList = () => {
                 <h2 className="text-4xl font-semibold">{playersListsNames[race]}</h2>
                 <span>{players.length} zawodników</span>
             </div>
-            <div className="border-1 border-gray-600 border-solid">
+            <div className="w-full border-1 border-gray-600 border-solid">
                 <Table headers={headers} rows={result} getKey={r => String(r.number)}>
+                    <Table.Item render={(r: itemsType) => <div>{r.i}</div>}></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => (
@@ -82,7 +84,9 @@ const StartingList = () => {
                     <Table.Item
                         render={(r: itemsType) => <div className="hidden sm:block">{r.country}</div>}
                     ></Table.Item>
-                    <Table.Item render={(r: itemsType) => <div>{r.raceCategory}</div>}></Table.Item>
+                    <Table.Item
+                        render={(r: itemsType) => <div className="whitespace-nowrap">{r.raceCategory}</div>}
+                    ></Table.Item>
                     <Table.Item render={(r: itemsType) => <div>{r.team}</div>}></Table.Item>
                 </Table>
             </div>
