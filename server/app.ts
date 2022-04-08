@@ -3,7 +3,12 @@ import cors from "cors";
 import express from "express";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
-import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
+import {
+    ClockListPlayer,
+    formatTimeNoSec,
+    sort,
+    UserCredentials
+    } from "@set/shared/dist";
 import { config } from "./config";
 import { createServer } from "http";
 import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
@@ -14,6 +19,7 @@ import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
+import { sortDesc } from "@set/shared/dist";
 import { stringify } from "csv-stringify";
 import { ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 
@@ -63,25 +69,44 @@ const writeJson = <T>(content: T, path: string) => {
     });
 };
 
+const readJsonAsync = async <T>(path: string) => {
+    const contents = await readFileAsync(resolve(path));
+    return JSON.parse(contents.toString()) as T;
+};
+
 const readCsv = async <T>(path: string) => {
     const data = await readFileAsync(resolve(path));
     return (await parseAsync(data, { columns: true })) as T;
 };
 
 const loadRaceResults = () => {
-    const fetches = [
+    const funFetches = [
         fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=3"),
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=1"),
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=4"),
-        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=2")
+        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=1")
     ];
 
-    Promise.all(fetches)
+    Promise.all(funFetches)
         .then(arr => arr.reduce((acc, arr) => [...acc, ...arr], []))
         .then(results => {
             writeJson(
                 sort(results, r => r.number),
-                "../timegonewresults.json"
+                "../results-fun-2022.json"
+            );
+            // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
+        })
+        .catch(() => console.log(`race.results.fetch.fail [${new Date().toLocaleString()}]`));
+
+    const proFetches = [
+        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=4"),
+        fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=8&did=2")
+    ];
+
+    Promise.all(proFetches)
+        .then(arr => arr.reduce((acc, arr) => [...acc, ...arr], []))
+        .then(results => {
+            writeJson(
+                sort(results, r => r.number),
+                "../results-pro-2022.json"
             );
             // console.log(`race.results.fetch.success [${new Date().toLocaleString()}]`);
         })
@@ -91,7 +116,7 @@ const loadRaceResults = () => {
 const loadTimeTrialResults = () => {
     getTimeTrialResults()
         .then(results => {
-            writeJson(results, "../timetrialresults.json");
+            writeJson(results, "../results-tt-2022.json");
             // console.log(`timetrial.results.fetch.success [${new Date().toLocaleString()}]`);
         })
         .catch(() => console.log(`timetrial.results.fetch.fail [${new Date().toLocaleString()}]`));
@@ -107,8 +132,16 @@ const run = async () => {
         });
     });
 
-    app.get("/race-results", (_, res) => {
-        readFile(resolve("../timegonewresults.json"), (err, text: any) => {
+    app.get("/pro-results", (_, res) => {
+        readFile(resolve("../results-pro-2022.json"), (err, text: any) => {
+            const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
+
+            res.json(playersResults);
+        });
+    });
+
+    app.get("/fun-results", (_, res) => {
+        readFile(resolve("../results-fun-2022.json"), (err, text: any) => {
             const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
 
             res.json(playersResults);
@@ -116,7 +149,7 @@ const run = async () => {
     });
 
     app.get("/timetrial-results", (_, res) => {
-        readFile(resolve("../timetrialresults.json"), (err, text: any) => {
+        readFile(resolve("../results-tt-2022.json"), (err, text: any) => {
             const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
 
             res.json(playersResults);
@@ -174,10 +207,14 @@ const run = async () => {
     });
 
     app.get("/timetrial-players", async (_, res) => {
-        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const result = players.map(toStartPlayerToPlayer);
+        const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const players = toStartPlayers.map(toStartPlayerToPlayer);
 
-        res.json(result);
+        const startTimes = await readJsonAsync<{ number: Number; startTime: number }[]>("../start-tt-2022.json");
+
+        const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
+
+        res.json(sort(result, p => p.startTime || Number.MAX_VALUE));
     });
 
     app.get("/players", (_, res) => {
@@ -197,16 +234,47 @@ const run = async () => {
         res.json(Date.now());
     });
 
-    app.post("/calculate-start-times", async (_, res) => {
+    app.post("/calculate-start-times", async (req, res) => {
+        const { includeGC } = req.body as { includeGC?: boolean };
+
         const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
         const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
-        const nonGcPlayers = timeTrialPlayers.filter(
+        const nonGCPlayers = timeTrialPlayers.filter(
             p => !gcPlayers.find(gp => p["Nr zawodnika"] === gp["Nr zawodnika"])
         );
 
-        console.log(gcPlayers.length, nonGcPlayers.length);
+        const sexToNumber = (sex: string) => (sex === "M" ? 1 : 0);
+
+        const nonGCWomanFirst = [...nonGCPlayers].sort((p1, p2) => sexToNumber(p1.Płeć) - sexToNumber(p2.Płeć));
+
+        const raceStartTime = 1649581200000;
+        const minute = 60_000;
+
+        const nonGCNumbersWithTimes = nonGCWomanFirst.map((p, i) => ({
+            number: Number(p["Nr zawodnika"]),
+            startTime: raceStartTime + i * minute + Math.floor(i / 10) * minute
+        }));
+
+        const lastNonGCStartTime = nonGCNumbersWithTimes.at(-1)?.startTime!;
+
+        const proResults = includeGC ? await readJsonAsync<PlayerResult[]>("../results-pro-2022.json") : [];
+
+        const GCSlowestFirst = sortDesc(
+            proResults.filter(p => p.status === "OK"),
+            r => r.result!
+        );
+
+        const GCNumbersWithTimes = GCSlowestFirst.map((p, i) => ({
+            number: Number(p.number),
+            startTime: lastNonGCStartTime + i * minute + 5 * minute
+        }));
+
+        const allTTStaringList = [...nonGCNumbersWithTimes, ...GCNumbersWithTimes];
+        writeJson(allTTStaringList, "../start-tt-2022.json");
+
+        res.json("ok");
     });
 
     app.post("/read-start-times", (_, res) => {});

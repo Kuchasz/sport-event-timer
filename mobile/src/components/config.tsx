@@ -33,8 +33,13 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const handleReadPlayerStartTimes = () => {
         readPlayersStartTimes();
     };
-    const handleCalculateStartTimes = () => {
-        calculateStartTimes();
+
+    const handleCalculateTTStartTimes = () => {
+        calculateStartTimes(false);
+    };
+
+    const handleCalculateAllStartTimes = () => {
+        calculateStartTimes(true);
     };
 
     const setTimeKeeperId = (timeKeeperId: number) => {
@@ -67,9 +72,16 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
             </div>
             <div className="py-4">
                 <PrimaryActionButton
-                    onClick={handleCalculateStartTimes}
+                    onClick={handleCalculateTTStartTimes}
                     icon={mdiUpload}
-                    contents={<strong>CALCULATE PLAYER START TIMES</strong>}
+                    contents={<strong>CALCULATE TT START TIMES</strong>}
+                />
+            </div>
+            <div className="py-4">
+                <PrimaryActionButton
+                    onClick={handleCalculateAllStartTimes}
+                    icon={mdiUpload}
+                    contents={<strong>CALCULATE ALL START TIMES</strong>}
                 />
             </div>
             <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">

@@ -16,7 +16,11 @@ export const getCountdownTime = (time: number) => {
     return 60_000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
 };
 
-export const formatTimeNoSec = (time: Date) => `${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}`;
+export const formatTimeNoSec = (time?: number) => {
+    if (!time) return "--:--";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
+};
 
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
