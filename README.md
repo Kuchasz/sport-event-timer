@@ -30,3 +30,4 @@ Application for making time measurements
 -   auto GC classification calculation
 -   SMS notification with the result
 -   fetching results from external system
+-   fix gallery photo download :heavy_check_mark:
