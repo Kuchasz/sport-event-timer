@@ -14,6 +14,7 @@ import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
+import { stringify } from "csv-stringify";
 import { ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
@@ -46,6 +47,12 @@ const parseAsync = (data: Buffer, options: any) =>
             res(results);
         })
     );
+const stringifyAsync = (data: any) =>
+    new Promise<string>((res, rej) => {
+        stringify(data, { header: true }, (err, str) => {
+            res(str);
+        });
+    });
 
 const writeJson = <T>(content: T, path: string) => {
     writeFile(resolve(path), JSON.stringify(content), err => {
@@ -114,6 +121,37 @@ const run = async () => {
 
             res.json(playersResults);
         });
+    });
+
+    app.get("/office-players", async (_, res) => {
+        const funplayers = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const proplayers = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const ttplayers = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+
+        const allPlayers = [...funplayers, ...proplayers, ...ttplayers];
+
+        const playersNumbers = new Set<string>(allPlayers.map(x => x["Nr zawodnika"]!));
+
+        const officePlayers = [...playersNumbers.values()].map(n => {
+            const races = allPlayers.filter(p => p["Nr zawodnika"] === n);
+            const [playerData] = races;
+
+            const officePlayer = {
+                ["Nr zawodnika"]: playerData["Nr zawodnika"],
+                ["Imię"]: playerData.Imię,
+                ["Nazwisko"]: playerData.Nazwisko,
+                ["Race"]: races.find(r => r.Klasyfikacja === "RnK PRO" || r.Klasyfikacja === "RnK FUN")?.Klasyfikacja,
+                ["Time Trial"]: races.find(r => r.Klasyfikacja === "RnK TT")?.Klasyfikacja
+            };
+
+            return officePlayer;
+        });
+
+        const playersCsv = await stringifyAsync(sort(officePlayers, o => Number(o["Nr zawodnika"])));
+
+        res.header("Content-Type", "text/csv");
+        res.attachment("office-players.csv");
+        return res.send(playersCsv);
     });
 
     app.get("/fun-players", async (_, res) => {

@@ -24,11 +24,12 @@ Application for making time measurements
 -   easier starting list fillout than passing .csv's
 -   beep in countdown watch :heavy_check_mark:
 -   more mobile-friendly results and starting list :heavy_check_mark:
--   times on time trial starting list
+-   times on time trial starting list :heavy_check_mark:
 -   persist countdown watch settings
 -   auto teams classifications
 -   auto GC classification calculation
 -   SMS notification with the result
--   fetching results from external system
+-   fetching results from external system :heavy_check_mark:
 -   fix gallery photo download :heavy_check_mark:
--   fullscreen mode for timer
+-   fullscreen mode for timer :heavy_check_mark:
+-   fix skipping seconds :heavy_check_mark:
