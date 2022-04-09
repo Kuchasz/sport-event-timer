@@ -1,7 +1,10 @@
 import Head from "next/head";
+import Icon from "@mdi/react";
+import Link from "next/link";
 import { formatTimeNoSec } from "@set/shared/dist";
 import { getFunRacePlayers, getProRacePlayers, getTimeTrialPlayers } from "api";
 import { Loader } from "../../components/loader";
+import { mdiKeyboardBackspace } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { Table } from "../../components/table";
 import { useEffect } from "react";
@@ -67,6 +70,12 @@ const StartingList = () => {
             <div className="p-8 ">
                 <h2 className="text-4xl font-semibold">{playersListsNames[race]}</h2>
                 <span>{players.length} zawodników</span>
+                <Link href="/lista">
+                    <span className="flex mt-2 cursor-pointer hover:text-orange-600">
+                        <Icon size={1} path={mdiKeyboardBackspace} />
+                        <span className="pl-2 font-semibold">Powrót do listy wyścigów</span>
+                    </span>
+                </Link>
             </div>
             <div className="w-full border-1 border-gray-600 border-solid">
                 <Table headers={headers} rows={result} getKey={r => String(r.number)}>
