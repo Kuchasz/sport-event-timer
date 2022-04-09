@@ -9,7 +9,7 @@ Application for making time measurements
 -   reset clocked out time :heavy_check_mark:
 -   clocked time adjustments by <button +0.1 sec /> | <button -0.1 sec /> :heavy_check_mark:
 -   autocomplete based on times from previous timekeepers :heavy_check_mark:
--   DNF/DSQ support
+-   DNF/DSQ support :heavy_check_mark:
 -   mobile friendly results list :heavy_check_mark:
 -   next and current player hint on watch :heavy_check_mark:
 -   make it harder to remove the timestamps :heavy_check_mark:
@@ -26,8 +26,8 @@ Application for making time measurements
 -   more mobile-friendly results and starting list :heavy_check_mark:
 -   times on time trial starting list :heavy_check_mark:
 -   persist countdown watch settings
--   auto teams classifications
--   auto GC classification calculation
+-   auto teams classifications :heavy_check_mark:
+-   auto GC classification calculation :heavy_check_mark:
 -   SMS notification with the result
 -   fetching results from external system :heavy_check_mark:
 -   fix gallery photo download :heavy_check_mark:
