@@ -83,8 +83,8 @@ const readCsv = async <T>(path: string) => {
 };
 
 const loadRaceResults = async () => {
-    const today = new Date();
-    if (today.getMonth() !== 3 && today.getDate() !== 9) return;
+    // const today = new Date();
+    // if (today.getMonth() !== 3 && today.getDate() !== 9) return;
 
     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
@@ -108,8 +108,8 @@ const loadRaceResults = async () => {
 };
 
 const loadTimeTrialResults = async () => {
-    const today = new Date();
-    if (today.getMonth() !== 3 && today.getDate() !== 10) return;
+    // const today = new Date();
+    // if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
     const timeTrialResults = await getTimeTrialResults();
     const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
@@ -404,8 +404,8 @@ const run = async () => {
         console.log("SERVER_STARTED_LISTENING");
     });
 
-    setInterval(loadRaceResults, 5000);
-    setInterval(loadTimeTrialResults, 5000);
+    setInterval(loadRaceResults, 10000);
+    setInterval(loadTimeTrialResults, 10000);
 };
 
 run();
