@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";

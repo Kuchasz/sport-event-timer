@@ -22,7 +22,7 @@ const Lista = () => {
                             <br />
                             <span>
                                 Zawodnicy startujący w klasyfikacji generalnej uwzględnieni zostali w wyścigach RnK PRO
-                                i RnK Time Trial.
+                                i RnK Time Trial. Wyniki odświeżaą się automatycznie co kilka sekund.
                                 <br />
                                 <br />
                                 <Anchor className="my-2" href={"/wyniki/gc/K18-99"}>

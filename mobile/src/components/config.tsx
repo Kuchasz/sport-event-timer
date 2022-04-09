@@ -1,4 +1,3 @@
-import { boolean } from "fp-ts";
 import {
     calculateGCStartTimes,
     calculateNonGCStartTimes,
