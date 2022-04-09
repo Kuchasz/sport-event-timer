@@ -3,14 +3,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import React from "react";
-import {
-    getFunRacePlayers,
-    getFunRaceResults,
-    getProRacePlayers,
-    getProRaceResults,
-    getTimeTrialPlayers,
-    getTimeTrialRaceResults
-    } from "../../../api";
+import { getGCPlayers, getGCResults } from "../../../api";
 import { Loader } from "../../../components/loader";
 import { mdiKeyboardBackspace, mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/model";
@@ -45,15 +38,7 @@ const filterByCategory = (category: Categories) => (player: Player) => {
     return player.raceCategory == category;
 };
 
-type Races = "pro" | "fun" | "tt";
-
-const racesTypes: Races[] = ["pro", "fun", "tt"];
-
-const races = {
-    pro: { getList: getProRacePlayers, getResults: getProRaceResults, title: "RnK PRO", distance: 106_100 },
-    fun: { getList: getFunRacePlayers, getResults: getFunRaceResults, title: "RnK FUN", distance: 53_620 },
-    tt: { getList: getTimeTrialPlayers, getResults: getTimeTrialRaceResults, title: "RnK Time Trial", distance: 10_700 }
-};
+type Races = "gc";
 
 const calculateFinalTimeStr = (status: string, result?: number) => {
     if (!result) return status ?? "--:--:--";
@@ -68,9 +53,9 @@ const calculateFinalTimeStr = (status: string, result?: number) => {
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-type Categories = "K18-29" | "K30-39" | "K40-99" | "M18-29" | "M30-39" | "M40-49" | "M50-59" | "M60-99";
+type Categories = "K18-99" | "M18-99";
 
-const categories: Categories[] = ["K18-29", "K30-39", "K40-99", "M18-29", "M30-39", "M40-49", "M50-59", "M60-99"];
+const categories: Categories[] = ["K18-99", "M18-99"];
 
 const ResultLink = ({
     race,
@@ -100,14 +85,8 @@ const ResultLink = ({
 );
 
 const namesForTypes = {
-    "K18-29": "K18-29",
-    "K30-39": "K30-39",
-    "K40-99": "K40-99",
-    "M18-29": "M18-29",
-    "M30-39": "M30-39",
-    "M40-49": "M40-49",
-    "M50-59": "M50-59",
-    "M60-99": "M60-99"
+    "K18-99": "K18-99",
+    "M18-99": "M18-99"
 };
 
 const ResultLinks = ({ category, race }: { category: Categories; race: Races }) => {
@@ -155,20 +134,18 @@ const ResultLinks = ({ category, race }: { category: Categories; race: Races }) 
 const Index = ({}: Props) => {
     const router = useRouter();
 
-    const { race, category } = router.query as { race: Races; category: Categories };
+    const { category } = router.query as { category: Categories };
 
     const [raceTimes, setRaceTimes] = useState<PlayerResult[]>();
     const [players, setPlayers] = useState<Player[]>();
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (racesTypes.includes(race)) {
-                races[race].getResults().then(setRaceTimes);
-                races[race].getList().then(setPlayers);
-            }
+            getGCResults().then(setRaceTimes);
+            getGCPlayers().then(setPlayers);
         }, 5000);
         return () => clearInterval(interval);
-    }, [race]);
+    }, []);
 
     if (!raceTimes || !players)
         return (
@@ -218,7 +195,7 @@ const Index = ({}: Props) => {
                 <title>Wyniki {category ? `- ${category}` : ""}</title>
             </Head>
             <div className="p-8 ">
-                <h2 className="text-4xl font-semibold">{races[race].title}</h2>
+                <h2 className="text-4xl font-semibold">Klasyfikacja generalna</h2>
                 <Link href="/wyniki">
                     <span className="flex mt-2 cursor-pointer hover:text-orange-600">
                         <Icon size={1} path={mdiKeyboardBackspace} />
@@ -227,7 +204,7 @@ const Index = ({}: Props) => {
                 </Link>
             </div>
             <div className="flex flex-col text-zinc-600">
-                <ResultLinks category={category} race={race} />
+                <ResultLinks category={category} race="gc" />
 
                 <Table headers={headers} rows={result} getKey={r => String(r.id)}>
                     <Table.Item render={(r: itemsType) => <div>{r.place}</div>}></Table.Item>
@@ -253,7 +230,7 @@ const Index = ({}: Props) => {
                     <Table.Item
                         render={(r: itemsType) => (
                             <div className="hidden lg:block">
-                                {r.result ? formatSpeed(r.result, races[race].distance) : ""}
+                                {r.result ? formatSpeed(r.result, 10_700 + 106_100) : ""}
                             </div>
                         )}
                     ></Table.Item>

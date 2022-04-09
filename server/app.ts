@@ -84,7 +84,7 @@ const readCsv = async <T>(path: string) => {
 
 const loadRaceResults = async () => {
     const today = new Date();
-    if (today.getMonth() !== 3 && today.getDay() !== 9) return;
+    if (today.getMonth() !== 3 && today.getDate() !== 9) return;
 
     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
@@ -109,7 +109,7 @@ const loadRaceResults = async () => {
 
 const loadTimeTrialResults = async () => {
     const today = new Date();
-    if (today.getMonth() !== 3 && today.getDay() !== 10) return;
+    if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
     const timeTrialResults = await getTimeTrialResults();
     const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
@@ -132,28 +132,49 @@ const run = async () => {
         });
     });
 
-    app.get("/pro-results", (_, res) => {
-        readFile(resolve("../results-pro-2022.json"), (err, text: any) => {
-            const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
-
-            res.json(playersResults);
-        });
+    app.get("/pro-results", async (_, res) => {
+        const proResults = await readFileAsync("../results-pro-2022.json");
+        res.header("Content-Type", "application/json");
+        res.send(proResults);
     });
 
-    app.get("/fun-results", (_, res) => {
-        readFile(resolve("../results-fun-2022.json"), (err, text: any) => {
-            const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
-
-            res.json(playersResults);
-        });
+    app.get("/fun-results", async (_, res) => {
+        const funResults = await readFileAsync("../results-fun-2022.json");
+        res.header("Content-Type", "application/json");
+        res.send(funResults);
     });
 
-    app.get("/timetrial-results", (_, res) => {
-        readFile(resolve("../results-tt-2022.json"), (err, text: any) => {
-            const playersResults: PlayerResult[] = err ? [] : JSON.parse(text);
+    app.get("/timetrial-results", async (_, res) => {
+        const timeTrialResults = await readFileAsync("../results-tt-2022.json");
+        res.header("Content-Type", "application/json");
+        res.send(timeTrialResults);
+    });
 
-            res.json(playersResults);
-        });
+    app.get("/gc-results", async (_, res) => {
+        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+        const timeTrialResults = await readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
+
+        const summaryResults = proResults
+            .map(pro => ({ pro, timeTrial: timeTrialResults.find(tt => pro.number === tt.number) }))
+            .filter(p => p.timeTrial !== undefined)
+            .map(p => ({
+                number: p.pro.number,
+                status: [p.pro.status, p.timeTrial!.status].includes("DSQ")
+                    ? "DSQ"
+                    : [p.pro.status, p.timeTrial!.status].includes("DNS")
+                    ? "DNS"
+                    : [p.pro.status, p.timeTrial!.status].includes("DNF")
+                    ? "DNF"
+                    : p.pro.status === "OK" && p.timeTrial!.status === "OK"
+                    ? "OK"
+                    : [p.pro.status, p.timeTrial!.status].find(s => s !== "OK"),
+                result:
+                    p.pro.status === "OK" && p.timeTrial!.status === "OK"
+                        ? p.pro.result! + p.timeTrial?.result!
+                        : undefined
+            }));
+
+        res.json(summaryResults);
     });
 
     app.get("/office-players", async (_, res) => {
@@ -215,6 +236,19 @@ const run = async () => {
         const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
 
         res.json(sort(result, p => p.startTime || Number.MAX_VALUE));
+    });
+
+    app.get("/gc-players", async (_, res) => {
+        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+
+        const gcPlayers = proPlayers
+            .map(pro => ({ pro, timeTrial: timeTrialPlayers.find(tt => pro["Nr zawodnika"] === tt["Nr zawodnika"]) }))
+            .filter(p => p.timeTrial !== undefined)
+            .map(p => ({ ...p.pro, Kategoria: p.pro.Płeć === "M" ? "M18-99" : "K18-99" }))
+            .map(toStartPlayerToPlayer);
+
+        res.json(gcPlayers);
     });
 
     app.get("/players", (_, res) => {
