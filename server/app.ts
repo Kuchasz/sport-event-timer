@@ -310,7 +310,8 @@ const run = async () => {
 
         const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
-        const lastNonGCStartTime = sort(nonGCNumbersWithTimes, t => t.startTime!).at(-1)?.startTime!;
+        const sorted = sort(nonGCNumbersWithTimes, t => t.startTime);
+        const lastNonGCStartTime = sorted[sorted.length-1].startTime!;
 
         const gcPlayersProResults = proResults.filter(p =>
             gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"]))
