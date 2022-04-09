@@ -68,25 +68,9 @@ const calculateFinalTimeStr = (status: string, result?: number) => {
 const getName = (name: string, lastName: string) => `${name} ${lastName}`;
 const getCompactName = (name: string, lastName: string) => `${name.slice(0, 1)}. ${lastName}`;
 
-type Categories =
-    // | ""
-    // | "open-k"
-    // | "open-m"
-    "K18-29" | "K30-39" | "K40-99" | "M18-29" | "M30-39" | "M40-49" | "M50-59" | "M60-99";
+type Categories = "K18-29" | "K30-39" | "K40-99" | "M18-29" | "M30-39" | "M40-49" | "M50-59" | "M60-99";
 
-const categories: Categories[] = [
-    // "",
-    // "open-k",
-    // "open-m",
-    "K18-29",
-    "K30-39",
-    "K40-99",
-    "M18-29",
-    "M30-39",
-    "M40-49",
-    "M50-59",
-    "M60-99"
-];
+const categories: Categories[] = ["K18-29", "K30-39", "K40-99", "M18-29", "M30-39", "M40-49", "M50-59", "M60-99"];
 
 const ResultLink = ({
     race,
@@ -116,9 +100,6 @@ const ResultLink = ({
 );
 
 const namesForTypes = {
-    "": "WSZYSCY",
-    "open-k": "OPEN K",
-    "open-m": "OPEN M",
     "K18-29": "K18-29",
     "K30-39": "K30-39",
     "K40-99": "K40-99",

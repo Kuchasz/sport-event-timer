@@ -38,15 +38,7 @@ app.use(express.urlencoded());
 app.use(express.json());
 const server = createServer(app);
 
-const minutesAgo = (minutes: number) => {
-    const currentTime = new Date(Date.now());
-    currentTime.setMilliseconds(0);
-    currentTime.setSeconds(0);
-
-    const currentTimeMinutesAgo = new Date(currentTime.getTime() - minutes * 60_000);
-    return currentTimeMinutesAgo.getTime();
-};
-type NumberTime = { number: Number; startTime: number };
+type NumberStartTime = { number: number; startTime: number };
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
@@ -91,6 +83,9 @@ const readCsv = async <T>(path: string) => {
 };
 
 const loadRaceResults = async () => {
+    const today = new Date();
+    if (today.getMonth() !== 3 && today.getDay() !== 9) return;
+
     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
 
@@ -112,13 +107,19 @@ const loadRaceResults = async () => {
     );
 };
 
-const loadTimeTrialResults = () => {
-    getTimeTrialResults()
-        .then(results => {
-            writeJson(results, "../results-tt-2022.json");
-            // console.log(`timetrial.results.fetch.success [${new Date().toLocaleString()}]`);
-        })
-        .catch(() => console.log(`timetrial.results.fetch.fail [${new Date().toLocaleString()}]`));
+const loadTimeTrialResults = async () => {
+    const today = new Date();
+    if (today.getMonth() !== 3 && today.getDay() !== 10) return;
+
+    const timeTrialResults = await getTimeTrialResults();
+    const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
+
+    const finalTimeTrialResults = timeTrialResults.map(r => ({
+        ...r,
+        ...timeTrialResultsOverrides.find(o => r.number === o.number)
+    }));
+
+    writeJson(finalTimeTrialResults, "../results-tt-2022.json");
 };
 
 const run = async () => {
@@ -209,7 +210,7 @@ const run = async () => {
         const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
         const players = toStartPlayers.map(toStartPlayerToPlayer);
 
-        const startTimes = await readJsonAsync<NumberTime[]>("../start-tt-2022.json");
+        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
         const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
 
@@ -326,21 +327,18 @@ const run = async () => {
         writeJson(state, "../state.json");
     });
 
-    app.get("/clock-players", (_, res) => {
-        readFile(resolve("../players.json"), (err, text: any) => {
-            const players: m.Player[] = err ? [] : JSON.parse(text);
-            const firstPlayerStart = minutesAgo(16);
-            const startTimeFromNumber = (number: number) => firstPlayerStart + 8_000 * number;
+    app.get("/clock-players", async (_, res) => {
+        const players = await readJsonAsync<m.Player[]>("../players.json");
+        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
-            const clockPlayers: ClockListPlayer[] = sort(players, p => p.number).map((p, i) => ({
-                number: p.number,
-                name: p.name,
-                lastName: p.lastName,
-                startTime: startTimeFromNumber(i)
-            }));
+        const clockPlayers: ClockListPlayer[] = sort(startTimes, p => p.number).map(t => ({
+            number: t.number,
+            name: players.find(p => t.number === p.number)?.name!,
+            lastName: players.find(p => t.number === p.number)?.lastName!,
+            startTime: t.startTime
+        }));
 
-            res.json(clockPlayers);
-        });
+        res.json(clockPlayers);
     });
 
     app.post("/log-in", async (req: TypedRequestBody<UserCredentials>, res: Response) => {
@@ -373,7 +371,7 @@ const run = async () => {
     });
 
     setInterval(loadRaceResults, 5000);
-    setInterval(loadTimeTrialResults, 10000);
+    setInterval(loadTimeTrialResults, 5000);
 };
 
 run();
