@@ -4,13 +4,12 @@ import Link from "next/link";
 import React from "react";
 import { getGCPlayers, getGCResults } from "../../api";
 import { Loader } from "../../components/loader";
-import { mdiKeyboardBackspace, mdiMenu } from "@mdi/js";
+import { mdiKeyboardBackspace } from "@mdi/js";
 import { Player } from "@set/timer/model";
 import { PlayerResult, sort } from "@set/shared/dist";
 import { Table } from "../../components/table";
 import { TimerState } from "@set/timer/store";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
 
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
