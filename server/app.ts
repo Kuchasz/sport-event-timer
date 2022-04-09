@@ -23,6 +23,7 @@ import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { stringify } from "csv-stringify";
 import { TimerState } from "../timer/store";
+import { upload } from "@set/timer/dist/slices/players";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -363,6 +364,8 @@ const run = async () => {
 
         writeJson(players, "../players.json");
         writeJson(state, "../state.json");
+
+        dispatch(upload(players));
     });
 
     app.get("/clock-players", async (_, res) => {
@@ -400,7 +403,7 @@ const run = async () => {
         res.sendStatus(401);
     });
 
-    await applyHub(server);
+    const dispatch = await applyHub(server);
 
     if (!isDevelopment) await applyResults(app);
 

@@ -40,7 +40,7 @@ const readCsv = <T>(path: string) => {
     });
 };
 
-export const apply = (server: HttpServer): Promise<void> => {
+export const apply = (server: HttpServer): Promise<any> => {
     const io = new Server(server, {
         serveClient: false,
         pingTimeout: 2000,
@@ -265,5 +265,5 @@ export const apply = (server: HttpServer): Promise<void> => {
         });
     });
 
-    return Promise.resolve();
+    return Promise.resolve(store.dispatch);
 };
