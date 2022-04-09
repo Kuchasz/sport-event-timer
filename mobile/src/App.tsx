@@ -14,31 +14,37 @@ import { PlayersDialPad } from "./components/players-dial-pad";
 import { PlayersList } from "./components/players-list";
 import { PlayersReassignTime } from "./components/players-reassign-time";
 import { PlayersTimes } from "./components/players-times";
+import { sort } from "@set/shared/dist";
 import { Status } from "./components/status";
 import { TweakTimeStamps } from "./components/tweak-time-stamp";
 import { useTimerDispatch, useTimerSelector } from "./hooks";
 
 function App() {
-    const allPlayers = useTimerSelector((x) => x.players);
-    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
-    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
-    const isOffline = useTimerSelector((x) => x.timeKeeperConfig?.connectionState !== "connected");
+    const allPlayers = useTimerSelector(x => x.players);
+    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const offset = useTimerSelector(x => x.timeKeeperConfig?.timeOffset);
+    const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
+    const isOffline = useTimerSelector(x => x.timeKeeperConfig?.connectionState !== "connected");
 
     const dispatch = useTimerDispatch();
 
     const playersWithTimeStamps = (timeKeeperId: number) =>
-        allPlayers.map((x) => ({
-            ...x,
-            timeStamp: allTimeStamps.find((a) => a.playerId === x.id && a.timeKeeperId === timeKeeperId)
-        }));
+        sort(
+            allPlayers.map(x => ({
+                ...x,
+                timeStamp: allTimeStamps.find(a => a.playerId === x.id && a.timeKeeperId === timeKeeperId)
+            })),
+            p => p.startTime || Number.MAX_VALUE
+        );
+
+    console.log(allPlayers);
 
     const timeStampsWithPlayers = (timeKeeperId: number) =>
         allTimeStamps
-            .filter((s) => s.timeKeeperId === timeKeeperId)
-            .map((s) => ({
+            .filter(s => s.timeKeeperId === timeKeeperId)
+            .map(s => ({
                 ...s,
-                player: allPlayers.find((p) => s.playerId === p.id)
+                player: allPlayers.find(p => s.playerId === p.id)
             }));
 
     return (
@@ -73,7 +79,7 @@ function App() {
                                             path={`${process.env.PUBLIC_URL}/list`}
                                             element={
                                                 <PlayersList
-                                                    onTimeRecord={(playerId) =>
+                                                    onTimeRecord={playerId =>
                                                         dispatch(
                                                             add({
                                                                 playerId,
@@ -82,7 +88,7 @@ function App() {
                                                             })
                                                         )
                                                     }
-                                                    onTimeReset={(timeStampId) => dispatch(reset({ id: timeStampId }))}
+                                                    onTimeReset={timeStampId => dispatch(reset({ id: timeStampId }))}
                                                     players={playersWithTimeStamps(timeKeeperId)}
                                                 />
                                             }
@@ -120,7 +126,7 @@ function App() {
                                             path={`${process.env.PUBLIC_URL}/tweak/:timeStampId`}
                                             element={
                                                 <TweakTimeStamps
-                                                    onSave={(timeStamp) => {
+                                                    onSave={timeStamp => {
                                                         dispatch(tweakTimeStamp(timeStamp));
                                                     }}
                                                 />

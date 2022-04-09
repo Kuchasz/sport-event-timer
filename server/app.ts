@@ -350,7 +350,10 @@ const run = async () => {
 
     app.post("/read-start-times", async (_, res) => {
         const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const players = toStartPlayers.map(toStartPlayerToPlayer);
+        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const players = toStartPlayers
+            .map(toStartPlayerToPlayer)
+            .map(p => ({ ...p, startTime: startTimes.find(s => p.number === s.number)?.startTime }));
         const state = await readJsonAsync<TimerState>("../state.json");
 
         state.players = players;
@@ -372,7 +375,7 @@ const run = async () => {
             startTime: t.startTime
         }));
 
-        res.json(clockPlayers);
+        res.json(sort(clockPlayers, p => p.startTime));
     });
 
     app.post("/log-in", async (req: TypedRequestBody<UserCredentials>, res: Response) => {
