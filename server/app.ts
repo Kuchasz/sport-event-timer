@@ -310,7 +310,7 @@ const run = async () => {
 
         const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
-        const sorted = sort(nonGCNumbersWithTimes, t => t.startTime);
+        const sorted = sort(nonGCNumbersWithTimes, t => t.startTime!);
         const lastNonGCStartTime = sorted[sorted.length-1].startTime!;
 
         const gcPlayersProResults = proResults.filter(p =>
