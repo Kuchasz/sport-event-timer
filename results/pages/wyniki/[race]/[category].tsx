@@ -50,7 +50,7 @@ type Races = "pro" | "fun" | "tt";
 const racesTypes: Races[] = ["pro", "fun", "tt"];
 
 const races = {
-    pro: { getList: getProRacePlayers, getResults: getProRaceResults, title: "RnK PRO", distance: 106_100 },
+    pro: { getList: getProRacePlayers, getResults: getProRaceResults, title: "RnK PRO", distance: 79_860 },
     fun: { getList: getFunRacePlayers, getResults: getFunRaceResults, title: "RnK FUN", distance: 53_620 },
     tt: { getList: getTimeTrialPlayers, getResults: getTimeTrialRaceResults, title: "RnK Time Trial", distance: 10_700 }
 };
