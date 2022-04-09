@@ -317,8 +317,8 @@ const run = async () => {
         );
 
         const GCSlowestFirst = sortDesc(
-            gcPlayersProResults.filter(p => p.status === "OK"),
-            r => r.result!
+            gcPlayersProResults,
+            r => r.result || Number.MAX_VALUE
         );
 
         const minute = 60_000;
