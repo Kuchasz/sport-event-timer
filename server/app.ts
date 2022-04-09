@@ -366,6 +366,7 @@ const run = async () => {
         writeJson(state, "../state.json");
 
         dispatch(upload(players));
+        res.send("OK")
     });
 
     app.get("/clock-players", async (_, res) => {
