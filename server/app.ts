@@ -85,7 +85,7 @@ const readCsv = async <T>(path: string) => {
 
 const loadRaceResults = async () => {
     const today = new Date();
-    if (today.getMonth() !== 3 && today.getDate() !== 9) return;
+    if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
@@ -312,16 +312,13 @@ const run = async () => {
         const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
         const sorted = sort(nonGCNumbersWithTimes, t => t.startTime!);
-        const lastNonGCStartTime = sorted[sorted.length-1].startTime!;
+        const lastNonGCStartTime = sorted[sorted.length - 1].startTime!;
 
         const gcPlayersProResults = proResults.filter(p =>
             gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"]))
         );
 
-        const GCSlowestFirst = sortDesc(
-            gcPlayersProResults,
-            r => r.result || Number.MAX_VALUE
-        );
+        const GCSlowestFirst = sortDesc(gcPlayersProResults, r => r.result || Number.MAX_VALUE);
 
         const minute = 60_000;
 
@@ -366,7 +363,7 @@ const run = async () => {
         writeJson(state, "../state.json");
 
         dispatch(upload(players));
-        res.send("OK")
+        res.send("OK");
     });
 
     app.get("/clock-players", async (_, res) => {
