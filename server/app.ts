@@ -12,7 +12,6 @@ import {
 import { config } from "./config";
 import { createServer } from "http";
 import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
-import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 import { login } from "./auth";
 import { parse } from "csv-parse";
 import { PlayerResult } from "../shared/index";
@@ -24,6 +23,7 @@ import { sortDesc } from "@set/shared/dist";
 import { stringify } from "csv-stringify";
 import { TimerState } from "../timer/store";
 import { upload } from "@set/timer/dist/slices/players";
+// import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
@@ -83,45 +83,45 @@ const readCsv = async <T>(path: string) => {
     return (await parseAsync(data, { columns: true })) as T;
 };
 
-const loadRaceResults = async () => {
-    const today = new Date();
-    if (today.getMonth() !== 3 && today.getDate() !== 10) return;
+// const loadRaceResults = async () => {
+//     const today = new Date();
+//     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
-    const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
-    const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
+//     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
+//     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
 
-    const finalFunResults = funResults.map(r => ({ ...r, ...funResultsOverrides.find(o => r.number === o.number) }));
+//     const finalFunResults = funResults.map(r => ({ ...r, ...funResultsOverrides.find(o => r.number === o.number) }));
 
-    writeJson(
-        sort(finalFunResults, r => r.number),
-        "../results-fun-2022.json"
-    );
+//     writeJson(
+//         sort(finalFunResults, r => r.number),
+//         "../results-fun-2022.json"
+//     );
 
-    const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
-    const proResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
+//     const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
+//     const proResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
 
-    const finalProResults = proResults.map(r => ({ ...r, ...proResultsOverrides.find(o => r.number === o.number) }));
+//     const finalProResults = proResults.map(r => ({ ...r, ...proResultsOverrides.find(o => r.number === o.number) }));
 
-    writeJson(
-        sort(finalProResults, r => r.number),
-        "../results-pro-2022.json"
-    );
-};
+//     writeJson(
+//         sort(finalProResults, r => r.number),
+//         "../results-pro-2022.json"
+//     );
+// };
 
-const loadTimeTrialResults = async () => {
-    const today = new Date();
-    if (today.getMonth() !== 3 && today.getDate() !== 10) return;
+// const loadTimeTrialResults = async () => {
+//     const today = new Date();
+//     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
-    const timeTrialResults = await getTimeTrialResults();
-    const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
+//     const timeTrialResults = await getTimeTrialResults();
+//     const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
 
-    const finalTimeTrialResults = timeTrialResults.map(r => ({
-        ...r,
-        ...timeTrialResultsOverrides.find(o => r.number === o.number)
-    }));
+//     const finalTimeTrialResults = timeTrialResults.map(r => ({
+//         ...r,
+//         ...timeTrialResultsOverrides.find(o => r.number === o.number)
+//     }));
 
-    writeJson(finalTimeTrialResults, "../results-tt-2022.json");
-};
+//     writeJson(finalTimeTrialResults, "../results-tt-2022.json");
+// };
 
 const run = async () => {
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
