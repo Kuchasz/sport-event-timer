@@ -409,8 +409,8 @@ const run = async () => {
         console.log("SERVER_STARTED_LISTENING");
     });
 
-    setInterval(loadRaceResults, 10000);
-    setInterval(loadTimeTrialResults, 10000);
+    // setInterval(loadRaceResults, 10000);
+    // setInterval(loadTimeTrialResults, 10000);
 };
 
 run();
