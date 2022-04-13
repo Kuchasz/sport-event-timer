@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { randomUUID } from "crypto";
 import { useEffect, useState } from "react";
 
 type Item = {
@@ -22,18 +23,18 @@ const rura = (url: string) => `https://galleries.azureedge.net/rura/${url}`;
 function Zdjecia() {
     const [directories, setDirectories] = useState<Directory[]>([]);
     useEffect(() => {
-        fetch(rura("index.json"))
-            .then((x) => x.json())
+        fetch(rura(`index.json?v=${randomUUID()}`))
+            .then(x => x.json())
             .then((dirs: Directory[]) =>
                 Promise.all(
-                    dirs.map((d) =>
+                    dirs.map(d =>
                         fetch(rura(`${d.dir}/photos.json`))
-                            .then((x) => x.json())
+                            .then(x => x.json())
                             .then((x: string[]) =>
                                 Promise.resolve({
                                     ...d,
                                     date: d.date.replace(/-/g, "."),
-                                    items: x.map((i) => ({
+                                    items: x.map(i => ({
                                         thumb: rura(`${d.dir}/thumb/${i}`),
                                         big: rura(`${d.dir}/big/${i}`),
                                         full: rura(`${d.dir}/full/${i}`)
@@ -54,7 +55,7 @@ function Zdjecia() {
             <div className="flex p-4 flex-col items-center">
                 <div className="flex flex-wrap">
                     {directories.length !== 0
-                        ? directories.map((d) => (
+                        ? directories.map(d => (
                               <Link key={d.dir} href={`zdjecia/${d.dir}`}>
                                   <div className="relative w-full md:w-1/3 cursor-pointer h-96">
                                       <img
