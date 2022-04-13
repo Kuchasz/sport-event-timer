@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import { randomUUID } from "crypto";
 import { useEffect, useState } from "react";
 
 type Item = {
@@ -23,7 +22,7 @@ const rura = (url: string) => `https://galleries.azureedge.net/rura/${url}`;
 function Zdjecia() {
     const [directories, setDirectories] = useState<Directory[]>([]);
     useEffect(() => {
-        fetch(rura(`index.json?v=${randomUUID()}`))
+        fetch(rura(`index.json?v=${Math.random()}`))
             .then(x => x.json())
             .then((dirs: Directory[]) =>
                 Promise.all(
