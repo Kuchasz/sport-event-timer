@@ -154,9 +154,10 @@ const run = async () => {
     app.get("/gc-results", async (_, res) => {
         const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
         const timeTrialResults = await readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
+        const timeTrialResultsMap = new Map(timeTrialResults.map(r => [r.number, r]));
 
         const summaryResults = proResults
-            .map(pro => ({ pro, timeTrial: timeTrialResults.find(tt => pro.number === tt.number) }))
+            .map(pro => ({ pro, timeTrial: timeTrialResultsMap.get(pro.number) }))
             .filter(p => p.timeTrial !== undefined)
             .map(p => ({
                 number: p.pro.number,
