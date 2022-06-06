@@ -140,10 +140,15 @@ const Index = ({}: Props) => {
     const [players, setPlayers] = useState<Player[]>();
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const fetchResults = () => {
             getGCResults().then(setRaceTimes);
             getGCPlayers().then(setPlayers);
-        }, 5000);
+        };
+        
+        fetchResults();
+        
+        const interval = setInterval(fetchResults, 5000);
+        
         return () => clearInterval(interval);
     }, []);
 
