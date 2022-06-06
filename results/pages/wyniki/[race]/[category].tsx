@@ -161,12 +161,17 @@ const Index = ({}: Props) => {
     const [players, setPlayers] = useState<Player[]>();
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const fetchResults = () => {
             if (racesTypes.includes(race)) {
                 races[race].getResults().then(setRaceTimes);
                 races[race].getList().then(setPlayers);
             }
-        }, 5000);
+        };
+        
+        fetchResults();
+        
+        const interval = setInterval(fetchResults, 5000);
+
         return () => clearInterval(interval);
     }, [race]);
 
