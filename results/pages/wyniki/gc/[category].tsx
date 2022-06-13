@@ -144,11 +144,11 @@ const Index = ({}: Props) => {
             getGCResults().then(setRaceTimes);
             getGCPlayers().then(setPlayers);
         };
-        
+
         fetchResults();
-        
+
         const interval = setInterval(fetchResults, 5000);
-        
+
         return () => clearInterval(interval);
     }, []);
 
@@ -235,7 +235,7 @@ const Index = ({}: Props) => {
                     <Table.Item
                         render={(r: itemsType) => (
                             <div className="hidden lg:block">
-                                {r.result ? formatSpeed(r.result, 10_700 + 106_100) : ""}
+                                {r.result ? formatSpeed(r.result, 10_700 + 79_860) : ""}
                             </div>
                         )}
                     ></Table.Item>
