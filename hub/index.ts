@@ -1,5 +1,6 @@
+import { arrayRange, uuidv4 } from "@set/shared";
 import { createStore } from "@set/timer/dist/store";
-import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
+import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "@set/timer/to-start";
 import { getAgeCategory } from "./players";
 import { parse } from "csv-parse/sync";
 import { Player } from "@set/timer/dist/model";
@@ -89,16 +90,23 @@ export const apply = (server: HttpServer): Promise<any> => {
             writeJson(state, "../state.json");
         });
 
-        socket.on("upload-players", playersCSV => {
-            console.log("upload-players");
-            const parsedPlayers: ToStartPlayer[] = parse(playersCSV, { columns: true });
+        socket.on("upload-players", toStartPlayersCSV => {
+            const parsedPlayers: ToStartPlayer[] = parse(toStartPlayersCSV, { columns: true });
+            const forbiddenNumbers = [179];
 
             if (parsedPlayers.length < 10) return;
 
-            const getNumber = (potentialNumber: number) =>
-                String(potentialNumber < 179 ? potentialNumber : potentialNumber + 1);
+            const paidPlayers = parsedPlayers
+                .filter(p => p["Status opłaty"] === "Opłacony")
+                .map(p => ({
+                    ...p,
+                    uid: uuidv4(),
+                    playerId: p["Adres email"] + p["Imię"] + p["Nazwisko"] + p["Data urodzenia"]
+                }));
 
-            const paidPlayers = parsedPlayers.filter(p => p["Status opłaty"] === "Opłacony");
+            let potentialNumbers = arrayRange(1, 1000)
+                .filter(pn => forbiddenNumbers.includes(pn) === false)
+                .reverse();
 
             const gcPlayers = paidPlayers.filter(p => p.Klasyfikacja === "GC");
             const nonGcPlayers = paidPlayers.filter(p => p.Klasyfikacja !== "GC");
@@ -106,53 +114,45 @@ export const apply = (server: HttpServer): Promise<any> => {
             const funPlayers = paidPlayers.filter(p => p.Klasyfikacja === "RnK FUN");
             const ttPlayers = paidPlayers.filter(p => p.Klasyfikacja === "RnK TT");
 
-            if (paidPlayers.filter(pp => pp["Adres email"] === undefined).length)
-                throw new Error("Any player does not have email");
-
-            if (gcPlayers.filter(gp => nonGcPlayers.find(ngc => gp["Adres email"] === ngc["Adres email"])).length)
+            if (gcPlayers.filter(gp => nonGcPlayers.find(ngc => gp["playerId"] === ngc["playerId"])).length)
                 throw new Error("The same player paid in GC and any other classification");
 
-            if (proPlayers.filter(pp => funPlayers.find(fp => pp["Adres email"] === fp["Adres email"])).length)
+            if (proPlayers.filter(pp => funPlayers.find(fp => pp["playerId"] === fp["playerId"])).length)
                 throw new Error("The same player paid in PRO and FUN classification");
 
-            if (proPlayers.filter(pp => ttPlayers.find(tp => pp["Adres email"] === tp["Adres email"])).length)
-                throw new Error("The same player paid in PRO and TT classification");
+            if (proPlayers.filter(pp => ttPlayers.find(tp => pp["playerId"] === tp["playerId"])).length)
+                throw new Error("The same player paid in PRO and TT classification separately");
 
-            const uniqueEmails = new Set<string>(paidPlayers.map(p => p["Adres email"]));
-            const emailsNumers = new Map<string, string>();
-
-            let lastIndex = 1;
+            const playerUids = new Set<string>(paidPlayers.map(p => p["uid"]));
+            const uidsNumbers = new Map<string, string>();
 
             gcPlayers.forEach((p, i) => {
-                emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
+                uidsNumbers.set(p["uid"], String(potentialNumbers.pop()));
             });
 
-            lastIndex += gcPlayers.length + 10;
+            potentialNumbers = potentialNumbers.slice(10);
 
             proPlayers.forEach((p, i) => {
-                emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
+                uidsNumbers.set(p["uid"], String(potentialNumbers.pop()));
             });
 
-            lastIndex += proPlayers.length + 10;
+            potentialNumbers = potentialNumbers.slice(10);
 
             funPlayers.forEach((p, i) => {
-                emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
+                uidsNumbers.set(p["uid"], String(potentialNumbers.pop()));
             });
 
-            lastIndex += funPlayers.length + 10;
+            potentialNumbers = potentialNumbers.slice(10);
 
-            ttPlayers
-                .filter(tp => emailsNumers.has(tp["Adres email"]) === false)
-                .forEach((p, i) => {
-                    emailsNumers.set(p["Adres email"], getNumber(lastIndex + i));
-                });
+            ttPlayers.forEach((p, i) => {
+                uidsNumbers.set(p["uid"], String(potentialNumbers.pop()));
+            });
 
-            if (uniqueEmails.size !== emailsNumers.size)
-                throw new Error("Emails may not be used as ids, emails are not unique");
+            if (playerUids.size !== uidsNumbers.size) throw new Error("Not all players got numbers");
 
             const paidPlayersWithNumbers = paidPlayers.map(p => ({
                 ...p,
-                ["Nr zawodnika"]: emailsNumers.get(p["Adres email"])
+                ["Nr zawodnika"]: uidsNumbers.get(p["uid"])
             }));
 
             //create staring list
@@ -185,66 +185,35 @@ export const apply = (server: HttpServer): Promise<any> => {
             const proRacePlayers = sort(
                 paidPlayersWithNumbers
                     .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK PRO")
-                    .map(p => ({ ...p, Klasyfikacja: "RnK PRO", Kategoria: getAgeCategory(p) })),
+                    .map(({ uid, playerId, ...p }) => ({
+                        ...p,
+                        Klasyfikacja: "RnK PRO",
+                        Kategoria: getAgeCategory(p)
+                    })),
                 p => Number(p["Nr zawodnika"]!)
             );
 
             const funRacePlayers = sort(
                 paidPlayersWithNumbers
                     .filter(p => p.Klasyfikacja === "RnK FUN")
-                    .map(p => ({ ...p, Klasyfikacja: "RnK FUN", Kategoria: getAgeCategory(p) })),
+                    .map(({ uid, playerId, ...p }) => ({
+                        ...p,
+                        Klasyfikacja: "RnK FUN",
+                        Kategoria: getAgeCategory(p)
+                    })),
                 p => Number(p["Nr zawodnika"]!)
             );
 
             const ttRacePlayers = sort(
                 paidPlayersWithNumbers
                     .filter(p => p.Klasyfikacja === "GC" || p.Klasyfikacja === "RnK TT")
-                    .map(p => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p) })),
+                    .map(({ uid, playerId, ...p }) => ({ ...p, Klasyfikacja: "RnK TT", Kategoria: getAgeCategory(p) })),
                 p => Number(p["Nr zawodnika"]!)
             );
 
             writeCsv(proRacePlayers, "../ls-pro-2022.csv");
             writeCsv(funRacePlayers, "../ls-fun-2022.csv");
             writeCsv(ttRacePlayers, "../ls-tt-2022.csv");
-
-            // const csvPaidPlayers = stringify(
-            //     sort(paidPlayersWithNumbers, p => p["Nr zawodnika"]!),
-            //     {
-            //         header: true
-            //     }
-            // );
-
-            // writeFile(resolve("../lista-startowa-rura-2022.csv"), csvPaidPlayers, e => {
-            //     if (e) console.log("An error occured while saving starting list");
-            // });
-
-            // const players = ttRacePlayers.map(toStartPlayerToPlayer);
-
-            // store.dispatch(upload(players));
-            // writeJson(players, "../players.json");
-            // const state = store.getState();
-            // writeJson(state, "../state.json");
-
-            // io.emit("receive-state", store.getState());
-
-            // console.log("upload-players");
-            // const parsedPlayers = parse(playersCSV, { columns: true }) as any[];
-            // const getGender = (genderText: "M" | "K") => (genderText === "M" ? "male" : "female");
-
-            // const players: Player[] = parsedPlayers
-            //     .filter((p) => p["Nr zawodnika"] !== "0")
-            //     .map((p, i) => ({
-            //         id: i,
-            //         name: p["Imię"],
-            //         lastName: p["Nazwisko"],
-            //         gender: getGender(p["Płeć"]),
-            //         birthYear: Number(p["Data urodzenia"].split(".")[2]),
-            //         number: Number(p["Nr zawodnika"]),
-            //         raceCategory: p["Kategoria"],
-            //         team: p["Nazwa klubu"],
-            //         city: p["Miasto"],
-            //         country: p["Państwo"]
-            //     }));
 
             // store.dispatch(upload(players));
             // writeJson(players, "../players-2022.json");
