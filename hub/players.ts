@@ -1,4 +1,4 @@
-import { ToStartPlayer } from "./to-start";
+import { ToStartPlayer } from "@set/timer/to-start";
 
 const ageCategories = [
     {

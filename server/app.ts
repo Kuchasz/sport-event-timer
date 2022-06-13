@@ -296,39 +296,39 @@ const run = async () => {
     });
 
     app.post("/calculate-gc-start-times", async (_, res) => {
-        const startTimes = await readJsonAsync<{ number: number; startTime: number }[]>("../start-tt-2022.json");
+        const existingStartTimes = await readJsonAsync<{ number: number; startTime: number }[]>(
+            "../start-tt-2022.json"
+        );
         const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
         const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
-        const nonGCPlayers = timeTrialPlayers.filter(
+        const timeTrialOnlyPlayers = timeTrialPlayers.filter(
             p => !gcPlayers.find(gp => p["Nr zawodnika"] === gp["Nr zawodnika"])
         );
 
-        const nonGCNumbersWithTimes = nonGCPlayers.map(p => ({
+        const timeTrialOnlyNumbersWithTimes = timeTrialOnlyPlayers.map(p => ({
             number: Number(p["Nr zawodnika"]),
-            startTime: startTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
+            startTime: existingStartTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
         }));
 
         const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
-        const sorted = sort(nonGCNumbersWithTimes, t => t.startTime!);
-        const lastNonGCStartTime = sorted[sorted.length - 1].startTime!;
+        const sorted = sort(timeTrialOnlyNumbersWithTimes, t => t.startTime!);
+        const lastTimeTrialOnlyStartTime = sorted[sorted.length - 1].startTime!;
 
-        const gcPlayersProResults = proResults.filter(p =>
-            gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"]))
-        );
+        const gcPlayersResults = proResults.filter(p => gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"])));
 
-        const GCSlowestFirst = sortDesc(gcPlayersProResults, r => r.result || Number.MAX_VALUE);
+        const gcFromWorstToBest = sortDesc(gcPlayersResults, r => r.result || Number.MAX_VALUE);
 
         const minute = 60_000;
 
-        const GCNumbersWithTimes = GCSlowestFirst.map((p, i) => ({
+        const gcNumbersWithTimes = gcFromWorstToBest.map((p, i) => ({
             number: Number(p.number),
-            startTime: lastNonGCStartTime + i * minute + 5 * minute
+            startTime: lastTimeTrialOnlyStartTime + i * minute + 5 * minute
         }));
 
-        const allTTStaringList = [...nonGCNumbersWithTimes, ...GCNumbersWithTimes];
+        const allTTStaringList = [...timeTrialOnlyNumbersWithTimes, ...gcNumbersWithTimes];
         writeJson(allTTStaringList, "../start-tt-2022.json");
 
         res.json("ok");
