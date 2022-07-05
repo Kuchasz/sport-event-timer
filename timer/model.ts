@@ -6,6 +6,43 @@ import { flow, increment, pipe } from "fp-ts/function";
 
 export type Gender = "male" | "female";
 
+export type Classification = {
+    name: string;
+    id: string;
+};
+
+export type RegistrationPlayer = {
+    id: number;
+    // number?: number; // !!!!!!!!
+    // chipNumber: number; // !!!!!!!
+    classificationId: string;
+    // category: string; // !!!!!!!
+    name: string;
+    lastName: string;
+    gender: Gender;
+    // age: number; // !!!!!!!!
+    birthDate: Date;
+    country: string;
+    city: string;
+    team: string;
+    email: string;
+    phoneNumber: string;
+    icePhoneNumber: string;
+    //["Anonimowy"]: string;
+    // ["Kwota przelewu"]: string;
+    // ["Kwota za start"]: string;
+    // ["Kwota za sklep"]: string;
+    // ["Kwota za ubezpieczenie"]: string;
+    // ["Data przelewu"]: string;
+    // ["Numer transakcji"]: string;
+    // ["Status opłaty"]: string;
+    // ["Data rejestracji"]: string;
+    // ["Nr GPS"]: string;
+    //["Status zawodnika"]: string;
+    // ["Notatka"]: string;
+    // ["Pliki"]: string;
+};
+
 export type Player = {
     id: number;
     name: string;

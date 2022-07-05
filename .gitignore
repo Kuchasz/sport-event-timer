@@ -36,5 +36,8 @@ time*.json
 ls*.csv
 ls*.xlsx
 hub/**/*.js
+timer/**/*.js
 results*.json
 start*.json
+uploaded*
+classifications.json

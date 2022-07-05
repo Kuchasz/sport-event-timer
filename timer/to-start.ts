@@ -1,3 +1,4 @@
+import { Classification, Gender } from "./model";
 import { Player } from "@set/timer/model";
 export type ToStartPlayer = {
     ["Nr zawodnika"]?: string;
@@ -29,6 +30,23 @@ export type ToStartPlayer = {
     ["Notatka"]: string;
     ["Pliki"]: string;
 };
+
+export const toStartPlayerTransform = (classifications: Classification[]) => ({
+    birthDate: { name: "Data urodzenia", transformation: (s: string) => new Date(s.split(".").reverse().join("-")) },
+    city: { name: "Miasto", transformation: String },
+    classificationId: {
+        name: "Klasyfikacja",
+        transformation: (s: string) => classifications.find(c => c.name === s)!.id
+    },
+    country: { name: "Państwo", transformation: String },
+    email: { name: "Adres email", transformation: String },
+    gender: { name: "Płeć", transformation: (s: string) => (s === "M" ? "male" : ("female" as Gender)) },
+    icePhoneNumber: { name: "Telefon ICE", transformation: String },
+    lastName: { name: "Nazwisko", transformation: String },
+    name: { name: "Imię", transformation: String },
+    phoneNumber: { name: "Telefon", transformation: String },
+    team: { name: "Nazwa klubu", transformation: String }
+});
 
 export const emptyToStartPlayer = {
     ["Nr chip"]: undefined,

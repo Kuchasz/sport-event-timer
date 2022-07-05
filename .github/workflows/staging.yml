@@ -3,11 +3,13 @@
 
 name: Staging.BuildDeploy
 
-on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+# on:
+#     push:
+#         branches:
+#             - main
+#     workflow_dispatch:
+
+on: workflow_dispatch
 
 jobs:
     build_shared:

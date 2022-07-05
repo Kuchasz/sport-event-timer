@@ -1,8 +1,8 @@
 {
-    "name": "@set/results",
+    "name": "@set/panel",
     "version": "1.0.0",
     "private": true,
-    "main": "dist/results/index.js",
+    "main": "dist/panel/index.js",
     "scripts": {
         "build": "next build && tsc --project tsconfig.json",
         "export": "next build && next export",
@@ -10,10 +10,6 @@
         "start:dev": "next dev"
     },
     "dependencies": {
-        "@types/simple-react-lightbox": "3.6.1",
-        "@types/socket.io-client": "^3.0.0",
-        "simple-react-lightbox": "3.6.9-0",
-        "socket.io-client": "^4.4.1",
         "@mdi/js": "^6.9.96",
         "@mdi/react": "^1.6.0",
         "@set/shared": "*",
@@ -24,16 +20,23 @@
         "@types/node": "^18.0.0",
         "@types/react": "^18.0.14",
         "@types/react-dom": "^18.0.5",
+        "@types/xlsx": "^0.0.36",
         "autoprefixer": "^10.4.7",
         "classnames": "^2.3.1",
+        "daisyui": "^2.18.0",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.5.25",
         "next": "^12.2.0",
         "next-pwa": "^5.5.4",
         "postcss": "^8.4.14",
         "react": "^18.2.0",
+        "react-daisyui": "^2.0.5",
+        "react-data-grid": "^7.0.0-beta.13",
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.1.4",
         "tailwindcss-classnames": "^3.0.5",
-        "typescript": "^4.7.4"
+        "typescript": "^4.7.4",
+        "xlsx": "^0.18.5"
     },
     "resolutions": {
         "@types/eslint": "8.4.3"
