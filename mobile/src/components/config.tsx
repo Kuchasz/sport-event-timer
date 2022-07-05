@@ -1,11 +1,13 @@
 import {
+    assignPlayerNumbers,
     calculateGCStartTimes,
     calculateNonGCStartTimes,
     readPlayersStartTimes,
-    stripLists
+    stripLists,
+    uploadClassifications,
+    uploadPlayers
     } from "../api";
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
-import { getConnection } from "../connection";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
 import { TimeKeeperIcon } from "./time-keeper-icon";
@@ -19,7 +21,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const [devModeEnabled, setDevModeEnabled] = useState<boolean>(false);
     const [devModeClicks, setDevModeClicks] = useState<number>(0);
 
-    const uploadPlayers = () => {
+    const triggerPlayersFileChooser = () => {
         inputFile?.current?.click();
     };
 
@@ -29,12 +31,25 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
             const reader = new FileReader();
 
             reader.onload = (e: ProgressEvent<FileReader>) => {
-                const socket = getConnection();
-                socket.emit("upload-players", e.target?.result);
+                uploadPlayers(e.target!.result! as string);
             };
 
             reader.readAsText(file);
         }
+    };
+
+    const handleUploadClassifications = () => {
+        uploadClassifications([
+            { name: "RnK PRO", id: "rnk_pro" },
+            { name: "RnK FUN", id: "rnk_fun" },
+            { name: "RnK TT", id: "rnk_tt" },
+            { name: "GC", id: "gc" }
+        ]);
+    };
+
+    const handleAssignPlayerNumbers = async () => {
+        const res = await assignPlayerNumbers();
+        console.log(res);
     };
 
     const handleReadPlayerStartTimes = () => {
@@ -81,11 +96,26 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
                     />
                     <div className="py-4">
                         <PrimaryActionButton
-                            onClick={uploadPlayers}
+                            onClick={triggerPlayersFileChooser}
                             icon={mdiUpload}
                             contents={<strong>UPLOAD PLAYERS</strong>}
                         />
                     </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleUploadClassifications}
+                            icon={mdiUpload}
+                            contents={<strong>UPLOAD CLASSIFICATIONS</strong>}
+                        />
+                    </div>
+                    <div className="py-4">
+                        <PrimaryActionButton
+                            onClick={handleAssignPlayerNumbers}
+                            icon={mdiUpload}
+                            contents={<strong>ASSIGN PLAYERS NUMBERS</strong>}
+                        />
+                    </div>
+
                     <div className="py-4">
                         <PrimaryActionButton
                             onClick={handleReadPlayerStartTimes}

@@ -37,8 +37,6 @@ function App() {
             p => p.startTime || Number.MAX_VALUE
         );
 
-    console.log(allPlayers);
-
     const timeStampsWithPlayers = (timeKeeperId: number) =>
         allTimeStamps
             .filter(s => s.timeKeeperId === timeKeeperId)

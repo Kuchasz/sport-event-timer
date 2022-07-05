@@ -5,7 +5,7 @@
     "main": "index.ts",
     "license": "MIT",
     "scripts": {
-        "start:dev": "set NODE_ENV=development&& ts-node app.ts --project tsconfig.json",
+        "start:dev": "set NODE_ENV=development&& ts-node-dev app.ts --project tsconfig.json",
         "dev": "nodemon",
         "build": "tsc --project tsconfig.json"
     },
@@ -14,15 +14,16 @@
         "@set/mobile": "*",
         "@set/results": "*",
         "@set/shared": "*",
+        "@types/cookie-parser": "^1.4.3",
         "@types/jsonwebtoken": "^8.5.8",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
-        "cross-env": "^7.0.2",
         "csv-parse": "^5.0.4",
         "dotenv": "^16.0.0",
+        "express": "^4.18.1",
         "jsonwebtoken": "^8.5.1",
         "node-html-parser": "^5.3.3",
-        "nodemon": "^2.0.4",
-        "ts-node": "^8.10.2",
+        "ts-node-dev": "^2.0.0",
         "typescript": "^4.4.3"
     }
 }

@@ -11,7 +11,11 @@
             "hub",
             "results",
             "server",
-            "shared"
+            "shared",
+            "panel"
         ]
+    },
+    "resolutions": {
+        "@types/eslint": "8.4.3"
     }
 }

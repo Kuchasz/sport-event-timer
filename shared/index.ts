@@ -24,6 +24,21 @@ export const formatTimeNoSec = (time?: number) => {
 
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
+export const areOverlapping = (A: { from: number; to: number }, B: { from: number; to: number }) => {
+    if (B.from <= A.from) {
+        return B.to >= A.from;
+    } else {
+        return B.from <= A.to;
+    }
+};
+
+export const inRange = (range: { from: number; to: number }, n: number) => range.from <= n && range.to >= n;
+
+export const rangeLength = (range: { from: number; to: number }) => range.to - range.from;
+
+export const createRange = (range: { from: number; to: number }) =>
+    Array.from({ length: rangeLength(range) }, (_, i) => range.from + i);
+
 export const getCurrentTime = (offset: number) => Date.now() + offset;
 
 export const sort = <T>(items: T[], func: (item: T) => number): T[] => {

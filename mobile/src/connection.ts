@@ -29,7 +29,7 @@ export const onConnectionStateChanged = (handler: ConnectionStateHandler) => {
 }; //possible memory leaks
 
 const runStateChangedHandlers = (s: ConnectionState) => {
-    onStateChangedHandlers.forEach((x) => x(s));
+    onStateChangedHandlers.forEach(x => x(s));
 };
 
 const registerStateChangeHandlers = (socket: Socket) => {
@@ -37,7 +37,7 @@ const registerStateChangeHandlers = (socket: Socket) => {
         runStateChangedHandlers("connected");
     });
 
-    socket.on("disconnect", (r) => {
+    socket.on("disconnect", r => {
         runStateChangedHandlers("disconnected");
     });
 
