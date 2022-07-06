@@ -1,9 +1,13 @@
+import * as fs from "./async-fs";
 import * as m from "@set/timer/model";
+import * as trpc from "@trpc/server";
+import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
+import { appRouter } from "./router";
 import { assignNumbersToPlayers, transform } from "@set/timer/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
 import {
@@ -33,6 +37,9 @@ import { TimerState } from "@set/timer/store";
 import { upload } from "@set/timer/dist/slices/players";
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 
+const createContext = ({ req, res }: trpcExpress.CreateExpressContextOptions) => ({}); // no context
+type Context = trpc.inferAsyncReturnType<typeof createContext>;
+
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -50,55 +57,27 @@ const corsOptions = {
     methods: "GET,POST,PUT,OPTIONS",
     allowedHeaders: ["Content-Type", "Authorization", "Accept"]
 };
+
 app.use(cors(corsOptions));
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+    "/api/trpc",
+    trpcExpress.createExpressMiddleware({
+        router: appRouter,
+        createContext
+    })
+);
 
 type NumberStartTime = { number: number; startTime: number };
-const readFileAsync = promisify(readFile);
-const writeFileAsync = promisify(writeFile);
-
-const parseCsvAsync = (data: Buffer | string, options: any) =>
-    new Promise<any>((res, _) =>
-        parse(data, options, (_, results) => {
-            res(results);
-        })
-    );
-
-const stringifyCsvAsync = (data: any) =>
-    new Promise<string>((res, _) => {
-        stringify(data, { header: true }, (_, str) => {
-            res(str);
-        });
-    });
-
-const writeCsvAsync = async <T>(content: T, path: string) => {
-    const contentCsvString = await stringifyCsvAsync(content);
-    await writeFileAsync(path, contentCsvString);
-};
-
-const writeJsonAsync = async <T>(content: T, path: string) => {
-    const json = JSON.stringify(content);
-    await writeFileAsync(resolve(path), json);
-};
-
-const readJsonAsync = async <T>(path: string) => {
-    const contents = await readFileAsync(resolve(path));
-    return JSON.parse(contents.toString()) as T;
-};
-
-const readCsvAsync = async <T>(path: string) => {
-    const data = await readFileAsync(resolve(path));
-    return (await parseCsvAsync(data, { columns: true })) as T;
-};
 
 // const loadRaceResults = async () => {
 //     const today = new Date();
 //     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
 //     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
-//     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
+//     const funResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
 
 //     const finalFunResults = funResults.map(r => ({ ...r, ...funResultsOverrides.find(o => r.number === o.number) }));
 
@@ -108,7 +87,7 @@ const readCsvAsync = async <T>(path: string) => {
 //     );
 
 //     const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
-//     const proResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
+//     const proResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
 
 //     const finalProResults = proResults.map(r => ({ ...r, ...proResultsOverrides.find(o => r.number === o.number) }));
 
@@ -123,7 +102,7 @@ const readCsvAsync = async <T>(path: string) => {
 //     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
 //     const timeTrialResults = await getTimeTrialResults();
-//     const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
+//     const timeTrialResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
 
 //     const finalTimeTrialResults = timeTrialResults.map(r => ({
 //         ...r,
@@ -137,28 +116,28 @@ const run = async () => {
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
     app.get("/timer/*", (_, res) => res.sendFile(requireModule("@set/mobile/build/index.html")));
     app.get("/state", async (_, res) => {
-        const data = await readFileAsync(resolve("../state.json"));
+        const data = await fs.readFileAsync(resolve("../state.json"));
         res.json(JSON.parse(data as any));
     });
 
     app.get("/pro-results", async (_, res) => {
-        const proResults = await readFileAsync("../results-pro-2022.json");
+        const proResults = await fs.readFileAsync("../results-pro-2022.json");
         res.json(proResults);
     });
 
     app.get("/fun-results", async (_, res) => {
-        const funResults = await readFileAsync("../results-fun-2022.json");
+        const funResults = await fs.readFileAsync("../results-fun-2022.json");
         res.json(funResults);
     });
 
     app.get("/timetrial-results", async (_, res) => {
-        const timeTrialResults = await readFileAsync("../results-tt-2022.json");
+        const timeTrialResults = await fs.readFileAsync("../results-tt-2022.json");
         res.json(timeTrialResults);
     });
 
     app.get("/gc-results", async (_, res) => {
-        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
-        const timeTrialResults = await readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
+        const proResults = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+        const timeTrialResults = await fs.readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
         const timeTrialResultsMap = new Map(timeTrialResults.map(r => [r.number, r]));
 
         const summaryResults = proResults
@@ -185,9 +164,9 @@ const run = async () => {
     });
 
     app.get("/office-players", async (_, res) => {
-        const funplayers = await readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
-        const proplayers = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
-        const ttplayers = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const funplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const proplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const ttplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
 
         const allPlayers = [...funplayers, ...proplayers, ...ttplayers];
 
@@ -212,34 +191,15 @@ const run = async () => {
             return officePlayer;
         });
 
-        const playersCsv = await stringifyCsvAsync(sort(officePlayers, o => Number(o["Nr zawodnika"])));
+        const playersCsv = await fs.stringifyCsvAsync(sort(officePlayers, o => Number(o["Nr zawodnika"])));
 
         res.header("Content-Type", "text/csv");
         res.attachment("office-players.csv");
         return res.send(playersCsv);
     });
 
-    app.get("/classifications", async (_, res) => {
-        const classifications = await readJsonAsync<Classification[]>("../classifications.json");
-        res.json(classifications);
-    });
-
-    app.post("/classifications", verify, async (req: TypedRequestBody<m.Classification[]>, res) => {
-        const classifications = req.body;
-
-        await writeJsonAsync(classifications, "../classifications.json");
-        res.json("ok");
-    });
-
-    app.get("/players/:classification", async (req, res) => {
-        const { classification } = req.params;
-        const players = await readCsvAsync<RegistrationPlayer[]>("../uploaded-players.csv");
-
-        res.json(players.filter(p => classification === "all" || p.classificationId === classification));
-    });
-
     app.get("/fun-players", async (_, res) => {
-        const players: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const players: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
 
         const result = players.map(toStartPlayerToPlayer);
 
@@ -247,17 +207,17 @@ const run = async () => {
     });
 
     app.get("/pro-players", async (_, res) => {
-        const players: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const players: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
         const result = players.map(toStartPlayerToPlayer);
 
         res.json(result);
     });
 
     app.get("/timetrial-players", async (_, res) => {
-        const toStartPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const toStartPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
         const players = toStartPlayers.map(toStartPlayerToPlayer);
 
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
         const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
 
@@ -265,8 +225,8 @@ const run = async () => {
     });
 
     app.get("/gc-players", async (_, res) => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = proPlayers
             .map(pro => ({ pro, timeTrial: timeTrialPlayers.find(tt => pro["Nr zawodnika"] === tt["Nr zawodnika"]) }))
@@ -278,7 +238,7 @@ const run = async () => {
     });
 
     app.get("/players", async (_, res) => {
-        const data = await readFileAsync(resolve("../players.json"));
+        const data = await fs.readFileAsync(resolve("../players.json"));
         const players: m.Player[] = JSON.parse(data as any);
         res.json(players);
     });
@@ -294,12 +254,12 @@ const run = async () => {
     });
 
     app.post("/upload-players", verify, async (req: TypedRequestBody<{ playersCSV: string }>, res) => {
-        const parsedPlayers: ToStartPlayer[] = await parseCsvAsync(req.body.playersCSV, {
+        const parsedPlayers: ToStartPlayer[] = await fs.parseCsvAsync(req.body.playersCSV, {
             columns: true,
             encoding: "utf-8"
         });
 
-        const classifications = await readJsonAsync<Classification[]>("../classifications.json");
+        const classifications = await fs.readJsonAsync<Classification[]>("../classifications.json");
 
         const formatBirthDate = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDay()}`;
 
@@ -309,12 +269,12 @@ const run = async () => {
             id: id + 1
         }));
 
-        await writeJsonAsync(uploadedPlayers, resolve("../uploaded-players.json"));
+        await fs.writeJsonAsync(uploadedPlayers, resolve("../uploaded-players.json"));
         res.json("ok");
     });
 
     app.post("/assign-numbers", verify, async (_, res) => {
-        const registeredPlayers = await readJsonAsync<RegistrationPlayer[]>("../uploaded-players.json");
+        const registeredPlayers = await fs.readJsonAsync<RegistrationPlayer[]>("../uploaded-players.json");
 
         const result = assignNumbersToPlayers(
             registeredPlayers,
@@ -329,13 +289,13 @@ const run = async () => {
             p => p.classificationId
         );
 
-        await writeJsonAsync(result.playersNumbers, "../players-numbers.json");
+        await fs.writeJsonAsync(result.playersNumbers, "../players-numbers.json");
         res.json("ok");
     });
 
     app.post("/calculate-nongc-start-times", verify, async (req, res) => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
         const nonGCPlayers = timeTrialPlayers.filter(
@@ -354,16 +314,16 @@ const run = async () => {
             startTime: raceStartTime + i * minute + Math.floor(i / 10) * minute
         }));
 
-        writeJsonAsync(nonGCNumbersWithTimes, "../start-tt-2022.json");
+        fs.writeJsonAsync(nonGCNumbersWithTimes, "../start-tt-2022.json");
         res.json("ok");
     });
 
     app.post("/calculate-gc-start-times", verify, async (_, res) => {
-        const existingStartTimes = await readJsonAsync<{ number: number; startTime: number }[]>(
+        const existingStartTimes = await fs.readJsonAsync<{ number: number; startTime: number }[]>(
             "../start-tt-2022.json"
         );
-        const timeTrialPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
         const timeTrialOnlyPlayers = timeTrialPlayers.filter(
@@ -375,7 +335,7 @@ const run = async () => {
             startTime: existingStartTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
         }));
 
-        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+        const proResults = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
         const sorted = sort(timeTrialOnlyNumbersWithTimes, t => t.startTime!);
         const lastTimeTrialOnlyStartTime = sorted[sorted.length - 1].startTime!;
@@ -392,47 +352,47 @@ const run = async () => {
         }));
 
         const allTTStaringList = [...timeTrialOnlyNumbersWithTimes, ...gcNumbersWithTimes];
-        writeJsonAsync(allTTStaringList, "../start-tt-2022.json");
+        fs.writeJsonAsync(allTTStaringList, "../start-tt-2022.json");
 
         res.json("ok");
     });
 
     app.post("/strip-lists", verify, async () => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
-        const funPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const funPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
 
         const minProRacePlayers = proPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
         const minFunRacePlayers = funPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
         const minTimetrialRacePlayers = timeTrialPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
 
-        await writeCsvAsync(minProRacePlayers, "../ls-min-pro-2022.csv");
-        await writeCsvAsync(minFunRacePlayers, "../ls-min-fun-2022.csv");
-        await writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
+        await fs.writeCsvAsync(minProRacePlayers, "../ls-min-pro-2022.csv");
+        await fs.writeCsvAsync(minFunRacePlayers, "../ls-min-fun-2022.csv");
+        await fs.writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
     });
 
     app.post("/read-start-times", verify, async (_, res) => {
-        const toStartPlayers: ToStartPlayer[] = await readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const toStartPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
         const players = toStartPlayers
             .map(toStartPlayerToPlayer)
             .map(p => ({ ...p, startTime: startTimes.find(s => p.number === s.number)?.startTime }));
-        const state = await readJsonAsync<TimerState>("../state.json");
+        const state = await fs.readJsonAsync<TimerState>("../state.json");
 
         state.players = players;
         state.timeStamps = [];
         state.actionsHistory = [];
 
-        writeJsonAsync(players, "../players.json");
-        writeJsonAsync(state, "../state.json");
+        fs.writeJsonAsync(players, "../players.json");
+        fs.writeJsonAsync(state, "../state.json");
 
         dispatch(upload(players));
         res.send("OK");
     });
 
     app.get("/clock-players", async (_, res) => {
-        const players = await readJsonAsync<m.Player[]>("../players.json");
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const players = await fs.readJsonAsync<m.Player[]>("../players.json");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
         const clockPlayers: ClockListPlayer[] = sort(startTimes, p => p.number).map(t => ({
             number: t.number,

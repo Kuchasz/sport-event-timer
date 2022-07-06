@@ -4,7 +4,6 @@ import {
     calculateNonGCStartTimes,
     readPlayersStartTimes,
     stripLists,
-    uploadClassifications,
     uploadPlayers
     } from "../api";
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
@@ -36,15 +35,6 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
 
             reader.readAsText(file);
         }
-    };
-
-    const handleUploadClassifications = () => {
-        uploadClassifications([
-            { name: "RnK PRO", id: "rnk_pro" },
-            { name: "RnK FUN", id: "rnk_fun" },
-            { name: "RnK TT", id: "rnk_tt" },
-            { name: "GC", id: "gc" }
-        ]);
     };
 
     const handleAssignPlayerNumbers = async () => {
@@ -99,13 +89,6 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
                             onClick={triggerPlayersFileChooser}
                             icon={mdiUpload}
                             contents={<strong>UPLOAD PLAYERS</strong>}
-                        />
-                    </div>
-                    <div className="py-4">
-                        <PrimaryActionButton
-                            onClick={handleUploadClassifications}
-                            icon={mdiUpload}
-                            contents={<strong>UPLOAD CLASSIFICATIONS</strong>}
                         />
                     </div>
                     <div className="py-4">

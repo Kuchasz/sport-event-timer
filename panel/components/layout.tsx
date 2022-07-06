@@ -19,7 +19,8 @@ const navItems = [
     { text: "Players", icon: mdiAccountGroup, to: "/players" },
     { text: "Classifications", icon: mdiAccountCogOutline, to: "/classifications" },
     { text: "Times", icon: mdiAlarm, to: "/" },
-    { text: "Results", icon: mdiTimetable, to: "/" }
+    { text: "Results", icon: mdiTimetable, to: "/" },
+    { text: "Say hay!", icon: mdiTimetable, to: "/hello" }
 ];
 
 const Layout = ({ children }: Props) => {

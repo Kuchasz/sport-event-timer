@@ -42,12 +42,12 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                                 <span className="label-text">Classification</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Select>
+                            <Select initialValue={undefined}>
                                 <Select.Option value="rnk_pro">RnK PRO</Select.Option>
                                 <Select.Option value="rnk_fun">RnK FUN</Select.Option>
                                 <Select.Option value="rnk_tt">RnK TT</Select.Option>
                                 <Select.Option value="gc">GC</Select.Option>
-                                <Select.Option value={undefined} disabled selected></Select.Option>
+                                <Select.Option value={undefined} disabled></Select.Option>
                             </Select>
                         </div>
                     </div>
@@ -74,10 +74,10 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                                 <span className="label-text">Gender</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Select>
+                            <Select initialValue={undefined}>
                                 <Select.Option value="female">Female</Select.Option>
                                 <Select.Option value="male">Male</Select.Option>
-                                <Select.Option value={undefined} disabled selected></Select.Option>
+                                <Select.Option value={undefined} disabled></Select.Option>
                             </Select>
                         </div>
                         <div className="p-2"></div>

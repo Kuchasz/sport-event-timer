@@ -72,7 +72,7 @@ export const PlayerEdit = ({ isOpen, editedPlayer, onCancel, onEdit }: PlayerEdi
                             <span className="label-text">Birth Date</span>
                             <span className="label-text-alt">Required</span>
                         </label>
-                        <Input />
+                        <Input value={editedPlayer?.birthDate.toString()} />
                     </div>
                 </div>
                 <div>
