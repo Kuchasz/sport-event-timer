@@ -5,9 +5,9 @@ import { Button } from "react-daisyui";
 import { Classification } from "@set/timer/model";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
-import { getClassifications } from "../api";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
-import { useEffect, useMemo, useState } from "react";
+import { trpc } from "../trpc";
+import { useMemo, useState } from "react";
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {
@@ -29,7 +29,7 @@ const columns: Column<Classification, unknown>[] = [
 // const sortColumns = columns.slice(1).map(x => x.key);
 
 const Classifications = () => {
-    const [classifications, setClassifications] = useState<Classification[]>([]);
+    const { data: classifications } = trpc.useQuery(["classification.classifications"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -37,6 +37,7 @@ const Classifications = () => {
     const [edited, setEdited] = useState<Classification | undefined>(undefined);
 
     const sortedPlayers = useMemo((): readonly Classification[] => {
+        if (!classifications) return [];
         if (sortColumns.length === 0) return classifications;
 
         return [...classifications].sort((a, b) => {
@@ -59,10 +60,6 @@ const Classifications = () => {
         setEdited(e);
         setEditVisible(!editVisible);
     };
-
-    useEffect(() => {
-        getClassifications().then(setClassifications);
-    }, []);
 
     return (
         <>
@@ -98,7 +95,6 @@ const Classifications = () => {
                         resizable: true
                     }}
                     onRowDoubleClick={e => toggleEditVisible(e)}
-                    onRowsChange={setClassifications}
                     onSortColumnsChange={setSortColumns}
                     columns={columns}
                     rows={sortedPlayers}

@@ -1,18 +1,13 @@
 import Layout from "../components/layout";
+import superjson from "superjson";
 import { AppProps } from "next/app";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { useEffect } from "react";
+import { withTRPC } from "@trpc/next";
 import "../globals.scss";
-import type { NextPage } from "next";
 
-type NextPageWithLayout = NextPage & {
-    getLayout?: (page: ReactElement) => ReactNode;
-};
+import type { AppRouter } from "@set/server/router";
 
-type AppPropsWithLayout = AppProps & {
-    Component: NextPageWithLayout;
-};
-
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -34,3 +29,28 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         </Layout>
     );
 }
+
+export default withTRPC<AppRouter>({
+    config({ ctx }) {
+        /**
+         * If you want to use SSR, you need to use the server's full URL
+         * @link https://trpc.io/docs/ssr
+         */
+        const url = process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}/api/trpc`
+            : "http://localhost:21822/api/trpc";
+
+        return {
+            url,
+            transformer: superjson
+            /**
+             * @link https://react-query.tanstack.com/reference/QueryClient
+             */
+            // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+        };
+    },
+    /**
+     * @link https://trpc.io/docs/ssr
+     */
+    ssr: true
+})(MyApp);

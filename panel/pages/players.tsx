@@ -1,29 +1,13 @@
-import DataGrid, {
-    Column,
-    EditorProps,
-    SortColumn,
-    TextEditor
-    } from "react-data-grid";
+import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import {
-    Button,
-    Input,
-    InputGroup,
-    Modal,
-    Select
-    } from "react-daisyui";
+import { Button } from "react-daisyui";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
 import { Gender, RegistrationPlayer } from "@set/timer/model";
-import { getAllPlayers } from "../api";
-import {
-    mdiAccountMultiplePlus,
-    mdiContentSaveCheck,
-    mdiNumeric,
-    mdiPlus
-    } from "@mdi/js";
+import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
+import { trpc } from "../trpc";
 import { useEffect, useMemo, useState } from "react";
 
 type Comparator = (a: RegistrationPlayer, b: RegistrationPlayer) => number;
@@ -103,13 +87,14 @@ const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>
 };
 
 const StartingList = () => {
-    const [players, setPlayers] = useState<RegistrationPlayer[]>([]);
+    const { data: players } = trpc.useQuery(["player.players", "all"]);
     const [createVisible, setCreateVisible] = useState<boolean>(false);
     const [editVisible, setEditVisible] = useState<boolean>(false);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
     const [edited, setEdited] = useState<RegistrationPlayer | undefined>(undefined);
 
     const sortedPlayers = useMemo((): readonly RegistrationPlayer[] => {
+        if (!players) return [];
         if (sortColumns.length === 0) return players;
 
         return [...players].sort((a, b) => {
@@ -123,10 +108,6 @@ const StartingList = () => {
             return 0;
         });
     }, [players, sortColumns]);
-
-    useEffect(() => {
-        getAllPlayers().then(setPlayers);
-    }, []);
 
     const toggleCreateVisible = () => {
         setCreateVisible(!createVisible);
@@ -146,7 +127,6 @@ const StartingList = () => {
                 resizable: true
             }}
             onRowDoubleClick={e => toggleEditVisible(e)}
-            onRowsChange={setPlayers}
             onSortColumnsChange={setSortColumns}
             columns={columns}
             rows={sortedPlayers}

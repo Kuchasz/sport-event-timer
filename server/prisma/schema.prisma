@@ -1,0 +1,83 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./database.db"
+}
+
+model Race {
+    id              Int              @id
+    name            String
+    classifications Classification[]
+}
+
+model Classification {
+    id      String       @id
+    name    String
+    race    Race         @relation(fields: [raceId], references: [id])
+    raceId  Int
+    players RacePlayer[]
+
+    @@unique([id, raceId])
+}
+
+model RacePlayer {
+    id                 Int            @id @default(autoincrement())
+    // name             String
+    // lastName         String
+    // birthDate        DateTime
+    // gender           String
+    // team             String
+    classification     Classification @relation(fields: [classificationId], references: [id])
+    classificationId   String
+    profile            PlayerProfile  @relation(fields: [playerProfileId], references: [id])
+    playerProfileId    Int
+    registeredBy       User           @relation(fields: [registeredByUserId], references: [id])
+    registeredByUserId Int
+    // city             String
+    // country          String
+    // email            String
+    // phoneNumber      String
+    // icePhoneNumber   String
+}
+
+model PlayerProfile {
+    id             Int          @id @default(autoincrement())
+    name           String
+    lastName       String
+    birthDate      DateTime
+    gender         String
+    team           String
+    city           String
+    country        String
+    email          String
+    phoneNumber    String
+    icePhoneNumber String
+    racePlayer     RacePlayer[]
+    user           User[]
+}
+
+model User {
+    id                Int           @id @default(autoincrement())
+    login             String
+    password          String
+    profile           PlayerProfile @relation(fields: [playerProfileId], references: [id])
+    playerProfileId   Int
+    registeredPlayers RacePlayer[]
+}
+
+// model Player {
+//     id             Int      @id @default(autoincrement())
+//     name           String
+//     lastName       String
+//     birthDate      DateTime
+//     gender         String
+//     team           String
+//     city           String
+//     country        String
+//     email          String
+//     phoneNumber    String
+//     icePhoneNumber String
+// }
