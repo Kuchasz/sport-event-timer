@@ -1,6 +1,6 @@
 {
     "name": "@set/mobile",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
     "homepage": "https://wss.set-hub.pyszstudio.pl/timer/",
     "main": "build",
@@ -10,8 +10,8 @@
         "@mdi/js": "^6.5.95",
         "@mdi/react": "^1.5.0",
         "@reduxjs/toolkit": "^1.8.0",
-        "@set/shared": "*",
-        "@set/timer": "*",
+        "@set/shared": "1.0.0",
+        "@set/timer": "1.0.0",
         "@testing-library/jest-dom": "^5.16.2",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^13.5.0",

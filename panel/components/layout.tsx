@@ -4,6 +4,7 @@ import {
     mdiAccountCogOutline,
     mdiAccountGroup,
     mdiAlarm,
+    mdiBikeFast,
     mdiHome,
     mdiTimetable
     } from "@mdi/js";
@@ -20,6 +21,7 @@ const navItems = [
     { text: "Classifications", icon: mdiAccountCogOutline, to: "/classifications" },
     { text: "Times", icon: mdiAlarm, to: "/" },
     { text: "Results", icon: mdiTimetable, to: "/" },
+    { text: "Races", icon: mdiBikeFast, to: "/races" },
     { text: "Say hay!", icon: mdiTimetable, to: "/hello" }
 ];
 

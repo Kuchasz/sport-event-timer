@@ -2,12 +2,13 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
-import { Classification } from "@set/timer/model";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
+import { InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
-import { trpc } from "../trpc";
 import { useMemo, useState } from "react";
+
+type Classification = InferQueryOutput<"classification.classifications">[0];
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {
@@ -30,6 +31,7 @@ const columns: Column<Classification, unknown>[] = [
 
 const Classifications = () => {
     const { data: classifications } = trpc.useQuery(["classification.classifications"]);
+    const updateClassificationMutation = trpc.useMutation(["classification.update"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -61,6 +63,11 @@ const Classifications = () => {
         setEditVisible(!editVisible);
     };
 
+    const classificationEdit = async (classification: Classification) => {
+        await updateClassificationMutation.mutateAsync(classification);
+        toggleEditVisible(undefined);
+    };
+
     return (
         <>
             <Head>
@@ -84,7 +91,7 @@ const Classifications = () => {
                 <ClassificationEdit
                     isOpen={editVisible}
                     onCancel={() => toggleEditVisible()}
-                    onEdit={() => {}}
+                    onEdit={classificationEdit}
                     editedClassification={edited}
                 />
                 <DataGrid

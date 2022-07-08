@@ -8,43 +8,21 @@ datasource db {
 }
 
 model Race {
-    id              Int              @id
+    id              Int              @id @default(autoincrement())
     name            String
     classifications Classification[]
 }
 
 model Classification {
-    id      String       @id
+    id      Int      @id @default(autoincrement())
     name    String
-    race    Race         @relation(fields: [raceId], references: [id])
+    race    Race     @relation(fields: [raceId], references: [id])
     raceId  Int
-    players RacePlayer[]
-
-    @@unique([id, raceId])
+    players Player[]
 }
 
-model RacePlayer {
-    id                 Int            @id @default(autoincrement())
-    // name             String
-    // lastName         String
-    // birthDate        DateTime
-    // gender           String
-    // team             String
-    classification     Classification @relation(fields: [classificationId], references: [id])
-    classificationId   String
-    profile            PlayerProfile  @relation(fields: [playerProfileId], references: [id])
-    playerProfileId    Int
-    registeredBy       User           @relation(fields: [registeredByUserId], references: [id])
-    registeredByUserId Int
-    // city             String
-    // country          String
-    // email            String
-    // phoneNumber      String
-    // icePhoneNumber   String
-}
-
-model PlayerProfile {
-    id             Int          @id @default(autoincrement())
+model Player {
+    id             Int      @id @default(autoincrement())
     name           String
     lastName       String
     birthDate      DateTime
@@ -55,29 +33,16 @@ model PlayerProfile {
     email          String
     phoneNumber    String
     icePhoneNumber String
-    racePlayer     RacePlayer[]
-    user           User[]
+
+    classification     Classification @relation(fields: [classificationId], references: [id])
+    classificationId   Int
+    registeredBy       User           @relation(fields: [registeredByUserId], references: [id])
+    registeredByUserId Int
 }
 
 model User {
-    id                Int           @id @default(autoincrement())
+    id                Int      @id @default(autoincrement())
     login             String
     password          String
-    profile           PlayerProfile @relation(fields: [playerProfileId], references: [id])
-    playerProfileId   Int
-    registeredPlayers RacePlayer[]
+    registeredPlayers Player[]
 }
-
-// model Player {
-//     id             Int      @id @default(autoincrement())
-//     name           String
-//     lastName       String
-//     birthDate      DateTime
-//     gender         String
-//     team           String
-//     city           String
-//     country        String
-//     email          String
-//     phoneNumber    String
-//     icePhoneNumber String
-// }
