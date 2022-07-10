@@ -19,6 +19,8 @@ model Classification {
     race    Race     @relation(fields: [raceId], references: [id])
     raceId  Int
     players Player[]
+
+    @@unique([raceId, name])
 }
 
 model Player {
