@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import {
@@ -9,6 +10,7 @@ import {
     mdiTimetable
     } from "@mdi/js";
 import { Meta } from "./meta";
+import { useRouter } from "next/router";
 
 type Props = {
     preview?: boolean;
@@ -41,26 +43,50 @@ const menuItems = [
     }
 ];
 
+const Status = () => (
+    <div className="flex items-center my-4 px-4 text-white">
+        <img src="assets/logo_ravelo.png" />
+        <div className="grow"></div>
+        <div className="flex items-center mr-4">
+            <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />
+            <div className="ml-4 flex flex-col">
+                <div className="font-semibold">Andre Somersby</div>
+                <div className="text-xs font-light">Organizer</div>
+            </div>
+        </div>
+    </div>
+);
+
+const MenuButton = (n: { color: string; text: string; icon: string; to: string; isActive: boolean }) => (
+    <Link href={n.to}>
+        <div
+            className={classNames("py-4 cursor-pointer px-6 flex items-center text-sm", {
+                ["bg-slate-100"]: n.isActive,
+                ["hover:bg-slate-50"]: !n.isActive
+            })}
+        >
+            <Icon className={n.color} size={0.8} path={n.icon}></Icon>
+            <span className="ml-4">{n.text}</span>
+        </div>
+    </Link>
+);
+
 const Layout = ({ children }: Props) => {
+    const router = useRouter();
     return (
         <>
             <Meta />
             <div className="h-full relative bg-gray-100">
-                <div className="h-64 w-full absolute top-0 left-0 bg-[#F28C28]"></div>
+                <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#F28C28] to-[#FF5F1F]"></div>
                 <div className="will-change-transform h-full w-full flex flex-col">
-                    <div className="flex my-8"></div>
+                    <Status />
                     <div className="flex flex-grow overflow-y-hidden">
-                        <nav className="w-60 py-4 px-6 flex-col shadow-lg rounded-tr-md bg-white">
+                        <nav className="w-60 py-4 flex-col shadow-lg rounded-tr-md bg-white">
                             {menuItems.map(mi => (
                                 <>
-                                    <div className="uppercase py-4 text-2xs">{mi.name}</div>
+                                    <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
                                     {mi.items.map(n => (
-                                        <Link href={n.to}>
-                                            <div className="py-4 flex items-center text-sm">
-                                                <Icon className={n.color} size={0.8} path={n.icon}></Icon>
-                                                <span className="ml-4">{n.text}</span>
-                                            </div>
-                                        </Link>
+                                        <MenuButton {...n} isActive={router.asPath === n.to} />
                                     ))}
                                 </>
                             ))}
