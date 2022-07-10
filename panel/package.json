@@ -10,6 +10,7 @@
         "start:dev": "next dev"
     },
     "dependencies": {
+        "@headlessui/react": "^1.6.6",
         "@mdi/js": "^6.9.96",
         "@mdi/react": "^1.6.0",
         "@set/server": "1.0.0",

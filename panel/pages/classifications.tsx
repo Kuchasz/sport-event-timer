@@ -4,12 +4,14 @@ import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
+import { CurrentRaceContext } from "../current-race-context";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 
 type Classification = InferQueryOutput<"classification.classifications">[0];
 type EditedClassification = InferMutationInput<"classification.update">;
+type CreatedClassification = InferMutationInput<"classification.add">;
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {
@@ -33,6 +35,8 @@ const columns: Column<Classification, unknown>[] = [
 const Classifications = () => {
     const { data: classifications } = trpc.useQuery(["classification.classifications"]);
     const updateClassificationMutation = trpc.useMutation(["classification.update"]);
+    const addClassifiationMutation = trpc.useMutation(["classification.add"]);
+    const { raceId } = useContext(CurrentRaceContext);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -69,6 +73,11 @@ const Classifications = () => {
         toggleEditVisible(undefined);
     };
 
+    const classificationCreate = async (classification: CreatedClassification) => {
+        await addClassifiationMutation.mutateAsync(classification);
+        toggleCreateVisible();
+    };
+
     return (
         <>
             <Head>
@@ -78,6 +87,7 @@ const Classifications = () => {
                 <div className="mb-4 inline-flex">
                     <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
                         Create
+                        {raceId!}
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiAccountMultiplePlus} />}>
@@ -85,9 +95,10 @@ const Classifications = () => {
                     </Button>
                 </div>
                 <ClassificationCreate
+                    raceId={raceId!}
                     isOpen={createVisible}
                     onCancel={() => toggleCreateVisible()}
-                    onCreate={() => {}}
+                    onCreate={classificationCreate}
                 />
                 <ClassificationEdit
                     isOpen={editVisible}

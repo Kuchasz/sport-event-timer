@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
+import { CurrentRaceContext } from "../current-race-context";
 import {
     mdiAccountCogOutline,
     mdiAccountGroup,
@@ -10,6 +11,9 @@ import {
     mdiTimetable
     } from "@mdi/js";
 import { Meta } from "./meta";
+import { Select } from "./select";
+import { trpc } from "../trpc";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -43,19 +47,36 @@ const menuItems = [
     }
 ];
 
-const Status = () => (
-    <div className="flex items-center my-4 px-4 text-white">
-        <img src="assets/logo_ravelo.png" />
-        <div className="grow"></div>
-        <div className="flex items-center mr-4">
-            <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />
-            <div className="ml-4 flex flex-col">
-                <div className="font-semibold">Andre Somersby</div>
-                <div className="text-xs font-light">Organizer</div>
+const Status = () => {
+    const { data: items } = trpc.useQuery(["race.races"]);
+    const { selectRace } = useContext(CurrentRaceContext);
+    return (
+        <div className="flex items-center my-4 px-4 text-white">
+            <img src="assets/logo_ravelo.png" />
+            <div className="grow"></div>
+            <div className="w-64 text-gray-800 will-change-transform z-10">
+                {items && (
+                    <Select
+                        initialValue={items[0]}
+                        nameKey="name"
+                        items={items}
+                        onChange={e => {
+                            selectRace(e.id);
+                        }}
+                    ></Select>
+                )}
+            </div>
+            <div className="grow"></div>
+            <div className="flex items-center mr-4">
+                <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />
+                <div className="ml-4 flex flex-col">
+                    <div className="font-semibold">Andre Somersby</div>
+                    <div className="text-xs font-light">Organizer</div>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const MenuButton = (n: { color: string; text: string; icon: string; to: string; isActive: boolean }) => (
     <Link href={n.to}>
@@ -86,7 +107,7 @@ const Layout = ({ children }: Props) => {
                                 <>
                                     <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
                                     {mi.items.map(n => (
-                                        <MenuButton {...n} isActive={router.asPath === n.to} />
+                                        <MenuButton key={n.to} {...n} isActive={router.asPath === n.to} />
                                     ))}
                                 </>
                             ))}

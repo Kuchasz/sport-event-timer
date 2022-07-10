@@ -7,6 +7,7 @@ import { useFormState } from "hooks";
 type Classification = InferMutationInput<"classification.add">;
 
 type ClassificationCreateProps = {
+    raceId: number;
     isOpen: boolean;
     onCancel: () => void;
     onCreate: (classification: Classification) => void;
@@ -17,7 +18,7 @@ const initialClassification = {
     name: ""
 };
 
-export const ClassificationCreate = ({ isOpen, onCancel, onCreate }: ClassificationCreateProps) => {
+export const ClassificationCreate = ({ raceId, isOpen, onCancel, onCreate }: ClassificationCreateProps) => {
     const [classification, changeHandler] = useFormState(initialClassification);
 
     return (
@@ -28,25 +29,17 @@ export const ClassificationCreate = ({ isOpen, onCancel, onCreate }: Classificat
                     <div className="flex">
                         <div className="form-control grow">
                             <label className="label">
-                                <span className="label-text">Id</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <Input value={classification.raceId} />
-                        </div>
-                        <div className="p-2"></div>
-                        <div className="form-control grow">
-                            <label className="label">
                                 <span className="label-text">Name</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Input value={classification.name} />
+                            <Input value={classification.name} onChange={changeHandler("name")} />
                         </div>
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Actions>
                 <Button
-                    onClick={() => onCreate(classification)}
+                    onClick={() => onCreate({ ...classification, raceId })}
                     startIcon={<Icon size={1} path={mdiContentSaveCheck} />}
                 >
                     save

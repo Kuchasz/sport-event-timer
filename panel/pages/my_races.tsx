@@ -18,7 +18,7 @@ const columns: Column<Race, unknown>[] = [
 
 const MyRaces = () => {
     const { data: races } = trpc.useQuery(["race.races"]);
-    const addRaceMuttaion = trpc.useMutation(["race.add"]);
+    const addRaceMutation = trpc.useMutation(["race.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const MyRaces = () => {
     };
 
     const raceCreate = async (race: CreatedRace) => {
-        await addRaceMuttaion.mutateAsync(race);
+        await addRaceMutation.mutateAsync(race);
         toggleCreateVisible();
     };
 
