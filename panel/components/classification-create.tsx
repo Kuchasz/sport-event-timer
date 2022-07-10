@@ -1,7 +1,10 @@
 import Icon from "@mdi/react";
 import { Button, Input, Modal } from "react-daisyui";
-import { Classification } from "@set/timer/model";
+import { InferMutationInput } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
+import { useFormState } from "hooks";
+
+type Classification = InferMutationInput<"classification.add">;
 
 type ClassificationCreateProps = {
     isOpen: boolean;
@@ -9,11 +12,13 @@ type ClassificationCreateProps = {
     onCreate: (classification: Classification) => void;
 };
 
+const initialClassification = {
+    raceId: 0,
+    name: ""
+};
+
 export const ClassificationCreate = ({ isOpen, onCancel, onCreate }: ClassificationCreateProps) => {
-    const newClassification: Classification = {
-        id: "",
-        name: ""
-    };
+    const [classification, changeHandler] = useFormState(initialClassification);
 
     return (
         <Modal open={isOpen} className="max-w-[52rem]">
@@ -26,7 +31,7 @@ export const ClassificationCreate = ({ isOpen, onCancel, onCreate }: Classificat
                                 <span className="label-text">Id</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Input />
+                            <Input value={classification.raceId} />
                         </div>
                         <div className="p-2"></div>
                         <div className="form-control grow">
@@ -34,14 +39,14 @@ export const ClassificationCreate = ({ isOpen, onCancel, onCreate }: Classificat
                                 <span className="label-text">Name</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Input />
+                            <Input value={classification.name} />
                         </div>
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Actions>
                 <Button
-                    onClick={() => onCreate(newClassification)}
+                    onClick={() => onCreate(classification)}
                     startIcon={<Icon size={1} path={mdiContentSaveCheck} />}
                 >
                     save

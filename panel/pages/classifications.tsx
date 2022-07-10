@@ -4,11 +4,12 @@ import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
-import { InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
 import { useMemo, useState } from "react";
 
 type Classification = InferQueryOutput<"classification.classifications">[0];
+type EditedClassification = InferMutationInput<"classification.update">;
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {
@@ -63,7 +64,7 @@ const Classifications = () => {
         setEditVisible(!editVisible);
     };
 
-    const classificationEdit = async (classification: Classification) => {
+    const classificationEdit = async (classification: EditedClassification) => {
         await updateClassificationMutation.mutateAsync(classification);
         toggleEditVisible(undefined);
     };

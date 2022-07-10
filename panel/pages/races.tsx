@@ -2,13 +2,14 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
-import { InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
 import { useMemo, useState } from "react";
 
 type Race = InferQueryOutput<"race.races">[0];
+type CreatedRace = InferMutationInput<"race.add">;
 
 const columns: Column<Race, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -17,6 +18,7 @@ const columns: Column<Race, unknown>[] = [
 
 const Races = () => {
     const { data: races } = trpc.useQuery(["race.races"]);
+    const addRaceMuttaion = trpc.useMutation(["race.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -32,6 +34,11 @@ const Races = () => {
         setEditVisible(!editVisible);
     };
 
+    const raceCreate = async (race: CreatedRace) => {
+        await addRaceMuttaion.mutateAsync(race);
+        toggleCreateVisible();
+    };
+
     return (
         <>
             <Head>
@@ -43,7 +50,7 @@ const Races = () => {
                         Create
                     </Button>
                 </div>
-                <RaceCreate isOpen={createVisible} onCancel={() => toggleCreateVisible()} onCreate={() => {}} />
+                <RaceCreate isOpen={createVisible} onCancel={() => toggleCreateVisible()} onCreate={raceCreate} />
                 <RaceEdit
                     isOpen={editVisible}
                     onCancel={() => toggleEditVisible()}
