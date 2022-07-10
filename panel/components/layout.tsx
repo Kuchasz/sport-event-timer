@@ -22,7 +22,7 @@ const menuItems = [
         name: "General",
         items: [
             { text: "Home", icon: mdiHome, to: "/", color: "text-yellow-600" },
-            { text: "Races", icon: mdiBikeFast, to: "/races", color: "text-red-600" }
+            { text: "My Races", icon: mdiBikeFast, to: "/my_races", color: "text-red-600" }
         ]
     },
     {
@@ -30,8 +30,8 @@ const menuItems = [
         items: [
             { text: "Players", icon: mdiAccountGroup, to: "/players", color: "text-pink-600" },
             { text: "Classifications", icon: mdiAccountCogOutline, to: "/classifications", color: "text-purple-600" },
-            { text: "Times", icon: mdiAlarm, to: "/", color: "text-red-600" },
-            { text: "Results", icon: mdiTimetable, to: "/", color: "text-blue-600" }
+            { text: "Times", icon: mdiAlarm, to: "/times", color: "text-red-600" },
+            { text: "Results", icon: mdiTimetable, to: "/results", color: "text-blue-600" }
         ]
     },
     {
@@ -77,7 +77,7 @@ const Layout = ({ children }: Props) => {
         <>
             <Meta />
             <div className="h-full relative bg-gray-100">
-                <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#F28C28] to-[#FF5F1F]"></div>
+                <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"></div>
                 <div className="will-change-transform h-full w-full flex flex-col">
                     <Status />
                     <div className="flex flex-grow overflow-y-hidden">

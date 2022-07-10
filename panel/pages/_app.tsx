@@ -1,13 +1,15 @@
 import Layout from "../components/layout";
 import superjson from "superjson";
 import { AppProps } from "next/app";
-import { useEffect } from "react";
+import { CurrentRaceContext } from "current-race-context";
+import { useEffect, useState } from "react";
 import { withTRPC } from "@trpc/next";
 import "../globals.scss";
 
 import type { AppRouter } from "@set/server/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -24,9 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, []);
 
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </CurrentRaceContext.Provider>
     );
 }
 
