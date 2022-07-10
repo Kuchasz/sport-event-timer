@@ -35,8 +35,16 @@ export const classificationRouter = trpc
         }),
         async resolve(req) {
             const { id, ...data } = req.input;
-            await db.classification.update({ where: { id }, data });
-            return null;
+            return await db.classification.update({ where: { id }, data });
+        }
+    })
+    .mutation("add", {
+        input: z.object({
+            raceId: z.number({ required_error: "raceId is required" }).min(1),
+            name: z.string({ required_error: "name is required" })
+        }),
+        async resolve(req) {
+            return await db.classification.create({ data: req.input });
         }
     });
 

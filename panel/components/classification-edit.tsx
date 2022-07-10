@@ -1,10 +1,10 @@
 import Icon from "@mdi/react";
 import { Button, Input, Modal } from "react-daisyui";
-import { InferQueryOutput } from "../trpc";
+import { InferMutationInput } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
-import { useEffect, useState } from "react";
+import { useFormState } from "hooks";
 
-type Classification = InferQueryOutput<"classification.classifications">[0];
+type Classification = InferMutationInput<"classification.update">;
 
 type ClassificationEditProps = {
     isOpen: boolean;
@@ -14,11 +14,7 @@ type ClassificationEditProps = {
 };
 
 export const ClassificationEdit = ({ isOpen, editedClassification, onCancel, onEdit }: ClassificationEditProps) => {
-    const [classification, setClassification] = useState(editedClassification);
-
-    useEffect(() => {
-        setClassification(editedClassification);
-    }, [editedClassification]);
+    const [classification, changeHandler] = useFormState(editedClassification!);
 
     return (
         <Modal open={isOpen && classification !== undefined} className="max-w-[52rem]">
@@ -32,7 +28,7 @@ export const ClassificationEdit = ({ isOpen, editedClassification, onCancel, onE
                                     <span className="label-text">Id</span>
                                     <span className="label-text-alt">Required</span>
                                 </label>
-                                <Input value={classification?.id} disabled />
+                                <Input value={classification.id} disabled />
                             </div>
                             <div className="p-2"></div>
                             <div className="form-control grow">
@@ -40,10 +36,7 @@ export const ClassificationEdit = ({ isOpen, editedClassification, onCancel, onE
                                     <span className="label-text">Name</span>
                                     <span className="label-text-alt">Required</span>
                                 </label>
-                                <Input
-                                    value={classification?.name}
-                                    onChange={e => setClassification({ ...classification, name: e.target.value })}
-                                />
+                                <Input value={classification.name} onChange={changeHandler("name")} />
                             </div>
                         </div>
                     </div>
