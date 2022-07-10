@@ -7,7 +7,7 @@ export default function IndexPage() {
     }
     return (
         <div>
-            <h2 className="text-2xl font-semibold">Hi!</h2>
+            <h2 className="text-2xl uppercase font-semibold">Times</h2>
         </div>
     );
 }
