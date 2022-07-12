@@ -13,7 +13,7 @@ import {
 import { Meta } from "./meta";
 import { Select } from "./select";
 import { trpc } from "../trpc";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -50,6 +50,7 @@ const menuItems = [
 const Status = () => {
     const { data: items } = trpc.useQuery(["race.races"]);
     const { selectRace } = useContext(CurrentRaceContext);
+
     return (
         <div className="flex items-center my-4 px-4 text-white">
             <img src="assets/logo_ravelo.png" />

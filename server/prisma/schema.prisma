@@ -11,6 +11,7 @@ model Race {
     id              Int              @id @default(autoincrement())
     name            String
     classifications Classification[]
+
 }
 
 model Classification {
@@ -29,12 +30,12 @@ model Player {
     lastName       String
     birthDate      DateTime
     gender         String
-    team           String
-    city           String
-    country        String
-    email          String
-    phoneNumber    String
-    icePhoneNumber String
+    team           String?
+    city           String?
+    country        String?
+    email          String?
+    phoneNumber    String?
+    icePhoneNumber String?
 
     classification     Classification @relation(fields: [classificationId], references: [id])
     classificationId   Int
