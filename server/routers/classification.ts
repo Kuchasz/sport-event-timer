@@ -5,8 +5,12 @@ import { z } from "zod";
 export const classificationRouter = trpc
     .router()
     .query("classifications", {
-        async resolve() {
-            return await db.classification.findMany();
+        input: z.object({
+            raceId: z.number({ required_error: "raceId is required" })
+        }),
+        async resolve(req) {
+            const raceId = req.input.raceId;
+            return await db.classification.findMany({ where: { raceId } });
             // return await fs.readJsonAsync<Classification[]>("../classifications.json");
         }
     })

@@ -94,6 +94,7 @@ const MenuButton = (n: { color: string; text: string; icon: string; to: string; 
 
 const Layout = ({ children }: Props) => {
     const router = useRouter();
+    const { raceId } = useContext(CurrentRaceContext);
     return (
         <>
             <Meta />
@@ -101,21 +102,23 @@ const Layout = ({ children }: Props) => {
                 <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"></div>
                 <div className="will-change-transform h-full w-full flex flex-col">
                     <Status />
-                    <div className="flex flex-grow overflow-y-hidden">
-                        <nav className="w-60 py-4 flex-col shadow-lg rounded-tr-md bg-white">
-                            {menuItems.map(mi => (
-                                <>
-                                    <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
-                                    {mi.items.map(n => (
-                                        <MenuButton key={n.to} {...n} isActive={router.asPath === n.to} />
-                                    ))}
-                                </>
-                            ))}
-                        </nav>
-                        <main className="grow h-full overflow-y-auto p-8">
-                            <div className="p-4 h-full bg-white rounded-md shadow-md">{children}</div>
-                        </main>
-                    </div>
+                    {raceId && (
+                        <div className="flex flex-grow overflow-y-hidden">
+                            <nav className="w-60 py-4 flex-col shadow-lg rounded-tr-md bg-white">
+                                {menuItems.map(mi => (
+                                    <>
+                                        <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
+                                        {mi.items.map(n => (
+                                            <MenuButton key={n.to} {...n} isActive={router.asPath === n.to} />
+                                        ))}
+                                    </>
+                                ))}
+                            </nav>
+                            <main className="grow h-full overflow-y-auto p-8">
+                                <div className="p-4 h-full bg-white rounded-md shadow-md">{children}</div>
+                            </main>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

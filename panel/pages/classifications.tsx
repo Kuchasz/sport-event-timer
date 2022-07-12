@@ -33,10 +33,11 @@ const columns: Column<Classification, unknown>[] = [
 // const sortColumns = columns.slice(1).map(x => x.key);
 
 const Classifications = () => {
-    const { data: classifications } = trpc.useQuery(["classification.classifications"]);
+    const { raceId } = useContext(CurrentRaceContext);
+    const { data: classifications, refetch } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
     const updateClassificationMutation = trpc.useMutation(["classification.update"]);
     const addClassifiationMutation = trpc.useMutation(["classification.add"]);
-    const { raceId } = useContext(CurrentRaceContext);
+
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -71,11 +72,13 @@ const Classifications = () => {
     const classificationEdit = async (classification: EditedClassification) => {
         await updateClassificationMutation.mutateAsync(classification);
         toggleEditVisible(undefined);
+        refetch();
     };
 
     const classificationCreate = async (classification: CreatedClassification) => {
         await addClassifiationMutation.mutateAsync(classification);
         toggleCreateVisible();
+        refetch();
     };
 
     return (
@@ -87,7 +90,6 @@ const Classifications = () => {
                 <div className="mb-4 inline-flex">
                     <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
                         Create
-                        {raceId!}
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiAccountMultiplePlus} />}>
