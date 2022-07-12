@@ -9,6 +9,16 @@ export const raceRouter = trpc
             return await db.race.findMany();
         }
     })
+    .mutation("update", {
+        input: z.object({
+            id: z.number().min(1),
+            name: z.string({ required_error: "name is required" })
+        }),
+        async resolve(req) {
+            const { id, ...data } = req.input;
+            return await db.race.update({ where: { id }, data });
+        }
+    })
     .mutation("add", {
         input: z.object({
             name: z.string({ required_error: "name is required" }).min(5, "name must be at least 5 characters")

@@ -10,6 +10,7 @@ import { useMemo, useState } from "react";
 
 type Race = InferQueryOutput<"race.races">[0];
 type CreatedRace = InferMutationInput<"race.add">;
+type EditedRace = InferMutationInput<"race.update">;
 
 const columns: Column<Race, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -17,7 +18,8 @@ const columns: Column<Race, unknown>[] = [
 ];
 
 const Races = () => {
-    const { data: races } = trpc.useQuery(["race.races"]);
+    const { data: races, refetch } = trpc.useQuery(["race.races"]);
+    const updateRaceMutation = trpc.useMutation(["race.update"]);
     const addRaceMuttaion = trpc.useMutation(["race.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
@@ -34,9 +36,16 @@ const Races = () => {
         setEditVisible(!editVisible);
     };
 
+    const raceEdit = async (race: EditedRace) => {
+        await updateRaceMutation.mutateAsync(race);
+        toggleEditVisible(undefined);
+        refetch();
+    };
+
     const raceCreate = async (race: CreatedRace) => {
         await addRaceMuttaion.mutateAsync(race);
         toggleCreateVisible();
+        refetch();
     };
 
     return (
@@ -54,7 +63,7 @@ const Races = () => {
                 <RaceEdit
                     isOpen={editVisible}
                     onCancel={() => toggleEditVisible()}
-                    onEdit={() => {}}
+                    onEdit={raceEdit}
                     editedRace={edited}
                 />
                 {races && (
