@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { Button, Input, Modal } from "react-daisyui";
 import { InferMutationInput } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
+import { useEffect } from "react";
 import { useFormState } from "hooks";
 
 type Classification = InferMutationInput<"classification.add">;
@@ -19,8 +20,8 @@ const initialClassification = {
 };
 
 export const ClassificationCreate = ({ raceId, isOpen, onCancel, onCreate }: ClassificationCreateProps) => {
-    const [classification, changeHandler] = useFormState(initialClassification);
-
+    const [classification, changeHandler, reset] = useFormState(initialClassification);
+    useEffect(reset, [isOpen]);
     return (
         <Modal open={isOpen} className="max-w-[52rem]">
             <Modal.Header className="font-bold">Create new classification</Modal.Header>
