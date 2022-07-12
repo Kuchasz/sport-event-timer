@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { Button, Input, Modal } from "react-daisyui";
 import { InferMutationInput } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
+import { useEffect } from "react";
 import { useFormState } from "hooks";
 
 type Race = InferMutationInput<"race.add">;
@@ -17,8 +18,8 @@ const initialRace = {
 };
 
 export const RaceCreate = ({ isOpen, onCancel, onCreate }: RaceCreateProps) => {
-    const [race, changeHandler] = useFormState(initialRace);
-
+    const [race, changeHandler, reset] = useFormState(initialRace);
+    useEffect(reset, [isOpen]);
     return (
         <Modal open={isOpen} className="max-w-[52rem]">
             <Modal.Header className="font-bold">Create new Race</Modal.Header>
