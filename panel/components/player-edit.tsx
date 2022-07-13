@@ -5,14 +5,16 @@ import {
     Modal,
     Select
     } from "react-daisyui";
+import { InferQueryOutput } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
-import { RegistrationPlayer } from "@set/timer/model";
+
+type Player = InferQueryOutput<"player.players">[0];
 
 type PlayerEditProps = {
     isOpen: boolean;
-    editedPlayer?: RegistrationPlayer;
+    editedPlayer?: Player;
     onCancel: () => void;
-    onEdit: (player: RegistrationPlayer | undefined) => void;
+    onEdit: (player: Player | undefined) => void;
 };
 
 export const PlayerEdit = ({ isOpen, editedPlayer, onCancel, onEdit }: PlayerEditProps) => (
@@ -80,7 +82,7 @@ export const PlayerEdit = ({ isOpen, editedPlayer, onCancel, onEdit }: PlayerEdi
                         <label className="label">
                             <span className="label-text">Team</span>
                         </label>
-                        <Input value={editedPlayer?.team} />
+                        <Input value={editedPlayer?.team ?? ""} />
                     </div>
                 </div>
                 <div className="flex">
@@ -88,14 +90,14 @@ export const PlayerEdit = ({ isOpen, editedPlayer, onCancel, onEdit }: PlayerEdi
                         <label className="label">
                             <span className="label-text">Country</span>
                         </label>
-                        <Input value={editedPlayer?.country} />
+                        <Input value={editedPlayer?.country ?? ""} />
                     </div>
                     <div className="p-2"></div>
                     <div className="form-control grow">
                         <label className="label">
                             <span className="label-text">City</span>
                         </label>
-                        <Input value={editedPlayer?.city} />
+                        <Input value={editedPlayer?.city ?? ""} />
                     </div>
                 </div>
 
@@ -104,21 +106,21 @@ export const PlayerEdit = ({ isOpen, editedPlayer, onCancel, onEdit }: PlayerEdi
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <Input value={editedPlayer?.email} />
+                        <Input value={editedPlayer?.email ?? ""} />
                     </div>
                     <div className="p-2"></div>
                     <div className="form-control grow">
                         <label className="label">
                             <span className="label-text">Phone Number</span>
                         </label>
-                        <Input value={editedPlayer?.phoneNumber} />
+                        <Input value={editedPlayer?.phoneNumber ?? ""} />
                     </div>
                     <div className="p-2"></div>
                     <div className="form-control grow">
                         <label className="label">
                             <span className="label-text">Ice Phone Number</span>
                         </label>
-                        <Input value={editedPlayer?.icePhoneNumber} />
+                        <Input value={editedPlayer?.icePhoneNumber ?? ""} />
                     </div>
                 </div>
             </div>

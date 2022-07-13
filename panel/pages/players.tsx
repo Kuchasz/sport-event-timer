@@ -2,50 +2,17 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
+import { CurrentRaceContext } from "../current-race-context";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
-import { Gender, RegistrationPlayer } from "@set/timer/model";
+import { InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
-import { trpc } from "../trpc";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 
-type Comparator = (a: RegistrationPlayer, b: RegistrationPlayer) => number;
-function getComparator(sortColumn: string): Comparator {
-    switch (sortColumn) {
-        case "classificationId":
-        case "name":
-        case "lastName":
-        case "gender":
+type Player = InferQueryOutput<"player.players">[0];
 
-        case "country":
-        case "city":
-        case "team":
-        case "email":
-        case "phoneNumber":
-        case "icePhoneNumber":
-            return (a, b) => {
-                return a[sortColumn].localeCompare(b[sortColumn]);
-            };
-        // case "available":
-        //     return (a, b) => {
-        //         return a[sortColumn] === b[sortColumn] ? 0 : a[sortColumn] ? 1 : -1;
-        //     };
-        // case "id":
-        // case "progress":
-        case "birthDate":
-            // case "startTimestamp":
-            // case "endTimestamp":
-            // case "budget":
-            return (a, b) => {
-                return a[sortColumn].getDate() - b[sortColumn].getDate();
-            };
-        default:
-            throw new Error(`unsupported sortColumn: "${sortColumn}"`);
-    }
-}
-
-const columns: Column<RegistrationPlayer, unknown>[] = [
+const columns: Column<Player, unknown>[] = [
     { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
     {
         key: "classificationId",
@@ -67,8 +34,6 @@ const columns: Column<RegistrationPlayer, unknown>[] = [
     { key: "icePhoneNumber", name: "Ice Phone Number" }
 ];
 
-// const sortColumns = columns.slice(1).map(x => x.key);
-
 const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>; children: React.ReactChild }) => {
     const [exporting, setExporting] = useState(false);
     return (
@@ -87,51 +52,35 @@ const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>
 };
 
 const StartingList = () => {
-    const { data: players } = trpc.useQuery(["player.players", "all"]);
+    const { raceId } = useContext(CurrentRaceContext);
+    const { data: players } = trpc.useQuery(["player.players", { raceId: raceId! }]);
     const [createVisible, setCreateVisible] = useState<boolean>(false);
     const [editVisible, setEditVisible] = useState<boolean>(false);
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
-    const [edited, setEdited] = useState<RegistrationPlayer | undefined>(undefined);
-
-    const sortedPlayers = useMemo((): readonly RegistrationPlayer[] => {
-        if (!players) return [];
-        if (sortColumns.length === 0) return players;
-
-        return [...players].sort((a, b) => {
-            for (const sort of sortColumns) {
-                const comparator = getComparator(sort.columnKey);
-                const compResult = comparator(a, b);
-                if (compResult !== 0) {
-                    return sort.direction === "ASC" ? compResult : -compResult;
-                }
-            }
-            return 0;
-        });
-    }, [players, sortColumns]);
+    const [edited, setEdited] = useState<Player | undefined>(undefined);
 
     const toggleCreateVisible = () => {
         setCreateVisible(!createVisible);
     };
 
-    const toggleEditVisible = (e?: RegistrationPlayer) => {
+    const toggleEditVisible = (e?: Player) => {
         setEdited(e);
         setEditVisible(!editVisible);
     };
 
-    const gridElement = (
-        <DataGrid
-            sortColumns={sortColumns}
-            className="h-full"
-            defaultColumnOptions={{
-                sortable: true,
-                resizable: true
-            }}
-            onRowDoubleClick={e => toggleEditVisible(e)}
-            onSortColumnsChange={setSortColumns}
-            columns={columns}
-            rows={sortedPlayers}
-        />
-    );
+    // const gridElement = (
+    //     <DataGrid
+    //         sortColumns={sortColumns}
+    //         className="h-full"
+    //         defaultColumnOptions={{
+    //             sortable: true,
+    //             resizable: true
+    //         }}
+    //         onRowDoubleClick={e => toggleEditVisible(e)}
+    //         onSortColumnsChange={setSortColumns}
+    //         columns={columns}
+    //         rows={players}
+    //     />
+    // );
 
     return (
         <>
@@ -151,14 +100,14 @@ const StartingList = () => {
                     <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiNumeric} />}>
                         Set numbers
                     </Button>
-                    <div className="grow"></div>
+                    {/* <div className="grow"></div>
                     <ExportButton onExport={() => exportToCsv(gridElement, "Players.csv")}>Export to CSV</ExportButton>
                     <div className="px-1"></div>
                     <ExportButton onExport={() => exportToXlsx(gridElement, "Players.xlsx")}>
                         Export to XSLX
                     </ExportButton>
                     <div className="px-1"></div>
-                    <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton>
+                    <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton> */}
                 </div>
                 <PlayerCreate isOpen={createVisible} onCancel={() => toggleCreateVisible()} onCreate={() => {}} />
                 <PlayerEdit
@@ -167,7 +116,19 @@ const StartingList = () => {
                     onEdit={() => {}}
                     editedPlayer={edited}
                 />
-                {gridElement}
+                {/* {gridElement} */}
+                {players && (
+                    <DataGrid
+                        className="h-full"
+                        defaultColumnOptions={{
+                            sortable: true,
+                            resizable: true
+                        }}
+                        onRowDoubleClick={e => toggleEditVisible(e)}
+                        columns={columns}
+                        rows={players}
+                    />
+                )}
             </div>
         </>
     );

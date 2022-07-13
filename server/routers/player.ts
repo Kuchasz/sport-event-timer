@@ -9,11 +9,21 @@ const GenderEnum = z.enum(["male", "female"]);
 
 export const playerRouter = trpc
     .router()
-    .query("players", {
+    .query("legacy-players", {
         input: ClassificationsEnum,
         async resolve(req) {
             const players = await fs.readCsvAsync<RegistrationPlayer[]>("../uploaded-players.csv");
             return players.filter(p => req.input === "all" || p.classificationId === req.input);
+        }
+    })
+    .query("players", {
+        input: z.object({ raceId: z.number({ required_error: "raceId is required" }) }),
+        async resolve({ input }) {
+            const { raceId } = input;
+            return await db.player.findMany({
+                where: { classification: { raceId } },
+                include: { classification: true }
+            });
         }
     })
     .mutation("add", {
