@@ -14,23 +14,19 @@ import { useFormState } from "hooks";
 type Player = InferMutationInput<"player.add">;
 
 type PlayerCreateProps = {
+    raceId: number;
     isOpen: boolean;
     onCancel: () => void;
     onCreate: (player: Player) => void;
 };
 
 const initialPlayer: Player = {
+    raceId: 0,
     classificationId: 0,
     name: "",
     lastName: "",
     gender: "male",
-    birthDate: new Date(),
-    country: "",
-    city: "",
-    team: "",
-    email: "",
-    phoneNumber: "",
-    icePhoneNumber: ""
+    birthDate: new Date()
 };
 
 const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
@@ -46,7 +42,7 @@ const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
 }) => (
     <Select
         onChange={(e: T[TValueKey]) => {
-            onChange({ target: { value: e } });
+            onChange({ target: { value: Number(e) as unknown as T[TValueKey] } });
         }}
     >
         {items.map(i => (
@@ -57,14 +53,21 @@ const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
     </Select>
 );
 
+const PoorInput = ({
+    value,
+    onChange
+}: {
+    value?: string;
+    onChange: (event: { target: { value: string } }) => void;
+}) => <Input value={value || ""} onChange={onChange} />;
+
 const genders = [
     { name: "Male", value: "male" as "male" | "female" },
     { name: "Female", value: "female" as "male" | "female" }
 ];
 
-export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) => {
+export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreateProps) => {
     const [player, changeHandler, reset] = useFormState(initialPlayer);
-    const { raceId } = useContext(CurrentRaceContext);
     const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
 
     return (
@@ -105,7 +108,7 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                                 <span className="label-text">Name</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Input value={player.name} onChange={changeHandler("name")} />
+                            <PoorInput value={player.name} onChange={changeHandler("name")} />
                         </div>
                         <div className="p-2"></div>
                         <div className="form-control grow">
@@ -113,7 +116,7 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                                 <span className="label-text">Last Name</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            <Input value={player.lastName} onChange={changeHandler("lastName")} />
+                            <PoorInput value={player.lastName} onChange={changeHandler("lastName")} />
                         </div>
                     </div>
                     <div className="flex">
@@ -134,8 +137,8 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                                 <Select.Option value={undefined} disabled></Select.Option>
                             </Select> */}
                         </div>
-                        <div className="p-2"></div>
-                        {/* <div className="form-control grow basis-full">
+                        {/* <div className="p-2"></div>
+                         <div className="form-control grow basis-full">
                             <label className="label">
                                 <span className="label-text">Birth Date</span>
                                 <span className="label-text-alt">Required</span>
@@ -148,7 +151,7 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                             <label className="label">
                                 <span className="label-text">Team</span>
                             </label>
-                            <Input value={player.team ?? ""} onChange={changeHandler("team")} />
+                            <PoorInput value={player.team} onChange={changeHandler("team")} />
                         </div>
                     </div>
                     <div className="flex">
@@ -156,14 +159,14 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                             <label className="label">
                                 <span className="label-text">Country</span>
                             </label>
-                            <Input value={player.country ?? ""} onChange={changeHandler("country")} />
+                            <PoorInput value={player.country} onChange={changeHandler("country")} />
                         </div>
                         <div className="p-2"></div>
                         <div className="form-control grow">
                             <label className="label">
                                 <span className="label-text">City</span>
                             </label>
-                            <Input value={player.city ?? ""} onChange={changeHandler("city")} />
+                            <PoorInput value={player.city} onChange={changeHandler("city")} />
                         </div>
                     </div>
 
@@ -172,28 +175,31 @@ export const PlayerCreate = ({ isOpen, onCancel, onCreate }: PlayerCreateProps) 
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <Input value={player.email ?? ""} onChange={changeHandler("email")} />
+                            <PoorInput value={player.email} onChange={changeHandler("email")} />
                         </div>
                         <div className="p-2"></div>
                         <div className="form-control grow">
                             <label className="label">
                                 <span className="label-text">Phone Number</span>
                             </label>
-                            <Input value={player.phoneNumber ?? ""} onChange={changeHandler("phoneNumber")} />
+                            <PoorInput value={player.phoneNumber} onChange={changeHandler("phoneNumber")} />
                         </div>
                         <div className="p-2"></div>
                         <div className="form-control grow">
                             <label className="label">
                                 <span className="label-text">Ice Phone Number</span>
                             </label>
-                            <Input value={player.icePhoneNumber ?? ""} onChange={changeHandler("icePhoneNumber")} />
+                            <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
                         </div>
                     </div>
                 </div>
             </Modal.Body>
 
             <Modal.Actions>
-                <Button onClick={() => onCreate(player)} startIcon={<Icon size={1} path={mdiContentSaveCheck} />}>
+                <Button
+                    onClick={() => onCreate({ ...player, raceId })}
+                    startIcon={<Icon size={1} path={mdiContentSaveCheck} />}
+                >
                     save
                 </Button>
                 <Button onClick={onCancel}>cancel</Button>
