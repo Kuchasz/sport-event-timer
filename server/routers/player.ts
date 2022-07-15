@@ -28,25 +28,29 @@ export const playerRouter = trpc
     })
     .mutation("add", {
         input: z.object({
+            raceId: z.number({ required_error: "raceId is required" }).min(1),
             classificationId: z.number({ required_error: "classification is required" }),
             name: z.string({ required_error: "name is required" }),
             lastName: z.string({ required_error: "lastName is required" }),
             gender: GenderEnum,
             birthDate: z.date({ required_error: "birthDate is required" }),
-            country: z.string().nullish(),
-            city: z.string().nullish(),
-            team: z.string().nullish(),
-            email: z.string().email("email is not valid").nullish(),
-            phoneNumber: z.string().nullish(),
-            icePhoneNumber: z.string().nullish()
+            country: z.string().optional(),
+            city: z.string().optional(),
+            team: z.string().optional(),
+            email: z.string().email("email is not valid").optional(),
+            phoneNumber: z.string().optional(),
+            icePhoneNumber: z.string().optional()
         }),
         async resolve(req) {
             const { input } = req;
-            const classification = await db.classification.findUnique({ where: { id: req.input.classificationId } });
+            const classification = await db.classification.findFirstOrThrow({
+                where: { id: req.input.classificationId, race: { id: input.raceId } },
+                include: { race: true }
+            });
             if (!classification) return;
 
-            const player = await db.player.findFirst();
-            if (!player) return;
+            const user = await db.user.findFirst();
+            if (!user) return;
 
             return await db.player.create({
                 data: {
@@ -61,7 +65,7 @@ export const playerRouter = trpc
                     phoneNumber: input.phoneNumber,
                     icePhoneNumber: input.icePhoneNumber,
                     classificationId: classification.id,
-                    registeredByUserId: player.id
+                    registeredByUserId: user.id
                 }
             });
         }

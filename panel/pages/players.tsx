@@ -1,16 +1,17 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column, FormatterProps, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
 import { CurrentRaceContext } from "../current-race-context";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
-import { InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
 import { useContext, useState } from "react";
 
 type Player = InferQueryOutput<"player.players">[0];
+type CreatedPlayer = InferMutationInput<"player.add">;
 
 const columns: Column<Player, unknown>[] = [
     { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
@@ -25,7 +26,7 @@ const columns: Column<Player, unknown>[] = [
         name: "Gender",
         width: 10
     },
-    { key: "birthDate", name: "Birth Date" },
+    { key: "birthDate", name: "Birth Date", formatter: props => <div>{props.row.birthDate.toLocaleDateString()}</div> },
     { key: "country", name: "Country", width: 10 },
     { key: "city", name: "City" },
     { key: "team", name: "Team" },
@@ -34,26 +35,27 @@ const columns: Column<Player, unknown>[] = [
     { key: "icePhoneNumber", name: "Ice Phone Number" }
 ];
 
-const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>; children: React.ReactChild }) => {
-    const [exporting, setExporting] = useState(false);
-    return (
-        <Button
-            disabled={exporting}
-            loading={exporting}
-            onClick={async () => {
-                setExporting(true);
-                await onExport();
-                setExporting(false);
-            }}
-        >
-            {exporting ? "Exporting" : children}
-        </Button>
-    );
-};
+// const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>; children: React.ReactChild }) => {
+//     const [exporting, setExporting] = useState(false);
+//     return (
+//         <Button
+//             disabled={exporting}
+//             loading={exporting}
+//             onClick={async () => {
+//                 setExporting(true);
+//                 await onExport();
+//                 setExporting(false);
+//             }}
+//         >
+//             {exporting ? "Exporting" : children}
+//         </Button>
+//     );
+// };
 
-const StartingList = () => {
+const Players = () => {
     const { raceId } = useContext(CurrentRaceContext);
-    const { data: players } = trpc.useQuery(["player.players", { raceId: raceId! }]);
+    const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
+    const addPlayerMutation = trpc.useMutation(["player.add"]);
     const [createVisible, setCreateVisible] = useState<boolean>(false);
     const [editVisible, setEditVisible] = useState<boolean>(false);
     const [edited, setEdited] = useState<Player | undefined>(undefined);
@@ -65,6 +67,12 @@ const StartingList = () => {
     const toggleEditVisible = (e?: Player) => {
         setEdited(e);
         setEditVisible(!editVisible);
+    };
+
+    const playerCreate = async (player: CreatedPlayer) => {
+        await addPlayerMutation.mutateAsync(player);
+        toggleCreateVisible();
+        refetch();
     };
 
     // const gridElement = (
@@ -109,7 +117,12 @@ const StartingList = () => {
                     <div className="px-1"></div>
                     <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton> */}
                 </div>
-                <PlayerCreate isOpen={createVisible} onCancel={() => toggleCreateVisible()} onCreate={() => {}} />
+                <PlayerCreate
+                    raceId={raceId!}
+                    isOpen={createVisible}
+                    onCancel={() => toggleCreateVisible()}
+                    onCreate={playerCreate}
+                />
                 <PlayerEdit
                     isOpen={editVisible}
                     onCancel={() => toggleEditVisible()}
@@ -134,4 +147,4 @@ const StartingList = () => {
     );
 };
 
-export default StartingList;
+export default Players;
