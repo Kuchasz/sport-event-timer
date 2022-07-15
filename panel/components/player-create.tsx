@@ -30,19 +30,23 @@ const initialPlayer: Player = {
 };
 
 const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
+    initialValue,
     items,
     nameKey,
     valueKey,
     onChange
 }: {
+    initialValue: T[TValueKey];
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
     onChange: (event: { target: { value: T[TValueKey] } }) => void;
 }) => (
     <Select
+        initialValue={initialValue}
         onChange={(e: T[TValueKey]) => {
-            onChange({ target: { value: Number(e) as unknown as T[TValueKey] } });
+            const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
+            onChange({ target: { value: desiredItem[valueKey] } });
         }}
     >
         {items.map(i => (
@@ -84,6 +88,7 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                             </label>
                             {classifications && (
                                 <PoorSelect
+                                    initialValue={classifications[0].id}
                                     items={classifications}
                                     nameKey="name"
                                     valueKey="id"
@@ -126,6 +131,7 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                                 <span className="label-text-alt">Required</span>
                             </label>
                             <PoorSelect
+                                initialValue={genders[0].value}
                                 items={genders}
                                 nameKey="name"
                                 valueKey="value"
