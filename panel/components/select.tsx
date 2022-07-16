@@ -16,6 +16,8 @@ export const Select = <T, TKey extends keyof T>({
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
+    const selectedValue = selected ? selected[nameKey] : "";
+
     return (
         <Listbox
             value={selected}
@@ -26,7 +28,7 @@ export const Select = <T, TKey extends keyof T>({
         >
             <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                    <span className="block truncate">{String(selected[nameKey])}</span>
+                    <span className="block truncate">{String(selectedValue)}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
                         <Icon className="text-gray-400" path={mdiArrowUpDown} size={0.7} />

@@ -21,7 +21,7 @@ export const RaceCreate = ({ isOpen, onCancel, onCreate }: RaceCreateProps) => {
     const [race, changeHandler, reset] = useFormState(initialRace);
     useEffect(reset, [isOpen]);
     return (
-        <Modal open={isOpen} className="max-w-[52rem]">
+        <Modal open={isOpen} className="max-w-[52rem] text-black">
             <Modal.Header className="font-bold">Create new Race</Modal.Header>
             <Modal.Body>
                 <div className="flex flex-col">
