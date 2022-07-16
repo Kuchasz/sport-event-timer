@@ -86,7 +86,7 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                                 <span className="label-text">Classification</span>
                                 <span className="label-text-alt">Required</span>
                             </label>
-                            {classifications && (
+                            {classifications && classifications.length ? (
                                 <PoorSelect
                                     initialValue={classifications[0].id}
                                     items={classifications}
@@ -94,7 +94,7 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                                     valueKey="id"
                                     onChange={changeHandler("classificationId")}
                                 ></PoorSelect>
-                            )}
+                            ) : null}
                             {/* <Select
                                 initialValue={initialPlayer.classificationId}
                                 onChange={changeHandler("classificationId")}
