@@ -3,12 +3,16 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
 import { CurrentRaceContext } from "../current-race-context";
+import { Demodal } from "demodal";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
+import { NiceModal } from "../components/modal";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
 import { useContext, useState } from "react";
+
+// import { Modal } from "components/modal";
 
 type Player = InferQueryOutput<"player.players">[0];
 type CreatedPlayer = InferMutationInput<"player.add">;
@@ -60,8 +64,19 @@ const Players = () => {
     const [editVisible, setEditVisible] = useState<boolean>(false);
     const [edited, setEdited] = useState<Player | undefined>(undefined);
 
-    const toggleCreateVisible = () => {
-        setCreateVisible(!createVisible);
+    const toggleCreateVisible = async () => {
+        const res = await Demodal.open(NiceModal, {
+            title: "Create new player",
+            content: PlayerCreate,
+            props: {
+                raceId: raceId!,
+                isOpen: createVisible,
+                onCancel: () => toggleCreateVisible(),
+                onCreate: playerCreate
+            }
+        });
+        console.log(res);
+        // setCreateVisible(!createVisible);
     };
 
     const toggleEditVisible = (e?: Player) => {
@@ -95,6 +110,7 @@ const Players = () => {
             <Head>
                 <title>Lista zawodników</title>
             </Head>
+
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 flex">
                     <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
@@ -102,7 +118,7 @@ const Players = () => {
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiAccountMultiplePlus} />}>
-                        Load
+                        Import
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiNumeric} />}>
@@ -117,18 +133,23 @@ const Players = () => {
                     <div className="px-1"></div>
                     <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton> */}
                 </div>
-                <PlayerCreate
-                    raceId={raceId!}
-                    isOpen={createVisible}
-                    onCancel={() => toggleCreateVisible()}
-                    onCreate={playerCreate}
-                />
-                <PlayerEdit
-                    isOpen={editVisible}
-                    onCancel={() => toggleEditVisible()}
-                    onEdit={() => {}}
-                    editedPlayer={edited}
-                />
+                {/* {createVisible && (
+                    <Modal />
+                    // <PlayerCreate
+                    //     raceId={raceId!}
+                    //     isOpen={createVisible}
+                    //     onCancel={() => toggleCreateVisible()}
+                    //     onCreate={playerCreate}
+                    // />
+                )} */}
+                {edited && (
+                    <PlayerEdit
+                        isOpen={editVisible}
+                        onCancel={() => toggleEditVisible()}
+                        onEdit={() => {}}
+                        editedPlayer={edited}
+                    />
+                )}
                 {/* {gridElement} */}
                 {players && (
                     <DataGrid

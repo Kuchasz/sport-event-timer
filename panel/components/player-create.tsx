@@ -1,14 +1,7 @@
 import Icon from "@mdi/react";
-import {
-    Button,
-    Input,
-    Modal,
-    Select
-    } from "react-daisyui";
-import { CurrentRaceContext } from "../current-race-context";
+import { Button, Input, Select } from "react-daisyui";
 import { InferMutationInput, trpc } from "../trpc";
 import { mdiContentSaveCheck } from "@mdi/js";
-import { useContext } from "react";
 import { useFormState } from "hooks";
 
 type Player = InferMutationInput<"player.add">;
@@ -70,32 +63,28 @@ const genders = [
     { name: "Female", value: "female" as "male" | "female" }
 ];
 
-export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreateProps) => {
+export const PlayerCreate = ({ raceId, onCancel, onCreate }: PlayerCreateProps) => {
     const [player, changeHandler, reset] = useFormState(initialPlayer);
     const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
 
     return (
-        <Modal open={isOpen} className="max-w-[52rem]">
-            <Modal.Header className="font-bold">Create new player</Modal.Header>
-
-            <Modal.Body>
-                <div className="flex flex-col">
-                    <div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Classification</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            {classifications && classifications.length ? (
-                                <PoorSelect
-                                    initialValue={classifications[0].id}
-                                    items={classifications}
-                                    nameKey="name"
-                                    valueKey="id"
-                                    onChange={changeHandler("classificationId")}
-                                ></PoorSelect>
-                            ) : null}
-                            {/* <Select
+        <div className="flex flex-col">
+            <div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Classification</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    {classifications && classifications.length ? (
+                        <PoorSelect
+                            initialValue={classifications[0].id}
+                            items={classifications}
+                            nameKey="name"
+                            valueKey="id"
+                            onChange={changeHandler("classificationId")}
+                        ></PoorSelect>
+                    ) : null}
+                    {/* <Select
                                 initialValue={initialPlayer.classificationId}
                                 onChange={changeHandler("classificationId")}
                             >
@@ -105,45 +94,45 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                                 <Select.Option value="gc">GC</Select.Option>
                                 <Select.Option value={undefined} disabled></Select.Option>
                             </Select> */}
-                        </div>
-                    </div>
-                    <div className="flex">
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <PoorInput value={player.name} onChange={changeHandler("name")} />
-                        </div>
-                        <div className="p-2"></div>
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Last Name</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <PoorInput value={player.lastName} onChange={changeHandler("lastName")} />
-                        </div>
-                    </div>
-                    <div className="flex">
-                        <div className="form-control grow basis-full">
-                            <label className="label">
-                                <span className="label-text">Gender</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <PoorSelect
-                                initialValue={genders[0].value}
-                                items={genders}
-                                nameKey="name"
-                                valueKey="value"
-                                onChange={changeHandler("gender")}
-                            />
-                            {/* <Select initialValue={player.gender} onChange={changeHandler("gender")}>
+                </div>
+            </div>
+            <div className="flex">
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Name</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    <PoorInput value={player.name} onChange={changeHandler("name")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Last Name</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    <PoorInput value={player.lastName} onChange={changeHandler("lastName")} />
+                </div>
+            </div>
+            <div className="flex">
+                <div className="form-control grow basis-full">
+                    <label className="label">
+                        <span className="label-text">Gender</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    <PoorSelect
+                        initialValue={genders[0].value}
+                        items={genders}
+                        nameKey="name"
+                        valueKey="value"
+                        onChange={changeHandler("gender")}
+                    />
+                    {/* <Select initialValue={player.gender} onChange={changeHandler("gender")}>
                                 <Select.Option value="female">Female</Select.Option>
                                 <Select.Option value="male">Male</Select.Option>
                                 <Select.Option value={undefined} disabled></Select.Option>
                             </Select> */}
-                        </div>
-                        {/* <div className="p-2"></div>
+                </div>
+                {/* <div className="p-2"></div>
                          <div className="form-control grow basis-full">
                             <label className="label">
                                 <span className="label-text">Birth Date</span>
@@ -151,65 +140,61 @@ export const PlayerCreate = ({ raceId, isOpen, onCancel, onCreate }: PlayerCreat
                             </label>
                             <Input value={player.birthDate} onChange={changeHandler("birthDate")} />
                         </div> */}
-                    </div>
-                    <div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Team</span>
-                            </label>
-                            <PoorInput value={player.team} onChange={changeHandler("team")} />
-                        </div>
-                    </div>
-                    <div className="flex">
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Country</span>
-                            </label>
-                            <PoorInput value={player.country} onChange={changeHandler("country")} />
-                        </div>
-                        <div className="p-2"></div>
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">City</span>
-                            </label>
-                            <PoorInput value={player.city} onChange={changeHandler("city")} />
-                        </div>
-                    </div>
-
-                    <div className="flex">
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <PoorInput value={player.email} onChange={changeHandler("email")} />
-                        </div>
-                        <div className="p-2"></div>
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Phone Number</span>
-                            </label>
-                            <PoorInput value={player.phoneNumber} onChange={changeHandler("phoneNumber")} />
-                        </div>
-                        <div className="p-2"></div>
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Ice Phone Number</span>
-                            </label>
-                            <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
-                        </div>
-                    </div>
+            </div>
+            <div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Team</span>
+                    </label>
+                    <PoorInput value={player.team} onChange={changeHandler("team")} />
                 </div>
-            </Modal.Body>
+            </div>
+            <div className="flex">
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Country</span>
+                    </label>
+                    <PoorInput value={player.country} onChange={changeHandler("country")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">City</span>
+                    </label>
+                    <PoorInput value={player.city} onChange={changeHandler("city")} />
+                </div>
+            </div>
 
-            <Modal.Actions>
-                <Button
+            <div className="flex">
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Email</span>
+                    </label>
+                    <PoorInput value={player.email} onChange={changeHandler("email")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Phone Number</span>
+                    </label>
+                    <PoorInput value={player.phoneNumber} onChange={changeHandler("phoneNumber")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Ice Phone Number</span>
+                    </label>
+                    <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
+                </div>
+            </div>
+
+            {/* <Button
                     onClick={() => onCreate({ ...player, raceId })}
                     startIcon={<Icon size={1} path={mdiContentSaveCheck} />}
                 >
                     save
                 </Button>
-                <Button onClick={onCancel}>cancel</Button>
-            </Modal.Actions>
-        </Modal>
+                <Button onClick={onCancel}>cancel</Button> */}
+        </div>
     );
 };
