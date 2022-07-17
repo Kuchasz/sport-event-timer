@@ -2,6 +2,7 @@ import Layout from "../components/layout";
 import superjson from "superjson";
 import { AppProps } from "next/app";
 import { CurrentRaceContext } from "current-race-context";
+import { Demodal } from "demodal";
 import { useEffect, useState } from "react";
 import { withTRPC } from "@trpc/next";
 import "../globals.scss";
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
                 <Component {...pageProps} />
             </Layout>
+            <Demodal.Container />
         </CurrentRaceContext.Provider>
     );
 }
