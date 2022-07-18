@@ -17,14 +17,14 @@ type PlayerCreateProps = {
     onResolve: (player: Player) => void;
 };
 
-const initialPlayer: Player = {
+const initialPlayer = (classifications: Classifications | undefined): Player => ({
     raceId: 0,
-    classificationId: 0,
+    classificationId: classifications ? classifications[0]?.id : 0,
     name: undefined as unknown as string,
     lastName: undefined as unknown as string,
     gender: "male",
     birthDate: new Date()
-};
+});
 
 const genders = [
     { name: "Male", value: "male" as "male" | "female" },
@@ -34,7 +34,7 @@ const genders = [
 export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
     const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
 
-    const [player, changeHandler, reset] = useFormState(initialPlayer);
+    const [player, changeHandler, reset] = useFormState(initialPlayer(classifications), [classifications]);
 
     return (
         <div className="flex flex-col">

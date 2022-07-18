@@ -3,7 +3,10 @@ import { useState } from "react";
 
 const toDateString = (date: Date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 const toDate = (dateString: string) => {
-    if (!/\d\d?.\d\d?.\d\d\d\d/gm.test(dateString)) return undefined;
+    if (!/\d\d?.\d\d?.\d\d\d\d/gm.test(dateString)) {
+        alert("Passed value does not match pattern DD.MM.YYYY");
+        return undefined;
+    }
 
     const [day, month, year] = dateString.split(".");
     return new Date(Number(year), Number(month) - 1, Number(day));

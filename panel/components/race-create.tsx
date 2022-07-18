@@ -18,7 +18,7 @@ const initialRace = {
 };
 
 export const RaceCreate = ({ isOpen, onCancel, onCreate }: RaceCreateProps) => {
-    const [race, changeHandler, reset] = useFormState(initialRace);
+    const [race, changeHandler, reset] = useFormState(initialRace, [initialRace]);
     useEffect(reset, [isOpen]);
     return (
         <Modal open={isOpen} className="max-w-[52rem] text-black">
