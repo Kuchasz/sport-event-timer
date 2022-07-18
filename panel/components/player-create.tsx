@@ -1,71 +1,40 @@
 import Icon from "@mdi/react";
-import { Button, Input, Select } from "react-daisyui";
-import { InferMutationInput, trpc } from "../trpc";
-import { mdiContentSaveCheck } from "@mdi/js";
+import { Button } from "./button";
+import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
+import { PoorDatepicker } from "./poor-datepicker";
+import { PoorInput } from "./poor-input";
+import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
 
 type Player = InferMutationInput<"player.add">;
+type Classifications = InferQueryOutput<"classification.classifications">;
 
 type PlayerCreateProps = {
     raceId: number;
     isOpen: boolean;
-    onCancel: () => void;
-    onCreate: (player: Player) => void;
+    onReject: () => void;
+    onResolve: (player: Player) => void;
 };
 
 const initialPlayer: Player = {
     raceId: 0,
     classificationId: 0,
-    name: "",
-    lastName: "",
+    name: undefined as unknown as string,
+    lastName: undefined as unknown as string,
     gender: "male",
     birthDate: new Date()
 };
-
-const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
-    initialValue,
-    items,
-    nameKey,
-    valueKey,
-    onChange
-}: {
-    initialValue: T[TValueKey];
-    items: T[];
-    nameKey: TNameKey;
-    valueKey: TValueKey;
-    onChange: (event: { target: { value: T[TValueKey] } }) => void;
-}) => (
-    <Select
-        initialValue={initialValue}
-        onChange={(e: T[TValueKey]) => {
-            const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
-            onChange({ target: { value: desiredItem[valueKey] } });
-        }}
-    >
-        {items.map(i => (
-            <Select.Option value={i[valueKey] as unknown as string | number | undefined}>
-                {i[nameKey] as unknown as string | number | undefined}
-            </Select.Option>
-        ))}
-    </Select>
-);
-
-const PoorInput = ({
-    value,
-    onChange
-}: {
-    value?: string;
-    onChange: (event: { target: { value: string } }) => void;
-}) => <Input value={value || ""} onChange={onChange} />;
 
 const genders = [
     { name: "Male", value: "male" as "male" | "female" },
     { name: "Female", value: "female" as "male" | "female" }
 ];
 
-export const PlayerCreate = ({ raceId, onCancel, onCreate }: PlayerCreateProps) => {
-    const [player, changeHandler, reset] = useFormState(initialPlayer);
+export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
     const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
+
+    const [player, changeHandler, reset] = useFormState(initialPlayer);
 
     return (
         <div className="flex flex-col">
@@ -126,20 +95,15 @@ export const PlayerCreate = ({ raceId, onCancel, onCreate }: PlayerCreateProps) 
                         valueKey="value"
                         onChange={changeHandler("gender")}
                     />
-                    {/* <Select initialValue={player.gender} onChange={changeHandler("gender")}>
-                                <Select.Option value="female">Female</Select.Option>
-                                <Select.Option value="male">Male</Select.Option>
-                                <Select.Option value={undefined} disabled></Select.Option>
-                            </Select> */}
                 </div>
-                {/* <div className="p-2"></div>
-                         <div className="form-control grow basis-full">
-                            <label className="label">
-                                <span className="label-text">Birth Date</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <Input value={player.birthDate} onChange={changeHandler("birthDate")} />
-                        </div> */}
+                <div className="p-2"></div>
+                <div className="form-control grow basis-full">
+                    <label className="label">
+                        <span className="label-text">Birth Date</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    <PoorDatepicker value={player.birthDate} onChange={changeHandler("birthDate")} />
+                </div>
             </div>
             <div>
                 <div className="form-control">
@@ -187,14 +151,16 @@ export const PlayerCreate = ({ raceId, onCancel, onCreate }: PlayerCreateProps) 
                     <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
                 </div>
             </div>
-
-            {/* <Button
-                    onClick={() => onCreate({ ...player, raceId })}
-                    startIcon={<Icon size={1} path={mdiContentSaveCheck} />}
-                >
-                    save
+            <div className="mt-4 flex">
+                <Button onClick={() => onResolve({ ...player, raceId })}>
+                    <Icon size={1} path={mdiContentSaveCheck} />
+                    <span className="ml-2">Save</span>
                 </Button>
-                <Button onClick={onCancel}>cancel</Button> */}
+                <Button onClick={onReject} className="ml-2">
+                    <Icon size={1} path={mdiClose} />
+                    <span className="ml-2">Cancel</span>
+                </Button>
+            </div>
         </div>
     );
 };
