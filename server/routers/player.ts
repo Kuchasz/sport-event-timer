@@ -30,8 +30,8 @@ export const playerRouter = trpc
         input: z.object({
             raceId: z.number({ required_error: "raceId is required" }).min(1),
             classificationId: z.number({ required_error: "classification is required" }),
-            name: z.string({ required_error: "name is required" }),
-            lastName: z.string({ required_error: "lastName is required" }),
+            name: z.string({ required_error: "name is required" }).min(3),
+            lastName: z.string({ required_error: "lastName is required" }).min(3),
             gender: GenderEnum,
             birthDate: z.date({ required_error: "birthDate is required" }),
             country: z.string().optional(),

@@ -60,22 +60,24 @@ const Players = () => {
     const { raceId } = useContext(CurrentRaceContext);
     const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
     const addPlayerMutation = trpc.useMutation(["player.add"]);
-    const [createVisible, setCreateVisible] = useState<boolean>(false);
     const [editVisible, setEditVisible] = useState<boolean>(false);
     const [edited, setEdited] = useState<Player | undefined>(undefined);
 
     const toggleCreateVisible = async () => {
-        const res = await Demodal.open(NiceModal, {
+        const player = await Demodal.open<CreatedPlayer>(NiceModal, {
             title: "Create new player",
-            content: PlayerCreate,
+            component: PlayerCreate,
             props: {
                 raceId: raceId!,
-                isOpen: createVisible,
-                onCancel: () => toggleCreateVisible(),
-                onCreate: playerCreate
+                onCancel: () => toggleCreateVisible()
             }
         });
-        console.log(res);
+
+        if (player) {
+            await addPlayerMutation.mutateAsync(player);
+            refetch();
+        }
+        // console.log(res);
         // setCreateVisible(!createVisible);
     };
 
@@ -84,11 +86,11 @@ const Players = () => {
         setEditVisible(!editVisible);
     };
 
-    const playerCreate = async (player: CreatedPlayer) => {
-        await addPlayerMutation.mutateAsync(player);
-        toggleCreateVisible();
-        refetch();
-    };
+    // const playerCreate = async (player: CreatedPlayer) => {
+    //     await addPlayerMutation.mutateAsync(player);
+    //     toggleCreateVisible();
+    //     refetch();
+    // };
 
     // const gridElement = (
     //     <DataGrid
