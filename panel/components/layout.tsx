@@ -4,19 +4,20 @@ import Link from "next/link";
 import { Button } from "react-daisyui";
 import { CurrentRaceContext } from "../current-race-context";
 import {
-  mdiAccountCogOutline,
-  mdiAccountGroup,
-  mdiAlarm,
-  mdiBikeFast,
-  mdiHome,
-  mdiPlus,
-  mdiTimetable
-  } from "@mdi/js";
+    mdiAccountCogOutline,
+    mdiAccountGroup,
+    mdiAlarm,
+    mdiBikeFast,
+    mdiHome,
+    mdiPlus,
+    mdiTimetable
+    } from "@mdi/js";
 import { Meta } from "./meta";
 import { RaceCreateFull } from "./race-create-full";
 import { Select } from "./select";
 import { trpc } from "../trpc";
 import { useCallback, useContext } from "react";
+import { useCurrentRaceId } from "../use-current-race-id";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -131,7 +132,7 @@ const MenuButton = (n: { color: string; text: string; icon: string; to: string; 
 
 const Layout = ({ children }: Props) => {
     const router = useRouter();
-    const { raceId } = useContext(CurrentRaceContext);
+    const raceId = useCurrentRaceId();
     return (
         <>
             <Meta />

@@ -7,6 +7,24 @@ import { z } from "zod";
 const ClassificationsEnum = z.enum(["rnk_pro", "rnk_fun", "rnk_tt", "gc", "all"]);
 const GenderEnum = z.enum(["male", "female"]);
 
+const playerSchema = z.object({
+    raceId: z.number({ required_error: "raceId is required" }).min(1),
+    player: z.object({
+        id: z.number().nullish(),
+        classificationId: z.number({ required_error: "classification is required" }),
+        name: z.string({ required_error: "name is required" }).min(3),
+        lastName: z.string({ required_error: "lastName is required" }).min(3),
+        gender: GenderEnum,
+        birthDate: z.date({ required_error: "birthDate is required" }),
+        country: z.string().nullish(),
+        city: z.string().nullish(),
+        team: z.string().nullish(),
+        email: z.string().email("email is not valid").nullish(),
+        phoneNumber: z.string().nullish(),
+        icePhoneNumber: z.string().nullish()
+    })
+});
+
 export const playerRouter = trpc
     .router()
     .query("legacy-players", {
@@ -27,24 +45,11 @@ export const playerRouter = trpc
         }
     })
     .mutation("add", {
-        input: z.object({
-            raceId: z.number({ required_error: "raceId is required" }).min(1),
-            classificationId: z.number({ required_error: "classification is required" }),
-            name: z.string({ required_error: "name is required" }).min(3),
-            lastName: z.string({ required_error: "lastName is required" }).min(3),
-            gender: GenderEnum,
-            birthDate: z.date({ required_error: "birthDate is required" }),
-            country: z.string().optional(),
-            city: z.string().optional(),
-            team: z.string().optional(),
-            email: z.string().email("email is not valid").optional(),
-            phoneNumber: z.string().optional(),
-            icePhoneNumber: z.string().optional()
-        }),
+        input: playerSchema,
         async resolve(req) {
             const { input } = req;
             const classification = await db.classification.findFirstOrThrow({
-                where: { id: req.input.classificationId, race: { id: input.raceId } },
+                where: { id: input.player.classificationId, race: { id: input.raceId } },
                 include: { race: true }
             });
             if (!classification) return;
@@ -54,18 +59,49 @@ export const playerRouter = trpc
 
             return await db.player.create({
                 data: {
-                    name: input.name,
-                    lastName: input.lastName,
-                    gender: input.gender,
-                    birthDate: input.birthDate,
-                    country: input.country,
-                    city: input.city,
-                    team: input.team,
-                    email: input.email,
-                    phoneNumber: input.phoneNumber,
-                    icePhoneNumber: input.icePhoneNumber,
+                    name: input.player.name,
+                    lastName: input.player.lastName,
+                    gender: input.player.gender,
+                    birthDate: input.player.birthDate,
+                    country: input.player.country,
+                    city: input.player.city,
+                    team: input.player.team,
+                    email: input.player.email,
+                    phoneNumber: input.player.phoneNumber,
+                    icePhoneNumber: input.player.icePhoneNumber,
                     classificationId: classification.id,
                     registeredByUserId: user.id
+                }
+            });
+        }
+    })
+    .mutation("edit", {
+        input: playerSchema,
+        async resolve(req) {
+            const { input } = req;
+            const classification = await db.classification.findFirstOrThrow({
+                where: { id: input.player.classificationId, race: { id: input.raceId } },
+                include: { race: true }
+            });
+            if (!classification) return;
+
+            const user = await db.user.findFirst();
+            if (!user) return;
+
+            return await db.player.update({
+                where: { id: input.player.id! },
+                data: {
+                    name: input.player.name,
+                    lastName: input.player.lastName,
+                    gender: input.player.gender,
+                    birthDate: input.player.birthDate,
+                    country: input.player.country,
+                    city: input.player.city,
+                    team: input.player.team,
+                    email: input.player.email,
+                    phoneNumber: input.player.phoneNumber,
+                    icePhoneNumber: input.player.icePhoneNumber,
+                    classificationId: classification.id
                 }
             });
         }
