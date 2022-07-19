@@ -11,11 +11,13 @@ import { NiceModal } from "../components/modal";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
 import { useContext, useState } from "react";
+import { useCurrentRaceId } from "../use-current-race-id";
 
 // import { Modal } from "components/modal";
 
 type Player = InferQueryOutput<"player.players">[0];
-type CreatedPlayer = InferMutationInput<"player.add">;
+type CreatedPlayer = InferMutationInput<"player.add">["player"];
+type EditedPlayer = InferMutationInput<"player.add">["player"];
 
 const columns: Column<Player, unknown>[] = [
     { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
@@ -57,33 +59,40 @@ const columns: Column<Player, unknown>[] = [
 // };
 
 const Players = () => {
-    const { raceId } = useContext(CurrentRaceContext);
+    const raceId = useCurrentRaceId();
     const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
     const addPlayerMutation = trpc.useMutation(["player.add"]);
-    const [editVisible, setEditVisible] = useState<boolean>(false);
-    const [edited, setEdited] = useState<Player | undefined>(undefined);
+    const editPlayerMutation = trpc.useMutation(["player.edit"]);
 
     const toggleCreateVisible = async () => {
         const player = await Demodal.open<CreatedPlayer>(NiceModal, {
             title: "Create new player",
             component: PlayerCreate,
             props: {
-                raceId: raceId!,
-                onCancel: () => toggleCreateVisible()
+                raceId: raceId!
             }
         });
 
         if (player) {
-            await addPlayerMutation.mutateAsync(player);
+            await addPlayerMutation.mutateAsync({ raceId: raceId!, player });
             refetch();
         }
-        // console.log(res);
-        // setCreateVisible(!createVisible);
     };
 
-    const toggleEditVisible = (e?: Player) => {
-        setEdited(e);
-        setEditVisible(!editVisible);
+    const toggleEditVisible = async (editedPlayer?: Player) => {
+        const player = await Demodal.open<EditedPlayer>(NiceModal, {
+            title: "Edit player",
+            component: PlayerEdit,
+            props: {
+                raceId: raceId!,
+                editedPlayer
+            }
+        });
+
+        if (player) {
+            await editPlayerMutation.mutateAsync({ raceId: raceId!, player });
+            refetch();
+        }
     };
 
     // const playerCreate = async (player: CreatedPlayer) => {
@@ -144,14 +153,14 @@ const Players = () => {
                     //     onCreate={playerCreate}
                     // />
                 )} */}
-                {edited && (
+                {/* {edited && (
                     <PlayerEdit
                         isOpen={editVisible}
                         onCancel={() => toggleEditVisible()}
                         onEdit={() => {}}
                         editedPlayer={edited}
                     />
-                )}
+                )} */}
                 {/* {gridElement} */}
                 {players && (
                     <DataGrid

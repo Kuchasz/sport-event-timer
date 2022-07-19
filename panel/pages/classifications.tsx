@@ -8,6 +8,7 @@ import { CurrentRaceContext } from "../current-race-context";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
 import { useContext, useMemo, useState } from "react";
+import { useCurrentRaceId } from "../use-current-race-id";
 
 type Classification = InferQueryOutput<"classification.classifications">[0];
 type EditedClassification = InferMutationInput<"classification.update">;
@@ -33,7 +34,7 @@ const columns: Column<Classification, unknown>[] = [
 // const sortColumns = columns.slice(1).map(x => x.key);
 
 const Classifications = () => {
-    const { raceId } = useContext(CurrentRaceContext);
+    const raceId = useCurrentRaceId();
     const { data: classifications, refetch } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
     const updateClassificationMutation = trpc.useMutation(["classification.update"]);
     const addClassifiationMutation = trpc.useMutation(["classification.add"]);

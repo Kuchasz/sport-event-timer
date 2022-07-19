@@ -4,6 +4,6 @@ export const PoorInput = ({
     value,
     onChange
 }: {
-    value?: string;
+    value?: string | null;
     onChange: (event: { target: { value: string } }) => void;
 }) => <Input value={value || ""} onChange={onChange} />;
