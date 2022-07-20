@@ -14,7 +14,7 @@ type ClassificationEditProps = {
 };
 
 export const ClassificationEdit = ({ isOpen, editedClassification, onCancel, onEdit }: ClassificationEditProps) => {
-    const [classification, changeHandler] = useFormState(editedClassification!);
+    const [classification, changeHandler] = useFormState(editedClassification!, [editedClassification]);
 
     return (
         <Modal open={isOpen && classification !== undefined} className="max-w-[52rem]">

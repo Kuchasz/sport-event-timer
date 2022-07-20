@@ -2,6 +2,11 @@ import * as trpc from "@trpc/server";
 import { db } from "../db";
 import { z } from "zod";
 
+const raceSchema = z.object({
+    id: z.number().min(1).nullish(),
+    name: z.string({ required_error: "name is required" })
+});
+
 export const raceRouter = trpc
     .router()
     .query("races", {
@@ -10,19 +15,14 @@ export const raceRouter = trpc
         }
     })
     .mutation("update", {
-        input: z.object({
-            id: z.number().min(1),
-            name: z.string({ required_error: "name is required" })
-        }),
+        input: raceSchema,
         async resolve(req) {
             const { id, ...data } = req.input;
-            return await db.race.update({ where: { id }, data });
+            return await db.race.update({ where: { id: id! }, data });
         }
     })
     .mutation("add", {
-        input: z.object({
-            name: z.string({ required_error: "name is required" }).min(5, "name must be at least 5 characters")
-        }),
+        input: raceSchema,
         async resolve(req) {
             return await db.race.create({ data: { name: req.input.name } });
         }

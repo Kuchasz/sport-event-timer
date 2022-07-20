@@ -10,10 +10,10 @@ import {
     mdiBikeFast,
     mdiHome,
     mdiPlus,
+    mdiTimerCogOutline,
     mdiTimetable
     } from "@mdi/js";
 import { Meta } from "./meta";
-import { RaceCreateFull } from "./race-create-full";
 import { Select } from "./select";
 import { trpc } from "../trpc";
 import { useCallback, useContext } from "react";
@@ -52,6 +52,12 @@ const menuItems = [
                 icon: mdiAccountCogOutline,
                 to: "/classifications",
                 color: "text-purple-600"
+            },
+            {
+                text: "Time Keepers",
+                icon: mdiTimerCogOutline,
+                to: "/timekeepers",
+                color: "text-lime-600"
             },
             { text: "Times", icon: mdiAlarm, to: "/times", color: "text-red-600" },
             {
@@ -103,7 +109,6 @@ const Status = () => {
                     ></Select>
                 ) : null}
             </div>
-            <RaceCreateFull />
             <div className="grow"></div>
             <div className="flex items-center mr-4">
                 <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />

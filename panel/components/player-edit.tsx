@@ -2,7 +2,7 @@ import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { PlayerForm } from "./player-form";
 
 type Player = InferQueryOutput<"player.players">[0];
-type EditPlayer = InferMutationInput<"player.add">["player"];
+type EditPlayer = InferMutationInput<"player.edit">["player"];
 
 type PlayerEditProps = {
     raceId: number;

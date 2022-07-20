@@ -12,6 +12,7 @@ model Race {
     name            String
     classifications Classification[]
 
+    TimeKeeper TimeKeeper[]
 }
 
 model Classification {
@@ -48,4 +49,14 @@ model User {
     login             String
     password          String
     registeredPlayers Player[]
+}
+
+model TimeKeeper {
+    id     Int    @id @default(autoincrement())
+    name   String
+    order  Int
+    race   Race   @relation(fields: [raceId], references: [id])
+    raceId Int
+
+    @@unique([raceId, name])
 }

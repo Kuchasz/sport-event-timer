@@ -1,47 +1,17 @@
-import Icon from "@mdi/react";
-import { Button, Input, Modal } from "react-daisyui";
-import { InferMutationInput } from "../trpc";
-import { mdiContentSaveCheck } from "@mdi/js";
-import { useEffect } from "react";
-import { useFormState } from "hooks";
+import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { RaceForm } from "./race-form";
 
-type Race = InferMutationInput<"race.add">;
+type CreateRace = InferMutationInput<"race.add">;
 
 type RaceCreateProps = {
-    isOpen: boolean;
-    onCancel: () => void;
-    onCreate: (Race: Race) => void;
+    onReject: () => void;
+    onResolve: (player: CreateRace) => void;
 };
 
-const initialRace = {
-    name: ""
-};
+export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
+    const race: CreateRace = {
+        name: ""
+    };
 
-export const RaceCreate = ({ isOpen, onCancel, onCreate }: RaceCreateProps) => {
-    const [race, changeHandler, reset] = useFormState(initialRace, [initialRace]);
-    useEffect(reset, [isOpen]);
-    return (
-        <Modal open={isOpen} className="max-w-[52rem] text-black">
-            <Modal.Header className="font-bold">Create new Race</Modal.Header>
-            <Modal.Body>
-                <div className="flex flex-col">
-                    <div className="flex">
-                        <div className="form-control grow">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                                <span className="label-text-alt">Required</span>
-                            </label>
-                            <Input value={race.name} onChange={changeHandler("name")} />
-                        </div>
-                    </div>
-                </div>
-            </Modal.Body>
-            <Modal.Actions>
-                <Button onClick={() => onCreate(race)} startIcon={<Icon size={1} path={mdiContentSaveCheck} />}>
-                    save
-                </Button>
-                <Button onClick={onCancel}>cancel</Button>
-            </Modal.Actions>
-        </Modal>
-    );
+    return <RaceForm onReject={onReject} onResolve={onResolve} initialRace={race} />;
 };

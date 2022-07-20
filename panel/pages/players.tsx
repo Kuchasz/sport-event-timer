@@ -13,8 +13,6 @@ import { PlayerEdit } from "components/player-edit";
 import { useContext, useState } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
 
-// import { Modal } from "components/modal";
-
 type Player = InferQueryOutput<"player.players">[0];
 type CreatedPlayer = InferMutationInput<"player.add">["player"];
 type EditedPlayer = InferMutationInput<"player.add">["player"];
