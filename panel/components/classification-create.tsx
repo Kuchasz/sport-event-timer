@@ -20,7 +20,7 @@ const initialClassification = {
 };
 
 export const ClassificationCreate = ({ raceId, isOpen, onCancel, onCreate }: ClassificationCreateProps) => {
-    const [classification, changeHandler, reset] = useFormState(initialClassification);
+    const [classification, changeHandler, reset] = useFormState(initialClassification, [initialClassification]);
     useEffect(reset, [isOpen]);
     return (
         <Modal open={isOpen} className="max-w-[52rem]">

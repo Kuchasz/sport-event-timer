@@ -11,7 +11,6 @@ export const classificationRouter = trpc
         async resolve(req) {
             const raceId = req.input.raceId;
             return await db.classification.findMany({ where: { raceId } });
-            // return await fs.readJsonAsync<Classification[]>("../classifications.json");
         }
     })
     .mutation("upload", {
