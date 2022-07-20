@@ -2,6 +2,13 @@ import * as trpc from "@trpc/server";
 import { db } from "../db";
 import { z } from "zod";
 
+const timeKeeperSchema = z.object({
+    id: z.number().min(1).nullish(),
+    raceId: z.number({ required_error: "raceId is required" }).min(1),
+    name: z.string({ required_error: "name is required" }),
+    order: z.number({ required_error: "order is required" })
+});
+
 export const timeKeeperRouter = trpc
     .router()
     .query("timeKeepers", {
@@ -14,24 +21,23 @@ export const timeKeeperRouter = trpc
         }
     })
     .mutation("update", {
-        input: z.object({
-            id: z.number().min(1),
-            name: z.string({ required_error: "name is required" }),
-            order: z.number({ required_error: "order is required" })
-        }),
+        input: timeKeeperSchema,
         async resolve(req) {
             const { id, ...data } = req.input;
-            return await db.classification.update({ where: { id }, data });
+            return await db.timeKeeper.update({ where: { id: id! }, data });
         }
     })
     .mutation("add", {
-        input: z.object({
-            raceId: z.number({ required_error: "raceId is required" }).min(1),
-            name: z.string({ required_error: "name is required" }),
-            order: z.number({ required_error: "order is required" })
-        }),
+        input: timeKeeperSchema,
         async resolve(req) {
-            return await db.timeKeeper.create({ data: req.input });
+            const { input } = req;
+            return await db.timeKeeper.create({
+                data: {
+                    name: input.name,
+                    order: input.order,
+                    raceId: input.raceId
+                }
+            });
         }
     });
 
