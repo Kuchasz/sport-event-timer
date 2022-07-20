@@ -33,7 +33,7 @@ const menuItems = [
             {
                 text: "My Races",
                 icon: mdiBikeFast,
-                to: "/my_races",
+                to: "/my-races",
                 color: "text-red-600"
             }
         ]
@@ -56,7 +56,7 @@ const menuItems = [
             {
                 text: "Time Keepers",
                 icon: mdiTimerCogOutline,
-                to: "/timekeepers",
+                to: "/time-keepers",
                 color: "text-lime-600"
             },
             { text: "Times", icon: mdiAlarm, to: "/times", color: "text-red-600" },
