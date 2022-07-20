@@ -4,51 +4,54 @@ import Icon from "@mdi/react";
 import { Button } from "react-daisyui";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
+import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
-import { useMemo, useState } from "react";
+import { useCurrentRaceId } from "use-current-race-id";
+import { useState } from "react";
 
-type Race = InferQueryOutput<"race.races">[0];
-type CreatedRace = InferMutationInput<"race.add">;
-type EditedRace = InferMutationInput<"race.update">;
+type TimeKeeper = InferQueryOutput<"timekeeper.timeKeepers">[0];
+type CreatedTimeKeeper = InferMutationInput<"timekeeper.add">;
+type EditedTimeKeeper = InferMutationInput<"timekeeper.update">;
 
-const columns: Column<Race, unknown>[] = [
+const columns: Column<TimeKeeper, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
+    { key: "order", name: "Order" },
     { key: "name", name: "Name" }
 ];
 
-const Races = () => {
-    const { data: races, refetch } = trpc.useQuery(["race.races"]);
-    const updateRaceMutation = trpc.useMutation(["race.update"]);
-    const addRaceMuttaion = trpc.useMutation(["race.add"]);
+const TimeKeeper = () => {
+    const raceId = useCurrentRaceId();
+    const { data: races, refetch } = trpc.useQuery(["timekeeper.timeKeepers", { raceId: raceId! }]);
+    const updateTimeKeeperMutation = trpc.useMutation(["timekeeper.update"]);
+    const addTimeKeeperMuttaion = trpc.useMutation(["timekeeper.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const toggleCreateVisible = async () => {
-        const race = await Demodal.open<CreatedRace>(NiceModal, {
-            title: "Create new race",
+        const timeKeeper = await Demodal.open<CreatedTimeKeeper>(NiceModal, {
+            title: "Create new time keeper",
             component: RaceCreate,
             props: {}
         });
 
-        if (race) {
-            await addRaceMuttaion.mutateAsync(race);
+        if (timeKeeper) {
+            await addTimeKeeperMuttaion.mutateAsync(timeKeeper);
             refetch();
         }
     };
 
-    const toggleEditVisible = async (editedRace?: Race) => {
-        const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: "Edit race",
+    const toggleEditVisible = async (editedRace?: TimeKeeper) => {
+        const timeKeeper = await Demodal.open<EditedTimeKeeper>(NiceModal, {
+            title: "Edit time keeper",
             component: RaceEdit,
             props: {
                 editedRace
             }
         });
 
-        if (race) {
-            await updateRaceMutation.mutateAsync(race);
+        if (timeKeeper) {
+            await updateTimeKeeperMutation.mutateAsync(timeKeeper);
             refetch();
         }
     };
@@ -56,7 +59,7 @@ const Races = () => {
     return (
         <>
             <Head>
-                <title>Lista wyścigów</title>
+                <title>Time Keepers list</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
@@ -83,4 +86,4 @@ const Races = () => {
     );
 };
 
-export default Races;
+export default TimeKeeper;
