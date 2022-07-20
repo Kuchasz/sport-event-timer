@@ -8,6 +8,8 @@ import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
+import { TimeKeeperCreate } from "components/time-keeper-create";
+import { TimeKeeperEdit } from "components/time-keeper-edit";
 import { useCurrentRaceId } from "use-current-race-id";
 import { useState } from "react";
 
@@ -31,8 +33,8 @@ const TimeKeeper = () => {
     const toggleCreateVisible = async () => {
         const timeKeeper = await Demodal.open<CreatedTimeKeeper>(NiceModal, {
             title: "Create new time keeper",
-            component: RaceCreate,
-            props: {}
+            component: TimeKeeperCreate,
+            props: { raceId: raceId! }
         });
 
         if (timeKeeper) {
@@ -41,12 +43,12 @@ const TimeKeeper = () => {
         }
     };
 
-    const toggleEditVisible = async (editedRace?: TimeKeeper) => {
+    const toggleEditVisible = async (editedTimeKeeper?: TimeKeeper) => {
         const timeKeeper = await Demodal.open<EditedTimeKeeper>(NiceModal, {
             title: "Edit time keeper",
-            component: RaceEdit,
+            component: TimeKeeperEdit,
             props: {
-                editedRace
+                editedTimeKeeper
             }
         });
 
