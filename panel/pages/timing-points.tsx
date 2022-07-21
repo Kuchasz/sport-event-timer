@@ -8,52 +8,52 @@ import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
-import { TimeKeeperCreate } from "components/time-keeper-create";
-import { TimeKeeperEdit } from "components/time-keeper-edit";
+import { TimingPointCreate } from "components/timing-point-create";
+import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "use-current-race-id";
 import { useState } from "react";
 
-type TimeKeeper = InferQueryOutput<"timekeeper.timeKeepers">[0];
-type CreatedTimeKeeper = InferMutationInput<"timekeeper.add">;
-type EditedTimeKeeper = InferMutationInput<"timekeeper.update">;
+type TimingPoint = InferQueryOutput<"timing-point.timingPoints">[0];
+type CreatedTimingPoint = InferMutationInput<"timing-point.add">;
+type EditedTimingPoint = InferMutationInput<"timing-point.update">;
 
-const columns: Column<TimeKeeper, unknown>[] = [
+const columns: Column<TimingPoint, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
     { key: "order", name: "Order" },
     { key: "name", name: "Name" }
 ];
 
-const TimeKeeper = () => {
+const TimingPoint = () => {
     const raceId = useCurrentRaceId();
-    const { data: races, refetch } = trpc.useQuery(["timekeeper.timeKeepers", { raceId: raceId! }]);
-    const updateTimeKeeperMutation = trpc.useMutation(["timekeeper.update"]);
-    const addTimeKeeperMuttaion = trpc.useMutation(["timekeeper.add"]);
+    const { data: races, refetch } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }]);
+    const updateTimingPointMutation = trpc.useMutation(["timing-point.update"]);
+    const addTimingPointMuttaion = trpc.useMutation(["timing-point.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const toggleCreateVisible = async () => {
-        const timeKeeper = await Demodal.open<CreatedTimeKeeper>(NiceModal, {
-            title: "Create new time keeper",
-            component: TimeKeeperCreate,
+        const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
+            title: "Create new timing point",
+            component: TimingPointCreate,
             props: { raceId: raceId! }
         });
 
-        if (timeKeeper) {
-            await addTimeKeeperMuttaion.mutateAsync(timeKeeper);
+        if (TimingPoint) {
+            await addTimingPointMuttaion.mutateAsync(TimingPoint);
             refetch();
         }
     };
 
-    const toggleEditVisible = async (editedTimeKeeper?: TimeKeeper) => {
-        const timeKeeper = await Demodal.open<EditedTimeKeeper>(NiceModal, {
-            title: "Edit time keeper",
-            component: TimeKeeperEdit,
+    const toggleEditVisible = async (editedTimingPoint?: TimingPoint) => {
+        const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
+            title: "Edit timing point",
+            component: TimingPointEdit,
             props: {
-                editedTimeKeeper
+                editedTimingPoint
             }
         });
 
-        if (timeKeeper) {
-            await updateTimeKeeperMutation.mutateAsync(timeKeeper);
+        if (TimingPoint) {
+            await updateTimingPointMutation.mutateAsync(TimingPoint);
             refetch();
         }
     };
@@ -61,7 +61,7 @@ const TimeKeeper = () => {
     return (
         <>
             <Head>
-                <title>Time Keepers list</title>
+                <title>Timing Points list</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
@@ -88,4 +88,4 @@ const TimeKeeper = () => {
     );
 };
 
-export default TimeKeeper;
+export default TimingPoint;

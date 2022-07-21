@@ -54,9 +54,9 @@ const menuItems = [
                 color: "text-purple-600"
             },
             {
-                text: "Time Keepers",
+                text: "Timing Points",
                 icon: mdiTimerCogOutline,
-                to: "/time-keepers",
+                to: "/timing-points",
                 color: "text-lime-600"
             },
             { text: "Times", icon: mdiAlarm, to: "/times", color: "text-red-600" },
