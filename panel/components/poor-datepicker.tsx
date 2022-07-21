@@ -1,7 +1,7 @@
 import { Input } from "react-daisyui";
 import { useState } from "react";
 
-const toDateString = (date: Date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+const toDateString = (date: Date) => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 const toDate = (dateString: string) => {
     if (!/\d\d?.\d\d?.\d\d\d\d/gm.test(dateString)) {
         alert("Passed value does not match pattern DD.MM.YYYY");

@@ -9,7 +9,7 @@ type PlayerCreateProps = {
     onResolve: (player: CreatePlayer) => void;
 };
 
-export const PlayerEdit = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
+export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
     const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
     if (!classifications) return;
 
