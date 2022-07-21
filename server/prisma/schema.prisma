@@ -69,6 +69,7 @@ model TimingPoint {
     splitTime SplitTime[]
 
     @@unique([raceId, name])
+    @@unique([raceId, order])
 }
 
 model SplitTime {

@@ -20,7 +20,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
             <div className="flex">
                 <div className="form-control grow">
                     <label className="label">
-                        <span className="label-text">Country</span>
+                        <span className="label-text">Name</span>
                     </label>
                     <PoorInput value={race.name} onChange={changeHandler("name")} />
                 </div>

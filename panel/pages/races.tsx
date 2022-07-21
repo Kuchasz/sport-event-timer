@@ -25,7 +25,7 @@ const Races = () => {
     const addRaceMuttaion = trpc.useMutation(["race.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
-    const toggleCreateVisible = async () => {
+    const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
             title: "Create new race",
             component: RaceCreate,
@@ -38,7 +38,7 @@ const Races = () => {
         }
     };
 
-    const toggleEditVisible = async (editedRace?: Race) => {
+    const openEditDialog = async (editedRace?: Race) => {
         const race = await Demodal.open<EditedRace>(NiceModal, {
             title: "Edit race",
             component: RaceEdit,
@@ -60,7 +60,7 @@ const Races = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
-                    <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
+                    <Button onClick={openCreateDialog} startIcon={<Icon size={1} path={mdiPlus} />}>
                         Create
                     </Button>
                 </div>
@@ -72,7 +72,7 @@ const Races = () => {
                             sortable: true,
                             resizable: true
                         }}
-                        onRowDoubleClick={e => toggleEditVisible(e)}
+                        onRowDoubleClick={e => openEditDialog(e)}
                         onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={races}
