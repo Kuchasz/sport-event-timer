@@ -3,18 +3,19 @@ import { Button } from "./button";
 import { InferMutationInput } from "../trpc";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
+import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
 
-type Race = InferMutationInput<"race.add">;
+type Classification = InferMutationInput<"classification.add">;
 
-type RaceFormProps = {
+type ClassificationFormProps = {
     onReject: () => void;
-    onResolve: (race: Race) => void;
-    initialRace: Race;
+    onResolve: (classification: Classification) => void;
+    initialClassification: Classification;
 };
 
-export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) => {
-    const [race, changeHandler] = useFormState(initialRace, [initialRace]);
+export const ClassificationForm = ({ onReject, onResolve, initialClassification }: ClassificationFormProps) => {
+    const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
     return (
         <div className="flex flex-col">
             <div className="flex">
@@ -22,11 +23,11 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                     <label className="label">
                         <span className="label-text">Name</span>
                     </label>
-                    <PoorInput value={race.name} onChange={changeHandler("name")} />
+                    <PoorInput value={classification.name} onChange={changeHandler("name")} />
                 </div>
             </div>
             <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...race })}>
+                <Button onClick={() => onResolve({ ...classification })}>
                     <Icon size={1} path={mdiContentSaveCheck} />
                     <span className="ml-2">Save</span>
                 </Button>

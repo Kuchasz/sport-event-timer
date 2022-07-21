@@ -5,7 +5,7 @@ type CreateRace = InferMutationInput<"race.add">;
 
 type RaceCreateProps = {
     onReject: () => void;
-    onResolve: (player: CreateRace) => void;
+    onResolve: (race: CreateRace) => void;
 };
 
 export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {

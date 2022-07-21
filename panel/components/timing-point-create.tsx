@@ -6,7 +6,7 @@ type CreateTimingPoint = InferMutationInput<"timing-point.add">;
 type TimingPointCreateProps = {
     raceId: number;
     onReject: () => void;
-    onResolve: (timeKepper: CreateTimingPoint) => void;
+    onResolve: (timingPoint: CreateTimingPoint) => void;
 };
 
 export const TimingPointCreate = ({ raceId, onReject, onResolve }: TimingPointCreateProps) => {

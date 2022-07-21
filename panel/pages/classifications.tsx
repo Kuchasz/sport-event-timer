@@ -5,8 +5,10 @@ import { Button } from "react-daisyui";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { CurrentRaceContext } from "../current-race-context";
+import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
+import { NiceModal } from "components/modal";
 import { useContext, useMemo, useState } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
 
@@ -41,10 +43,6 @@ const Classifications = () => {
 
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
-    const [createVisible, setCreateVisible] = useState<boolean>(false);
-    const [editVisible, setEditVisible] = useState<boolean>(false);
-    const [edited, setEdited] = useState<Classification | undefined>(undefined);
-
     const sortedPlayers = useMemo((): readonly Classification[] => {
         if (!classifications) return [];
         if (sortColumns.length === 0) return classifications;
@@ -61,25 +59,32 @@ const Classifications = () => {
         });
     }, [classifications, sortColumns]);
 
-    const toggleCreateVisible = () => {
-        setCreateVisible(!createVisible);
+    const openCreateDialog = async () => {
+        const classification = await Demodal.open<CreatedClassification>(NiceModal, {
+            title: "Create new classification",
+            component: ClassificationCreate,
+            props: {}
+        });
+
+        if (classification) {
+            await addClassifiationMutation.mutateAsync(classification);
+            refetch();
+        }
     };
 
-    const toggleEditVisible = (e?: Classification) => {
-        setEdited(e);
-        setEditVisible(!editVisible);
-    };
+    const openEditDialog = async (editedClassification?: Classification) => {
+        const classification = await Demodal.open<EditedClassification>(NiceModal, {
+            title: "Edit classification",
+            component: ClassificationEdit,
+            props: {
+                editedClassification
+            }
+        });
 
-    const classificationEdit = async (classification: EditedClassification) => {
-        await updateClassificationMutation.mutateAsync(classification);
-        toggleEditVisible(undefined);
-        refetch();
-    };
-
-    const classificationCreate = async (classification: CreatedClassification) => {
-        await addClassifiationMutation.mutateAsync(classification);
-        toggleCreateVisible();
-        refetch();
+        if (classification) {
+            await updateClassificationMutation.mutateAsync(classification);
+            refetch();
+        }
     };
 
     return (
@@ -89,7 +94,7 @@ const Classifications = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
-                    <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
+                    <Button onClick={openCreateDialog} startIcon={<Icon size={1} path={mdiPlus} />}>
                         Create
                     </Button>
                     <div className="px-1"></div>
@@ -97,18 +102,6 @@ const Classifications = () => {
                         Load
                     </Button>
                 </div>
-                <ClassificationCreate
-                    raceId={raceId!}
-                    isOpen={createVisible}
-                    onCancel={() => toggleCreateVisible()}
-                    onCreate={classificationCreate}
-                />
-                <ClassificationEdit
-                    isOpen={editVisible}
-                    onCancel={() => toggleEditVisible()}
-                    onEdit={classificationEdit}
-                    editedClassification={edited}
-                />
                 <DataGrid
                     sortColumns={sortColumns}
                     className="h-full"
@@ -116,7 +109,7 @@ const Classifications = () => {
                         sortable: true,
                         resizable: true
                     }}
-                    onRowDoubleClick={e => toggleEditVisible(e)}
+                    onRowDoubleClick={e => openEditDialog(e)}
                     onSortColumnsChange={setSortColumns}
                     columns={columns}
                     rows={sortedPlayers}

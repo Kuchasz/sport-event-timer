@@ -10,7 +10,7 @@ type TimingPoint = InferMutationInput<"timing-point.add">;
 
 type TimingPointFormProps = {
     onReject: () => void;
-    onResolve: (player: TimingPoint) => void;
+    onResolve: (timingPoint: TimingPoint) => void;
     initialTimingPoint: TimingPoint;
 };
 

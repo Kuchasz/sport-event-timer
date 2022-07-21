@@ -64,7 +64,7 @@ const menuItems = [
                 to: "/timing-points",
                 color: "text-lime-600"
             },
-            { text: "Times", icon: mdiAlarm, to: "/times", color: "text-red-600" },
+            { text: "Split Times", icon: mdiAlarm, to: "/split-times", color: "text-red-600" },
             {
                 text: "Results",
                 icon: mdiTimetable,
