@@ -59,6 +59,7 @@ export const playerRouter = trpc
 
             return await db.player.create({
                 data: {
+                    raceId: input.raceId,
                     name: input.player.name,
                     lastName: input.player.lastName,
                     gender: input.player.gender,

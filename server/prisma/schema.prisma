@@ -8,9 +8,8 @@ datasource db {
 }
 
 model Race {
-    id   Int    @id @default(autoincrement())
-    name String
-
+    id              Int              @id @default(autoincrement())
+    name            String
     classifications Classification[]
     timeKeeper      TimingPoint[]
     player          Player[]
@@ -18,9 +17,8 @@ model Race {
 }
 
 model Classification {
-    id   Int    @id @default(autoincrement())
-    name String
-
+    id      Int      @id @default(autoincrement())
+    name    String
     race    Race     @relation(fields: [raceId], references: [id])
     raceId  Int
     players Player[]
@@ -29,19 +27,18 @@ model Classification {
 }
 
 model Player {
-    id             Int      @id @default(autoincrement())
-    name           String
-    lastName       String
-    birthDate      DateTime
-    gender         String
-    bibNumber      Int?
-    team           String?
-    city           String?
-    country        String?
-    email          String?
-    phoneNumber    String?
-    icePhoneNumber String?
-
+    id                 Int            @id @default(autoincrement())
+    name               String
+    lastName           String
+    birthDate          DateTime
+    gender             String
+    bibNumber          Int?
+    team               String?
+    city               String?
+    country            String?
+    email              String?
+    phoneNumber        String?
+    icePhoneNumber     String?
     race               Race           @relation(fields: [raceId], references: [id])
     raceId             Int
     classification     Classification @relation(fields: [classificationId], references: [id])
@@ -73,10 +70,10 @@ model TimingPoint {
 }
 
 model SplitTime {
-    id        Int    @id @default(autoincrement())
-    time      BigInt
-    bibNumber Int
-
+    id            Int         @id @default(autoincrement())
+    bibNumber     Int
+    measuredTime  BigInt
+    adjustedTime  BigInt
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
