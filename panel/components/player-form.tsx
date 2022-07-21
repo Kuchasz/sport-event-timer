@@ -36,7 +36,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     </label>
                     {classifications && classifications.length ? (
                         <PoorSelect
-                            initialValue={classifications[0].id}
+                            initialValue={player.classificationId}
                             items={classifications}
                             nameKey="name"
                             valueKey="id"
@@ -69,7 +69,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <span className="label-text-alt">Required</span>
                     </label>
                     <PoorSelect
-                        initialValue={genders[0].value}
+                        initialValue={player.gender}
                         items={genders}
                         nameKey="name"
                         valueKey="value"

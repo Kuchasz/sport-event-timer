@@ -3,7 +3,7 @@ import superjson from "superjson";
 import { classificationRouter } from "./routers/classification";
 import { playerRouter } from "./routers/player";
 import { raceRouter } from "./routers/race";
-import { timeKeeperRouter } from "./routers/time-keeper";
+import { timingPointRouter } from "./routers/timing-point";
 
 export const appRouter = trpc
     .router()
@@ -11,7 +11,7 @@ export const appRouter = trpc
     .merge("classification.", classificationRouter)
     .merge("player.", playerRouter)
     .merge("race.", raceRouter)
-    .merge("timekeeper.", timeKeeperRouter);
+    .merge("timing-point.", timingPointRouter);
 // .query("getUser", {
 //     input: z.string(),
 //     async resolve(req) {

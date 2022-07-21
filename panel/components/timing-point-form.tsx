@@ -6,16 +6,16 @@ import { PoorInput } from "./poor-input";
 import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
 
-type TimeKeeper = InferMutationInput<"timekeeper.add">;
+type TimingPoint = InferMutationInput<"timing-point.add">;
 
-type TimeKeeperFormProps = {
+type TimingPointFormProps = {
     onReject: () => void;
-    onResolve: (player: TimeKeeper) => void;
-    initialTimeKeeper: TimeKeeper;
+    onResolve: (player: TimingPoint) => void;
+    initialTimingPoint: TimingPoint;
 };
 
-export const TimeKeeperForm = ({ onReject, onResolve, initialTimeKeeper }: TimeKeeperFormProps) => {
-    const [timeKeeper, changeHandler] = useFormState(initialTimeKeeper, [initialTimeKeeper]);
+export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: TimingPointFormProps) => {
+    const [timingPoint, changeHandler] = useFormState(initialTimingPoint, [initialTimingPoint]);
     return (
         <div className="flex flex-col">
             <div className="flex">
@@ -23,18 +23,18 @@ export const TimeKeeperForm = ({ onReject, onResolve, initialTimeKeeper }: TimeK
                     <label className="label">
                         <span className="label-text">Name</span>
                     </label>
-                    <PoorInput value={timeKeeper.name} onChange={changeHandler("name")} />
+                    <PoorInput value={timingPoint.name} onChange={changeHandler("name")} />
                 </div>
                 <div className="p-2"></div>
                 <div className="form-control grow">
                     <label className="label">
                         <span className="label-text">Order</span>
                     </label>
-                    <PoorNumberInput value={timeKeeper.order} onChange={changeHandler("order")} />
+                    <PoorNumberInput value={timingPoint.order} onChange={changeHandler("order")} />
                 </div>
             </div>
             <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...timeKeeper })}>
+                <Button onClick={() => onResolve({ ...timingPoint })}>
                     <Icon size={1} path={mdiContentSaveCheck} />
                     <span className="ml-2">Save</span>
                 </Button>
