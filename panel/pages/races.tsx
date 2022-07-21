@@ -1,7 +1,7 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import { Button } from "react-daisyui";
+import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
@@ -60,8 +60,8 @@ const Races = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog} startIcon={<Icon size={1} path={mdiPlus} />}>
-                        Create
+                    <Button onClick={openCreateDialog}>
+                        <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
                 {races && (

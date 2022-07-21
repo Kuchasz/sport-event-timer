@@ -1,13 +1,11 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import { Button } from "react-daisyui";
+import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { RaceCreate } from "components/race-create";
-import { RaceEdit } from "components/race-edit";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "use-current-race-id";
@@ -30,7 +28,7 @@ const TimingPoint = () => {
     const addTimingPointMuttaion = trpc.useMutation(["timing-point.add"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
-    const toggleCreateVisible = async () => {
+    const openCreateDialog = async () => {
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
             title: "Create new timing point",
             component: TimingPointCreate,
@@ -43,7 +41,7 @@ const TimingPoint = () => {
         }
     };
 
-    const toggleEditVisible = async (editedTimingPoint?: TimingPoint) => {
+    const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
         const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
             title: "Edit timing point",
             component: TimingPointEdit,
@@ -65,8 +63,8 @@ const TimingPoint = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
-                    <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
-                        Create
+                    <Button onClick={openCreateDialog}>
+                        <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
                 {races && (
@@ -77,7 +75,7 @@ const TimingPoint = () => {
                             sortable: true,
                             resizable: true
                         }}
-                        onRowDoubleClick={e => toggleEditVisible(e)}
+                        onRowDoubleClick={e => openEditDialog(e)}
                         onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={races}
