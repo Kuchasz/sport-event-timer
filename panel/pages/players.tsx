@@ -1,7 +1,7 @@
 import DataGrid, { Column, FormatterProps, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import { Button } from "react-daisyui";
+import { Button } from "components/button";
 import { CurrentRaceContext } from "../current-race-context";
 import { Demodal } from "demodal";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
@@ -66,7 +66,7 @@ const Players = () => {
     const addPlayerMutation = trpc.useMutation(["player.add"]);
     const editPlayerMutation = trpc.useMutation(["player.edit"]);
 
-    const toggleCreateVisible = async () => {
+    const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayer>(NiceModal, {
             title: "Create new player",
             component: PlayerCreate,
@@ -81,7 +81,7 @@ const Players = () => {
         }
     };
 
-    const toggleEditVisible = async (editedPlayer?: Player) => {
+    const openEditDialog = async (editedPlayer?: Player) => {
         const player = await Demodal.open<EditedPlayer>(NiceModal, {
             title: "Edit player",
             component: PlayerEdit,
@@ -125,18 +125,25 @@ const Players = () => {
             </Head>
 
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                {/* <div className="pb-4">
+                    <h1 className="text-xl font-semibold uppercase">Players</h1>
+                    <div className="flex-grow max-w-xs border-t-2 mt-2 border-pink-400"></div>
+                </div> */}
                 <div className="mb-4 flex">
-                    <Button onClick={toggleCreateVisible} startIcon={<Icon size={1} path={mdiPlus} />}>
-                        Create
+                    <Button onClick={openCreateDialog}>
+                        <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiAccountMultiplePlus} />}>
-                        Import
+                    <Button autoCapitalize="false">
+                        <Icon size={1} path={mdiAccountMultiplePlus} />
+                        <span className="ml-2">Import</span>
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiNumeric} />}>
-                        Set numbers
+                    <Button autoCapitalize="false">
+                        <Icon size={1} path={mdiNumeric} />
+                        <span className="ml-2">Set numbers</span>
                     </Button>
+
                     {/* <div className="grow"></div>
                     <ExportButton onExport={() => exportToCsv(gridElement, "Players.csv")}>Export to CSV</ExportButton>
                     <div className="px-1"></div>
@@ -146,23 +153,6 @@ const Players = () => {
                     <div className="px-1"></div>
                     <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton> */}
                 </div>
-                {/* {createVisible && (
-                    <Modal />
-                    // <PlayerCreate
-                    //     raceId={raceId!}
-                    //     isOpen={createVisible}
-                    //     onCancel={() => toggleCreateVisible()}
-                    //     onCreate={playerCreate}
-                    // />
-                )} */}
-                {/* {edited && (
-                    <PlayerEdit
-                        isOpen={editVisible}
-                        onCancel={() => toggleEditVisible()}
-                        onEdit={() => {}}
-                        editedPlayer={edited}
-                    />
-                )} */}
                 {/* {gridElement} */}
                 {players && (
                     <DataGrid
@@ -171,7 +161,7 @@ const Players = () => {
                             sortable: true,
                             resizable: true
                         }}
-                        onRowDoubleClick={e => toggleEditVisible(e)}
+                        onRowDoubleClick={e => openEditDialog(e)}
                         columns={columns}
                         rows={players}
                     />

@@ -1,7 +1,7 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import { Button } from "react-daisyui";
+import { Button } from "components/button";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { CurrentRaceContext } from "../current-race-context";
@@ -9,8 +9,8 @@ import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { useContext, useMemo, useState } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
+import { useMemo, useState } from "react";
 
 type Classification = InferQueryOutput<"classification.classifications">[0];
 type EditedClassification = InferMutationInput<"classification.update">;
@@ -94,12 +94,13 @@ const Classifications = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog} startIcon={<Icon size={1} path={mdiPlus} />}>
-                        Create
+                    <Button onClick={openCreateDialog}>
+                        <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false" startIcon={<Icon size={1} path={mdiAccountMultiplePlus} />}>
-                        Load
+                    <Button autoCapitalize="false">
+                        <Icon size={1} path={mdiAccountMultiplePlus} />
+                        <span className="ml-2">Load</span>
                     </Button>
                 </div>
                 <DataGrid
