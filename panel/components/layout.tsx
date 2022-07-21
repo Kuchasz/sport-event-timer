@@ -1,8 +1,10 @@
 import classNames from "classnames";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { Button } from "react-daisyui";
+import { Button } from "./button";
 import { CurrentRaceContext } from "../current-race-context";
+import { Demodal } from "demodal";
+import { InferMutationInput, trpc } from "../trpc";
 import {
     mdiAccountCogOutline,
     mdiAccountGroup,
@@ -14,9 +16,10 @@ import {
     mdiTimetable
     } from "@mdi/js";
 import { Meta } from "./meta";
+import { NiceModal } from "./modal";
+import { RaceCreate } from "./race-create";
 import { Select } from "./select";
-import { trpc } from "../trpc";
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
 import { useRouter } from "next/router";
 
@@ -24,6 +27,8 @@ type Props = {
     preview?: boolean;
     children: React.ReactNode;
 };
+
+type CreatedRace = InferMutationInput<"race.add">;
 
 const menuItems = [
     {
@@ -90,8 +95,22 @@ const menuItems = [
 const optionZero = { name: "Select race", id: 0 };
 
 const Status = () => {
-    const { data: items } = trpc.useQuery(["race.races"]);
+    const { data: items, refetch } = trpc.useQuery(["race.races"]);
+    const addRaceMuttaion = trpc.useMutation(["race.add"]);
     const { selectRace } = useContext(CurrentRaceContext);
+
+    const openCreateDialog = async () => {
+        const race = await Demodal.open<CreatedRace>(NiceModal, {
+            title: "Create new race",
+            component: RaceCreate,
+            props: {}
+        });
+
+        if (race) {
+            await addRaceMuttaion.mutateAsync(race);
+            refetch();
+        }
+    };
 
     return (
         <div className="flex items-center my-4 px-4 text-white">
@@ -109,6 +128,10 @@ const Status = () => {
                     ></Select>
                 ) : null}
             </div>
+            <Button onClick={openCreateDialog}>
+                <Icon size={1} path={mdiPlus} />
+                <span className="ml-2">Create Race</span>
+            </Button>
             <div className="grow"></div>
             <div className="flex items-center mr-4">
                 <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />
