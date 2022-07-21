@@ -7,7 +7,7 @@ type EditTimingPoint = InferMutationInput<"timing-point.update">;
 type TimingPointEditProps = {
     editedTimingPoint: TimingPoint;
     onReject: () => void;
-    onResolve: (TimingPoint: EditTimingPoint) => void;
+    onResolve: (timingPoint: EditTimingPoint) => void;
 };
 
 export const TimingPointEdit = ({ editedTimingPoint, onReject, onResolve }: TimingPointEditProps) => (

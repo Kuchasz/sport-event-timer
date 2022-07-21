@@ -4,6 +4,7 @@ import { InferMutationInput, InferQueryOutput } from "../trpc";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
+import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
 
@@ -28,8 +29,8 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
 
     return (
         <div className="flex flex-col">
-            <div>
-                <div className="form-control">
+            <div className="flex">
+                <div className="form-control grow basis-full">
                     <label className="label">
                         <span className="label-text">Classification</span>
                         <span className="label-text-alt">Required</span>
@@ -43,6 +44,13 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             onChange={changeHandler("classificationId")}
                         ></PoorSelect>
                     ) : null}
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow basis-full">
+                    <label className="label">
+                        <span className="label-text">Bib Number</span>
+                    </label>
+                    <PoorNumberInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
                 </div>
             </div>
             <div className="flex">

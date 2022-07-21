@@ -23,6 +23,10 @@ const columns: Column<Player, unknown>[] = [
         key: "classificationId",
         name: "Classification Id"
     },
+    {
+        key: "bibNumber",
+        name: "Bib Number"
+    },
     { key: "name", name: "Name" },
     { key: "lastName", name: "Last Name" },
     {

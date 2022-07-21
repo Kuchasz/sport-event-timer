@@ -7,7 +7,7 @@ type EditRace = InferMutationInput<"race.update">;
 type RaceEditProps = {
     editedRace: Race;
     onReject: () => void;
-    onResolve: (player: EditRace) => void;
+    onResolve: (race: EditRace) => void;
 };
 
 export const RaceEdit = ({ editedRace, onReject, onResolve }: RaceEditProps) => (
