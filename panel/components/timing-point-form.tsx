@@ -22,6 +22,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
                 <div className="form-control grow">
                     <label className="label">
                         <span className="label-text">Name</span>
+                        <span className="label-text-alt">Required</span>
                     </label>
                     <PoorInput value={timingPoint.name} onChange={changeHandler("name")} />
                 </div>
@@ -29,6 +30,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
                 <div className="form-control grow">
                     <label className="label">
                         <span className="label-text">Order</span>
+                        <span className="label-text-alt">Required</span>
                     </label>
                     <PoorNumberInput value={timingPoint.order} onChange={changeHandler("order")} />
                 </div>

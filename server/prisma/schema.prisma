@@ -10,6 +10,7 @@ datasource db {
 model Race {
     id              Int              @id @default(autoincrement())
     name            String
+    date            DateTime
     classifications Classification[]
     timeKeeper      TimingPoint[]
     player          Player[]
@@ -33,6 +34,7 @@ model Player {
     birthDate          DateTime
     gender             String
     bibNumber          Int?
+    startTime          Int?
     team               String?
     city               String?
     country            String?

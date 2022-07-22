@@ -55,8 +55,7 @@ export const playerRouter = trpc
             });
             if (!classification) return;
 
-            const user = await db.user.findFirst();
-            if (!user) return;
+            const user = await db.user.findFirstOrThrow();
 
             return await db.player.create({
                 data: {

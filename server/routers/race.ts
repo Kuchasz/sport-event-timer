@@ -4,7 +4,8 @@ import { z } from "zod";
 
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
-    name: z.string({ required_error: "name is required" })
+    name: z.string({ required_error: "name is required" }),
+    date: z.date({ required_error: "date is required" })
 });
 
 export const raceRouter = trpc
@@ -24,7 +25,8 @@ export const raceRouter = trpc
     .mutation("add", {
         input: raceSchema,
         async resolve(req) {
-            return await db.race.create({ data: { name: req.input.name } });
+            const { id, ...data } = req.input;
+            return await db.race.create({ data });
         }
     });
 
