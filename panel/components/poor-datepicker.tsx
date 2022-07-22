@@ -12,8 +12,6 @@ const toDate = (dateString: string) => {
     return new Date(Number(year), Number(month) - 1, Number(day));
 };
 
-const allowedCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-
 export const PoorDatepicker = ({
     value: initialValue,
     onChange
