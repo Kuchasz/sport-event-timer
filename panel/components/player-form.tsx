@@ -6,6 +6,7 @@ import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
+import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
 
 type Player = InferMutationInput<"player.add">["player"];
@@ -116,7 +117,6 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     <PoorInput value={player.city} onChange={changeHandler("city")} />
                 </div>
             </div>
-
             <div className="flex">
                 <div className="form-control grow">
                     <label className="label">
@@ -137,6 +137,14 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <span className="label-text">Ice Phone Number</span>
                     </label>
                     <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
+                </div>
+            </div>
+            <div className="flex">
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Start Time</span>
+                    </label>
+                    <PoorTimepicker value={player.startTime} onChange={changeHandler("startTime")} />
                 </div>
             </div>
             <div className="mt-4 flex">
