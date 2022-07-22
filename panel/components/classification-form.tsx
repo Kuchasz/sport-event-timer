@@ -22,6 +22,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 <div className="form-control grow">
                     <label className="label">
                         <span className="label-text">Name</span>
+                        <span className="label-text-alt">Required</span>
                     </label>
                     <PoorInput value={classification.name} onChange={changeHandler("name")} />
                 </div>

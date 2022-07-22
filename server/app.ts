@@ -10,12 +10,7 @@ import { apply as applyResults } from "@set/results";
 import { appRouter } from "./router";
 import { assignNumbersToPlayers, transform } from "@set/timer/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
-import {
-    ClockListPlayer,
-    formatTimeNoSec,
-    sort,
-    UserCredentials
-    } from "@set/shared/dist";
+import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
 import { createServer } from "http";
 import {
@@ -25,14 +20,11 @@ import {
     toStartPlayerTransform
     } from "@set/timer/to-start";
 import { login, verify } from "./auth";
-import { parse } from "csv-parse";
 import { PlayerResult } from "@set/shared/index";
-import { promisify } from "util";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
-import { stringify } from "csv-stringify";
 import { TimerState } from "@set/timer/store";
 import { upload } from "@set/timer/dist/slices/players";
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";

@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput } from "../trpc";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
+import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 
@@ -21,8 +22,17 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                 <div className="form-control grow">
                     <label className="label">
                         <span className="label-text">Name</span>
+                        <span className="label-text-alt">Required</span>
                     </label>
                     <PoorInput value={race.name} onChange={changeHandler("name")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="form-control grow">
+                    <label className="label">
+                        <span className="label-text">Date</span>
+                        <span className="label-text-alt">Required</span>
+                    </label>
+                    <PoorDatepicker value={race.date} onChange={changeHandler("date")} />
                 </div>
             </div>
             <div className="mt-4 flex">

@@ -63,7 +63,7 @@ const Classifications = () => {
         const classification = await Demodal.open<CreatedClassification>(NiceModal, {
             title: "Create new classification",
             component: ClassificationCreate,
-            props: {}
+            props: { raceId: raceId! }
         });
 
         if (classification) {
