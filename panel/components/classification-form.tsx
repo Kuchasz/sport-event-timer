@@ -1,9 +1,9 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput } from "../trpc";
+import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
-import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
 
 type Classification = InferMutationInput<"classification.add">;
@@ -19,11 +19,8 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     return (
         <div className="flex flex-col">
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Name</Label>
                     <PoorInput value={classification.name} onChange={changeHandler("name")} />
                 </div>
             </div>

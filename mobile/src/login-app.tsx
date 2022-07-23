@@ -11,13 +11,13 @@ type LoginAppProps = {
 
 export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
     const dispatch = useTimerDispatch();
-    const user = useTimerSelector((x) => x.userConfig.user);
+    const user = useTimerSelector(x => x.userConfig.user);
 
     const [login, setLogin] = useState<string>(user || "");
     const [password, setPassword] = useState<string>("");
 
     const requestLogIn = () => {
-        logIn({ login, password }).then((result) => {
+        logIn({ login, password }).then(result => {
             dispatch(setUser({ user: login, tokenExpire: Date.now() + (result.expireDate - result.issuedAt) * 1000 }));
         });
     };
@@ -31,7 +31,7 @@ export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
                         <Icon size={1} path={mdiAccountOutline} className="text-red-500 m-3" />
                         <input
                             className="focus:outline-none text-red-500 font-semibold py-1 w-full"
-                            onChange={(e) => setLogin(e.target.value)}
+                            onChange={e => setLogin(e.target.value)}
                             value={login}
                         />
                     </div>
@@ -43,7 +43,7 @@ export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
                         <input
                             type="password"
                             className="focus:outline-none text-red-500 font-semibold py-1 w-full"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={e => setPassword(e.target.value)}
                         />
                     </div>
                 </div>

@@ -3,16 +3,16 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
     mode: "jit",
-    content: ["./components/**/*.tsx", "./pages/**/*.tsx"],
-    plugins: [require("daisyui")],
+    // plugins: [require("@tailwindcss/forms")],
     safelist: [
         {
             pattern: /./
         }
     ],
+    content: ["./pages//*.{js,ts,jsx,tsx}", "./components//*.{js,ts,jsx,tsx}"],
     theme: {
         colors: {
-            ...colors,
+            // ...colors,
             // Build your palette here
             transparent: "transparent",
             current: "currentColor",
@@ -23,7 +23,12 @@ module.exports = {
             orange: colors.orange,
             black: colors.black,
             white: colors.white,
-            zinc: colors.zinc
+            zinc: colors.zinc,
+            indigo: colors.indigo,
+            pink: colors.purple,
+            purple: colors.pink,
+            green: colors.green,
+            lime: colors.lime
         },
         screens: {
             sm: "640px",
@@ -52,11 +57,6 @@ module.exports = {
             },
             fontFamily: {
                 sans: ["Inter var", ...defaultTheme.fontFamily.sans]
-            }
-        },
-        variants: {
-            extend: {
-                backgroundColor: ["even", "odd"]
             }
         }
     }

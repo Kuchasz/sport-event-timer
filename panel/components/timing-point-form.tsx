@@ -1,6 +1,7 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput } from "../trpc";
+import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { PoorNumberInput } from "./poor-number-input";
@@ -19,19 +20,13 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
     return (
         <div className="flex flex-col">
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Name</Label>
                     <PoorInput value={timingPoint.name} onChange={changeHandler("name")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Order</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Order</Label>
                     <PoorNumberInput value={timingPoint.order} onChange={changeHandler("order")} />
                 </div>
             </div>
