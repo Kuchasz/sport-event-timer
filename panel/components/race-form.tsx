@@ -1,6 +1,7 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput } from "../trpc";
+import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
@@ -19,19 +20,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
     return (
         <div className="flex flex-col">
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Name</Label>
                     <PoorInput value={race.name} onChange={changeHandler("name")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Date</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Date</Label>
                     <PoorDatepicker value={race.date} onChange={changeHandler("date")} />
                 </div>
             </div>

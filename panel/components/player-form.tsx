@@ -1,6 +1,7 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
@@ -31,11 +32,8 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
     return (
         <div className="flex flex-col">
             <div className="flex">
-                <div className="form-control grow basis-full">
-                    <label className="label">
-                        <span className="label-text">Classification</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow basis-full">
+                    <Label>Classification</Label>
                     {classifications && classifications.length ? (
                         <PoorSelect
                             initialValue={player.classificationId}
@@ -47,36 +45,27 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     ) : null}
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow basis-full">
-                    <label className="label">
-                        <span className="label-text">Bib Number</span>
-                    </label>
+                <div className="grow basis-full">
+                    <Label>Bib Number</Label>
                     <PoorNumberInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Name</Label>
                     <PoorInput value={player.name} onChange={changeHandler("name")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Last Name</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow">
+                    <Label>Last Name</Label>
                     <PoorInput value={player.lastName} onChange={changeHandler("lastName")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div className="flex">
-                <div className="form-control grow basis-full">
-                    <label className="label">
-                        <span className="label-text">Gender</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow basis-full">
+                    <Label>Gender</Label>
                     <PoorSelect
                         initialValue={player.gender}
                         items={genders}
@@ -86,64 +75,51 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow basis-full">
-                    <label className="label">
-                        <span className="label-text">Birth Date</span>
-                        <span className="label-text-alt">Required</span>
-                    </label>
+                <div className="grow basis-full">
+                    <Label>Birth Date</Label>
                     <PoorDatepicker value={player.birthDate} onChange={changeHandler("birthDate")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Team</span>
-                    </label>
+                <div>
+                    <Label>Team</Label>
                     <PoorInput value={player.team} onChange={changeHandler("team")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Country</span>
-                    </label>
+                <div className="grow">
+                    <Label>Country</Label>
                     <PoorInput value={player.country} onChange={changeHandler("country")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">City</span>
-                    </label>
+                <div className="grow">
+                    <Label>City</Label>
                     <PoorInput value={player.city} onChange={changeHandler("city")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
+                <div className="grow">
+                    <Label>Email</Label>
                     <PoorInput value={player.email} onChange={changeHandler("email")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Phone Number</span>
-                    </label>
+                <div className="grow">
+                    <Label>Phone Number</Label>
                     <PoorInput value={player.phoneNumber} onChange={changeHandler("phoneNumber")} />
                 </div>
                 <div className="p-2"></div>
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Ice Phone Number</span>
-                    </label>
+                <div className="grow">
+                    <Label>Ice Phone Number</Label>
                     <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
                 </div>
             </div>
+            <div className="p-2"></div>
             <div className="flex">
-                <div className="form-control grow">
-                    <label className="label">
-                        <span className="label-text">Start Time</span>
-                    </label>
+                <div className="grow">
+                    <Label>Start Time</Label>
                     <PoorTimepicker value={player.startTime} onChange={changeHandler("startTime")} />
                 </div>
             </div>

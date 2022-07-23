@@ -17,8 +17,8 @@ import {
     } from "@mdi/js";
 import { Meta } from "./meta";
 import { NiceModal } from "./modal";
+import { PoorSelect } from "./poor-select";
 import { RaceCreate } from "./race-create";
-import { Select } from "./select";
 import { useContext } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
 import { useRouter } from "next/router";
@@ -118,14 +118,14 @@ const Status = () => {
             <div className="grow"></div>
             <div className="w-64 text-gray-800 will-change-transform z-10 mr-4">
                 {items && items.length > 0 ? (
-                    <Select
-                        initialValue={optionZero}
+                    <PoorSelect
                         nameKey="name"
+                        valueKey="id"
                         items={items}
                         onChange={e => {
-                            selectRace(e.id);
+                            selectRace(e.target.value);
                         }}
-                    ></Select>
+                    ></PoorSelect>
                 ) : null}
             </div>
             <Button onClick={openCreateDialog}>

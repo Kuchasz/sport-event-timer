@@ -1,4 +1,4 @@
-import { Input } from "react-daisyui";
+import { Input } from "./input";
 
 export const PoorNumberInput = ({
     value,
@@ -7,5 +7,9 @@ export const PoorNumberInput = ({
     value?: number | null;
     onChange: (event: { target: { value: number } }) => void;
 }) => (
-    <Input type="number" value={value || ""} onChange={e => onChange({ target: { value: Number(e.target.value) } })} />
+    <Input
+        type="number"
+        value={value || ""}
+        onChange={e => onChange({ target: { value: Number(e.currentTarget.value) } })}
+    />
 );

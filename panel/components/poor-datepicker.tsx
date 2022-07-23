@@ -1,4 +1,4 @@
-import { Input } from "react-daisyui";
+import { Input } from "./input";
 import { useState } from "react";
 
 const toDateString = (date: Date) => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
@@ -25,7 +25,7 @@ export const PoorDatepicker = ({
         <Input
             value={value}
             onChange={e => {
-                setValue(e.target.value);
+                setValue(e.currentTarget.value);
             }}
             onBlur={e => {
                 onChange({ target: { value: toDate(e.target.value) ?? new Date() } });
