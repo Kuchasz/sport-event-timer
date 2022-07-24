@@ -83,7 +83,7 @@ export const trpcClient = createTRPCClient<AppRouter>({
                 client: wsClient
             }),
             false: httpBatchLink({
-                url: `http://localhost:2022`
+                url
             })
         })
     ]

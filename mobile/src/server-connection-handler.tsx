@@ -19,6 +19,8 @@ export const ServerConnectionHandler = ({
         onError: console.error
     });
 
+    const ntpMutation = trpc.useMutation(["ntp.sync"]);
+
     useEffect(() => {
         // const aaa = trpc.useQuery(["race.races"]);
         // trpc.useSubscription(["action.onDispatched"], {
@@ -30,24 +32,26 @@ export const ServerConnectionHandler = ({
         // socket.on("receive-action", action => dispatch({ ...action, __remote: true }));
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        // let loadStartTime = Date.now();
-        // socket.on("TR", serverTime => {
-        //     const loadEndTime = Date.now();
-        //     const latency = loadEndTime - loadStartTime;
+        let loadStartTime = Date.now();
 
-        //     const timeOffset = -(loadEndTime - (serverTime + latency / 2));
+        const requestTimeSync = async () => {
+            const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
+            const loadEndTime = Date.now();
+            const latency = loadEndTime - loadStartTime;
 
-        //     dispatch(setTimeOffset({ timeOffset }));
+            const timeOffset = -(loadEndTime - (serverTime + latency / 2));
 
-        //     if (latency <= 50) {
-        //         clearInterval(timeSyncInterval);
-        //     }
-        // });
+            dispatch(setTimeOffset({ timeOffset }));
 
-        // const timeSyncInterval = setInterval(() => {
-        //     loadStartTime = Date.now();
-        //     socket.emit("TQ");
-        // }, 1000);
+            if (latency <= 50) {
+                clearInterval(timeSyncInterval);
+            }
+        };
+
+        const timeSyncInterval = setInterval(() => {
+            loadStartTime = Date.now();
+            requestTimeSync();
+        }, 1000);
 
         const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             //dispatch connectionState !== "connected"
@@ -56,7 +60,7 @@ export const ServerConnectionHandler = ({
         });
 
         return () => {
-            // clearInterval(timeSyncInterval);
+            clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
             // socket.removeAllListeners();
             // socket.disconnect();
