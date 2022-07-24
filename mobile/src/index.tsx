@@ -1,20 +1,22 @@
 import App from "./App";
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
-import { getConnection } from "./connection";
+import { getConnection, queryClient, trpcClient } from "./connection";
 import { isLoggedIn } from "./security";
 import { LoginApp } from "./login-app";
 import { Middleware } from "redux";
-import { Provider as ReduxStoreProdiver } from "react-redux";
+import { Provider as ReduxStoreProvider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ServerConnectionHandler } from "./server-connection-handler";
 import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
+import { trpc } from "./trpc";
 import { userConfigSlice } from "@set/timer/dist/slices/user-config";
 import { useTimerSelector } from "./hooks";
 import "./index.scss";
 
-export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
+export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = storeApi => next => action => {
     if (!isLoggedIn(storeApi.getState().userConfig.tokenExpire)) {
         next(action);
         return;
@@ -23,17 +25,18 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
 
         if (
             !action.__remote &&
-            socket.connected &&
+            socket?.OPEN &&
             !action.type.includes(timeKeeperConfigSlice.name) &&
             !action.type.includes(userConfigSlice.name)
         )
-            socket.emit("post-action", action);
+            trpcClient.mutation("action.dispatch", action);
+        // socket.emit("post-action", action);
 
         next(action);
     }
 };
 
-export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = (state) => (next) => (action) => {
+export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = state => next => action => {
     if (
         !action.__remote &&
         !action.type.includes(timeKeeperConfigSlice.name) &&
@@ -46,7 +49,7 @@ export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = (s
     next(action);
 };
 
-export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> = (storeApi) => (next) => (action) => {
+export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> = storeApi => next => action => {
     next(action);
     const config = storeApi.getState().userConfig;
     const configState = JSON.stringify(config);
@@ -54,12 +57,16 @@ export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> =
 };
 
 const LoggedApp = () => {
-    const loggedIn = useTimerSelector((x) => isLoggedIn(x.userConfig.tokenExpire));
+    const loggedIn = useTimerSelector(x => isLoggedIn(x.userConfig.tokenExpire));
 
     return loggedIn ? (
-        <ServerConnectionHandler dispatch={store!.dispatch}>
-            <App />
-        </ServerConnectionHandler>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            <QueryClientProvider client={queryClient}>
+                <ServerConnectionHandler dispatch={store!.dispatch}>
+                    <App />
+                </ServerConnectionHandler>
+            </QueryClientProvider>
+        </trpc.Provider>
     ) : (
         <LoginApp />
     );
@@ -70,15 +77,14 @@ const store = createStore([persistStateMiddleware, addIssuerMiddleware, postActi
     userConfig: JSON.parse(stateString || "{}")
 });
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(
     <React.StrictMode>
-        <ReduxStoreProdiver store={store}>
+        <ReduxStoreProvider store={store}>
             <LoggedApp />
-        </ReduxStoreProdiver>
-    </React.StrictMode>,
-    document.getElementById("root")
+        </ReduxStoreProvider>
+    </React.StrictMode>
 );
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

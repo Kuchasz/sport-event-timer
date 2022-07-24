@@ -78,7 +78,7 @@ export type TimeKeeperConfig = {
     connectionState: ConnectionState;
 };
 
-export type ConnectionState = "connected" | "reconnecting" | "disconnected" | "error";
+export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
 
 export type UserConfig = {
     user?: string;

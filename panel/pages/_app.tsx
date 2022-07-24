@@ -5,6 +5,7 @@ import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { CurrentRaceContext } from "current-race-context";
 import { Demodal } from "demodal";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
+import { loggerLink } from "@trpc/client/links/loggerLink";
 import { useEffect, useState } from "react";
 import { withTRPC } from "@trpc/next";
 import "../globals.scss";
@@ -41,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : "http://localhost:21822/api/trpc";
 const wsUrl = process.env.VERCEL_URL ? `wss://${process.env.VERCEL_URL}/api/trpc` : "ws://localhost:21822/api/trpc";
 
-const getEndingLink = () => {
+const getWSLink = () => {
     if (typeof window === "undefined") {
         return httpBatchLink({
             url
@@ -68,8 +69,13 @@ export default withTRPC<AppRouter>({
         return {
             transformer: superjson,
             links: [
-                // pass logger link in here
-                getEndingLink()
+                loggerLink({
+                    enabled: opts =>
+                        (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
+                        (opts.direction === "down" && opts.result instanceof Error)
+                }),
+                getWSLink(),
+                httpBatchLink({ url })
             ]
             /**
              * @link https://react-query.tanstack.com/reference/QueryClient

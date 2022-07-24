@@ -12,6 +12,7 @@ export const actionRouter = trpc
             action: z.any()
         }),
         resolve({ input }) {
+            console.log(input.action);
             ee.emit("dispatch", input.action);
             return "OK";
         }

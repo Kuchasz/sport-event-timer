@@ -1,17 +1,17 @@
-import {
-    assignPlayerNumbers,
-    calculateGCStartTimes,
-    calculateNonGCStartTimes,
-    readPlayersStartTimes,
-    stripLists,
-    uploadPlayers
-    } from "../api";
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { useRef, useState } from "react";
 import { useTimerSelector } from "../hooks";
+// import {
+//     assignPlayerNumbers,
+//     calculateGCStartTimes,
+//     calculateNonGCStartTimes,
+//     readPlayersStartTimes,
+//     stripLists,
+//     uploadPlayers
+//     } from "../api";
 
 export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
@@ -20,43 +20,43 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const [devModeEnabled, setDevModeEnabled] = useState<boolean>(false);
     const [devModeClicks, setDevModeClicks] = useState<number>(0);
 
-    const triggerPlayersFileChooser = () => {
-        inputFile?.current?.click();
-    };
+    // const triggerPlayersFileChooser = () => {
+    //     inputFile?.current?.click();
+    // };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.length === 1) {
-            const [file] = e.target.files;
-            const reader = new FileReader();
+    // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files?.length === 1) {
+    //         const [file] = e.target.files;
+    //         const reader = new FileReader();
 
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                uploadPlayers(e.target!.result! as string);
-            };
+    //         reader.onload = (e: ProgressEvent<FileReader>) => {
+    //             uploadPlayers(e.target!.result! as string);
+    //         };
 
-            reader.readAsText(file);
-        }
-    };
+    //         reader.readAsText(file);
+    //     }
+    // };
 
-    const handleAssignPlayerNumbers = async () => {
-        const res = await assignPlayerNumbers();
-        console.log(res);
-    };
+    // const handleAssignPlayerNumbers = async () => {
+    //     const res = await assignPlayerNumbers();
+    //     console.log(res);
+    // };
 
-    const handleReadPlayerStartTimes = () => {
-        readPlayersStartTimes();
-    };
+    // const handleReadPlayerStartTimes = () => {
+    //     readPlayersStartTimes();
+    // };
 
-    const handleCalculateNonGCStartTimes = () => {
-        calculateNonGCStartTimes();
-    };
+    // const handleCalculateNonGCStartTimes = () => {
+    //     calculateNonGCStartTimes();
+    // };
 
-    const handleCalculateGCStartTimes = () => {
-        calculateGCStartTimes();
-    };
+    // const handleCalculateGCStartTimes = () => {
+    //     calculateGCStartTimes();
+    // };
 
-    const handleStripLists = () => {
-        stripLists();
-    };
+    // const handleStripLists = () => {
+    //     stripLists();
+    // };
 
     const setTimeKeeperId = (timeKeeperId: number) => {
         dispatch(chooseTimeKeeper({ timeKeeperId }));
@@ -76,7 +76,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
 
             {devModeEnabled ? (
                 <div>
-                    <input
+                    {/* <input
                         type="file"
                         id="file"
                         accept=".csv"
@@ -126,7 +126,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
                             icon={mdiUpload}
                             contents={<strong>STRIP LISTS FOR TIMEGONEW</strong>}
                         />
-                    </div>
+                    </div> */}
                 </div>
             ) : null}
 
