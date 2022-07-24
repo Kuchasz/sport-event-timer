@@ -29,8 +29,7 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
             !action.type.includes(timeKeeperConfigSlice.name) &&
             !action.type.includes(userConfigSlice.name)
         )
-            trpcClient.mutation("action.dispatch", action);
-        // socket.emit("post-action", action);
+            trpcClient.mutation("action.dispatch", { action });
 
         next(action);
     }

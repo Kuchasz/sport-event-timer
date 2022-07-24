@@ -40,3 +40,12 @@ export const readCsvAsync = async <T>(path: string) => {
     const data = await readFileAsync(resolve(path));
     return (await parseCsvAsync(data, { columns: true })) as T;
 };
+
+export const writeJson = <T>(content: T, path: string) => {
+    writeFile(resolve(path), JSON.stringify(content), err => {
+        if (err) {
+            console.log(err);
+        } else {
+        }
+    });
+};
