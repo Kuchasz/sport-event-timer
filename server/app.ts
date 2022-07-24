@@ -2,9 +2,11 @@ import * as fs from "./async-fs";
 import * as m from "@set/timer/model";
 import * as trpc from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import * as trpcWs from "@trpc/server/adapters/ws";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import ws from "ws";
 import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
 import { appRouter } from "./router";
@@ -12,6 +14,7 @@ import { assignNumbersToPlayers, transform } from "@set/timer/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
 import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
+import { createContext } from "./trpc-context";
 import { createServer } from "http";
 import {
     emptyToStartPlayer,
@@ -29,9 +32,6 @@ import { TimerState } from "@set/timer/store";
 import { upload } from "@set/timer/dist/slices/players";
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 
-const createContext = ({ req, res }: trpcExpress.CreateExpressContextOptions) => ({}); // no context
-type Context = trpc.inferAsyncReturnType<typeof createContext>;
-
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -46,21 +46,30 @@ const corsOptions = {
     credentials: true,
     preflightContinue: false,
     origin: true,
-    methods: "GET,POST,PUT,OPTIONS",
+    methods: ["GET", "POST", "PUT", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept"]
 };
+
+const wss = new ws.Server({ server });
+const handler = trpcWs.applyWSSHandler({ wss, router: appRouter, createContext });
+
+const trpcExpressMiddleware = trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext
+});
 
 app.use(cors(corsOptions));
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    "/api/trpc",
-    trpcExpress.createExpressMiddleware({
-        router: appRouter,
-        createContext
-    })
-);
+app.use("/api/trpc", trpcExpressMiddleware);
+
+process.on("SIGTERM", () => {
+    console.log("SIGTERM");
+    handler.broadcastReconnectNotification();
+    wss.close();
+    server.close();
+});
 
 type NumberStartTime = { number: number; startTime: number };
 

@@ -50,6 +50,7 @@ model Player {
     splitTime          SplitTime[]
 
     @@unique([raceId, bibNumber])
+    @@unique([classificationId, startTime])
 }
 
 model User {

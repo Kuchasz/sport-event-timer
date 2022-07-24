@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "./button";
 import { CurrentRaceContext } from "../current-race-context";
 import { Demodal } from "demodal";
+import { Fragment, useContext } from "react";
 import { InferMutationInput, trpc } from "../trpc";
 import {
     mdiAccountCogOutline,
@@ -19,7 +20,6 @@ import { Meta } from "./meta";
 import { NiceModal } from "./modal";
 import { PoorSelect } from "./poor-select";
 import { RaceCreate } from "./race-create";
-import { useContext } from "react";
 import { useCurrentRaceId } from "../use-current-race-id";
 import { useRouter } from "next/router";
 
@@ -172,12 +172,12 @@ const Layout = ({ children }: Props) => {
                         <div className="flex flex-grow overflow-y-hidden">
                             <nav className="w-60 py-4 flex-col shadow-lg rounded-tr-md bg-white">
                                 {menuItems.map(mi => (
-                                    <>
+                                    <Fragment key={mi.name}>
                                         <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
                                         {mi.items.map(n => (
                                             <MenuButton key={n.to} {...n} isActive={router.asPath === n.to} />
                                         ))}
-                                    </>
+                                    </Fragment>
                                 ))}
                             </nav>
                             <main className="grow h-full overflow-y-auto p-8">

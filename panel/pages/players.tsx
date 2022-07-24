@@ -6,6 +6,7 @@ import { Demodal } from "demodal";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
+import { milisecondsToTimeString } from "../utils";
 import { NiceModal } from "../components/modal";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
@@ -31,6 +32,11 @@ const columns: Column<Player, unknown>[] = [
         key: "gender",
         name: "Gender",
         width: 10
+    },
+    {
+        key: "startTime",
+        name: "Start Time",
+        formatter: props => <div>{milisecondsToTimeString(props.row.startTime)}</div>
     },
     { key: "birthDate", name: "Birth Date", formatter: props => <div>{props.row.birthDate.toLocaleDateString()}</div> },
     { key: "country", name: "Country", width: 10 },

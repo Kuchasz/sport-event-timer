@@ -5,7 +5,7 @@
     "main": "index.ts",
     "license": "MIT",
     "scripts": {
-        "start:dev": "NODE_ENV=development&& ts-node-dev app.ts --project tsconfig.json",
+        "start:dev": "set NODE_ENV=development&& ts-node-dev app.ts --project tsconfig.json",
         "dev": "nodemon",
         "build": "tsc --project tsconfig.json"
     },
