@@ -1,9 +1,38 @@
 import * as trpc from "@trpc/server";
+import { createStore } from "@set/timer/store";
 import { EventEmitter } from "events";
+import { readFile } from "fs";
+import { resolve } from "path";
+import { staticTimeKeppers } from "@set/timer/slices/time-keepers";
+import { writeJsonAsync } from "../async-fs";
 import { z } from "zod";
 
 type Action = any;
 const ee = new EventEmitter();
+
+const store = createStore([]);
+
+readFile(resolve("../state.json"), { encoding: "utf8", flag: "r" }, (err, res) => {
+    let state;
+
+    if (err) {
+        state = {
+            players: [],
+            timeKeepers: staticTimeKeppers,
+            timeStamps: [],
+            raceCategories: []
+        };
+    } else {
+        state = JSON.parse(res.toString());
+    }
+
+    store.dispatch({
+        type: "REPLACE_STATE",
+        state
+    });
+
+    writeJsonAsync(state, "../state.json");
+});
 
 export const actionRouter = trpc
     .router()
@@ -17,11 +46,17 @@ export const actionRouter = trpc
             return "OK";
         }
     })
-    .subscription("onDispatched", {
+    .query("state", {
+        resolve() {
+            return store.getState();
+        }
+    })
+    .subscription("action-dispatched", {
         resolve() {
             return new trpc.Subscription<Action>(emit => {
                 const onDispatched = (action: Action) => {
-                    emit.data(action);
+                    console.log("emit", action?.type);
+                    // emit.data(action);
                 };
 
                 ee.on("dispatch", onDispatched);

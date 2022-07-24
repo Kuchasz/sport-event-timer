@@ -14,11 +14,15 @@ export const ServerConnectionHandler = ({
     dispatch: (action: any) => void;
     children: ReactNode;
 }) => {
-    trpc.useSubscription(["action.onDispatched"], {
+    trpc.useSubscription(["action.action-dispatched"], {
         onNext: action => dispatch({ ...action, __remote: true }),
         onError: console.error
     });
 
+    const { refetch: refetchState } = trpc.useQuery(["action.state"], {
+        enabled: false,
+        onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true })
+    });
     const ntpMutation = trpc.useMutation(["ntp.sync"]);
 
     useEffect(() => {
@@ -31,6 +35,8 @@ export const ServerConnectionHandler = ({
 
         // socket.on("receive-action", action => dispatch({ ...action, __remote: true }));
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
+
+        refetchState();
 
         let loadStartTime = Date.now();
 
