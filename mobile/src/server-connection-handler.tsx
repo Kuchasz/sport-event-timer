@@ -1,6 +1,11 @@
 import { getConnection, onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
+import { trpc } from "./trpc";
+
+require("react-dom");
+(window as any).React2 = require("react");
+console.log((window as any).React1, (window as any).React2, (window as any).React1 === (window as any).React2);
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -9,40 +14,51 @@ export const ServerConnectionHandler = ({
     dispatch: (action: any) => void;
     children: ReactNode;
 }) => {
+    trpc.useSubscription(["action.onDispatched"], {
+        onNext: action => dispatch({ ...action, __remote: true }),
+        onError: console.error
+    });
+
     useEffect(() => {
-        const socket = getConnection();
+        // const aaa = trpc.useQuery(["race.races"]);
+        // trpc.useSubscription(["action.onDispatched"], {
+        //     onNext: action => dispatch({ ...action, __remote: true }),
+        //     onError: console.error
+        // });
+        // const socket = getConnection();
 
-        socket.on("receive-action", (action) => dispatch({ ...action, __remote: true }));
-        socket.on("receive-state", (state) => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
+        // socket.on("receive-action", action => dispatch({ ...action, __remote: true }));
+        // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        let loadStartTime = Date.now();
-        socket.on("TR", (serverTime) => {
-            const loadEndTime = Date.now();
-            const latency = loadEndTime - loadStartTime;
+        // let loadStartTime = Date.now();
+        // socket.on("TR", serverTime => {
+        //     const loadEndTime = Date.now();
+        //     const latency = loadEndTime - loadStartTime;
 
-            const timeOffset = -(loadEndTime - (serverTime + latency / 2));
+        //     const timeOffset = -(loadEndTime - (serverTime + latency / 2));
 
-            dispatch(setTimeOffset({ timeOffset }));
+        //     dispatch(setTimeOffset({ timeOffset }));
 
-            if (latency <= 50) {
-                clearInterval(timeSyncInterval);
-            }
-        });
+        //     if (latency <= 50) {
+        //         clearInterval(timeSyncInterval);
+        //     }
+        // });
 
-        const timeSyncInterval = setInterval(() => {
-            loadStartTime = Date.now();
-            socket.emit("TQ");
-        }, 1000);
+        // const timeSyncInterval = setInterval(() => {
+        //     loadStartTime = Date.now();
+        //     socket.emit("TQ");
+        // }, 1000);
 
-        const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
+        const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             //dispatch connectionState !== "connected"
+            console.log("dispatch connectionState ", connectionState);
             dispatch(setConnectionState({ connectionState }));
         });
 
         return () => {
-            clearInterval(timeSyncInterval);
+            // clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
-            socket.removeAllListeners();
+            // socket.removeAllListeners();
             // socket.disconnect();
         };
     }, [dispatch]);
