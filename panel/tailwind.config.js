@@ -22,7 +22,7 @@ module.exports = {
         },
         extend: {
             colors: {
-                ...colors,
+                // ...colors,
                 // Build your palette here
                 transparent: "transparent",
                 current: "currentColor",

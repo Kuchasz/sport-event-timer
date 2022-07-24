@@ -1,8 +1,10 @@
 import Layout from "../components/layout";
 import superjson from "superjson";
 import { AppProps } from "next/app";
+import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { CurrentRaceContext } from "current-race-context";
 import { Demodal } from "demodal";
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { useEffect, useState } from "react";
 import { withTRPC } from "@trpc/next";
 import "../globals.scss";
@@ -36,19 +38,39 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
+const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : "http://localhost:21822/api/trpc";
+const wsUrl = process.env.VERCEL_URL ? `wss://${process.env.VERCEL_URL}/api/trpc` : "ws://localhost:21822/api/trpc";
+
+const getEndingLink = () => {
+    if (typeof window === "undefined") {
+        return httpBatchLink({
+            url
+        });
+    }
+
+    const client = createWSClient({
+        // url: process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:21822"
+        url: wsUrl
+    });
+
+    return wsLink<AppRouter>({
+        client
+    });
+};
+
 export default withTRPC<AppRouter>({
     config({ ctx }) {
         /**
          * If you want to use SSR, you need to use the server's full URL
          * @link https://trpc.io/docs/ssr
          */
-        const url = process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}/api/trpc`
-            : "http://localhost:21822/api/trpc";
 
         return {
-            url,
-            transformer: superjson
+            transformer: superjson,
+            links: [
+                // pass logger link in here
+                getEndingLink()
+            ]
             /**
              * @link https://react-query.tanstack.com/reference/QueryClient
              */

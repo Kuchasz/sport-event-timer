@@ -15,7 +15,7 @@ const playerSchema = z.object({
         name: z.string({ required_error: "name is required" }).min(3),
         lastName: z.string({ required_error: "lastName is required" }).min(3),
         bibNumber: z.number().nullish(),
-        startTime: z.number().nullable(),
+        startTime: z.number().optional(),
         gender: GenderEnum,
         birthDate: z.date({ required_error: "birthDate is required" }),
         country: z.string().nullish(),
