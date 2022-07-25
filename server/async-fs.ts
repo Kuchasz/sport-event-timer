@@ -1,6 +1,11 @@
+import {
+    access,
+    constants,
+    readFile,
+    writeFile
+    } from "fs";
 import { parse } from "csv-parse";
 import { promisify } from "util";
-import { readFile, writeFile } from "fs";
 import { resolve } from "path";
 import { stringify } from "csv-stringify";
 
@@ -49,3 +54,5 @@ export const writeJson = <T>(content: T, path: string) => {
         }
     });
 };
+
+export const fileExistsAsync = (path: string) => new Promise(r => access(resolve(path), constants.F_OK, e => r(!e)));

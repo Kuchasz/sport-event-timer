@@ -2,6 +2,7 @@ import { getConnection, onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";
+import { uuidv4 } from "@set/shared/dist";
 
 require("react-dom");
 (window as any).React2 = require("react");
@@ -9,12 +10,14 @@ console.log((window as any).React1, (window as any).React2, (window as any).Reac
 
 export const ServerConnectionHandler = ({
     dispatch,
-    children
+    children,
+    clientId
 }: {
     dispatch: (action: any) => void;
     children: ReactNode;
+    clientId: string;
 }) => {
-    trpc.useSubscription(["action.action-dispatched"], {
+    trpc.useSubscription(["action.action-dispatched", { clientId }], {
         onNext: action => dispatch({ ...action, __remote: true }),
         onError: console.error
     });
