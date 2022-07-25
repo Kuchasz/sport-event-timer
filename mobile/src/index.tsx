@@ -14,7 +14,10 @@ import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config
 import { trpc } from "./trpc";
 import { userConfigSlice } from "@set/timer/dist/slices/user-config";
 import { useTimerSelector } from "./hooks";
+import { uuidv4 } from "@set/shared/dist";
 import "./index.scss";
+
+const clientId = uuidv4();
 
 export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = storeApi => next => action => {
     if (!isLoggedIn(storeApi.getState().userConfig.tokenExpire)) {
@@ -29,7 +32,7 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
             !action.type.includes(timeKeeperConfigSlice.name) &&
             !action.type.includes(userConfigSlice.name)
         )
-            trpcClient.mutation("action.dispatch", { action });
+            trpcClient.mutation("action.dispatch", { action, clientId });
 
         next(action);
     }
@@ -61,7 +64,7 @@ const LoggedApp = () => {
     return loggedIn ? (
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
-                <ServerConnectionHandler dispatch={store!.dispatch}>
+                <ServerConnectionHandler dispatch={store!.dispatch} clientId={clientId}>
                     <App />
                 </ServerConnectionHandler>
             </QueryClientProvider>
