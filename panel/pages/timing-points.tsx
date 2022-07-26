@@ -2,9 +2,10 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
+import { Confirmation } from "../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
@@ -17,9 +18,41 @@ type EditedTimingPoint = InferMutationInput<"timing-point.update">;
 
 const columns: Column<TimingPoint, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
-    { key: "order", name: "Order" },
-    { key: "name", name: "Name" }
+    { key: "order", name: "Order", width: 10 },
+    { key: "name", name: "Name" },
+    {
+        key: "id",
+        width: 15,
+        name: "Actions",
+        formatter: props => <TimingPointDeleteButton timingPoint={props.row} />
+    }
 ];
+
+const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) => {
+    const raceId = useCurrentRaceId();
+    const { refetch } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }]);
+    const deleteTimingPointMutation = trpc.useMutation(["timing-point.delete"]);
+    const deleteTimingPoint = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete timing point`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`
+            }
+        });
+
+        if (confirmed) {
+            await deleteTimingPointMutation.mutateAsync(timingPoint);
+            refetch();
+        }
+    };
+    return (
+        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
+            <Icon size={1} path={mdiTrashCan} />
+            delete
+        </span>
+    );
+};
 
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();

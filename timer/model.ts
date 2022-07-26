@@ -155,8 +155,11 @@ export const changePlayerInfo = (players: Player[], modifiedPlayer: Player): Pla
 
 export const uploadPlayers = (_players: Player[], newPlayers: Player[]): Player[] => newPlayers;
 
-export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
-    pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
+export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
+    pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
+
+// export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
+//     pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
 
 export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
 

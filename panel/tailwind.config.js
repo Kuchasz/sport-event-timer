@@ -4,13 +4,33 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
     mode: "jit",
     // plugins: [require("@tailwindcss/forms")],
-    safelist: [
-        {
-            pattern: /./
-        }
-    ],
-    content: ["./pages//*.{js,ts,jsx,tsx}", "./components//*.{js,ts,jsx,tsx}"],
+    // safelist: [
+    //     {
+    //         pattern: /./
+    //     }
+    // ],
+    content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
     theme: {
+        colors: {
+            // ...colors,
+            // Build your palette here
+            transparent: "transparent",
+            current: "currentColor",
+            gray: colors.neutral,
+            red: colors.red,
+            blue: colors.sky,
+            yellow: colors.amber,
+            orange: colors.orange,
+            black: colors.black,
+            white: colors.white,
+            zinc: colors.zinc,
+            indigo: colors.indigo,
+            pink: colors.purple,
+            purple: colors.pink,
+            green: colors.green,
+            lime: colors.lime,
+            slate: colors.slate
+        },
         screens: {
             sm: "640px",
             md: "768px",
@@ -21,25 +41,6 @@ module.exports = {
             wide: { raw: "(min-aspect-ratio: 1/1)" }
         },
         extend: {
-            colors: {
-                // ...colors,
-                // Build your palette here
-                transparent: "transparent",
-                current: "currentColor",
-                gray: colors.neutral,
-                red: colors.red,
-                blue: colors.sky,
-                yellow: colors.amber,
-                orange: colors.orange,
-                black: colors.black,
-                white: colors.white,
-                zinc: colors.zinc,
-                indigo: colors.indigo,
-                pink: colors.purple,
-                purple: colors.pink,
-                green: colors.green,
-                lime: colors.lime
-            },
             zIndex: {
                 "-1": "-1"
             },

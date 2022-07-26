@@ -92,8 +92,6 @@ const menuItems = [
     }
 ];
 
-const optionZero = { name: "Select race", id: 0 };
-
 const Status = () => {
     const { data: items, refetch } = trpc.useQuery(["race.races"]);
     const addRaceMuttaion = trpc.useMutation(["race.add"]);

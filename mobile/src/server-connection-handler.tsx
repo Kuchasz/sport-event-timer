@@ -2,7 +2,6 @@ import { getConnection, onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";
-import { uuidv4 } from "@set/shared/dist";
 
 require("react-dom");
 (window as any).React2 = require("react");

@@ -17,7 +17,7 @@ const BottomMenuButton = ({ text, path, icon, chosenPath: chosenMode }: BottomMe
     return (
         <Link
             to={`${process.env.PUBLIC_URL}/${path}`}
-            className={`${opacity} transition-opacity w-12 flex flex-col items-center px-4 py-2`}
+            className={`${opacity} hover:opacity-50 transition-opacity w-12 flex flex-col items-center px-4 py-2`}
         >
             <Icon color="white" size={1} path={icon} />
             <p className="text-xs text-white font-semibold">{text}</p>
