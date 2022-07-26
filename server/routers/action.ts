@@ -18,7 +18,7 @@ const dispatchActionSchema = z.object({
     action: z.any()
 });
 
-const store = createStore([]);
+export const store = createStore([]);
 
 const loadState = async () => {
     const statePath = "../state.json";
@@ -40,13 +40,15 @@ const loadState = async () => {
 };
 
 loadState();
+
 type Client = {
     emit: trpc.SubscriptionEmit<Action>;
     clientId: string;
 };
+
 let clients: Client[] = [];
 
-const handleActionDispatch = (payload: z.infer<typeof dispatchActionSchema>) => {
+export const dispatchAction = (payload: z.infer<typeof dispatchActionSchema>) => {
     clients.filter(c => c.clientId !== payload.clientId).forEach(c => c.emit.data(payload.action));
     store.dispatch(payload.action);
     writeJson(store.getState(), "../state.json");
@@ -57,7 +59,7 @@ export const actionRouter = trpc
     .mutation("dispatch", {
         input: dispatchActionSchema,
         resolve({ input }) {
-            handleActionDispatch(input);
+            dispatchAction(input);
             return "OK";
         }
     })
