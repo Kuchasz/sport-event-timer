@@ -3,10 +3,6 @@ import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";
 
-require("react-dom");
-(window as any).React2 = require("react");
-console.log((window as any).React1, (window as any).React2, (window as any).React1 === (window as any).React2);
-
 export const ServerConnectionHandler = ({
     dispatch,
     children,

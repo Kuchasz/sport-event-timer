@@ -1,6 +1,7 @@
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { mdiUpload } from "@mdi/js";
 import { PrimaryActionButton } from "./action-button";
+import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { useRef, useState } from "react";
 import { useTimerSelector } from "../hooks";
@@ -19,6 +20,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
     const [devModeEnabled, setDevModeEnabled] = useState<boolean>(false);
     const [devModeClicks, setDevModeClicks] = useState<number>(0);
+    const sortedTimeKeepers = sort(allTimeKeepers, tk => tk.order);
 
     // const triggerPlayersFileChooser = () => {
     //     inputFile?.current?.click();
@@ -131,7 +133,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
             ) : null}
 
             <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">
-                {allTimeKeepers.map(tk => (
+                {sortedTimeKeepers.map((tk, id) => (
                     <button
                         onClick={() => setTimeKeeperId(tk.id)}
                         className={`flex items-center transition-opacity hover:opacity-50 py-4 px-4 my-2 ${
@@ -139,7 +141,7 @@ export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
                         }`}
                         key={tk.id}
                     >
-                        <TimeKeeperIcon type={tk.type} />
+                        <TimeKeeperIcon isFirst={id === 0} isLast={id === sortedTimeKeepers.length - 1} />
                         <span className="ml-4 text-xl">{tk.name}</span>
                     </button>
                 ))}

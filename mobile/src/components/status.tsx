@@ -6,6 +6,7 @@ import {
     mdiCloudSyncOutline,
     mdiWeatherCloudyAlert
     } from "@mdi/js";
+import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useTimerSelector } from "../hooks";
@@ -45,12 +46,13 @@ export const Status = () => {
     const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
     const offset = useTimerSelector(x => x.timeKeeperConfig?.timeOffset);
     const timeKeeperName = allTimeKeepers.find(tk => tk.id === timeKeeperId)?.name;
+    const sortedTimeKeepers = sort(allTimeKeepers, tk => tk.order).map(tk => tk.id);
 
     return (
         <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
             <span className="flex">
                 {timeKeeperId !== undefined && allTimeKeepers.length && (
-                    <TimeKeeperIcon type={allTimeKeepers.find(tk => tk.id === timeKeeperId)!.type} />
+                    <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timeKeeperId} isLast={false} />
                 )}
                 <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>
             </span>
