@@ -65,12 +65,10 @@ export type RaceCategory = {
     gender?: Gender;
 };
 
-export type TimeKeeperType = "start" | "checkpoint" | "end";
-
 export type TimeKeeper = {
     id: number;
     name: string;
-    type: TimeKeeperType;
+    order: number;
 };
 
 export type TimeKeeperConfig = {
@@ -130,28 +128,27 @@ export const removeById = <T extends { id: number }>(items: T[], id: number) =>
         Arr.filter(e => e.id !== id)
     );
 
+export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
+    pipe(
+        items,
+        Arr.findIndex(e => e.id === item.id),
+        Option.chain(index =>
+            pipe(
+                items,
+                Arr.modifyAt(index, e => ({ ...e, ...item }))
+            )
+        ),
+        Option.fold(
+            () => items,
+            e => e
+        )
+    );
+
 export const registerPlayer = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
     pipe(players, Arr.append({ ...newPlayer, id: getNextId(players) }));
 
 export const changePlayerInfo = (players: Player[], modifiedPlayer: Player): Player[] =>
-    pipe(
-        players,
-        Arr.updateAt(
-            pipe(
-                players,
-                Arr.findIndex(e => e.id === modifiedPlayer.id),
-                Option.fold(
-                    () => -1,
-                    e => e
-                )
-            ),
-            modifiedPlayer
-        ),
-        Option.fold(
-            () => players,
-            e => e
-        )
-    );
+    updateItem(players, modifiedPlayer);
 
 export const uploadPlayers = (_players: Player[], newPlayers: Player[]): Player[] => newPlayers;
 
@@ -160,6 +157,9 @@ export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeep
 
 // export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
 //     pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
+
+export const updateTimeKeeper = (timeKeepers: TimeKeeper[], modifiedTimeKeeper: Partial<TimeKeeper>): TimeKeeper[] =>
+    updateItem(timeKeepers, modifiedTimeKeeper);
 
 export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
 
@@ -171,21 +171,8 @@ export const addHistoricAction = (historicActions: HistoricAction[], action: His
 
 export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);
 
-export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Pick<TimeStamp, "id">): TimeStamp[] =>
-    pipe(
-        timeStamps,
-        Arr.findIndex(e => e.id === modifiedTimeStamp.id),
-        Option.chain(index =>
-            pipe(
-                timeStamps,
-                Arr.modifyAt(index, e => ({ ...e, ...modifiedTimeStamp }))
-            )
-        ),
-        Option.fold(
-            () => timeStamps,
-            e => e
-        )
-    );
+export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Partial<TimeStamp>): TimeStamp[] =>
+    updateItem(timeStamps, modifiedTimeStamp);
 
 export const addRaceCategory = (
     raceCategories: RaceCategory[],

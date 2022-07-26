@@ -10,12 +10,11 @@ export const timeStampsSlice = createSlice({
     initialState,
     reducers: {
         add: (state, action: PayloadAction<Omit<m.TimeStamp, "id">>) => m.addTimeStamp(state, action.payload),
-        assignTimeStamp: (state, action: PayloadAction<Pick<m.TimeStamp, "id" | "playerId">>) =>
+        assignTimeStamp: (state, action: PayloadAction<Partial<m.TimeStamp>>) =>
             m.updateTimeStamp(state, action.payload),
-        reassignTimeStamp: (state, action: PayloadAction<Pick<m.TimeStamp, "id" | "playerId">>) =>
+        reassignTimeStamp: (state, action: PayloadAction<Partial<m.TimeStamp>>) =>
             m.updateTimeStamp(state, action.payload),
-        tweakTimeStamp: (state, action: PayloadAction<Pick<m.TimeStamp, "id" | "playerId">>) =>
-            m.updateTimeStamp(state, action.payload),
+        tweakTimeStamp: (state, action: PayloadAction<m.TimeStamp>) => m.updateTimeStamp(state, action.payload),
         reset: (state, action: PayloadAction<Pick<m.TimeStamp, "id">>) => m.resetTimeStamp(state, action.payload.id)
     }
 });

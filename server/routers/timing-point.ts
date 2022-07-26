@@ -1,5 +1,5 @@
 import * as trpc from "@trpc/server";
-import { add, remove } from "@set/timer/slices/time-keepers";
+import { add, remove, update } from "@set/timer/dist/slices/time-keepers";
 import { db } from "../db";
 import { dispatchAction } from "./action";
 import { z } from "zod";
@@ -26,6 +26,12 @@ export const timingPointRouter = trpc
         input: timingPointSchema,
         async resolve(req) {
             const { id, ...data } = req.input;
+
+            dispatchAction({
+                clientId: "",
+                action: update({ id: id!, name: data.name, order: data.order })
+            });
+
             return await db.timingPoint.update({ where: { id: id! }, data });
         }
     })
@@ -57,7 +63,7 @@ export const timingPointRouter = trpc
 
             dispatchAction({
                 clientId: "",
-                action: add({ id: newTimingPoint.id, name: newTimingPoint.name, type: "checkpoint" })
+                action: add({ id: newTimingPoint.id, name: newTimingPoint.name, order: newTimingPoint.order })
             });
 
             return newTimingPoint;

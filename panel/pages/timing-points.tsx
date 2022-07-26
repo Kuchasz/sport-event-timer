@@ -21,7 +21,7 @@ const columns: Column<TimingPoint, unknown>[] = [
     { key: "order", name: "Order", width: 10 },
     { key: "name", name: "Name" },
     {
-        key: "id",
+        key: "actions",
         width: 15,
         name: "Actions",
         formatter: props => <TimingPointDeleteButton timingPoint={props.row} />
