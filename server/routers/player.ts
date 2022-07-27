@@ -1,7 +1,10 @@
 import * as fs from "../async-fs";
 import * as trpc from "@trpc/server";
 import { db } from "../db";
+import { dispatchAction } from "./action";
 import { RegistrationPlayer } from "@set/timer/model";
+import { TRPCError } from "@trpc/server";
+import { upload } from "@set/timer/dist/slices/players";
 import { z } from "zod";
 
 const ClassificationsEnum = z.enum(["rnk_pro", "rnk_fun", "rnk_tt", "gc", "all"]);
@@ -41,9 +44,43 @@ export const playerRouter = trpc
         async resolve({ input }) {
             const { raceId } = input;
             return await db.player.findMany({
-                where: { classification: { raceId } },
+                where: { raceId: raceId },
                 include: { classification: true }
             });
+        }
+    })
+    .mutation("push-players", {
+        input: z.object({
+            raceId: z.number({ required_error: "raceId is required" })
+        }),
+        async resolve({ input }) {
+            const { raceId } = input;
+            const players = await db.player.findMany({ where: { raceId } });
+
+            const anyPlayerInvalid = players.some(r => !r.bibNumber || !r.startTime);
+            if (anyPlayerInvalid)
+                throw new TRPCError({
+                    message: "At least one of players does not have BibNumber or StartTime",
+                    code: "FORBIDDEN"
+                });
+
+            dispatchAction({
+                clientId: "",
+                action: upload(players.map(p => ({ ...p, bibNumber: p.bibNumber!, startTime: p.startTime! })))
+            });
+        }
+    })
+    .mutation("delete", {
+        input: z.object({
+            playerId: z.number()
+        }),
+        async resolve({ input }) {
+            // dispatchAction({
+            //     clientId: "",
+            //     action: remove({ id: id! })
+            // });
+
+            return await db.player.delete({ where: { id: input.playerId } });
         }
     })
     .mutation("add", {

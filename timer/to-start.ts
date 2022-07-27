@@ -79,11 +79,11 @@ export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player 
     id: i,
     name: player["Imię"],
     lastName: player["Nazwisko"],
-    gender: getGender(player["Płeć"]),
-    birthYear: Number(player["Data urodzenia"].split(".")[2]),
-    number: Number(player["Nr zawodnika"]),
-    raceCategory: player["Kategoria"],
-    team: player["Nazwa klubu"],
-    city: player["Miasto"],
-    country: player["Państwo"]
+    // gender: getGender(player["Płeć"]),
+    // birthYear: Number(player["Data urodzenia"].split(".")[2]),
+    bibNumber: Number(player["Nr zawodnika"])
+    // raceCategory: player["Kategoria"],
+    // team: player["Nazwa klubu"],
+    // city: player["Miasto"],
+    // country: player["Państwo"]
 });
