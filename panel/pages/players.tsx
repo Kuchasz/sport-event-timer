@@ -2,10 +2,16 @@ import DataGrid, { Column, FormatterProps, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
+import { Confirmation } from "../components/confirmation";
 import { Demodal } from "demodal";
 import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import { mdiAccountMultiplePlus, mdiNumeric, mdiPlus } from "@mdi/js";
+import {
+    mdiAccountMultiplePlus,
+    mdiNumeric,
+    mdiPlus,
+    mdiTrashCan
+    } from "@mdi/js";
 import { milisecondsToTimeString } from "../utils";
 import { NiceModal } from "../components/modal";
 import { PlayerCreate } from "../components/player-create";
@@ -44,9 +50,40 @@ const columns: Column<Player, unknown>[] = [
     { key: "team", name: "Team" },
     { key: "email", name: "Email" },
     { key: "phoneNumber", name: "Phone Number" },
-    { key: "icePhoneNumber", name: "Ice Phone Number" }
+    { key: "icePhoneNumber", name: "Ice Phone Number" },
+    {
+        key: "actions",
+        width: 15,
+        name: "Actions",
+        formatter: props => <PlayerDeleteButton player={props.row} />
+    }
 ];
 
+const PlayerDeleteButton = ({ player }: { player: Player }) => {
+    const raceId = useCurrentRaceId();
+    const { refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
+    const deletePlayerMutation = trpc.useMutation(["player.delete"]);
+    const deletePlayer = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete player`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete the Player ${player.name} ${player.lastName}. Do you want to proceed?`
+            }
+        });
+
+        if (confirmed) {
+            await deletePlayerMutation.mutateAsync({ playerId: player.id });
+            refetch();
+        }
+    };
+    return (
+        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayer}>
+            <Icon size={1} path={mdiTrashCan} />
+            delete
+        </span>
+    );
+};
 // const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>; children: React.ReactChild }) => {
 //     const [exporting, setExporting] = useState(false);
 //     return (
@@ -69,6 +106,11 @@ const Players = () => {
     const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
     const addPlayerMutation = trpc.useMutation(["player.add"]);
     const editPlayerMutation = trpc.useMutation(["player.edit"]);
+    const pushPlayersMutation = trpc.useMutation(["player.push-players"]);
+
+    const pushPlayersToTimer = async () => {
+        pushPlayersMutation.mutate({ raceId: raceId! });
+    };
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayer>(NiceModal, {
@@ -138,15 +180,15 @@ const Players = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false">
+                    <Button onClick={pushPlayersToTimer} autoCapitalize="false">
                         <Icon size={1} path={mdiAccountMultiplePlus} />
-                        <span className="ml-2">Import</span>
+                        <span className="ml-2">Push Players to Timer</span>
                     </Button>
-                    <div className="px-1"></div>
+                    {/* <div className="px-1"></div>
                     <Button autoCapitalize="false">
                         <Icon size={1} path={mdiNumeric} />
                         <span className="ml-2">Set numbers</span>
-                    </Button>
+                    </Button> */}
 
                     {/* <div className="grow"></div>
                     <ExportButton onExport={() => exportToCsv(gridElement, "Players.csv")}>Export to CSV</ExportButton>

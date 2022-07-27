@@ -47,13 +47,13 @@ export type Player = {
     id: number;
     name: string;
     lastName: string;
-    number: number;
-    birthYear: number;
-    gender: Gender;
-    city: string;
-    raceCategory: string;
-    team: string;
-    country: string;
+    bibNumber: number;
+    // birthYear: number;
+    // gender: Gender;
+    // city: string;
+    // raceCategory: string;
+    // team: string;
+    // country: string;
     startTime?: number;
 };
 

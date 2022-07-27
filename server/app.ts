@@ -220,7 +220,10 @@ const run = async () => {
 
         const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
-        const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
+        const result = players.map(p => ({
+            ...p,
+            startTime: startTimes.find(s => s.number === p.bibNumber)?.startTime
+        }));
 
         res.json(sort(result, p => p.startTime || Number.MAX_VALUE));
     });
@@ -377,7 +380,7 @@ const run = async () => {
         const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
         const players = toStartPlayers
             .map(toStartPlayerToPlayer)
-            .map(p => ({ ...p, startTime: startTimes.find(s => p.number === s.number)?.startTime }));
+            .map(p => ({ ...p, startTime: startTimes.find(s => p.bibNumber === s.number)?.startTime }));
         const state = await fs.readJsonAsync<TimerState>("../state.json");
 
         state.players = players;
@@ -397,8 +400,8 @@ const run = async () => {
 
         const clockPlayers: ClockListPlayer[] = sort(startTimes, p => p.number).map(t => ({
             number: t.number,
-            name: players.find(p => t.number === p.number)?.name!,
-            lastName: players.find(p => t.number === p.number)?.lastName!,
+            name: players.find(p => t.number === p.bibNumber)?.name!,
+            lastName: players.find(p => t.number === p.bibNumber)?.lastName!,
             startTime: t.startTime
         }));
 

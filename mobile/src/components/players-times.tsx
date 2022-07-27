@@ -74,13 +74,13 @@ const Item = ({
 
     return (
         <div
-            onTouchStart={(e) => {
+            onTouchStart={e => {
                 startMoveElement(e.changedTouches[0].clientX);
             }}
-            onTouchEnd={(e) => {
+            onTouchEnd={e => {
                 deleteTargetElement(e.changedTouches[0].clientX);
             }}
-            onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
+            onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX)}
             className="relative bg-yellow-700 overflow-hidden"
         >
             <div ref={targetBackground} className="w-full pl-8 h-full flex items-center top-0 bg-red-500 absolute">
@@ -90,7 +90,7 @@ const Item = ({
                 <PlayerWithTimeStampDisplay
                     playerWithTimeStamp={{
                         timeStamp: t,
-                        number: t.player?.number,
+                        bibNumber: t.player?.bibNumber,
                         name: t.player?.name,
                         lastName: t.player?.lastName
                     }}
@@ -141,7 +141,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                     <Icon color="white" size={1} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            {sort(times).map((t) => (
+            {sort(times).map(t => (
                 <Item key={t.id} dispatch={dispatch} navigate={navigate} t={t} />
             ))}
         </div>
