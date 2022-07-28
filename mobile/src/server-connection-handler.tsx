@@ -59,7 +59,7 @@ export const ServerConnectionHandler = ({
 
         const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             //dispatch connectionState !== "connected"
-            console.log("dispatch connectionState ", connectionState);
+            // console.log("dispatch connectionState ", connectionState);
             dispatch(setConnectionState({ connectionState }));
         });
 

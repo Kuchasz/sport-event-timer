@@ -28,7 +28,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
         <Listbox
             value={selected}
             onChange={(e: T[TValueKey]) => {
-                console.log(e);
+                // console.log(e);
                 setSelected(e);
                 const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
                 onChange({ target: { value: desiredItem[valueKey] } });
