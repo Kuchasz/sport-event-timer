@@ -1,7 +1,6 @@
 import Layout from "../components/layout";
 import superjson from "superjson";
 import { AppProps } from "next/app";
-import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { CurrentRaceContext } from "current-race-context";
 import { Demodal } from "demodal";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
@@ -12,8 +11,11 @@ import "../globals.scss";
 
 import type { AppRouter } from "@set/server/router";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const noLayoutPages = ["/timer/[raceId]"];
+
+function MyApp({ Component, pageProps, router }: AppProps) {
     const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
+    console.log(router.pathname);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -31,9 +33,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-            <Layout>
+            {noLayoutPages.includes(router.pathname) ? (
                 <Component {...pageProps} />
-            </Layout>
+            ) : (
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            )}
             <Demodal.Container />
         </CurrentRaceContext.Provider>
     );

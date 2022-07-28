@@ -24,14 +24,6 @@ export const ServerConnectionHandler = ({
     const ntpMutation = trpc.useMutation(["ntp.sync"]);
 
     useEffect(() => {
-        // const aaa = trpc.useQuery(["race.races"]);
-        // trpc.useSubscription(["action.onDispatched"], {
-        //     onNext: action => dispatch({ ...action, __remote: true }),
-        //     onError: console.error
-        // });
-        // const socket = getConnection();
-
-        // socket.on("receive-action", action => dispatch({ ...action, __remote: true }));
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
         refetchState();

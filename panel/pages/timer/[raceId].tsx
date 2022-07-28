@@ -1,30 +1,29 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep } from "@set/server/dist/utils";
-import { Clock } from "../components/clock";
-import { ClockListPlayer } from "../../shared/index";
-import { ConfigMenu } from "../components/config-menu";
+import { BeepFunction, createBeep } from "@set/shared/dist/beep";
+import { Clock } from "../../components/clock";
+import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
 import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
-import { getTimerPlayers } from "../api";
-import { Loader } from "../components/loader";
+import { InferQueryOutput, trpc } from "trpc";
 import {
     mdiChevronDoubleRight,
     mdiCog,
     mdiVolumeHigh,
     mdiVolumeOff
     } from "@mdi/js";
-import { Meta } from "../components/meta";
-import { socket } from "../connection";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
+type StartListPlayer = InferQueryOutput<"player.start-list">[0];
 
 export type TextSettings = {
     enabled: boolean;
     size: number;
 };
 
-export type ClockSettings = {
+export type TimerSettings = {
     showSettings: boolean;
     clock: TextSettings;
     countdown: TextSettings;
@@ -39,7 +38,7 @@ export type TextActions = {
 
 const clockTimeout = 100;
 
-export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
+export const defaultTimerSettings: TimerSettings = unreliablyGetIsMobile()
     ? {
           showSettings: false,
           clock: { enabled: true, size: 6 },
@@ -53,7 +52,7 @@ export const defaultClockSettings: ClockSettings = unreliablyGetIsMobile()
           players: { enabled: true, size: 24, count: 3 }
       };
 
-const NextPlayers = ({ player }: { player: ClockListPlayer }) => (
+const NextPlayers = ({ player }: { player: StartListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
         <Icon size="2em" path={mdiChevronDoubleRight} />
         <div
@@ -62,19 +61,24 @@ const NextPlayers = ({ player }: { player: ClockListPlayer }) => (
                 paddingBlock: "0.1em"
             }}
         >
-            {player.number}
+            {player.bibNumber}
         </div>
         {player.name} {player.lastName}
     </span>
 );
 
-const Zegar = () => {
+const Timer = () => {
     const [globalTimeOffset, setGlobalTimeOffset] = useState<number>();
     const [globalTime, setGlobalTime] = useState<number>();
-    const [clockState, setClockState] = useState<ClockSettings>(defaultClockSettings);
+    const [clockState, setClockState] = useState<TimerSettings>(defaultTimerSettings);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
-    const [players, setPlayers] = useState<ClockListPlayer[]>([]);
-    const [nextPlayers, setNextPlayers] = useState<ClockListPlayer[]>([]);
+    const { raceId } = useRouter().query;
+
+    const { data: players } = trpc.useQuery(["player.start-list", { raceId: Number.parseInt(raceId! as string) }]);
+    const ntpMutation = trpc.useMutation(["ntp.sync"]);
+
+    // const [players, setPlayers] = useState<ClockListPlayer[]>([]);
+    const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
 
     const toggleSoundEnabled = () => {
@@ -86,7 +90,7 @@ const Zegar = () => {
     };
 
     useEffect(() => {
-        if (globalTimeOffset === undefined) return;
+        if (globalTimeOffset === undefined || players === undefined) return;
         const clockStartTimeLatency = new Date().getMilliseconds();
         const secondsToPlayerInterval = setInterval(() => {
             const globalTime = Date.now() + globalTimeOffset;
@@ -95,7 +99,7 @@ const Zegar = () => {
 
             if (miliseconds <= clockTimeout) {
                 const playersWithPosiviteTimeToStart = players
-                    .map(p => ({ player: p, timeToStart: p.startTime - globalTime }))
+                    .map(p => ({ player: p, timeToStart: p.absoluteStartTime - globalTime }))
                     .filter(p => p.timeToStart > 0);
 
                 const nextPlayers = sort(playersWithPosiviteTimeToStart, p => p.timeToStart);
@@ -120,40 +124,41 @@ const Zegar = () => {
 
     useEffect(() => {
         let loadStartTime = Date.now();
-        socket.on("TR", serverTime => {
+
+        const requestTimeSync = async () => {
+            const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
-            // console.log("latency", latency);
 
-            setGlobalTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
+            const timeOffset = -(loadEndTime - (serverTime + latency / 2));
+
+            setGlobalTimeOffset(timeOffset);
+
             if (latency <= 50) {
                 clearInterval(timeSyncInterval);
-                socket.close();
             }
-        });
-
-        getTimerPlayers().then(setPlayers);
+        };
 
         const timeSyncInterval = setInterval(() => {
             loadStartTime = Date.now();
-            socket.emit("TQ");
+            requestTimeSync();
         }, 1000);
 
         return () => {
             clearInterval(timeSyncInterval);
         };
     }, []);
+
     return (
         <>
             <Head>
-                <title>Zegar</title>
+                <title>Timer</title>
                 <link key="manifest" rel="manifest" href="/favicon/clock.webmanifest" />
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {globalTime === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
                         Smarujemy łańcuch...
-                        <Loader light={true} />
                     </div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
@@ -168,7 +173,7 @@ const Zegar = () => {
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
                                     {nextPlayers.map(p => (
-                                        <NextPlayers key={p.number} player={p} />
+                                        <NextPlayers key={p.bibNumber} player={p} />
                                     ))}
                                 </div>
                             </div>
@@ -190,11 +195,4 @@ const Zegar = () => {
     );
 };
 
-Zegar.getLayout = () => (
-    <>
-        <Meta />
-        <Zegar />
-    </>
-);
-
-export default Zegar;
+export default Timer;

@@ -32,7 +32,7 @@ const registerStateChangeHandlers = () => {
         const currentState = socket.readyState;
         if (currentState === previousState) return;
 
-        console.log("runStateChangedHandlers: ", currentState);
+        // console.log("runStateChangedHandlers: ", currentState);
 
         previousState = currentState;
 
