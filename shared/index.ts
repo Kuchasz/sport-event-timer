@@ -22,6 +22,14 @@ export const formatTimeNoSec = (time?: number) => {
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
 };
 
+export const formatTimeWithSec = (time?: number) => {
+    if (!time) return "--:--:--";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
+        dateTime.getSeconds()
+    )}`;
+};
+
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
 export const areOverlapping = (A: { from: number; to: number }, B: { from: number; to: number }) => {

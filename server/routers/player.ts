@@ -49,6 +49,35 @@ export const playerRouter = trpc
             });
         }
     })
+    .query("start-list", {
+        input: z.object({ raceId: z.number({ required_error: "raceId is required" }) }),
+        async resolve({ input }) {
+            const { raceId } = input;
+            const race = await db.race.findFirstOrThrow({ where: { id: raceId } });
+            const playersWithTimes = await db.player.findMany({
+                where: { raceId: raceId },
+                select: {
+                    name: true,
+                    lastName: true,
+                    bibNumber: true,
+                    startTime: true
+                }
+            });
+
+            if (playersWithTimes.some(p => !p.startTime))
+                throw new TRPCError({
+                    message: "Some of the players does not have start times",
+                    code: "PRECONDITION_FAILED"
+                });
+
+            return playersWithTimes.map(p => ({
+                name: p.name,
+                lastName: p.lastName,
+                bibNumber: p.bibNumber,
+                absoluteStartTime: race.date.getTime() + p.startTime!
+            }));
+        }
+    })
     .mutation("push-players", {
         input: z.object({
             raceId: z.number({ required_error: "raceId is required" })
@@ -66,7 +95,15 @@ export const playerRouter = trpc
 
             dispatchAction({
                 clientId: "",
-                action: upload(players.map(p => ({ ...p, bibNumber: p.bibNumber!, startTime: p.startTime! })))
+                action: upload(
+                    players.map(p => ({
+                        id: p.id,
+                        name: p.name,
+                        lastName: p.lastName,
+                        bibNumber: p.bibNumber!,
+                        startTime: p.startTime!
+                    }))
+                )
             });
         }
     })

@@ -112,7 +112,7 @@ const Status = () => {
 
     return (
         <div className="flex items-center my-4 px-4 text-white">
-            <img src="assets/logo_ravelo.png" />
+            <img src="/assets/logo_ravelo.png" />
             <div className="grow"></div>
             <div className="w-64 text-gray-800 will-change-transform z-10 mr-4">
                 {items && items.length > 0 ? (
@@ -132,7 +132,7 @@ const Status = () => {
             </Button>
             <div className="grow"></div>
             <div className="flex items-center mr-4">
-                <img className="rounded-full h-12 w-12" src="assets/typical_system_admin.png" />
+                <img className="rounded-full h-12 w-12" src="/assets/typical_system_admin.png" />
                 <div className="ml-4 flex flex-col">
                     <div className="font-semibold">Andre Somersby</div>
                     <div className="text-xs font-light">Organizer</div>

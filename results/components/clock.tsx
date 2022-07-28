@@ -6,6 +6,6 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
     </div>
 );
 
-export const Timer = ({ time, fontSize }: { time: number; fontSize: number }) => {
+export const Clock = ({ time, fontSize }: { time: number; fontSize: number }) => {
     return <Time time={time} fontSize={fontSize} />;
 };
