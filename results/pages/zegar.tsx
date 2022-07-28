@@ -123,7 +123,7 @@ const Zegar = () => {
         socket.on("TR", serverTime => {
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
-            console.log("latency", latency);
+            // console.log("latency", latency);
 
             setGlobalTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
             if (latency <= 50) {

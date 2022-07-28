@@ -133,12 +133,12 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
 
     return (
         <div>
-            <div className="flex flex-col mt-2">
+            <div className="flex flex-col mt-2 px-2">
                 <button
                     onClick={onAddTime}
-                    className="self-end rounded-md text-center bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
+                    className="self-end rounded-md text-center bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-2"
                 >
-                    <Icon color="white" size={1} path={mdiPlusCircleOutline} />
+                    <Icon color="white" size={2} path={mdiPlusCircleOutline} />
                 </button>
             </div>
             {sort(times).map(t => (

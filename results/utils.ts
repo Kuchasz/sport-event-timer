@@ -2,7 +2,7 @@ export type BeepFunction = (freq?: number, duration?: number, vol?: number) => v
 export const createBeep = () => {
     if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
 
-    console.log("create.beep");
+    // console.log("create.beep");
 
     const ContextConstructor = window.AudioContext || (window as any).webkitAudioContext;
 
@@ -10,7 +10,7 @@ export const createBeep = () => {
     if (context.state !== "running") context.resume();
 
     context.onstatechange = function () {
-        console.log(context.state);
+        // console.log(context.state);
     };
 
     const runBeep = (freq: number, duration: number, vol: number) => {
