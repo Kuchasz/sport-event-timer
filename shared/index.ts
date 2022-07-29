@@ -38,6 +38,14 @@ export const formatTimeWithMilliSec = (time?: number) => {
     )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
 };
 
+export const formatTimeWithMilliSecUTC = (time?: number) => {
+    if (!time) return "--:--:--.---";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getUTCHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
+        dateTime.getSeconds()
+    )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
+};
+
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
 export const areOverlapping = (A: { from: number; to: number }, B: { from: number; to: number }) => {

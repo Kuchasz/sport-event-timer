@@ -4,16 +4,6 @@ import { readState } from "./action";
 import { sort } from "@set/shared/dist";
 import { z } from "zod";
 
-// id            Int         @id
-// bibNumber     Int
-// measuredTime  BigInt
-// adjustedTime  BigInt?
-// race          Race        @relation(fields: [raceId], references: [id])
-// raceId        Int
-// timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
-// timingPointId Int
-// player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
-
 const manualSplitTimeSchema = z.object({
     id: z.number().min(1).nullish(),
     bibNumber: z.number({ required_error: "bibNumber is required" }),
@@ -155,4 +145,4 @@ export const splitTimeRouter = trpc
         }
     });
 
-export type TimingPointRouter = typeof splitTimeRouter;
+export type SplitTimeRouter = typeof splitTimeRouter;

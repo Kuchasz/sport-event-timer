@@ -6,23 +6,12 @@ import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/shared/dist";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import {
-    mdiAccountCogOutline,
-    mdiAccountMultiplePlus,
-    mdiAutorenew,
-    mdiClockEdit,
     mdiClockEditOutline,
     mdiClockPlusOutline,
-    mdiNoteEditOutline,
     mdiPlus,
-    mdiReload,
-    mdiTrashCan,
-    mdiUpdate
+    mdiReload
     } from "@mdi/js";
-import { milisecondsToTimeString } from "../utils";
 import { NiceModal } from "components/modal";
-import { RaceCreate } from "components/race-create";
-import { RaceEdit } from "components/race-edit";
-import { SplitTimeCreate } from "../components/split-time-create";
 import { SplitTimeEdit } from "../components/split-time-edit";
 import { useCurrentRaceId } from "use-current-race-id";
 import { useMemo, useState } from "react";
@@ -151,7 +140,7 @@ const SplitTimes = () => {
         ...timingPoints!.map(tp => ({
             key: tp.name,
             name: tp.name,
-            formatter: p => (
+            formatter: (p: any) => (
                 <SplitTimeResult
                     openEditDialog={openEditDialog}
                     openResetDialog={openRevertDialog}

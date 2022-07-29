@@ -5,6 +5,7 @@ import { classificationRouter } from "./routers/classification";
 import { ntpRouter } from "./routers/ntp";
 import { playerRouter } from "./routers/player";
 import { raceRouter } from "./routers/race";
+import { resultRouter } from "./routers/result";
 import { splitTimeRouter } from "./routers/split-time";
 import { timingPointRouter } from "./routers/timing-point";
 
@@ -17,7 +18,8 @@ export const appRouter = trpc
     .merge("timing-point.", timingPointRouter)
     .merge("action.", actionRouter)
     .merge("ntp.", ntpRouter)
-    .merge("split-time.", splitTimeRouter);
+    .merge("split-time.", splitTimeRouter)
+    .merge("result.", resultRouter);
 // .query("getUser", {
 //     input: z.string(),
 //     async resolve(req) {
