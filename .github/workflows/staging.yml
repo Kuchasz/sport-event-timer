@@ -231,36 +231,3 @@ jobs:
                   SOURCE: "package/"
                   REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
-                  # TARGET: ${{ secrets.REMOTE_TARGET }}
-
-            # - name: upload artifact to staging
-            #   uses: SamKirkland/FTP-Deploy-Action@4.0.0
-            #   with:
-            #       server: ${{ secrets.ftp_server }}
-            #       username: ${{ secrets.ftp_username }}
-            #       password: ${{ secrets.ftp_password }}
-            #       local-dir: ./package/
-            #       server-dir: domains/artifacts/
-
-    # deploy:
-    #     runs-on: ubuntu-latest
-    #     needs: build_server
-    #     # environment:
-    #     #     name: "production"
-    #     # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    #     steps:
-    #         - name: publish
-    #           uses: garygrossgarten/github-action-ssh@release
-    #           with:
-    #               host: ${{ secrets.ssh_host }}
-    #               username: ${{ secrets.ssh_username }}
-    #               password: ${{ secrets.ssh_password }}
-    #               tryKeyboard: true
-    #               command: |
-    #                   cd domains/set-hub.pyszstudio.pl/
-    #                   rm -rf node_modules
-    #                   rm -rf public_nodejs
-    #                   unzip -q ../artifacts/set-hub-package.zip
-    #                   mv server public_nodejs
-    #                   devil www restart set-hub.pyszstudio.pl
