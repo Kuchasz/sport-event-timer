@@ -8,7 +8,6 @@
         "packages": [
             "mobile",
             "timer",
-            "hub",
             "results",
             "server",
             "shared",

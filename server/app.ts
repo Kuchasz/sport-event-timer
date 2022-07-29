@@ -1,13 +1,11 @@
 import * as fs from "./async-fs";
 import * as m from "@set/timer/model";
-import * as trpc from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import * as trpcWs from "@trpc/server/adapters/ws";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import ws from "ws";
-import { apply as applyHub } from "@set/hub";
 import { apply as applyResults } from "@set/results";
 import { appRouter } from "./router";
 import { assignNumbersToPlayers, transform } from "@set/timer/list";
@@ -30,6 +28,7 @@ import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { TimerState } from "@set/timer/store";
 import { upload } from "@set/timer/dist/slices/players";
+
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
@@ -390,7 +389,7 @@ const run = async () => {
         fs.writeJsonAsync(players, "../players.json");
         fs.writeJsonAsync(state, "../state.json");
 
-        dispatch(upload(players));
+        // dispatch(upload(players));
         res.send("OK");
     });
 
@@ -430,8 +429,6 @@ const run = async () => {
 
         res.sendStatus(401);
     });
-
-    const dispatch = await applyHub(server);
 
     if (!isDevelopment) await applyResults(app);
 
