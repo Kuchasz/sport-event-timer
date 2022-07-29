@@ -14,7 +14,7 @@ export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps)
     if (!classifications) return;
 
     const player: CreatePlayer = {
-        classificationId: classifications ? classifications[0]?.id : 0,
+        classificationId: classifications[0]?.id ?? 0,
         name: undefined as unknown as string,
         lastName: undefined as unknown as string,
         gender: "male",

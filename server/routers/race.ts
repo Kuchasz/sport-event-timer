@@ -15,6 +15,13 @@ export const raceRouter = trpc
             return await db.race.findMany();
         }
     })
+    .query("race", {
+        input: z.object({ raceId: z.number({ required_error: "raceId is required" }) }),
+        async resolve(req) {
+            const id = req.input.raceId;
+            return await db.race.findUnique({ where: { id } });
+        }
+    })
     .mutation("update", {
         input: raceSchema,
         async resolve(req) {

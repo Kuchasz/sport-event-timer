@@ -1,17 +1,36 @@
 import * as trpc from "@trpc/server";
 import { db } from "../db";
 import { readState } from "./action";
+import { sort } from "@set/shared/dist";
 import { z } from "zod";
 
+// id            Int         @id
+// bibNumber     Int
+// measuredTime  BigInt
+// adjustedTime  BigInt?
+// race          Race        @relation(fields: [raceId], references: [id])
+// raceId        Int
+// timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
+// timingPointId Int
+// player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+
+const manualSplitTimeSchema = z.object({
+    id: z.number().min(1).nullish(),
+    bibNumber: z.number({ required_error: "bibNumber is required" }),
+    time: z.number().optional(),
+    raceId: z.number({ required_error: "raceId is required" }),
+    timingPointId: z.number({ required_error: "timingPointId is required" })
+});
+
 type ActualSplitTime = { id: number; bibNumber: number; time: number; timeKeeperId: number };
-type ExistingSplitTime = { id: number; bibNumber: number; measuredTime: bigint; timingPointId: number };
+type ExistingSplitTime = { id: number; bibNumber: number; time: bigint; timingPointId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
     actual.bibNumber === existing.bibNumber &&
-    actual.time === Number(existing.measuredTime) &&
+    actual.time === Number(existing.time) &&
     actual.timeKeeperId === existing.timingPointId;
 
-setInterval(async () => {
+const updateSplitTimes = async () => {
     const existingSplitTimes = await db.splitTime.findMany();
     const existingSplitTimesMap = new Map(existingSplitTimes.map(st => [st.id, st]));
 
@@ -31,7 +50,7 @@ setInterval(async () => {
             data: {
                 id,
                 bibNumber: data?.bibNumber!,
-                measuredTime: data?.time!,
+                time: data?.time!,
                 raceId: 1,
                 timingPointId: data?.timeKeeperId!
             }
@@ -49,26 +68,83 @@ setInterval(async () => {
             await db.splitTime.update({
                 where: { id },
                 data: {
-                    measuredTime: actual.time,
+                    time: actual.time,
                     bibNumber: actual.bibNumber
                 }
             });
         }
     });
-}, 5000);
+};
 
-export const splitTimeRouter = trpc.router().query("split-times", {
-    input: z.object({
-        raceId: z.number({ required_error: "raceId is required" })
-    }),
-    async resolve(req) {
-        const raceId = req.input.raceId;
-        const splitTimes = await db.splitTime.findMany({
-            where: { raceId },
-            include: { player: true, timingPoint: true }
-        });
-        return splitTimes.map(st => ({ ...st, measuredTime: Number(st.measuredTime) }));
-    }
-});
+setInterval(updateSplitTimes, 5000);
+
+export const splitTimeRouter = trpc
+    .router()
+    .query("split-times", {
+        input: z.object({
+            raceId: z.number({ required_error: "raceId is required" })
+        }),
+        async resolve(req) {
+            const raceId = req.input.raceId;
+
+            const allPlayers = await db.player.findMany({
+                where: { raceId },
+                include: { splitTime: true, manualSplitTime: true }
+            });
+
+            return allPlayers.map(p => ({
+                bibNumber: p.bibNumber,
+                name: p.name,
+                lastName: p.lastName,
+                times: {
+                    ...Object.fromEntries(
+                        p.splitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: false }])
+                    ),
+                    ...Object.fromEntries(
+                        p.manualSplitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: true }])
+                    )
+                }
+            }));
+        }
+    })
+    .mutation("update", {
+        input: manualSplitTimeSchema,
+        async resolve(req) {
+            const { id, ...splitTime } = req.input;
+
+            const existingManualSplitTime = await db.manualSplitTime.findFirst({
+                where: {
+                    raceId: splitTime.raceId,
+                    bibNumber: splitTime.bibNumber,
+                    timingPointId: splitTime.timingPointId
+                }
+            });
+
+            if (!existingManualSplitTime) {
+                return await db.manualSplitTime.create({ data: splitTime });
+            } else
+                await db.manualSplitTime.update({
+                    where: {
+                        timingPointId_bibNumber: {
+                            bibNumber: splitTime.bibNumber,
+                            timingPointId: splitTime.timingPointId
+                        }
+                    },
+                    data: splitTime
+                });
+        }
+    })
+    .mutation("revert", {
+        input: z.object({
+            bibNumber: z.number(),
+            timingPointId: z.number()
+        }),
+        async resolve(req) {
+            const { ...data } = req.input;
+            return await db.manualSplitTime.delete({
+                where: { timingPointId_bibNumber: { bibNumber: data.bibNumber, timingPointId: data.timingPointId } }
+            });
+        }
+    });
 
 export type TimingPointRouter = typeof splitTimeRouter;
