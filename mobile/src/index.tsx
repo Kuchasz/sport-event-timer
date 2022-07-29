@@ -1,5 +1,5 @@
 import App from "./App";
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
@@ -8,7 +8,7 @@ import { isLoggedIn } from "./security";
 import { LoginApp } from "./login-app";
 import { Middleware } from "redux";
 import { Provider as ReduxStoreProvider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { ServerConnectionHandler } from "./server-connection-handler";
 import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";

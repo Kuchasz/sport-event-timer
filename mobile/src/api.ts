@@ -1,5 +1,5 @@
-import { Classification } from "@set/timer/model";
 import { LoginResult, UserCredentials } from "@set/shared/dist";
+// import { Classification } from "@set/timer/model";
 // import { hubUrl } from "./connection";
 
 // export const getCurrentTimeOffset = (): Promise<number> => {

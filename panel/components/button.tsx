@@ -2,14 +2,11 @@ import { HTMLProps } from "react";
 
 type ButtonColor = "blue" | "red" | "orange" | "yellow" | "zinc" | "pink" | "gray";
 
-type ButtonProps = HTMLProps<HTMLButtonElement> & {
-    color?: ButtonColor;
-};
+type ButtonProps = HTMLProps<HTMLButtonElement> & {};
 
 const defaultColor: ButtonColor = "blue";
 
-export const Button = ({ color: desiredColor, children, className, ...props }: ButtonProps) => {
-    const color = desiredColor ?? defaultColor;
+export const Button = ({ children, className, ...props }: ButtonProps) => {
     return (
         <button
             {...props}
