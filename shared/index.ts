@@ -31,11 +31,11 @@ export const formatTimeWithSec = (time?: number) => {
 };
 
 export const formatTimeWithMilliSec = (time?: number) => {
-    if (!time) return "--:--:--.-";
+    if (!time) return "--:--:--.---";
     const dateTime = new Date(time);
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
         dateTime.getSeconds()
-    )}.${formatNumber(dateTime.getMilliseconds())}`;
+    )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
 };
 
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();

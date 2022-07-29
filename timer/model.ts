@@ -122,16 +122,14 @@ export const getNextId = flow(
     Option.fold(() => 1, increment)
 );
 
-export const removeById = <T extends { id: number }>(items: T[], id: number) =>
-    pipe(
-        items,
-        Arr.filter(e => e.id !== id)
-    );
+export const removeBy = <T>(items: T[], func: (item: T) => boolean) => pipe(items, Arr.filter(func));
 
-export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
+export const removeById = <T extends { id: number }>(items: T[], id: number) => removeBy(items, item => item.id === id);
+
+export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T>) => boolean) =>
     pipe(
         items,
-        Arr.findIndex(e => e.id === item.id),
+        Arr.findIndex(e => func(e) === func(item)),
         Option.chain(index =>
             pipe(
                 items,
@@ -143,6 +141,9 @@ export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T
             e => e
         )
     );
+
+export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
+    updateBy(items, item, i => i.id === item.id);
 
 export const registerPlayer = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
     pipe(players, Arr.append({ ...newPlayer, id: getNextId(players) }));
