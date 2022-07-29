@@ -11,7 +11,6 @@
     },
     "dependencies": {
         "@prisma/client": "^4.1.0",
-        "@set/hub": "1.0.0",
         "@set/mobile": "1.0.0",
         "@set/results": "1.0.0",
         "@set/shared": "1.0.0",
