@@ -73,13 +73,13 @@ model TimingPoint {
 }
 
 model SplitTime {
-    id            Int         @id @default(autoincrement())
+    id            Int         @id
     bibNumber     Int
     measuredTime  BigInt
-    adjustedTime  BigInt
+    adjustedTime  BigInt?
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
     timingPointId Int
-    player        Player?     @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 }

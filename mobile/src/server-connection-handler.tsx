@@ -35,7 +35,9 @@ export const ServerConnectionHandler = ({
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
 
-            const timeOffset = -(loadEndTime - (serverTime + latency / 2));
+            const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
+
+            console.log(timeOffset);
 
             dispatch(setTimeOffset({ timeOffset }));
 

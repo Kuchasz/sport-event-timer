@@ -32,7 +32,7 @@ function App() {
         sort(
             allPlayers.map(x => ({
                 ...x,
-                timeStamp: allTimeStamps.find(a => a.playerId === x.id && a.timeKeeperId === timeKeeperId)
+                timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timeKeeperId === timeKeeperId)
             })),
             p => p.startTime || Number.MAX_VALUE
         );
@@ -42,7 +42,7 @@ function App() {
             .filter(s => s.timeKeeperId === timeKeeperId)
             .map(s => ({
                 ...s,
-                player: allPlayers.find(p => s.playerId === p.id)
+                player: allPlayers.find(p => s.bibNumber === p.bibNumber)
             }));
 
     return (
@@ -77,10 +77,10 @@ function App() {
                                             path={`${process.env.PUBLIC_URL}/list`}
                                             element={
                                                 <PlayersList
-                                                    onTimeRecord={playerId =>
+                                                    onTimeRecord={bibNumber =>
                                                         dispatch(
                                                             add({
-                                                                playerId,
+                                                                bibNumber,
                                                                 timeKeeperId,
                                                                 time: getCurrentTime(offset)
                                                             })
