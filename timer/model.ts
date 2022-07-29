@@ -122,9 +122,9 @@ export const getNextId = flow(
     Option.fold(() => 1, increment)
 );
 
-export const removeBy = <T>(items: T[], func: (item: T) => boolean) => pipe(items, Arr.filter(func));
+export const filterBy = <T>(items: T[], func: (item: T) => boolean) => pipe(items, Arr.filter(func));
 
-export const removeById = <T extends { id: number }>(items: T[], id: number) => removeBy(items, item => item.id === id);
+export const removeById = <T extends { id: number }>(items: T[], id: number) => filterBy(items, item => item.id !== id);
 
 export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T>) => boolean) =>
     pipe(

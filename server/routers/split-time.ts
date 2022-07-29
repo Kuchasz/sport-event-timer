@@ -44,7 +44,7 @@ const updateSplitTimes = async () => {
     const toUpdate = new Set([...existing].filter(x => actual.has(x)));
     const toDelete = new Set([...existing].filter(e => !actual.has(e)));
 
-    toCreate.forEach(async id => {
+    for (const id of toCreate) {
         const data = actualSplitTimesMap.get(id);
         await db.splitTime.create({
             data: {
@@ -55,13 +55,9 @@ const updateSplitTimes = async () => {
                 timingPointId: data?.timeKeeperId!
             }
         });
-    });
+    }
 
-    toDelete.forEach(async id => {
-        await db.splitTime.delete({ where: { id } });
-    });
-
-    toUpdate.forEach(async id => {
+    for (const id of toUpdate) {
         const existing = existingSplitTimesMap.get(id)! as ExistingSplitTime;
         const actual = actualSplitTimesMap.get(id) as ActualSplitTime;
         if (!areSplitTimesEqual(actual, existing)) {
@@ -73,7 +69,11 @@ const updateSplitTimes = async () => {
                 }
             });
         }
-    });
+    }
+
+    for (const id of toDelete) {
+        await db.splitTime.delete({ where: { id } });
+    }
 };
 
 setInterval(updateSplitTimes, 5000);
@@ -92,11 +92,19 @@ export const splitTimeRouter = trpc
                 include: { splitTime: true, manualSplitTime: true }
             });
 
+            const startTimingPoint = await db.timingPoint.findFirst({ where: { raceId }, orderBy: { order: "asc" } });
+            const race = await db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
+
+            const raceDateStart = race?.date.getTime();
+
             return allPlayers.map(p => ({
                 bibNumber: p.bibNumber,
                 name: p.name,
                 lastName: p.lastName,
                 times: {
+                    ...Object.fromEntries([
+                        [startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]
+                    ]),
                     ...Object.fromEntries(
                         p.splitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: false }])
                     ),

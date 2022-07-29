@@ -142,7 +142,7 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                 </button>
             </div>
             {sort(times).map(t => (
-                <Item key={t.bibNumber} dispatch={dispatch} navigate={navigate} t={t} />
+                <Item key={t.time} dispatch={dispatch} navigate={navigate} t={t} />
             ))}
         </div>
     );

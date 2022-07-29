@@ -1,5 +1,4 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
-import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../components/confirmation";
@@ -88,7 +87,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId
                         } as any)
                     }
-                    className="flex items-center hover:text-red-600 cursor-pointer"
+                    className="flex items-center ml-2 hover:text-red-600 cursor-pointer"
                 >
                     <Icon size={0.75} path={mdiReload} />
                     <span className="ml-1">revert</span>
@@ -179,7 +178,6 @@ const SplitTimes = () => {
                             sortable: true,
                             resizable: true
                         }}
-                        onRowDoubleClick={e => openEditDialog(e)}
                         onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={splitTimes}
