@@ -92,7 +92,7 @@ export type HistoricAction = {
 
 export type TimeStamp = {
     id: number;
-    playerId?: number;
+    bibNumber?: number;
     timeKeeperId: number;
     time: number;
 };
@@ -119,7 +119,7 @@ export const getNextId = flow(
     ]),
     Arr.last,
     Option.map(e => e.id),
-    Option.fold(() => 0, increment)
+    Option.fold(() => 1, increment)
 );
 
 export const removeById = <T extends { id: number }>(items: T[], id: number) =>

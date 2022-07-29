@@ -10,7 +10,7 @@ type PlayerWithTimeStamp = Player & {
 
 type PlayersListProps = {
     players: PlayerWithTimeStamp[];
-    onTimeRecord: (playerId: number) => void;
+    onTimeRecord: (bibNumber: number) => void;
     onTimeReset: (timeStampId: number) => void;
 };
 
@@ -26,7 +26,7 @@ export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListP
                     {p.timeStamp ? (
                         <PrimaryActionButton icon={mdiAlarmOff} onClick={onReset(p.timeStamp.id)} />
                     ) : (
-                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={onRecord(p.id)} />
+                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={onRecord(p.bibNumber)} />
                     )}
                     {p.timeStamp && (
                         <ActionButton

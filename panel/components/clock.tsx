@@ -5,7 +5,7 @@ const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
         style={{ fontSize: `${fontSize}rem` }}
         className="leading-none font-mono text-white text-center transition-all"
     >
-        {formatTimeWithSec(new Date(time))}
+        {formatTimeWithSec(time)}
     </div>
 );
 

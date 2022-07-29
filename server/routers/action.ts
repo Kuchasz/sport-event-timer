@@ -1,14 +1,8 @@
 import * as trpc from "@trpc/server";
 import { createStore } from "@set/timer/store";
-import { EventEmitter } from "events";
-import {
-    fileExistsAsync,
-    readFileAsync,
-    readJsonAsync,
-    writeJson,
-    writeJsonAsync
-    } from "../async-fs";
+import { fileExistsAsync, readJsonAsync, writeJson } from "../async-fs";
 import { staticTimeKeppers } from "@set/timer/slices/time-keepers";
+import { TimerState } from "@set/timer/store";
 import { z } from "zod";
 
 type Action = any;
@@ -53,6 +47,8 @@ export const dispatchAction = (payload: z.infer<typeof dispatchActionSchema>) =>
     store.dispatch(payload.action);
     writeJson(store.getState(), "../state.json");
 };
+
+export const readState = () => store.getState() as TimerState;
 
 export const actionRouter = trpc
     .router()
