@@ -1,24 +1,58 @@
-import { trpc } from "../trpc";
+import DataGrid, { Column, SortColumn } from "react-data-grid";
+import Icon from "@mdi/react";
+import { Button } from "components/button";
+import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/shared/dist";
+import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import {
+    mdiClockEditOutline,
+    mdiClockPlusOutline,
+    mdiPlus,
+    mdiReload
+    } from "@mdi/js";
+import { NiceModal } from "components/modal";
+import { useCurrentRaceId } from "use-current-race-id";
+import { useState } from "react";
 
-export default function IndexPage() {
-    // const { mutateAsync: sendMessageMutation } = trpc.useMutation(["action.dispatch"]);
+type Result = InferQueryOutput<"result.results">[0];
 
-    // trpc.useSubscription(["action.onDispatched"], {
-    //     onNext(action) {
-    //         console.log("!!!", action);
-    //         //   addMessages([post]);
-    //     },
-    //     onError(err) {
-    //         console.error("Subscription error:", err);
-    //         // we might have missed a message - invalidate cache
-    //         //   utils.queryClient.invalidateQueries();
-    //     }
-    // });
+const Results = () => {
+    const raceId = useCurrentRaceId();
+    const { data: results, refetch: refetchResults } = trpc.useQuery(["result.results", { raceId: raceId! }]);
+    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
+
+    const columns: Column<Result, unknown>[] = [
+        { key: "bibNumber", name: "Bib", width: 10 },
+        { key: "player.name", name: "Name", formatter: p => <span>{p.row.name}</span> },
+        { key: "player.lastName", name: "Last Name", formatter: p => <span>{p.row.lastName}</span> },
+        { key: "start", name: "Start", formatter: p => <span>{formatTimeWithMilliSec(p.row.start)}</span> },
+        { key: "finish", name: "Finish", formatter: p => <span>{formatTimeWithMilliSec(p.row.finish)}</span> },
+        { key: "result", name: "Result", formatter: p => <span>{formatTimeWithMilliSecUTC(p.row.result)}</span> }
+    ];
 
     return (
-        <div>
-            <h2 className="text-2xl uppercase font-semibold">Results</h2>
-            <button>Send Action</button>
-        </div>
+        <>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <div className="mb-4 inline-flex">
+                    <Button onClick={() => {}}>
+                        <Icon size={1} path={mdiPlus} />
+                    </Button>
+                </div>
+                {results && (
+                    <DataGrid
+                        sortColumns={sortColumns}
+                        className="h-full"
+                        defaultColumnOptions={{
+                            sortable: true,
+                            resizable: true
+                        }}
+                        onSortColumnsChange={setSortColumns}
+                        columns={columns}
+                        rows={results}
+                    />
+                )}
+            </div>
+        </>
     );
-}
+};
+
+export default Results;
