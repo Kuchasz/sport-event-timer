@@ -20,6 +20,7 @@ export const login = async ({ login, password }: UserCredentials) => {
 };
 
 export const verify = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("cookies: ", req.cookies);
     let accessToken: string = req.cookies[config.auth.cookieName];
 
     if (!accessToken) {

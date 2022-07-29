@@ -1,18 +1,10 @@
 import { Icon } from "@mdi/react";
 import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
-import { TimeKeeperType } from "@set/timer/dist/model";
 
-const getIconFromType = (type: TimeKeeperType) => {
-    switch (type) {
-        case "start":
-            return mdiRayStartArrow;
-        case "checkpoint":
-            return mdiRayVertex;
-        case "end":
-            return mdiFlagCheckered;
-        default:
-            throw new Error("Not handled time keeper type");
-    }
+const getIcon = (isFirst: boolean, isLast: boolean) => {
+    return isFirst ? mdiRayStartArrow : isLast ? mdiFlagCheckered : mdiRayVertex;
 };
 
-export const TimeKeeperIcon = ({ type }: { type: TimeKeeperType }) => <Icon size={1} path={getIconFromType(type)} />;
+export const TimeKeeperIcon = ({ isFirst, isLast }: { isFirst: boolean; isLast: boolean }) => (
+    <Icon size={1} path={getIcon(isFirst, isLast)} />
+);

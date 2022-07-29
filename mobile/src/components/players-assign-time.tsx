@@ -14,8 +14,8 @@ export const PlayersAssignTime = ({ timeKeeperId }: PlayersAssignTimeProps) => {
 
     return (
         <PlayersCheckIn
-            onPlayerCheckIn={(playerId) => {
-                dispatch(assignTimeStamp({ playerId, id: parseInt(timeStampToAssignId!) }));
+            onPlayerCheckIn={bibNumber => {
+                dispatch(assignTimeStamp({ bibNumber, id: parseInt(timeStampToAssignId!) }));
                 navigate(-1);
             }}
             title="Assign time to player"

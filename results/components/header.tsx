@@ -42,7 +42,6 @@ const MenuButton = ({
 export const Header = () => {
     const router = useRouter();
     const [menuRevealed, setMenuRevealed] = useState(false);
-    console.log(router.asPath);
     return (
         <header className="flex flex-col">
             <div className="flex justify-center py-4 bg-zinc-900 text-white">
@@ -85,7 +84,7 @@ export const Header = () => {
                 <div className="w-full max-w-6xl flex-col flex">
                     <div className="mx-4 sm:mx-0 flex justify-between">
                         <div className="hidden sm:flex justify-between md:justify-start">
-                            {menuItems.map((mi) => (
+                            {menuItems.map(mi => (
                                 <MenuButton key={mi.path} activePath={router.asPath} to={mi.path} text={mi.label} />
                             ))}
                         </div>
@@ -93,7 +92,7 @@ export const Header = () => {
                             <Icon size={1.5} path={mdiMenu} />
                             <MenuText
                                 text={
-                                    menuItems.find((mi) =>
+                                    menuItems.find(mi =>
                                         mi.path === "/" ? router.asPath === mi.path : router.asPath.startsWith(mi.path)
                                     )?.label ?? "MENU"
                                 }
@@ -110,7 +109,7 @@ export const Header = () => {
                     <div
                         className={classNames("flex-col ml-2 items-start", menuRevealed ? "flex sm:hidden" : "hidden")}
                     >
-                        {menuItems.map((mi) => (
+                        {menuItems.map(mi => (
                             <MenuButton
                                 onClick={() => setMenuRevealed(false)}
                                 key={mi.path}

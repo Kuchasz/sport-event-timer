@@ -10,7 +10,7 @@ type PlayerWithTimeStamp = Player & {
 
 type PlayersListProps = {
     players: PlayerWithTimeStamp[];
-    onTimeRecord: (playerId: number) => void;
+    onTimeRecord: (bibNumber: number) => void;
     onTimeReset: (timeStampId: number) => void;
 };
 
@@ -20,13 +20,13 @@ export const PlayersList = ({ players, onTimeRecord, onTimeReset }: PlayersListP
     const navigate = useNavigate();
     return (
         <div className="px-4 text-white">
-            {players.map((p) => (
-                <div key={p.number} className="py-5 flex items-center">
+            {players.map(p => (
+                <div key={p.bibNumber} className="py-5 flex items-center">
                     <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
                     {p.timeStamp ? (
                         <PrimaryActionButton icon={mdiAlarmOff} onClick={onReset(p.timeStamp.id)} />
                     ) : (
-                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={onRecord(p.id)} />
+                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={onRecord(p.bibNumber)} />
                     )}
                     {p.timeStamp && (
                         <ActionButton

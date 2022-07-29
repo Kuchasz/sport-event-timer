@@ -22,7 +22,7 @@ export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): 
         Arr.filter(S.startsWith(typedNumbers)),
         Arr.map(sliceFrom(typedNumbers.length)),
         Arr.map(S.slice(0, 1)),
-        Arr.filter((s) => !!s)
+        Arr.filter(s => !!s)
     );
 
 export const getCurrentTime = (offset: number) => Date.now() + offset;

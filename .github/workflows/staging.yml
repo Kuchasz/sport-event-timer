@@ -9,6 +9,8 @@ on:
             - main
     workflow_dispatch:
 
+on: workflow_dispatch
+
 jobs:
     build_shared:
         runs-on: ubuntu-latest
@@ -29,7 +31,7 @@ jobs:
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
               with:
-                  node-version: "14.x"
+                  node-version: "16.x"
 
             - name: npm install, build, and test
               run: |
@@ -61,7 +63,7 @@ jobs:
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
               with:
-                  node-version: "14.x"
+                  node-version: "16.x"
 
             - name: npm install, build, and test
               run: |
@@ -74,7 +76,7 @@ jobs:
                   name: timer.dist
                   path: ./timer
 
-    build_hub:
+    build_panel:
         needs: [build_timer, build_shared]
         runs-on: ubuntu-latest
 
@@ -94,50 +96,7 @@ jobs:
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
               with:
-                  node-version: "14.x"
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: timer.dist
-                  path: ./timer
-
-            - name: npm install, build, and test
-              run: |
-                  cd ./hub
-                  yarn install
-                  yarn run build
-
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: hub.dist
-                  path: ./hub
-
-    build_results:
-        needs: [build_timer, build_shared]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v2
-
-            - uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v2-beta
-              with:
-                  node-version: "14.x"
+                  node-version: "16.x"
 
             - uses: actions/download-artifact@v2
               with:
@@ -151,7 +110,7 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  cd ./results
+                  cd ./panel
                   yarn install
                   yarn build
                   mv .next dist/.next
@@ -159,11 +118,59 @@ jobs:
 
             - uses: actions/upload-artifact@v2
               with:
-                  name: results.dist
+                  name: panel.dist
                   path: |
-                      ./results/dist
-                      ./results/.next
-                      ./results/public
+                      ./panel/dist
+                      ./panel/.next
+                      ./panel/public
+
+    # build_results:
+    #     needs: [build_timer, build_shared]
+    #     runs-on: ubuntu-latest
+
+    #     steps:
+    #         - uses: actions/checkout@v2
+
+    #         - uses: actions/cache@v2
+    #           id: yarn-cache
+    #           with:
+    #               path: |
+    #                   **/node_modules
+    #                   ${{ steps.yarn-cache-dir-path.outputs.dir }}
+    #               key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+    #               restore-keys: |
+    #                   ${{ runner.os }}-yarn-
+
+    #         - name: Set up Node.js version
+    #           uses: actions/setup-node@v2-beta
+    #           with:
+    #               node-version: "16.x"
+
+    #         - uses: actions/download-artifact@v2
+    #           with:
+    #               name: timer.dist
+    #               path: ./timer
+
+    #         - uses: actions/download-artifact@v2
+    #           with:
+    #               name: shared.dist
+    #               path: ./shared
+
+    #         - name: npm install, build, and test
+    #           run: |
+    #               cd ./results
+    #               yarn install
+    #               yarn build
+    #               mv .next dist/.next
+    #               mv public dist/public
+
+    #         - uses: actions/upload-artifact@v2
+    #           with:
+    #               name: results.dist
+    #               path: |
+    #                   ./results/dist
+    #                   ./results/.next
+    #                   ./results/public
 
     build_mobile:
         needs: [build_timer, build_shared]
@@ -185,7 +192,7 @@ jobs:
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
               with:
-                  node-version: "14.x"
+                  node-version: "16.x"
 
             - uses: actions/download-artifact@v2
               with:
@@ -209,7 +216,7 @@ jobs:
                   path: ./mobile/build
 
     build_server:
-        needs: [build_timer, build_hub, build_results, build_mobile, build_shared]
+        needs: [build_timer, build_panel, build_mobile, build_shared]
         runs-on: ubuntu-latest
 
         steps:
@@ -222,18 +229,23 @@ jobs:
 
             - uses: actions/download-artifact@v2
               with:
-                  name: hub.dist
-                  path: ./hub
+                  name: panel.dist
+                  path: ./panel
 
             - uses: actions/download-artifact@v2
               with:
                   name: shared.dist
                   path: ./shared
 
-            - uses: actions/download-artifact@v2
-              with:
-                  name: results.dist
-                  path: ./results
+            # - uses: actions/download-artifact@v2
+            #   with:
+            #       name: panel.dist
+            #       path: ./panel
+
+            # - uses: actions/download-artifact@v2
+            #   with:
+            #       name: results.dist
+            #       path: ./results
 
             - uses: actions/download-artifact@v2
               with:
@@ -253,7 +265,7 @@ jobs:
             - name: Set up Node.js version
               uses: actions/setup-node@v2-beta
               with:
-                  node-version: "14.x"
+                  node-version: "16.x"
 
             - name: npm install, build, and test
               run: |
@@ -263,40 +275,50 @@ jobs:
 
             - uses: montudor/action-zip@v1
               with:
-                  args: zip -qq -r set-hub-package.zip hub results timer server node_modules
+                  args: zip -qq -r set-hub-package.zip panel shared timer server node_modules
 
             - run: |
                   mkdir package
                   mv set-hub-package.zip package/set-hub-package.zip
 
             - name: upload artifact to staging
-              uses: SamKirkland/FTP-Deploy-Action@4.0.0
-              with:
-                  server: ${{ secrets.ftp_server }}
-                  username: ${{ secrets.ftp_username }}
-                  password: ${{ secrets.ftp_password }}
-                  local-dir: ./package/
-                  server-dir: domains/artifacts/
+              uses: easingthemes/ssh-deploy@main
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
+                  ARGS: "-rltgoDzvO"
+                  SOURCE: "package/"
+                  REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
+                  # TARGET: ${{ secrets.REMOTE_TARGET }}
 
-    deploy:
-        runs-on: ubuntu-latest
-        needs: build_server
-        # environment:
-        #     name: "production"
-        # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+            # - name: upload artifact to staging
+            #   uses: SamKirkland/FTP-Deploy-Action@4.0.0
+            #   with:
+            #       server: ${{ secrets.ftp_server }}
+            #       username: ${{ secrets.ftp_username }}
+            #       password: ${{ secrets.ftp_password }}
+            #       local-dir: ./package/
+            #       server-dir: domains/artifacts/
 
-        steps:
-            - name: publish
-              uses: garygrossgarten/github-action-ssh@release
-              with:
-                  host: ${{ secrets.ssh_host }}
-                  username: ${{ secrets.ssh_username }}
-                  password: ${{ secrets.ssh_password }}
-                  tryKeyboard: true
-                  command: |
-                      cd domains/set-hub.pyszstudio.pl/
-                      rm -rf node_modules
-                      rm -rf public_nodejs
-                      unzip -q ../artifacts/set-hub-package.zip
-                      mv server public_nodejs
-                      devil www restart set-hub.pyszstudio.pl
+    # deploy:
+    #     runs-on: ubuntu-latest
+    #     needs: build_server
+    #     # environment:
+    #     #     name: "production"
+    #     # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    #     steps:
+    #         - name: publish
+    #           uses: garygrossgarten/github-action-ssh@release
+    #           with:
+    #               host: ${{ secrets.ssh_host }}
+    #               username: ${{ secrets.ssh_username }}
+    #               password: ${{ secrets.ssh_password }}
+    #               tryKeyboard: true
+    #               command: |
+    #                   cd domains/set-hub.pyszstudio.pl/
+    #                   rm -rf node_modules
+    #                   rm -rf public_nodejs
+    #                   unzip -q ../artifacts/set-hub-package.zip
+    #                   mv server public_nodejs
+    #                   devil www restart set-hub.pyszstudio.pl

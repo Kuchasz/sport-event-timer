@@ -13,10 +13,10 @@ export const PlayersDialPad = ({ timeKeeperId, offset }: PlayersDialPadProps) =>
 
     return (
         <PlayersCheckIn
-            onPlayerCheckIn={(playerId) => {
+            onPlayerCheckIn={bibNumber => {
                 dispatch(
                     add({
-                        playerId,
+                        bibNumber,
                         timeKeeperId,
                         time: getCurrentTime(offset)
                     })

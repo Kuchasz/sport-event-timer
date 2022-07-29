@@ -22,21 +22,79 @@ export const formatTimeNoSec = (time?: number) => {
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
 };
 
+export const formatTimeWithSec = (time?: number) => {
+    if (!time) return "--:--:--";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
+        dateTime.getSeconds()
+    )}`;
+};
+
+export const formatTimeWithMilliSec = (time?: number) => {
+    if (!time) return "--:--:--.---";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
+        dateTime.getSeconds()
+    )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
+};
+
+export const formatTimeWithMilliSecUTC = (time?: number) => {
+    if (!time) return "--:--:--.---";
+    const dateTime = new Date(time);
+    return `${formatNumber(dateTime.getUTCHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
+        dateTime.getSeconds()
+    )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
+};
+
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
+
+export const areOverlapping = (A: { from: number; to: number }, B: { from: number; to: number }) => {
+    if (B.from <= A.from) {
+        return B.to >= A.from;
+    } else {
+        return B.from <= A.to;
+    }
+};
+
+export const inRange = (range: { from: number; to: number }, n: number) => range.from <= n && range.to >= n;
+
+export const rangeLength = (range: { from: number; to: number }) => range.to - range.from;
+
+export const createRange = (range: { from: number; to: number }) =>
+    Array.from({ length: rangeLength(range) }, (_, i) => range.from + i);
 
 export const getCurrentTime = (offset: number) => Date.now() + offset;
 
-export function sort<T>(items: T[], func: (item: T) => number): T[] {
+export const sort = <T>(items: T[], func: (item: T) => number): T[] => {
     const i = [...items];
 
     return i.sort((a, b) => func(a) - func(b));
-}
+};
 
-export function sortDesc<T>(items: T[], func: (item: T) => number): T[] {
+export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
     const i = [...items];
 
     return i.sort((a, b) => func(b) - func(a));
-}
+};
+
+export const arrayRange = (startNumber: number, endNumber: number) =>
+    [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
+
+export const uuidv4 = () => {
+    let d = new Date().getTime();
+    let d2 = (typeof performance !== "undefined" && performance.now && performance.now() * 1000) || 0;
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+        var r = Math.random() * 16;
+        if (d > 0) {
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
+        }
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+    });
+};
 
 export type PlayerResult = { number: number; result?: number; status: string };
 export type UserCredentials = { login: string; password: string };
