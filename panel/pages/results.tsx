@@ -2,14 +2,8 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/shared/dist";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import {
-    mdiClockEditOutline,
-    mdiClockPlusOutline,
-    mdiPlus,
-    mdiReload
-    } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { InferQueryOutput, trpc } from "../trpc";
+import { mdiPlus } from "@mdi/js";
 import { useCurrentRaceId } from "use-current-race-id";
 import { useState } from "react";
 
