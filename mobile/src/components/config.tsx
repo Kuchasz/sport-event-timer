@@ -1,6 +1,4 @@
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
-import { mdiUpload } from "@mdi/js";
-import { PrimaryActionButton } from "./action-button";
 import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { useRef, useState } from "react";
