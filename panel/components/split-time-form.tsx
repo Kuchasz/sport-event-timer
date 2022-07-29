@@ -10,7 +10,7 @@ import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
 
-type SplitTime = InferMutationInput<"split-time.add">;
+type SplitTime = InferMutationInput<"split-time.update">;
 
 type SplitTimeFormProps = {
     onReject: () => void;
