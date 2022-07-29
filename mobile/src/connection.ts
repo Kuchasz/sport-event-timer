@@ -1,11 +1,11 @@
 import superjson from "superjson";
-import { createReactQueryHooks, createTRPCClient } from "@trpc/react";
+import { createTRPCClient } from "@trpc/react";
 import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { QueryClient } from "react-query";
 import { splitLink } from "@trpc/client/links/splitLink";
-import { trpc } from "./trpc";
+// import { trpc } from "./trpc";
 
 import type { AppRouter } from "@set/server/router";
 // export const hubUrl =
