@@ -1,28 +1,34 @@
+import * as fs from "./async-fs";
 import * as m from "@set/timer/model";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import * as trpcWs from "@trpc/server/adapters/ws";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-import { apply as applyHub } from "@set/hub";
+import ws from "ws";
 import { apply as applyResults } from "@set/results";
-import {
-    ClockListPlayer,
-    formatTimeNoSec,
-    sort,
-    UserCredentials
-    } from "@set/shared/dist";
+import { appRouter } from "./router";
+import { assignNumbersToPlayers, transform } from "@set/timer/list";
+import { Classification, RegistrationPlayer } from "../timer/model";
+import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
+import { createContext } from "./trpc-context";
 import { createServer } from "http";
-import { emptyToStartPlayer, ToStartPlayer, toStartPlayerToPlayer } from "./to-start";
-import { login } from "./auth";
-import { parse } from "csv-parse";
-import { PlayerResult } from "../shared/index";
-import { promisify } from "util";
+import {
+    emptyToStartPlayer,
+    ToStartPlayer,
+    toStartPlayerToPlayer,
+    toStartPlayerTransform
+    } from "@set/timer/to-start";
+import { login, verify } from "./auth";
+import { PlayerResult } from "@set/shared/index";
 import { readFile, stat, writeFile } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
-import { stringify } from "csv-stringify";
-import { TimerState } from "../timer/store";
+import { TimerState } from "@set/timer/store";
 import { upload } from "@set/timer/dist/slices/players";
+
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
 
 const requireModule = (path: string) => resolve(__dirname + `/../node_modules/${path}`);
@@ -34,61 +40,44 @@ export interface TypedRequestBody<T> extends Express.Request {
 }
 
 const app = express();
-app.use(cors());
+const server = createServer(app);
+const corsOptions = {
+    credentials: true,
+    preflightContinue: false,
+    origin: true,
+    methods: ["GET", "POST", "PUT", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"]
+};
+
+const wss = new ws.Server({ server });
+const handler = trpcWs.applyWSSHandler({ wss, router: appRouter, createContext });
+
+const trpcExpressMiddleware = trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext
+});
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded());
 app.use(express.json());
-const server = createServer(app);
+app.use(cookieParser());
+app.use("/api/trpc", trpcExpressMiddleware);
+
+process.on("SIGTERM", () => {
+    console.log("SIGTERM");
+    handler.broadcastReconnectNotification();
+    wss.close();
+    server.close();
+});
 
 type NumberStartTime = { number: number; startTime: number };
-const readFileAsync = promisify(readFile);
-const writeFileAsync = promisify(writeFile);
-
-const parseAsync = (data: Buffer, options: any) =>
-    new Promise<any>((res, rej) =>
-        parse(data, options, (err, results) => {
-            res(results);
-        })
-    );
-
-const stringifyAsync = (data: any) =>
-    new Promise<string>((res, rej) => {
-        stringify(data, { header: true }, (err, str) => {
-            res(str);
-        });
-    });
-
-const writeCsvAsync = <T>(content: T, path: string) =>
-    new Promise<void>(async (res, rej) => {
-        const contentCsvString = await stringifyAsync(content);
-        await writeFileAsync(path, contentCsvString);
-        res();
-    });
-
-const writeJson = <T>(content: T, path: string) => {
-    writeFile(resolve(path), JSON.stringify(content), err => {
-        if (err) {
-            console.log(err);
-        } else {
-        }
-    });
-};
-
-const readJsonAsync = async <T>(path: string) => {
-    const contents = await readFileAsync(resolve(path));
-    return JSON.parse(contents.toString()) as T;
-};
-
-const readCsv = async <T>(path: string) => {
-    const data = await readFileAsync(resolve(path));
-    return (await parseAsync(data, { columns: true })) as T;
-};
 
 // const loadRaceResults = async () => {
 //     const today = new Date();
 //     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
 //     const funResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=2");
-//     const funResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
+//     const funResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-fun-2022-overrides.json");
 
 //     const finalFunResults = funResults.map(r => ({ ...r, ...funResultsOverrides.find(o => r.number === o.number) }));
 
@@ -98,7 +87,7 @@ const readCsv = async <T>(path: string) => {
 //     );
 
 //     const proResults = await fetchTimeGoNewResults("http://timegonew.pl/?page=result&action=live&cid=19&did=1");
-//     const proResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
+//     const proResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022-overrides.json");
 
 //     const finalProResults = proResults.map(r => ({ ...r, ...proResultsOverrides.find(o => r.number === o.number) }));
 
@@ -113,7 +102,7 @@ const readCsv = async <T>(path: string) => {
 //     if (today.getMonth() !== 3 && today.getDate() !== 10) return;
 
 //     const timeTrialResults = await getTimeTrialResults();
-//     const timeTrialResultsOverrides = await readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
+//     const timeTrialResultsOverrides = await fs.readJsonAsync<PlayerResult[]>("../results-tt-2022-overrides.json");
 
 //     const finalTimeTrialResults = timeTrialResults.map(r => ({
 //         ...r,
@@ -126,34 +115,29 @@ const readCsv = async <T>(path: string) => {
 const run = async () => {
     app.use("/timer", express.static(requireModule("@set/mobile/build")));
     app.get("/timer/*", (_, res) => res.sendFile(requireModule("@set/mobile/build/index.html")));
-    app.get("/state", (_, res) => {
-        readFile(resolve("../state.json"), (err, data) => {
-            if (err) throw err;
-            res.json(JSON.parse(data as any));
-        });
+    app.get("/state", async (_, res) => {
+        const data = await fs.readFileAsync(resolve("../state.json"));
+        res.json(JSON.parse(data as any));
     });
 
     app.get("/pro-results", async (_, res) => {
-        const proResults = await readFileAsync("../results-pro-2022.json");
-        res.header("Content-Type", "application/json");
-        res.send(proResults);
+        const proResults = await fs.readFileAsync("../results-pro-2022.json");
+        res.json(proResults);
     });
 
     app.get("/fun-results", async (_, res) => {
-        const funResults = await readFileAsync("../results-fun-2022.json");
-        res.header("Content-Type", "application/json");
-        res.send(funResults);
+        const funResults = await fs.readFileAsync("../results-fun-2022.json");
+        res.json(funResults);
     });
 
     app.get("/timetrial-results", async (_, res) => {
-        const timeTrialResults = await readFileAsync("../results-tt-2022.json");
-        res.header("Content-Type", "application/json");
-        res.send(timeTrialResults);
+        const timeTrialResults = await fs.readFileAsync("../results-tt-2022.json");
+        res.json(timeTrialResults);
     });
 
     app.get("/gc-results", async (_, res) => {
-        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
-        const timeTrialResults = await readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
+        const proResults = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+        const timeTrialResults = await fs.readJsonAsync<PlayerResult[]>("../results-tt-2022.json");
         const timeTrialResultsMap = new Map(timeTrialResults.map(r => [r.number, r]));
 
         const summaryResults = proResults
@@ -180,9 +164,9 @@ const run = async () => {
     });
 
     app.get("/office-players", async (_, res) => {
-        const funplayers = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
-        const proplayers = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
-        const ttplayers = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const funplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const proplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const ttplayers = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
 
         const allPlayers = [...funplayers, ...proplayers, ...ttplayers];
 
@@ -207,7 +191,7 @@ const run = async () => {
             return officePlayer;
         });
 
-        const playersCsv = await stringifyAsync(sort(officePlayers, o => Number(o["Nr zawodnika"])));
+        const playersCsv = await fs.stringifyCsvAsync(sort(officePlayers, o => Number(o["Nr zawodnika"])));
 
         res.header("Content-Type", "text/csv");
         res.attachment("office-players.csv");
@@ -215,7 +199,7 @@ const run = async () => {
     });
 
     app.get("/fun-players", async (_, res) => {
-        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
+        const players: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
 
         const result = players.map(toStartPlayerToPlayer);
 
@@ -223,26 +207,29 @@ const run = async () => {
     });
 
     app.get("/pro-players", async (_, res) => {
-        const players: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const players: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
         const result = players.map(toStartPlayerToPlayer);
 
         res.json(result);
     });
 
     app.get("/timetrial-players", async (_, res) => {
-        const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const toStartPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
         const players = toStartPlayers.map(toStartPlayerToPlayer);
 
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
-        const result = players.map(p => ({ ...p, startTime: startTimes.find(s => s.number === p.number)?.startTime }));
+        const result = players.map(p => ({
+            ...p,
+            startTime: startTimes.find(s => s.number === p.bibNumber)?.startTime
+        }));
 
         res.json(sort(result, p => p.startTime || Number.MAX_VALUE));
     });
 
     app.get("/gc-players", async (_, res) => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = proPlayers
             .map(pro => ({ pro, timeTrial: timeTrialPlayers.find(tt => pro["Nr zawodnika"] === tt["Nr zawodnika"]) }))
@@ -253,11 +240,10 @@ const run = async () => {
         res.json(gcPlayers);
     });
 
-    app.get("/players", (_, res) => {
-        readFile(resolve("../players.json"), (err, data) => {
-            const players: m.Player[] = err ? [] : JSON.parse(data as any);
-            res.json(players);
-        });
+    app.get("/players", async (_, res) => {
+        const data = await fs.readFileAsync(resolve("../players.json"));
+        const players: m.Player[] = JSON.parse(data as any);
+        res.json(players);
     });
 
     app.get("/players-date", (_, res) => {
@@ -270,9 +256,49 @@ const run = async () => {
         res.json(Date.now());
     });
 
-    app.post("/calculate-nongc-start-times", async (req, res) => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+    app.post("/upload-players", verify, async (req: TypedRequestBody<{ playersCSV: string }>, res) => {
+        const parsedPlayers: ToStartPlayer[] = await fs.parseCsvAsync(req.body.playersCSV, {
+            columns: true,
+            encoding: "utf-8"
+        });
+
+        const classifications = await fs.readJsonAsync<Classification[]>("../classifications.json");
+
+        const formatBirthDate = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDay()}`;
+
+        const uploadedPlayers = transform(parsedPlayers, toStartPlayerTransform(classifications)).map((p, id) => ({
+            ...p,
+            birthDate: formatBirthDate(p.birthDate),
+            id: id + 1
+        }));
+
+        await fs.writeJsonAsync(uploadedPlayers, resolve("../uploaded-players.json"));
+        res.json("ok");
+    });
+
+    app.post("/assign-numbers", verify, async (_, res) => {
+        const registeredPlayers = await fs.readJsonAsync<RegistrationPlayer[]>("../uploaded-players.json");
+
+        const result = assignNumbersToPlayers(
+            registeredPlayers,
+            [179],
+            [
+                { id: "rnk_pro", excludes: ["gc", "rnk_fun"], range: { from: 101, to: 200 } },
+                { id: "rnk_fun", excludes: ["gc", "rnk_pro"], range: { from: 201, to: 400 } },
+                { id: "rnk_tt", excludes: ["gc"], range: { from: 401, to: 500 } },
+                { id: "gc", excludes: ["rnk_fun", "rnk_pro", "rnk_tt"], range: { from: 1, to: 100 } }
+            ],
+            p => p.id,
+            p => p.classificationId
+        );
+
+        await fs.writeJsonAsync(result.playersNumbers, "../players-numbers.json");
+        res.json("ok");
+    });
+
+    app.post("/calculate-nongc-start-times", verify, async (req, res) => {
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
         const nonGCPlayers = timeTrialPlayers.filter(
@@ -291,90 +317,90 @@ const run = async () => {
             startTime: raceStartTime + i * minute + Math.floor(i / 10) * minute
         }));
 
-        writeJson(nonGCNumbersWithTimes, "../start-tt-2022.json");
+        fs.writeJsonAsync(nonGCNumbersWithTimes, "../start-tt-2022.json");
         res.json("ok");
     });
 
-    app.post("/calculate-gc-start-times", async (_, res) => {
-        const startTimes = await readJsonAsync<{ number: number; startTime: number }[]>("../start-tt-2022.json");
-        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
+    app.post("/calculate-gc-start-times", verify, async (_, res) => {
+        const existingStartTimes = await fs.readJsonAsync<{ number: number; startTime: number }[]>(
+            "../start-tt-2022.json"
+        );
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
 
         const gcPlayers = timeTrialPlayers.filter(p => proPlayers.find(pp => p["Nr zawodnika"] === pp["Nr zawodnika"]));
-        const nonGCPlayers = timeTrialPlayers.filter(
+        const timeTrialOnlyPlayers = timeTrialPlayers.filter(
             p => !gcPlayers.find(gp => p["Nr zawodnika"] === gp["Nr zawodnika"])
         );
 
-        const nonGCNumbersWithTimes = nonGCPlayers.map(p => ({
+        const timeTrialOnlyNumbersWithTimes = timeTrialOnlyPlayers.map(p => ({
             number: Number(p["Nr zawodnika"]),
-            startTime: startTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
+            startTime: existingStartTimes.find(s => Number(p["Nr zawodnika"]) === s.number)?.startTime
         }));
 
-        const proResults = await readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
+        const proResults = await fs.readJsonAsync<PlayerResult[]>("../results-pro-2022.json");
 
-        const sorted = sort(nonGCNumbersWithTimes, t => t.startTime!);
-        const lastNonGCStartTime = sorted[sorted.length - 1].startTime!;
+        const sorted = sort(timeTrialOnlyNumbersWithTimes, t => t.startTime!);
+        const lastTimeTrialOnlyStartTime = sorted[sorted.length - 1].startTime!;
 
-        const gcPlayersProResults = proResults.filter(p =>
-            gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"]))
-        );
+        const gcPlayersResults = proResults.filter(p => gcPlayers.find(gp => p.number === Number(gp["Nr zawodnika"])));
 
-        const GCSlowestFirst = sortDesc(gcPlayersProResults, r => r.result || Number.MAX_VALUE);
+        const gcFromWorstToBest = sortDesc(gcPlayersResults, r => r.result || Number.MAX_VALUE);
 
         const minute = 60_000;
 
-        const GCNumbersWithTimes = GCSlowestFirst.map((p, i) => ({
+        const gcNumbersWithTimes = gcFromWorstToBest.map((p, i) => ({
             number: Number(p.number),
-            startTime: lastNonGCStartTime + i * minute + 5 * minute
+            startTime: lastTimeTrialOnlyStartTime + i * minute + 5 * minute
         }));
 
-        const allTTStaringList = [...nonGCNumbersWithTimes, ...GCNumbersWithTimes];
-        writeJson(allTTStaringList, "../start-tt-2022.json");
+        const allTTStaringList = [...timeTrialOnlyNumbersWithTimes, ...gcNumbersWithTimes];
+        fs.writeJsonAsync(allTTStaringList, "../start-tt-2022.json");
 
         res.json("ok");
     });
 
-    app.post("/strip-lists", async () => {
-        const timeTrialPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const proPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-pro-2022.csv");
-        const funPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-fun-2022.csv");
+    app.post("/strip-lists", verify, async () => {
+        const timeTrialPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const proPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-pro-2022.csv");
+        const funPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-fun-2022.csv");
 
         const minProRacePlayers = proPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
         const minFunRacePlayers = funPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
         const minTimetrialRacePlayers = timeTrialPlayers.map(p => ({ ...p, ...emptyToStartPlayer }));
 
-        await writeCsvAsync(minProRacePlayers, "../ls-min-pro-2022.csv");
-        await writeCsvAsync(minFunRacePlayers, "../ls-min-fun-2022.csv");
-        await writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
+        await fs.writeCsvAsync(minProRacePlayers, "../ls-min-pro-2022.csv");
+        await fs.writeCsvAsync(minFunRacePlayers, "../ls-min-fun-2022.csv");
+        await fs.writeCsvAsync(minTimetrialRacePlayers, "../ls-min-tt-2022.csv");
     });
 
-    app.post("/read-start-times", async (_, res) => {
-        const toStartPlayers: ToStartPlayer[] = await readCsv<ToStartPlayer[]>("../ls-tt-2022.csv");
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+    app.post("/read-start-times", verify, async (_, res) => {
+        const toStartPlayers: ToStartPlayer[] = await fs.readCsvAsync<ToStartPlayer[]>("../ls-tt-2022.csv");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
         const players = toStartPlayers
             .map(toStartPlayerToPlayer)
-            .map(p => ({ ...p, startTime: startTimes.find(s => p.number === s.number)?.startTime }));
-        const state = await readJsonAsync<TimerState>("../state.json");
+            .map(p => ({ ...p, startTime: startTimes.find(s => p.bibNumber === s.number)?.startTime }));
+        const state = await fs.readJsonAsync<TimerState>("../state.json");
 
         state.players = players;
         state.timeStamps = [];
         state.actionsHistory = [];
 
-        writeJson(players, "../players.json");
-        writeJson(state, "../state.json");
+        fs.writeJsonAsync(players, "../players.json");
+        fs.writeJsonAsync(state, "../state.json");
 
-        dispatch(upload(players));
+        // dispatch(upload(players));
         res.send("OK");
     });
 
     app.get("/clock-players", async (_, res) => {
-        const players = await readJsonAsync<m.Player[]>("../players.json");
-        const startTimes = await readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
+        const players = await fs.readJsonAsync<m.Player[]>("../players.json");
+        const startTimes = await fs.readJsonAsync<NumberStartTime[]>("../start-tt-2022.json");
 
         const clockPlayers: ClockListPlayer[] = sort(startTimes, p => p.number).map(t => ({
             number: t.number,
-            name: players.find(p => t.number === p.number)?.name!,
-            lastName: players.find(p => t.number === p.number)?.lastName!,
+            name: players.find(p => t.number === p.bibNumber)?.name!,
+            lastName: players.find(p => t.number === p.bibNumber)?.lastName!,
             startTime: t.startTime
         }));
 
@@ -389,10 +415,12 @@ const run = async () => {
                 issuedAt: tokens.iat,
                 expireDate: tokens.exp
             };
+
             res.cookie(config.auth.cookieName, result.authToken, {
                 httpOnly: true,
                 maxAge: config.auth.maxAge * 1000
             });
+
             res.json(result);
             return;
         } catch (err) {
@@ -401,8 +429,6 @@ const run = async () => {
 
         res.sendStatus(401);
     });
-
-    const dispatch = await applyHub(server);
 
     if (!isDevelopment) await applyResults(app);
 

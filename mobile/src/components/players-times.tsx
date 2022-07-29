@@ -74,13 +74,13 @@ const Item = ({
 
     return (
         <div
-            onTouchStart={(e) => {
+            onTouchStart={e => {
                 startMoveElement(e.changedTouches[0].clientX);
             }}
-            onTouchEnd={(e) => {
+            onTouchEnd={e => {
                 deleteTargetElement(e.changedTouches[0].clientX);
             }}
-            onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
+            onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX)}
             className="relative bg-yellow-700 overflow-hidden"
         >
             <div ref={targetBackground} className="w-full pl-8 h-full flex items-center top-0 bg-red-500 absolute">
@@ -90,7 +90,7 @@ const Item = ({
                 <PlayerWithTimeStampDisplay
                     playerWithTimeStamp={{
                         timeStamp: t,
-                        number: t.player?.number,
+                        bibNumber: t.player?.bibNumber,
                         name: t.player?.name,
                         lastName: t.player?.lastName
                     }}
@@ -133,16 +133,16 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
 
     return (
         <div>
-            <div className="flex flex-col mt-2">
+            <div className="flex flex-col my-2 px-2">
                 <button
                     onClick={onAddTime}
-                    className="self-end rounded-md text-center bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
+                    className="self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
                 >
-                    <Icon color="white" size={1} path={mdiPlusCircleOutline} />
+                    <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            {sort(times).map((t) => (
-                <Item key={t.id} dispatch={dispatch} navigate={navigate} t={t} />
+            {sort(times).map(t => (
+                <Item key={t.time} dispatch={dispatch} navigate={navigate} t={t} />
             ))}
         </div>
     );

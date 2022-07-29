@@ -1,14 +1,21 @@
 {
-  "name": "@set/timer",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "ts-node store.ts",
-    "build": "tsc --project tsconfig.json"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.8.0",
-    "fp-ts": "^2.11.9",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.2"
-  }
+    "name": "@set/timer",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "ts-node store.ts",
+        "build": "tsc --project tsconfig.json",
+        "test": "jest",
+        "test:watch": "jest --watch"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.8.0",
+        "fp-ts": "^2.11.9",
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.2"
+    },
+    "devDependencies": {
+        "@types/jest": "^28.1.1",
+        "jest": "^28.1.1",
+        "ts-jest": "^28.0.4"
+    }
 }

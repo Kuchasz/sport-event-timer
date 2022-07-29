@@ -52,11 +52,11 @@ type TweakTimeStampProps = {
 
 export const TweakTimeStamps = ({ onSave }: TweakTimeStampProps) => {
     const { timeStampId } = useParams();
-    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const allPlayers = useTimerSelector((x) => x.players);
+    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allPlayers = useTimerSelector(x => x.players);
 
-    const timeStamp = allTimeStamps.find((x) => x.id === parseInt(timeStampId!));
-    const player = allPlayers.find((x) => x.id === timeStamp?.playerId);
+    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId!));
+    const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
     const navigate = useNavigate();
 

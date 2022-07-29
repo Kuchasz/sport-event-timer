@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep } from "../utils";
+import { BeepFunction, createBeep } from "@set/server/dist/utils";
+import { Clock } from "../components/clock";
 import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
@@ -16,7 +17,6 @@ import {
     } from "@mdi/js";
 import { Meta } from "../components/meta";
 import { socket } from "../connection";
-import { Timer } from "../components/timer";
 import { useEffect, useState } from "react";
 
 export type TextSettings = {
@@ -123,7 +123,7 @@ const Zegar = () => {
         socket.on("TR", serverTime => {
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
-            console.log("latency", latency);
+            // console.log("latency", latency);
 
             setGlobalTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
             if (latency <= 50) {
@@ -157,7 +157,7 @@ const Zegar = () => {
                     </div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
-                        {clockState.clock.enabled && <Timer fontSize={clockState.clock.size} time={globalTime!} />}
+                        {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
                         {clockState.countdown.enabled && (
                             <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
                         )}
