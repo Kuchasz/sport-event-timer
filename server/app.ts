@@ -12,7 +12,7 @@ import { Classification, RegistrationPlayer } from "../timer/model";
 import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
 import { createContext } from "./trpc-context";
-import { createServer } from "http";
+import { createServer } from "https";
 import {
     emptyToStartPlayer,
     ToStartPlayer,
@@ -21,10 +21,10 @@ import {
     } from "@set/timer/dist/to-start";
 import { login, verify } from "./auth";
 import { PlayerResult } from "@set/shared/index";
+import { readFileSync, stat } from "fs";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
-import { stat } from "fs";
 import { TimerState } from "@set/timer/dist/store";
 // import { apply as applyPanel } from "@set/panel";
 // import { upload } from "@set/timer/dist/slices/players";
@@ -39,8 +39,16 @@ export interface TypedRequestBody<T> extends Express.Request {
     body: T;
 }
 
+var key = readFileSync(__dirname + "/../certs/selfsigned.key");
+var cert = readFileSync(__dirname + "/../certs/selfsigned.crt");
+
+var options = {
+    key: key,
+    cert: cert
+};
+
 const app = express();
-const server = createServer(app);
+const server = createServer(options, app);
 const corsOptions = {
     credentials: true,
     preflightContinue: false,
