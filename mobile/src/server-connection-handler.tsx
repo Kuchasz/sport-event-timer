@@ -21,12 +21,13 @@ export const ServerConnectionHandler = ({
         enabled: false,
         onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true })
     });
+
     const ntpMutation = trpc.useMutation(["ntp.sync"]);
 
     useEffect(() => {
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        refetchState();
+        // refetchState();
 
         let loadStartTime = Date.now();
 
@@ -63,7 +64,7 @@ export const ServerConnectionHandler = ({
             // socket.removeAllListeners();
             // socket.disconnect();
         };
-    }, [dispatch, refetchState, ntpMutation]);
+    }, [dispatch, ntpMutation]);
 
     return <>{children}</>;
 };
