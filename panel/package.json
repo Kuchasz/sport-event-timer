@@ -4,7 +4,7 @@
     "private": true,
     "main": "dist/index.js",
     "scripts": {
-        "build": "next build && tsc --project tsconfig.json",
+        "build": "next build",
         "export": "next build && next export",
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "start:dev": "next dev",
