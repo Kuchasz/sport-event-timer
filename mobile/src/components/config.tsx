@@ -1,7 +1,7 @@
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useTimerSelector } from "../hooks";
 // import {
 //     assignPlayerNumbers,
