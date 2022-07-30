@@ -43,6 +43,7 @@ jobs:
                   path: ./shared
 
     build_timer:
+        needs: [build_shared]
         runs-on: ubuntu-latest
 
         steps:
@@ -62,6 +63,11 @@ jobs:
               uses: actions/setup-node@v2-beta
               with:
                   node-version: "16.x"
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: shared.dist
+                  path: ./shared
 
             - name: npm install, build, and test
               run: |
