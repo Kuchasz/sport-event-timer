@@ -27,7 +27,7 @@ export const ServerConnectionHandler = ({
     useEffect(() => {
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
 
-        // refetchState();
+        refetchState();
 
         let loadStartTime = Date.now();
 
