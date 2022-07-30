@@ -2,7 +2,7 @@ import Head from "next/head";
 import { getState } from "../api";
 import { Loader } from "../components/loader";
 import { Table } from "../components/table";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 import { useEffect, useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>
@@ -43,7 +43,7 @@ const Index = ({}: Props) => {
     type itemsType = typeof result[0];
 
     const headers = ["Nr. zaw.", "Imię Nazwisko", "Miejscowość", "Klub", "Kraj", "Rok urodz.", "Kat."].concat(
-        state.timeKeepers.map((tk) => tk.name)
+        state.timeKeepers.map(tk => tk.name)
     );
 
     return (
@@ -52,7 +52,7 @@ const Index = ({}: Props) => {
                 <title>Wyniki na żywo</title>
             </Head>
             <div className="border-1 border-gray-600 border-solid">
-                <Table headers={headers} rows={result} getKey={(r) => String(r.id)}>
+                <Table headers={headers} rows={result} getKey={r => String(r.id)}>
                     <Table.Item render={(r: itemsType) => <div>{r.number}</div>}></Table.Item>
                     <Table.Item
                         render={(r: itemsType) => (
@@ -73,7 +73,7 @@ const Index = ({}: Props) => {
                         render={(r: itemsType) => (
                             <div>
                                 {formatTime(
-                                    state.timeStamps.find((ts) => ts.playerId === r.id && ts.timeKeeperId === 0)?.time
+                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timeKeeperId === 0)?.time
                                 )}
                             </div>
                         )}
@@ -82,7 +82,7 @@ const Index = ({}: Props) => {
                         render={(r: itemsType) => (
                             <div>
                                 {formatTime(
-                                    state.timeStamps.find((ts) => ts.playerId === r.id && ts.timeKeeperId === 1)?.time
+                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timeKeeperId === 1)?.time
                                 )}
                             </div>
                         )}

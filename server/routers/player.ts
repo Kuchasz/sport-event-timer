@@ -2,7 +2,7 @@ import * as fs from "../async-fs";
 import * as trpc from "@trpc/server";
 import { db } from "../db";
 import { dispatchAction } from "./action";
-import { RegistrationPlayer } from "@set/timer/model";
+import { RegistrationPlayer } from "@set/timer/dist/model";
 import { TRPCError } from "@trpc/server";
 import { upload } from "@set/timer/dist/slices/players";
 import { z } from "zod";

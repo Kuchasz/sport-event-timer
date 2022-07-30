@@ -2,7 +2,7 @@
     "name": "@set/panel",
     "version": "1.0.0",
     "private": true,
-    "main": "dist/panel/index.js",
+    "main": "dist/index.js",
     "scripts": {
         "build": "next build && tsc --project tsconfig.json",
         "export": "next build && next export",

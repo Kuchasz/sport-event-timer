@@ -1,5 +1,5 @@
 import { Classification, Gender } from "./model";
-import { Player } from "@set/timer/model";
+import { Player } from "@set/timer/dist/model";
 export type ToStartPlayer = {
     ["Nr zawodnika"]?: string;
     ["Nr chip"]: string;
