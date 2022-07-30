@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 
 type Props = {
     state: TimerState;

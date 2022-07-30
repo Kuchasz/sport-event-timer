@@ -1,5 +1,5 @@
 import * as fs from "./async-fs";
-import * as m from "@set/timer/model";
+import * as m from "@set/timer/dist/model";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import * as trpcWs from "@trpc/server/adapters/ws";
 import cookieParser from "cookie-parser";
@@ -8,7 +8,7 @@ import express from "express";
 import ws from "ws";
 import { apply as applyPanel } from "@set/panel";
 import { appRouter } from "./router";
-import { assignNumbersToPlayers, transform } from "@set/timer/list";
+import { assignNumbersToPlayers, transform } from "@set/timer/dist/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
 import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
 import { config } from "./config";
@@ -19,14 +19,14 @@ import {
     ToStartPlayer,
     toStartPlayerToPlayer,
     toStartPlayerTransform
-    } from "@set/timer/to-start";
+    } from "@set/timer/dist/to-start";
 import { login, verify } from "./auth";
 import { PlayerResult } from "@set/shared/index";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { stat } from "fs";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 // import { upload } from "@set/timer/dist/slices/players";
 
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";

@@ -5,10 +5,10 @@ import React from "react";
 import { getGCPlayers, getGCResults } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiKeyboardBackspace } from "@mdi/js";
-import { Player } from "@set/timer/model";
+import { Player } from "@set/timer/dist/model";
 import { PlayerResult, sort } from "@set/shared/dist";
 import { Table } from "../../components/table";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 import { useEffect, useState } from "react";
 
 export const formatNumber = (n: number, precision = 2) =>

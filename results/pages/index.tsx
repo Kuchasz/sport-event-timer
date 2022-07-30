@@ -5,7 +5,7 @@ import { PostDetails } from "../components/post-details";
 import { posts } from "../posts";
 import { Slogan } from "../components/slogan";
 import { sort } from "@set/shared/dist";
-import { TimerState } from "@set/timer/store";
+import { TimerState } from "@set/timer/dist/store";
 
 const SneakPeak = ({ article }: { article: typeof posts[0] }) => (
     <Link href={`artykul/${article.alias}`}>
@@ -32,7 +32,7 @@ type Props = {
 };
 
 const Index = ({}: Props) => {
-    const sortedPosts = sort(posts, (p) => p.date.getTime()).reverse();
+    const sortedPosts = sort(posts, p => p.date.getTime()).reverse();
     const [mainPost] = sortedPosts;
 
     return (
@@ -43,14 +43,14 @@ const Index = ({}: Props) => {
             <Slogan {...mainPost} link={mainPost.alias} photo={`assets/posts/${mainPost.photo}`} />
             <div className="flex w-full justify-center">
                 <div className="w-full flex flex-col sm:flex-row py-4 px-12">
-                    {sortedPosts.slice(1, 4).map((n) => (
+                    {sortedPosts.slice(1, 4).map(n => (
                         <SneakPeak key={n.title} article={n} />
                     ))}
                 </div>
             </div>
             <div className="flex w-full relative justify-center overflow-hidden">
                 <div className="w-full my-12 max-w-6xl flex flex-col items-start justify-center">
-                    {sortedPosts.slice(4).map((p) => (
+                    {sortedPosts.slice(4).map(p => (
                         <Link key={p.alias} href={`artykul/${p.alias}`}>
                             <div className="cursor-pointer flex flex-col md:flex-row mb-4">
                                 <img
