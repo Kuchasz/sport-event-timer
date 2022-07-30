@@ -224,11 +224,11 @@ jobs:
             - name: upload artifact to staging
               uses: easingthemes/ssh-deploy@main
               with:
-                  TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
+                  TARGET: ${{ secrets.AZURE_REMOTE_TARGET }}
                   ARGS: "-rltgoDzvO --delete"
               env:
-                  SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
+                  SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
                   ARGS: "-rltgoDzvO --delete"
                   SOURCE: "package/"
-                  REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
-                  REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
+                  REMOTE_HOST: ${{ secrets.AZURE_REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.AZURE_REMOTE_USER }}
