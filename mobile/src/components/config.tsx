@@ -14,7 +14,7 @@ import { useTimerSelector } from "../hooks";
 
 export const Config = ({ dispatch }: { dispatch: (action: any) => void }) => {
     const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
-    const inputFile = useRef<HTMLInputElement>(null);
+    // const inputFile = useRef<HTMLInputElement>(null);
     const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
     const [devModeEnabled, setDevModeEnabled] = useState<boolean>(false);
     const [devModeClicks, setDevModeClicks] = useState<number>(0);

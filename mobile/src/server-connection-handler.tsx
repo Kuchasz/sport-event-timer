@@ -1,4 +1,4 @@
-import { getConnection, onConnectionStateChanged } from "./connection";
+import { onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";
