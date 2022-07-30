@@ -39,8 +39,8 @@ export interface TypedRequestBody<T> extends Express.Request {
     body: T;
 }
 
-var key = readFileSync(__dirname + "/../certs/selfsigned.key");
-var cert = readFileSync(__dirname + "/../certs/selfsigned.crt");
+var key = readFileSync(__dirname + "/certs/selfsigned.key");
+var cert = readFileSync(__dirname + "/certs/selfsigned.crt");
 
 var options = {
     key: key,
