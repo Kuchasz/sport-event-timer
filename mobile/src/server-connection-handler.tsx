@@ -41,7 +41,7 @@ export const ServerConnectionHandler = ({
 
             dispatch(setTimeOffset({ timeOffset }));
 
-            if (latency <= 50) {
+            if (latency <= 200) {
                 clearInterval(timeSyncInterval);
             }
         };
