@@ -14,7 +14,7 @@ import {
 import { NiceModal } from "components/modal";
 import { SplitTimeEdit } from "../components/split-time-edit";
 import { useCurrentRaceId } from "use-current-race-id";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 type SplitTime = InferQueryOutput<"split-time.split-times">[0];
 type RevertedSplitTime = InferMutationInput<"split-time.revert">;
@@ -92,11 +92,10 @@ const SplitTimes = () => {
         "split-time.split-times",
         { raceId: raceId! }
     ]);
-    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.useQuery(
-        ["timing-point.timingPoints", { raceId: raceId! }],
-        { initialData: [] }
-    );
-    const { data: race } = trpc.useQuery(["race.race", { raceId }]);
+    const { data: timingPoints } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }], {
+        initialData: []
+    });
+    const { data: race } = trpc.useQuery(["race.race", { raceId: raceId! }]);
     const updateSplitTimeMutation = trpc.useMutation(["split-time.update"]);
     const revertSplitTimeMuttaion = trpc.useMutation(["split-time.revert"]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);

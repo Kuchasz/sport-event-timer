@@ -4,11 +4,11 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import { mdiAccountCogOutline, mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
+import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 type Race = InferQueryOutput<"race.races">[0];
 type CreatedRace = InferMutationInput<"race.add">;

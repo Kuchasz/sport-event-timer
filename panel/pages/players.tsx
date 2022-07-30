@@ -1,22 +1,17 @@
-import DataGrid, { Column, FormatterProps, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../components/confirmation";
 import { Demodal } from "demodal";
-import { exportToCsv, exportToPdf, exportToXlsx } from "exportUtils";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
-import {
-    mdiAccountMultiplePlus,
-    mdiNumeric,
-    mdiPlus,
-    mdiTrashCan
-    } from "@mdi/js";
+import { mdiAccountMultiplePlus, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "../utils";
 import { NiceModal } from "../components/modal";
 import { PlayerCreate } from "../components/player-create";
 import { PlayerEdit } from "components/player-edit";
 import { useCurrentRaceId } from "../use-current-race-id";
+
 
 type Player = InferQueryOutput<"player.players">[0];
 type CreatedPlayer = InferMutationInput<"player.add">["player"];
