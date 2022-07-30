@@ -1,6 +1,5 @@
 import * as trpc from "@trpc/server";
-import { date, z } from "zod";
-import { EventEmitter } from "events";
+import { z } from "zod";
 
 export const ntpRouter = trpc.router().mutation("sync", {
     input: z.number(),

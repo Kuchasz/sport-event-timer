@@ -1,4 +1,4 @@
-import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { InferMutationInput } from "../trpc";
 import { RaceForm } from "./race-form";
 
 type CreateRace = InferMutationInput<"race.add">;
@@ -10,7 +10,8 @@ type RaceCreateProps = {
 
 export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
     const race: CreateRace = {
-        name: ""
+        name: "",
+        date: new Date()
     };
 
     return <RaceForm onReject={onReject} onResolve={onResolve} initialRace={race} />;

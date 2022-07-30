@@ -1,7 +1,5 @@
 import * as trpc from "@trpc/server";
 import { db } from "../db";
-import { readState } from "./action";
-import { sort } from "@set/shared/dist";
 import { z } from "zod";
 
 export const resultRouter = trpc.router().query("results", {

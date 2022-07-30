@@ -11,7 +11,7 @@ type Result = InferQueryOutput<"result.results">[0];
 
 const Results = () => {
     const raceId = useCurrentRaceId();
-    const { data: results, refetch: refetchResults } = trpc.useQuery(["result.results", { raceId: raceId! }]);
+    const { data: results } = trpc.useQuery(["result.results", { raceId: raceId! }]);
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const columns: Column<Result, unknown>[] = [
