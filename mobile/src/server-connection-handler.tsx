@@ -30,7 +30,7 @@ export const ServerConnectionHandler = ({
         refetchState();
 
         let loadStartTime = Date.now();
-
+        let timeout: any;
         const requestTimeSync = async () => {
             const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
             const loadEndTime = Date.now();
@@ -43,14 +43,18 @@ export const ServerConnectionHandler = ({
             dispatch(setTimeOffset({ timeOffset }));
 
             if (latency <= 200) {
-                clearInterval(timeSyncInterval);
+                // clearInterval(timeSyncInterval);
+            } else {
+                loadStartTime = Date.now();
+
+                timeout = setTimeout(requestTimeSync, 1000);
             }
         };
 
-        const timeSyncInterval = setInterval(() => {
-            loadStartTime = Date.now();
-            requestTimeSync();
-        }, 1000);
+        // const timeSyncInterval = setInterval(() => {
+        //     loadStartTime = Date.now();
+        //     requestTimeSync();
+        // }, 1000);
 
         const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             //dispatch connectionState !== "connected"
@@ -59,7 +63,8 @@ export const ServerConnectionHandler = ({
         });
 
         return () => {
-            clearInterval(timeSyncInterval);
+            clearImmediate(timeout);
+            // clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
             // socket.removeAllListeners();
             // socket.disconnect();
