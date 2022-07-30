@@ -12,6 +12,7 @@ import { Classification, RegistrationPlayer } from "../timer/model";
 import {
     ClockListPlayer,
     formatTimeWithMilliSec,
+    formatTimeWithMilliSecUTC,
     sort,
     UserCredentials
     } from "@set/shared/dist";
@@ -25,8 +26,8 @@ import {
     toStartPlayerToPlayer,
     toStartPlayerTransform
     } from "@set/timer/dist/to-start";
-import { formatTimeWithMilliSecUTC, PlayerResult } from "@set/shared/index";
 import { login, verify } from "./auth";
+import { PlayerResult } from "@set/shared/index";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
