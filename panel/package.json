@@ -7,7 +7,8 @@
         "build": "next build && tsc --project tsconfig.json",
         "export": "next build && next export",
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
-        "start:dev": "next dev"
+        "start:dev": "next dev",
+        "start": "next start"
     },
     "dependencies": {
         "@headlessui/react": "^1.6.6",

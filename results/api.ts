@@ -2,7 +2,7 @@ import { ClockListPlayer, PlayerResult } from "@set/shared/dist";
 import { Player } from "@set/timer/model";
 import { TimerState } from "@set/timer/dist/store";
 
-const hubUrl = process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
+const hubUrl = process.env.NODE_ENV === "production" ? "https://20.234.101.215:21822" : "http://localhost:21822";
 export const getState = (): Promise<TimerState> => fetch(`${hubUrl}/state`).then(x => x.json());
 export const getProRaceResults = (): Promise<PlayerResult[]> => fetch(`${hubUrl}/pro-results`).then(x => x.json());
 export const getFunRaceResults = (): Promise<PlayerResult[]> => fetch(`${hubUrl}/fun-results`).then(x => x.json());

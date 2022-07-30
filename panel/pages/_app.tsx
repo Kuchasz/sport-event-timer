@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     );
 }
 
-const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : "http://localhost:21822/api/trpc";
+const url = process.env.VERCEL_URL ? `https://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
 // const wsUrl = process.env.VERCEL_URL ? `wss://${process.env.VERCEL_URL}/api/trpc` : "ws://localhost:21822/api/trpc";
 
 // const getWSLink = () => {

@@ -49,14 +49,10 @@ const registerStateChangeHandlers = () => {
 };
 
 const url =
-    process.env.NODE_ENV === "production"
-        ? `https://wss.set-hub.pyszstudio.pl/api/trpc`
-        : "http://localhost:21822/api/trpc";
+    process.env.NODE_ENV === "production" ? `https://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
 
 const wsUrl =
-    process.env.NODE_ENV === "production"
-        ? `wss://wss.set-hub.pyszstudio.pl/api/trpc`
-        : "ws://localhost:21822/api/trpc";
+    process.env.NODE_ENV === "production" ? `wss://20.234.101.215:21822/api/trpc` : "ws://localhost:21822/api/trpc";
 
 const wsClient = createWSClient({
     url: wsUrl

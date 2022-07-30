@@ -6,7 +6,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import ws from "ws";
-import { apply as applyPanel } from "@set/panel";
 import { appRouter } from "./router";
 import { assignNumbersToPlayers, transform } from "@set/timer/dist/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
@@ -27,6 +26,7 @@ import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
 import { stat } from "fs";
 import { TimerState } from "@set/timer/dist/store";
+// import { apply as applyPanel } from "@set/panel";
 // import { upload } from "@set/timer/dist/slices/players";
 
 // import { fetchTimeGoNewResults, getTimeTrialResults } from "./results";
@@ -430,7 +430,7 @@ const run = async () => {
         res.sendStatus(401);
     });
 
-    if (!isDevelopment) await applyPanel(app);
+    // if (!isDevelopment) await applyPanel(app);
 
     server.listen(21822, "localhost", () => {
         console.log("SERVER_STARTED_LISTENING");
