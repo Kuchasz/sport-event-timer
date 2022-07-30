@@ -472,34 +472,65 @@ const run = async () => {
         <html>
         <head>
         <style>
-        <script src="https://cdn.tailwindcss.com"></script>
         </style>
+        
+        <script src="https://cdn.tailwindcss.com"></script>
         </head>
         <body>
         
-        <table>
-          <tr>
-            <th>#</th>
-            <th>Bib</th>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Team</th>
-            <th>Gender</th>
-            <th>Result</th>
-          </tr>
+
+        <div class="container flex justify-center mx-auto">
+    <div class="flex flex-col">
+        <div class="w-full">
+            <div class="border-b border-gray-200 shadow">
+                <table class="divide-y divide-gray-300 ">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                                #
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Bib
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Name
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Last Name
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Team
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Gender
+                            </th>
+                            <th class="px-6 py-2 text-xs text-gray-500">
+                            Result
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-300">
+                        
           ${sorted.map(
               (s, i) => `
-          <tr>
-            <td>${i}</td>
-            <td>${s.bibNumber}</td>
-            <td>${s.name}</td>
-            <td>${s.lastName}</td>
-            <td>${s.team ?? ""}</td>
-            <td>${s.gender}</td>
-            <td>${formatTimeWithMilliSecUTC(s.result)}</td>
-          </tr>`
+            <tr class="whitespace-nowrap">
+          <td class="px-6 py-4">${i}</td>
+          <td class="px-6 py-4">${s.bibNumber}</td>
+          <td class="px-6 py-4">${s.name}</td>
+          <td class="px-6 py-4">${s.lastName}</td>
+          <td class="px-6 py-4">${s.team ?? ""}</td>
+          <td class="px-6 py-4">${s.gender}</td>
+          <td class="px-6 py-4">${formatTimeWithMilliSecUTC(s.result)}</td>
+        </tr>`
           )}
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
         
         </body>
         </html>
