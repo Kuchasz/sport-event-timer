@@ -1,6 +1,6 @@
-export const hubUrl = process.env.NODE_ENV === "production" ? "https://20.234.101.215:21822" : "http://localhost:21822";
+export const hubUrl = process.env.NODE_ENV === "production" ? "http://20.234.101.215:21822" : "http://localhost:21822";
 
-export const wsHubUrl = process.env.NODE_ENV === "production" ? "wss://20.234.101.215:21822" : "ws://localhost:21822";
+export const wsHubUrl = process.env.NODE_ENV === "production" ? "ws://20.234.101.215:21822" : "ws://localhost:21822";
 export const socket = io(hubUrl, { transports: ["websocket"] });
 
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
