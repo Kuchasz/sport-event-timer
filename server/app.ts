@@ -512,9 +512,8 @@ const run = async () => {
                     <tbody class="bg-white divide-y divide-gray-300">
                         
           ${sorted.map(
-              (s, i) => `
-            <tr class="whitespace-nowrap">
-          <td class="px-6 py-4">${i}</td>
+              (s, i) => `<tr class="whitespace-nowrap">
+          <td class="px-6 py-4">${i + 1}</td>
           <td class="px-6 py-4">${s.bibNumber}</td>
           <td class="px-6 py-4">${s.name}</td>
           <td class="px-6 py-4">${s.lastName}</td>
