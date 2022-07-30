@@ -19,7 +19,7 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
         id: editedPlayer.id,
         birthDate: editedPlayer.birthDate,
         bibNumber: editedPlayer.bibNumber,
-        startTime: editedPlayer.startTime,
+        startTime: editedPlayer.startTime as number,
         classificationId: editedPlayer.classificationId,
         gender: editedPlayer.gender as "male" | "female",
         lastName: editedPlayer.lastName,
