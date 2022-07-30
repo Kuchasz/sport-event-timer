@@ -134,7 +134,7 @@ const Timer = () => {
 
             setGlobalTimeOffset(timeOffset);
 
-            if (latency <= 50) {
+            if (latency <= 200) {
                 clearInterval(timeSyncInterval);
             }
         };

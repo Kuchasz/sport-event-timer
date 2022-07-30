@@ -126,7 +126,7 @@ const Zegar = () => {
             // console.log("latency", latency);
 
             setGlobalTimeOffset(-(loadEndTime - (serverTime + latency / 2)));
-            if (latency <= 50) {
+            if (latency <= 200) {
                 clearInterval(timeSyncInterval);
                 socket.close();
             }
