@@ -1,5 +1,6 @@
 import * as trpc from "@trpc/server";
 import { db } from "../db";
+import { sort } from "@set/shared/dist";
 import { z } from "zod";
 
 export const resultRouter = trpc.router().query("results", {
@@ -41,7 +42,7 @@ export const resultRouter = trpc.router().query("results", {
             }
         }));
 
-        return times
+        const results = times
             .filter(t => t.times[startTimingPoint?.id] && t.times[endTimingPoint?.id])
             .map(t => ({
                 ...t,
@@ -49,6 +50,8 @@ export const resultRouter = trpc.router().query("results", {
                 finish: t.times[endTimingPoint.id].time,
                 result: t.times[endTimingPoint.id].time - t.times[startTimingPoint.id].time
             }));
+
+        return sort(results, r => r.result);
     }
 });
 

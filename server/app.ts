@@ -9,18 +9,24 @@ import ws from "ws";
 import { appRouter } from "./router";
 import { assignNumbersToPlayers, transform } from "@set/timer/dist/list";
 import { Classification, RegistrationPlayer } from "../timer/model";
-import { ClockListPlayer, sort, UserCredentials } from "@set/shared/dist";
+import {
+    ClockListPlayer,
+    formatTimeWithMilliSec,
+    sort,
+    UserCredentials
+    } from "@set/shared/dist";
 import { config } from "./config";
 import { createContext } from "./trpc-context";
 import { createServer } from "http";
+import { db } from "./db";
 import {
     emptyToStartPlayer,
     ToStartPlayer,
     toStartPlayerToPlayer,
     toStartPlayerTransform
     } from "@set/timer/dist/to-start";
+import { formatTimeWithMilliSecUTC, PlayerResult } from "@set/shared/index";
 import { login, verify } from "./auth";
-import { PlayerResult } from "@set/shared/index";
 import { resolve } from "path";
 import { Response } from "express";
 import { sortDesc } from "@set/shared/dist";
@@ -413,6 +419,109 @@ const run = async () => {
         }));
 
         res.json(sort(clockPlayers, p => p.startTime));
+    });
+
+    app.get("/live", async (_, res) => {
+        const raceId = 1;
+
+        const allPlayers = await db.player.findMany({
+            where: { raceId },
+            include: { splitTime: true, manualSplitTime: true }
+        });
+
+        const timingPoints = await db.timingPoint.findMany({ where: { raceId }, orderBy: { order: "asc" } });
+        const race = await db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
+
+        const startTimingPoint = timingPoints.at(0);
+        const endTimingPoint = timingPoints.at(-1);
+
+        if (!startTimingPoint || !endTimingPoint) return [];
+
+        const raceDateStart = race?.date.getTime();
+
+        const times = allPlayers.map(p => ({
+            bibNumber: p.bibNumber,
+            name: p.name,
+            lastName: p.lastName,
+            team: p.team,
+            gender: p.gender,
+            times: {
+                ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
+                ...Object.fromEntries(
+                    p.splitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: false }])
+                ),
+                ...Object.fromEntries(
+                    p.manualSplitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: true }])
+                )
+            }
+        }));
+
+        const results = times
+            .filter(t => t.times[startTimingPoint?.id] && t.times[endTimingPoint?.id])
+            .map(t => ({
+                ...t,
+                start: t.times[startTimingPoint.id].time,
+                finish: t.times[endTimingPoint.id].time,
+                result: t.times[endTimingPoint.id].time - t.times[startTimingPoint.id].time
+            }));
+
+        const sorted = sort(results, r => r.result);
+
+        res.send(`<!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+        </head>
+        <body>
+        
+        <h2>HTML Table</h2>
+        
+        <table>
+          <tr>
+            <th>Bib</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Team</th>
+            <th>Gender</th>
+            <th>Start Time</th>
+            <th>Finish</th>
+            <th>Result</th>
+          </tr>
+          ${sorted.map(
+              s => `
+          <tr>
+            <td>${s.bibNumber}</td>
+            <td>${s.name}</td>
+            <td>${s.lastName}</td>
+            <td>${s.team}</td>
+            <td>${s.gender}</td>
+            <td>${formatTimeWithMilliSec(s.start)}</td>
+            <td>${formatTimeWithMilliSec(s.finish)}</td>
+            <td>${formatTimeWithMilliSecUTC(s.result)}</td>
+          </tr>`
+          )}
+        </table>
+        
+        </body>
+        </html>
+        
+        `);
     });
 
     app.post("/log-in", async (req: TypedRequestBody<UserCredentials>, res: Response) => {
