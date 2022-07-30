@@ -69,7 +69,7 @@ export const ServerConnectionHandler = ({
             // socket.removeAllListeners();
             // socket.disconnect();
         };
-    }, [dispatch, ntpMutation]);
+    }, [dispatch]);
 
     return <>{children}</>;
 };
