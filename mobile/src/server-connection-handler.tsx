@@ -46,7 +46,6 @@ export const ServerConnectionHandler = ({
                 // clearInterval(timeSyncInterval);
             } else {
                 loadStartTime = Date.now();
-
                 timeout = setTimeout(requestTimeSync, 1000);
             }
         };
@@ -62,8 +61,10 @@ export const ServerConnectionHandler = ({
             dispatch(setConnectionState({ connectionState }));
         });
 
+        requestTimeSync();
+
         return () => {
-            clearImmediate(timeout);
+            clearTimeout(timeout);
             // clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
             // socket.removeAllListeners();
