@@ -472,48 +472,30 @@ const run = async () => {
         <html>
         <head>
         <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-        
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
+        <script src="https://cdn.tailwindcss.com"></script>
         </style>
         </head>
         <body>
         
-        <h2>HTML Table</h2>
-        
         <table>
           <tr>
+            <th>#</th>
             <th>Bib</th>
             <th>Name</th>
             <th>Last Name</th>
             <th>Team</th>
             <th>Gender</th>
-            <th>Start Time</th>
-            <th>Finish</th>
             <th>Result</th>
           </tr>
           ${sorted.map(
-              s => `
+              (s, i) => `
           <tr>
+            <td>${i}</td>
             <td>${s.bibNumber}</td>
             <td>${s.name}</td>
             <td>${s.lastName}</td>
-            <td>${s.team}</td>
+            <td>${s.team ?? ""}</td>
             <td>${s.gender}</td>
-            <td>${formatTimeWithMilliSec(s.start)}</td>
-            <td>${formatTimeWithMilliSec(s.finish)}</td>
             <td>${formatTimeWithMilliSecUTC(s.result)}</td>
           </tr>`
           )}
