@@ -16,6 +16,7 @@
         "@set/shared": "1.0.0",
         "@trpc/server": "^9.25.3",
         "@types/cookie-parser": "^1.4.3",
+        "@types/cors": "^2.8.12",
         "@types/jsonwebtoken": "^8.5.8",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
