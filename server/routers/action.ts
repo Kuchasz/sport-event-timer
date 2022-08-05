@@ -1,7 +1,6 @@
 import * as trpc from "@trpc/server";
 import { createStore } from "@set/timer/dist/store";
 import { fileExistsAsync, readJsonAsync, writeJson } from "../async-fs";
-import { staticTimeKeppers } from "@set/timer/dist/slices/time-keepers";
 import { TimerState } from "@set/timer/dist/store";
 import { z } from "zod";
 
@@ -22,7 +21,7 @@ const loadState = async () => {
         ? await readJsonAsync(statePath)
         : {
               players: [],
-              timeKeepers: staticTimeKeppers,
+              timeKeepers: [],
               timeStamps: [],
               raceCategories: []
           };

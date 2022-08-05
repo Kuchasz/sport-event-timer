@@ -19,17 +19,4 @@ export const timeKeepersSlice = createSlice({
 
 export const { add, remove, update } = timeKeepersSlice.actions;
 
-export const staticTimeKeppers = [
-    {
-        id: 0,
-        name: "Start",
-        order: 1
-    },
-    {
-        id: 1,
-        name: "Meta",
-        order: 2
-    }
-] as m.TimeKeeper[];
-
 export default timeKeepersSlice.reducer;
