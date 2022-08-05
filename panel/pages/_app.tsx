@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Layout from "../components/layout";
 import superjson from "superjson";
 import { AppProps } from "next/app";
@@ -5,12 +6,14 @@ import { CurrentRaceContext } from "current-race-context";
 import { Demodal } from "demodal";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
-import { PanelApp } from "./_panel";
+import { PanelApp } from "../apps/panel";
 import { queryClient, trpcClient } from "../connection";
-import { StopwatchApp } from "./_stopwatch";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { TimerApp } from "../apps/timer";
 import { withTRPC } from "@trpc/next";
 import "../globals.scss";
+
+const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
 import type { AppRouter } from "@set/server/router";
 
@@ -51,7 +54,13 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             trpcClient={trpcClient}
         />
     ) : (
-        <Component {...pageProps} />
+        <TimerApp
+            Component={Component}
+            pageProps={pageProps}
+            router={router}
+            queryClient={queryClient}
+            trpcClient={trpcClient}
+        />
     );
 
     // return noLayoutPages.includes(router.pathname) ? (

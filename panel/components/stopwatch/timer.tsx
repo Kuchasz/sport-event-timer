@@ -1,4 +1,4 @@
-import { formatTime } from "@set/shared/utils";
+import { formatTime } from "@set/shared/dist/utils";
 import { useEffect, useState } from "react";
 
 const Time = ({ time }: { time: number }) => <div className="w-24 font-mono text-xl">{formatTime(new Date(time))}</div>;

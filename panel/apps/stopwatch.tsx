@@ -4,7 +4,7 @@ import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
 import { getConnection, queryClient, trpcClient } from "../connection";
 import { isLoggedIn } from "../security";
-import { Login } from "./login";
+import { Login } from "../pages/login";
 import { Middleware } from "redux";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -65,7 +65,7 @@ export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> =
     next(action);
     const config = storeApi.getState().userConfig;
     const configState = JSON.stringify(config);
-    localStorage.setItem("state.config", configState);
+    localStorage?.setItem("state.config", configState);
 };
 
 const stateString = localStorage.getItem("state.config");
@@ -117,3 +117,5 @@ export const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: 
         </ReduxStoreProvider>
     );
 };
+
+export default StopwatchApp;
