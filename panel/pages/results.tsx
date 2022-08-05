@@ -26,11 +26,11 @@ const Results = () => {
     return (
         <>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <div className="mb-4 inline-flex">
+                {/* <div className="mb-4 inline-flex">
                     <Button onClick={() => {}}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
-                </div>
+                </div> */}
                 {results && (
                     <DataGrid
                         sortColumns={sortColumns}
