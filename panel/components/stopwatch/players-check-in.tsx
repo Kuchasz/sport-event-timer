@@ -1,8 +1,8 @@
 import { DialPad } from "./dial-pad";
-import { getAvailableDigits, getAvailableNumbers } from "../utils";
+import { getAvailableDigits, getAvailableNumbers } from "@set/shared/utils";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
-import { useTimerSelector } from "../hooks";
+import { useTimerSelector } from "../../hooks";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;

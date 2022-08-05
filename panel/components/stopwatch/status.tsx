@@ -1,4 +1,4 @@
-import { ConnectionState } from "../connection";
+import { ConnectionState } from "../../connection";
 import { Icon } from "@mdi/react";
 import {
     mdiCloudOffOutline,
@@ -9,7 +9,7 @@ import {
 import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
-import { useTimerSelector } from "../hooks";
+import { useTimerSelector } from "../../hooks";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
     switch (state) {

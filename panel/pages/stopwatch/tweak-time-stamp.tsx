@@ -1,18 +1,18 @@
 import Icon from "@mdi/react";
-import { ActionButton } from "./action-button";
-import { formatNumber } from "../utils";
+import { ActionButton } from "../../components/stopwatch/action-button";
+import { formatNumber } from "@set/shared/utils";
 import {
     mdiFloppy,
     mdiMinus,
     mdiPlus,
     mdiRestart
     } from "@mdi/js";
-import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../components/stopwatch/player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useTimerSelector } from "../hooks";
+import { useTimerSelector } from "../../hooks";
 
 type TypedPlayerProps = {
     playerNumber: string;

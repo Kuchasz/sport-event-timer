@@ -7,7 +7,7 @@ import {
     mdiHistory,
     mdiTimetable
     } from "@mdi/js";
-import { StopWatchMode } from "../stopwatch-mode";
+import { StopWatchMode } from "../../stopwatch-mode";
 
 type Paths = StopWatchMode | "config" | "history";
 type BottomMenuButtonProps = { text: string; path: Paths; icon: string; chosenPath: Paths };

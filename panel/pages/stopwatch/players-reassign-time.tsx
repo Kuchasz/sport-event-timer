@@ -1,7 +1,7 @@
-import { PlayersCheckIn } from "./players-check-in";
+import { PlayersCheckIn } from "../../components/stopwatch/players-check-in";
 import { reassignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { useNavigate, useParams } from "react-router-dom";
-import { useTimerDispatch } from "../hooks";
+import { useTimerDispatch } from "../../hooks";
 
 type PlayersReassignTimeProps = {
     timeKeeperId: number;

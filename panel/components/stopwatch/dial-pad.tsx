@@ -1,5 +1,3 @@
-import React from "react";
-
 type Button = {
     char: string;
     changeNumber: (number: string) => string;
@@ -56,7 +54,7 @@ export const DialPad = (props: DialPadProps) => {
 
     return (
         <div className="grid h-2/5 self-center w-5/6 grid-cols-3 py-2 grid-rows-4">
-            {buttons.map((b) => (
+            {buttons.map(b => (
                 <PadButton
                     alwaysEnabled={b.alwaysEnabled}
                     enabled={props.availableDigits.includes(b.char)}

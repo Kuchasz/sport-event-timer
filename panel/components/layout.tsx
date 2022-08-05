@@ -20,7 +20,7 @@ import { Meta } from "./meta";
 import { NiceModal } from "./modal";
 import { PoorSelect } from "./poor-select";
 import { RaceCreate } from "./race-create";
-import { useCurrentRaceId } from "../use-current-race-id";
+import { useCurrentRaceId } from "../hooks";
 import { useRouter } from "next/router";
 
 type Props = {
