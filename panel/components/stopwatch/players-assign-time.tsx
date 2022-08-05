@@ -1,7 +1,7 @@
 import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { PlayersCheckIn } from "./players-check-in";
 import { useNavigate, useParams } from "react-router-dom";
-import { useTimerDispatch } from "../hooks";
+import { useTimerDispatch } from "../../hooks";
 
 type PlayersAssignTimeProps = {
     timeKeeperId: number;

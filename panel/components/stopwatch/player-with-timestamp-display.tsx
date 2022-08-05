@@ -1,4 +1,4 @@
-import { formatNumber, formatTime } from "../utils";
+import { formatNumber, formatTime } from "@set/shared/utils";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 
 type PlayerWithTimeStamp = Player & {

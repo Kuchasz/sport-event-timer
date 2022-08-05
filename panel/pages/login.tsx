@@ -1,15 +1,15 @@
 import Icon from "@mdi/react";
-import { logIn } from "./api";
+import { logIn } from "../api";
 import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
 import { setUser } from "@set/timer/dist/slices/user-config";
 import { useState } from "react";
-import { useTimerDispatch, useTimerSelector } from "./hooks";
+import { useTimerDispatch, useTimerSelector } from "../hooks";
 
 type LoginAppProps = {
     onLoggedIn?: () => void;
 };
 
-export const LoginApp = ({ onLoggedIn }: LoginAppProps) => {
+export const Login = ({ onLoggedIn }: LoginAppProps) => {
     const dispatch = useTimerDispatch();
     const user = useTimerSelector(x => x.userConfig.user);
 

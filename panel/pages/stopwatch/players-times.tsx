@@ -1,4 +1,4 @@
-import { ActionButton, PrimaryActionButton } from "./action-button";
+import { ActionButton, PrimaryActionButton } from "../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
 import {
     mdiAccountAlertOutline,
@@ -9,10 +9,10 @@ import {
 import { mdiWrench } from "@mdi/js";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Player, TimeStamp } from "@set/timer/dist/model";
-import { PlayerWithTimeStampDisplay } from "./player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../components/stopwatch/player-with-timestamp-display";
 import { reset } from "@set/timer/dist/slices/time-stamps";
 import { useRef } from "react";
-import { useTimerDispatch } from "../hooks";
+import { useTimerDispatch } from "../../hooks";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;

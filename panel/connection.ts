@@ -5,34 +5,20 @@ import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { QueryClient } from "react-query";
 import { splitLink } from "@trpc/client/links/splitLink";
-// import { trpc } from "./trpc";
 
 import type { AppRouter } from "@set/server/router";
-// export const hubUrl =
-//     process.env.NODE_ENV === "production" ? "https://wss.set-hub.pyszstudio.pl" : "http://localhost:21822";
-
-// export const wsHubUrl =
-//     process.env.NODE_ENV === "production" ? "wss://wss.set-hub.pyszstudio.pl" : "ws://localhost:21822";
-
-// let socket: WebSocket;
 
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));
 };
 
 const registerStateChangeHandlers = () => {
-    // socket.onopen = () => runStateChangedHandlers("connected");
-    // socket.onerror = () => runStateChangedHandlers("error");
-    // socket.onclose = () => runStateChangedHandlers("disconnected");
-
     let previousState = 0;
 
     setInterval(() => {
         const socket = getConnection();
         const currentState = socket.readyState;
         if (currentState === previousState) return;
-
-        // console.log("runStateChangedHandlers: ", currentState);
 
         previousState = currentState;
 
