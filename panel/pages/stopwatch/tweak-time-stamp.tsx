@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { ActionButton } from "../../components/stopwatch/action-button";
-import { formatNumber } from "@set/shared/utils";
+import { formatNumber } from "@set/shared/dist/utils";
 import {
     mdiFloppy,
     mdiMinus,

@@ -5,10 +5,10 @@ import { Button } from "components/button";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import { mdiAccountMultiplePlus, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { useCurrentRaceId } from "../use-current-race-id";
+import { useCurrentRaceId } from "../../hooks";
 import { useMemo, useState } from "react";
 
 type Classification = InferQueryOutput<"classification.classifications">[0];

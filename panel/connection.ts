@@ -40,11 +40,14 @@ const url =
 const wsUrl =
     process.env.NODE_ENV === "production" ? `ws://20.234.101.215:21822/api/trpc` : "ws://localhost:21822/api/trpc";
 
-const wsClient = createWSClient({
-    url: wsUrl
-});
+const wsClient =
+    typeof window === "undefined"
+        ? null
+        : createWSClient({
+              url: wsUrl
+          });
 
-export const getConnection = wsClient.getConnection;
+export const getConnection = wsClient?.getConnection;
 
 registerStateChangeHandlers();
 
@@ -61,9 +64,14 @@ export const trpcClient = createTRPCClient<AppRouter>({
             condition(op) {
                 return op.type === "subscription";
             },
-            true: wsLink({
-                client: wsClient
-            }),
+            true:
+                wsClient !== null
+                    ? wsLink({
+                          client: wsClient
+                      })
+                    : httpBatchLink({
+                          url
+                      }),
             false: httpBatchLink({
                 url
             })
