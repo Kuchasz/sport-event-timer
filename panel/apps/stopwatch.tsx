@@ -34,6 +34,9 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
         next(action);
         return;
     } else {
+        if(!getConnection)
+        return;
+
         const socket = getConnection();
 
         if (
@@ -75,8 +78,10 @@ const store = createStore([persistStateMiddleware, addIssuerMiddleware, postActi
 
 type StopwatchAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
 export const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: StopwatchAppProps) => {
-    const loggedIn = useTimerSelector(x => isLoggedIn(x.userConfig.tokenExpire));
-    const isOffline = useTimerSelector(x => x.timeKeeperConfig?.connectionState !== "connected");
+    // const loggedIn = useTimerSelector(x => isLoggedIn(x.userConfig.tokenExpire));
+    // const isOffline = useTimerSelector(x => x.timeKeeperConfig?.connectionState !== "connected");
+    const loggedIn = true;
+    const isOffline = true;
     return (
         <ReduxStoreProvider store={store}>
             {loggedIn ? (
