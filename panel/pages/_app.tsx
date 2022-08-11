@@ -37,6 +37,8 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         }
     }, []);
 
+    console.log(router.pathname)
+
     return router.pathname.startsWith("/panel") ? (
         <PanelApp
             Component={Component}

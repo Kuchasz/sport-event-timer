@@ -8,11 +8,26 @@ import { splitLink } from "@trpc/client/links/splitLink";
 
 import type { AppRouter } from "@set/server/router";
 
+const url =
+    process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
+
+const wsUrl =
+    process.env.NODE_ENV === "production" ? `ws://20.234.101.215:21822/api/trpc` : "ws://localhost:21822/api/trpc";
+
+const wsClient =
+    typeof window === "undefined"
+        ? null
+        : createWSClient({
+            url: wsUrl
+        });
+
+export const getConnection = wsClient?.getConnection;
+
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));
 };
 
-const registerStateChangeHandlers = () => {
+const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
     let previousState = 0;
 
     setInterval(() => {
@@ -26,30 +41,16 @@ const registerStateChangeHandlers = () => {
             currentState === 0
                 ? "connecting"
                 : currentState === 1
-                ? "connected"
-                : currentState === 2
-                ? "disconnected"
-                : "error"
+                    ? "connected"
+                    : currentState === 2
+                        ? "disconnected"
+                        : "error"
         );
     }, 500);
 };
 
-const url =
-    process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
-
-const wsUrl =
-    process.env.NODE_ENV === "production" ? `ws://20.234.101.215:21822/api/trpc` : "ws://localhost:21822/api/trpc";
-
-const wsClient =
-    typeof window === "undefined"
-        ? null
-        : createWSClient({
-              url: wsUrl
-          });
-
-export const getConnection = wsClient?.getConnection;
-
-registerStateChangeHandlers();
+if (getConnection)
+    registerStateChangeHandlers(getConnection);
 
 export const queryClient = new QueryClient();
 export const trpcClient = createTRPCClient<AppRouter>({
@@ -67,11 +68,11 @@ export const trpcClient = createTRPCClient<AppRouter>({
             true:
                 wsClient !== null
                     ? wsLink({
-                          client: wsClient
-                      })
+                        client: wsClient
+                    })
                     : httpBatchLink({
-                          url
-                      }),
+                        url
+                    }),
             false: httpBatchLink({
                 url
             })

@@ -5,19 +5,19 @@
     "main": "index.ts",
     "license": "MIT",
     "scripts": {
-        "start:dev": "set NODE_ENV=development&& ts-node-dev app.ts --project tsconfig.json",
+        "start:dev": "NODE_ENV=development&& ts-node-dev app.ts --project tsconfig.json",
         "dev": "nodemon",
         "build": "tsc --project tsconfig.json"
     },
     "dependencies": {
         "@prisma/client": "^4.1.0",
-        "@set/mobile": "1.0.0",
         "@set/results": "1.0.0",
         "@set/shared": "1.0.0",
         "@trpc/server": "^9.25.3",
         "@types/cookie-parser": "^1.4.3",
         "@types/cors": "^2.8.12",
         "@types/jsonwebtoken": "^8.5.8",
+        "@types/ws": "^8.5.3",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "csv-parse": "^5.0.4",
