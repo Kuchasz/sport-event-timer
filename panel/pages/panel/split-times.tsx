@@ -1,10 +1,10 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { Confirmation } from "../components/confirmation";
+import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/shared/dist";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import {
     mdiClockEditOutline,
     mdiClockPlusOutline,
@@ -12,8 +12,8 @@ import {
     mdiReload
     } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { SplitTimeEdit } from "../components/split-time-edit";
-import { useCurrentRaceId } from "use-current-race-id";
+import { SplitTimeEdit } from "../../components/split-time-edit";
+import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
 type SplitTime = InferQueryOutput<"split-time.split-times">[0];

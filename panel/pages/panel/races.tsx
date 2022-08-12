@@ -3,7 +3,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import { mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";

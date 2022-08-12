@@ -2,14 +2,14 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { Confirmation } from "../components/confirmation";
+import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
-import { useCurrentRaceId } from "use-current-race-id";
+import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
 type TimingPoint = InferQueryOutput<"timing-point.timingPoints">[0];
