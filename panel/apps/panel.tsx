@@ -31,8 +31,8 @@ export function PanelApp({ Component, pageProps, queryClient, trpcClient }: Pane
                 <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
                     <Layout>
                         <Component {...pageProps} />
-                        <Demodal.Container />
                     </Layout>
+                    <Demodal.Container />
                 </CurrentRaceContext.Provider>
             </QueryClientProvider>
         </trpc.Provider>

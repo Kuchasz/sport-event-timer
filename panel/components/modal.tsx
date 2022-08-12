@@ -7,6 +7,7 @@ type ResolvableComponent<P> = ComponentType<ResolvableComponentProps<P>>;
 type ResolvableModalProps<P> = { title: string; component: ResolvableComponent<P>; props: ResolvableComponentProps<P> };
 
 export const NiceModal = Demodal.create(<P,>({ title, component: Content, props }: ResolvableModalProps<P>) => {
+
     const modal = useModal();
 
     const reject = () => {
