@@ -34,11 +34,11 @@ const menuItems = [
     {
         name: "General",
         items: [
-            { text: "Home", icon: mdiHome, to: "/", color: "text-yellow-600" },
+            { text: "Home", icon: mdiHome, to: "/panel/", color: "text-yellow-600" },
             {
                 text: "My Races",
                 icon: mdiBikeFast,
-                to: "/my-races",
+                to: "/panel/my-races",
                 color: "text-red-600"
             }
         ]
@@ -49,26 +49,26 @@ const menuItems = [
             {
                 text: "Players",
                 icon: mdiAccountGroup,
-                to: "/players",
+                to: "/panel/players",
                 color: "text-pink-600"
             },
             {
                 text: "Classifications",
                 icon: mdiAccountCogOutline,
-                to: "/classifications",
+                to: "/panel/classifications",
                 color: "text-purple-600"
             },
             {
                 text: "Timing Points",
                 icon: mdiTimerCogOutline,
-                to: "/timing-points",
+                to: "/panel/timing-points",
                 color: "text-lime-600"
             },
-            { text: "Split Times", icon: mdiAlarm, to: "/split-times", color: "text-red-600" },
+            { text: "Split Times", icon: mdiAlarm, to: "/panel/split-times", color: "text-red-600" },
             {
                 text: "Results",
                 icon: mdiTimetable,
-                to: "/results",
+                to: "/panel/results",
                 color: "text-blue-600"
             }
         ]
@@ -79,13 +79,13 @@ const menuItems = [
             {
                 text: "Races",
                 icon: mdiBikeFast,
-                to: "/races",
+                to: "/panel/races",
                 color: "text-green-600"
             },
             {
                 text: "Say hay!",
                 icon: mdiTimetable,
-                to: "/hello",
+                to: "/panel/hello",
                 color: "text-red-600"
             }
         ]
@@ -98,6 +98,7 @@ const Status = () => {
     const { selectRace } = useContext(CurrentRaceContext);
 
     const openCreateDialog = async () => {
+        console.log('open create modal')
         const race = await Demodal.open<CreatedRace>(NiceModal, {
             title: "Create new race",
             component: RaceCreate,
@@ -119,6 +120,7 @@ const Status = () => {
                     <PoorSelect
                         nameKey="name"
                         valueKey="id"
+                        placeholder="Select race"
                         items={items}
                         onChange={e => {
                             selectRace(e.target.value);

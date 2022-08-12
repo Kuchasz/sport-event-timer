@@ -9,6 +9,9 @@ type RaceCreateProps = {
 };
 
 export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
+
+    console.log('create reace');
+
     const race: CreateRace = {
         name: "",
         date: new Date()

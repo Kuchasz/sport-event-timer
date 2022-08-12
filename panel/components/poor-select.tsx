@@ -8,19 +8,21 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     initialValue,
     nameKey,
     valueKey,
-    onChange
+    onChange,
+    placeholder
 }: {
     initialValue?: T[TValueKey];
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
     onChange: (event: { target: { value: T[TValueKey] } }) => void;
+    placeholder?: string
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
     const desiredItem = selected
         ? items.find(i => String(i[valueKey]) === String(selected))!
-        : ({ [valueKey]: -1, [nameKey]: "Select value" } as unknown as T);
+        : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     // const selectedValue = selected ? selected[nameKey] : "";
 
