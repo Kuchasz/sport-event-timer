@@ -7,12 +7,7 @@ import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
 import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
 import { InferQueryOutput, trpc } from "trpc";
-import {
-    mdiChevronDoubleRight,
-    mdiCog,
-    mdiVolumeHigh,
-    mdiVolumeOff
-    } from "@mdi/js";
+import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -43,27 +38,41 @@ export const defaultTimerSettings: TimerSettings = unreliablyGetIsMobile()
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 40 },
-          players: { enabled: true, size: 14, count: 3 }
+          players: { enabled: true, size: 14, count: 3 },
       }
     : {
           showSettings: false,
           clock: { enabled: true, size: 6 },
           countdown: { enabled: true, size: 90 },
-          players: { enabled: true, size: 24, count: 3 }
+          players: { enabled: true, size: 24, count: 3 },
       };
 
-const NextPlayers = ({ player }: { player: StartListPlayer }) => (
+const NextPlayer = ({ player }: { player: StartListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
         <Icon size="2em" path={mdiChevronDoubleRight} />
         <div
             style={{
                 paddingInline: "0.25em",
-                paddingBlock: "0.1em"
+                paddingBlock: "0.1em",
             }}
         >
             {player.bibNumber}
         </div>
         {player.name} {player.lastName}
+    </span>
+);
+
+const NoPlayersLeft = () => (
+    <span className="flex items-center first:font-semibold" style={{ marginInline: "0.25em" }}>
+        <Icon size="1.5em" path={mdiInformationOutline} />
+        <div
+            style={{
+                paddingInline: "0.25em",
+                paddingBlock: "0.1em",
+            }}
+        >
+            No players left
+        </div>
     </span>
 );
 
@@ -86,7 +95,10 @@ const Timer = () => {
     };
 
     const toggleMenu = () => {
-        setClockState({ ...clockState, showSettings: !clockState.showSettings });
+        setClockState({
+            ...clockState,
+            showSettings: !clockState.showSettings,
+        });
     };
 
     useEffect(() => {
@@ -99,18 +111,19 @@ const Timer = () => {
 
             if (miliseconds <= clockTimeout) {
                 const playersWithPosiviteTimeToStart = players
-                    .map(p => ({ player: p, timeToStart: p.absoluteStartTime - globalTime }))
-                    .filter(p => p.timeToStart > 0);
+                    .map((p) => ({
+                        player: p,
+                        timeToStart: p.absoluteStartTime - globalTime,
+                    }))
+                    .filter((p) => p.timeToStart > 0);
 
-                const nextPlayers = sort(playersWithPosiviteTimeToStart, p => p.timeToStart);
+                const nextPlayers = sort(playersWithPosiviteTimeToStart, (p) => p.timeToStart);
                 const nextPlayer = nextPlayers[0];
 
                 //it will re-render that react tree each second, too often
-                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
+                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
 
-                const secondsToNextStart = Math.floor(
-                    (nextPlayer?.timeToStart || getCountdownTime(globalTime)) / 1_000
-                );
+                const secondsToNextStart = Math.floor((nextPlayer?.timeToStart || getCountdownTime(globalTime)) / 1_000);
 
                 setSecondsToNextPlayer(secondsToNextStart);
                 setGlobalTime(globalTime);
@@ -157,9 +170,7 @@ const Timer = () => {
             </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {globalTime === undefined ? (
-                    <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">
-                        Smarujemy łańcuch...
-                    </div>
+                    <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
                         {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
@@ -168,13 +179,17 @@ const Timer = () => {
                         )}
                         {clockState.players.enabled && (
                             <div
-                                style={{ fontSize: `${clockState.players.size}px` }}
+                                style={{
+                                    fontSize: `${clockState.players.size}px`,
+                                }}
                                 className="leading-none transition-all w-full"
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
-                                    {nextPlayers.map(p => (
-                                        <NextPlayers key={p.bibNumber} player={p} />
-                                    ))}
+                                    {nextPlayers.length > 0 ? (
+                                        nextPlayers.map((p) => <NextPlayer key={p.bibNumber} player={p} />)
+                                    ) : (
+                                        <NoPlayersLeft/>
+                                    )}
                                 </div>
                             </div>
                         )}
