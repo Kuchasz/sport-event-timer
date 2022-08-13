@@ -1,14 +1,15 @@
 import { add } from "@set/timer/dist/slices/time-stamps";
-import { getCurrentTime } from "../utils";
-import { PlayersCheckIn } from "./players-check-in";
-import { useTimerDispatch } from "../hooks";
+import { getCurrentTime } from "@set/shared/dist";
+// import { PlayersCheckIn } from "./players-check-in";
+import { useTimerDispatch } from "../../hooks";
+import { PlayersCheckIn } from "components/stopwatch/players-check-in";
 
 type PlayersDialPadProps = {
     timeKeeperId: number;
     offset: number;
 };
 
-export const PlayersDialPad = ({ timeKeeperId, offset }: PlayersDialPadProps) => {
+const PlayersDialPad = ({ timeKeeperId, offset }: PlayersDialPadProps) => {
     const dispatch = useTimerDispatch();
 
     return (
@@ -27,3 +28,5 @@ export const PlayersDialPad = ({ timeKeeperId, offset }: PlayersDialPadProps) =>
         />
     );
 };
+
+export default PlayersDialPad;
