@@ -1,27 +1,17 @@
 import { ActionButton, PrimaryActionButton } from "../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
-import {
-    mdiAccountAlertOutline,
-    mdiAccountSupervisor,
-    mdiDeleteOutline,
-    mdiPlusCircleOutline
-    } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
 import { mdiWrench } from "@mdi/js";
-import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../components/stopwatch/player-with-timestamp-display";
-import { reset } from "@set/timer/dist/slices/time-stamps";
+import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { useRef } from "react";
-import { useTimerDispatch } from "../../hooks";
+import { useTimerDispatch, useTimerSelector } from "../../hooks";
+import { useRouter } from "next/router";
+import { getCurrentTime } from "@set/shared/dist";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
-};
-
-type PlayersTimesProps = {
-    times: TimeStampWithPlayer[];
-    onAddTime: () => void;
-    timeKeeperId?: number;
 };
 
 const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time - a.time);
@@ -29,10 +19,10 @@ const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time 
 const Item = ({
     t,
     navigate,
-    dispatch
+    dispatch,
 }: {
     t: TimeStampWithPlayer;
-    navigate: NavigateFunction;
+    navigate: (path: string) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
 }) => {
     let touchStartX = 0;
@@ -74,13 +64,13 @@ const Item = ({
 
     return (
         <div
-            onTouchStart={e => {
+            onTouchStart={(e) => {
                 startMoveElement(e.changedTouches[0].clientX);
             }}
-            onTouchEnd={e => {
+            onTouchEnd={(e) => {
                 deleteTargetElement(e.changedTouches[0].clientX);
             }}
-            onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX)}
+            onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
             className="relative bg-yellow-700 overflow-hidden"
         >
             <div ref={targetBackground} className="w-full pl-8 h-full flex items-center top-0 bg-red-500 absolute">
@@ -92,7 +82,7 @@ const Item = ({
                         timeStamp: t,
                         bibNumber: t.player?.bibNumber,
                         name: t.player?.name,
-                        lastName: t.player?.lastName
+                        lastName: t.player?.lastName,
                     }}
                 />
                 {!t.player ? (
@@ -127,9 +117,30 @@ const Item = ({
     );
 };
 
-export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
+const PlayersTimes = () => {
+    const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
+    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+    const allPlayers = useTimerSelector((x) => x.players);
+
+    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
+
+    const times = allTimeStamps
+        .filter((s) => s.timeKeeperId === timeKeeperId)
+        .map((s) => ({
+            ...s,
+            player: allPlayers.find((p) => s.bibNumber === p.bibNumber),
+        }));
+
+    const onAddTime = () =>
+        dispatch(
+            add({
+                timeKeeperId: timeKeeperId!,
+                time: getCurrentTime(offset!),
+            })
+        );
+
     const dispatch = useTimerDispatch();
-    const navigate = useNavigate();
+    const { push } = useRouter();
 
     return (
         <div>
@@ -141,9 +152,11 @@ export const PlayersTimes = ({ times, onAddTime }: PlayersTimesProps) => {
                     <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            {sort(times).map(t => (
-                <Item key={t.time} dispatch={dispatch} navigate={navigate} t={t} />
+            {sort(times).map((t) => (
+                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} />
             ))}
         </div>
     );
 };
+
+export default PlayersTimes;

@@ -44,6 +44,7 @@
         "react-daisyui": "^2.0.5",
         "react-data-grid": "^7.0.0-beta.13",
         "react-dom": "^18.2.0",
+        "react-location": "^3.3.4",
         "react-query": "^3.39.1",
         "react-redux": "^8.0.2",
         "redux": "^4.2.0",

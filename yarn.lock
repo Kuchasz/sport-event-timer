@@ -1250,7 +1250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.0, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.0, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -1985,6 +1985,7 @@ __metadata:
     react-daisyui: ^2.0.5
     react-data-grid: ^7.0.0-beta.13
     react-dom: ^18.2.0
+    react-location: ^3.3.4
     react-query: ^3.39.1
     react-redux: ^8.0.2
     redux: ^4.2.0
@@ -7544,6 +7545,18 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-location@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "react-location@npm:3.3.4"
+  dependencies:
+    "@babel/runtime": ^7.16.7
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 1694c509a5381f60f5a1d4503518f4026b6b5e5eb7dc70c4ca63e24ee199515a7ae102c288f69d1ff31e88bd4e5583ec5fc55fbb19f84fb1ef095f6890e0ab27
   languageName: node
   linkType: hard
 
