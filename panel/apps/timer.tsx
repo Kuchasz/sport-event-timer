@@ -1,7 +1,5 @@
-import Layout from "../components/layout";
 import { AppProps } from "next/app";
 import { CurrentRaceContext } from "current-race-context";
-import { Demodal } from "demodal";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { trpc } from "../trpc";
 import { useEffect, useState } from "react";
