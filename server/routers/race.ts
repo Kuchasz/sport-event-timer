@@ -22,6 +22,14 @@ export const raceRouter = trpc
             return await db.race.findUnique({ where: { id } });
         }
     })
+    .mutation("delete", {
+        input: z.object({
+            raceId: z.number()
+        }),
+        async resolve({ input }) {
+            return await db.race.delete({ where: { id: input.raceId } });
+        }
+    })
     .mutation("update", {
         input: raceSchema,
         async resolve(req) {
