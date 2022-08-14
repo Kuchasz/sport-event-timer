@@ -88,7 +88,7 @@ const Item = ({
                 {!t.player ? (
                     <PrimaryActionButton
                         onClick={() => {
-                            navigate(`${process.env.PUBLIC_URL}/assign/${t.id}`);
+                            navigate(`/stopwatch/assign/${t.id}`);
                         }}
                         icon={mdiAccountAlertOutline}
                     />
@@ -96,14 +96,14 @@ const Item = ({
                     <ActionButton
                         icon={mdiAccountSupervisor}
                         onClick={() => {
-                            navigate(`${process.env.PUBLIC_URL}/reassign/${t.id}`);
+                            navigate(`/stopwatch/reassign/${t.id}`);
                         }}
                     />
                 )}
                 <ActionButton
                     icon={mdiWrench}
                     onClick={() => {
-                        navigate(`${process.env.PUBLIC_URL}/tweak/${t.id}`);
+                        navigate(`/stopwatch/tweak/${t.id}`);
                     }}
                 />
                 {/* <ActionButton
