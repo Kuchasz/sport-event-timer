@@ -1,23 +1,12 @@
 import dynamic from "next/dynamic";
-import Layout from "../components/layout";
-import superjson from "superjson";
 import { AppProps } from "next/app";
-import { CurrentRaceContext } from "current-race-context";
-import { Demodal } from "demodal";
-import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
-import { loggerLink } from "@trpc/client/links/loggerLink";
 import { PanelApp } from "../apps/panel";
 import { queryClient, trpcClient } from "../connection";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect} from "react";
 import { TimerApp } from "../apps/timer";
-import { withTRPC } from "@trpc/next";
 import "../globals.scss";
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
-
-import type { AppRouter } from "@set/server/router";
-
-const noLayoutPages = ["/timer/[raceId]"];
 
 function MyApp({ Component, pageProps, router }: AppProps) {
     // const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);

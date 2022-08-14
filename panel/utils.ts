@@ -36,3 +36,6 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
         hourMillis * Number(hour)
     );
 };
+
+export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";
+export const parseJSON = (jsonString: string) => typeof window !== 'undefined' ? JSON.parse(jsonString || "{}") : {};
