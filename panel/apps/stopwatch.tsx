@@ -15,6 +15,7 @@ import { trpc } from "../trpc";
 import { userConfigSlice } from "@set/timer/dist/slices/user-config";
 import { useTimerDispatch, useTimerSelector } from "../hooks";
 import { uuidv4 } from "@set/shared/dist";
+import { parseJSON, readLocalStorage } from "utils";
 
 const clientId = uuidv4();
 
@@ -55,9 +56,9 @@ export const persistStateMiddleware: Middleware<{}, TimerState, TimerDispatch> =
     localStorage?.setItem("state.config", configState);
 };
 
-const stateString = localStorage.getItem("state.config");
+const stateString = readLocalStorage("state.config");
 const store = createStore([persistStateMiddleware, addIssuerMiddleware, postActionsMiddleware], {
-    userConfig: JSON.parse(stateString || "{}"),
+    userConfig: parseJSON(stateString || "{}"),
 });
 
 type LoggedAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
