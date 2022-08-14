@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { ActionButton } from "../../components/stopwatch/action-button";
+import { ActionButton } from "../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/shared/dist/utils";
 import {
     mdiFloppy,
@@ -7,12 +7,12 @@ import {
     mdiPlus,
     mdiRestart
     } from "@mdi/js";
-import { PlayerWithTimeStampDisplay } from "../../components/stopwatch/player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useTimerSelector } from "../../hooks";
+import { useTimerDispatch, useTimerSelector } from "../../../hooks";
+import { useRouter } from "next/router";
+import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -46,19 +46,15 @@ const Minus = ({ changeTime }: BtnProps) => (
 );
 const Digit = ({ number }: { number: string }) => <div className="text-6xl mb-2 text-center">{number}</div>;
 
-type TweakTimeStampProps = {
-    onSave: (timeStamp: TimeStamp) => void;
-};
-
-export const TweakTimeStamps = ({ onSave }: TweakTimeStampProps) => {
-    const { timeStampId } = useParams();
+const TweakTimeStamps = () => {
+    const { query: {timeStampId}, back } = useRouter();
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const allPlayers = useTimerSelector(x => x.players);
+    const dispatch = useTimerDispatch();
+    const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));
 
-    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId!));
+    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId! as string));
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
-
-    const navigate = useNavigate();
 
     const [currentTime, setCurrentTime] = useState<number>(timeStamp!.time);
 
@@ -102,7 +98,7 @@ export const TweakTimeStamps = ({ onSave }: TweakTimeStampProps) => {
                     <button
                         onClick={() => {
                             onSave({ ...timeStamp!, time: currentTime });
-                            navigate(-1);
+                            back();
                         }}
                         className="rounded-md mx-2 text-center bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
                     >
@@ -122,3 +118,5 @@ export const TweakTimeStamps = ({ onSave }: TweakTimeStampProps) => {
         </div>
     );
 };
+
+export default TweakTimeStamps;
