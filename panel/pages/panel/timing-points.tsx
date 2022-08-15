@@ -101,9 +101,8 @@ const TimingPoint = () => {
                     </Button>
                 </div>
                 {races && (
-                    <DataGrid
+                    <DataGrid className='rdg-light h-full'
                         sortColumns={sortColumns}
-                        className="h-full"
                         defaultColumnOptions={{
                             sortable: true,
                             resizable: true
