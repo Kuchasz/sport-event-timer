@@ -22,10 +22,12 @@ const Item = ({
     t,
     navigate,
     dispatch,
+    raceId,
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: string) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
+    raceId: number;
 }) => {
     let touchStartX = 0;
 
@@ -90,7 +92,7 @@ const Item = ({
                 {!t.player ? (
                     <PrimaryActionButton
                         onClick={() => {
-                            navigate(`/stopwatch/assign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/assign/${t.id}`);
                         }}
                         icon={mdiAccountAlertOutline}
                     />
@@ -98,14 +100,14 @@ const Item = ({
                     <ActionButton
                         icon={mdiAccountSupervisor}
                         onClick={() => {
-                            navigate(`/stopwatch/reassign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
                         }}
                     />
                 )}
                 <ActionButton
                     icon={mdiWrench}
                     onClick={() => {
-                        navigate(`/stopwatch/tweak/${t.id}`);
+                        navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
                     }}
                 />
                 {/* <ActionButton
@@ -122,9 +124,13 @@ const Item = ({
 const PlayersTimes = () => {
     const [timeKeeperId] = useAtom(timeKeeperIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
-    
+
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const allPlayers = useTimerSelector((x) => x.players);
+
+    const {
+        query: { raceId },
+    } = useRouter();
 
     const times = allTimeStamps
         .filter((s) => s.timeKeeperId === timeKeeperId)
@@ -155,7 +161,7 @@ const PlayersTimes = () => {
                 </button>
             </div>
             {sort(times).map((t) => (
-                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} />
+                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId)} />
             ))}
         </div>
     );
