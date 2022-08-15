@@ -1,24 +1,25 @@
 import Icon from "@mdi/react";
 import { logIn } from "../api";
 import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
-import { setUser } from "@set/timer/dist/slices/user-config";
 import { useState } from "react";
-import { useTimerDispatch, useTimerSelector } from "../hooks";
+import { useAtom } from "jotai";
+import { tokenExpireAtom, userAtom } from "stopwatch-states";
 
 type LoginAppProps = {
     onLoggedIn?: () => void;
 };
 
 export const Login = ({ onLoggedIn }: LoginAppProps) => {
-    const dispatch = useTimerDispatch();
-    const user = useTimerSelector(x => x.userConfig.user);
+    const [user, setUser] = useAtom(userAtom);
+    const [tokenExpire, setTokenExpire] = useAtom(tokenExpireAtom);
 
     const [login, setLogin] = useState<string>(user || "");
     const [password, setPassword] = useState<string>("");
 
     const requestLogIn = () => {
         logIn({ login, password }).then(result => {
-            dispatch(setUser({ user: login, tokenExpire: Date.now() + (result.expireDate - result.issuedAt) * 1000 }));
+            setUser(login);
+            setTokenExpire(Date.now() + (result.expireDate - result.issuedAt) * 1000);
         });
     };
 
@@ -57,3 +58,5 @@ export const Login = ({ onLoggedIn }: LoginAppProps) => {
         </div>
     );
 };
+
+export default Login;
