@@ -1975,6 +1975,7 @@ __metadata:
     daisyui: ^2.18.0
     demodal: ^1.1.0
     event-stream: ^4.0.1
+    jotai: ^1.7.8
     jspdf: ^2.5.1
     jspdf-autotable: ^3.5.25
     next: 12.2.2
@@ -6052,6 +6053,43 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: b9dcb542eb7c16261c281cdc2bf37155dbb3f1205bae0b567f05051db362c85ddd4b765f126591efb88f6d298eb10336d0aa6c7d5373b4d53f918137a9a70182
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^1.7.8":
+  version: 1.7.8
+  resolution: "jotai@npm:1.7.8"
+  peerDependencies:
+    "@babel/core": "*"
+    "@babel/template": "*"
+    "@tanstack/query-core": "*"
+    "@urql/core": "*"
+    immer: "*"
+    optics-ts: "*"
+    react: ">=16.8"
+    valtio: "*"
+    wonka: "*"
+    xstate: "*"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@babel/template":
+      optional: true
+    "@tanstack/query-core":
+      optional: true
+    "@urql/core":
+      optional: true
+    immer:
+      optional: true
+    optics-ts:
+      optional: true
+    valtio:
+      optional: true
+    wonka:
+      optional: true
+    xstate:
+      optional: true
+  checksum: 15eca7c0519511c9d4b6c56c334e79451ea44466c23cd2abbcdb88072f9b068f1a3612513bdacd3c1b9558a744776368796c3a5ec26f32704b8b7488d294f7fb
   languageName: node
   linkType: hard
 

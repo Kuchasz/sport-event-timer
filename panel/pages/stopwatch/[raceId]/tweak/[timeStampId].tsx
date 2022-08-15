@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { ActionButton } from "../../../components/stopwatch/action-button";
+import { ActionButton } from "../../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/shared/dist/utils";
 import {
     mdiFloppy,
@@ -7,10 +7,10 @@ import {
     mdiPlus,
     mdiRestart
     } from "@mdi/js";
-import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../../../components/stopwatch/player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
-import { useTimerDispatch, useTimerSelector } from "../../../hooks";
+import { useTimerDispatch, useTimerSelector } from "../../../../hooks";
 import { useRouter } from "next/router";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 

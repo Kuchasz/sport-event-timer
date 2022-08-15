@@ -27,23 +27,25 @@ export const timingPointRouter = trpc
         async resolve(req) {
             const { id, ...data } = req.input;
 
-            dispatchAction({
-                clientId: "",
-                action: update({ id: id!, name: data.name, order: data.order })
-            });
+            dispatchAction(
+                data.raceId,
+                "",
+                update({ id: id!, name: data.name, order: data.order })
+            );
 
             return await db.timingPoint.update({ where: { id: id! }, data });
         }
     })
     .mutation("delete", {
         input: timingPointSchema,
-        async resolve(req) {
-            const { id } = req.input;
+        async resolve({ input }) {
+            const { id } = input;
 
-            dispatchAction({
-                clientId: "",
-                action: remove({ id: id! })
-            });
+            dispatchAction(
+                input.raceId,
+                "",
+                remove({ id: id! })
+            );
 
             return await db.timingPoint.delete({ where: { id: id! } });
         }
@@ -61,10 +63,11 @@ export const timingPointRouter = trpc
                 }
             });
 
-            dispatchAction({
-                clientId: "",
-                action: add({ id: newTimingPoint.id, name: newTimingPoint.name, order: newTimingPoint.order })
-            });
+            dispatchAction(
+                input.raceId,
+                "",
+                add({ id: newTimingPoint.id, name: newTimingPoint.name, order: newTimingPoint.order })
+            );
 
             return newTimingPoint;
         }

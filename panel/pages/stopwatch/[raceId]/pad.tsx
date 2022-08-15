@@ -1,7 +1,6 @@
 import { add } from "@set/timer/dist/slices/time-stamps";
 import { getCurrentTime } from "@set/shared/dist";
-// import { PlayersCheckIn } from "./players-check-in";
-import { useTimerDispatch } from "../../hooks";
+import { useTimerDispatch } from "../../../hooks";
 import { PlayersCheckIn } from "components/stopwatch/players-check-in";
 
 type PlayersDialPadProps = {

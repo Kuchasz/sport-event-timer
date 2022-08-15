@@ -16,6 +16,15 @@ model Race {
     player          Player[]
     splitTime       SplitTime[]
     manualSplitTime ManualSplitTime[]
+    stopwatch       Stopwatch?
+}
+
+model Stopwatch {
+    race   Race   @relation(fields: [raceId], references: [id])
+    raceId Int
+    state  String
+
+    @@id([raceId])
 }
 
 model Classification {

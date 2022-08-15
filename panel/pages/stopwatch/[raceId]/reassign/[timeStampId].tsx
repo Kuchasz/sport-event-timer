@@ -1,12 +1,13 @@
-import { PlayersCheckIn } from "../../../components/stopwatch/players-check-in";
+import { PlayersCheckIn } from "../../../../components/stopwatch/players-check-in";
 import { reassignTimeStamp } from "@set/timer/dist/slices/time-stamps";
-import { useTimerDispatch, useTimerSelector } from "../../../hooks";
+import { useTimerDispatch } from "../../../../hooks";
 import { useRouter } from "next/router";
+import { useAtom } from "jotai";
+import { timeKeeperIdAtom } from "stopwatch-states";
 
 const PlayersReassignTime = () => {
+    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
     const dispatch = useTimerDispatch();
-
-    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
 
     const {
         query: { timeStampId },

@@ -1,11 +1,13 @@
 import { chooseTimeKeeper } from "@set/timer/dist/slices/user-config";
 import { sort } from "@set/shared/dist";
-import { TimeKeeperIcon } from "../../components/stopwatch/time-keeper-icon";
-import { useTimerDispatch, useTimerSelector } from "../../hooks";
+import { TimeKeeperIcon } from "../../../components/stopwatch/time-keeper-icon";
+import { useTimerDispatch, useTimerSelector } from "../../../hooks";
+import { timeKeeperIdAtom } from "stopwatch-states";
+import { useAtom } from "jotai";
 
 const Config = () => {
+    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
     const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
-    const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
     const sortedTimeKeepers = sort(allTimeKeepers, tk => tk.order);
     const dispatch = useTimerDispatch();
 

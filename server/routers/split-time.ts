@@ -1,6 +1,5 @@
 import * as trpc from "@trpc/server";
 import { db } from "../db";
-import { readState } from "./action";
 import { z } from "zod";
 
 const manualSplitTimeSchema = z.object({
@@ -19,53 +18,53 @@ const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime
     actual.time === Number(existing.time) &&
     actual.timeKeeperId === existing.timingPointId;
 
-const updateSplitTimes = async () => {
-    const existingSplitTimes = await db.splitTime.findMany();
-    const existingSplitTimesMap = new Map(existingSplitTimes.map(st => [st.id, st]));
+// const updateSplitTimes = async () => {
+//     const existingSplitTimes = await db.splitTime.findMany();
+//     const existingSplitTimesMap = new Map(existingSplitTimes.map(st => [st.id, st]));
 
-    const actualSplitTimes = readState().timeStamps.filter(st => st.bibNumber);
-    const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
+//     const actualSplitTimes = readState().timeStamps.filter(st => st.bibNumber);
+//     const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
 
-    const existing = new Set(existingSplitTimes.map(e => e.id));
-    const actual = new Set(actualSplitTimes.map(a => a.id));
+//     const existing = new Set(existingSplitTimes.map(e => e.id));
+//     const actual = new Set(actualSplitTimes.map(a => a.id));
 
-    const toCreate = new Set([...actual].filter(e => !existing.has(e)));
-    const toUpdate = new Set([...existing].filter(x => actual.has(x)));
-    const toDelete = new Set([...existing].filter(e => !actual.has(e)));
+//     const toCreate = new Set([...actual].filter(e => !existing.has(e)));
+//     const toUpdate = new Set([...existing].filter(x => actual.has(x)));
+//     const toDelete = new Set([...existing].filter(e => !actual.has(e)));
 
-    for (const id of toCreate) {
-        const data = actualSplitTimesMap.get(id);
-        await db.splitTime.create({
-            data: {
-                id,
-                bibNumber: data?.bibNumber!,
-                time: data?.time!,
-                raceId: 1,
-                timingPointId: data?.timeKeeperId!
-            }
-        });
-    }
+//     for (const id of toCreate) {
+//         const data = actualSplitTimesMap.get(id);
+//         await db.splitTime.create({
+//             data: {
+//                 id,
+//                 bibNumber: data?.bibNumber!,
+//                 time: data?.time!,
+//                 raceId: 1,
+//                 timingPointId: data?.timeKeeperId!
+//             }
+//         });
+//     }
 
-    for (const id of toUpdate) {
-        const existing = existingSplitTimesMap.get(id)! as ExistingSplitTime;
-        const actual = actualSplitTimesMap.get(id) as ActualSplitTime;
-        if (!areSplitTimesEqual(actual, existing)) {
-            await db.splitTime.update({
-                where: { id },
-                data: {
-                    time: actual.time,
-                    bibNumber: actual.bibNumber
-                }
-            });
-        }
-    }
+//     for (const id of toUpdate) {
+//         const existing = existingSplitTimesMap.get(id)! as ExistingSplitTime;
+//         const actual = actualSplitTimesMap.get(id) as ActualSplitTime;
+//         if (!areSplitTimesEqual(actual, existing)) {
+//             await db.splitTime.update({
+//                 where: { id },
+//                 data: {
+//                     time: actual.time,
+//                     bibNumber: actual.bibNumber
+//                 }
+//             });
+//         }
+//     }
 
-    for (const id of toDelete) {
-        await db.splitTime.delete({ where: { id } });
-    }
-};
+//     for (const id of toDelete) {
+//         await db.splitTime.delete({ where: { id } });
+//     }
+// };
 
-setInterval(updateSplitTimes, 5000);
+// setInterval(updateSplitTimes, 5000);
 
 export const splitTimeRouter = trpc
     .router()

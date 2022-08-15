@@ -1,16 +1,22 @@
 import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { PlayersCheckIn } from "../../../components/stopwatch/players-check-in";
-import { useTimerDispatch, useTimerSelector } from "../../../hooks";
+import { timeKeeperIdAtom } from "stopwatch-states";
+import { PlayersCheckIn } from "../../../../components/stopwatch/players-check-in";
+import { useTimerDispatch } from "../../../../hooks";
 
 const PlayersAssignTime = () => {
-    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
+    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
     const dispatch = useTimerDispatch();
-    const { query: {timeStampId}, back } = useRouter();
+    
+    const {
+        query: { timeStampId },
+        back,
+    } = useRouter();
 
     return (
         <PlayersCheckIn
-            onPlayerCheckIn={bibNumber => {
+            onPlayerCheckIn={(bibNumber) => {
                 dispatch(assignTimeStamp({ bibNumber, id: parseInt(timeStampId! as string) }));
                 back();
             }}
