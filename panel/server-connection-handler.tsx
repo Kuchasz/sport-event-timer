@@ -1,26 +1,32 @@
 import { onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
-import { setConnectionState, setTimeOffset } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "./trpc";
+import { useSetAtom } from "jotai";
+import { connectionStateAtom, timeOffsetAtom } from "stopwatch-states";
 
 export const ServerConnectionHandler = ({
     dispatch,
     children,
-    clientId
+    raceId,
+    clientId,
 }: {
     dispatch: (action: any) => void;
     children: ReactNode;
+    raceId: number;
     clientId: string;
 }) => {
-    trpc.useSubscription(["action.action-dispatched", { clientId }], {
-        onNext: action => dispatch({ ...action, __remote: true }),
-        onError: console.error
+    trpc.useSubscription(["action.action-dispatched", { raceId, clientId }], {
+        onNext: (action) => dispatch({ ...action, __remote: true }),
+        onError: console.error,
     });
 
-    const { refetch: refetchState } = trpc.useQuery(["action.state"], {
+    const { refetch: refetchState } = trpc.useQuery(["action.state", { raceId }], {
         enabled: false,
-        onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true })
+        onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true }),
     });
+
+    const setTimeOffset = useSetAtom(timeOffsetAtom);
+    const setConnectionState = useSetAtom(connectionStateAtom);
 
     const ntpMutation = trpc.useMutation(["ntp.sync"]);
 
@@ -40,7 +46,7 @@ export const ServerConnectionHandler = ({
 
             console.log(timeOffset);
 
-            dispatch(setTimeOffset({ timeOffset }));
+            setTimeOffset(timeOffset);
 
             if (latency <= 200) {
                 // clearInterval(timeSyncInterval);
@@ -55,10 +61,10 @@ export const ServerConnectionHandler = ({
         //     requestTimeSync();
         // }, 1000);
 
-        const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
+        const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
             //dispatch connectionState !== "connected"
             // console.log("dispatch connectionState ", connectionState);
-            dispatch(setConnectionState({ connectionState }));
+            setConnectionState(connectionState);
         });
 
         requestTimeSync();

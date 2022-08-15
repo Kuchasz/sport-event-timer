@@ -71,18 +71,7 @@ export type TimeKeeper = {
     order: number;
 };
 
-export type TimeKeeperConfig = {
-    timeOffset?: number;
-    connectionState: ConnectionState;
-};
-
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
-
-export type UserConfig = {
-    user?: string;
-    timeKeeperId?: number;
-    tokenExpire?: number;
-};
 
 export type HistoricAction = {
     issuer: string;
@@ -182,28 +171,3 @@ export const addRaceCategory = (
 
 export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
     removeById(raceCategories, id);
-
-export const setConnectionState = (timeKeeperConfig: TimeKeeperConfig, connectionState: ConnectionState) => ({
-    ...timeKeeperConfig,
-    connectionState
-});
-
-export const setTimeOffset = (timeKeeperConfig: TimeKeeperConfig, timeOffset: number) => ({
-    ...timeKeeperConfig,
-    timeOffset
-});
-
-export const setUser = (timeKeeperConfig: UserConfig, user: string) => ({
-    ...timeKeeperConfig,
-    user
-});
-
-export const setTokenExpire = (timeKeeperConfig: UserConfig, tokenExpire: number) => ({
-    ...timeKeeperConfig,
-    tokenExpire
-});
-
-export const chooseTimeKeeper = (timeKeeperConfig: UserConfig, timeKeeperId: number) => ({
-    ...timeKeeperConfig,
-    timeKeeperId
-});

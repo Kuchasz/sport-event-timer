@@ -1,15 +1,12 @@
 import { ConnectionState } from "../../connection";
 import { Icon } from "@mdi/react";
-import {
-    mdiCloudOffOutline,
-    mdiCloudOutline,
-    mdiCloudSyncOutline,
-    mdiWeatherCloudyAlert
-    } from "@mdi/js";
+import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherCloudyAlert } from "@mdi/js";
 import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useTimerSelector } from "../../hooks";
+import { useAtom } from "jotai";
+import { connectionStateAtom, timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
     switch (state) {
@@ -41,17 +38,17 @@ const getTextFromConnectionState = (state: ConnectionState) => {
 };
 
 export const Status = () => {
-    const connectionState = useTimerSelector(x => x.timeKeeperConfig.connectionState);
-    const allTimeKeepers = useTimerSelector(x => x.timeKeepers);
-    const timeKeeperId = useTimerSelector(x => x.userConfig?.timeKeeperId);
-    const offset = useTimerSelector(x => x.timeKeeperConfig?.timeOffset);
-    const timeKeeperName = allTimeKeepers.find(tk => tk.id === timeKeeperId)?.name;
-    const sortedTimeKeepers = sort(allTimeKeepers, tk => tk.order).map(tk => tk.id);
+    const [connectionState] = useAtom(connectionStateAtom);
+    const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
+    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [offset] = useAtom(timeOffsetAtom);
+    const timeKeeperName = allTimeKeepers?.find((tk) => tk.id === timeKeeperId)?.name;
+    const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order).map((tk) => tk.id);
 
     return (
         <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
             <span className="flex">
-                {timeKeeperId !== undefined && allTimeKeepers.length && (
+                {timeKeeperId !== undefined && allTimeKeepers?.length && (
                     <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timeKeeperId} isLast={false} />
                 )}
                 <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>

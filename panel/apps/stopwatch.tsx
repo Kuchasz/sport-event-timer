@@ -10,9 +10,7 @@ import { Provider as ReduxStoreProvider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ServerConnectionHandler } from "../server-connection-handler";
 import { Status } from "../components/stopwatch/status";
-import { timeKeeperConfigSlice } from "@set/timer/dist/slices/time-keeper-config";
 import { trpc } from "../trpc";
-import { userConfigSlice } from "@set/timer/dist/slices/user-config";
 import { uuidv4 } from "@set/shared/dist";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
@@ -36,20 +34,14 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
 
         const socket = getConnection();
 
-        if (
-            !action.__remote &&
-            socket?.OPEN &&
-            !action.type.includes(timeKeeperConfigSlice.name) &&
-            !action.type.includes(userConfigSlice.name)
-        )
-            trpcClient.mutation("action.dispatch", { raceId: externals.raceId!, clientId, action });
+        if (!action.__remote && socket?.OPEN) trpcClient.mutation("action.dispatch", { raceId: externals.raceId!, clientId, action });
 
         next(action);
     }
 };
 
 export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = (_) => (next) => (action) => {
-    if (!action.__remote && !action.type.includes(timeKeeperConfigSlice.name) && !action.type.includes(userConfigSlice.name)) {
+    if (!action.__remote) {
         action.__issuer = externals.user;
         action.__issuedAt = Date.now() + (externals.timeOffset || 0);
     }
@@ -72,10 +64,13 @@ const ExternalsExposer = () => {
     return <></>;
 };
 
-type LoggedAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
-const LoggedApp = ({ Component, pageProps, queryClient, trpcClient }: LoggedAppProps) => {
+type StopwatchAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
+const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: StopwatchAppProps) => {
     const [tokenExpire] = useAtom(tokenExpireAtom);
     const [connectionState] = useAtom(connectionStateAtom);
+    const {
+        query: { raceId },
+    } = useRouter();
     const loggedIn = isLoggedIn(tokenExpire);
     const isOffline = connectionState !== "connected";
 
@@ -84,7 +79,7 @@ const LoggedApp = ({ Component, pageProps, queryClient, trpcClient }: LoggedAppP
             <ExternalsExposer />
             <trpc.Provider client={trpcClient} queryClient={queryClient}>
                 <QueryClientProvider client={queryClient}>
-                    <ServerConnectionHandler dispatch={store!.dispatch} clientId={clientId}>
+                    <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
                         <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-800 h-full w-screen text-white">
                             <Status />
                             <div id="module-holder" className="relative overflow-hidden h-full flex-col flex-1">
@@ -112,11 +107,6 @@ const LoggedApp = ({ Component, pageProps, queryClient, trpcClient }: LoggedAppP
     ) : (
         <Login />
     );
-};
-
-type StopwatchAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
-export const StopwatchApp = (props: StopwatchAppProps) => {
-    return <LoggedApp {...props} />;
 };
 
 export default StopwatchApp;
