@@ -93,9 +93,10 @@ export const playerRouter = trpc
                     code: "FORBIDDEN"
                 });
 
-            dispatchAction({
-                clientId: "",
-                action: upload(
+            dispatchAction(
+                raceId,
+                "",
+                upload(
                     players.map(p => ({
                         id: p.id,
                         name: p.name,
@@ -104,7 +105,7 @@ export const playerRouter = trpc
                         startTime: p.startTime!
                     }))
                 )
-            });
+            );
         }
     })
     .mutation("delete", {

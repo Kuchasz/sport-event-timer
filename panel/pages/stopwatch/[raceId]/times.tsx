@@ -1,14 +1,16 @@
-import { ActionButton, PrimaryActionButton } from "../../components/stopwatch/action-button";
+import { ActionButton, PrimaryActionButton } from "../../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
 import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlusCircleOutline } from "@mdi/js";
 import { mdiWrench } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/dist/model";
-import { PlayerWithTimeStampDisplay } from "../../components/stopwatch/player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { useRef } from "react";
-import { useTimerDispatch, useTimerSelector } from "../../hooks";
+import { useTimerDispatch, useTimerSelector } from "../../../hooks";
 import { useRouter } from "next/router";
 import { getCurrentTime } from "@set/shared/dist";
+import { useAtom } from "jotai";
+import { timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -43,7 +45,7 @@ const Item = ({
 
         const dX = x - touchStartX;
 
-        const translation = dX > 10 ? dX : 0;
+        const translation = dX > 15 ? dX : 0;
 
         targetElement.current.style.transform = `translateX(${translation}px)`;
     };
@@ -53,7 +55,7 @@ const Item = ({
 
         const dX = x - touchStartX;
 
-        if (dX > 150) {
+        if (dX > 200) {
             dispatch(reset({ id: t.id }));
         } else {
             targetElement.current.style.transition = "transform";
@@ -118,11 +120,11 @@ const Item = ({
 };
 
 const PlayersTimes = () => {
-    const offset = useTimerSelector((x) => x.timeKeeperConfig?.timeOffset);
+    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [offset] = useAtom(timeOffsetAtom);
+    
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const allPlayers = useTimerSelector((x) => x.players);
-
-    const timeKeeperId = useTimerSelector((x) => x.userConfig?.timeKeeperId);
 
     const times = allTimeStamps
         .filter((s) => s.timeKeeperId === timeKeeperId)

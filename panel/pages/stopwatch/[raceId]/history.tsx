@@ -1,7 +1,7 @@
 import { formatTime, sortDesc } from "@set/shared/dist";
 import { HistoricAction } from "@set/timer/dist/model";
 import { reset } from "@set/timer/dist/slices/time-stamps";
-import { useTimerSelector } from "../../hooks";
+import { useTimerSelector } from "../../../hooks";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
     if (reset.match(historicAction.action)) {

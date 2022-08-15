@@ -3,75 +3,87 @@ import { createStore } from "@set/timer/dist/store";
 import { fileExistsAsync, readJsonAsync, writeJson } from "../async-fs";
 import { TimerState } from "@set/timer/dist/store";
 import { z } from "zod";
+import { stopwatchStateProvider } from "../db";
 
 type Action = any;
 
 const dispatchActionSchema = z.object({
+    raceId: z.number(),
     clientId: z.string(),
     action: z.any()
 });
 
-export const store = createStore([]);
+// export const store = createStore([]);
 
-const loadState = async () => {
-    const statePath = "../state.json";
-    const stateFileExists = await fileExistsAsync(statePath);
+// const loadState = async () => {
+//     const statePath = "../state.json";
+//     const stateFileExists = await fileExistsAsync(statePath);
 
-    const state = stateFileExists
-        ? await readJsonAsync(statePath)
-        : {
-              players: [],
-              timeKeepers: [],
-              timeStamps: [],
-              raceCategories: []
-          };
+//     const state = stateFileExists
+//         ? await readJsonAsync(statePath)
+//         : {
+//               players: [],
+//               timeKeepers: [],
+//               timeStamps: [],
+//               raceCategories: []
+//           };
 
-    store.dispatch({
-        type: "REPLACE_STATE",
-        state
-    });
-};
+//     store.dispatch({
+//         type: "REPLACE_STATE",
+//         state
+//     });
+// };
 
-loadState();
+// loadState();
 
 type Client = {
     emit: trpc.SubscriptionEmit<Action>;
     clientId: string;
+    raceId: number;
 };
 
 let clients: Client[] = [];
 
-export const dispatchAction = (payload: z.infer<typeof dispatchActionSchema>) => {
-    clients.filter(c => c.clientId !== payload.clientId).forEach(c => c.emit.data(payload.action));
-    store.dispatch(payload.action);
-    writeJson(store.getState(), "../state.json");
-};
+export const dispatchAction = async (raceId: number, clientId: string, action: any) => {
+    clients
+        .filter(c => c.raceId === raceId && c.clientId !== clientId)
+        .forEach(c => c.emit.data(action));
 
-export const readState = () => store.getState() as TimerState;
+    const state = await stopwatchStateProvider.get(raceId);
+    const store = createStore([], state);
+
+    store.dispatch(action);
+
+    await stopwatchStateProvider.save(raceId, store.getState());
+};
 
 export const actionRouter = trpc
     .router()
     .mutation("dispatch", {
         input: dispatchActionSchema,
-        resolve({ input }) {
-            dispatchAction(input);
+        async resolve({ input }) {
+            await dispatchAction(input.raceId, input.clientId, input.action);
             return "OK";
         }
     })
     .query("state", {
-        resolve() {
-            return store.getState();
+        input: z.object({
+            raceId: z.number()
+        }),
+        resolve({ input }) {
+            return stopwatchStateProvider.get(input.raceId)
         }
     })
     .subscription("action-dispatched", {
         input: z.object({
-            clientId: z.string()
+            clientId: z.string(),
+            raceId: z.number()
         }),
         resolve({ input }) {
             return new trpc.Subscription<Action>(emit => {
-                const { clientId } = input;
+                const { clientId, raceId } = input;
 
-                clients = [...clients, { clientId, emit }];
+                clients = [...clients, { clientId, raceId, emit }];
 
                 return () => {
                     clients = clients.filter(c => c.clientId !== clientId);

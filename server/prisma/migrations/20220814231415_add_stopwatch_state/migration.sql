@@ -1,0 +1,6 @@
+-- CreateTable
+CREATE TABLE "Stopwatch" (
+    "raceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "state" TEXT NOT NULL,
+    CONSTRAINT "Stopwatch_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

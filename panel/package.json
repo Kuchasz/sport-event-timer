@@ -34,6 +34,7 @@
         "daisyui": "^2.18.0",
         "demodal": "^1.1.0",
         "event-stream": "^4.0.1",
+        "jotai": "^1.7.8",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.25",
         "next": "12.2.2",
