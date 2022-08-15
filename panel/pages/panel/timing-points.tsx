@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
-import { mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiTimerOutline, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
@@ -24,8 +24,8 @@ const columns: Column<TimingPoint, unknown>[] = [
         key: "actions",
         width: 15,
         name: "Actions",
-        formatter: props => <TimingPointDeleteButton timingPoint={props.row} />
-    }
+        formatter: (props) => <TimingPointDeleteButton timingPoint={props.row} />,
+    },
 ];
 
 const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) => {
@@ -37,8 +37,8 @@ const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) 
             title: `Delete timing point`,
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`
-            }
+                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`,
+            },
         });
 
         if (confirmed) {
@@ -65,7 +65,7 @@ const TimingPoint = () => {
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
             title: "Create new timing point",
             component: TimingPointCreate,
-            props: { raceId: raceId! }
+            props: { raceId: raceId! },
         });
 
         if (TimingPoint) {
@@ -79,8 +79,8 @@ const TimingPoint = () => {
             title: "Edit timing point",
             component: TimingPointEdit,
             props: {
-                editedTimingPoint
-            }
+                editedTimingPoint,
+            },
         });
 
         if (TimingPoint) {
@@ -99,15 +99,21 @@ const TimingPoint = () => {
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
+                    <div className="px-1"></div>
+                    <Button autoCapitalize="false">
+                        <Icon size={1} path={mdiTimerOutline} />
+                        <span className="ml-2">Open Stopwatch</span>
+                    </Button>
                 </div>
                 {races && (
-                    <DataGrid className='rdg-light h-full'
+                    <DataGrid
+                        className="rdg-light h-full"
                         sortColumns={sortColumns}
                         defaultColumnOptions={{
                             sortable: true,
-                            resizable: true
+                            resizable: true,
                         }}
-                        onRowDoubleClick={e => openEditDialog(e)}
+                        onRowDoubleClick={(e) => openEditDialog(e)}
                         onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={races}

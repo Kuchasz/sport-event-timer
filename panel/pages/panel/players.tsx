@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
-import { mdiAccountMultiplePlus, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountMultiplePlus, mdiAccountSync, mdiAccountSyncOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "../../utils";
 import { NiceModal } from "../../components/modal";
 import { PlayerCreate } from "../../components/player-create";
@@ -176,8 +176,8 @@ const Players = () => {
                     </Button>
                     <div className="px-1"></div>
                     <Button onClick={pushPlayersToTimer} autoCapitalize="false">
-                        <Icon size={1} path={mdiAccountMultiplePlus} />
-                        <span className="ml-2">Push Players to Timer</span>
+                        <Icon size={1} path={mdiAccountSyncOutline} />
+                        <span className="ml-2">Push to Stopwatch</span>
                     </Button>
                     {/* <div className="px-1"></div>
                     <Button autoCapitalize="false">
