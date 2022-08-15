@@ -102,9 +102,8 @@ const Classifications = () => {
                         <span className="ml-2">Load</span>
                     </Button>
                 </div>
-                <DataGrid
+                <DataGrid className='rdg-light h-full'
                     sortColumns={sortColumns}
-                    className="h-full"
                     defaultColumnOptions={{
                         sortable: true,
                         resizable: true

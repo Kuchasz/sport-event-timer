@@ -196,8 +196,7 @@ const Players = () => {
                 </div>
                 {/* {gridElement} */}
                 {players && (
-                    <DataGrid
-                        className="h-full"
+                    <DataGrid className='rdg-light h-full'
                         defaultColumnOptions={{
                             sortable: true,
                             resizable: true
