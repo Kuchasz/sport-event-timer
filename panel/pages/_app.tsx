@@ -2,15 +2,15 @@ import dynamic from "next/dynamic";
 import { AppProps } from "next/app";
 import { PanelApp } from "../apps/panel";
 import { queryClient, trpcClient } from "../connection";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
+import { ResultApp } from "apps/result";
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
 function MyApp({ Component, pageProps, router }: AppProps) {
-    // const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
-    console.log(router.pathname);
+    
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -26,48 +26,20 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         }
     }, []);
 
-    console.log(router.pathname)
+    console.log(router.pathname);
 
     return router.pathname.startsWith("/panel") ? (
-        <PanelApp
-            Component={Component}
-            pageProps={pageProps}
-            router={router}
-            queryClient={queryClient}
-            trpcClient={trpcClient}
-        />
+        <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
     ) : router.pathname.startsWith("/stopwatch") ? (
-        <StopwatchApp
-            Component={Component}
-            pageProps={pageProps}
-            router={router}
-            queryClient={queryClient}
-            trpcClient={trpcClient}
-        />
+        <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
+    ) : router.pathname.startsWith("/result") ? (
+        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
     ) : (
-        <TimerApp
-            Component={Component}
-            pageProps={pageProps}
-            router={router}
-            queryClient={queryClient}
-            trpcClient={trpcClient}
-        />
+        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
     );
-
-    // return noLayoutPages.includes(router.pathname) ? (
-    //     <Component {...pageProps} />
-    // ) : (
-    //     <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-    //         <Layout>
-    //             <Component {...pageProps} />
-    //             <Demodal.Container />
-    //         </Layout>
-    //     </CurrentRaceContext.Provider>
-    // );
 }
 
-const url =
-    process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
+const url = process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
 
 export default MyApp;
 

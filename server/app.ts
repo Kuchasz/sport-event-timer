@@ -128,8 +128,6 @@ type NumberStartTime = { number: number; startTime: number };
 // };
 
 const run = async () => {
-    app.use("/timer", express.static(requireModule("@set/mobile/build")));
-    app.get("/timer/*", (_, res) => res.sendFile(requireModule("@set/mobile/build/index.html")));
     app.get("/state", async (_, res) => {
         const data = await fs.readFileAsync(resolve("../state.json"));
         res.json(JSON.parse(data as any));
