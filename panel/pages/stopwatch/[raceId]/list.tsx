@@ -14,6 +14,8 @@ const PlayersList = () => {
 
     const allPlayers = useTimerSelector((x) => x.players);
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+
+    const {query: {raceId}} = useRouter();
     
     const players = sort(
         allPlayers.map((x) => ({
@@ -48,7 +50,7 @@ const PlayersList = () => {
                         <ActionButton
                             icon={mdiWrench}
                             onClick={() => {
-                                push(`/stopwatch/tweak/${p.timeStamp?.id}`);
+                                push(`/stopwatch/${raceId}/tweak/${p.timeStamp?.id}`);
                             }}
                         />
                     )}

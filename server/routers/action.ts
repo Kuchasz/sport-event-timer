@@ -1,9 +1,8 @@
 import * as trpc from "@trpc/server";
 import { createStore } from "@set/timer/dist/store";
-import { fileExistsAsync, readJsonAsync, writeJson } from "../async-fs";
-import { TimerState } from "@set/timer/dist/store";
 import { z } from "zod";
 import { stopwatchStateProvider } from "../db";
+import { updateSplitTimesQueue } from "../queue";
 
 type Action = any;
 
@@ -12,29 +11,6 @@ const dispatchActionSchema = z.object({
     clientId: z.string(),
     action: z.any()
 });
-
-// export const store = createStore([]);
-
-// const loadState = async () => {
-//     const statePath = "../state.json";
-//     const stateFileExists = await fileExistsAsync(statePath);
-
-//     const state = stateFileExists
-//         ? await readJsonAsync(statePath)
-//         : {
-//               players: [],
-//               timeKeepers: [],
-//               timeStamps: [],
-//               raceCategories: []
-//           };
-
-//     store.dispatch({
-//         type: "REPLACE_STATE",
-//         state
-//     });
-// };
-
-// loadState();
 
 type Client = {
     emit: trpc.SubscriptionEmit<Action>;
@@ -55,6 +31,7 @@ export const dispatchAction = async (raceId: number, clientId: string, action: a
     store.dispatch(action);
 
     await stopwatchStateProvider.save(raceId, store.getState());
+    updateSplitTimesQueue.push({ raceId });
 };
 
 export const actionRouter = trpc
