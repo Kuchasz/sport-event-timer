@@ -6,7 +6,7 @@ import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
-import { mdiAccountMultiplePlus, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
+import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../hooks";
 import { useMemo, useState } from "react";

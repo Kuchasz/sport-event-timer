@@ -8,7 +8,7 @@ import { upload } from "@set/timer/dist/slices/players";
 import { z } from "zod";
 
 const ClassificationsEnum = z.enum(["rnk_pro", "rnk_fun", "rnk_tt", "gc", "all"]);
-const GenderEnum = z.enum(["male", "female"]);
+export const GenderEnum = z.enum(["male", "female"]);
 
 const playerSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }).min(1),
