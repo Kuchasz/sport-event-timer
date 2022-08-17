@@ -28,17 +28,17 @@ model Stopwatch {
 }
 
 model Classification {
-    id            Int           @id @default(autoincrement())
-    name          String
-    race          Race          @relation(fields: [raceId], references: [id])
-    raceId        Int
-    players       Player[]
-    ageCategories AgeCategory[]
+    id         Int        @id @default(autoincrement())
+    name       String
+    race       Race       @relation(fields: [raceId], references: [id])
+    raceId     Int
+    players    Player[]
+    categories Category[]
 
     @@unique([raceId, name])
 }
 
-model AgeCategory {
+model Category {
     id               Int            @id @default(autoincrement())
     name             String
     gender           String
