@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GenderEnum } from "./player";
 
 const ageCategoriesSchema = z.array(z.object({
-    id: z.number().min(1).nullish(),
+    id: z.number().min(1).optional(),
     name: z.string({ required_error: "name is required" }),
     gender: GenderEnum,
     minAge: z.number().min(1),
@@ -29,14 +29,14 @@ export const classificationRouter = trpc
             return await db.classification.findMany({ where: { raceId } });
         }
     })
-    .query("age-categories", {
+    .query("categories", {
         input: z.object({
             classificationId: z.number({ required_error: "classificationId is required" })
         }),
         output: ageCategoriesSchema,
         async resolve(req) {
             const classificationId = req.input.classificationId;
-            const ageCategories = await db.ageCategory.findMany({ where: { classificationId } });
+            const ageCategories = await db.category.findMany({ where: { classificationId } });
 
             return await ageCategoriesSchema.parseAsync(ageCategories);
         }
@@ -63,7 +63,19 @@ export const classificationRouter = trpc
         input: classificationSchema,
         async resolve(req) {
             const { id, ...data } = req.input;
-            return await db.classification.update({ where: { id: id! }, data });
+            const { ageCategories, ...classification } = data;
+
+            const categories = ageCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
+
+            return await db.classification.update({
+                where: { id: id! },
+                data: {
+                    ...classification,
+                    categories: {
+                        upsert: categories
+                    }
+                }
+            });
         }
     })
     .mutation("add", {
