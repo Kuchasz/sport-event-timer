@@ -100,7 +100,7 @@ jobs:
                       ./panel/public
 
     build_server:
-        needs: [build_timer, build_panel, build_shared_timer]
+        needs: [build_panel, build_shared_timer]
         runs-on: ubuntu-latest
 
         steps:
