@@ -50,10 +50,18 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                                 <span>{a.name}</span>
                             </div>
                         ))}
-                    <Button onClick={createCategory} className="w-full">
+                    {/* <Button onClick={createCategory} className="w-full">
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Add age category</span>
-                    </Button>
+                        <span className="ml-2">Add category</span>
+                    </Button> */}
+                </div>
+            </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="flex w-full">
+                    <div className="flex bg-red-300 w-[33%] h-10 items-center justify-center text-white">0-33</div>
+                    <div className="flex bg-orange-300 w-[50%] h-10 items-center justify-center text-white">34-76</div>
+                    <div className="flex bg-yellow-300 w-[17%] h-10 items-center justify-center text-white">77-99</div>
                 </div>
             </div>
             <div className="mt-4 flex">
