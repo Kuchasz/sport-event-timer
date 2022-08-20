@@ -88,8 +88,8 @@ jobs:
                   cd ./panel
                   yarn install
                   yarn build
-                  mv .next dist/.next
-                  mv public dist/public
+                #   mv .next dist/.next
+                #   mv public dist/public
 
             - uses: actions/upload-artifact@v2
               with:
