@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    build_shared_timer:
+    build:
         runs-on: ubuntu-latest
 
         steps:
@@ -36,110 +36,19 @@ jobs:
                   cd ./shared
                   yarn run build
 
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
             - name: timer_build, and test
               run: |
                   cd ./timer
                   yarn run build
 
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: timer.dist
-                  path: ./timer
-
-    build_panel:
-        needs: [build_shared_timer]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v2
-
-            - uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v2-beta
-              with:
-                  node-version: "16.x"
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: timer.dist
-                  path: ./timer
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
-            - name: npm install, build, and test
+            - name: panel_build, and test
               run: |
                   cd ./panel
-                  yarn install
                   yarn build
-                #   mv .next dist/.next
-                #   mv public dist/public
 
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: panel.dist
-                  path: |
-                      ./panel/dist
-                      ./panel/.next
-                      ./panel/public
-
-    build_server:
-        needs: [build_panel, build_shared_timer]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v2
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: timer.dist
-                  path: ./timer
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: panel.dist
-                  path: ./panel
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
-            - uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v2-beta
-              with:
-                  node-version: "16.x"
-
-            - name: npm install, build, and test
+            - name: server_build, and test
               run: |
                   cd ./server
-                  yarn install
                   yarn run build
 
             - uses: montudor/action-zip@v1
