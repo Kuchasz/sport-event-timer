@@ -5,13 +5,13 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 import { tokenExpireAtom, userAtom } from "stopwatch-states";
 
-type LoginAppProps = {
-    onLoggedIn?: () => void;
-};
+// type LoginAppProps = {
+//     onLoggedIn?: () => void;
+// };
 
-export const Login = ({ onLoggedIn }: LoginAppProps) => {
+export const Login = () => {
     const [user, setUser] = useAtom(userAtom);
-    const [tokenExpire, setTokenExpire] = useAtom(tokenExpireAtom);
+    const [_, setTokenExpire] = useAtom(tokenExpireAtom);
 
     const [login, setLogin] = useState<string>(user || "");
     const [password, setPassword] = useState<string>("");

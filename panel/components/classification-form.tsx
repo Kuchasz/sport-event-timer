@@ -2,10 +2,10 @@ import Icon from "@mdi/react";
 import { Button } from "./button";
 import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck, mdiPlus } from "@mdi/js";
+import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
-import { useQueryClient } from "react-query";
+// import { useQueryClient } from "react-query";
 
 type Classification = InferMutationInput<"classification.add">;
 type InitialClassification = InferQueryOutput<"classification.classifications">[0];
@@ -20,16 +20,16 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
     const { data: categories } = trpc.useQuery(["classification.categories", { classificationId: initialClassification.id }]);
 
-    const qc = useQueryClient();
+    // const qc = useQueryClient();
 
-    const createCategory = () => {
-        const category = {
-            name: "New Category",
-            gemder: "male",
-        };
+    // const createCategory = () => {
+    //     const category = {
+    //         name: "New Category",
+    //         gemder: "male",
+    //     };
 
-        qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
-    };
+    //     qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
+    // };
 
     return (
         <div className="flex flex-col">
