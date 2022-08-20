@@ -1,6 +1,5 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Icon from "@mdi/react";
-import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/shared/dist";
@@ -8,7 +7,6 @@ import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import {
     mdiClockEditOutline,
     mdiClockPlusOutline,
-    mdiPlus,
     mdiReload
     } from "@mdi/js";
 import { NiceModal } from "components/modal";

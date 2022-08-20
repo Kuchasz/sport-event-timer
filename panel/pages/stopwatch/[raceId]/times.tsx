@@ -161,7 +161,7 @@ const PlayersTimes = () => {
                 </button>
             </div>
             {sort(times).map((t) => (
-                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId)} />
+                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId as string)} />
             ))}
         </div>
     );

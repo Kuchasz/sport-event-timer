@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
-import { mdiAccountMultiplePlus, mdiAccountSync, mdiAccountSyncOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountSyncOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "../../utils";
 import { NiceModal } from "../../components/modal";
 import { PlayerCreate } from "../../components/player-create";

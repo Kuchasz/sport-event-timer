@@ -1,6 +1,6 @@
 import { formatTimeWithMilliSecUTC } from "@set/shared/dist";
 import { useRouter } from "next/router";
-import { InferQueryOutput, trpc } from "trpc";
+import { trpc } from "trpc";
 
 const Result = () => {
     const {
