@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Staging.BuildDeploy
 
 on:
@@ -10,7 +7,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    build_shared:
+    build_shared+timer:
         runs-on: ubuntu-latest
 
         steps:
@@ -31,10 +28,12 @@ jobs:
               with:
                   node-version: "16.x"
 
-            - name: npm install, build, and test
+            - name: npm install
+              run: yarn install
+
+            - name: shared_build, and test
               run: |
                   cd ./shared
-                  yarn install
                   yarn run build
 
             - uses: actions/upload-artifact@v2
@@ -42,37 +41,9 @@ jobs:
                   name: shared.dist
                   path: ./shared
 
-    build_timer:
-        needs: [build_shared]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v2
-
-            - uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v2-beta
-              with:
-                  node-version: "16.x"
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
-            - name: npm install, build, and test
+            - name: timer_build, and test
               run: |
-                  cd ./timer
-                  yarn install
+                  cd ../timer
                   yarn run build
 
             - uses: actions/upload-artifact@v2
@@ -81,7 +52,7 @@ jobs:
                   path: ./timer
 
     build_panel:
-        needs: [build_timer, build_shared]
+        needs: [build_shared+timer]
         runs-on: ubuntu-latest
 
         steps:
@@ -128,51 +99,8 @@ jobs:
                       ./panel/.next
                       ./panel/public
 
-    build_mobile:
-        needs: [build_timer, build_shared]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v2
-
-            - uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: |
-                      **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ secrets.CACHE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v2-beta
-              with:
-                  node-version: "16.x"
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: shared.dist
-                  path: ./shared
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: timer.dist
-                  path: ./timer
-
-            - name: npm install, build, and test
-              run: |
-                  cd ./mobile
-                  yarn install
-                  yarn run build
-
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: mobile.dist
-                  path: ./mobile/build
-
     build_server:
-        needs: [build_timer, build_panel, build_mobile, build_shared]
+        needs: [build_timer, build_panel, build_shared+timer]
         runs-on: ubuntu-latest
 
         steps:
@@ -192,11 +120,6 @@ jobs:
               with:
                   name: shared.dist
                   path: ./shared
-
-            - uses: actions/download-artifact@v2
-              with:
-                  name: mobile.dist
-                  path: ./mobile/build
 
             - uses: actions/cache@v2
               id: yarn-cache
@@ -230,11 +153,11 @@ jobs:
             - name: upload artifact to staging
               uses: easingthemes/ssh-deploy@main
               with:
-                  TARGET: ${{ secrets.AZURE_REMOTE_TARGET }}
+                  TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
                   ARGS: "-rltgoDzvO --delete"
               env:
-                  SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
+                  SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
                   ARGS: "-rltgoDzvO --delete"
                   SOURCE: "package/"
-                  REMOTE_HOST: ${{ secrets.AZURE_REMOTE_HOST }}
-                  REMOTE_USER: ${{ secrets.AZURE_REMOTE_USER }}
+                  REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
