@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    build_shared+timer:
+    build_shared_timer:
         runs-on: ubuntu-latest
 
         steps:
@@ -52,7 +52,7 @@ jobs:
                   path: ./timer
 
     build_panel:
-        needs: [build_shared+timer]
+        needs: [build_shared_timer]
         runs-on: ubuntu-latest
 
         steps:
@@ -100,7 +100,7 @@ jobs:
                       ./panel/public
 
     build_server:
-        needs: [build_timer, build_panel, build_shared+timer]
+        needs: [build_timer, build_panel, build_shared_timer]
         runs-on: ubuntu-latest
 
         steps:
