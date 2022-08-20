@@ -43,7 +43,7 @@ jobs:
 
             - name: timer_build, and test
               run: |
-                  cd ../timer
+                  cd ./timer
                   yarn run build
 
             - uses: actions/upload-artifact@v2
