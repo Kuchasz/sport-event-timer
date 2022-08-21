@@ -6,7 +6,6 @@
     },
     "workspaces": {
         "packages": [
-            "mobile",
             "timer",
             "results",
             "server",
