@@ -86,6 +86,6 @@ jobs:
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     unzip -q set-hub-package.zip
-                    cd server
+                    cd /var/node/set-hub-package/server
                     yarn prisma db push
                     yarn prisma db seed
