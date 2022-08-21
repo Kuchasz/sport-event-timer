@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange } from "@set/shared/dist/index";
+import { createRange, capitalizeFirstLetter } from "@set/shared/dist/index";
 import { Classification, Player, Race, TimingPoint } from "@prisma/client";
 
 async function main() {
@@ -73,7 +73,7 @@ const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
         { name: 'Start', order: 1, raceId: r },
         ...createRange({ from: 0, to: faker.mersenne.rand(2, 0) })
-            .map((i) => ({ name: faker.word.noun(), order: 2 + i, raceId: r })),
+            .map((i) => ({ name: capitalizeFirstLetter(faker.word.noun()), order: 2 + i, raceId: r })),
         { name: 'Finish', order: 5, raceId: r }]);
 
 main()
