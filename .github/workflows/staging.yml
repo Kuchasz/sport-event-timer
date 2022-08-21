@@ -73,13 +73,12 @@ jobs:
                   REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
 
             - name: Publish
-              uses: garygrossgarten/github-action-ssh@release
+              uses: appleboy/ssh-action@master
               with:
                   host: ${{ secrets.OVH_REMOTE_HOST }}
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   key: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
-                  tryKeyboard: true
-                  command: |
+                  script: |
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       unzip set-hub-package.zip
                       cd server
