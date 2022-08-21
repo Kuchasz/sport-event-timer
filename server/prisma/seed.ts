@@ -1,15 +1,15 @@
 import { db } from "../db";
 
 async function main() {
-    db.user.upsert({
+    await db.user.upsert({
         where: {
-            id: 0
+            id: 1
         },
         update: {},
         create: {
             login: 'admin',
             password: 'admin',
-            id: 0
+            id: 1
         }
     })
 }
