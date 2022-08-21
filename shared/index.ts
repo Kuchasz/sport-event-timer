@@ -77,6 +77,10 @@ export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
     return i.sort((a, b) => func(b) - func(a));
 };
 
+export const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
