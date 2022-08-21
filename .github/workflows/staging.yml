@@ -49,6 +49,7 @@ jobs:
             - name: Build server
               run: |
                   cd ./server
+                  yarn install
                   yarn build
 
             - name: Bundle ZIP package
