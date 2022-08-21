@@ -85,8 +85,10 @@ jobs:
                 key: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
+                    pm2 stop all
                     unzip -q set-hub-package.zip
                     cd server
                     yarn install
                     yarn prisma db push
                     yarn prisma db seed
+                    pm2 start all
