@@ -50,7 +50,7 @@ const createPlayers = (stores: { [key: number]: {} }, genders: string[], userId:
                 gender: faker.helpers.arrayElement(genders),
                 birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
                 registeredByUserId: userId,
-                bibNumber: faker.unique(faker.mersenne.rand, [400, 1], { store: stores[c.raceId] }),
+                bibNumber: faker.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
                 city: faker.address.cityName(),
                 classificationId: c.id,
                 raceId: c.raceId,
