@@ -43,26 +43,29 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
                 name: faker.commerce.productName()
             })))
 
-const createPlayers = (stores: { [key: number]: {} }, genders: string[], userId: number, classifications: Classification[]): Omit<Player, "id">[] =>
+const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female')[], userId: number, classifications: Classification[]): Omit<Player, "id">[] =>
     classifications.flatMap(c => {
         return createRange({ from: 0, to: faker.mersenne.rand(200, 20) })
-            .map(() => ({
-                name: faker.name.firstName(),
-                lastName: faker.name.lastName(),
-                gender: faker.helpers.arrayElement(genders),
-                birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
-                registeredByUserId: userId,
-                bibNumber: faker.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
-                city: faker.address.cityName(),
-                classificationId: c.id,
-                raceId: c.raceId,
-                country: faker.address.country(),
-                email: faker.internet.email(),
-                icePhoneNumber: faker.phone.number("###-###-###"),
-                phoneNumber: faker.phone.number("###-###-###"),
-                startTime: faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime(),
-                team: faker.company.name()
-            }))
+            .map(() => {
+                const gender = faker.helpers.arrayElement(genders);
+                return ({
+                    name: faker.name.firstName(gender),
+                    lastName: faker.name.lastName(gender),
+                    gender,
+                    birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
+                    registeredByUserId: userId,
+                    bibNumber: faker.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
+                    city: faker.address.cityName(),
+                    classificationId: c.id,
+                    raceId: c.raceId,
+                    country: faker.address.country(),
+                    email: faker.internet.email(),
+                    icePhoneNumber: faker.phone.number("###-###-###"),
+                    phoneNumber: faker.phone.number("###-###-###"),
+                    startTime: faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime(),
+                    team: faker.company.name()
+                })
+            })
     }
     );
 
