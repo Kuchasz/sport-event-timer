@@ -13,7 +13,7 @@
         "seed": "ts-node prisma/seed.ts"
     },
     "dependencies": {
-        "@prisma/client": "^4.1.0",
+        "@prisma/client": "latest",
         "@set/results": "1.0.0",
         "@set/shared": "1.0.0",
         "@trpc/server": "^9.25.3",
@@ -31,7 +31,7 @@
         "fastq": "^1.13.0",
         "jsonwebtoken": "^8.5.1",
         "node-html-parser": "^5.3.3",
-        "prisma": "^4.1.0",
+        "prisma": "latest",
         "superjson": "^1.9.1",
         "ts-node": "^10.9.1",
         "ts-node-dev": "^2.0.0",
