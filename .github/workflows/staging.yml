@@ -49,7 +49,6 @@ jobs:
             - name: Build server
               run: |
                   cd ./server
-                  yarn install
                   yarn build
 
             - name: Bundle ZIP package
@@ -88,5 +87,6 @@ jobs:
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     unzip -q set-hub-package.zip
                     cd server
+                    yarn install
                     yarn prisma db push
                     yarn prisma db seed
