@@ -73,8 +73,9 @@ jobs:
                   REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
 
     publish:
+        needs: [build]
         runs-on: ubuntu-latest
-        
+
         steps:
           - name: Publish
             uses: appleboy/ssh-action@master
