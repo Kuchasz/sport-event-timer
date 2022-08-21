@@ -560,7 +560,7 @@ const run = async () => {
 
     // if (!isDevelopment) await applyPanel(app);
 
-    server.listen(21822, "0.0.0.0", () => {
+    server.listen(3001, "localhost", () => {
         console.log("SERVER_STARTED_LISTENING");
     });
 

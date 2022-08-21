@@ -9,10 +9,10 @@ import { splitLink } from "@trpc/client/links/splitLink";
 import type { AppRouter } from "@set/server/router";
 
 const url =
-    process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
+    process.env.NODE_ENV === "production" ? `https://api.rura.cc/api/trpc` : "http://localhost:3001/api/trpc";
 
 const wsUrl =
-    process.env.NODE_ENV === "production" ? `ws://20.234.101.215:21822/api/trpc` : "ws://localhost:21822/api/trpc";
+    process.env.NODE_ENV === "production" ? `wss://api.rura.cc/api/trpc` : "ws://localhost:3001/api/trpc";
 
 const wsClient =
     typeof window === "undefined"

@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     );
 }
 
-// const url = process.env.NODE_ENV === "production" ? `http://20.234.101.215:21822/api/trpc` : "http://localhost:21822/api/trpc";
+// const url = process.env.NODE_ENV === "production" ? `https://api.rura.cc/api/trpc` : "http://localhost:3001/api/trpc";
 
 export default MyApp;
 
