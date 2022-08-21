@@ -20,6 +20,8 @@
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^18.7.2",
         "@types/ws": "^8.5.3",
+        "csv-parse": "^5.3.0",
+        "csv-stringify": "^6.2.0",
         "dotenv": "^16.0.0",
         "fastq": "^1.13.0",
         "jsonwebtoken": "^8.5.1",
