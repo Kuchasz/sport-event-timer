@@ -28,30 +28,31 @@ jobs:
               with:
                   node-version: "16.x"
 
-            - name: npm install
+            - name: Install dependencies
               run: yarn install
 
-            - name: shared_build, and test
+            - name: Build shared
               run: |
                   cd ./shared
-                  yarn run build
+                  yarn build
 
-            - name: timer_build, and test
+            - name: Build timer
               run: |
                   cd ./timer
-                  yarn run build
+                  yarn build
 
-            - name: panel_build, and test
+            - name: Build panel
               run: |
                   cd ./panel
                   yarn build
 
-            - name: server_build, and test
+            - name: Build server
               run: |
                   cd ./server
-                  yarn run build
+                  yarn build
 
-            - uses: montudor/action-zip@v1
+            - name: Bundle ZIP package
+              uses: montudor/action-zip@v1
               with:
                   args: zip -qq -r set-hub-package.zip panel shared timer server node_modules
 
@@ -59,7 +60,7 @@ jobs:
                   mkdir package
                   mv set-hub-package.zip package/set-hub-package.zip
 
-            - name: upload artifact to staging
+            - name: Upload artifact
               uses: easingthemes/ssh-deploy@main
               with:
                   TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
