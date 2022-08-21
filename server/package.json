@@ -13,6 +13,7 @@
         "seed": "ts-node prisma/seed.ts"
     },
     "dependencies": {
+        "@faker-js/faker": "^7.4.0",
         "@prisma/client": "latest",
         "@set/results": "1.0.0",
         "@set/shared": "1.0.0",
