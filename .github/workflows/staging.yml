@@ -72,6 +72,10 @@ jobs:
                   REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
 
+    publish:
+      runs-on: ubuntu-latest
+
+        steps:
             - name: Publish
               uses: appleboy/ssh-action@master
               with:
@@ -80,7 +84,7 @@ jobs:
                   key: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
                   script: |
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
-                      unzip set-hub-package.zip
+                      unzip -q set-hub-package.zip
                       cd server
                       yarn prisma db push
                       yarn prisma db seed
