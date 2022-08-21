@@ -2007,7 +2007,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@set/results@1.0.0, @set/results@workspace:results":
+"@set/results@workspace:results":
   version: 0.0.0-use.local
   resolution: "@set/results@workspace:results"
   dependencies:
@@ -2044,7 +2044,6 @@ __metadata:
   dependencies:
     "@faker-js/faker": ^7.4.0
     "@prisma/client": latest
-    "@set/results": 1.0.0
     "@set/shared": 1.0.0
     "@trpc/server": ^9.25.3
     "@types/cookie-parser": ^1.4.3
@@ -2066,6 +2065,7 @@ __metadata:
     ts-node: ^10.9.1
     ts-node-dev: ^2.0.0
     typescript: ^4.4.3
+    ws: ^8.8.1
     zod: ^3.17.3
   languageName: unknown
   linkType: soft
@@ -9716,6 +9716,21 @@ __metadata:
     imurmurhash: ^0.1.4
     signal-exit: ^3.0.7
   checksum: 8f780232533ca6223c63c9b9c01c4386ca8c625ebe5017a9ed17d037aec19462ae17109e0aa155bff5966ee4ae7a27b67a99f55caf3f32ffd84155e9da3929fc
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.8.1":
+  version: 8.8.1
+  resolution: "ws@npm:8.8.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 2152cf862cae0693f3775bc688a6afb2e989d19d626d215e70f5fcd8eb55b1c3b0d3a6a4052905ec320e2d7734e20aeedbf9744496d62f15a26ad79cf4cf7dae
   languageName: node
   linkType: hard
 
