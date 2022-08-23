@@ -1,10 +1,8 @@
 import * as fs from "../async-fs";
 import * as trpc from "@trpc/server";
 import { db } from "../db";
-import { dispatchAction } from "./action";
 import { RegistrationPlayer } from "@set/timer/dist/model";
 import { TRPCError } from "@trpc/server";
-import { upload } from "@set/timer/dist/slices/players";
 import { z } from "zod";
 
 const ClassificationsEnum = z.enum(["rnk_pro", "rnk_fun", "rnk_tt", "gc", "all"]);
@@ -101,36 +99,6 @@ export const playerRouter = trpc
                 bibNumber: p.bibNumber,
                 absoluteStartTime: race.date.getTime() + p.startTime!
             }));
-        }
-    })
-    .mutation("push-players", {
-        input: z.object({
-            raceId: z.number({ required_error: "raceId is required" })
-        }),
-        async resolve({ input }) {
-            const { raceId } = input;
-            const players = await db.player.findMany({ where: { raceId } });
-
-            const anyPlayerInvalid = players.some(r => !r.bibNumber || !r.startTime);
-            if (anyPlayerInvalid)
-                throw new TRPCError({
-                    message: "At least one of players does not have BibNumber or StartTime",
-                    code: "FORBIDDEN"
-                });
-
-            dispatchAction(
-                raceId,
-                "",
-                upload(
-                    players.map(p => ({
-                        id: p.id,
-                        name: p.name,
-                        lastName: p.lastName,
-                        bibNumber: p.bibNumber!,
-                        startTime: p.startTime!
-                    }))
-                )
-            );
         }
     })
     .mutation("delete", {
