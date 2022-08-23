@@ -1,5 +1,4 @@
 import actionsHistory from "./slices/actions-history";
-import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
 import {
@@ -12,7 +11,6 @@ import {
 const reducer = combineReducers({
     timeKeepers,
     timeStamps,
-    raceCategories,
     actionsHistory
 });
 
