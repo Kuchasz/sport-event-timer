@@ -1,5 +1,4 @@
 import actionsHistory from "./slices/actions-history";
-import players from "./slices/players";
 import raceCategories from "./slices/race-categories";
 import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
@@ -11,7 +10,6 @@ import {
     } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
-    players,
     timeKeepers,
     timeStamps,
     raceCategories,

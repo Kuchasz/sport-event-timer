@@ -1,27 +1,21 @@
 import Icon from "@mdi/react";
 import { ActionButton } from "../../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/shared/dist/utils";
-import {
-    mdiFloppy,
-    mdiMinus,
-    mdiPlus,
-    mdiRestart
-    } from "@mdi/js";
+import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "../../../../components/stopwatch/player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../hooks";
 import { useRouter } from "next/router";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
+import { trpc } from "trpc";
 
 type TypedPlayerProps = {
     playerNumber: string;
 };
 
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">
-        {playerNumber}
-    </div>
+    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">{playerNumber}</div>
 );
 
 type BtnProps = {
@@ -47,14 +41,22 @@ const Minus = ({ changeTime }: BtnProps) => (
 const Digit = ({ number }: { number: string }) => <div className="text-6xl mb-2 text-center">{number}</div>;
 
 const TweakTimeStamps = () => {
-    const { query: {timeStampId}, back } = useRouter();
-    const allTimeStamps = useTimerSelector(x => x.timeStamps);
-    const allPlayers = useTimerSelector(x => x.players);
+    const {
+        query: { timeStampId },
+        back,
+    } = useRouter();
+    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+    const {
+        query: { raceId },
+    } = useRouter();
+
+    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+
     const dispatch = useTimerDispatch();
     const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));
 
-    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId! as string));
-    const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
+    const timeStamp = allTimeStamps.find((x) => x.id === parseInt(timeStampId! as string));
+    const player = allPlayers!.find((x) => x.bibNumber === timeStamp?.bibNumber);
 
     const [currentTime, setCurrentTime] = useState<number>(timeStamp!.time);
 

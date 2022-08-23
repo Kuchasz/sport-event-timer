@@ -3,6 +3,8 @@ import { getAvailableDigits, getAvailableNumbers } from "@set/shared/dist/utils"
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerSelector } from "../../hooks";
+import { useRouter } from "next/router";
+import { trpc } from "trpc";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -13,9 +15,7 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">
-        {playerNumber}
-    </div>
+    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">{playerNumber}</div>
 );
 
 type CheckInPlayerProps = {
@@ -42,28 +42,34 @@ type PlayersDialPadProps = {
 
 export const PlayersCheckIn = ({ onPlayerCheckIn, title, timeKeeperId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
-    const allPlayers = useTimerSelector(x => x.players);
-    const allTimeStamps = useTimerSelector(x => x.timeStamps);
 
-    const playersWithTimeStamps = allPlayers.map(x => ({
+    const {
+        query: { raceId },
+    } = useRouter();
+
+    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+
+    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+
+    const playersWithTimeStamps = allPlayers!.map((x) => ({
         ...x,
-        timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timeKeeperId === timeKeeperId)
+        timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timeKeeperId === timeKeeperId),
     }));
 
-    const playersWithoutTimeStamps = playersWithTimeStamps.filter(x => x.timeStamp === undefined);
-    const playersNumbersWithoutTimeStamps = playersWithoutTimeStamps.map(x => x.bibNumber);
+    const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
+    const playersNumbersWithoutTimeStamps = playersWithoutTimeStamps.map((x) => x.bibNumber);
 
     const availableNumbers = getAvailableNumbers(playerNumber, playersNumbersWithoutTimeStamps);
-    const availablePlayers = playersWithoutTimeStamps.filter(p => availableNumbers.includes(p.bibNumber));
+    const availablePlayers = playersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.bibNumber));
 
     return (
         <div className="flex h-full flex-col">
             {title && <h1 className="text-2xl text-center py-4">{title}</h1>}
             <div className="flex-auto flex flex-col-reverse mx-12 overflow-y-auto mt-2 items-stretch h-3/5">
-                {availablePlayers.map(p => (
+                {availablePlayers.map((p) => (
                     <CheckInPlayer
                         key={p.bibNumber}
-                        onPlayerCheckIn={bibNumber => {
+                        onPlayerCheckIn={(bibNumber) => {
                             onPlayerCheckIn(bibNumber);
                             setPlayerNumber("");
                         }}

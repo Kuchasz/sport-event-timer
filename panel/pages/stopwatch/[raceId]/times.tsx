@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { getCurrentTime } from "@set/shared/dist";
 import { useAtom } from "jotai";
 import { timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { trpc } from "trpc";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -126,17 +127,17 @@ const PlayersTimes = () => {
     const [offset] = useAtom(timeOffsetAtom);
 
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const allPlayers = useTimerSelector((x) => x.players);
-
     const {
         query: { raceId },
     } = useRouter();
+
+    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
 
     const times = allTimeStamps
         .filter((s) => s.timeKeeperId === timeKeeperId)
         .map((s) => ({
             ...s,
-            player: allPlayers.find((p) => s.bibNumber === p.bibNumber),
+            player: allPlayers!.find((p) => s.bibNumber === p.bibNumber),
         }));
 
     const onAddTime = () =>
