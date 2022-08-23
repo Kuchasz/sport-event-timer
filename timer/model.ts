@@ -134,8 +134,6 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
 export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
     updateBy(items, item, i => i.id === item.id);
 
-export const uploadPlayers = (_players: Player[], newPlayers: Player[]): Player[] => newPlayers;
-
 export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
     pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
 

@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
-import { mdiAccountSyncOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "../../utils";
 import { NiceModal } from "../../components/modal";
 import { PlayerCreate } from "../../components/player-create";
@@ -101,12 +101,7 @@ const Players = () => {
     const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
     const addPlayerMutation = trpc.useMutation(["player.add"]);
     const editPlayerMutation = trpc.useMutation(["player.edit"]);
-    const pushPlayersMutation = trpc.useMutation(["player.push-players"]);
-
-    const pushPlayersToTimer = async () => {
-        pushPlayersMutation.mutate({ raceId: raceId! });
-    };
-
+    
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayer>(NiceModal, {
             title: "Create new player",
@@ -175,10 +170,6 @@ const Players = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
-                    <Button onClick={pushPlayersToTimer} autoCapitalize="false">
-                        <Icon size={1} path={mdiAccountSyncOutline} />
-                        <span className="ml-2">Push to Stopwatch</span>
-                    </Button>
                     {/* <div className="px-1"></div>
                     <Button autoCapitalize="false">
                         <Icon size={1} path={mdiNumeric} />
