@@ -30,6 +30,14 @@ const playerSchema = z.object({
     })
 });
 
+const stopwatchPlayersSchema = z.array(
+    z.object({
+        name: z.string(), 
+        lastName: z.string(), 
+        bibNumber: z.number(), 
+        startTime: z.number().optional()
+    }));
+
 export const playerRouter = trpc
     .router()
     .query("legacy-players", {
@@ -47,6 +55,23 @@ export const playerRouter = trpc
                 where: { raceId: raceId },
                 include: { classification: true }
             });
+        }
+    })
+    .query("stopwatch-players", {
+        input: z.object({ raceId: z.number({ required_error: "raceId is required" }) }),
+        output: stopwatchPlayersSchema,
+        async resolve({ input }) {
+            const { raceId } = input;
+            const players = await db.player.findMany({
+                where: { raceId: raceId, bibNumber: { not: null } },
+                select: {
+                    name: true,
+                    lastName: true,
+                    bibNumber: true,
+                    startTime: true
+                }
+            });
+            return players as z.TypeOf<typeof stopwatchPlayersSchema>;
         }
     })
     .query("start-list", {

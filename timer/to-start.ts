@@ -75,7 +75,7 @@ export const emptyToStartPlayer = {
 const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
 
 export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player => ({
-    id: i,
+    // id: i,
     name: player["Imię"],
     lastName: player["Nazwisko"],
     // gender: getGender(player["Płeć"]),

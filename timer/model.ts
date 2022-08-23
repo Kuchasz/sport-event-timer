@@ -44,7 +44,7 @@ export type RegistrationPlayer = {
 };
 
 export type Player = {
-    id: number;
+    // id: number;
     name: string;
     lastName: string;
     bibNumber: number;
@@ -133,12 +133,6 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
 
 export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
     updateBy(items, item, i => i.id === item.id);
-
-export const registerPlayer = (players: Player[], newPlayer: Omit<Player, "id">): Player[] =>
-    pipe(players, Arr.append({ ...newPlayer, id: getNextId(players) }));
-
-export const changePlayerInfo = (players: Player[], modifiedPlayer: Player): Player[] =>
-    updateItem(players, modifiedPlayer);
 
 export const uploadPlayers = (_players: Player[], newPlayers: Player[]): Player[] => newPlayers;
 
