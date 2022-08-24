@@ -6,11 +6,11 @@ import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-tim
 import { useTimerDispatch, useTimerSelector } from "hooks";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";
 
 const PlayersList = () => {
-    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
 
     const {
@@ -24,7 +24,7 @@ const PlayersList = () => {
     const players = sort(
         allPlayers!.map((x) => ({
             ...x,
-            timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timeKeeperId === timeKeeperId),
+            timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
         })),
         (p) => p.startTime || Number.MAX_VALUE
     );
@@ -35,7 +35,7 @@ const PlayersList = () => {
         dispatch(
             add({
                 bibNumber,
-                timeKeeperId: timeKeeperId!,
+                timingPointId: timingPointId!,
                 time: getCurrentTime(offset!),
             })
         );

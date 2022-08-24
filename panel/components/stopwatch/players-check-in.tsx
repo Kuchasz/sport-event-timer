@@ -37,10 +37,10 @@ export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) =
 type PlayersDialPadProps = {
     onPlayerCheckIn: (bibNumber: number) => void;
     title?: string;
-    timeKeeperId?: number;
+    timingPointId?: number;
 };
 
-export const PlayersCheckIn = ({ onPlayerCheckIn, title, timeKeeperId }: PlayersDialPadProps) => {
+export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
 
     const {
@@ -53,7 +53,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timeKeeperId }: Players
 
     const playersWithTimeStamps = allPlayers!.map((x) => ({
         ...x,
-        timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timeKeeperId === timeKeeperId),
+        timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
     }));
 
     const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
