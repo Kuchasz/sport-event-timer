@@ -73,7 +73,7 @@ const Index = ({}: Props) => {
                         render={(r: itemsType) => (
                             <div>
                                 {formatTime(
-                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timeKeeperId === 0)?.time
+                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timingPointId === 0)?.time
                                 )}
                             </div>
                         )}
@@ -82,7 +82,7 @@ const Index = ({}: Props) => {
                         render={(r: itemsType) => (
                             <div>
                                 {formatTime(
-                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timeKeeperId === 1)?.time
+                                    state.timeStamps.find(ts => ts.playerId === r.id && ts.timingPointId === 1)?.time
                                 )}
                             </div>
                         )}

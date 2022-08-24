@@ -10,7 +10,7 @@ import { useTimerDispatch, useTimerSelector } from "../../../hooks";
 import { useRouter } from "next/router";
 import { getCurrentTime } from "@set/shared/dist";
 import { useAtom } from "jotai";
-import { timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";
 
 type TimeStampWithPlayer = TimeStamp & {
@@ -123,7 +123,7 @@ const Item = ({
 };
 
 const PlayersTimes = () => {
-    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
 
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
@@ -134,7 +134,7 @@ const PlayersTimes = () => {
     const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
 
     const times = allTimeStamps
-        .filter((s) => s.timeKeeperId === timeKeeperId)
+        .filter((s) => s.timingPointId === timingPointId)
         .map((s) => ({
             ...s,
             player: allPlayers!.find((p) => s.bibNumber === p.bibNumber),
@@ -143,7 +143,7 @@ const PlayersTimes = () => {
     const onAddTime = () =>
         dispatch(
             add({
-                timeKeeperId: timeKeeperId!,
+                timingPointId: timingPointId!,
                 time: getCurrentTime(offset!),
             })
         );

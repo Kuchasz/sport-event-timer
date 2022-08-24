@@ -1,12 +1,12 @@
 import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { timeKeeperIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "stopwatch-states";
 import { PlayersCheckIn } from "../../../../components/stopwatch/players-check-in";
 import { useTimerDispatch } from "../../../../hooks";
 
 const PlayersAssignTime = () => {
-    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const dispatch = useTimerDispatch();
     
     const {
@@ -21,7 +21,7 @@ const PlayersAssignTime = () => {
                 back();
             }}
             title="Assign time to player"
-            timeKeeperId={timeKeeperId}
+            timingPointId={timingPointId}
         />
     );
 };

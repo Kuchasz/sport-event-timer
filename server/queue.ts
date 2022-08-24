@@ -1,13 +1,13 @@
 import { db, stopwatchStateProvider } from "./db";
 import * as fastq from "fastq";
 
-type ActualSplitTime = { id: number; bibNumber: number; time: number; timeKeeperId: number };
+type ActualSplitTime = { id: number; bibNumber: number; time: number; timingPointId: number };
 type ExistingSplitTime = { id: number; bibNumber: number; time: bigint; timingPointId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
     actual.bibNumber === existing.bibNumber &&
     actual.time === Number(existing.time) &&
-    actual.timeKeeperId === existing.timingPointId;
+    actual.timingPointId === existing.timingPointId;
 
 type UpdateSplitTimesTask = {
     raceId: number
@@ -37,7 +37,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
                 bibNumber: data?.bibNumber!,
                 time: data?.time!,
                 raceId,
-                timingPointId: data?.timeKeeperId!
+                timingPointId: data?.timingPointId!
             }
         });
     }

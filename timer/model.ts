@@ -82,7 +82,7 @@ export type HistoricAction = {
 export type TimeStamp = {
     id: number;
     bibNumber?: number;
-    timeKeeperId: number;
+    timingPointId: number;
     time: number;
 };
 
@@ -94,7 +94,7 @@ export type State = {
 
 export type RaceResult = {
     player: Omit<Player, "id">;
-    timeStamps: { [timeKeeperId: number]: number };
+    timeStamps: { [timingPointId: number]: number };
 };
 
 export type RaceResults = RaceResult[];

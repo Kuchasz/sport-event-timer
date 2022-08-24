@@ -3,10 +3,10 @@ import { reassignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { useTimerDispatch } from "../../../../hooks";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { timeKeeperIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "stopwatch-states";
 
 const PlayersReassignTime = () => {
-    const [timeKeeperId] = useAtom(timeKeeperIdAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const dispatch = useTimerDispatch();
 
     const {
@@ -21,7 +21,7 @@ const PlayersReassignTime = () => {
                 back();
             }}
             title="Reassign time to player"
-            timeKeeperId={timeKeeperId}
+            timingPointId={timingPointId}
         />
     );
 };
