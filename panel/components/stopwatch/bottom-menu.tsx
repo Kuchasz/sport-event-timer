@@ -14,10 +14,10 @@ type BottomMenuButtonProps = {
 };
 
 const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProps) => {
-    const opacity = `/stopwatch/${path}` === chosenPath ? "opacity-100" : "opacity-20";
+    const opacity = `/stopwatch/${path}` === chosenPath ? "opacity-100 pointer-events-none" : "opacity-20 hover:opacity-50 cursor-pointer";
     return (
         <Link href={`/stopwatch/${path}`}>
-            <span className={`${opacity} hover:opacity-50 cursor-pointer transition-opacity w-12 flex flex-col items-center px-4 py-2`}>
+            <span className={`${opacity} transition-opacity w-12 flex flex-col items-center px-4 py-2`}>
                 <Icon color="white" size={1} path={icon} />
                 <p className="text-xs text-white font-semibold">{text}</p>
             </span>
