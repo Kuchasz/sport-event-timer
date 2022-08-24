@@ -43,3 +43,6 @@ start*.json
 uploaded*
 classifications.json
 server/prisma/database*.*
+*.js.map
+workbox-*
+sw.js
