@@ -82,19 +82,17 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
                         <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-800 h-full w-screen text-white">
                             <Status />
-                            <div id="module-holder" className="relative overflow-hidden h-full flex-col flex-1">
-                                <div className="h-full flex-1 overflow-y-scroll">
-                                    {isOffline ? (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <div className="flex-col">
-                                                <div className="text-4xl font-semibold">APP IS OFFLINE ::SAD::</div>
-                                                <div className="">Wait for the app to reconnect or kill the app and run it again</div>
-                                            </div>
+                            <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
+                                {isOffline ? (
+                                    <div className="w-full h-full flex items-center justify-center">
+                                        <div className="flex-col">
+                                            <div className="text-4xl font-semibold">APP IS OFFLINE ::SAD::</div>
+                                            <div className="">Wait for the app to reconnect or kill the app and run it again</div>
                                         </div>
-                                    ) : (
-                                        <Component {...pageProps} />
-                                    )}
-                                </div>
+                                    </div>
+                                ) : (
+                                    <Component {...pageProps} />
+                                )}
                             </div>
                             <div>
                                 <BottomMenu />
