@@ -1,5 +1,4 @@
 import actionsHistory from "./slices/actions-history";
-import timeKeepers from "./slices/time-keepers";
 import timeStamps from "./slices/time-stamps";
 import {
     AnyAction,
@@ -9,7 +8,6 @@ import {
     } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
-    timeKeepers,
     timeStamps,
     actionsHistory
 });
