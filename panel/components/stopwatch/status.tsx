@@ -7,6 +7,8 @@ import { Timer } from "./timer";
 import { useTimerSelector } from "../../hooks";
 import { useAtom } from "jotai";
 import { connectionStateAtom, timeKeeperIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { useRouter } from "next/router";
+import { trpc } from "trpc";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
     switch (state) {
@@ -39,7 +41,12 @@ const getTextFromConnectionState = (state: ConnectionState) => {
 
 export const Status = () => {
     const [connectionState] = useAtom(connectionStateAtom);
-    const allTimeKeepers = useTimerSelector((x) => x.timeKeepers);
+    const {
+        query: { raceId },
+    } = useRouter();
+    const { data: allTimeKeepers } = trpc.useQuery(["timing-point.timingPoints", { raceId: parseInt(raceId as string) }], {
+        initialData: [],
+    });
     const [timeKeeperId] = useAtom(timeKeeperIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
     const timeKeeperName = allTimeKeepers?.find((tk) => tk.id === timeKeeperId)?.name;
