@@ -10,7 +10,7 @@ export const PlayerWithTimeStampDisplay = ({
 }: {
     playerWithTimeStamp: Partial<PlayerWithTimeStamp>;
 }) => (
-    <span className="flex grow h-12">
+    <span className="flex items-center grow h-12">
         <span className="text-3xl mr-4">
             {playerWithTimeStamp.bibNumber !== undefined ? formatNumber(playerWithTimeStamp.bibNumber, 3) : "- - -"}
         </span>

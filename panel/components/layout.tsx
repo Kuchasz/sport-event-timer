@@ -98,7 +98,7 @@ const Status = () => {
     const { selectRace } = useContext(CurrentRaceContext);
 
     const openCreateDialog = async () => {
-        console.log('open create modal')
+        
         const race = await Demodal.open<CreatedRace>(NiceModal, {
             title: "Create new race",
             component: RaceCreate,
