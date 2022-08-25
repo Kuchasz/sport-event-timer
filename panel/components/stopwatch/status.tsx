@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { useRouter } from "next/router";
 import { trpc } from "trpc";
+import classNames from "classnames";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
     switch (state) {
@@ -52,18 +53,29 @@ export const Status = () => {
     const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order).map((tk) => tk.id);
 
     return (
-        <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
-            <span className="flex">
-                {timingPointId > 0 && allTimeKeepers?.length && (
-                    <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timingPointId} isLast={false} />
-                )}
-                <span>{timeKeeperName ?? "MISSING CONFIG"}</span>
-            </span>
-            <Timer offset={offset!} />
-            <span className="text-xs flex items-center">
+        <div>
+            <span
+                className={classNames("text-xs w-full transition-all bg-transparent h-0 flex justify-center items-center", {
+                    ["invisible"]: connectionState === "connected",
+                    ["visible h-auto py-2"]: connectionState !== "connected",
+                    ["bg-red-600"]: connectionState === "disconnected" || connectionState === "error",
+                    ["bg-orange-600"]: connectionState === "connecting",
+                })}
+            >
                 <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
-                <Icon path={getIconFromConnectionState(connectionState)} size={1} />
+                <Icon path={getIconFromConnectionState(connectionState)} size={0.8} />
             </span>
+            <div className="px-2 py-4 w-screen justify-between flex-shrink-0 flex items-center font-semibold">
+                <Timer offset={offset!} />
+                <span>
+                    <span className="flex">
+                        {timingPointId > 0 && allTimeKeepers?.length && (
+                            <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timingPointId} isLast={false} />
+                        )}
+                        <span>{timeKeeperName ?? "MISSING CONFIG"}</span>
+                    </span>
+                </span>
+            </div>
         </div>
     );
 };
