@@ -55,10 +55,10 @@ export const Status = () => {
     return (
         <div className="px-5 w-screen flex-shrink-0 flex items-center justify-between bg-gradient-to-r from-orange-500 to-red-500 font-semibold h-10">
             <span className="flex">
-                {timingPointId !== undefined && allTimeKeepers?.length && (
+                {timingPointId > 0 && allTimeKeepers?.length && (
                     <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timingPointId} isLast={false} />
                 )}
-                <span>{timeKeeperName ?? "NO_TIMEKEEPER"}</span>
+                <span>{timeKeeperName ?? "MISSING CONFIG"}</span>
             </span>
             <Timer offset={offset!} />
             <span className="text-xs flex items-center">

@@ -14,12 +14,13 @@ type BottomMenuButtonProps = {
 };
 
 const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProps) => {
-    const opacity = `/stopwatch/${path}` === chosenPath ? "opacity-100 pointer-events-none" : "opacity-20 hover:opacity-50 cursor-pointer";
+    const classes = `/stopwatch/${path}` === chosenPath ? "opacity-100 pointer-events-none bg-orange-500" : "opacity-20 hover:opacity-50 cursor-pointer";
+    const classes2 = `/stopwatch/${path}` === chosenPath ? 'w-auto ml-2 text-white' : 'w-[0px] ml-0 overflow-hidden text-transparent';
     return (
         <Link href={`/stopwatch/${path}`}>
-            <span className={`${opacity} transition-opacity w-12 flex flex-col items-center px-4 py-2`}>
+            <span className={`${classes} rounded-full transition-opacity flex items-center px-4 py-1`}>
                 <Icon color="white" size={1} path={icon} />
-                <p className="text-xs text-white font-semibold">{text}</p>
+                <p className={`${classes2} transition-all text-sm font-semibold`}>{text}</p>
             </span>
         </Link>
     );
@@ -33,7 +34,7 @@ export const BottomMenu = () => {
     const mode = asPath as Paths;
 
     return (
-        <div className="flex justify-around select-none text-black">
+        <div className="flex justify-around select-none text-black py-2">
             <BottomMenuButton path={raceId + "/config"} text="Config" icon={mdiCog} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/list"} text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/pad"} text="Pad" icon={mdiDialpad} chosenPath={mode} />
