@@ -48,7 +48,7 @@ const Item = ({
 
         const dX = x - touchStartX;
 
-        const translation = dX > 15 ? dX : 0;
+        const translation = dX > 30 ? dX : 0;
 
         targetElement.current.style.transform = `translateX(${translation}px)`;
     };
