@@ -4,7 +4,6 @@ import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherClo
 import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
-import { useTimerSelector } from "../../hooks";
 import { useAtom } from "jotai";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { useRouter } from "next/router";
