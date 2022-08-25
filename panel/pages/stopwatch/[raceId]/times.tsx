@@ -76,12 +76,15 @@ const Item = ({
                 deleteTargetElement(e.changedTouches[0].clientX);
             }}
             onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
-            className="relative bg-yellow-700 overflow-hidden"
+            className="relative overflow-hidden"
         >
-            <div ref={targetBackground} className="w-full pl-8 h-full flex items-center top-0 bg-red-500 absolute">
-                <Icon size={1} path={mdiDeleteOutline} />
-            </div>
-            <div className="flex p-4 items-center relative bg-gray-800 z-10" ref={targetElement}>
+            <div className="flex my-1 py-2 px-4 items-center relative rounded-xl bg-gray-900 z-10" ref={targetElement}>
+                <div
+                    ref={targetBackground}
+                    className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 absolute -ml-[70px]"
+                >
+                    <Icon size={1} path={mdiDeleteOutline} />
+                </div>
                 <PlayerWithTimeStampDisplay
                     playerWithTimeStamp={{
                         timeStamp: t,
@@ -161,9 +164,11 @@ const PlayersTimes = () => {
                     <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            {sort(times).map((t) => (
-                <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId as string)} />
-            ))}
+            <div className="px-2 text-white">
+                {sort(times).map((t) => (
+                    <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId as string)} />
+                ))}
+            </div>
         </div>
     );
 };
