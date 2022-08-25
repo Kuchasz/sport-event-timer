@@ -86,7 +86,7 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
                                 {isOffline ? (
                                     <div className="w-full h-full flex items-center justify-center">
                                         <div className="flex-col">
-                                            <div className="text-4xl font-semibold">APP IS OFFLINE ::SAD::</div>
+                                            <div className="text-xl font-semibold">APP IS OFFLINE</div>
                                             <div className="">Wait for the app to reconnect or kill the app and run it again</div>
                                         </div>
                                     </div>
