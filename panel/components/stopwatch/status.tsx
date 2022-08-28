@@ -5,6 +5,7 @@ import { sort } from "@set/shared/dist";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
+import Link from "next/link";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { useRouter } from "next/router";
 import { trpc } from "trpc";
@@ -39,6 +40,28 @@ const getTextFromConnectionState = (state: ConnectionState) => {
     }
 };
 
+const SelectedTimingPoint = ({
+    timingPoints,
+    timingPointId,
+    timingPointName,
+}: {
+    timingPoints: number[];
+    timingPointId: number;
+    timingPointName: string | undefined;
+}) => (
+    <span className="flex bg-zinc-300 px-3 py-1 rounded-full">
+        <TimeKeeperIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
+
+        <span>{timingPointName ?? "SELECT TIMING POINT"}</span>
+    </span>
+);
+
+const WarningMessage = ({ contents }: { contents: string }) => (
+    <span className="flex text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+        <span>{contents}</span>
+    </span>
+);
+
 export const Status = () => {
     const [connectionState] = useAtom(connectionStateAtom);
     const {
@@ -49,7 +72,7 @@ export const Status = () => {
     });
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
-    const timeKeeperName = allTimeKeepers?.find((tk) => tk.id === timingPointId)?.name;
+    const timeKeeperName = allTimeKeepers!.find((tk) => tk.id === timingPointId)?.name;
     const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order).map((tk) => tk.id);
 
     return (
@@ -67,14 +90,21 @@ export const Status = () => {
             </span>
             <div className="px-2 py-4 w-screen justify-between flex-shrink-0 flex items-center font-semibold">
                 <Timer offset={offset!} />
-                <span>
-                    <span className="flex">
-                        {timingPointId > 0 && allTimeKeepers?.length && (
-                            <TimeKeeperIcon isFirst={sortedTimeKeepers[0] === timingPointId} isLast={false} />
+                <Link href={`/stopwatch/${raceId}/config`}>
+                    <span>
+                        {sortedTimeKeepers.length === 0 ? (
+                            <WarningMessage contents={"NO TIMING POINTS"} />
+                        ) : timingPointId === undefined || timingPointId === 0 ? (
+                            <WarningMessage contents={"CONFIG TIMING POINT"} />
+                        ) : (
+                            <SelectedTimingPoint
+                                timingPointId={timingPointId}
+                                timingPointName={timeKeeperName}
+                                timingPoints={sortedTimeKeepers}
+                            />
                         )}
-                        <span>{timeKeeperName ?? "MISSING CONFIG"}</span>
                     </span>
-                </span>
+                </Link>
             </div>
         </div>
     );

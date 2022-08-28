@@ -41,9 +41,9 @@ const PlayersList = () => {
         );
     const { push } = useRouter();
     return (
-        <div className="px-2 text-white">
+        <div className="px-2">
             {players.map((p) => (
-                <div key={p.bibNumber} className="my-1 py-2 px-4 rounded-xl bg-zinc-900 flex items-center">
+                <div key={p.bibNumber} className="my-1 py-2 px-4 rounded-xl bg-white flex items-center">
                     <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
                     {p.timeStamp ? (
                         <PrimaryActionButton icon={mdiAlarmOff} onClick={() => onReset(p.timeStamp!.id)} />
