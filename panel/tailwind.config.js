@@ -9,7 +9,7 @@ module.exports = {
     //         pattern: /./
     //     }
     // ],
-    content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
+    content: ["./pages/**/*.tsx", "./components/**/*.tsx", "./apps/**/*.tsx"],
     theme: {
         colors: {
             // ...colors,

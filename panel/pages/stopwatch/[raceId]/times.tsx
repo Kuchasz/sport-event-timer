@@ -78,7 +78,7 @@ const Item = ({
             onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
             className="relative overflow-hidden"
         >
-            <div className="flex my-1 py-2 px-4 items-center relative rounded-xl bg-gray-900 z-10" ref={targetElement}>
+            <div className="flex mt-1 py-2 px-4 items-center relative rounded-xl bg-white z-10" ref={targetElement}>
                 <div
                     ref={targetBackground}
                     className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 absolute -ml-[70px]"
@@ -164,7 +164,7 @@ const PlayersTimes = () => {
                     <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            <div className="px-2 text-white">
+            <div className="px-2">
                 {sort(times).map((t) => (
                     <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId as string)} />
                 ))}

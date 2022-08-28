@@ -20,8 +20,8 @@ const Config = () => {
     };
 
     return (
-        <div className="flex h-full w-full items-center bg-zinc-800 flex-col">
-            <div className="flex flex-grow h-full w-full justify-center items-center bg-zinc-800 flex-col">
+        <div className="flex h-full w-full items-center flex-col">
+            <div className="flex flex-grow h-full w-full justify-center items-center flex-col">
                 {sortedTimeKeepers.map((tk, id) => (
                     <button
                         onClick={() => setTimingPointId(tk.id)}

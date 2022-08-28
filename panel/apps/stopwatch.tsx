@@ -80,7 +80,7 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
             <trpc.Provider client={trpcClient} queryClient={queryClient}>
                 <QueryClientProvider client={queryClient}>
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
-                        <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-800 h-full w-screen text-white">
+                        <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
                             <Status />
                             <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
                                 {isOffline ? (
