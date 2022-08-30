@@ -43,7 +43,7 @@ const PlayersList = () => {
     return (
         <div className="px-2">
             {players.map((p) => (
-                <div key={p.bibNumber} className="my-1 py-2 px-4 rounded-xl bg-white flex items-center">
+                <div key={p.bibNumber} className="my-1 py-2 px-4 rounded-xl shadow bg-white flex items-center">
                     <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
                     {p.timeStamp ? (
                         <PrimaryActionButton icon={mdiAlarmOff} onClick={() => onReset(p.timeStamp!.id)} />

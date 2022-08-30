@@ -33,10 +33,8 @@ const Item = ({
     let touchStartX = 0;
 
     const targetElement = useRef<HTMLDivElement>(null);
-    const targetBackground = useRef<HTMLDivElement>(null);
-
     const startMoveElement = (x: number) => {
-        if (!targetElement.current || !targetBackground.current) return;
+        if (!targetElement.current) return;
         touchStartX = x;
         targetElement.current.style.transition = "none";
         // targetElement.current.style.willChange = "transform";
@@ -76,13 +74,10 @@ const Item = ({
                 deleteTargetElement(e.changedTouches[0].clientX);
             }}
             onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
-            className="relative overflow-hidden"
+            className=""
         >
-            <div className="flex mt-1 py-2 px-4 items-center relative rounded-xl bg-white z-10" ref={targetElement}>
-                <div
-                    ref={targetBackground}
-                    className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 absolute -ml-[70px]"
-                >
+            <div className="flex mt-1 py-2 px-4 items-center relative rounded-xl shadow bg-white" ref={targetElement}>
+                <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
                     <Icon size={1} path={mdiDeleteOutline} />
                 </div>
                 <PlayerWithTimeStampDisplay
