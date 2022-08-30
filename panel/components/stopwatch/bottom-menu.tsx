@@ -14,7 +14,7 @@ type BottomMenuButtonProps = {
 };
 
 const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProps) => {
-    const classes = `/stopwatch/${path}` === chosenPath ? "opacity-100 pointer-events-none bg-orange-200 text-orange-600" : "opacity-40 hover:opacity-80 cursor-pointer background-transparent";
+    const classes = `/stopwatch/${path}` === chosenPath ? "opacity-100 pointer-events-none bg-orange-100 text-orange-600" : "opacity-40 hover:opacity-80 cursor-pointer background-transparent";
     const classesText = `/stopwatch/${path}` === chosenPath ? 'w-auto ml-2 text-orange-600' : 'w-[0px] ml-0 overflow-hidden text-transparent';
     return (
         <Link href={`/stopwatch/${path}`}>
