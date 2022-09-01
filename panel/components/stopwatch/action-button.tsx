@@ -11,7 +11,7 @@ export const PrimaryActionButton = ({
 }) => (
     <button
         onClick={onClick}
-        className="mx-0.5 bg-gradient-to-r from-orange-500 to-red-500 flex items-center rounded-md px-2 py-1 text-white"
+        className="mx-0.5 bg-gradient-to-r from-orange-500 to-red-500 flex items-center rounded-xl px-3 py-2 text-white"
     >
         {icon && <Icon path={icon} size={1} color="white" />}
         {contents}
@@ -27,8 +27,8 @@ export const ActionButton = ({
     icon?: string;
     contents?: JSX.Element;
 }) => (
-    <button onClick={onClick} className="mx-0.5 bg-zinc-600 flex items-center rounded-md px-2 py-1 text-white">
-        {icon && <Icon path={icon} size={1} color="white" />}
+    <button onClick={onClick} className="mx-0.5 bg-zinc-100 flex items-center rounded-xl px-3 py-2">
+        {icon && <Icon path={icon} size={1} />}
         {contents}
     </button>
 );

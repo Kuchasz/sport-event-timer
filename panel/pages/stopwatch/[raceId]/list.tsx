@@ -1,4 +1,4 @@
-import { mdiAlarmCheck, mdiAlarmOff, mdiWrench } from "@mdi/js";
+import { mdiAlarmCheck, mdiAlarmOff, mdiWrenchOutline } from "@mdi/js";
 import { getCurrentTime, sort } from "@set/shared/dist";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { PrimaryActionButton, ActionButton } from "components/stopwatch/action-button";
@@ -45,18 +45,18 @@ const PlayersList = () => {
             {players.map((p) => (
                 <div key={p.bibNumber} className="my-1 py-2 px-4 rounded-xl shadow bg-white flex items-center">
                     <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
-                    {p.timeStamp ? (
-                        <PrimaryActionButton icon={mdiAlarmOff} onClick={() => onReset(p.timeStamp!.id)} />
-                    ) : (
-                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={() => onRecord(p.bibNumber)} />
-                    )}
                     {p.timeStamp && (
                         <ActionButton
-                            icon={mdiWrench}
+                            icon={mdiWrenchOutline}
                             onClick={() => {
                                 push(`/stopwatch/${raceId}/tweak/${p.timeStamp?.id}`);
                             }}
                         />
+                    )}
+                    {p.timeStamp ? (
+                        <PrimaryActionButton icon={mdiAlarmOff} onClick={() => onReset(p.timeStamp!.id)} />
+                    ) : (
+                        <PrimaryActionButton icon={mdiAlarmCheck} onClick={() => onRecord(p.bibNumber)} />
                     )}
                 </div>
             ))}
