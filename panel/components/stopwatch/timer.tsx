@@ -1,7 +1,7 @@
 import { formatTime } from "@set/shared/dist/utils";
 import { useEffect, useState } from "react";
 
-const Time = ({ time }: { time: number }) => <div className="font-mono text-xl">{formatTime(new Date(time))}</div>;
+const Time = ({ time }: { time: number }) => <div className="bg-zinc-300 px-3 py-1 rounded-full font-mono text-xl">{formatTime(new Date(time))}</div>;
 
 export const Timer = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);

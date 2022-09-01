@@ -15,6 +15,7 @@ import { uuidv4 } from "@set/shared/dist";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom, tokenExpireAtom, userAtom } from "stopwatch-states";
+import Head from "next/head";
 
 const clientId = uuidv4();
 
@@ -80,6 +81,10 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
             <trpc.Provider client={trpcClient} queryClient={queryClient}>
                 <QueryClientProvider client={queryClient}>
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
+                        <Head>
+                            <title>Stopwatch</title>
+                            <link key="manifest" rel="manifest" href="/favicon/clock.webmanifest" />
+                        </Head>
                         <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
                             <Status />
                             <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
