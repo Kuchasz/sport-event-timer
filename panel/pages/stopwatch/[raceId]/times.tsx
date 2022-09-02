@@ -75,7 +75,7 @@ const Item = ({
             onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
             className=""
         >
-            <div className="flex mt-1 py-2 px-4 items-center relative rounded-xl shadow bg-white" ref={targetElement}>
+            <div className="flex mt-1 py-2 px-3 items-center relative rounded-xl shadow bg-white" ref={targetElement}>
                 <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
                     <Icon size={1} path={mdiDeleteOutline} />
                 </div>
