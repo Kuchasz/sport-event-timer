@@ -11,9 +11,9 @@ export const PrimaryActionButton = ({
 }) => (
     <button
         onClick={onClick}
-        className="mx-0.5 bg-gradient-to-r from-orange-500 to-red-500 flex items-center rounded-xl px-3 py-2 text-white"
+        className="mx-0.5 text-orange-600 bg-orange-100 flex items-center rounded-xl px-3 py-2 "
     >
-        {icon && <Icon path={icon} size={1} color="white" />}
+        {icon && <Icon path={icon} size={1}  />}
         {contents}
     </button>
 );

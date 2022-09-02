@@ -38,7 +38,7 @@ const Minus = ({ changeTime }: BtnProps) => (
         icon={mdiMinus}
     />
 );
-const Digit = ({ number }: { number: string }) => <div className="text-6xl mb-2 text-center">{number}</div>;
+const Digit = ({ number }: { number: string }) => <div className="font-mono text-6xl my-4 text-center">{number}</div>;
 
 const TweakTimeStamps = () => {
     const {

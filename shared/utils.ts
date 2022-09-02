@@ -10,6 +10,12 @@ export const formatTime = (time: Date) =>
         time.getSeconds()
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
+export const splitTime = (time: Date) => ({
+    hours: formatNumber(time.getHours()), minutes: formatNumber(time.getMinutes()), seconds: formatNumber(
+        time.getSeconds()
+    ), miliseconds: formatNumber(time.getMilliseconds(), 3).slice(0, 1)
+});
+
 export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]): number[] =>
     typedNumbers !== "" ? pipe(allNumbers, Arr.filter(flow(String, S.startsWith(typedNumbers)))) : [];
 

@@ -22,7 +22,7 @@ export const PlayerWithTimeStampDisplay = ({ playerWithTimeStamp }: { playerWith
                 <span>{playerWithTimeStamp.timeStamp ? formatTime(new Date(playerWithTimeStamp.timeStamp.time)) : null}</span>
             </div>
             <div className="opacity-50 text-sm">
-                {playerWithTimeStamp.name} {playerWithTimeStamp.lastName}
+                <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
             </div>
         </span>
     </span>

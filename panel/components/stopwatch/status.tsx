@@ -78,7 +78,7 @@ export const Status = () => {
     return (
         <div>
             <span
-                className={classNames("text-xs w-full transition-all bg-transparent h-0 flex justify-center items-center", {
+                className={classNames("text-xs w-full text-white font-semibold transition-all bg-transparent h-0 flex justify-center items-center", {
                     ["invisible"]: connectionState === "connected",
                     ["visible h-auto py-2"]: connectionState !== "connected",
                     ["bg-red-600"]: connectionState === "disconnected" || connectionState === "error",
@@ -88,7 +88,7 @@ export const Status = () => {
                 <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
                 <Icon path={getIconFromConnectionState(connectionState)} size={0.8} />
             </span>
-            <div className="px-2 py-4 w-screen justify-between flex-shrink-0 flex items-center font-semibold">
+            <div className="px-4 rounded-b-xl z-10 bg-white py-6 w-screen justify-between flex-shrink-0 flex items-center font-semibold">
                 <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
