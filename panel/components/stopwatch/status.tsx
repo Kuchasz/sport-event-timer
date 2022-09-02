@@ -49,10 +49,10 @@ const SelectedTimingPoint = ({
     timingPointId: number;
     timingPointName: string | undefined;
 }) => (
-    <span className="flex bg-zinc-300 px-3 py-1 rounded-full">
+    <span className="flex bg-zinc-100 px-3 py-1 rounded-full">
         <TimeKeeperIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
 
-        <span>{timingPointName ?? "SELECT TIMING POINT"}</span>
+        <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
     </span>
 );
 
