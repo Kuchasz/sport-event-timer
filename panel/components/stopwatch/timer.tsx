@@ -6,13 +6,13 @@ const Time = ({ time }: { time: number }) => {
 
     return (
         <div className="text-3xl flex">
-            <div className="text-center w-10">{splits.hours}</div>
+            <div className="text-center font-normal w-10">{splits.hours}</div>
             <div className="px-1 text-orange-600">:</div>
-            <div className="text-center w-10">{splits.minutes}</div>
+            <div className="text-center font-normal w-10">{splits.minutes}</div>
             <div className="px-1 text-orange-600">:</div>
-            <div className="text-center w-10">{splits.seconds}</div>
-            <div className="px-1 text-orange-600">.</div>
-            <div className="text-center">{splits.miliseconds}</div>
+            <div className="text-center font-normal w-10">{splits.seconds}</div>
+            <div className="-ml-0.5">.</div>
+            <div className="text-center text-xl font-normal">{splits.miliseconds}</div>
         </div>
     );
 };
