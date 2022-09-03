@@ -1,6 +1,6 @@
 {
-    "name": "rura.cc",
-    "short_name": "rura.cc",
+    "name": "Timer",
+    "short_name": "Timer",
     "icons": [
         {
             "src": "/favicon/icon-192x192.png",
@@ -25,6 +25,5 @@
     ],
     "theme_color": "#f69435",
     "background_color": "#f69435",
-    "display": "standalone",
-    "start_url": "/zegar"
+    "display": "standalone"
 }

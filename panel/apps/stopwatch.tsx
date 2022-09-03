@@ -83,7 +83,7 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
                         <Head>
                             <title>Stopwatch</title>
-                            <link key="manifest" rel="manifest" href="/favicon/clock.webmanifest" />
+                            <link key="manifest" rel="manifest" href="/favicon/stopwatch.webmanifest" />
                         </Head>
                         <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
                             <Status />
