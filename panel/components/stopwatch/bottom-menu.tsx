@@ -34,7 +34,7 @@ export const BottomMenu = () => {
     const mode = asPath as Paths;
 
     return (
-        <div className="flex rounded-t-xl justify-around select-none bg-white py-3">
+        <div className="flex rounded-t-2xl justify-around select-none bg-white py-3">
             <BottomMenuButton path={raceId + "/list"} text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/pad"} text="Pad" icon={mdiDialpad} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/times"} text="Times" icon={mdiTimetable} chosenPath={mode} />

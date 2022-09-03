@@ -49,7 +49,7 @@ const SelectedTimingPoint = ({
     timingPointId: number;
     timingPointName: string | undefined;
 }) => (
-    <span className="flex bg-zinc-100 px-3 py-1 rounded-full">
+    <span className="flex bg-zinc-800 text-zinc-300 px-4 py-1 rounded-xl">
         <TimeKeeperIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
 
         <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
@@ -88,7 +88,7 @@ export const Status = () => {
                 <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
                 <Icon path={getIconFromConnectionState(connectionState)} size={0.8} />
             </span>
-            <div className="px-4 rounded-b-xl z-10 bg-white py-6 w-screen justify-between flex-shrink-0 flex items-center font-semibold">
+            <div className="p-4 rounded-b-2xl z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
                 <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
