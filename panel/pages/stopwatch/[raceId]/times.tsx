@@ -158,7 +158,7 @@ const PlayersTimes = () => {
                     <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
             </div>
-            <div className="px-2">
+            <div className="px-2 overflow-x-hidden">
                 {sort(times).map((t) => (
                     <Item key={t.time} dispatch={dispatch} navigate={push} t={t} raceId={parseInt(raceId as string)} />
                 ))}
