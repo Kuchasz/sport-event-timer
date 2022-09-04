@@ -52,7 +52,7 @@ const PlayersList = () => {
     const rowVirtualizer = useVirtualizer({
         count: players.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 86,
+        estimateSize: () => 64,
     });
 
     return (
@@ -65,28 +65,13 @@ const PlayersList = () => {
                 }}
             >
                 {rowVirtualizer.getVirtualItems().map((virtualRow) => (
-                    // <div
-                    //     key={virtualRow.index}
-                    //     ref={virtualRow.measureElement}
-                    //     className={virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"}
-                    //     style={{
-                    //         position: "absolute",
-                    //         top: 0,
-                    //         left: 0,
-                    //         width: "100%",
-                    //         transform: `translateY(${virtualRow.start}px)`,
-                    //     }}
-                    // >
                     <div
-                        key={virtualRow.index}
+                        key={players[virtualRow.index].bibNumber}
                         ref={virtualRow.measureElement}
                         className="absolute w-full t-0 left-0"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
-                        <div
-                            
-                            className="mt-1 py-2 px-3 w-full rounded-xl shadow bg-white flex items-center"
-                        >
+                        <div className="mt-1 py-2 px-3 w-full rounded-xl shadow bg-white flex items-center">
                             <PlayerWithTimeStampDisplay playerWithTimeStamp={players[virtualRow.index]} />
                             {players[virtualRow.index].timeStamp && (
                                 <ActionButton
