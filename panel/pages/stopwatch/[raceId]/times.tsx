@@ -1,6 +1,6 @@
 import { ActionButton, PrimaryActionButton } from "../../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
-import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlusCircleOutline, mdiWrenchOutline } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiPlusCircleOutline, mdiWrenchOutline } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
@@ -135,6 +135,9 @@ const PlayersTimes = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
 
+    const dispatch = useTimerDispatch();
+    const { push } = useRouter();
+
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
     const {
         query: { raceId },
@@ -157,8 +160,7 @@ const PlayersTimes = () => {
             })
         );
 
-    const dispatch = useTimerDispatch();
-    const { push } = useRouter();
+    console.log('render times!');
 
     return (
         <div>
