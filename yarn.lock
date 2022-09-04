@@ -1966,7 +1966,7 @@ __metadata:
     "@set/shared": 1.0.0
     "@set/timer": 1.0.0
     "@tailwindcss/forms": ^0.5.2
-    "@tanstack/react-virtual": ^3.0.0-alpha.0
+    "@tanstack/react-virtual": 3.0.0-beta.18
     "@trpc/client": ^9.25.3
     "@trpc/next": ^9.25.3
     "@trpc/react": ^9.25.3
@@ -2152,7 +2152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:^3.0.0-alpha.0":
+"@tanstack/react-virtual@npm:3.0.0-beta.18":
   version: 3.0.0-beta.18
   resolution: "@tanstack/react-virtual@npm:3.0.0-beta.18"
   dependencies:
