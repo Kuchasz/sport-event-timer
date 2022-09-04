@@ -11,9 +11,6 @@ import { trpc } from "trpc";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 
-import { FixedSizeList as List } from "react-window";
-import AutoSizer from "react-virtualized-auto-sizer";
-
 const PlayersList = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
@@ -37,7 +34,7 @@ const PlayersList = () => {
 
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
 
-    const players2 = sort(
+    const players = sort(
         allPlayers!.map((x) => ({
             ...x,
             timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
@@ -47,7 +44,7 @@ const PlayersList = () => {
         })),
         (p) => p.startTime || Number.MAX_VALUE
     );
-    const players = [...players2, ...players2, ...players2, ...players2, ...players2, ...players2];
+
     const dispatch = useTimerDispatch();
 
     const parentRef = useRef<HTMLDivElement>(null);
@@ -55,15 +52,11 @@ const PlayersList = () => {
     const rowVirtualizer = useVirtualizer({
         count: players.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 125,
+        estimateSize: () => 86,
     });
 
     return (
-        <div ref={parentRef} className="px-2"   style={{
-            height: `100%`,
-            width: `100%`,
-            overflow: 'auto',
-          }}>
+        <div ref={parentRef} className="px-2 w-full h-full overflow-auto">
             <div
                 style={{
                     height: rowVirtualizer.getTotalSize(),
@@ -72,21 +65,27 @@ const PlayersList = () => {
                 }}
             >
                 {rowVirtualizer.getVirtualItems().map((virtualRow) => (
+                    // <div
+                    //     key={virtualRow.index}
+                    //     ref={virtualRow.measureElement}
+                    //     className={virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"}
+                    //     style={{
+                    //         position: "absolute",
+                    //         top: 0,
+                    //         left: 0,
+                    //         width: "100%",
+                    //         transform: `translateY(${virtualRow.start}px)`,
+                    //     }}
+                    // >
                     <div
                         key={virtualRow.index}
                         ref={virtualRow.measureElement}
-                        className={virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"}
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            transform: `translateY(${virtualRow.start}px)`,
-                        }}
+                        className="absolute w-full t-0 left-0"
+                        style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
                         <div
-                            key={players[virtualRow.index].bibNumber}
-                            className="my-1 py-2 px-3 rounded-xl shadow bg-white flex items-center"
+                            
+                            className="mt-1 py-2 px-3 w-full rounded-xl shadow bg-white flex items-center"
                         >
                             <PlayerWithTimeStampDisplay playerWithTimeStamp={players[virtualRow.index]} />
                             {players[virtualRow.index].timeStamp && (
