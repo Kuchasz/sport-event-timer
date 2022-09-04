@@ -59,6 +59,16 @@ module.exports = {
             },
             fontFamily: {
                 sans: ["Inter var", ...defaultTheme.fontFamily.sans]
+            },
+            keyframes: {
+                pushIn: {
+                    '0%': { transform: 'scale(1)' },
+                    '80%': { transform: 'scale(0.6)' },
+                    '100%': { transfrm: 'scale(0.8)' }
+                }
+            },
+            animation: {
+                pushIn: 'pushIn 0.2s ease-out'
             }
         }
     }
