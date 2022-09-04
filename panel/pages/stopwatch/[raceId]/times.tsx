@@ -11,6 +11,7 @@ import { getCurrentTime } from "@set/shared/dist";
 import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";
+import { Transition } from "@headlessui/react";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -65,57 +66,68 @@ const Item = ({
     };
 
     return (
-        <div
-            onTouchStart={(e) => {
-                startMoveElement(e.changedTouches[0].clientX);
-            }}
-            onTouchEnd={(e) => {
-                deleteTargetElement(e.changedTouches[0].clientX);
-            }}
-            onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
-            className=""
+        <Transition
+            appear={true}
+            show={true}
+            enter="transition-all duration-500"
+            enterFrom="opacity-0 translate-x-10"
+            enterTo="opacity-100 translate-x-0"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
         >
-            <div className="flex mt-1 py-2 px-3 items-center relative rounded-xl shadow bg-white" ref={targetElement}>
-                <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
-                    <Icon size={1} path={mdiDeleteOutline} />
-                </div>
-                <PlayerWithTimeStampDisplay
-                    playerWithTimeStamp={{
-                        timeStamp: t,
-                        bibNumber: t.player?.bibNumber,
-                        name: t.player?.name,
-                        lastName: t.player?.lastName,
-                    }}
-                />
-                {!t.player ? (
-                    <PrimaryActionButton
-                        onClick={() => {
-                            navigate(`/stopwatch/${raceId}/assign/${t.id}`);
+            <div
+                onTouchStart={(e) => {
+                    startMoveElement(e.changedTouches[0].clientX);
+                }}
+                onTouchEnd={(e) => {
+                    deleteTargetElement(e.changedTouches[0].clientX);
+                }}
+                onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX)}
+                className=""
+            >
+                <div className="flex mt-1 py-2 px-3 items-center relative rounded-xl shadow bg-white" ref={targetElement}>
+                    {/* <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
+                        <Icon size={1} path={mdiDeleteOutline} />
+                    </div> */}
+                    <PlayerWithTimeStampDisplay
+                        playerWithTimeStamp={{
+                            timeStamp: t,
+                            bibNumber: t.player?.bibNumber,
+                            name: t.player?.name,
+                            lastName: t.player?.lastName,
                         }}
-                        icon={mdiAccountAlertOutline}
                     />
-                ) : (
+                    {!t.player ? (
+                        <PrimaryActionButton
+                            onClick={() => {
+                                navigate(`/stopwatch/${raceId}/assign/${t.id}`);
+                            }}
+                            icon={mdiAccountAlertOutline}
+                        />
+                    ) : (
+                        <ActionButton
+                            icon={mdiAccountSupervisor}
+                            onClick={() => {
+                                navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
+                            }}
+                        />
+                    )}
                     <ActionButton
-                        icon={mdiAccountSupervisor}
+                        icon={mdiWrenchOutline}
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
                         }}
                     />
-                )}
-                <ActionButton
-                    icon={mdiWrenchOutline}
-                    onClick={() => {
-                        navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
-                    }}
-                />
-                {/* <ActionButton
+                    {/* <ActionButton
                     icon={mdiDeleteOutline}
                     onClick={() => {
                         dispatch(reset({ id: t.id }));
                     }}
                 /> */}
+                </div>
             </div>
-        </div>
+        </Transition>
     );
 };
 

@@ -99,9 +99,9 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
                                     <Component {...pageProps} />
                                 )}
                             </div>
-                            <div>
+                            
                                 <BottomMenu />
-                            </div>
+                            
                         </div>
                     </ServerConnectionHandler>
                 </QueryClientProvider>
