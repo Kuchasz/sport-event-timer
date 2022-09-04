@@ -56,7 +56,7 @@ const PlayersList = () => {
     });
 
     return (
-        <div ref={parentRef} className="px-2 w-full h-full overflow-auto">
+        <div ref={parentRef} className="px-2 py-2 w-full h-full overflow-auto">
             <div
                 style={{
                     height: rowVirtualizer.getTotalSize(),
@@ -68,10 +68,10 @@ const PlayersList = () => {
                     <div
                         key={players[virtualRow.index].bibNumber}
                         ref={virtualRow.measureElement}
-                        className="absolute w-full t-0 left-0"
+                        className="absolute w-full t-0 left-0 py-0.5"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
-                        <div className="mt-1 py-2 px-3 w-full rounded-xl shadow bg-white flex items-center">
+                        <div className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white">
                             <PlayerWithTimeStampDisplay playerWithTimeStamp={players[virtualRow.index]} />
                             {players[virtualRow.index].timeStamp && (
                                 <ActionButton

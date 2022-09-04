@@ -11,7 +11,6 @@ import { getCurrentTime, sortDesc } from "@set/shared/dist";
 import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";
-import { Transition } from "@headlessui/react";
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -27,14 +26,14 @@ const Item = ({
     dispatch,
     raceId,
     style,
-    ref,
+    reff,
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: string) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
     style: CSSProperties;
-    ref: LegacyRef<HTMLDivElement>;
+    reff: LegacyRef<HTMLDivElement>;
 }) => {
     let touchStartX = 0;
     let touchStartY = 0;
@@ -73,9 +72,9 @@ const Item = ({
     };
 
     return (
-        <div style={style} ref={ref} className="absolute w-full t-0 left-0">
+        <div style={style} ref={reff} className="absolute w-full t-0 left-0 py-0.5">
             <div
-                className="flex mt-1 py-2 px-3 items-center relative rounded-xl shadow bg-white"
+                className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white"
                 ref={targetElement}
                 onTouchStart={(e) => {
                     startMoveElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
@@ -165,14 +164,14 @@ const PlayersTimes = () => {
     const rowVirtualizer = useVirtualizer({
         count: times.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 68,
+        estimateSize: () => 64,
     });
 
     console.log("render times!");
 
     return (
         <div className="h-full flex flex-col">
-            <div className="flex flex-col my-2 px-2">
+            <div className="flex my-2 flex-col px-2">
                 <button
                     onClick={onAddTime}
                     className="self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
@@ -192,7 +191,7 @@ const PlayersTimes = () => {
                         <Item
                             style={{ transform: `translateY(${virtualRow.start}px)` }}
                             key={times[virtualRow.index].id}
-                            ref={virtualRow.measureElement}
+                            reff={virtualRow.measureElement}
                             dispatch={dispatch}
                             navigate={push}
                             t={times[virtualRow.index]}
