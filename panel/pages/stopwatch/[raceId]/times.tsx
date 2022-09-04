@@ -7,7 +7,7 @@ import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { CSSProperties, LegacyRef, useRef } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../hooks";
 import { useRouter } from "next/router";
-import { getCurrentTime } from "@set/shared/dist";
+import { getCurrentTime, sortDesc } from "@set/shared/dist";
 import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";
@@ -51,7 +51,7 @@ const Item = ({
         if (!targetElement.current) return;
 
         const dX = x - touchStartX;
-        const dY = y - touchStartY;
+        const dY = Math.abs(y - touchStartY);
 
         const translation = dX > 30 && dY < 5 ? dX : 0;
 
@@ -73,19 +73,7 @@ const Item = ({
     };
 
     return (
-        <Transition
-            appear={true}
-            style={style}
-            show={true}
-            ref={ref}
-            className="absolute w-full t-0 left-0"
-            enter="transition-all duration-500"
-            enterFrom="opacity-0 translate-x-10"
-            enterTo="opacity-100 translate-x-0"
-            leave="transition-opacity duration-150"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-        >
+        <div style={style} ref={ref} className="absolute w-full t-0 left-0">
             <div
                 className="flex mt-1 py-2 px-3 items-center relative rounded-xl shadow bg-white"
                 ref={targetElement}
@@ -98,8 +86,8 @@ const Item = ({
                 onTouchMove={(e) => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
             >
                 <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
-                        <Icon size={1} path={mdiDeleteOutline} />
-                    </div>
+                    <Icon size={1} path={mdiDeleteOutline} />
+                </div>
                 <PlayerWithTimeStampDisplay
                     playerWithTimeStamp={{
                         timeStamp: t,
@@ -136,7 +124,7 @@ const Item = ({
                     }}
                 /> */}
             </div>
-        </Transition>
+        </div>
     );
 };
 
@@ -154,12 +142,15 @@ const PlayersTimes = () => {
 
     const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
 
-    const times = allTimeStamps
-        //.filter((s) => s.timingPointId === timingPointId)
-        .map((s) => ({
-            ...s,
-            player: allPlayers!.find((p) => s.bibNumber === p.bibNumber),
-        }));
+    const times = sortDesc(
+        allTimeStamps
+            .filter((s) => s.timingPointId === timingPointId)
+            .map((s) => ({
+                ...s,
+                player: allPlayers!.find((p) => s.bibNumber === p.bibNumber),
+            })),
+        (t) => t.id
+    );
 
     const onAddTime = () =>
         dispatch(
