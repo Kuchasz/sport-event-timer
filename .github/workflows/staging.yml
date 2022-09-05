@@ -88,6 +88,7 @@ jobs:
                     pm2 stop all
                     unzip -q set-hub-package.zip
                     cd server
+                    chmod -R 777 prisma
                     yarn install
                     yarn prisma db push
                     yarn prisma db seed
