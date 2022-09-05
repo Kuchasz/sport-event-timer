@@ -35,24 +35,33 @@ const Item = ({
     style: CSSProperties;
     reff: LegacyRef<HTMLDivElement>;
 }) => {
-    let touchStartX = 0;
-    let touchStartY = 0;
+    const touchStartX = useRef<number>(0);
+    const touchStartY = useRef<number>(0);
+    const deleteModeEnabled = useRef<boolean | null>(null);
 
     const targetElement = useRef<HTMLDivElement>(null);
     const startMoveElement = (x: number, y: number) => {
         if (!targetElement.current) return;
-        touchStartX = x;
-        touchStartY = y;
+
+        touchStartX.current = x;
+        touchStartY.current = y;
         targetElement.current.style.transition = "none";
     };
 
     const moveTargetElement = (x: number, y: number) => {
         if (!targetElement.current) return;
 
-        const dX = x - touchStartX;
-        const dY = Math.abs(y - touchStartY);
+        const dX = x - touchStartX.current;
+        const dY = Math.abs(y - touchStartY.current);
 
-        const translation = dX > 30 && dY < 5 ? dX : 0;
+        if (deleteModeEnabled.current === null) {
+            if (dX > dY && dX > 1) 
+                deleteModeEnabled.current = true;
+            else 
+                deleteModeEnabled.current = false;
+        }
+
+        const translation = dX > 30 && deleteModeEnabled.current ? dX : 0;
 
         targetElement.current.style.transform = `translateX(${translation}px)`;
     };
@@ -60,15 +69,17 @@ const Item = ({
     const deleteTargetElement = (x: number) => {
         if (!targetElement.current) return;
 
-        const dX = x - touchStartX;
+        const dX = x - touchStartX.current;
 
-        if (dX > 200) {
+        if (deleteModeEnabled.current && dX > 200) {
             dispatch(reset({ id: t.id }));
         } else {
             targetElement.current.style.transition = "transform";
             targetElement.current.style.transitionDuration = "0.2s";
             targetElement.current.style.transform = `translateX(0px)`;
         }
+
+        deleteModeEnabled.current = null;
     };
 
     return (
