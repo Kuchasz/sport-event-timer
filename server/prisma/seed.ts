@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange, capitalizeFirstLetter } from "@set/shared/dist/index";
+import { createRange, capitalizeFirstLetter, sort } from "@set/shared/dist/index";
 import { Classification, Player, Race, TimingPoint } from "@prisma/client";
 
 async function main() {
@@ -27,7 +27,10 @@ async function main() {
     const players = await db.$transaction(_players.map(data => db.player.create({ data })));
 
     const _timingPoints = createTimingPoints(races.map(r => r.id));
-    const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })))
+    const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
+
+    const _stopwatches = createStopwatches(races, players, timingPoints);
+    const stopwatches = await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
 const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.mersenne.rand(20, 10) }).map(() => ({
@@ -75,6 +78,29 @@ const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
         ...createRange({ from: 0, to: faker.mersenne.rand(2, 0) })
             .map((i) => ({ name: capitalizeFirstLetter(faker.word.noun()), order: 2 + i, raceId: r })),
         { name: 'Finish', order: 5, raceId: r }]);
+
+const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[]) => {
+    const store = {};
+    return races.map(r => {
+        const playersForRace = players.filter(p => p.raceId === r.id);
+        const timingPointsForRace = sort(timingPoints.filter(tp => tp.raceId === r.id), r => r.order);
+
+        const chosenPlayersNumber = faker.mersenne.rand(playersForRace.length, 0);
+
+        const startTime = faker.date.between(r.date, new Date(r.date.getTime() + 3_600_000));
+
+        const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
+            .map(i => playersForRace[i])
+            .flatMap(p => timingPointsForRace.map((tp, i) => ({
+                id: faker.unique(faker.mersenne.rand, [1, 9999], store),
+                bibNumber: p.bibNumber!,
+                timingPointId: tp.id,
+                time: faker.date.between(new Date(startTime.getTime() + i * 3_600_000), new Date(startTime.getTime() + i * 3_600_600 + 3_600_600)).getTime()
+            })));
+
+        return { raceId: r.id, state: JSON.stringify({ timeStamps, actionHistory: [] }) };
+    });
+}
 
 main()
     .then(async () => {

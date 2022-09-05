@@ -87,8 +87,6 @@ export type TimeStamp = {
 };
 
 export type State = {
-    players: Player[];
-    timeKeepers: TimeKeeper[];
     timeStamps: TimeStamp[];
 };
 
