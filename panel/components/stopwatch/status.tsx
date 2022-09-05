@@ -49,7 +49,7 @@ const SelectedTimingPoint = ({
     timingPointId: number;
     timingPointName: string | undefined;
 }) => (
-    <span className="flex bg-zinc-800 text-zinc-300 px-4 py-1 rounded-xl">
+    <span className="cursor-pointer flex transition-colors hover:bg-zinc-700 bg-zinc-800 text-zinc-300 px-4 py-1 rounded-xl">
         <TimeKeeperIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
 
         <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
@@ -57,7 +57,7 @@ const SelectedTimingPoint = ({
 );
 
 const WarningMessage = ({ contents }: { contents: string }) => (
-    <span className="flex text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+    <span className="cursor-pointer flex text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
         <span>{contents}</span>
     </span>
 );
