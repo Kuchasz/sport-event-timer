@@ -65,10 +65,16 @@ module.exports = {
                     '0%': { transform: 'scale(1)' },
                     '30%': { transform: 'scale(0.8)' },
                     '100%': { transfrm: 'scale(0.9)' }
+                },
+                pushInLittle: {
+                    '0%': { transform: 'scale(1)' },
+                    '30%': { transform: 'scale(0.95)' },
+                    '100%': { transfrm: 'scale(1)' }
                 }
             },
             animation: {
-                pushIn: 'pushIn 0.2s ease-out'
+                pushIn: 'pushIn 0.2s ease-out',
+                pushInLittle: 'pushInLittle 0.2s ease-out'
             }
         }
     }
