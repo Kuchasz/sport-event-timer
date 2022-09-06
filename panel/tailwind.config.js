@@ -63,8 +63,8 @@ module.exports = {
             keyframes: {
                 pushIn: {
                     '0%': { transform: 'scale(1)' },
-                    '30%': { transform: 'scale(0.4)' },
-                    '100%': { transfrm: 'scale(0.8)' }
+                    '30%': { transform: 'scale(0.8)' },
+                    '100%': { transfrm: 'scale(0.9)' }
                 }
             },
             animation: {
