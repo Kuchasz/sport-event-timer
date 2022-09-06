@@ -185,7 +185,7 @@ const PlayersTimes = () => {
             <div className="flex my-2 flex-col px-2">
                 <button
                     onClick={onAddTime}
-                    className="self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
+                    className="active:animate-pushInLittle self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
                 >
                     <Icon color="white" size={5} path={mdiPlusCircleOutline} />
                 </button>
