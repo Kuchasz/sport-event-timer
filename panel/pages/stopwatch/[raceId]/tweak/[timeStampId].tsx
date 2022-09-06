@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { ActionButton } from "../../../../components/stopwatch/action-button";
+import { ActionButton, PrimaryActionButton } from "../../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/shared/dist/utils";
 import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "../../../../components/stopwatch/player-with-timestamp-display";
@@ -97,24 +97,20 @@ const TweakTimeStamps = () => {
                     </div>
                 </div>
                 <div className="flex mt-6">
-                    <button
+                    <PrimaryActionButton
                         onClick={() => {
                             onSave({ ...timeStamp!, time: currentTime });
                             back();
                         }}
-                        className="rounded-md mx-2 text-center bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
-                    >
-                        <Icon color="white" size={1} path={mdiFloppy} />
-                    </button>
-                    <button
+                        icon={mdiFloppy}
+                    />
+                    <PrimaryActionButton
                         disabled={timeStamp!.time === currentTime}
                         onClick={() => {
                             setCurrentTime(timeStamp!.time);
                         }}
-                        className="rounded-md mx-2 text-center disabled:grayscale bg-gradient-to-r w-20 flex justify-center from-orange-500 to-red-500 py-2 px-4"
-                    >
-                        <Icon color="white" size={1} path={mdiRestart} />
-                    </button>
+                        icon={mdiRestart}
+                    />
                 </div>
             </div>
         </div>
