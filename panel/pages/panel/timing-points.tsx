@@ -11,6 +11,7 @@ import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
+import Link from "next/link";
 
 type TimingPoint = InferQueryOutput<"timing-point.timingPoints">[0];
 type CreatedTimingPoint = InferMutationInput<"timing-point.add">;
@@ -100,10 +101,12 @@ const TimingPoint = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false">
-                        <Icon size={1} path={mdiTimerOutline} />
-                        <span className="ml-2">Open Stopwatch</span>
-                    </Button>
+                    <Link href={`/stopwatch/${raceId}`}>
+                        <Button autoCapitalize="false">
+                            <Icon size={1} path={mdiTimerOutline} />
+                            <span className="ml-2">Open Stopwatch</span>
+                        </Button>
+                    </Link>
                 </div>
                 {races && (
                     <DataGrid

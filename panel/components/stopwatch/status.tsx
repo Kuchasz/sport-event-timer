@@ -94,7 +94,7 @@ export const Status = () => {
                     <span>
                         {sortedTimeKeepers.length === 0 ? (
                             <WarningMessage contents={"NO TIMING POINTS"} />
-                        ) : timingPointId === undefined || timingPointId === 0 ? (
+                        ) : timingPointId === undefined || timingPointId === null || timingPointId === 0 || !sortedTimeKeepers.includes(timingPointId) ? (
                             <WarningMessage contents={"SET TIMING POINT"} />
                         ) : (
                             <SelectedTimingPoint

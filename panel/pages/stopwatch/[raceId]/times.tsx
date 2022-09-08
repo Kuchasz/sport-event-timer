@@ -1,6 +1,6 @@
 import { ActionButton, PrimaryActionButton } from "../../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
-import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlusCircleOutline, mdiWrenchOutline } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlus, mdiWrenchOutline } from "@mdi/js";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
@@ -187,7 +187,7 @@ const PlayersTimes = () => {
                     onClick={onAddTime}
                     className="active:animate-pushInLittle self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
                 >
-                    <Icon color="white" size={5} path={mdiPlusCircleOutline} />
+                    <Icon color="white" size={5} path={mdiPlus} />
                 </button>
             </div>
             <div ref={parentRef} className="px-2 flex-grow h-full overflow-x-hidden">
