@@ -10,9 +10,9 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
 
     return (
         <div className="my-1 flex py-2 px-3 items-center justify-between relative rounded-xl shadow bg-white">
-            <div className="flex flex-col text-sm text-gray-500">
+            <div className="flex flex-col text-sm">
                 <div>{formatTime(new Date(historicAction.issuedAt))}</div>
-                <div >{historicAction.issuer}</div>
+                <div>{historicAction.issuer}</div>
             </div>
             <div>{historicAction.action.type.split('/')[1]}</div>
         </div>
