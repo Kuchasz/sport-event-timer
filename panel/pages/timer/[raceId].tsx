@@ -5,11 +5,13 @@ import { BeepFunction, createBeep } from "@set/shared/dist/beep";
 import { Clock } from "../../components/clock";
 import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
-import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
+import { getCountdownTime, sort } from "@set/shared/dist";
 import { InferQueryOutput, trpc } from "trpc";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useAtom } from "jotai";
+import { timerSettingsAtom } from "timer-states";
 
 type StartListPlayer = InferQueryOutput<"player.start-list">[0];
 
@@ -33,19 +35,7 @@ export type TextActions = {
 
 const clockTimeout = 100;
 
-export const defaultTimerSettings: TimerSettings = unreliablyGetIsMobile()
-    ? {
-          showSettings: false,
-          clock: { enabled: true, size: 6 },
-          countdown: { enabled: true, size: 40 },
-          players: { enabled: true, size: 14, count: 3 },
-      }
-    : {
-          showSettings: false,
-          clock: { enabled: true, size: 6 },
-          countdown: { enabled: true, size: 90 },
-          players: { enabled: true, size: 24, count: 3 },
-      };
+
 
 const NextPlayer = ({ player }: { player: StartListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
@@ -79,7 +69,7 @@ const NoPlayersLeft = () => (
 const Timer = () => {
     const [globalTimeOffset, setGlobalTimeOffset] = useState<number>();
     const [globalTime, setGlobalTime] = useState<number>();
-    const [clockState, setClockState] = useState<TimerSettings>(defaultTimerSettings);
+    const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const { raceId } = useRouter().query;
 
