@@ -28,7 +28,21 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
 
     const [hour, minutes, sec_ms] = timeString.split(":");
     const [seconds, miliseconds] = sec_ms.split(".");
-    console.log(miliseconds, miliseconds.padEnd(3, "0"));
+    
+    console.log(
+        miliseconds,
+        seconds,
+        minutes,
+        hour
+    );
+
+    console.log(
+        Number(miliseconds.padEnd(3, "0")) +
+        secondMillis * Number(seconds) +
+        minuteMillis * Number(minutes) +
+        hourMillis * Number(hour)
+    )
+    
     return (
         Number(miliseconds.padEnd(3, "0")) +
         secondMillis * Number(seconds) +
