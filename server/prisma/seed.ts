@@ -87,7 +87,8 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
 
         const chosenPlayersNumber = faker.mersenne.rand(playersForRace.length, 0);
 
-        const startTime = faker.date.between(r.date, new Date(r.date.getTime() + 3_600_000));
+        const startTimeDate = faker.date.between(r.date, new Date(r.date.getTime() + 3_600_000));
+        const startTime = new Date(1970, 1, 1, startTimeDate.getHours(), startTimeDate.getMinutes(), startTimeDate.getSeconds(), startTimeDate.getMilliseconds());
 
         const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
