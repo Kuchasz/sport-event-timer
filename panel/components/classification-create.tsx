@@ -1,23 +1,28 @@
-// import { ClassificationForm } from "./classification-form";
-// import { InferMutationInput } from "../trpc";
+import { ClassificationForm } from "./classification-form";
+import { InferMutationInput } from "../trpc";
 
-// type CreateClassification = InferMutationInput<"classification.add">;
+type CreateClassification = InferMutationInput<"classification.add">;
 
-// type ClassificationCreateProps = {
-//     raceId: number;
-//     onReject: () => void;
-//     onResolve: (classification: CreateClassification) => void;
-// };
+type ClassificationCreateProps = {
+    raceId: number;
+    onReject: () => void;
+    onResolve: (classification: CreateClassification) => void;
+};
 
-// export const ClassificationCreate = ({ raceId, onReject, onResolve }: ClassificationCreateProps) => {
-export const ClassificationCreate = () => {
-    return null;
-    // const classification: CreateClassification = {
-    //     id: 0,
-    //     raceId,
-    //     name: "",
-    //     ageCategories: []
-    // };
+export const ClassificationCreate = ({ raceId, onReject, onResolve }: ClassificationCreateProps) => {
 
-    // return <ClassificationForm onReject={onReject} onResolve={onResolve} initialClassification={classification} />;
+    const classification: CreateClassification = {
+        id: 0,
+        raceId,
+        name: "",
+        ageCategories: [
+            {name: 'M20', minAge: 18, maxAge: 29, gender: 'male'},
+            {name: 'M30', minAge: 30, maxAge: 39, gender: 'male'},
+            {name: 'M40', minAge: 40, maxAge: 49, gender: 'male'},
+            {name: 'M50', minAge: 50, maxAge: 59, gender: 'male'},
+            {name: 'M60', minAge: 60, maxAge: 99, gender: 'male'},
+        ]
+    };
+
+    return <ClassificationForm onReject={onReject} onResolve={onResolve} initialClassification={classification} />;
 };
