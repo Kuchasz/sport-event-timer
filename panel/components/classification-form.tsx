@@ -1,35 +1,52 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput, InferQueryOutput, trpc } from "../trpc";
+import { InferMutationInput } from "../trpc";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
+import { mdiClose, mdiContentSaveCheck, mdiPlus } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
-// import { useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 
 type Classification = InferMutationInput<"classification.add">;
-type InitialClassification = InferQueryOutput<"classification.classifications">[0];
 
 type ClassificationFormProps = {
     onReject: () => void;
     onResolve: (classification: Classification) => void;
-    initialClassification: InitialClassification;
+    initialClassification: Classification;
+};
+
+const getColorFromIndex = (index: number) =>
+    ({
+        0: "bg-red-300",
+        1: "bg-orange-300",
+        2: "bg-yellow-300",
+        3: "bg-green-300",
+        4: "bg-indigo-300",
+        5: "bg-pink-300",
+        6: "bg-lime-300",
+    }[index]);
+
+const getPercentage = (category: { minAge: number; maxAge: number }) => {
+    const range = category.maxAge - category.minAge;
+
+    return (100 / (99 - 18 - 4)) * range + "%";
 };
 
 export const ClassificationForm = ({ onReject, onResolve, initialClassification }: ClassificationFormProps) => {
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
-    const { data: categories } = trpc.useQuery(["classification.categories", { classificationId: initialClassification.id }]);
 
-    // const qc = useQueryClient();
+    const categories = initialClassification.ageCategories;
 
-    // const createCategory = () => {
-    //     const category = {
-    //         name: "New Category",
-    //         gemder: "male",
-    //     };
+    const qc = useQueryClient();
 
-    //     qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
-    // };
+    const createCategory = () => {
+        const category = {
+            name: "New Category",
+            gemder: "male",
+        };
+
+        qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
+    };
 
     return (
         <div className="flex flex-col">
@@ -50,18 +67,25 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                                 <span>{a.name}</span>
                             </div>
                         ))}
-                    {/* <Button onClick={createCategory} className="w-full">
+                    <Button onClick={createCategory} className="w-full">
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">Add category</span>
-                    </Button> */}
+                    </Button>
                 </div>
             </div>
             <div className="p-2"></div>
             <div className="flex">
                 <div className="flex w-full">
-                    <div className="flex bg-red-300 w-[33%] h-10 items-center justify-center text-white">0-33</div>
-                    <div className="flex bg-orange-300 w-[50%] h-10 items-center justify-center text-white">34-76</div>
-                    <div className="flex bg-yellow-300 w-[17%] h-10 items-center justify-center text-white">77-99</div>
+                    {categories.map((c, i) => (
+                        <div
+                            style={{ width: getPercentage(c) }}
+                            className={`flex hover:opacity-80 cursor-pointerł ${getColorFromIndex(
+                                i
+                            )} h-10 items-center justify-center text-white`}
+                        >
+                            {c.minAge}-{c.maxAge}
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="mt-4 flex">
