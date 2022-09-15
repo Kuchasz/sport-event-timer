@@ -74,19 +74,20 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 </div>
             </div>
             <div className="p-2"></div>
-            <div className="flex">
-                <div className="flex w-full">
-                    {categories.map((c, i) => (
-                        <div
+            <div className="flex flex-col">
+                {categories.map((c, i) => (
+                    <div>
+                        <span>{c.name}</span>
+                        <span
                             style={{ width: getPercentage(c) }}
                             className={`flex hover:opacity-80 cursor-pointerł ${getColorFromIndex(
                                 i
                             )} h-10 items-center justify-center text-white`}
                         >
                             {c.minAge}-{c.maxAge}
-                        </div>
-                    ))}
-                </div>
+                        </span>
+                    </div>
+                ))}
             </div>
             <div className="mt-4 flex">
                 <Button onClick={() => onResolve({ ...classification, ageCategories: categories! })}>
