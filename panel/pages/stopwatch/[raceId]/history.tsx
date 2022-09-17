@@ -1,4 +1,4 @@
-import { formatTime, sortDesc } from "@set/shared/dist";
+import { formatTime, sortDesc } from "../utils/dist";
 import { HistoricAction } from "@set/timer/dist/model";
 import { useTimerSelector } from "../../../hooks";
 // import { reset } from "@set/timer/dist/slices/time-stamps";

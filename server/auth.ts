@@ -1,7 +1,7 @@
 import * as jwt from "./jwt";
 import { config } from "./config";
 import { NextFunction, Request, Response } from "express";
-import { UserCredentials } from "@set/shared/dist";
+import { UserCredentials } from "@set/utils/dist";
 
 const admin_password = config.auth.password;
 

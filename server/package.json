@@ -15,7 +15,7 @@
     "dependencies": {
         "@faker-js/faker": "^7.4.0",
         "@prisma/client": "latest",
-        "@set/shared": "1.0.0",
+        "@set/utils": "1.0.0",
         "@trpc/server": "^9.25.3",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^18.7.2",

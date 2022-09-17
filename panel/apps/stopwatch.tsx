@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ServerConnectionHandler } from "../server-connection-handler";
 import { Status } from "../components/stopwatch/status";
 import { trpc } from "../trpc";
-import { uuidv4 } from "@set/shared/dist";
+import { uuidv4 } from "@set/utils//dist/uuid";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom, tokenExpireAtom, userAtom } from "stopwatch-states";
