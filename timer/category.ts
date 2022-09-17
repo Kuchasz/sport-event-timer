@@ -1,4 +1,4 @@
-import { areOverlapping } from "@set/shared/dist";
+import { areOverlapping } from "@set/utils/dist";
 import { Gender } from "./model";
 
 // const ageCategories = [

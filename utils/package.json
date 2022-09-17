@@ -1,5 +1,5 @@
 {
-    "name": "@set/shared",
+    "name": "@set/utils",
     "version": "1.0.0",
     "scripts": {
         "build": "tsc --project tsconfig.json"

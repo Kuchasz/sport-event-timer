@@ -9,7 +9,7 @@
             "timer",
             "results",
             "server",
-            "shared",
+            "utils",
             "panel"
         ]
     },

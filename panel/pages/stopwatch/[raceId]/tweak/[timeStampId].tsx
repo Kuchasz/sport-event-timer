@@ -1,5 +1,5 @@
 import { ActionButton, PrimaryActionButton } from "../../../../components/stopwatch/action-button";
-import { formatNumber } from "@set/shared/dist/utils";
+import { formatNumber } from "../utils/dist/utils";
 import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "../../../../components/stopwatch/player-with-timestamp-display";
 import { TimeStamp } from "@set/timer/dist/model";

@@ -7,7 +7,7 @@ import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { CSSProperties, LegacyRef, useRef } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../hooks";
 import { useRouter } from "next/router";
-import { getCurrentTime, sortDesc } from "@set/shared/dist";
+import { getCurrentTime, sortDesc } from "../utils/dist";
 import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { trpc } from "trpc";

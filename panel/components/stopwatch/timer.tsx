@@ -1,4 +1,4 @@
-import { splitTime } from "@set/shared/dist/utils";
+import { splitTime } from "@set/utils/dist/datetime";
 import { useEffect, useState } from "react";
 
 const Time = ({ time }: { time: number }) => {

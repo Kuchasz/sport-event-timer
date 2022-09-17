@@ -1,4 +1,4 @@
-import { ClockListPlayer, PlayerResult } from "@set/shared/dist";
+import { ClockListPlayer, PlayerResult } from "@set/utils/dist";
 import { Player } from "@set/timer/model";
 import { TimerState } from "@set/timer/dist/store";
 

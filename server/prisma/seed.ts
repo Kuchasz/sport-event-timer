@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange, capitalizeFirstLetter, sort } from "@set/shared/dist/index";
+import { createRange, capitalizeFirstLetter, sort } from "@set/utils/dist/index";
 import { Classification, Player, Race, TimingPoint } from "@prisma/client";
 
 async function main() {

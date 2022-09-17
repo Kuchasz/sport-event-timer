@@ -1,4 +1,4 @@
-import { formatTimeWithMilliSecUTC } from "@set/shared/dist";
+import { formatTimeWithMilliSecUTC } from "../utils/dist";
 import { useRouter } from "next/router";
 import { trpc } from "trpc";
 

@@ -1,5 +1,5 @@
 import { parse } from "node-html-parser";
-import { PlayerResult } from "@set/shared/dist";
+import { PlayerResult } from "@set/utils/dist";
 import { promisify } from "util";
 import { readFile } from "fs";
 import { resolve } from "path";

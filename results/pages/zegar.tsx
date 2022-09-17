@@ -6,7 +6,7 @@ import { Clock } from "../components/clock";
 import { ClockListPlayer } from "../../shared/index";
 import { ConfigMenu } from "../components/config-menu";
 import { Countdown } from "components/countdown";
-import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/shared/dist";
+import { getCountdownTime, sort, unreliablyGetIsMobile } from "@set/utils/dist";
 import { getTimerPlayers } from "../api";
 import { Loader } from "../components/loader";
 import {

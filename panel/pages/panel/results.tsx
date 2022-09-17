@@ -1,6 +1,6 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 
-import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/shared/dist";
+import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "../utils/dist";
 import { InferQueryOutput, trpc } from "../../trpc";
 
 import { useCurrentRaceId } from "../../hooks";

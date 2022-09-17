@@ -28,22 +28,29 @@ model Stopwatch {
 }
 
 model Classification {
-    id         Int        @id @default(autoincrement())
-    name       String
-    race       Race       @relation(fields: [raceId], references: [id])
-    raceId     Int
-    players    Player[]
-    categories Category[]
+    id            Int            @id @default(autoincrement())
+    name          String
+    race          Race           @relation(fields: [raceId], references: [id])
+    raceId        Int
+    players       Player[]
+    categoryLines CategoryLine[]
 
     @@unique([raceId, name])
 }
 
 model Category {
+    id             Int           @id @default(autoincrement())
+    name           String
+    minAge         Int
+    maxAge         Int
+    CategoryLine   CategoryLine? @relation(fields: [categoryLineId], references: [id])
+    categoryLineId Int?
+}
+
+model CategoryLine {
     id               Int            @id @default(autoincrement())
-    name             String
     gender           String
-    minAge           Int
-    maxAge           Int
+    categories       Category[]
     classification   Classification @relation(fields: [classificationId], references: [id])
     classificationId Int
 }

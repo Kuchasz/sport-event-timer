@@ -6,7 +6,7 @@ import { getGCPlayers, getGCResults } from "../../api";
 import { Loader } from "../../components/loader";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import { Player } from "@set/timer/dist/model";
-import { PlayerResult, sort } from "@set/shared/dist";
+import { PlayerResult, sort } from "@set/utils/dist";
 import { Table } from "../../components/table";
 import { TimerState } from "@set/timer/dist/store";
 import { useEffect, useState } from "react";

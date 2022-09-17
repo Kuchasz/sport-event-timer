@@ -6,6 +6,7 @@ import { mdiClose, mdiContentSaveCheck, mdiPlus } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { useQueryClient } from "react-query";
+import { groupBy } from "@set/utils/dist/array";
 
 type Classification = InferMutationInput<"classification.add">;
 
@@ -36,6 +37,8 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
 
     const categories = initialClassification.ageCategories;
+
+    const categoriesByGender = Object.entries(groupBy(categories, (c) => c.gender));
 
     const qc = useQueryClient();
 
@@ -74,10 +77,9 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 </div>
             </div>
             <div className="p-2"></div>
-            <div className="flex flex-col">
-                {categories.map((c, i) => (
-                    <div>
-                        <span>{c.name}</span>
+            {categoriesByGender.map(([_, categories]) => (
+                <div className="flex">
+                    {categories.map((c, i) => (
                         <span
                             style={{ width: getPercentage(c) }}
                             className={`flex hover:opacity-80 cursor-pointerł ${getColorFromIndex(
@@ -86,9 +88,21 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                         >
                             {c.minAge}-{c.maxAge}
                         </span>
-                    </div>
+                    ))}
+                </div>
+            ))}
+            {/* <div className="flex">
+                {categories.map((c, i) => (
+                    <span
+                        style={{ width: getPercentage(c) }}
+                        className={`flex hover:opacity-80 cursor-pointerł ${getColorFromIndex(
+                            i
+                        )} h-10 items-center justify-center text-white`}
+                    >
+                        {c.minAge}-{c.maxAge}
+                    </span>
                 ))}
-            </div>
+            </div> */}
             <div className="mt-4 flex">
                 <Button onClick={() => onResolve({ ...classification, ageCategories: categories! })}>
                     <Icon size={1} path={mdiContentSaveCheck} />

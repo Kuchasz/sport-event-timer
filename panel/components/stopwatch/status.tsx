@@ -1,7 +1,7 @@
 import { ConnectionState } from "../../connection";
 import { Icon } from "@mdi/react";
 import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherCloudyAlert } from "@mdi/js";
-import { sort } from "@set/shared/dist";
+import { sort } from "@set/utils/dist/array";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
