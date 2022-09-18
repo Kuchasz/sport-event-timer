@@ -38,12 +38,12 @@ model Classification {
 }
 
 model Category {
-    id             Int     @id @default(autoincrement())
-    name           String
-    minAge         Int?
-    maxAge         Int?
-    gender         String?
-    categoryLineId Int
+    id        Int     @id @default(autoincrement())
+    name      String
+    minAge    Int?
+    maxAge    Int?
+    gender    String?
+    isSpecial Boolean
 }
 
 model Player {

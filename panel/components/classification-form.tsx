@@ -51,6 +51,9 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
         qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
     };
 
+    const openCategories = categories.filter(c => c.minAge === undefined && c.maxAge === undefined);
+    
+
     return (
         <div className="flex flex-col">
             <div className="flex">
