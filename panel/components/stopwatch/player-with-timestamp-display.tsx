@@ -1,4 +1,5 @@
-import { formatNumber, formatTime } from "../utils/dist/utils";
+import { formatTime } from "@set/utils/dist/datetime";
+import { formatNumber } from "@set/utils/dist/number";
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import classNames from "classnames";
 

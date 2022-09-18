@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep } from "../utils/dist/beep";
+import { BeepFunction, createBeep } from "@set/utils/dist/beep";
 import { Clock } from "../../components/clock";
 import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
-import { getCountdownTime, sort } from "../utils/dist";
+import { sort } from "@set/utils/dist/array";
+import { getCountdownTime } from "@set/utils/dist/datetime";
 import { InferQueryOutput, trpc } from "trpc";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
@@ -34,8 +35,6 @@ export type TextActions = {
 };
 
 const clockTimeout = 100;
-
-
 
 const NextPlayer = ({ player }: { player: StartListPlayer }) => (
     <span className="flex items-center first:text-orange-500 first:font-semibold" style={{ marginInline: "0.25em" }}>
@@ -178,7 +177,7 @@ const Timer = () => {
                                     {nextPlayers.length > 0 ? (
                                         nextPlayers.map((p) => <NextPlayer key={p.bibNumber} player={p} />)
                                     ) : (
-                                        <NoPlayersLeft/>
+                                        <NoPlayersLeft />
                                     )}
                                 </div>
                             </div>

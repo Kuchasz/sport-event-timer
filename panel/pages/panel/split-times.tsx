@@ -2,7 +2,7 @@ import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Icon from "@mdi/react";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { formatTimeWithMilliSec } from "../utils/dist";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import {
     mdiClockEditOutline,

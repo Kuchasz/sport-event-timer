@@ -1,5 +1,6 @@
 import { mdiAlarmCheck, mdiAlarmOff, mdiWrenchOutline } from "@mdi/js";
-import { getCurrentTime, sort } from "../utils/dist";
+import { getCurrentTime } from "@set/utils/dist/datetime";
+import { sort } from "@set/utils/dist/array";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { PrimaryActionButton, ActionButton } from "components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-timestamp-display";

@@ -1,4 +1,4 @@
-import { sort } from "../utils/dist";
+import { sort } from "@set/utils/dist/array";
 import { TimeKeeperIcon } from "../../../components/stopwatch/time-keeper-icon";
 import { timingPointIdAtom } from "stopwatch-states";
 import { useAtom } from "jotai";
