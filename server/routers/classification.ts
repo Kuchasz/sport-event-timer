@@ -6,9 +6,10 @@ import { GenderEnum } from "./player";
 const ageCategoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),
     name: z.string({ required_error: "name is required" }),
-    gender: GenderEnum,
-    minAge: z.number().min(1),
-    maxAge: z.number().max(199)
+    gender: GenderEnum.optional(),
+    minAge: z.number().min(1).optional(),
+    maxAge: z.number().max(199).optional(),
+    isSpecial: z.boolean()
 }));
 
 const classificationSchema = z.object({
