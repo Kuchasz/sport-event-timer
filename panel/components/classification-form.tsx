@@ -27,8 +27,8 @@ const getColorFromIndex = (index: number) =>
         6: "bg-lime-300",
     }[index]);
 
-const getPercentage = (category: { minAge: number; maxAge: number }) => {
-    const range = category.maxAge - category.minAge;
+const getPercentage = (category: { minAge?: number; maxAge?: number }) => {
+    const range = (category.maxAge ?? Number.MAX_VALUE) - (category.minAge ?? 0);
 
     return (100 / (99 - 18 - 4)) * range + "%";
 };
@@ -37,8 +37,6 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
 
     const categories = initialClassification.ageCategories;
-
-    const categoriesByGender = Object.entries(groupBy(categories, (c) => c.gender));
 
     const qc = useQueryClient();
 
@@ -51,8 +49,15 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
         qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
     };
 
-    const openCategories = categories.filter(c => c.minAge === undefined && c.maxAge === undefined);
-    
+    const autoCategories = categories.filter((c) => c.isSpecial === true);
+    const openCategories = categories.filter((c) => c.isSpecial === false && c.minAge === undefined && c.maxAge === undefined);
+
+    const ageCategories = Object.entries(
+        groupBy(
+            categories.filter((c) => c.minAge !== undefined || c.maxAge !== undefined),
+            (c) => c.gender ?? ""
+        )
+    );
 
     return (
         <div className="flex flex-col">
@@ -65,14 +70,6 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
-                    <Label>Categories</Label>
-                    {categories &&
-                        categories.map((a, i) => (
-                            <div key={i}>
-                                <span>{a.id}</span>
-                                <span>{a.name}</span>
-                            </div>
-                        ))}
                     <Button onClick={createCategory} className="w-full">
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">Add category</span>
@@ -80,7 +77,51 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 </div>
             </div>
             <div className="p-2"></div>
-            {categoriesByGender.map(([_, categories]) => (
+            <div className="flex">
+                <div className="grow">
+                    <Label>OPEN Categories</Label>
+                    {openCategories.map((a, i) => (
+                        <div key={i}>
+                            <span>{a.id}</span>
+                            <span>{a.name}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>AGE Categories</Label>
+                    {ageCategories.map(([_, categories]) => (
+                        <div className="flex">
+                            {categories.map((c, i) => (
+                                <span
+                                    style={{ width: getPercentage(c) }}
+                                    className={`flex hover:opacity-80 cursor-pointerł ${getColorFromIndex(
+                                        i
+                                    )} h-10 items-center justify-center text-white`}
+                                >
+                                    {c.minAge}-{c.maxAge}
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>SPECIAL Categories</Label>
+                    {autoCategories.map((a, i) => (
+                        <div key={i}>
+                            <span>{a.id}</span>
+                            <span>{a.name}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="p-2"></div>
+            {/* {categoriesByGender.map(([_, categories]) => (
                 <div className="flex">
                     {categories.map((c, i) => (
                         <span
@@ -93,7 +134,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                         </span>
                     ))}
                 </div>
-            ))}
+            ))} */}
             {/* <div className="flex">
                 {categories.map((c, i) => (
                     <span
