@@ -1,4 +1,4 @@
-import { formatTimeWithSec } from "../utils/dist";
+import { formatTimeWithSec } from "@set/utils/dist/datetime";
 
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
     <div

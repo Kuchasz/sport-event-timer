@@ -6,7 +6,7 @@ import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
-import { milisecondsToTimeString } from "../../utils";
+import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../components/modal";
 import { PlayerCreate } from "../../components/player-create";
 import { PlayerEdit } from "components/player-edit";

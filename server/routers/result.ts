@@ -1,6 +1,6 @@
 import * as trpc from "@trpc/server";
 import { db } from "../db";
-import { sort } from "../utils/dist";
+import { sort } from "@set/utils/dist/array";
 import { z } from "zod";
 
 export const resultRouter = trpc.router().query("results", {
