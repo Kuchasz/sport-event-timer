@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { formatTimeNoSec } from "@set/utils/dist";
+import { formatTimeNoSec } from "@set/utils/dist/datetime";
 import { getFunRacePlayers, getProRacePlayers, getTimeTrialPlayers } from "api";
 import { Loader } from "../../components/loader";
 import { mdiKeyboardBackspace } from "@mdi/js";
