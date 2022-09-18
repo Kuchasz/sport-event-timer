@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange, capitalizeFirstLetter, sort } from "@set/utils/dist/index";
+import { createRange, sort } from "@set/utils/dist/array";
+import { capitalizeFirstLetter } from "@set/utils/dist/string"
 import { Classification, Player, Race, TimingPoint } from "@prisma/client";
 
 async function main() {
@@ -57,7 +58,7 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
                     gender,
                     birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
                     registeredByUserId: userId,
-                    bibNumber: faker.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
+                    bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
                     city: faker.address.cityName(),
                     classificationId: c.id,
                     raceId: c.raceId,
@@ -93,7 +94,7 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
         const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
             .flatMap(p => timingPointsForRace.map((tp, i) => ({
-                id: faker.unique(faker.mersenne.rand, [1, 9999], store),
+                id: faker.helpers.unique(faker.mersenne.rand, [1, 9999], store),
                 bibNumber: p.bibNumber!,
                 timingPointId: tp.id,
                 time: faker.date.between(new Date(startTime.getTime() + i * 3_600_000), new Date(startTime.getTime() + i * 3_600_600 + 3_600_600)).getTime()

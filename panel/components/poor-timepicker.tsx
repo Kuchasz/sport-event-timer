@@ -1,5 +1,6 @@
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { fullTimeStringToMiliseconds, milisecondsToTimeString, timeStringToMiliseconds } from "utils";
+import { fullTimeStringToMiliseconds, timeStringToMiliseconds } from "utils";
+import { milisecondsToTimeString } from "@set/utils/dist/datetime"
 import { Input } from "./input";
 import { useState } from "react";
 
