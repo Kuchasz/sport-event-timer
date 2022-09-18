@@ -1,4 +1,4 @@
-import { formatTime } from "@set/utils/dist";
+import { formatTime } from "@set/utils/dist/datetime";
 
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
     <div style={{ fontSize: `${fontSize}rem` }} className="leading-none text-white text-center transition-all">

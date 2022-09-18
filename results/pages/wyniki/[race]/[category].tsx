@@ -14,7 +14,8 @@ import {
 import { Loader } from "../../../components/loader";
 import { mdiKeyboardBackspace, mdiMenu } from "@mdi/js";
 import { Player } from "@set/timer/dist/model";
-import { PlayerResult, sort } from "@set/utils/dist";
+import { PlayerResult } from "@set/utils/dist";
+import { sort } from "@set/utils/dist/array";
 import { Table } from "../../../components/table";
 import { TimerState } from "@set/timer/dist/store";
 import { useEffect, useState } from "react";

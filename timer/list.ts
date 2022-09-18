@@ -1,4 +1,4 @@
-import { areOverlapping, createRange } from "@set/utils/dist";
+import { areOverlapping, createRange } from "@set/utils/dist/array";
 import { RegistrationPlayer } from "./model";
 
 export type ClassificationConfig = {
