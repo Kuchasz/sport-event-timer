@@ -21,7 +21,6 @@ const PlayersDialPad = () => {
                     })
                 );
             }}
-            title={"Clock in player"}
             timingPointId={timingPointId}
         />
     );

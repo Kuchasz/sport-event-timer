@@ -80,6 +80,10 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
             <div className="flex">
                 <div className="grow">
                     <Label>OPEN Categories</Label>
+                    <div className="flex py-2 items-center text-xs text-blue-900">
+                        <Icon size={0.8} path={mdiPlus} />
+                        <span className="ml-1">Add category</span>
+                    </div>
                     {openCategories.map((a, i) => (
                         <div key={i}>
                             <span>{a.id}</span>
@@ -92,6 +96,10 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
             <div className="flex">
                 <div className="grow">
                     <Label>AGE Categories</Label>
+                    <div className="flex py-2 items-center text-xs text-blue-900">
+                        <Icon size={0.8} path={mdiPlus} />
+                        <span className="ml-1">Add category</span>
+                    </div>
                     {ageCategories.map(([_, categories]) => (
                         <div className="flex">
                             {categories.map((c, i) => (
@@ -112,6 +120,10 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
             <div className="flex">
                 <div className="grow">
                     <Label>SPECIAL Categories</Label>
+                    <div className="flex py-2 items-center text-xs text-blue-900">
+                        <Icon size={0.8} path={mdiPlus} />
+                        <span className="ml-1">Add category</span>
+                    </div>
                     {autoCategories.map((a, i) => (
                         <div key={i}>
                             <span>{a.id}</span>
