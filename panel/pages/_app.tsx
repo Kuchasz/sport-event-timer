@@ -5,6 +5,7 @@ import { queryClient, trpcClient } from "../connection";
 import { useEffect } from "react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
+import "react-data-grid/lib/styles.css";
 import { ResultApp } from "apps/result";
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
