@@ -1,7 +1,8 @@
 import { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { trpc } from "../trpc";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { useEffect } from "react";
+import { trpc } from "connection";
 
 type ResultAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
 

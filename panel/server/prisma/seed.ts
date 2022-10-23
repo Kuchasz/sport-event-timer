@@ -31,7 +31,7 @@ async function main() {
     const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
 
     const _stopwatches = createStopwatches(races, players, timingPoints);
-    const stopwatches = await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
+    await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
 const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.mersenne.rand(20, 10) }).map(() => ({
@@ -42,7 +42,7 @@ const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.m
 const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] =>
     raceIds.flatMap(r =>
         createRange({ from: 0, to: faker.mersenne.rand(3, 2) })
-            .map(c => ({
+            .map(() => ({
                 raceId: r,
                 name: faker.commerce.productName()
             })))

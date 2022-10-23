@@ -5,7 +5,6 @@ import { Button } from "./button";
 import { CurrentRaceContext } from "../current-race-context";
 import { Demodal } from "demodal";
 import { Fragment, useContext } from "react";
-import { InferMutationInput, trpc } from "../trpc";
 import {
     mdiAccountCogOutline,
     mdiAccountGroup,
@@ -22,13 +21,15 @@ import { PoorSelect } from "./poor-select";
 import { RaceCreate } from "./race-create";
 import { useCurrentRaceId } from "../hooks";
 import { useRouter } from "next/router";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "connection";
 
 type Props = {
     preview?: boolean;
     children: React.ReactNode;
 };
 
-type CreatedRace = InferMutationInput<"race.add">;
+type CreatedRace = AppRouterTypes["race"]["add"]["input"];
 
 const menuItems = [
     {
@@ -93,8 +94,8 @@ const menuItems = [
 ];
 
 const Status = () => {
-    const { data: items, refetch } = trpc.useQuery(["race.races"]);
-    const addRaceMuttaion = trpc.useMutation(["race.add"]);
+    const { data: items, refetch } = trpc.race.races.useQuery();
+    const addRaceMuttaion = trpc.race.add.useMutation();
     const { selectRace } = useContext(CurrentRaceContext);
 
     const openCreateDialog = async () => {

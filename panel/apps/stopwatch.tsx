@@ -2,15 +2,14 @@ import React from "react";
 import { AppProps } from "next/app";
 import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
-import { getConnection, trpc } from "../connection";
+import { getConnection, trpc, trpcClient } from "../connection";
 import { isLoggedIn } from "../security";
 import { Login } from "../pages/login";
 import { Middleware } from "redux";
 import { Provider as ReduxStoreProvider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ServerConnectionHandler } from "../server-connection-handler";
 import { Status } from "../components/stopwatch/status";
-import { trpc } from "../trpc";
 import { uuidv4 } from "@set/utils//dist/uuid";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
@@ -35,7 +34,7 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
 
         const socket = getConnection();
 
-        if (!action.__remote && socket?.OPEN) trpc.mutation("action.dispatch", { raceId: externals.raceId!, clientId, action });
+        if (!action.__remote && socket?.OPEN) trpcClient.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
 
         next(action);
     }

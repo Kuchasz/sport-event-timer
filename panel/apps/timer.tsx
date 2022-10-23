@@ -1,8 +1,9 @@
 import { AppProps } from "next/app";
 import { CurrentRaceContext } from "current-race-context";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { trpc } from "../trpc";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { useEffect, useState } from "react";
+import { trpc } from "connection";
 
 type TimerAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
 

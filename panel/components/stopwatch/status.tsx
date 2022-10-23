@@ -1,4 +1,4 @@
-import { ConnectionState } from "../../connection";
+import { ConnectionState, trpc } from "../../connection";
 import { Icon } from "@mdi/react";
 import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherCloudyAlert } from "@mdi/js";
 import { sort } from "@set/utils/dist/array";
@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import Link from "next/link";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
 import { useRouter } from "next/router";
-import { trpc } from "trpc";
+
 import classNames from "classnames";
 
 const getIconFromConnectionState = (state: ConnectionState) => {
@@ -67,7 +67,7 @@ export const Status = () => {
     const {
         query: { raceId },
     } = useRouter();
-    const { data: allTimeKeepers } = trpc.useQuery(["timing-point.timingPoints", { raceId: parseInt(raceId as string) }], {
+    const { data: allTimeKeepers } = trpc.timingPoint.timingPoints.useQuery({ raceId: parseInt(raceId as string)}, {
         initialData: [],
     });
     const [timingPointId] = useAtom(timingPointIdAtom);

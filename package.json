@@ -8,16 +8,11 @@
         "packages": [
             "timer",
             "results",
-            "server",
             "utils",
             "panel"
         ]
     },
     "resolutions": {
         "@types/eslint": "8.4.3"
-    },
-    "dependencies": {
-        "@tanstack/react-query": "^4.13.0",
-        "@trpc/react-query": "^10.0.0-proxy-beta.21"
     }
 }
