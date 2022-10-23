@@ -1,4 +1,4 @@
-import { trpc } from "../../trpc";
+import { trpc } from "../../connection";
 
 export default function IndexPage() {
     const { data } = trpc.useQuery(["classification.classifications", { raceId: 0 }]);
