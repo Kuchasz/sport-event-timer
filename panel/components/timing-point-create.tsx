@@ -1,7 +1,7 @@
-import { InferMutationInput } from "../trpc";
+import { AppRouterTypes } from "trpc";
 import { TimingPointForm } from "./timing-point-form";
 
-type CreateTimingPoint = InferMutationInput<"timing-point.add">;
+type CreateTimingPoint = AppRouterTypes["timingPoint"]["add"]["input"];
 
 type TimingPointCreateProps = {
     raceId: number;

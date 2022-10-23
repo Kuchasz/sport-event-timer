@@ -1,16 +1,17 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { InferQueryOutput, trpc } from "../../trpc";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "../../connection";
 
 import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
-type Result = InferQueryOutput<"result.results">[0];
+type Result = AppRouterTypes["result"]["results"]["output"][0];
 
 const Results = () => {
     const raceId = useCurrentRaceId();
-    const { data: results } = trpc.useQuery(["result.results", { raceId: raceId! }]);
+    const { data: results } = trpc.result.results.useQuery({ raceId: raceId! });
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const columns: Column<Result, unknown>[] = [

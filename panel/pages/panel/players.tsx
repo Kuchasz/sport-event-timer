@@ -4,7 +4,8 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../components/modal";
@@ -13,9 +14,9 @@ import { PlayerEdit } from "components/player-edit";
 import { useCurrentRaceId } from "../../hooks";
 
 
-type Player = InferQueryOutput<"player.players">[0];
-type CreatedPlayer = InferMutationInput<"player.add">["player"];
-type EditedPlayer = InferMutationInput<"player.add">["player"];
+type Player = AppRouterTypes["player"]["players"]["output"][0];
+type CreatedPlayer = AppRouterTypes["player"]["add"]["input"]["player"];
+type EditedPlayer = AppRouterTypes["player"]["add"]["input"]["player"];
 
 const columns: Column<Player, unknown>[] = [
     { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
@@ -56,8 +57,8 @@ const columns: Column<Player, unknown>[] = [
 
 const PlayerDeleteButton = ({ player }: { player: Player }) => {
     const raceId = useCurrentRaceId();
-    const { refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
-    const deletePlayerMutation = trpc.useMutation(["player.delete"]);
+    const { refetch } = trpc.player.players.useQuery({ raceId: raceId! });
+    const deletePlayerMutation = trpc.player.delete.useMutation();
     const deletePlayer = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete player`,
@@ -98,9 +99,9 @@ const PlayerDeleteButton = ({ player }: { player: Player }) => {
 
 const Players = () => {
     const raceId = useCurrentRaceId();
-    const { data: players, refetch } = trpc.useQuery(["player.players", { raceId: raceId! }]);
-    const addPlayerMutation = trpc.useMutation(["player.add"]);
-    const editPlayerMutation = trpc.useMutation(["player.edit"]);
+    const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId! });
+    const addPlayerMutation = trpc.player.add.useMutation();
+    const editPlayerMutation = trpc.player.edit.useMutation();
     
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayer>(NiceModal, {

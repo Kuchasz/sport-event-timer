@@ -1,7 +1,7 @@
 import { trpc } from "../../connection";
 
 export default function IndexPage() {
-    const { data } = trpc.useQuery(["classification.classifications", { raceId: 0 }]);
+    const { data } = trpc.classification.classifications.useQuery({ raceId: 0 });
     if (!data) {
         return <div>Loading...</div>;
     }

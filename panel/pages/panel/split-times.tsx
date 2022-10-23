@@ -3,7 +3,8 @@ import Icon from "@mdi/react";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "../../connection";
 import {
     mdiClockEditOutline,
     mdiClockPlusOutline,
@@ -14,9 +15,9 @@ import { SplitTimeEdit } from "../../components/split-time-edit";
 import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
-type SplitTime = InferQueryOutput<"split-time.split-times">[0];
-type RevertedSplitTime = InferMutationInput<"split-time.revert">;
-type EditedSplitTime = InferMutationInput<"split-time.update">;
+type SplitTime = AppRouterTypes["splitTime"]["splitTimes"]["output"][0];
+type RevertedSplitTime = AppRouterTypes["splitTime"]["revert"]["input"];
+type EditedSplitTime = AppRouterTypes["splitTime"]["update"]["input"];
 
 type SplitTimeResultTypes = {
     openEditDialog: (params: SplitTime) => Promise<void>;
@@ -86,16 +87,13 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
 
 const SplitTimes = () => {
     const raceId = useCurrentRaceId();
-    const { data: splitTimes, refetch: refetchSplitTimes } = trpc.useQuery([
-        "split-time.split-times",
-        { raceId: raceId! }
-    ]);
-    const { data: timingPoints } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }], {
+    const { data: splitTimes, refetch: refetchSplitTimes } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId! });
+    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! }, {
         initialData: []
     });
-    const { data: race } = trpc.useQuery(["race.race", { raceId: raceId! }]);
-    const updateSplitTimeMutation = trpc.useMutation(["split-time.update"]);
-    const revertSplitTimeMuttaion = trpc.useMutation(["split-time.revert"]);
+    const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
+    const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
+    const revertSplitTimeMuttaion = trpc.splitTime.revert.useMutation();
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {

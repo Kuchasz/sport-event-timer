@@ -1,7 +1,8 @@
-import { InferMutationInput, trpc } from "../trpc";
+import { trpc } from "connection";
+import { AppRouterTypes } from "trpc";
 import { SplitTimeForm } from "./split-time-form";
 
-type SplitTime = InferMutationInput<"split-time.update">;
+type SplitTime = AppRouterTypes["splitTime"]["update"]["input"];
 
 type SplitTimeEditProps = {
     onReject: () => void;
@@ -12,7 +13,7 @@ type SplitTimeEditProps = {
 };
 
 export const SplitTimeEdit = ({ raceId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
-    const { data: timingPoints } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }]);
+    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     if (!timingPoints) return;
 
     return (

@@ -1,8 +1,8 @@
-import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { AppRouterTypes } from "trpc";
 import { TimingPointForm } from "./timing-point-form";
 
-type TimingPoint = InferQueryOutput<"timing-point.timingPoints">[0];
-type EditTimingPoint = InferMutationInput<"timing-point.update">;
+type TimingPoint = AppRouterTypes["timingPoint"]["timingPoints"]["output"][0];
+type EditTimingPoint = AppRouterTypes["timingPoint"]["update"]["input"];
 
 type TimingPointEditProps = {
     editedTimingPoint: TimingPoint;

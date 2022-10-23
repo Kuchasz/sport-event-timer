@@ -13,8 +13,8 @@ import { useMemo, useState } from "react";
 import { AppRouterTypes } from "trpc";
 
 type Classification = AppRouterTypes["classification"]["classifications"]["output"][0];
-type EditedClassification = AppRouterTypes["classification"]["update"];
-type CreatedClassification = AppRouterTypes["classification"]["add"];
+type EditedClassification = AppRouterTypes["classification"]["update"]["input"];
+type CreatedClassification = AppRouterTypes["classification"]["add"]["input"];
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {
@@ -37,9 +37,9 @@ const columns: Column<Classification, unknown>[] = [
 
 const Classifications = () => {
     const raceId = useCurrentRaceId();
-    const { data: classifications, refetch } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
-    const updateClassificationMutation = trpc.useMutation(["classification.update"]);
-    const addClassifiationMutation = trpc.useMutation(["classification.add"]);
+    const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId! });
+    const updateClassificationMutation = trpc.classification.update.useMutation();
+    const addClassifiationMutation = trpc.classification.add.useMutation();
 
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 

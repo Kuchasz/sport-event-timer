@@ -1,7 +1,7 @@
-import { InferMutationInput } from "../trpc";
+import { AppRouterTypes } from "trpc";
 import { RaceForm } from "./race-form";
 
-type CreateRace = InferMutationInput<"race.add">;
+type CreateRace = AppRouterTypes["race"]["add"]["input"];
 
 type RaceCreateProps = {
     onReject: () => void;
