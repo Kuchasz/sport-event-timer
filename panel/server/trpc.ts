@@ -41,14 +41,15 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 
 const isAuthed = t.middleware(({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-    return next({
-        ctx: {
-            session: { ...ctx.session, user: ctx.session.user },
-        },
-    });
+    // if (!ctx.session || !ctx.session.user) {
+    //     throw new TRPCError({ code: "UNAUTHORIZED" });
+    // }
+    // return next({
+    //     ctx: {
+    //         session: { ...ctx.session, user: ctx.session.user },
+    //     },
+    // });
+    return next();
 });
 
 export const protectedProcedure = t.procedure.use(isAuthed);

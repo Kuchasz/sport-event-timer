@@ -1251,7 +1251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.0, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.19.0
   resolution: "@babel/runtime@npm:7.19.0"
   dependencies:
@@ -1711,6 +1711,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next-auth/prisma-adapter@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@next-auth/prisma-adapter@npm:1.0.5"
+  peerDependencies:
+    "@prisma/client": ">=2.26.0 || >=3"
+    next-auth: ^4
+  checksum: 5d03d623e60e719ea3ae91d7aecd57019eebc063a0711cbdb2917bf9675c29b6fcbdbc1724b584c346be995ad7bb6fbca533d08e4d43769023ba084e0aaae147
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:12.3.1":
   version: 12.3.1
   resolution: "@next/env@npm:12.3.1"
@@ -1977,14 +1987,17 @@ __metadata:
     "@headlessui/react": ^1.6.6
     "@mdi/js": ^6.9.96
     "@mdi/react": ^1.6.0
+    "@next-auth/prisma-adapter": ^1.0.5
     "@prisma/client": latest
     "@set/timer": 1.0.0
     "@set/utils": 1.0.0
     "@tailwindcss/forms": ^0.5.2
+    "@tanstack/react-query": ^4.13.0
     "@tanstack/react-virtual": 3.0.0-beta.18
-    "@trpc/client": ^9.25.3
+    "@trpc/client": next
     "@trpc/next": next
-    "@trpc/react": ^9.25.3
+    "@trpc/react": next
+    "@trpc/react-query": next
     "@trpc/server": next
     "@types/classnames": ^2.3.1
     "@types/express": ^4.17.13
@@ -2017,13 +2030,13 @@ __metadata:
     react-data-grid: 7.0.0-beta.19
     react-dom: ^18.2.0
     react-location: ^3.3.4
-    react-query: ^3.39.1
     react-redux: ^8.0.2
     redux: ^4.2.0
     sass: ^1.54.4
     superjson: ^1.9.1
     tailwindcss: ^3.1.6
     tailwindcss-classnames: ^3.0.5
+    ts-node: ^10.9.1
     typescript: ^4.8.4
     xlsx: ^0.18.5
     zod: ^3.17.3
@@ -2199,14 +2212,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/client@npm:^9.25.3":
-  version: 9.27.2
-  resolution: "@trpc/client@npm:9.27.2"
-  dependencies:
-    "@babel/runtime": ^7.9.0
+"@trpc/client@npm:next":
+  version: 10.0.0-proxy-beta.26
+  resolution: "@trpc/client@npm:10.0.0-proxy-beta.26"
   peerDependencies:
-    "@trpc/server": 9.27.2
-  checksum: a404048151bd657fea08af3d12e7a6038271f11e777c4fbc71affa24c40a0e954f7a7df5d84ca2d0d0039b43ca0576c53d9c604b2c2ade9d6d7b0b877c4ebd43
+    "@trpc/server": 10.0.0-proxy-beta.26
+  checksum: 503d8ff5855cc5fceea68d9300fedf2f4713e7bf3a937ea37dccd194ed4c3d39f9398e24196d8bc5aa7e533c3e4fe9c67f44330491fc2b798bfe2635995124e8
   languageName: node
   linkType: hard
 
@@ -2227,31 +2238,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/react-query@npm:^10.0.0-proxy-beta.21":
-  version: 10.0.0-proxy-beta.25
-  resolution: "@trpc/react-query@npm:10.0.0-proxy-beta.25"
+"@trpc/react-query@npm:next":
+  version: 10.0.0-proxy-beta.26
+  resolution: "@trpc/react-query@npm:10.0.0-proxy-beta.26"
   peerDependencies:
     "@tanstack/react-query": ^4.3.8
-    "@trpc/client": 10.0.0-proxy-beta.25
-    "@trpc/server": 10.0.0-proxy-beta.25
+    "@trpc/client": 10.0.0-proxy-beta.26
+    "@trpc/server": 10.0.0-proxy-beta.26
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 917239c0058d0b9f62419b4756d83cfa2815c0a99e18f6d6ba0a8e77977222c0c1b5a1d53222f80b875fc79d00fbe859e044799eac2d3e8783f521ff1348a5c8
+  checksum: 6edf88485db1db9bcb46353acc51117d26b4b5834da56031d56ea2def8f62b94e5f69da65f793301a16e78a303ee34c4d6cae603765728d586baccf9040a9fb7
   languageName: node
   linkType: hard
 
-"@trpc/react@npm:^9.25.3":
-  version: 9.27.2
-  resolution: "@trpc/react@npm:9.27.2"
-  dependencies:
-    "@babel/runtime": ^7.9.0
+"@trpc/react@npm:next":
+  version: 10.0.0-proxy-beta.20
+  resolution: "@trpc/react@npm:10.0.0-proxy-beta.20"
   peerDependencies:
-    "@trpc/client": 9.27.2
-    "@trpc/server": 9.27.2
+    "@tanstack/react-query": ^4.3.8
+    "@trpc/client": 10.0.0-proxy-beta.20
+    "@trpc/server": 10.0.0-proxy-beta.20
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-    react-query: ^3.37.0
-  checksum: 776d25f9460440ec01bf8178dcc7cc2b2ccc7aea2d5ec19a503c718ad5a42a814de1dbb40ac11d894d862225ede349508ddf6be49af11be3c41b1a1a69a190be
+  checksum: 000a84ef4f7c36acbe773fdf1d620161fd9068248ae2d90622e8e5d67f06a6b0ce5b1c4d2f6e72bcf29b30bd6d8ed2a10f161188564875d7338c3344cc5f1663
   languageName: node
   linkType: hard
 
@@ -7112,24 +7121,6 @@ prisma@latest:
   languageName: node
   linkType: hard
 
-"react-query@npm:^3.39.1":
-  version: 3.39.2
-  resolution: "react-query@npm:3.39.2"
-  dependencies:
-    "@babel/runtime": ^7.5.5
-    broadcast-channel: ^3.4.1
-    match-sorter: ^6.0.2
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 83b199e66af28ab67ec4d22e51da42f02447186623db926b75d27a1c09a3383da6ddc9e5b83d82578fac7abdba7e6f265aecbffdb91db61981950d3d59409346
-  languageName: node
-  linkType: hard
-
 "react-redux@npm:^8.0.2":
   version: 8.0.2
   resolution: "react-redux@npm:8.0.2"
@@ -7553,9 +7544,6 @@ prisma@latest:
 "root-workspace-0b6124@workspace:.":
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
-  dependencies:
-    "@tanstack/react-query": ^4.13.0
-    "@trpc/react-query": ^10.0.0-proxy-beta.21
   languageName: unknown
   linkType: soft
 
@@ -8472,7 +8460,7 @@ prisma@latest:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.7.0":
+"ts-node@npm:^10.7.0, ts-node@npm:^10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:

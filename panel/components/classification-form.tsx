@@ -1,12 +1,12 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput } from "../trpc";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck, mdiPlus } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { groupBy } from "@set/utils/dist/array";
+import { AppRouterTypes } from "trpc";
 
 type Classification = AppRouterTypes["classification"]["add"]["input"];
 

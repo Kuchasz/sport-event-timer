@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { AppType } from "next/app";
 import { PanelApp } from "../apps/panel";
-import { queryClient, trpc } from "../connection";
+import { queryClient, trpcClient, trpcNext } from "../connection";
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
@@ -30,49 +30,17 @@ const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { ses
 
     return router.pathname.startsWith("/panel") ? (
         <SessionProvider session={session}>
-            <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+            <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
         </SessionProvider>
     ) : router.pathname.startsWith("/stopwatch") ? (
         <SessionProvider session={session}>
-            <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+            <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
         </SessionProvider>
     ) : router.pathname.startsWith("/result") ? (
-        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
     ) : (
-        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
     );
 };
 
-// const url = process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3001";
-
-export default trpc.withTRPC(App);
-
-// export default withTRPC<AppRouter>({
-//     config() {
-//         /**
-//          * If you want to use SSR, you need to use the server's full URL
-//          * @link https://trpc.io/docs/ssr
-//          */
-
-//         return {
-//             transformer: superjson,
-//             links: [
-//                 loggerLink({
-//                     enabled: opts =>
-//                         (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
-//                         (opts.direction === "down" && opts.result instanceof Error)
-//                 }),
-//                 // getWSLink(),
-//                 httpBatchLink({ url })
-//             ]
-//             /**
-//              * @link https://react-query.tanstack.com/reference/QueryClient
-//              */
-//             // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-//         };
-//     },
-//     /**
-//      * @link https://trpc.io/docs/ssr
-//      */
-//     ssr: true
-// })(MyApp);
+export default trpcNext.withTRPC(App);
