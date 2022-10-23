@@ -1990,7 +1990,7 @@ __metadata:
     postcss: ^8.4.14
     react: ^18.2.0
     react-daisyui: ^2.0.5
-    react-data-grid: ^7.0.0-beta.13
+    react-data-grid: 7.0.0-beta.19
     react-dom: ^18.2.0
     react-location: ^3.3.4
     react-query: ^3.39.1
@@ -7067,15 +7067,15 @@ prisma@latest:
   languageName: node
   linkType: hard
 
-"react-data-grid@npm:^7.0.0-beta.13":
-  version: 7.0.0-beta.16
-  resolution: "react-data-grid@npm:7.0.0-beta.16"
+"react-data-grid@npm:7.0.0-beta.19":
+  version: 7.0.0-beta.19
+  resolution: "react-data-grid@npm:7.0.0-beta.19"
   dependencies:
     clsx: ^1.1.1
   peerDependencies:
-    react: ^16.14 || ^17.0 || ^18.0
-    react-dom: ^16.14 || ^17.0 || ^18.0
-  checksum: 0f2d320a924ad2802316bdb780a7270af2e5fa897a3715146bde5026f9dbb5789b97512ed0fa424f726e31037d0f10500783349ca4e8c566ab02f326510e2f39
+    react: ^18.0
+    react-dom: ^18.0
+  checksum: 21d1a71bc0e599c31c5cca091b1d30f164515fc0826c28d036f0b7a809bc8978450b5444384c6f67ae1fce18f892692115c28af1eeb6568263452cfb93720cc1
   languageName: node
   linkType: hard
 
