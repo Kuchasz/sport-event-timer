@@ -5,15 +5,16 @@ import { Button } from "components/button";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
+import { trpc } from "../../connection";
 import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../hooks";
 import { useMemo, useState } from "react";
+import { AppRouterTypes } from "trpc";
 
-type Classification = InferQueryOutput<"classification.classifications">[0];
-type EditedClassification = InferMutationInput<"classification.update">;
-type CreatedClassification = InferMutationInput<"classification.add">;
+type Classification = AppRouterTypes["classification"]["classifications"]["output"][0];
+type EditedClassification = AppRouterTypes["classification"]["update"];
+type CreatedClassification = AppRouterTypes["classification"]["add"];
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {

@@ -1,17 +1,18 @@
 import dynamic from "next/dynamic";
-import { AppProps } from "next/app";
+import { AppType } from "next/app";
 import { PanelApp } from "../apps/panel";
-import { queryClient, trpcClient } from "../connection";
+import { queryClient, trpc } from "../connection";
 import { useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
+import type { Session } from "next-auth";
 import "react-data-grid/lib/styles.css";
 import { ResultApp } from "apps/result";
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
-function MyApp({ Component, pageProps, router }: AppProps) {
-    
+const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps }, router }) => {
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -27,22 +28,24 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         }
     }, []);
 
-    console.log(router.pathname);
-
     return router.pathname.startsWith("/panel") ? (
-        <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
+        <SessionProvider session={session}>
+            <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+        </SessionProvider>
     ) : router.pathname.startsWith("/stopwatch") ? (
-        <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
+        <SessionProvider session={session}>
+            <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
+        </SessionProvider>
     ) : router.pathname.startsWith("/result") ? (
-        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
+        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
     ) : (
-        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
+        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpc} />
     );
-}
+};
 
 // const url = process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3001";
 
-export default MyApp;
+export default trpc.withTRPC(App);
 
 // export default withTRPC<AppRouter>({
 //     config() {

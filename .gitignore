@@ -42,7 +42,7 @@ results*.json
 start*.json
 uploaded*
 classifications.json
-server/prisma/database*.*
+database*.*
 *.js.map
 workbox-*
 sw.js

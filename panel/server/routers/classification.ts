@@ -1,7 +1,7 @@
-import * as trpc from "@trpc/server";
 import { db } from "../db";
 import { z } from "zod";
 import { GenderEnum } from "./player";
+import { protectedProcedure, router } from "../trpc";
 
 const ageCategoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),
@@ -19,50 +19,36 @@ const classificationSchema = z.object({
     ageCategories: ageCategoriesSchema
 });
 
-export const classificationRouter = trpc
-    .router()
-    .query("classifications", {
-        input: z.object({
+export const classificationRouter =
+    router({
+        classifications: protectedProcedure.input(z.object({
             raceId: z.number({ required_error: "raceId is required" })
-        }),
-        async resolve(req) {
+        })).query(async (req) => {
             const raceId = req.input.raceId;
             return await db.classification.findMany({ where: { raceId } });
-        }
-    })
-    .query("categories", {
-        input: z.object({
-            classificationId: z.number({ required_error: "classificationId is required" })
         }),
-        output: ageCategoriesSchema,
-        async resolve(req) {
+        categories: protectedProcedure.input(z.object({
+            classificationId: z.number({ required_error: "classificationId is required" })
+        })).query(async (req) => {
             const classificationId = req.input.classificationId;
             const ageCategories = await db.category.findMany({ where: { classificationId } });
 
             return await ageCategoriesSchema.parseAsync(ageCategories);
-        }
-    })
-    .mutation("upload", {
-        input: z.object({
+        }),
+        upload: protectedProcedure.input(z.object({
             classifications: z.array(
                 z.object({
                     name: z.string({ required_error: "name is required" })
                 })
             ),
             raceId: z.number().min(1)
-        }),
-        async resolve(req) {
+        })).mutation(async (req) => {
             const { classifications, raceId } = req.input;
             classifications.forEach(async classification => {
                 await db.classification.create({ data: { ...classification, raceId } });
             });
-            // db.classification.create({})
-            // return await fs.writeJsonAsync(classifications, "../classifications.json");
-        }
-    })
-    .mutation("update", {
-        input: classificationSchema,
-        async resolve(req) {
+        }),
+        update: protectedProcedure.input(classificationSchema).mutation(async (req) => {
             const { id, ...data } = req.input;
             const { ageCategories, ...classification } = data;
 
@@ -77,14 +63,11 @@ export const classificationRouter = trpc
                     }
                 }
             });
-        }
-    })
-    .mutation("add", {
-        input: classificationSchema,
-        async resolve(req) {
+        }),
+        add: protectedProcedure.input(classificationSchema).mutation(async (req) => {
             const { id, ...data } = req.input;
             return await db.classification.create({ data });
-        }
+        })
     });
 
 export type ClassificationRouter = typeof classificationRouter;

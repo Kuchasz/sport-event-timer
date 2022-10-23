@@ -2,7 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
-import { getConnection, trpcClient } from "../connection";
+import { getConnection, trpc } from "../connection";
 import { isLoggedIn } from "../security";
 import { Login } from "../pages/login";
 import { Middleware } from "redux";
@@ -35,7 +35,7 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
 
         const socket = getConnection();
 
-        if (!action.__remote && socket?.OPEN) trpcClient.mutation("action.dispatch", { raceId: externals.raceId!, clientId, action });
+        if (!action.__remote && socket?.OPEN) trpc.mutation("action.dispatch", { raceId: externals.raceId!, clientId, action });
 
         next(action);
     }
