@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { AppRouterTypes } from "trpc";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
@@ -10,13 +10,13 @@ import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
 
-type Player = InferMutationInput<"player.add">["player"];
+type Player = AppRouterTypes["player"]["add"]["input"]["player"];
 
 type PlayerFormProps = {
     onReject: () => void;
     onResolve: (player: Player) => void;
     initialPlayer: Player;
-    classifications: InferQueryOutput<"classification.classifications">;
+    classifications: AppRouterTypes["classification"]["classifications"]["output"];
 };
 
 export type Gender = "male" | "female";

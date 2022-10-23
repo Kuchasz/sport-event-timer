@@ -1,13 +1,13 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput } from "../trpc";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
+import { AppRouterTypes } from "trpc";
 
-type Race = InferMutationInput<"race.add">;
+type Race = AppRouterTypes["race"]["add"]["input"];
 
 type RaceFormProps = {
     onReject: () => void;

@@ -1,13 +1,13 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput } from "../trpc";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
+import { AppRouterTypes } from "trpc";
 
-type TimingPoint = InferMutationInput<"timing-point.add">;
+type TimingPoint = AppRouterTypes["timingPoint"]["add"]["input"];
 
 type TimingPointFormProps = {
     onReject: () => void;

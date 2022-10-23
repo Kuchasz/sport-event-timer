@@ -3,7 +3,8 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
@@ -11,9 +12,9 @@ import { RaceEdit } from "components/race-edit";
 import { useState } from "react";
 import { Confirmation } from "components/confirmation";
 
-type Race = InferQueryOutput<"race.races">[0];
-type CreatedRace = InferMutationInput<"race.add">;
-type EditedRace = InferMutationInput<"race.update">;
+type Race = AppRouterTypes["race"]["races"]["output"][0];
+type CreatedRace = AppRouterTypes["race"]["add"]["input"];
+type EditedRace = AppRouterTypes["race"]["update"]["input"];
 
 const columns: Column<Race, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -27,8 +28,8 @@ const columns: Column<Race, unknown>[] = [
 ];
 
 const RaceDeleteButton = ({ race }: { race: Race }) => {
-    const { refetch } = trpc.useQuery(["race.races"]);
-    const deleteRaceMutation = trpc.useMutation(["race.delete"]);
+    const { refetch } = trpc.race.races.useQuery();
+    const deleteRaceMutation = trpc.race.delete.useMutation();
     const deletePlayer = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete player`,
@@ -52,9 +53,9 @@ const RaceDeleteButton = ({ race }: { race: Race }) => {
 };
 
 const Races = () => {
-    const { data: races, refetch } = trpc.useQuery(["race.races"]);
-    const updateRaceMutation = trpc.useMutation(["race.update"]);
-    const addRaceMuttaion = trpc.useMutation(["race.add"]);
+    const { data: races, refetch } = trpc.race.races.useQuery();
+    const updateRaceMutation = trpc.race.update.useMutation();
+    const addRaceMuttaion = trpc.race.add.useMutation();
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openCreateDialog = async () => {

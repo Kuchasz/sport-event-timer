@@ -1,8 +1,8 @@
-import { InferMutationInput, InferQueryOutput } from "../trpc";
+import { AppRouterTypes } from "trpc";
 import { RaceForm } from "./race-form";
 
-type Race = InferQueryOutput<"race.races">[0];
-type EditRace = InferMutationInput<"race.update">;
+type Race = AppRouterTypes["race"]["races"]["output"][0];
+type EditRace = AppRouterTypes["race"]["update"]["input"];
 
 type RaceEditProps = {
     editedRace: Race;

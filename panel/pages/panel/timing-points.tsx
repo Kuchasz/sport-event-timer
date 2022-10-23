@@ -4,7 +4,8 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { InferMutationInput, InferQueryOutput, trpc } from "../../trpc";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "../../connection";
 import { mdiPlus, mdiTimerOutline, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
@@ -13,9 +14,9 @@ import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 import Link from "next/link";
 
-type TimingPoint = InferQueryOutput<"timing-point.timingPoints">[0];
-type CreatedTimingPoint = InferMutationInput<"timing-point.add">;
-type EditedTimingPoint = InferMutationInput<"timing-point.update">;
+type TimingPoint = AppRouterTypes["timingPoint"]["timingPoints"]["output"][0];
+type CreatedTimingPoint = AppRouterTypes["timingPoint"]["add"]["input"];
+type EditedTimingPoint = AppRouterTypes["timingPoint"]["update"]["input"];
 
 const columns: Column<TimingPoint, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -31,8 +32,8 @@ const columns: Column<TimingPoint, unknown>[] = [
 
 const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     const raceId = useCurrentRaceId();
-    const { refetch } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }]);
-    const deleteTimingPointMutation = trpc.useMutation(["timing-point.delete"]);
+    const { refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
     const deleteTimingPoint = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete timing point`,
@@ -57,9 +58,9 @@ const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) 
 
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();
-    const { data: races, refetch } = trpc.useQuery(["timing-point.timingPoints", { raceId: raceId! }]);
-    const updateTimingPointMutation = trpc.useMutation(["timing-point.update"]);
-    const addTimingPointMuttaion = trpc.useMutation(["timing-point.add"]);
+    const { data: races, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
+    const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
     const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openCreateDialog = async () => {

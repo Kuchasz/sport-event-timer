@@ -1,7 +1,8 @@
-import { InferMutationInput, trpc } from "../trpc";
+import { trpc } from "connection";
+import { AppRouterTypes } from "trpc";
 import { PlayerForm } from "./player-form";
 
-type CreatePlayer = InferMutationInput<"player.add">["player"];
+type CreatePlayer = AppRouterTypes["player"]["add"]["input"]["player"];
 
 type PlayerCreateProps = {
     raceId: number;
@@ -10,7 +11,7 @@ type PlayerCreateProps = {
 };
 
 export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
-    const { data: classifications } = trpc.useQuery(["classification.classifications", { raceId: raceId! }]);
+    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId! });
     if (!classifications) return;
 
     const player: CreatePlayer = {

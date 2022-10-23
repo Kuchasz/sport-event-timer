@@ -1,21 +1,21 @@
 import Icon from "@mdi/react";
 import { Button } from "./button";
-import { InferMutationInput, InferQueryOutput } from "../trpc";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorFullTimepicker } from "./poor-timepicker";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
+import { AppRouterTypes } from "trpc";
 
-type SplitTime = InferMutationInput<"split-time.update">;
+type SplitTime = AppRouterTypes["splitTime"]["update"]["input"];
 
 type SplitTimeFormProps = {
     onReject: () => void;
     onResolve: (splitTime: SplitTime) => void;
     initialSplitTime: SplitTime;
     raceDate: number;
-    timingPoints: InferQueryOutput<"timing-point.timingPoints">;
+    timingPoints: AppRouterTypes["timingPoint"]["timingPoints"]["output"];
 };
 
 export const SplitTimeForm = ({

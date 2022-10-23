@@ -8,7 +8,7 @@ import { useFormState } from "hooks";
 import { useQueryClient } from "react-query";
 import { groupBy } from "@set/utils/dist/array";
 
-type Classification = InferMutationInput<"classification.add">;
+type Classification = AppRouterTypes["classification"]["add"]["input"];
 
 type ClassificationFormProps = {
     onReject: () => void;
