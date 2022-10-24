@@ -1,6 +1,6 @@
 import { onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
-import { trpc } from "./trpc";
+import { trpc } from "./connection";
 import { useSetAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom } from "stopwatch-states";
 
@@ -15,12 +15,12 @@ export const ServerConnectionHandler = ({
     raceId: number;
     clientId: string;
 }) => {
-    trpc.useSubscription(["action.action-dispatched", { raceId, clientId }], {
-        onNext: (action) => dispatch({ ...action, __remote: true }),
+    trpc.action.actionDispatched.useSubscription({ raceId, clientId }, {
+        onData: (action) => dispatch({ ...action, __remote: true }),
         onError: console.error,
     });
 
-    const { refetch: refetchState } = trpc.useQuery(["action.state", { raceId }], {
+    const { refetch: refetchState } = trpc.action.state.useQuery({ raceId }, {
         enabled: false,
         onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true }),
     });
@@ -28,7 +28,7 @@ export const ServerConnectionHandler = ({
     const setTimeOffset = useSetAtom(timeOffsetAtom);
     const setConnectionState = useSetAtom(connectionStateAtom);
 
-    const ntpMutation = trpc.useMutation(["ntp.sync"]);
+    const ntpMutation = trpc.ntp.sync.useMutation();
 
     useEffect(() => {
         // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));

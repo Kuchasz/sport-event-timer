@@ -23,10 +23,10 @@ export function ResultApp({ Component, pageProps, queryClient, trpcClient }: Res
     }, []);
 
     return (
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        // <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
                 <Component {...pageProps} />
             </QueryClientProvider>
-        </trpc.Provider>
+        // </trpc.Provider>
     );
 }

@@ -26,7 +26,7 @@ export function PanelApp({ Component, pageProps, queryClient, trpcClient }: Pane
     }, []);
 
     return (
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        // <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
                 <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
                     <Layout>
@@ -35,6 +35,6 @@ export function PanelApp({ Component, pageProps, queryClient, trpcClient }: Pane
                     <Demodal.Container />
                 </CurrentRaceContext.Provider>
             </QueryClientProvider>
-        </trpc.Provider>
+        // </trpc.Provider>
     );
 }
