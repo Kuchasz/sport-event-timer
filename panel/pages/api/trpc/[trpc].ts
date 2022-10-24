@@ -11,6 +11,9 @@ export default createNextApiHandler({
   createContext,
   onError:({ path, error }) => {
     console.error(`❌ tRPC failed on ${path}: ${error}`);
+  },
+  batching: {
+    enabled: true
   }
     // env.NODE_ENV === "development"
     //   ? ({ path, error }) => {

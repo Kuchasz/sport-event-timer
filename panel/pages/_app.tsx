@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { AppType } from "next/app";
 import { PanelApp } from "../apps/panel";
-import { queryClient, trpcClient, trpcNext } from "../connection";
+import { queryClient, trpc, trpcClient } from "../connection";
 import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
@@ -30,17 +30,17 @@ const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { ses
 
     return router.pathname.startsWith("/panel") ? (
         <SessionProvider session={session}>
-            <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
+            <PanelApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
         </SessionProvider>
     ) : router.pathname.startsWith("/stopwatch") ? (
         <SessionProvider session={session}>
-            <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
+            <StopwatchApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
         </SessionProvider>
     ) : router.pathname.startsWith("/result") ? (
-        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
+        <ResultApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
     ) : (
-        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient as any} trpcClient={trpcClient} />
+        <TimerApp Component={Component} pageProps={pageProps} router={router} queryClient={queryClient} trpcClient={trpcClient} />
     );
 };
 
-export default trpcNext.withTRPC(App);
+export default trpc.withTRPC(App);

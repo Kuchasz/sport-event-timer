@@ -1994,11 +1994,11 @@ __metadata:
     "@tailwindcss/forms": ^0.5.2
     "@tanstack/react-query": ^4.13.0
     "@tanstack/react-virtual": 3.0.0-beta.18
-    "@trpc/client": next
-    "@trpc/next": next
+    "@trpc/client": latest
+    "@trpc/next": latest
     "@trpc/react": next
-    "@trpc/react-query": next
-    "@trpc/server": next
+    "@trpc/react-query": latest
+    "@trpc/server": latest
     "@types/classnames": ^2.3.1
     "@types/express": ^4.17.13
     "@types/jest": ^28.1.4
@@ -2212,42 +2212,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/client@npm:next":
-  version: 10.0.0-proxy-beta.26
-  resolution: "@trpc/client@npm:10.0.0-proxy-beta.26"
+"@trpc/client@npm:latest":
+  version: 10.0.0-rc.0
+  resolution: "@trpc/client@npm:10.0.0-rc.0"
   peerDependencies:
-    "@trpc/server": 10.0.0-proxy-beta.26
-  checksum: 503d8ff5855cc5fceea68d9300fedf2f4713e7bf3a937ea37dccd194ed4c3d39f9398e24196d8bc5aa7e533c3e4fe9c67f44330491fc2b798bfe2635995124e8
+    "@trpc/server": 10.0.0-rc.0
+  checksum: cf28f2424be09e1e33e5e2da81ca1135f8deb1f45c97917eb59c120ce2300d4ff7003d1fc88ae8ef528072b84322598a6bc630328ad7698d662465b3fae6f9bf
   languageName: node
   linkType: hard
 
-"@trpc/next@npm:next":
-  version: 10.0.0-proxy-beta.25
-  resolution: "@trpc/next@npm:10.0.0-proxy-beta.25"
+"@trpc/next@npm:latest":
+  version: 10.0.0-rc.0
+  resolution: "@trpc/next@npm:10.0.0-rc.0"
   dependencies:
     react-ssr-prepass: ^1.5.0
   peerDependencies:
     "@tanstack/react-query": ^4.3.8
-    "@trpc/client": 10.0.0-proxy-beta.25
+    "@trpc/client": 10.0.0-rc.0
     "@trpc/react-query": ^10.0.0-proxy-beta.21
-    "@trpc/server": 10.0.0-proxy-beta.25
+    "@trpc/server": 10.0.0-rc.0
     next: "*"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 88620d4ac40df25222deacf3cce7595cfc10b9a69c0bd925b3837ff776afcf3fdb0945b2c95f56ad85133b0f5f399c494cffee55e4366fddddf892dcc4c6acea
+  checksum: 67945cc294c864a5f63a0032fe7abc63df8bc8b1d73c307c3f3b9707395c64a5cc3d5db8d4f63fd80b55c8e697f229c8173872a9a4bc1ac077949c5cc13fa9b3
   languageName: node
   linkType: hard
 
-"@trpc/react-query@npm:next":
-  version: 10.0.0-proxy-beta.26
-  resolution: "@trpc/react-query@npm:10.0.0-proxy-beta.26"
+"@trpc/react-query@npm:latest":
+  version: 10.0.0-rc.0
+  resolution: "@trpc/react-query@npm:10.0.0-rc.0"
   peerDependencies:
     "@tanstack/react-query": ^4.3.8
-    "@trpc/client": 10.0.0-proxy-beta.26
-    "@trpc/server": 10.0.0-proxy-beta.26
+    "@trpc/client": 10.0.0-rc.0
+    "@trpc/server": 10.0.0-rc.0
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 6edf88485db1db9bcb46353acc51117d26b4b5834da56031d56ea2def8f62b94e5f69da65f793301a16e78a303ee34c4d6cae603765728d586baccf9040a9fb7
+  checksum: 5b0006b3fe6a82aabd29ae25cf396733bd9dec4e2ea15d24740b6b611e16f00dd9970ec4440646882fddbe4a634c82b0e15bb0996562d0b615cb0da6d2201b0b
   languageName: node
   linkType: hard
 
@@ -2264,10 +2264,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/server@npm:next":
-  version: 10.0.0-proxy-beta.25
-  resolution: "@trpc/server@npm:10.0.0-proxy-beta.25"
-  checksum: 785cff762b23bf57ca76df79a92410ad1c536c16434e051715fe79b1890d3eeb05507191d5617675b9fa75563620b44abfbce97b510202e66e4bf3894ade30f6
+"@trpc/server@npm:latest":
+  version: 10.0.0-rc.0
+  resolution: "@trpc/server@npm:10.0.0-rc.0"
+  checksum: 92edc7c02430a7049a4ef084919d9e0e6098c713ae916fa1f2750d78fd430137e7b6a4fdb93badb41c556d26f535094a0c94af126de80b3442a8b5e538fe40e8
   languageName: node
   linkType: hard
 

@@ -77,7 +77,7 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
     return loggedIn ? (
         <ReduxStoreProvider store={store}>
             <ExternalsExposer />
-            <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            {/* <trpc.Provider client={trpcClient} queryClient={queryClient}> */}
                 <QueryClientProvider client={queryClient}>
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
                         <Head>
@@ -104,7 +104,7 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
                         </div>
                     </ServerConnectionHandler>
                 </QueryClientProvider>
-            </trpc.Provider>
+            {/* </trpc.Provider> */}
         </ReduxStoreProvider>
     ) : (
         <Login />

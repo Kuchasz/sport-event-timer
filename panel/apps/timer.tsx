@@ -25,12 +25,12 @@ export function TimerApp({ Component, pageProps, queryClient, trpcClient }: Time
     }, []);
 
     return (
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        // <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
                 <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
                     <Component {...pageProps} />
                 </CurrentRaceContext.Provider>
             </QueryClientProvider>
-        </trpc.Provider>
+        // </trpc.Provider>
     );
 }

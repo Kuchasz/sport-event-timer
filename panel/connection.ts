@@ -1,12 +1,7 @@
 import superjson from "superjson";
 import { createTRPCNext } from "@trpc/next";
-import { createWSClient, wsLink } from "@trpc/client/links/wsLink";
-import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
-import { loggerLink } from "@trpc/client/links/loggerLink";
-
-import { splitLink } from "@trpc/client/links/splitLink";
+import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
 import { createTRPCProxyClient } from '@trpc/client';
-
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
 import { createTRPCReact } from "@trpc/react";
@@ -84,8 +79,8 @@ const createConnectionConfig = () => ({
 
 export const queryClient = new QueryClient();
 export const trpcClient = createTRPCProxyClient<AppRouter>(createConnectionConfig());
-export const trpc = createTRPCReact<AppRouter>();
-export const trpcNext = createTRPCNext({ config() { return createConnectionConfig() }, ssr: false });
+// export const trpc = createTRPCReact<AppRouter>();
+export const trpc = createTRPCNext({ config() { return createConnectionConfig() }, ssr: false });
 
  
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
