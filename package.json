@@ -14,5 +14,10 @@
     },
     "resolutions": {
         "@types/eslint": "8.4.3"
+    },
+    "dependencies": {
+        "@types/ws": "^8.5.3",
+        "node-fetch": "^3.2.10",
+        "ws": "^8.10.0"
     }
 }

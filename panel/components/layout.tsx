@@ -171,7 +171,7 @@ const Layout = ({ children }: Props) => {
                     <Status />
                     {raceId && (
                         <div className="flex flex-grow overflow-y-hidden">
-                            <nav className="w-60 py-4 flex-col shadow-lg rounded-tr-md bg-white">
+                            <nav className="w-60 shrink-0 py-4 flex-col shadow-lg rounded-tr-md bg-white">
                                 {menuItems.map(mi => (
                                     <Fragment key={mi.name}>
                                         <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
