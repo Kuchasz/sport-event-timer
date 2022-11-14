@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../hooks";
 import { useRouter } from "next/router";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
-import { trpc } from "trpc";
+import { trpc } from "connection";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -49,7 +49,7 @@ const TweakTimeStamps = () => {
         query: { raceId },
     } = useRouter();
 
-    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
     const dispatch = useTimerDispatch();
     const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));

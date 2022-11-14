@@ -7,14 +7,15 @@ import { ConfigMenu } from "../../components/config-menu";
 import { Countdown } from "components/countdown";
 import { sort } from "@set/utils/dist/array";
 import { getCountdownTime } from "@set/utils/dist/datetime";
-import { InferQueryOutput, trpc } from "trpc";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { timerSettingsAtom } from "timer-states";
+import { AppRouterTypes } from "trpc";
+import { trpc } from "connection";
 
-type StartListPlayer = InferQueryOutput<"player.start-list">[0];
+type StartListPlayer = AppRouterTypes["player"]["startList"]["output"][0];
 
 export type TextSettings = {
     enabled: boolean;
@@ -72,8 +73,8 @@ const Timer = () => {
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const { raceId } = useRouter().query;
 
-    const { data: players } = trpc.useQuery(["player.start-list", { raceId: Number.parseInt(raceId! as string) }]);
-    const ntpMutation = trpc.useMutation(["ntp.sync"]);
+    const { data: players } = trpc.player.startList.useQuery({ raceId: Number.parseInt(raceId! as string) });
+    const ntpMutation = trpc.ntp.sync.useMutation();
 
     // const [players, setPlayers] = useState<ClockListPlayer[]>([]);
     const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);

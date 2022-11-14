@@ -3,17 +3,17 @@ import { TimeKeeperIcon } from "../../../components/stopwatch/time-keeper-icon";
 import { timingPointIdAtom } from "stopwatch-states";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { trpc } from "trpc";
 import Icon from "@mdi/react";
 import { mdiCheck } from "@mdi/js";
 import classNames from "classnames";
+import { trpc } from "connection";
 
 const Config = () => {
     const [timingPointId, chooseTimeKeeper] = useAtom(timingPointIdAtom);
     const {
         query: { raceId },
     } = useRouter();
-    const { data: allTimeKeepers } = trpc.useQuery(["timing-point.timingPoints", { raceId: parseInt(raceId as string) }], {
+    const { data: allTimeKeepers } = trpc.timingPoint.timingPoints.useQuery({ raceId: parseInt(raceId as string) }, {
         initialData: [],
     });
     const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order);

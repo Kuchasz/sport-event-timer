@@ -1,12 +1,12 @@
 import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
+import { trpc } from "connection";
 import { useRouter } from "next/router";
-import { trpc } from "trpc";
 
 const Result = () => {
     const {
         query: { raceId },
     } = useRouter();
-    const { data: results } = trpc.useQuery(["result.results", { raceId: parseInt(raceId! as string) }]);
+    const { data: results } = trpc.result.results.useQuery({ raceId: parseInt(raceId! as string) });
 
     return (
         <div className="container flex justify-center mx-auto">

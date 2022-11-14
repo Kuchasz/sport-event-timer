@@ -4,7 +4,7 @@ import { Player, TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerSelector } from "../../hooks";
 import { useRouter } from "next/router";
-import { trpc } from "trpc";
+import { trpc } from "connection";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -47,7 +47,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: Player
         query: { raceId },
     } = useRouter();
 
-    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
 
