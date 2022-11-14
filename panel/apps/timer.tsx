@@ -3,11 +3,10 @@ import { CurrentRaceContext } from "current-race-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useEffect, useState } from "react";
-import { trpc } from "connection";
 
-type TimerAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
+type TimerAppProps = AppProps & { queryClient: QueryClient };
 
-export function TimerApp({ Component, pageProps, queryClient, trpcClient }: TimerAppProps) {
+export function TimerApp({ Component, pageProps, queryClient }: TimerAppProps) {
     const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
@@ -25,12 +24,10 @@ export function TimerApp({ Component, pageProps, queryClient, trpcClient }: Time
     }, []);
 
     return (
-        // <trpc.Provider client={trpcClient} queryClient={queryClient}>
-            <QueryClientProvider client={queryClient}>
-                <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-                    <Component {...pageProps} />
-                </CurrentRaceContext.Provider>
-            </QueryClientProvider>
-        // </trpc.Provider>
+        <QueryClientProvider client={queryClient}>
+            <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
+                <Component {...pageProps} />
+            </CurrentRaceContext.Provider>
+        </QueryClientProvider>
     );
 }
