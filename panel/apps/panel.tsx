@@ -3,12 +3,11 @@ import { AppProps } from "next/app";
 import { CurrentRaceContext } from "current-race-context";
 import { Demodal } from "demodal";
 import { useEffect, useState } from "react";
-import { trpc } from "connection";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-type PanelAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
+type PanelAppProps = AppProps & { queryClient: QueryClient };
 
-export function PanelApp({ Component, pageProps, queryClient, trpcClient }: PanelAppProps) {
+export function PanelApp({ Component, pageProps, queryClient }: PanelAppProps) {
     const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
@@ -26,15 +25,13 @@ export function PanelApp({ Component, pageProps, queryClient, trpcClient }: Pane
     }, []);
 
     return (
-        // <trpc.Provider client={trpcClient} queryClient={queryClient}>
-            <QueryClientProvider client={queryClient}>
-                <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
-                    <Demodal.Container />
-                </CurrentRaceContext.Provider>
-            </QueryClientProvider>
-        // </trpc.Provider>
+        <QueryClientProvider client={queryClient}>
+            <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+                <Demodal.Container />
+            </CurrentRaceContext.Provider>
+        </QueryClientProvider>
     );
 }
