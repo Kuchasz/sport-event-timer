@@ -8,9 +8,9 @@ import { useTimerDispatch, useTimerSelector } from "hooks";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
-import { trpc } from "trpc";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
+import { trpc } from "connection";
 
 const PlayersList = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
@@ -20,7 +20,7 @@ const PlayersList = () => {
         query: { raceId },
     } = useRouter();
 
-    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
     const onReset = (id: number) => dispatch(reset({ id }));
     const onRecord = (bibNumber: number) =>

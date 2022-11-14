@@ -11,9 +11,9 @@ import { sortDesc } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
-import { trpc } from "trpc";
 
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { trpc } from "connection";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -56,10 +56,8 @@ const Item = ({
         const dY = Math.abs(y - touchStartY.current);
 
         if (deleteModeEnabled.current === null) {
-            if (dX > dY && dX > 1) 
-                deleteModeEnabled.current = true;
-            else 
-                deleteModeEnabled.current = false;
+            if (dX > dY && dX > 1) deleteModeEnabled.current = true;
+            else deleteModeEnabled.current = false;
         }
 
         const translation = dX > 30 && deleteModeEnabled.current ? dX : 0;
@@ -151,7 +149,7 @@ const PlayersTimes = () => {
         query: { raceId },
     } = useRouter();
 
-    const { data: allPlayers } = trpc.useQuery(["player.stopwatch-players", { raceId: parseInt(raceId as string) }], { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
     const times = sortDesc(
         allTimeStamps
