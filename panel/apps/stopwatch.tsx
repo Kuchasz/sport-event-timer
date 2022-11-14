@@ -2,7 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
-import { getConnection, trpc, trpcClient } from "../connection";
+import { getConnection, trpcClient } from "../connection";
 import { isLoggedIn } from "../security";
 import { Login } from "../pages/login";
 import { Middleware } from "redux";
@@ -64,8 +64,8 @@ const ExternalsExposer = () => {
     return <></>;
 };
 
-type StopwatchAppProps = AppProps & { queryClient: QueryClient; trpcClient: any };
-const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: StopwatchAppProps) => {
+type StopwatchAppProps = AppProps & { queryClient: QueryClient };
+const StopwatchApp = ({ Component, pageProps, queryClient }: StopwatchAppProps) => {
     const [tokenExpire] = useAtom(tokenExpireAtom);
     const [connectionState] = useAtom(connectionStateAtom);
     const {
@@ -77,34 +77,31 @@ const StopwatchApp = ({ Component, pageProps, queryClient, trpcClient }: Stopwat
     return loggedIn ? (
         <ReduxStoreProvider store={store}>
             <ExternalsExposer />
-            {/* <trpc.Provider client={trpcClient} queryClient={queryClient}> */}
-                <QueryClientProvider client={queryClient}>
-                    <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
-                        <Head>
-                            <title>Stopwatch</title>
-                            <link key="manifest" rel="manifest" href="/favicon/stopwatch.webmanifest" />
-                        </Head>
-                        <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
-                            <Status />
-                            <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
-                                {isOffline ? (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <div className="flex-col">
-                                            <div className="text-xl font-semibold">APP IS OFFLINE</div>
-                                            <div className="">Wait for the app to reconnect or kill the app and run it again</div>
-                                        </div>
+            <QueryClientProvider client={queryClient}>
+                <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
+                    <Head>
+                        <title>Stopwatch</title>
+                        <link key="manifest" rel="manifest" href="/favicon/stopwatch.webmanifest" />
+                    </Head>
+                    <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
+                        <Status />
+                        <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
+                            {isOffline ? (
+                                <div className="w-full h-full flex items-center justify-center">
+                                    <div className="flex-col">
+                                        <div className="text-xl font-semibold">APP IS OFFLINE</div>
+                                        <div className="">Wait for the app to reconnect or kill the app and run it again</div>
                                     </div>
-                                ) : (
-                                    <Component {...pageProps} />
-                                )}
-                            </div>
-                            
-                                <BottomMenu />
-                            
+                                </div>
+                            ) : (
+                                <Component {...pageProps} />
+                            )}
                         </div>
-                    </ServerConnectionHandler>
-                </QueryClientProvider>
-            {/* </trpc.Provider> */}
+
+                        <BottomMenu />
+                    </div>
+                </ServerConnectionHandler>
+            </QueryClientProvider>
         </ReduxStoreProvider>
     ) : (
         <Login />
