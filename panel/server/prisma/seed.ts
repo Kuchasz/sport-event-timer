@@ -5,18 +5,8 @@ import { capitalizeFirstLetter } from "@set/utils/dist/string"
 import { Classification, Player, Race, TimingPoint } from "@prisma/client";
 
 async function main() {
-    const adminUser = await db.user.findFirst({ where: { id: 1 } });
-
-    if (adminUser)
-        return;
-
-    const user = await db.user.create({
-        data: {
-            login: 'admin',
-            password: 'admin',
-            id: 1
-        }
-    });
+    const userId = 'cla34zyas000852dulvt5oua7';
+    const adminUser = await db.user.create({ data: { id: userId, name: 'Admin', email: 'admin', emailVerified: new Date() } });
 
     const _races = createRaces();
     const races = await db.$transaction(_races.map(data => db.race.create({ data })));
@@ -24,7 +14,7 @@ async function main() {
     const _classifications = createClassifications(races.map(r => r.id));
     const classifications = await db.$transaction(_classifications.map(data => db.classification.create({ data })));
 
-    const _players = createPlayers(Object.fromEntries(races.map(r => [r.id, {}])), ['male', 'female'], user.id, classifications);
+    const _players = createPlayers(Object.fromEntries(races.map(r => [r.id, {}])), ['male', 'female'], adminUser.id, classifications);
     const players = await db.$transaction(_players.map(data => db.player.create({ data })));
 
     const _timingPoints = createTimingPoints(races.map(r => r.id));
@@ -47,7 +37,7 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
                 name: faker.commerce.productName()
             })))
 
-const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female')[], userId: number, classifications: Classification[]): Omit<Player, "id">[] =>
+const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female')[], userId: string, classifications: Classification[]): Omit<Player, "id">[] =>
     classifications.flatMap(c => {
         return createRange({ from: 0, to: faker.mersenne.rand(200, 20) })
             .map(() => {
@@ -89,7 +79,6 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
         const chosenPlayersNumber = faker.mersenne.rand(playersForRace.length, 0);
 
         const startTimeDate = faker.date.between(r.date, new Date(r.date.getTime() + 3_600_000));
-        const startTime = new Date(1970, 1, 1, startTimeDate.getHours(), startTimeDate.getMinutes(), startTimeDate.getSeconds(), startTimeDate.getMilliseconds());
 
         const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
@@ -97,7 +86,7 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
                 id: faker.helpers.unique(faker.mersenne.rand, [1, 9999], store),
                 bibNumber: p.bibNumber!,
                 timingPointId: tp.id,
-                time: faker.date.between(new Date(startTime.getTime() + i * 3_600_000), new Date(startTime.getTime() + i * 3_600_600 + 3_600_600)).getTime()
+                time: faker.date.between(new Date(startTimeDate.getTime() + i * 3_600_000), new Date(startTimeDate.getTime() + i * 3_600_600 + 3_600_600)).getTime()
             })));
 
         return { raceId: r.id, state: JSON.stringify({ timeStamps, actionHistory: [] }) };

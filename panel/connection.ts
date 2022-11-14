@@ -4,7 +4,6 @@ import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@t
 import { createTRPCProxyClient } from '@trpc/client';
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
-import { createTRPCReact } from "@trpc/react";
 
 const url =
     process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3000";
@@ -80,7 +79,7 @@ const createConnectionConfig = () => ({
 export const queryClient = new QueryClient();
 export const trpcClient = createTRPCProxyClient<AppRouter>(createConnectionConfig());
 // export const trpc = createTRPCReact<AppRouter>();
-export const trpc = createTRPCNext({ config() { return createConnectionConfig() }, ssr: false });
+export const trpc = createTRPCNext<AppRouter>({ config() { return createConnectionConfig() }, ssr: false });
 
  
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";

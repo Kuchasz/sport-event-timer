@@ -1,8 +1,8 @@
 import { HTMLProps } from "react";
 
-type ButtonProps = HTMLProps<HTMLButtonElement> & {};
+type ButtonProps = HTMLProps<HTMLButtonElement> & { outline?: boolean };
 
-export const Button = ({ children, className, ...props }: ButtonProps) => {
+export const Button = ({ outline, children, className, ...props }: ButtonProps) => {
     return (
         <button
             {...props}
