@@ -41,6 +41,11 @@ jobs:
                   cd ./timer
                   yarn build
 
+            - name: Generate prisma
+              run: |
+                  cd ./server/prisma
+                  yarn prisma generate
+
             - name: Build panel
               run: |
                   cd ./panel
