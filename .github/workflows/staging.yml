@@ -43,8 +43,8 @@ jobs:
 
             - name: Generate prisma
               run: |
-                  cd ./panel/server/prisma
-                  yarn prisma generate
+                  cd ./panel
+                  yarn generate-prisma
 
             - name: Build panel
               run: |
