@@ -1,9 +1,10 @@
 import { createStore } from "@set/timer/dist/store";
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
-import { observable } from '@trpc/server/observable';
+import { observable, Observer } from '@trpc/server/observable';
 import { stopwatchStateProvider } from "../db";
 import { updateSplitTimesQueue } from "../queue";
+import { logger } from "../../utils";
 
 type Action = any;
 
@@ -14,7 +15,7 @@ const dispatchActionSchema = z.object({
 });
 
 type Client = {
-    emit: any; //!! any here
+    emit: Observer<any,unknown>; //!! any here
     clientId: string;
     raceId: number;
 };
@@ -24,7 +25,9 @@ let clients: Client[] = [];
 export const dispatchAction = async (raceId: number, clientId: string, action: any) => {
     clients
         .filter(c => c.raceId === raceId && c.clientId !== clientId)
-        .forEach(c => c.emit.data(action));
+        .forEach(c => c.emit.next(action));
+
+    logger.log(clients, raceId, clientId, action);
 
     const state = await stopwatchStateProvider.get(raceId);
     const store = createStore([], state);
@@ -51,7 +54,8 @@ export const actionRouter =
             .subscription(({ input }) => {
                 return observable<Action>(emit => {
                     const { clientId, raceId } = input;
-                    clients = [...clients, { clientId, raceId, emit }];
+                    clients.push({ clientId, raceId, emit });
+                    logger.log(clients);
                     return () => {
                         clients = clients.filter(c => c.clientId !== clientId);
                     };

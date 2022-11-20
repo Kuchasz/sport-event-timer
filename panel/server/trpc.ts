@@ -6,31 +6,34 @@ import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 // import { getServerAuthSession } from "./auth";
 // import { db } from "./db";
 import superjson from "superjson";
-// import { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
-// import { IncomingMessage } from "http";
-// import ws from "ws";
+import { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
+import { IncomingMessage } from "http";
+import ws from "ws";
 import { db } from "./db";
-import { getServerAuthSession } from "./auth";
+// import { getServerAuthSession } from "./auth";
 import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
 
 type CreateContextOptions = {
     session: Session | null;
 };
 
-export const createContextInner = async ({session}: CreateContextOptions) => ({
+export const createContextInner = async ({ session }: CreateContextOptions) => ({
     session,
     db
 });
 
-// export const createContext = async (
-//     opts:
-//         | CreateNextContextOptions
-//         | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
-export const createContext = async (opts: CreateNextContextOptions) => {
-    const { req, res } = opts;
+export const createContext = async (
+    opts:
+        | CreateNextContextOptions
+        | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
+    // export const createContext = async (opts: CreateNextContextOptions) => {
+    // const { req, res } = opts;
+
+    // req.headers.cookie
 
     // Get the session from the server using the unstable_getServerSession wrapper function
-    const session = await getServerAuthSession({ req, res });
+    const session = await getSession(opts);
 
     return await createContextInner({
         session,
