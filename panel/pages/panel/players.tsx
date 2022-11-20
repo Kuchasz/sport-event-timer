@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
@@ -14,9 +14,9 @@ import { PlayerEdit } from "components/player-edit";
 import { useCurrentRaceId } from "../../hooks";
 
 
-type Player = AppRouterTypes["player"]["players"]["output"][0];
-type CreatedPlayer = AppRouterTypes["player"]["add"]["input"]["player"];
-type EditedPlayer = AppRouterTypes["player"]["add"]["input"]["player"];
+type Player = AppRouterOutputs["player"]["players"][0];
+type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
+type EditedPlayer = AppRouterInputs["player"]["add"]["player"];
 
 const columns: Column<Player, unknown>[] = [
     { key: "id", name: "Id", width: 10, sortable: false, resizable: false },

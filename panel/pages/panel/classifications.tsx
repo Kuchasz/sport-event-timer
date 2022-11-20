@@ -10,11 +10,11 @@ import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../hooks";
 import { useMemo, useState } from "react";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 
-type Classification = AppRouterTypes["classification"]["classifications"]["output"][0];
-type EditedClassification = AppRouterTypes["classification"]["update"]["input"];
-type CreatedClassification = AppRouterTypes["classification"]["add"]["input"];
+type Classification = AppRouterOutputs["classification"]["classifications"][0];
+type EditedClassification = AppRouterInputs["classification"]["update"];
+type CreatedClassification = AppRouterInputs["classification"]["add"];
 
 type Comparator = (a: Classification, b: Classification) => number;
 function getComparator(sortColumn: string): Comparator {

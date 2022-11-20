@@ -1,8 +1,8 @@
-import { AppRouterTypes } from "trpc";
+import { AppRouterOutputs, AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
 
-type Race = AppRouterTypes["race"]["races"]["output"][0];
-type EditRace = AppRouterTypes["race"]["update"]["input"];
+type Race = AppRouterOutputs["race"]["races"][0];
+type EditRace = AppRouterInputs["race"]["update"];
 
 type RaceEditProps = {
     editedRace: Race;

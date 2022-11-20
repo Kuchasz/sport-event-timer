@@ -3,7 +3,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
@@ -12,9 +12,9 @@ import { RaceEdit } from "components/race-edit";
 import { useState } from "react";
 import { Confirmation } from "components/confirmation";
 
-type Race = AppRouterTypes["race"]["races"]["output"][0];
-type CreatedRace = AppRouterTypes["race"]["add"]["input"];
-type EditedRace = AppRouterTypes["race"]["update"]["input"];
+type Race = AppRouterOutputs["race"]["races"][0];
+type CreatedRace = AppRouterInputs["race"]["add"];
+type EditedRace = AppRouterInputs["race"]["update"];
 
 const columns: Column<Race, unknown>[] = [
     { key: "id", name: "Id", width: 10 },

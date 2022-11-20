@@ -1,7 +1,7 @@
 import { ClassificationForm } from "./classification-form";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 
-type CreateClassification = AppRouterTypes["classification"]["add"]["input"];
+type CreateClassification = AppRouterInputs["classification"]["add"];
 
 type ClassificationCreateProps = {
     raceId: number;

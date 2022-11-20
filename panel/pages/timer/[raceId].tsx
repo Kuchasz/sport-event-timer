@@ -12,10 +12,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { timerSettingsAtom } from "timer-states";
-import { AppRouterTypes } from "trpc";
+import { AppRouterOutputs } from "trpc";
 import { trpc } from "connection";
 
-type StartListPlayer = AppRouterTypes["player"]["startList"]["output"][0];
+type StartListPlayer = AppRouterOutputs["player"]["startList"][0];
 
 export type TextSettings = {
     enabled: boolean;

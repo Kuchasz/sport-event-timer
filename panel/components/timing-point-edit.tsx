@@ -1,8 +1,8 @@
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { TimingPointForm } from "./timing-point-form";
 
-type TimingPoint = AppRouterTypes["timingPoint"]["timingPoints"]["output"][0];
-type EditTimingPoint = AppRouterTypes["timingPoint"]["update"]["input"];
+type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
+type EditTimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 type TimingPointEditProps = {
     editedTimingPoint: TimingPoint;

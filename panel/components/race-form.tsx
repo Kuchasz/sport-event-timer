@@ -5,9 +5,9 @@ import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 
-type Race = AppRouterTypes["race"]["add"]["input"];
+type Race = AppRouterInputs["race"]["add"];
 
 type RaceFormProps = {
     onReject: () => void;

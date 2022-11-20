@@ -1,8 +1,8 @@
 import { trpc } from "connection";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 import { PlayerForm } from "./player-form";
 
-type CreatePlayer = AppRouterTypes["player"]["add"]["input"]["player"];
+type CreatePlayer = AppRouterInputs["player"]["add"]["player"];
 
 type PlayerCreateProps = {
     raceId: number;
