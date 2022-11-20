@@ -6,9 +6,9 @@ import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { groupBy } from "@set/utils/dist/array";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 
-type Classification = AppRouterTypes["classification"]["add"]["input"];
+type Classification = AppRouterInputs["classification"]["add"];
 
 type ClassificationFormProps = {
     onReject: () => void;
