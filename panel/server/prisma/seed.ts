@@ -89,7 +89,7 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
                 time: faker.date.between(new Date(startTimeDate.getTime() + i * 3_600_000), new Date(startTimeDate.getTime() + i * 3_600_600 + 3_600_600)).getTime()
             })));
 
-        return { raceId: r.id, state: JSON.stringify({ timeStamps, actionHistory: [] }) };
+        return { raceId: r.id, state: JSON.stringify({ timeStamps, actionsHistory: [] }) };
     });
 }
 

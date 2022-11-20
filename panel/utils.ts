@@ -1,3 +1,5 @@
+import { createLogPrinter } from "@set/utils/dist/logger";
+
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
 const hourMillis = minuteMillis * 60;
@@ -20,7 +22,7 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
 
     const [hour, minutes, sec_ms] = timeString.split(":");
     const [seconds, miliseconds] = sec_ms.split(".");
-    
+
     return (
         Number(miliseconds.padEnd(3, "0")) +
         secondMillis * Number(seconds) +
@@ -31,3 +33,4 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
 
 export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";
 export const parseJSON = (jsonString: string) => typeof window !== 'undefined' ? JSON.parse(jsonString || "{}") : {};
+export const logger = createLogPrinter("@set");

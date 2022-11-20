@@ -3,6 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { trpc } from "./connection";
 import { useSetAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom } from "stopwatch-states";
+import { logger } from "utils";
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -15,6 +16,7 @@ export const ServerConnectionHandler = ({
     raceId: number;
     clientId: string;
 }) => {
+    
     trpc.action.actionDispatched.useSubscription({ raceId, clientId }, {
         onData: (action) => dispatch({ ...action, __remote: true }),
         onError: console.error,
@@ -38,13 +40,14 @@ export const ServerConnectionHandler = ({
         let loadStartTime = Date.now();
         let timeout: any;
         const requestTimeSync = async () => {
+
             const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
 
             const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
 
-            console.log(timeOffset);
+            logger.log('requestTimeSync', timeOffset);
 
             setTimeOffset(timeOffset);
 

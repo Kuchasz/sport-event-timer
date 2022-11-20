@@ -4,6 +4,7 @@ import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@t
 import { createTRPCProxyClient } from '@trpc/client';
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
+import { logger } from "utils";
 
 const url =
     process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3000";
