@@ -6,16 +6,16 @@ import { PoorFullTimepicker } from "./poor-timepicker";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 
-type SplitTime = AppRouterTypes["splitTime"]["update"]["input"];
+type SplitTime = AppRouterInputs["splitTime"]["update"];
 
 type SplitTimeFormProps = {
     onReject: () => void;
     onResolve: (splitTime: SplitTime) => void;
     initialSplitTime: SplitTime;
     raceDate: number;
-    timingPoints: AppRouterTypes["timingPoint"]["timingPoints"]["output"];
+    timingPoints: AppRouterOutputs["timingPoint"]["timingPoints"];
 };
 
 export const SplitTimeForm = ({

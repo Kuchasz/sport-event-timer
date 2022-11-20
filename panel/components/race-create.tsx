@@ -1,7 +1,7 @@
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
 
-type CreateRace = AppRouterTypes["race"]["add"]["input"];
+type CreateRace = AppRouterInputs["race"]["add"];
 
 type RaceCreateProps = {
     onReject: () => void;

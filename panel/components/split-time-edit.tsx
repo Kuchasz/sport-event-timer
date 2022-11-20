@@ -1,8 +1,8 @@
 import { trpc } from "connection";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 import { SplitTimeForm } from "./split-time-form";
 
-type SplitTime = AppRouterTypes["splitTime"]["update"]["input"];
+type SplitTime = AppRouterInputs["splitTime"]["update"];
 
 type SplitTimeEditProps = {
     onReject: () => void;

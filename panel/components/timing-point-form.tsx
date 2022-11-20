@@ -5,9 +5,9 @@ import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 
-type TimingPoint = AppRouterTypes["timingPoint"]["add"]["input"];
+type TimingPoint = AppRouterInputs["timingPoint"]["add"];
 
 type TimingPointFormProps = {
     onReject: () => void;

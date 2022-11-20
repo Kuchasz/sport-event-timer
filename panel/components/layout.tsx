@@ -22,7 +22,7 @@ import { PoorSelect } from "./poor-select";
 import { RaceCreate } from "./race-create";
 import { useCurrentRaceId } from "../hooks";
 import { useRouter } from "next/router";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs } from "trpc";
 import { trpc } from "connection";
 import { signOut, useSession } from "next-auth/react";
 
@@ -31,7 +31,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-type CreatedRace = AppRouterTypes["race"]["add"]["input"];
+type CreatedRace = AppRouterInputs["race"]["add"];
 
 const menuItems = [
     {

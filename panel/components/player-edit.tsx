@@ -1,9 +1,9 @@
 import { trpc } from "connection";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PlayerForm } from "./player-form";
 
-type Player = AppRouterTypes["player"]["players"]["output"][0];
-type EditPlayer = AppRouterTypes["player"]["edit"]["input"]["player"];
+type Player = AppRouterOutputs["player"]["players"][0];
+type EditPlayer = AppRouterInputs["player"]["edit"]["player"];
 
 type PlayerEditProps = {
     raceId: number;

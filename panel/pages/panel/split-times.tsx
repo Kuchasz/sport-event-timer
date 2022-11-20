@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
 import {
     mdiClockEditOutline,
@@ -15,9 +15,9 @@ import { SplitTimeEdit } from "../../components/split-time-edit";
 import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
-type SplitTime = AppRouterTypes["splitTime"]["splitTimes"]["output"][0];
-type RevertedSplitTime = AppRouterTypes["splitTime"]["revert"]["input"];
-type EditedSplitTime = AppRouterTypes["splitTime"]["update"]["input"];
+type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
+type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
+type EditedSplitTime = AppRouterInputs["splitTime"]["update"];
 
 type SplitTimeResultTypes = {
     openEditDialog: (params: SplitTime) => Promise<void>;

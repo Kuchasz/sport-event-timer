@@ -1,13 +1,13 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { AppRouterTypes } from "trpc";
+import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
 
 import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 
-type Result = AppRouterTypes["result"]["results"]["output"][0];
+type Result = AppRouterOutputs["result"]["results"][0];
 
 const Results = () => {
     const raceId = useCurrentRaceId();

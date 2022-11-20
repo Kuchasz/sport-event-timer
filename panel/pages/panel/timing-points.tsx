@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../components/confirmation";
 import { Demodal } from "demodal";
-import { AppRouterTypes } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
 import { mdiPlus, mdiTimerOutline, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
@@ -14,9 +14,9 @@ import { useCurrentRaceId } from "../../hooks";
 import { useState } from "react";
 import Link from "next/link";
 
-type TimingPoint = AppRouterTypes["timingPoint"]["timingPoints"]["output"][0];
-type CreatedTimingPoint = AppRouterTypes["timingPoint"]["add"]["input"];
-type EditedTimingPoint = AppRouterTypes["timingPoint"]["update"]["input"];
+type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
+type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"];
+type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 const columns: Column<TimingPoint, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
