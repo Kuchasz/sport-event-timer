@@ -5,6 +5,7 @@ import { createTRPCProxyClient } from '@trpc/client';
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
 import { logger } from "utils";
+import { createTRPCReact } from "@trpc/react-query";
 
 const url =
     process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3000";
@@ -50,8 +51,11 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
 if (getConnection)
     registerStateChangeHandlers(getConnection);
 
-const createConnectionConfig = () => ({
+export const queryClient = new QueryClient();
+
+const connectionConfig = ({
     transformer: superjson,
+    queryClient,
     links: [
         loggerLink({
             enabled: opts =>
@@ -60,16 +64,11 @@ const createConnectionConfig = () => ({
         }),
         splitLink({
             condition(op) {
-                return op.type === "subscription";
+                return wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
             },
-            true:
-                wsClient !== null
-                    ? wsLink({
-                        client: wsClient
-                    })
-                    : httpBatchLink({
-                        url: `${url}/api/trpc`
-                    }),
+            true: wsLink({
+                client: wsClient!
+            }),
             false: httpBatchLink({
                 url: `${url}/api/trpc`
             })
@@ -77,12 +76,8 @@ const createConnectionConfig = () => ({
     ]
 })
 
-export const queryClient = new QueryClient();
-export const trpcClient = createTRPCProxyClient<AppRouter>(createConnectionConfig());
-// export const trpc = createTRPCReact<AppRouter>();
-export const trpc = createTRPCNext<AppRouter>({ config() { return createConnectionConfig() }, ssr: false });
+export const trpc = createTRPCNext<AppRouter>({ config() { return connectionConfig }, ssr: false });
 
- 
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
 
 type ConnectionStateHandler = (s: ConnectionState) => void;

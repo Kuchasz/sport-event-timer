@@ -1,11 +1,10 @@
 import { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useEffect } from "react";
 
-type ResultAppProps = AppProps & { queryClient: QueryClient };
+type ResultAppProps = AppProps;
 
-export function ResultApp({ Component, pageProps, queryClient }: ResultAppProps) {
+export function ResultApp({ Component, pageProps }: ResultAppProps) {
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -21,9 +20,5 @@ export function ResultApp({ Component, pageProps, queryClient }: ResultAppProps)
         }
     }, []);
 
-    return (
-        <QueryClientProvider client={queryClient}>
-            <Component {...pageProps} />
-        </QueryClientProvider>
-    );
+    return <Component {...pageProps} />;
 }
