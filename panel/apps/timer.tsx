@@ -1,12 +1,11 @@
 import { AppProps } from "next/app";
 import { CurrentRaceContext } from "current-race-context";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useEffect, useState } from "react";
 
-type TimerAppProps = AppProps & { queryClient: QueryClient };
+type TimerAppProps = AppProps;
 
-export function TimerApp({ Component, pageProps, queryClient }: TimerAppProps) {
+export function TimerApp({ Component, pageProps }: TimerAppProps) {
     const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
@@ -24,10 +23,8 @@ export function TimerApp({ Component, pageProps, queryClient }: TimerAppProps) {
     }, []);
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-                <Component {...pageProps} />
-            </CurrentRaceContext.Provider>
-        </QueryClientProvider>
+        <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
+            <Component {...pageProps} />
+        </CurrentRaceContext.Provider>
     );
 }

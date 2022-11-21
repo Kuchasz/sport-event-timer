@@ -23,11 +23,12 @@ type Client = {
 let clients: Client[] = [];
 
 export const dispatchAction = async (raceId: number, clientId: string, action: any) => {
-    clients
-        .filter(c => c.raceId === raceId && c.clientId !== clientId)
-        .forEach(c => c.emit.next(action));
+    const messageRecipents = clients
+        .filter(c => c.raceId === raceId && c.clientId !== clientId);
+        
+    logger.log(messageRecipents.length, raceId, clientId, action);
 
-    logger.log(clients, raceId, clientId, action);
+    messageRecipents.forEach(c => c.emit.next(action));
 
     const state = await stopwatchStateProvider.get(raceId);
     const store = createStore([], state);
@@ -55,7 +56,6 @@ export const actionRouter =
                 return observable<Action>(emit => {
                     const { clientId, raceId } = input;
                     clients.push({ clientId, raceId, emit });
-                    logger.log(clients);
                     return () => {
                         clients = clients.filter(c => c.clientId !== clientId);
                     };
