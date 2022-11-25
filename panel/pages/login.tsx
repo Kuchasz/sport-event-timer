@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import { logIn } from "../api";
-import { mdiAccountOutline, mdiLockOutline } from "@mdi/js";
+import { mdiAccountOutline } from "@mdi/js";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { userAtom } from "stopwatch-states";
