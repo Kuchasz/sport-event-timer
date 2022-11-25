@@ -1,11 +1,8 @@
 import superjson from "superjson";
 import { createTRPCNext } from "@trpc/next";
 import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
-import { createTRPCProxyClient } from '@trpc/client';
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
-import { logger } from "utils";
-import { createTRPCReact } from "@trpc/react-query";
 
 const url =
     process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3000";
