@@ -63,10 +63,6 @@ jobs:
             - name: Upload artifact
               uses: appleboy/scp-action@master
               with:
-                  TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
-                  ARGS: "-rltgoDzvO --delete"
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
                   SOURCE: "package/"
                   HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   USERNAME: ${{ secrets.OVH_REMOTE_USER }}
