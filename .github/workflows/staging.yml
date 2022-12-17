@@ -8,7 +8,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu:14.04
 
         steps:
             - uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
 
     publish:
         needs: [build]
-        runs-on: ubuntu-latest
+        runs-on: ubuntu:14.04
 
         steps:
           - name: Publish
