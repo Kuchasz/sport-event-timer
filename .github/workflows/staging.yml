@@ -8,7 +8,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu:14.04
+        runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v3
@@ -71,10 +71,11 @@ jobs:
                   SOURCE: "package/"
                   REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
+                  REMOTE_PORT: 22 -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa
 
     publish:
         needs: [build]
-        runs-on: ubuntu:14.04
+        runs-on: ubuntu-latest
 
         steps:
           - name: Publish
