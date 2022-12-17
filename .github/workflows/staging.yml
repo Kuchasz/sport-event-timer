@@ -82,7 +82,7 @@ jobs:
             with:
                 host: ${{ secrets.OVH_REMOTE_HOST }}
                 username: ${{ secrets.OVH_REMOTE_USER }}
-                key: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
+                password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     pm2 stop all
