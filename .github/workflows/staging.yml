@@ -89,6 +89,7 @@ jobs:
                     unzip -q set-hub-package.zip
                     cd server
                     yarn install
+                    yarn prisma generate
                     yarn prisma db push
                     yarn prisma db seed
                     chmod -R 777 prisma
