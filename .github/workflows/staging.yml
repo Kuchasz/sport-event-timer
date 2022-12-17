@@ -67,7 +67,6 @@ jobs:
                   ARGS: "-rltgoDzvO --delete"
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
-                  ARGS: "-rltgoDzvO --delete"
                   SOURCE: "package/"
                   HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   USERNAME: ${{ secrets.OVH_REMOTE_USER }}
