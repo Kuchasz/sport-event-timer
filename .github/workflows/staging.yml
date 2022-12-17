@@ -61,7 +61,7 @@ jobs:
                   mv set-hub-package.zip package/set-hub-package.zip
 
             - name: Upload artifact
-              uses: easingthemes/ssh-deploy@main
+              uses: appleboy/scp-action@master
               with:
                   TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
                   ARGS: "-rltgoDzvO --delete"
@@ -69,9 +69,10 @@ jobs:
                   SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
                   ARGS: "-rltgoDzvO --delete"
                   SOURCE: "package/"
-                  REMOTE_HOST: ${{ secrets.OVH_REMOTE_HOST }}
-                  REMOTE_USER: ${{ secrets.OVH_REMOTE_USER }}
-                  REMOTE_PORT: 22 -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa
+                  HOST: ${{ secrets.OVH_REMOTE_HOST }}
+                  USERNAME: ${{ secrets.OVH_REMOTE_USER }}
+                  PASSWORD: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
+                  TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
 
     publish:
         needs: [build]
