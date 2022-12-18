@@ -14,7 +14,7 @@
         "start": "next start"
     },
     "prisma": {
-        "seed": "ts-node prisma/seed.ts"
+        "seed": "ts-node server/prisma/seed.ts"
     },
     "dependencies": {
         "@faker-js/faker": "^7.4.0",
