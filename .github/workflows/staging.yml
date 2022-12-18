@@ -91,6 +91,7 @@ jobs:
                     cd panel/server
                     node ../../node_modules/prisma/build/index.js generate
                     node ../../node_modules/prisma/build/index.js db push
-                    node ../../node_modules/prisma/build/index.js db seed
+                    cd ../
+                    node ../node_modules/prisma/build/index.js db seed
                     chmod -R 777 prisma
                     
