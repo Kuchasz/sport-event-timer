@@ -88,8 +88,8 @@ jobs:
                     rm set-hub-package.zip
                     yarn install
                     cd panel/server
-                    yarn prisma generate
-                    yarn prisma db push
-                    yarn prisma db seed
+                    node ../../node_modules/prisma/build/index.js generate
+                    node ../../node_modules/prisma/build/index.js db push
+                    node ../../node_modules/prisma/build/index.js db seed
                     chmod -R 777 prisma
                     
