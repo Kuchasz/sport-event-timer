@@ -89,9 +89,8 @@ jobs:
                     cp ../app.rura.cc.env panel/.env
                     yarn install
                     cd panel/server
-                    node ../../node_modules/prisma/build/index.js generate
-                    node ../../node_modules/prisma/build/index.js db push
+                    npx prisma generate
+                    npx prisma db push
                     cd ../
                     npx prisma db seed
                     chmod -R 777 server/prisma
-                    
