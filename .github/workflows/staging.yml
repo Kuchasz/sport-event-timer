@@ -86,6 +86,7 @@ jobs:
                     rm -rf node_modules/ package/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
                     unzip -q set-hub-package.zip
                     rm set-hub-package.zip
+                    cp ../app.rura.cc.env panel/.env
                     yarn install
                     cd panel/server
                     node ../../node_modules/prisma/build/index.js generate
