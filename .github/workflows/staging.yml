@@ -81,6 +81,8 @@ jobs:
                 username: ${{ secrets.OVH_REMOTE_USER }}
                 password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                 script: |
+                    export NVM_DIR=~/.nvm
+                    source ~/.nvm/nvm.sh
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     mv package/set-hub-package.zip set-hub-package.zip
                     rm -rf node_modules/ package/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
