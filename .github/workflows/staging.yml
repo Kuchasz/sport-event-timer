@@ -83,9 +83,11 @@ jobs:
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     mv package/set-hub-package.zip set-hub-package.zip
+                    rm -rf node_modules/ package/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
                     unzip -q set-hub-package.zip
-                    cd server
+                    rm set-hub-package.zip
                     yarn install
+                    cd panel/server
                     yarn prisma generate
                     yarn prisma db push
                     yarn prisma db seed
