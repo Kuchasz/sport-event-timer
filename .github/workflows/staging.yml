@@ -93,5 +93,5 @@ jobs:
                     node ../../node_modules/prisma/build/index.js db push
                     cd ../
                     node ../node_modules/prisma/build/index.js db seed
-                    chmod -R 777 prisma
+                    chmod -R 777 server/prisma
                     
