@@ -82,7 +82,6 @@ jobs:
                 password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
-                    pm2 stop all
                     unzip -q set-hub-package.zip
                     cd server
                     yarn install
@@ -90,4 +89,4 @@ jobs:
                     yarn prisma db push
                     yarn prisma db seed
                     chmod -R 777 prisma
-                    pm2 start all
+                    
