@@ -9,10 +9,9 @@
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "generate-prisma": "prisma generate --schema=./server/prisma/schema.prisma",
         "dev:ws": "ts-node server/wsDevServer.ts --tsconfig tsconfig.server.json",
-        "startprod": "ts-node server/prodServer.ts --tsconfig tsconfig.server.json",
+        "start": "ts-node server/prodServer.ts --tsconfig tsconfig.server.json",
         "dev:next": "next dev",
-        "start:dev": "yarn dev:ws & yarn dev:next",
-        "start": "next start"
+        "start:dev": "yarn dev:ws & yarn dev:next"
     },
     "prisma": {
         "seed": "ts-node server/prisma/seed.ts",
