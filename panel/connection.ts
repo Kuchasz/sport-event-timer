@@ -5,10 +5,10 @@ import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
 
 const url =
-    process.env.NODE_ENV === "production" ? `https://api.rura.cc` : "http://localhost:3000";
+    process.env.NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
 
 const wsUrl =
-    process.env.NODE_ENV === "production" ? `wss://api.rura.cc` : "ws://localhost:3001";
+    process.env.NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
 
 const wsClient =
     typeof window === "undefined"
