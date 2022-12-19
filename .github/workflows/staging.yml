@@ -54,7 +54,7 @@ jobs:
             - name: Bundle ZIP package
               uses: montudor/action-zip@v1
               with:
-                  args: zip -qq -r set-hub-package.zip package.json .yarn yarn.lock .yarnrc.yml panel utils timer node_modules
+                  args: zip -qq --symlinks -r set-hub-package.zip package.json .yarn yarn.lock .yarnrc.yml panel utils timer node_modules
 
             - run: |
                   mkdir package
@@ -90,10 +90,7 @@ jobs:
                     rm set-hub-package.zip
                     cp ../app.rura.cc.env panel/.env
                     yarn install
-                    cd panel
-                    yarn remove prisma
-                    yarn add prisma
-                    cd server
+                    cd panel/server
                     npx prisma generate
                     npx prisma db push
                     cd ../
