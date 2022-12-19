@@ -93,7 +93,7 @@ jobs:
                     cd panel
                     yarn remove prisma
                     yarn add prisma
-                    cd śserver
+                    cd server
                     npx prisma generate
                     npx prisma db push
                     cd ../
