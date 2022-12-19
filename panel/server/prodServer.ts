@@ -5,7 +5,7 @@ import next from 'next';
 import { parse } from 'url';
 import ws from 'ws';
 import { appRouter } from './routers/app';
-import { logger } from 'utils';
+import { logger } from '../utils';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
