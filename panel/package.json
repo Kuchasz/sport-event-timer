@@ -9,6 +9,7 @@
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "generate-prisma": "prisma generate --schema=./server/prisma/schema.prisma",
         "dev:ws": "ts-node server/wsDevServer.ts --tsconfig tsconfig.server.json",
+        "start:prod": "ts-node server/prodServer.ts --tsconfig tsconfig.server.json",
         "dev:next": "next dev",
         "start:dev": "yarn dev:ws & yarn dev:next",
         "start": "next start"
@@ -37,7 +38,7 @@
         "@types/classnames": "^2.3.1",
         "@types/express": "^4.17.13",
         "@types/jest": "^28.1.4",
-        "@types/node": "^18.0.0",
+        "@types/node": "^18.11.17",
         "@types/papaparse": "^5.3.2",
         "@types/react": "^18.0.14",
         "@types/react-dom": "^18.0.6",
