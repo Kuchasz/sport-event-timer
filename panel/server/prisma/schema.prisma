@@ -124,13 +124,6 @@ model Player {
     @@unique([classificationId, startTime])
 }
 
-// model User {
-//     id                Int      @id @default(autoincrement())
-//     login             String
-//     password          String
-//     registeredPlayers Player[]
-// }
-
 model TimingPoint {
     id              Int               @id @default(autoincrement())
     name            String
