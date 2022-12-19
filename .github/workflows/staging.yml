@@ -96,4 +96,4 @@ jobs:
                     npx prisma db seed
                     chmod -R 777 server/prisma
                     pm2 remove app.rura.cc
-                    pm2 start npm --name "app.rura.cc" -- start:prod
+                    pm2 start npm --name "app.rura.cc" -- "start:prod"
