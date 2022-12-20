@@ -1,10 +1,7 @@
-import classNames from "classnames";
 import Icon from "@mdi/react";
-import Link from "next/link";
 import { Button } from "./button";
-import { CurrentRaceContext } from "../current-race-context";
 import { Demodal } from "demodal";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import {
     mdiAccountCogOutline,
     mdiAccountGroup,
@@ -25,6 +22,7 @@ import { useRouter } from "next/router";
 import { AppRouterInputs } from "trpc";
 import { trpc } from "connection";
 import { signOut, useSession } from "next-auth/react";
+import { MenuButton } from "./menu-button";
 
 type Props = {
     preview?: boolean;
@@ -32,75 +30,80 @@ type Props = {
 };
 
 type CreatedRace = AppRouterInputs["race"]["add"];
+const generalMenuItems = {
+    name: "General",
+    items: [
+        { text: "Home", icon: mdiHome, to: "/panel/", color: "text-yellow-600" },
+        {
+            text: "My Races",
+            icon: mdiBikeFast,
+            to: "/panel/my-races",
+            color: "text-red-600",
+        },
+    ],
+};
 
-const menuItems = [
-    {
-        name: "General",
-        items: [
-            { text: "Home", icon: mdiHome, to: "/panel/", color: "text-yellow-600" },
-            {
-                text: "My Races",
-                icon: mdiBikeFast,
-                to: "/panel/my-races",
-                color: "text-red-600",
-            },
-        ],
-    },
-    {
-        name: "Race",
-        items: [
-            {
-                text: "Players",
-                icon: mdiAccountGroup,
-                to: "/panel/players",
-                color: "text-pink-600",
-            },
-            {
-                text: "Classifications",
-                icon: mdiAccountCogOutline,
-                to: "/panel/classifications",
-                color: "text-purple-600",
-            },
-            {
-                text: "Timing Points",
-                icon: mdiTimerCogOutline,
-                to: "/panel/timing-points",
-                color: "text-lime-600",
-            },
-            { text: "Split Times", icon: mdiAlarm, to: "/panel/split-times", color: "text-red-600" },
-            {
-                text: "Results",
-                icon: mdiTimetable,
-                to: "/panel/results",
-                color: "text-blue-600",
-            },
-        ],
-    },
-    {
-        name: "Admin",
-        items: [
-            {
-                text: "Races",
-                icon: mdiBikeFast,
-                to: "/panel/races",
-                color: "text-green-600",
-            },
-            {
-                text: "Say hay!",
-                icon: mdiTimetable,
-                to: "/panel/hello",
-                color: "text-red-600",
-            },
-        ],
-    },
-];
+const adminMenuItems = {
+    name: "Admin",
+    items: [
+        {
+            text: "Races",
+            icon: mdiBikeFast,
+            to: "/panel/races",
+            color: "text-green-600",
+        },
+        {
+            text: "Say hay!",
+            icon: mdiTimetable,
+            to: "/panel/hello",
+            color: "text-red-600",
+        },
+    ],
+};
+
+const raceMenuItems = {
+    name: "Race",
+    items: [
+        {
+            text: "Players",
+            icon: mdiAccountGroup,
+            to: "/panel/:raceId/players",
+            color: "text-pink-600",
+        },
+        {
+            text: "Classifications",
+            icon: mdiAccountCogOutline,
+            to: "/panel/:raceId/classifications",
+            color: "text-purple-600",
+        },
+        {
+            text: "Timing Points",
+            icon: mdiTimerCogOutline,
+            to: "/panel/:raceId/timing-points",
+            color: "text-lime-600",
+        },
+        { 
+            text: "Split Times", 
+            icon: mdiAlarm, 
+            to: "/panel/:raceId/split-times", 
+            color: "text-red-600" 
+        },
+        {
+            text: "Results",
+            icon: mdiTimetable,
+            to: "/panel/:raceId/results",
+            color: "text-blue-600",
+        },
+    ],
+};
 
 const Status = () => {
     const { data: sessionData } = useSession();
 
+    const router = useRouter();
     const { data: items, refetch } = trpc.race.races.useQuery();
     const addRaceMuttaion = trpc.race.add.useMutation();
-    const { selectRace } = useContext(CurrentRaceContext);
+    const raceId = useCurrentRaceId();
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -125,9 +128,11 @@ const Status = () => {
                         nameKey="name"
                         valueKey="id"
                         placeholder="Select race"
+                        initialValue={raceId}
                         items={items}
                         onChange={(e) => {
-                            selectRace(e.target.value);
+                            // selectRace(e.target.value);
+                            router.push(`/panel/${e.target.value}`);
                         }}
                     ></PoorSelect>
                 ) : null}
@@ -156,23 +161,12 @@ const Status = () => {
     );
 };
 
-const MenuButton = (n: { color: string; text: string; icon: string; to: string; isActive: boolean }) => (
-    <Link href={n.to}>
-        <div
-            className={classNames("py-4 cursor-pointer px-6 flex items-center text-sm", {
-                ["bg-slate-100"]: n.isActive,
-                ["hover:bg-slate-50"]: !n.isActive,
-            })}
-        >
-            <Icon className={n.color} size={0.8} path={n.icon}></Icon>
-            <span className="ml-4">{n.text}</span>
-        </div>
-    </Link>
-);
-
 const Layout = ({ children }: Props) => {
     const router = useRouter();
     const raceId = useCurrentRaceId();
+
+    const menuItems = raceId ? [generalMenuItems, raceMenuItems, adminMenuItems] : [generalMenuItems, adminMenuItems];
+
     return (
         <>
             <Meta />
@@ -181,18 +175,16 @@ const Layout = ({ children }: Props) => {
                 <div className="will-change-transform h-full w-full flex flex-col">
                     <Status />
                     <div className="flex flex-grow overflow-y-hidden">
-                        {raceId && (
-                            <nav className="w-60 shrink-0 py-4 flex-col shadow-lg rounded-tr-md bg-white">
-                                {menuItems.map((mi) => (
-                                    <Fragment key={mi.name}>
-                                        <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
-                                        {mi.items.map((n) => (
-                                            <MenuButton key={n.to} {...n} isActive={router.asPath === n.to} />
-                                        ))}
-                                    </Fragment>
-                                ))}
-                            </nav>
-                        )}
+                        <nav className="w-60 shrink-0 py-4 flex-col shadow-lg rounded-tr-md bg-white">
+                            {menuItems.map((mi) => (
+                                <Fragment key={mi.name}>
+                                    <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
+                                    {mi.items.map((n) => (
+                                        <MenuButton key={n.to} {...n} to={n.to.replace(":raceId", String(raceId))} isActive={router.asPath === n.to} />
+                                    ))}
+                                </Fragment>
+                            ))}
+                        </nav>
                         <main className="grow h-full overflow-y-auto p-8">
                             <div className="p-4 h-full bg-white rounded-md shadow-md">{children}</div>
                         </main>

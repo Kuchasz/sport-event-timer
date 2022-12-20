@@ -1,7 +1,7 @@
-import { CurrentRaceContext } from "current-race-context";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { TimerState, TimerDispatch } from "@set/timer/dist/store";
+import { useRouter } from "next/router";
 
 export const useFormState = <T,>(initialFormState: T, depts: unknown[]) => {
     const [state, setState] = useState({ ...initialFormState });
@@ -19,7 +19,13 @@ export const useFormState = <T,>(initialFormState: T, depts: unknown[]) => {
 
 export const useTimerDispatch = () => useDispatch<TimerDispatch>();
 export const useTimerSelector: TypedUseSelectorHook<TimerState> = useSelector;
-export const useCurrentRaceId = () => useContext(CurrentRaceContext).raceId;
+
+export const useCurrentRaceId = () => {
+    const { raceId } = useRouter().query;
+
+    return raceId ? parseInt(raceId as string) : undefined;
+}
+
 export const usePreviousValue = <T,>(value: T) => {
     const ref = useRef<T>();
 
