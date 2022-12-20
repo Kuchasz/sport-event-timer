@@ -95,5 +95,5 @@ jobs:
                     npx prisma db push
                     npx prisma db seed
                     chmod -R 777 server/prisma
-                    pm2 remove all
+                    pm2 delete all
                     pm2 start npm --name "app.rura.cc" -- start
