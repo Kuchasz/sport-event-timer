@@ -56,15 +56,16 @@ model VerificationToken {
 // Domain models
 
 model Race {
-    id              Int               @id @default(autoincrement())
-    name            String
-    date            DateTime
-    classifications Classification[]
-    timeKeeper      TimingPoint[]
-    player          Player[]
-    splitTime       SplitTime[]
-    manualSplitTime ManualSplitTime[]
-    stopwatch       Stopwatch?
+    id                 Int                  @id @default(autoincrement())
+    name               String
+    date               DateTime
+    classifications    Classification[]
+    timeKeeper         TimingPoint[]
+    player             Player[]
+    splitTime          SplitTime[]
+    manualSplitTime    ManualSplitTime[]
+    stopwatch          Stopwatch?
+    playerRegistration PlayerRegistration[]
 }
 
 model Stopwatch {
@@ -161,4 +162,20 @@ model ManualSplitTime {
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@unique([timingPointId, bibNumber])
+}
+
+model PlayerRegistration {
+    id             Int      @id @default(autoincrement())
+    name           String
+    lastName       String
+    birthDate      DateTime
+    gender         String
+    team           String?
+    city           String?
+    country        String?
+    email          String?
+    phoneNumber    String?
+    icePhoneNumber String?
+    race           Race     @relation(fields: [raceId], references: [id])
+    raceId         Int
 }
