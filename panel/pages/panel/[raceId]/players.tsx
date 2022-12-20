@@ -2,16 +2,16 @@ import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { Confirmation } from "../../components/confirmation";
+import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../connection";
+import { trpc } from "../../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { NiceModal } from "../../components/modal";
-import { PlayerCreate } from "../../components/player-create";
+import { NiceModal } from "../../../components/modal";
+import { PlayerCreate } from "../../../components/player-create";
 import { PlayerEdit } from "components/player-edit";
-import { useCurrentRaceId } from "../../hooks";
+import { useCurrentRaceId } from "../../../hooks";
 
 
 type Player = AppRouterOutputs["player"]["players"][0];

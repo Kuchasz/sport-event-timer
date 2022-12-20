@@ -5,12 +5,12 @@ import { Button } from "components/button";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
-import { trpc } from "../../connection";
+import { trpc } from "../../../connection";
 import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { useCurrentRaceId } from "../../hooks";
+import { useCurrentRaceId } from "../../../hooks";
 import { useMemo, useState } from "react";
-import { AppRouterInputs, AppRouterOutputs } from "../../trpc";
+import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];

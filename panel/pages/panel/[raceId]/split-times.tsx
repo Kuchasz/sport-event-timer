@@ -1,18 +1,18 @@
 import DataGrid, { Column, SortColumn } from "react-data-grid";
 import Icon from "@mdi/react";
-import { Confirmation } from "../../components/confirmation";
+import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../connection";
+import { trpc } from "../../../connection";
 import {
     mdiClockEditOutline,
     mdiClockPlusOutline,
     mdiReload
     } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { SplitTimeEdit } from "../../components/split-time-edit";
-import { useCurrentRaceId } from "../../hooks";
+import { SplitTimeEdit } from "../../../components/split-time-edit";
+import { useCurrentRaceId } from "../../../hooks";
 import { useState } from "react";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];

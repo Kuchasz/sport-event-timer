@@ -1,12 +1,9 @@
 import { AppProps } from "next/app";
-import { CurrentRaceContext } from "current-race-context";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type TimerAppProps = AppProps;
 
 export function TimerApp({ Component, pageProps }: TimerAppProps) {
-    const [currentRaceId, setCurrentRaceId] = useState<number | undefined>(undefined);
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
@@ -22,9 +19,5 @@ export function TimerApp({ Component, pageProps }: TimerAppProps) {
         }
     }, []);
 
-    return (
-        <CurrentRaceContext.Provider value={{ raceId: currentRaceId, selectRace: setCurrentRaceId }}>
-            <Component {...pageProps} />
-        </CurrentRaceContext.Provider>
-    );
+    return <Component {...pageProps} />;
 }
