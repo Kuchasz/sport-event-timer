@@ -66,6 +66,16 @@ model Race {
     manualSplitTime    ManualSplitTime[]
     stopwatch          Stopwatch?
     playerRegistration PlayerRegistration[]
+    apiKey             ApiKey[]
+}
+
+model ApiKey {
+    id   Int    @id @default(autoincrement())
+    key  String
+    name String
+
+    race   Race @relation(fields: [raceId], references: [id])
+    raceId Int
 }
 
 model Stopwatch {

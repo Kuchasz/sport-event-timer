@@ -43,7 +43,7 @@ export const playerRouter =
                     where: { raceId: raceId },
                     include: { classification: true }
                 });
-        }),
+            }),
         stopwatchPlayers: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .output(stopwatchPlayersSchema)
@@ -59,7 +59,7 @@ export const playerRouter =
                     }
                 });
                 return players as z.TypeOf<typeof stopwatchPlayersSchema>;
-        }),
+            }),
         startList: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .query(async ({ input }) => {
@@ -87,9 +87,9 @@ export const playerRouter =
                     bibNumber: p.bibNumber,
                     absoluteStartTime: race.date.getTime() + p.startTime!
                 }));
-        }),
+            }),
         delete: protectedProcedure
-            .input(z.object({playerId: z.number()}))
+            .input(z.object({ playerId: z.number() }))
             .mutation(async ({ input }) => {
                 // dispatchAction({
                 //     clientId: "",
@@ -97,7 +97,7 @@ export const playerRouter =
                 // });
 
                 return await db.player.delete({ where: { id: input.playerId } });
-        }),
+            }),
         add: protectedProcedure
             .input(playerSchema)
             .mutation(async (req) => {
@@ -129,7 +129,7 @@ export const playerRouter =
                         registeredByUserId: user.id
                     }
                 });
-        }),
+            }),
         edit: protectedProcedure
             .input(playerSchema)
             .mutation(async (req) => {
@@ -161,7 +161,7 @@ export const playerRouter =
                         classificationId: classification.id
                     }
                 });
-        })
+            })
     });
 
 export type PlayerRouter = typeof playerRouter;

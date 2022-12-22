@@ -1,5 +1,6 @@
 import { router } from "../trpc";
 import { actionRouter } from "./action";
+import { apiKeyRouter } from "./apiKey";
 import { classificationRouter } from "./classification";
 import { ntpRouter } from "./ntp";
 import { playerRouter } from "./player";
@@ -16,7 +17,8 @@ export const appRouter = router({
     action: actionRouter,
     ntp: ntpRouter,
     splitTime: splitTimeRouter,
-    result: resultRouter
+    result: resultRouter,
+    apiKey: apiKeyRouter
 });
 
 // export type definition of API
