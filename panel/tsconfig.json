@@ -4,7 +4,7 @@
         "module": "commonjs",
         "outDir": "dist",
         "jsx": "preserve",
-        "lib": ["dom", "es2017"],
+        "lib": ["dom", "es2017", "ES2021.String"],
         "baseUrl": ".",
         "moduleResolution": "node",
         "strict": true,

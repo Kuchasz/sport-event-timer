@@ -5,8 +5,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { raceId } = req.query;
 
-console.log('raceId: ', raceId);
-
     const {
         name,
         lastName,
@@ -19,20 +17,20 @@ console.log('raceId: ', raceId);
         phoneNumber,
         icePhoneNumber } = req.body;
 
-    const id = await db.playerRegistration.create({ 
-        data: { 
-            raceId: parseInt(raceId as string), 
-            name, 
-            lastName, 
+    const id = await db.playerRegistration.create({
+        data: {
+            raceId: parseInt(raceId as string),
+            name,
+            lastName,
             birthDate: new Date(birthDate),
-            gender, 
-            team, 
-            city, 
-            country, 
-            email, 
-            phoneNumber, 
-            icePhoneNumber 
-        } 
+            gender,
+            team,
+            city,
+            country,
+            email,
+            phoneNumber,
+            icePhoneNumber
+        }
     });
 
     res.send(id);

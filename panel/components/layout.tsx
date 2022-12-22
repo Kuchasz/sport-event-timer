@@ -7,6 +7,7 @@ import {
     mdiAccountGroup,
     mdiAlarm,
     mdiBikeFast,
+    mdiCog,
     mdiHome,
     mdiLogout,
     mdiPlus,
@@ -94,6 +95,12 @@ const raceMenuItems = {
             to: "/panel/:raceId/results",
             color: "text-blue-600",
         },
+        {
+            text: "Settings",
+            icon: mdiCog,
+            to: "/panel/:raceId/settings",
+            color: "text-orange-600"
+        }
     ],
 };
 
