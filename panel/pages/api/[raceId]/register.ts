@@ -2,7 +2,7 @@ import { withRaceApiKey } from "auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
 
-export default withRaceApiKey(async (req: NextApiRequest, res: NextApiResponse) => {
+const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { raceId } = req.query;
 
@@ -35,4 +35,6 @@ export default withRaceApiKey(async (req: NextApiRequest, res: NextApiResponse) 
     });
 
     res.send(id);
-});
+}
+
+export default withRaceApiKey(registerPlayer);
