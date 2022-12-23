@@ -3,12 +3,13 @@ import { createTRPCNext } from "@trpc/next";
 import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
 import { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "./server/routers/app";
+import { env } from "env/server.mjs";
 
 const url =
-    process.env.NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
+    env.NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
 
 const wsUrl =
-    process.env.NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
+    env.NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
 
 const wsClient =
     typeof window === "undefined"
