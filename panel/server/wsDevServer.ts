@@ -3,6 +3,9 @@ import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import fetch from 'node-fetch';
 import ws from 'ws';
 import { appRouter } from './routers/app';
+import * as path from "path";
+import * as dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(".env") })
 
 if (!global.fetch) {
     (global as any).fetch = fetch;

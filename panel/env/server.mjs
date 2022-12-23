@@ -24,4 +24,4 @@ for (let key of Object.keys(_serverEnv.data)) {
   }
 }
 
-export const env = { ..._serverEnv.data, ...clientEnv };
+export const env = { ..._serverEnv?.data, ...clientEnv };
