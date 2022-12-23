@@ -6,7 +6,9 @@ import { parse } from 'url';
 import ws from 'ws';
 import { appRouter } from './routers/app';
 import { logger } from '../utils';
-import { env } from 'env/server.mjs';
+import { env } from '../env/server.mjs';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const port = parseInt(env.PORT || '3000', 10);
 const dev = env.NODE_ENV !== 'production';
