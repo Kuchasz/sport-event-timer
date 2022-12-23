@@ -3,8 +3,6 @@ import { db } from "../db";
 import { z } from "zod";
 import { uuidv4 } from "@set/utils/dist/uuid";
 
-export const GenderEnum = z.enum(["male", "female"]);
-
 export const apiKeyRouter =
     router({
         list: protectedProcedure

@@ -2,8 +2,7 @@ import { protectedProcedure, router } from "../trpc";
 import { db } from "../db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-
-export const GenderEnum = z.enum(["male", "female"]);
+import { GenderEnum } from "server/schema";
 
 const playerSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }).min(1),
