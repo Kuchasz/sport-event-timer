@@ -44,9 +44,9 @@ const PlayerRegistrationDeleteButton = ({ playerRegistration }: { playerRegistra
     const raceId = useCurrentRaceId();
     const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
-    const deletePlayer = async () => {
+    const deletePlayerRegistration = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete player`,
+            title: `Delete player registration`,
             component: Confirmation,
             props: {
                 message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`
@@ -59,7 +59,7 @@ const PlayerRegistrationDeleteButton = ({ playerRegistration }: { playerRegistra
         }
     };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayer}>
+        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayerRegistration}>
             <Icon size={1} path={mdiTrashCan} />
             delete
         </span>
@@ -93,7 +93,7 @@ const PlayerRegistrations = () => {
             component: PlayerRegistrationEdit,
             props: {
                 raceId: raceId!,
-                editedPlayer: editedPlayerRegistration
+                editedPlayerRegistration
             }
         });
 
