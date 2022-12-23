@@ -6,9 +6,10 @@ import { parse } from 'url';
 import ws from 'ws';
 import { appRouter } from './routers/app';
 import { logger } from '../utils';
+import { env } from 'env/server.mjs';
 
-const port = parseInt(process.env.PORT || '3000', 10);
-const dev = process.env.NODE_ENV !== 'production';
+const port = parseInt(env.PORT || '3000', 10);
+const dev = env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
