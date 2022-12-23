@@ -70,6 +70,11 @@ const raceMenuItems = {
             icon: mdiAccountGroup,
             to: "/panel/:raceId/players",
             color: "text-pink-600",
+        }, {
+            text: "Player Registrations",
+            icon: mdiAccountGroup,
+            to: "/panel/:raceId/player-registrations",
+            color: "text-yellow-600",
         },
         {
             text: "Classifications",

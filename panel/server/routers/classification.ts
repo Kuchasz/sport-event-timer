@@ -1,7 +1,7 @@
 import { db } from "../db";
 import { z } from "zod";
-import { GenderEnum } from "./player";
 import { protectedProcedure, router } from "../trpc";
+import { GenderEnum } from "server/schema";
 
 const ageCategoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),

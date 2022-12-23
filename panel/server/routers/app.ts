@@ -8,6 +8,7 @@ import { raceRouter } from "./race";
 import { resultRouter } from "./result";
 import { splitTimeRouter } from "./split-time";
 import { timingPointRouter } from "./timing-point";
+import { playerRegistrationRouter } from "./player-registration";
 
 export const appRouter = router({
     classification: classificationRouter,
@@ -18,7 +19,8 @@ export const appRouter = router({
     ntp: ntpRouter,
     splitTime: splitTimeRouter,
     result: resultRouter,
-    apiKey: apiKeyRouter
+    apiKey: apiKeyRouter,
+    playerRegistration: playerRegistrationRouter
 });
 
 // export type definition of API
