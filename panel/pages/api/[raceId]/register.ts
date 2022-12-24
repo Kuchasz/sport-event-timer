@@ -34,7 +34,7 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         }
     });
 
-    res.send(id);
+    res.json(id);
 }
 
 export default withRaceApiKey(registerPlayer);
