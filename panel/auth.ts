@@ -19,7 +19,7 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
         res.status(403).send("Invalid ApiKey configuration"); return;
     }
 
-    const apiKeysForRace = await db.apiKey.findMany({ where: { raceId: Number(raceId) } });
+    const apiKeysForRace = await db.apiKey.findMany({ where: { raceId: parseInt(raceId) } });
 
     if (!apiKeysForRace.map(a => a.key).includes(apiKey)) {
         res.status(403).send("Invalid ApiKey"); return;
