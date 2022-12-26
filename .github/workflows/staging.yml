@@ -85,6 +85,8 @@ jobs:
                     source ~/.nvm/nvm.sh
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
                     mv package/set-hub-package.zip set-hub-package.zip
+                    sudo cp server/prisma/database.db ../../rura-databases/database-`date +"%Y%m%d%H%M"`.db
+                    pm2 delete all
                     rm -rf node_modules/ package/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
                     unzip -q set-hub-package.zip
                     rm set-hub-package.zip
@@ -93,7 +95,6 @@ jobs:
                     cd panel
                     npx prisma generate
                     npx prisma db push
-                    npx prisma db seed
+                    cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
                     chmod -R 777 server/prisma
-                    pm2 delete all
                     pm2 start npm --name "app.rura.cc" -- start
