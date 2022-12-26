@@ -12,14 +12,15 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
         res.status(403).send("Invalid Method"); return;
     }
 
-    const { apiKey, raceId } = req.body;
+    const { raceId } = req.query;
+    const { apiKey } = req.body;
 
     const parseResult = ApiKeyAuthModel.safeParse({ apiKey, raceId });
     if (!parseResult.success) {
         res.status(403).send("Invalid ApiKey configuration"); return;
     }
 
-    const apiKeysForRace = await db.apiKey.findMany({ where: { raceId: parseInt(raceId) } });
+    const apiKeysForRace = await db.apiKey.findMany({ where: { raceId: parseInt(raceId as string) } });
 
     if (!apiKeysForRace.map(a => a.key).includes(apiKey)) {
         res.status(403).send("Invalid ApiKey"); return;
