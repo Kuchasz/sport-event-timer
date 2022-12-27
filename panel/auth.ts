@@ -15,7 +15,7 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
     const { raceId } = req.query;
     const { apiKey } = req.body;
 
-    const parseResult = ApiKeyAuthModel.safeParse({ apiKey, raceId });
+    const parseResult = ApiKeyAuthModel.safeParse({ apiKey, raceId: parseInt(raceId as string) });
     if (!parseResult.success) {
         res.status(403).send("Invalid ApiKey configuration"); return;
     }
