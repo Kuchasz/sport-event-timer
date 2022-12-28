@@ -43,6 +43,7 @@ export const playerRegistrationRouter =
                 return await db.playerRegistration.create({
                     data: {
                         raceId: input.raceId,
+                        registrationDate: new Date(),
                         name: input.player.name,
                         lastName: input.player.lastName,
                         gender: input.player.gender,

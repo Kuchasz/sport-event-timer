@@ -175,17 +175,18 @@ model ManualSplitTime {
 }
 
 model PlayerRegistration {
-    id             Int      @id @default(autoincrement())
-    name           String
-    lastName       String
-    birthDate      DateTime
-    gender         String
-    team           String?
-    city           String?
-    country        String?
-    email          String?
-    phoneNumber    String?
-    icePhoneNumber String?
-    race           Race     @relation(fields: [raceId], references: [id])
-    raceId         Int
+    id               Int      @id @default(autoincrement())
+    registrationDate DateTime
+    name             String
+    lastName         String
+    birthDate        DateTime
+    gender           String
+    team             String?
+    city             String?
+    country          String?
+    email            String?
+    phoneNumber      String?
+    icePhoneNumber   String?
+    race             Race     @relation(fields: [raceId], references: [id])
+    raceId           Int
 }
