@@ -23,6 +23,7 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
             raceId: parseInt(raceId as string),
             name,
             lastName,
+            registrationDate: new Date(),
             birthDate: new Date(birthDate),
             gender,
             team,

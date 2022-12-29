@@ -94,7 +94,7 @@ jobs:
                     yarn install
                     cd panel
                     npx prisma generate
-                    npx prisma db push
+                    npx prisma migrate deploy
                     cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
                     chmod -R 777 server/prisma
                     pm2 start npm --name "app.rura.cc" -- start
