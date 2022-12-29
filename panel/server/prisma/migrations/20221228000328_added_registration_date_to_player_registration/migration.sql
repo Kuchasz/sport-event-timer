@@ -22,7 +22,7 @@ CREATE TABLE "new_PlayerRegistration" (
     "raceId" INTEGER NOT NULL,
     CONSTRAINT "PlayerRegistration_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
-INSERT INTO "new_PlayerRegistration" ("birthDate", "city", "country", "email", "gender", "icePhoneNumber", "id", "lastName", "name", "phoneNumber", "raceId", "registrationDate", "team") SELECT "birthDate", "city", "country", "email", "gender", "icePhoneNumber", "id", "lastName", "name", "phoneNumber", "raceId", DATE("now"),"team" FROM "PlayerRegistration";
+INSERT INTO "new_PlayerRegistration" ("birthDate", "city", "country", "email", "gender", "icePhoneNumber", "id", "lastName", "name", "phoneNumber", "raceId", "registrationDate", "team") SELECT "birthDate", "city", "country", "email", "gender", "icePhoneNumber", "id", "lastName", "name", "phoneNumber", "raceId", unixepoch() * 1000,"team" FROM "PlayerRegistration";
 DROP TABLE "PlayerRegistration";
 ALTER TABLE "new_PlayerRegistration" RENAME TO "PlayerRegistration";
 PRAGMA foreign_key_check;
