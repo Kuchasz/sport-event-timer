@@ -26,5 +26,5 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
         res.status(403).send("Invalid ApiKey"); return;
     }
 
-    next(req, res);
+    await next(req, res);
 }

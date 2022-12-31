@@ -19,7 +19,14 @@ export const serverSchema = z.object({
   NEXTAUTH_SECRET: z.string(),
   AUTH0_CLIENT_ID: z.string(),
   AUTH0_CLIENT_SECRET: z.string(),
-  AUTH0_ISSUER: z.string()
+  AUTH0_ISSUER: z.string(),
+  NOTIFICATIONS_SERVER_HOST: z.string(),
+  NOTIFICATIONS_SERVER_PORT: z.string(),
+  NOTIFICATIONS_SERVER_SECURE: z.string(),
+  NOTIFICATIONS_SERVER_AUTH_USER: z.string(),
+  NOTIFICATIONS_SERVER_AUTH_PASS: z.string(),
+  NOTIFICATIONS_MESSAGE_FROM: z.string(),
+  NOTIFICATIONS_MESSAGE_TARGET: z.string()
 });
 
 /**

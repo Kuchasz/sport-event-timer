@@ -1,5 +1,6 @@
 import { withRaceApiKey } from "auth";
 import { NextApiRequest, NextApiResponse } from "next";
+import { withExceptionHandling } from "exceptions";
 import { db } from "server/db";
 
 const getRegisteredPlayersForRace = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,4 +12,4 @@ const getRegisteredPlayersForRace = async (req: NextApiRequest, res: NextApiResp
     res.json(results);
 }
 
-export default withRaceApiKey(getRegisteredPlayersForRace);
+export default withRaceApiKey(withExceptionHandling(getRegisteredPlayersForRace));
