@@ -1,5 +1,6 @@
 import { withRaceApiKey } from "auth";
 import { NextApiRequest, NextApiResponse } from "next";
+import { withExceptionHandling } from "exceptions";
 import { db } from "server/db";
 
 const getTeamNames = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -8,7 +9,7 @@ const getTeamNames = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const results = await db.playerRegistration.groupBy({ by: ['team'], where: { raceId: Number(raceId) } });
 
-    res.json(results);
+    res.json(results.map(r => r.team));
 }
 
-export default withRaceApiKey(getTeamNames);
+export default withRaceApiKey(withExceptionHandling(getTeamNames));
