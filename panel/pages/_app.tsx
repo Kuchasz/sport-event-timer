@@ -13,33 +13,35 @@ import { ResultApp } from "apps/result";
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
 const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps }, router }) => {
-    useEffect(() => {
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker.register("/sw.js").then(
-                    function (registration) {
-                        console.log("Service Worker registration successful with scope: ", registration.scope);
-                    },
-                    function (err) {
-                        console.log("Service Worker registration failed: ", err);
-                    }
-                );
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if ("serviceWorker" in navigator) {
+    //         window.addEventListener("load", function () {
+    //             navigator.serviceWorker.register("/sw.js").then(
+    //                 function (registration) {
+    //                     console.log("Service Worker registration successful with scope: ", registration.scope);
+    //                 },
+    //                 function (err) {
+    //                     console.log("Service Worker registration failed: ", err);
+    //                 }
+    //             );
+    //         });
+    //     }
+    // }, []);
 
     return router.pathname.startsWith("/panel") ? (
         <SessionProvider session={session}>
-            <PanelApp Component={Component} pageProps={pageProps} router={router}/>
+            <PanelApp Component={Component} pageProps={pageProps} router={router} />
         </SessionProvider>
     ) : router.pathname.startsWith("/stopwatch") ? (
         <SessionProvider session={session}>
-            <StopwatchApp Component={Component} pageProps={pageProps} router={router}/>
+            <StopwatchApp Component={Component} pageProps={pageProps} router={router} />
         </SessionProvider>
     ) : router.pathname.startsWith("/result") ? (
-        <ResultApp Component={Component} pageProps={pageProps} router={router}/>
+        <ResultApp Component={Component} pageProps={pageProps} router={router} />
+    ) : router.pathname.startsWith("/timer") ? (
+        <TimerApp Component={Component} pageProps={pageProps} router={router} />
     ) : (
-        <TimerApp Component={Component} pageProps={pageProps} router={router}/>
+        <Component {...pageProps} />
     );
 };
 

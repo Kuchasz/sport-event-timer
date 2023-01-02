@@ -3,27 +3,25 @@ import { TimerState } from "@set/timer/dist/store";
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "components/button";
 
-
 const AuthShowcase = () => {
-  
     const { data: sessionData } = useSession();
-  
+
     return (
-      <div className="flex flex-col items-center justify-center gap-2">
-        {sessionData && (
-          <p className="text-2xl text-blue-500">
-            Logged in as {sessionData?.user?.name} <br/>
-          </p>
-        )}
-        <Button
-          className="rounded-md border border-black bg-violet-50 px-4 py-2 text-xl shadow-lg hover:bg-violet-100"
-          onClick={sessionData ? () => null : () => signIn()}
-        >
-          {sessionData ? "" : "Sign in"}
-        </Button>
-      </div>
+        <div className="flex flex-col items-center justify-center gap-2">
+            {sessionData && (
+                <p className="text-2xl text-blue-500">
+                    Logged in as {sessionData?.user?.name} <br />
+                </p>
+            )}
+            <Button
+                className="rounded-md border border-black bg-violet-50 px-4 py-2 text-xl shadow-lg hover:bg-violet-100"
+                onClick={sessionData ? () => null : () => signIn()}
+            >
+                {sessionData ? "" : "Sign in"}
+            </Button>
+        </div>
     );
-  };
+};
 
 type Props = {
     state: TimerState;
@@ -36,7 +34,7 @@ const Index = ({}: Props) => {
                 <title>Aktualności</title>
             </Head>
             <div>
-                <AuthShowcase/>
+                <AuthShowcase />
             </div>
             <div className="flex w-full justify-center">
                 <div className="w-full flex flex-col sm:flex-row py-4 px-12"></div>
@@ -49,3 +47,5 @@ const Index = ({}: Props) => {
 };
 
 export default Index;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../auth";

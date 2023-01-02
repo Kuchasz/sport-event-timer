@@ -103,3 +103,5 @@ const Settings = ({}: Props) => {
 };
 
 export default Settings;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

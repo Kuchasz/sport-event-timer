@@ -204,3 +204,5 @@ const Players = () => {
 };
 
 export default Players;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

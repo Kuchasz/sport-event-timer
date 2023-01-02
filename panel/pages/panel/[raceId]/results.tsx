@@ -49,3 +49,5 @@ const Results = () => {
 };
 
 export default Results;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

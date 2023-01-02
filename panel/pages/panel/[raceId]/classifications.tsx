@@ -120,3 +120,5 @@ const Classifications = () => {
 };
 
 export default Classifications;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

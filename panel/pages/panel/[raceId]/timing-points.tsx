@@ -129,3 +129,5 @@ const TimingPoint = () => {
 };
 
 export default TimingPoint;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

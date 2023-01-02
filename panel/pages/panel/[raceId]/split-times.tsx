@@ -172,3 +172,5 @@ const SplitTimes = () => {
 };
 
 export default SplitTimes;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";
