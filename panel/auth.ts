@@ -1,4 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, PreviewData } from "next";
+import { getSession } from "next-auth/react";
+import { ParsedUrlQuery } from "querystring";
 import { db } from "server/db";
 import { z } from "zod";
 
@@ -27,4 +29,28 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
     }
 
     await next(req, res);
+}
+
+export async function getSecuredServerSideProps(context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) {
+    const { req, resolvedUrl } = context;
+    const session = await getSession({ req });
+    const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
+    const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: callbackUrl,
+                permenant: false,
+            },
+        };
+    }
+
+    if (session) {
+        return {
+            props: {
+                session,
+            },
+        };
+    }
 }

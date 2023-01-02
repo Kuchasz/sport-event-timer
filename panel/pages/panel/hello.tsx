@@ -11,3 +11,5 @@ export default function IndexPage() {
         </div>
     );
 }
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../auth";

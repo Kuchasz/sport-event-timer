@@ -19,3 +19,5 @@ const Index = ({}: Props) => {
 };
 
 export default Index;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

@@ -133,3 +133,5 @@ const PlayerRegistrations = () => {
 };
 
 export default PlayerRegistrations;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

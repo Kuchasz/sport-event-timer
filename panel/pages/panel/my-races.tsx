@@ -116,3 +116,5 @@ const MyRaces = () => {
 };
 
 export default MyRaces;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../auth";
