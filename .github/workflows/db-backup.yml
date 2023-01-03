@@ -1,0 +1,19 @@
+name: DB.Backup
+
+on:
+    workflow_dispatch:
+
+jobs:
+    backup:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: DB-Backup
+            uses: appleboy/ssh-action@master
+            with:
+                host: ${{ secrets.OVH_REMOTE_HOST }}
+                username: ${{ secrets.OVH_REMOTE_USER }}
+                password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
+                script: |
+                    cd ${{ secrets.OVH_REMOTE_TARGET }}
+                    cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
