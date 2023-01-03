@@ -1,12 +1,11 @@
-import { NextPageContext } from "next";
-import { getProviders, getSession, signIn } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 type SignInProps = {
     providers: ReturnType<typeof getProviders>;
 };
 
-export default function SignIn({ providers }: SignInProps) {
+export default function SignIn({ }: SignInProps) {
     const router = useRouter();
 
     return (
