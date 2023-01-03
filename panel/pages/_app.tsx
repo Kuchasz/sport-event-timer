@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { AppType } from "next/app";
 import { PanelApp } from "../apps/panel";
 import { trpc } from "../connection";
-import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
@@ -13,20 +12,6 @@ import { ResultApp } from "apps/result";
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
 const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps }, router }) => {
-    // useEffect(() => {
-    //     if ("serviceWorker" in navigator) {
-    //         window.addEventListener("load", function () {
-    //             navigator.serviceWorker.register("/sw.js").then(
-    //                 function (registration) {
-    //                     console.log("Service Worker registration successful with scope: ", registration.scope);
-    //                 },
-    //                 function (err) {
-    //                     console.log("Service Worker registration failed: ", err);
-    //                 }
-    //             );
-    //         });
-    //     }
-    // }, []);
 
     return router.pathname.startsWith("/panel") ? (
         <SessionProvider session={session}>
