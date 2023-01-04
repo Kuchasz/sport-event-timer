@@ -1,8 +1,0 @@
--- CreateTable
-CREATE TABLE "ApiKey" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "key" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "raceId" INTEGER NOT NULL,
-    CONSTRAINT "ApiKey_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);

@@ -96,7 +96,8 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
             country,
             email: registrationEntry.email,
             phoneNumber: registrationEntry.phoneNumber,
-            icePhoneNumber: registrationEntry.icePhoneNumber
+            icePhoneNumber: registrationEntry.icePhoneNumber,
+            hasPaid: false
         }
     });
 
