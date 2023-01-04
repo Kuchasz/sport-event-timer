@@ -6,7 +6,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiCashCheck, mdiCashRemove, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
@@ -23,9 +23,9 @@ const columns: Column<PlayerRegistration, unknown>[] = [
     {
         key: "gender",
         name: "Gender",
-        width: 10
+        width: 10,
     },
-    { key: "birthDate", name: "Birth Date", formatter: props => <div>{props.row.birthDate.toLocaleDateString()}</div> },
+    { key: "birthDate", name: "Birth Date", formatter: (props) => <div>{props.row.birthDate.toLocaleDateString()}</div> },
     { key: "country", name: "Country", width: 10 },
     { key: "city", name: "City" },
     { key: "team", name: "Team" },
@@ -33,14 +33,49 @@ const columns: Column<PlayerRegistration, unknown>[] = [
     { key: "phoneNumber", name: "Phone Number" },
     { key: "icePhoneNumber", name: "Ice Phone Number" },
     {
+        key: "registrationDate",
+        name: "Registration Date",
+        formatter: (props) => <div>{props.row.registrationDate.toLocaleDateString()}</div>,
+    },
+    { key: "paymentDate", name: "Payment", width: 150, formatter: (props) => <PlayerRegistrationPayment playerRegistration={props.row} /> },
+    {
         key: "actions",
-        width: 15,
+        width: 50,
         name: "Actions",
-        formatter: props => <PlayerRegistrationDeleteButton playerRegistration={props.row} />
-    }
+        formatter: (props) => <PlayerRegistrationActions playerRegistration={props.row} />,
+    },
 ];
 
-const PlayerRegistrationDeleteButton = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
+const PlayerRegistrationPayment = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
+    const raceId = useCurrentRaceId();
+    const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
+    const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
+
+    const togglePlayerPayment = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Confirm payment change`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to change ${playerRegistration.name} ${playerRegistration.lastName} payment status to: ${
+                    playerRegistration.hasPaid ? "not paid" : "paid"
+                }. Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
+            refetch();
+        }
+    };
+    return (
+        <span className="flex h-full items-center hover:text-red-600 cursor-pointer" onClick={togglePlayerPayment}>
+            {playerRegistration.hasPaid ? <Icon size={1} path={mdiCashCheck} /> : <Icon size={1} path={mdiCashRemove} />}
+            <span className="ml-2">{playerRegistration.paymentDate?.toLocaleDateString() ?? 'not paid'}</span>
+        </span>
+    );
+};
+
+const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
     const raceId = useCurrentRaceId();
     const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
@@ -49,8 +84,8 @@ const PlayerRegistrationDeleteButton = ({ playerRegistration }: { playerRegistra
             title: `Delete player registration`,
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`
-            }
+                message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`,
+            },
         });
 
         if (confirmed) {
@@ -58,10 +93,12 @@ const PlayerRegistrationDeleteButton = ({ playerRegistration }: { playerRegistra
             refetch();
         }
     };
+
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayerRegistration}>
-            <Icon size={1} path={mdiTrashCan} />
-            delete
+        <span className="flex">
+            <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayerRegistration}>
+                <Icon size={1} path={mdiTrashCan} />
+            </span>
         </span>
     );
 };
@@ -71,14 +108,14 @@ const PlayerRegistrations = () => {
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
-    
+
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
             title: "Create new player registration",
             component: PlayerRegistrationCreate,
             props: {
-                raceId: raceId!
-            }
+                raceId: raceId!,
+            },
         });
 
         if (player) {
@@ -93,8 +130,8 @@ const PlayerRegistrations = () => {
             component: PlayerRegistrationEdit,
             props: {
                 raceId: raceId!,
-                editedPlayerRegistration
-            }
+                editedPlayerRegistration,
+            },
         });
 
         if (playerRegistration) {
@@ -117,12 +154,13 @@ const PlayerRegistrations = () => {
                     <div className="px-1"></div>
                 </div>
                 {registrations && (
-                    <DataGrid className='rdg-light h-full'
+                    <DataGrid
+                        className="rdg-light h-full"
                         defaultColumnOptions={{
                             sortable: true,
-                            resizable: true
+                            resizable: true,
                         }}
-                        onRowDoubleClick={e => openEditDialog(e)}
+                        onRowDoubleClick={(e) => openEditDialog(e)}
                         columns={columns}
                         rows={registrations}
                     />

@@ -175,7 +175,7 @@ model ManualSplitTime {
 }
 
 model PlayerRegistration {
-    id               Int      @id @default(autoincrement())
+    id               Int       @id @default(autoincrement())
     registrationDate DateTime
     name             String
     lastName         String
@@ -187,6 +187,8 @@ model PlayerRegistration {
     email            String?
     phoneNumber      String?
     icePhoneNumber   String?
-    race             Race     @relation(fields: [raceId], references: [id])
+    hasPaid          Boolean
+    paymentDate      DateTime?
+    race             Race      @relation(fields: [raceId], references: [id])
     raceId           Int
 }

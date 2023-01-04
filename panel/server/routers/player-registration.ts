@@ -16,7 +16,8 @@ const playerRegistrationSchema = z.object({
         team: z.string().nullish(),
         email: z.string().email("email is not valid").nullish(),
         phoneNumber: z.string().nullish(),
-        icePhoneNumber: z.string().nullish()
+        icePhoneNumber: z.string().nullish(),
+        hasPaid: z.boolean()
     })
 });
 
@@ -34,6 +35,11 @@ export const playerRegistrationRouter =
             .input(z.object({ playerId: z.number() }))
             .mutation(async ({ input }) => {
                 return await db.playerRegistration.delete({ where: { id: input.playerId } });
+            }),
+        setPaymentStatus: protectedProcedure
+            .input(z.object({ playerId: z.number(), hasPaid: z.boolean() }))
+            .mutation(async ({ input }) => {
+                return await db.playerRegistration.update({ where: { id: input.playerId }, data: { hasPaid: input.hasPaid, paymentDate: input.hasPaid ? new Date() : null } });
             }),
         add: protectedProcedure
             .input(playerRegistrationSchema)
@@ -53,7 +59,8 @@ export const playerRegistrationRouter =
                         team: input.player.team,
                         email: input.player.email,
                         phoneNumber: input.player.phoneNumber,
-                        icePhoneNumber: input.player.icePhoneNumber
+                        icePhoneNumber: input.player.icePhoneNumber,
+                        hasPaid: false
                     }
                 });
             }),
@@ -61,7 +68,6 @@ export const playerRegistrationRouter =
             .input(playerRegistrationSchema)
             .mutation(async (req) => {
                 const { input } = req;
-
                 return await db.playerRegistration.update({
                     where: { id: input.player.id! },
                     data: {
