@@ -12,6 +12,10 @@ export const raceRouter =
     router({
         races: protectedProcedure
             .query(async () => {
+                return await db.race.findMany();
+            }),
+        myRaces: protectedProcedure
+            .query(async () => {
                 return await db.race.findMany({ orderBy: { id: "desc" } });
             }),
         race: protectedProcedure

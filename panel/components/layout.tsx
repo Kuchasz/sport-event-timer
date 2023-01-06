@@ -9,7 +9,6 @@ import {
     mdiBikeFast,
     mdiCog,
     mdiHome,
-    mdiLogout,
     mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
@@ -114,7 +113,7 @@ const Status = () => {
     const { data: sessionData } = useSession();
 
     const router = useRouter();
-    const { data: items, refetch } = trpc.race.races.useQuery();
+    const { data: items, refetch } = trpc.race.myRaces.useQuery();
     const addRaceMuttaion = trpc.race.add.useMutation();
     const raceId = useCurrentRaceId();
 
