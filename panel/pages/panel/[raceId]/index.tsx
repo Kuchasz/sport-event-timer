@@ -10,7 +10,7 @@ const Index = ({}: Props) => {
 
     return (
         <>
-            <h3>Current RaceId is: {raceId}</h3>
+            <h3>Some dashboard for race: {raceId}</h3>
             <div className="flex w-full relative justify-center overflow-hidden">
                 <div className="w-full my-12 max-w-6xl flex flex-col items-start justify-center"></div>
             </div>
