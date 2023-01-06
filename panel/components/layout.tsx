@@ -11,6 +11,7 @@ import {
     mdiHome,
     mdiLogout,
     mdiPlus,
+    mdiPowerStandby,
     mdiTimerCogOutline,
     mdiTimetable,
 } from "@mdi/js";
@@ -158,15 +159,15 @@ const Status = () => {
             <div className="grow"></div>
             {sessionData && (
                 <div className="flex items-center mr-4">
-                    <img className="rounded-full h-12 w-12" src={sessionData.user?.image ?? ""} />
-                    <div className="ml-4 flex flex-col">
+                    <div className="mr-8 flex opacity-80 hover:opacity-100 transition-opacity items-center cursor-pointer text-sm" onClick={() => signOut()}>
+                        <Icon path={mdiPowerStandby} size={0.5}></Icon>
+                        <span className="ml-1">Logout</span>
+                    </div>
+                    <div className="mr-4 flex flex-col">
                         <div className="font-semibold">{sessionData.user?.name}</div>
                         <div className="text-xs font-light">Organizer</div>
                     </div>
-                    <div className="ml-4 flex cursor-pointer" onClick={() => signOut()}>
-                        <Icon path={mdiLogout} size={1}></Icon>
-                        <span>Logout</span>
-                    </div>
+                    <img className="rounded-full h-10 w-10" src={sessionData.user?.image ?? ""} />
                 </div>
             )}
         </div>

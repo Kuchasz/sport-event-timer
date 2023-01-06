@@ -7,10 +7,10 @@ const AuthShowcase = () => {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="flex flex-col items-center justify-center gap-2 hidden">
             {sessionData && (
                 <p className="text-2xl text-blue-500">
-                    Logged in as {sessionData?.user?.name} <br />
+                    You are logged in {sessionData?.user?.name} <br />
                 </p>
             )}
             <Button
