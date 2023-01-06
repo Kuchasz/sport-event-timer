@@ -3,6 +3,7 @@ import { Button } from "./button";
 import { Demodal } from "demodal";
 import { Fragment } from "react";
 import {
+    mdiAccount,
     mdiAccountCogOutline,
     mdiAccountGroup,
     mdiAlarm,
@@ -59,6 +60,12 @@ const adminMenuItems = {
             to: "/panel/hello",
             color: "text-red-600",
         },
+        {
+            text:'Accounts',
+            icon: mdiAccount,
+            to:'/panel/accounts',
+            color: "text-pink-600",
+        }
     ],
 };
 
