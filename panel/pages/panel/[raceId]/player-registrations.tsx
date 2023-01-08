@@ -17,7 +17,7 @@ type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["p
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
 const columns: Column<PlayerRegistration, unknown>[] = [
-    { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
+    { key: "id", name: "Id", sortable: false, resizable: false, width: 5 },
     { key: "name", name: "Name" },
     { key: "lastName", name: "Last Name" },
     {
@@ -25,22 +25,23 @@ const columns: Column<PlayerRegistration, unknown>[] = [
         name: "Gender",
         width: 10,
     },
-    { key: "birthDate", name: "Birth Date", formatter: (props) => <div>{props.row.birthDate.toLocaleDateString()}</div> },
+    { key: "birthDate", name: "Birth Date", width: 30, formatter: (props) => <div>{props.row.birthDate.toLocaleDateString()}</div> },
     { key: "country", name: "Country", width: 10 },
-    { key: "city", name: "City" },
-    { key: "team", name: "Team" },
-    { key: "email", name: "Email" },
-    { key: "phoneNumber", name: "Phone Number" },
-    { key: "icePhoneNumber", name: "Ice Phone Number" },
+    { key: "city", name: "City", width: 20 },
+    { key: "team", name: "Team", formatter: (props) => <div className="text-ellipsis">{props.row.team}</div> },
+    
+    { key: "phoneNumber", name: "Phone", width: 20 },
+    { key: "icePhoneNumber", name: "ICE Number", width: 20 },
     {
         key: "registrationDate",
         name: "Registration Date",
+        width: 30,
         formatter: (props) => <div>{props.row.registrationDate.toLocaleDateString()}</div>,
     },
     { key: "paymentDate", name: "Payment", width: 150, formatter: (props) => <PlayerRegistrationPayment playerRegistration={props.row} /> },
     {
         key: "actions",
-        width: 50,
+        width: 30,
         name: "Actions",
         formatter: (props) => <PlayerRegistrationActions playerRegistration={props.row} />,
     },
