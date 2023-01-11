@@ -27,14 +27,12 @@ const Item = ({
     dispatch,
     raceId,
     style,
-    reff,
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: string) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
     style: CSSProperties;
-    reff: LegacyRef<HTMLDivElement>;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -82,7 +80,7 @@ const Item = ({
     };
 
     return (
-        <div style={style} ref={reff} className="absolute w-full t-0 left-0 py-0.5">
+        <div style={style} className="absolute w-full t-0 left-0 py-0.5">
             <div
                 className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white"
                 ref={targetElement}
