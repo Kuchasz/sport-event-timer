@@ -4,7 +4,7 @@ import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlus
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
-import { CSSProperties, LegacyRef, useRef } from "react";
+import { CSSProperties, useRef } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../hooks";
 import { useRouter } from "next/router";
 import { sortDesc } from "@set/utils/dist/array";
