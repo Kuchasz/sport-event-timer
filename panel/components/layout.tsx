@@ -1,41 +1,46 @@
 import Icon from "@mdi/react";
-import { Button } from "./button";
-import { Demodal } from "demodal";
-import { Fragment } from "react";
 import {
     mdiAccount,
     mdiAccountCogOutline,
     mdiAccountGroup,
     mdiAlarm,
     mdiBikeFast,
+    mdiBriefcaseOutline,
     mdiCog,
     mdiHome,
+    mdiHomeOutline,
     mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
     mdiTimetable,
+    mdiViewDashboardEditOutline,
 } from "@mdi/js";
 import { Meta } from "./meta";
-import { NiceModal } from "./modal";
-import { PoorSelect } from "./poor-select";
-import { RaceCreate } from "./race-create";
 import { useCurrentRaceId } from "../hooks";
 import { useRouter } from "next/router";
-import { AppRouterInputs } from "trpc";
-import { trpc } from "connection";
 import { signOut, useSession } from "next-auth/react";
 import { MenuButton } from "./menu-button";
+import Link from "next/link";
+import { PoorSelect2 } from "./poor-select";
+import { trpc } from "connection";
+import { Demodal } from "demodal";
+import { AppRouterInputs } from "trpc";
+import { RaceCreate } from "./race-create";
+import { NiceModal } from "./modal";
 
+type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
     preview?: boolean;
     children: React.ReactNode;
 };
 
-type CreatedRace = AppRouterInputs["race"]["add"];
-const generalMenuItems = {
-    name: "General",
+const generalMenuGroup = {
+    name: "Your dashboard",
+    icon: mdiHomeOutline,
+    color: "bg-[#64b3f4]",
+    to: "/panel",
     items: [
-        { text: "Home", icon: mdiHome, to: "/panel/", color: "text-yellow-600" },
+        { text: "Home", icon: mdiHome, to: "/panel", color: "text-yellow-600" },
         {
             text: "My Races",
             icon: mdiBikeFast,
@@ -45,40 +50,59 @@ const generalMenuItems = {
     ],
 };
 
-const adminMenuItems = {
-    name: "Admin",
+const adminMenuGroup = {
+    name: "Admin the system",
+    icon: mdiBriefcaseOutline,
+    color: "bg-orange-500",
+    to: "/panel/admin",
     items: [
+        {
+            text: "Dashboard",
+            icon: mdiViewDashboardEditOutline,
+            to: "/panel/admin",
+            color: "text-yellow-600",
+        },
         {
             text: "Races",
             icon: mdiBikeFast,
-            to: "/panel/races",
+            to: "/panel/admin/races",
             color: "text-green-600",
         },
         {
             text: "Say hay!",
             icon: mdiTimetable,
-            to: "/panel/hello",
+            to: "/panel/admin/hello",
             color: "text-red-600",
         },
         {
-            text:'Accounts',
+            text: "Accounts",
             icon: mdiAccount,
-            to:'/panel/accounts',
+            to: "/panel/admin/accounts",
             color: "text-pink-600",
-        }
+        },
     ],
 };
 
-const raceMenuItems = {
-    name: "Race",
+const raceMenuGroup = {
+    name: "Manage your races",
+    icon: mdiAlarm,
+    color: "bg-[#c2e59c]",
+    to: "/panel/:raceId",
     items: [
+        {
+            text: "Dashboard",
+            icon: mdiViewDashboardEditOutline,
+            to: "/panel/:raceId",
+            color: "text-yellow-600",
+        },
         {
             text: "Players",
             icon: mdiAccountGroup,
             to: "/panel/:raceId/players",
             color: "text-pink-600",
-        }, {
-            text: "Player Registrations",
+        },
+        {
+            text: "Registrations",
             icon: mdiAccountGroup,
             to: "/panel/:raceId/player-registrations",
             color: "text-yellow-600",
@@ -95,11 +119,11 @@ const raceMenuItems = {
             to: "/panel/:raceId/timing-points",
             color: "text-lime-600",
         },
-        { 
-            text: "Split Times", 
-            icon: mdiAlarm, 
-            to: "/panel/:raceId/split-times", 
-            color: "text-red-600" 
+        {
+            text: "Split Times",
+            icon: mdiAlarm,
+            to: "/panel/:raceId/split-times",
+            color: "text-red-600",
         },
         {
             text: "Results",
@@ -111,18 +135,57 @@ const raceMenuItems = {
             text: "Settings",
             icon: mdiCog,
             to: "/panel/:raceId/settings",
-            color: "text-orange-600"
-        }
+            color: "text-orange-600",
+        },
     ],
 };
 
 const Status = () => {
     const { data: sessionData } = useSession();
 
+    return (
+        <div className="flex items-center my-4 px-4">
+            <div className="grow"></div>
+            {sessionData && (
+                <div className="flex items-center mr-4">
+                    <img className="rounded-full h-8 w-8" src={sessionData.user?.image ?? ""} />
+                    <div className="ml-4 flex flex-col">
+                        <div className="text-sm">{sessionData.user?.name}</div>
+                        <div className="text-2xs font-light">Organizer</div>
+                    </div>
+                    <div className="mx-8 w-[1px] h-8 flex bg-gray-100"></div>
+                    <div
+                        className="flex opacity-50 hover:opacity-100 transition-opacity items-center cursor-pointer text-sm"
+                        onClick={() => signOut()}
+                    >
+                        <Icon path={mdiPowerStandby} size={0.5}></Icon>
+                        <span className="ml-1">Logout</span>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const Layout = ({ children }: Props) => {
     const router = useRouter();
-    const { data: items, refetch } = trpc.race.myRaces.useQuery();
+
+    const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
+
+    const raceId = useCurrentRaceId() || items[0].id;
+
     const addRaceMuttaion = trpc.race.add.useMutation();
-    const raceId = useCurrentRaceId();
+
+    // const { query: { raceId }} = router;
+
+    const currentMenuGroup = router.asPath.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
+        ? raceMenuGroup
+        : router.asPath.includes(adminMenuGroup.to.replace(":raceId", String(raceId)))
+        ? adminMenuGroup
+        : generalMenuGroup;
+
+    const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
+    const menuItems = currentMenuGroup.items;
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -137,75 +200,81 @@ const Status = () => {
         }
     };
 
-    return (
-        <div className="flex items-center my-4 px-4 text-white">
-            <img src="/assets/logo_ravelo.png" />
-            <div className="grow"></div>
-            <div className="w-64 text-gray-800 will-change-transform z-10 mr-4">
-                {items && items.length > 0 ? (
-                    <PoorSelect
-                        nameKey="name"
-                        valueKey="id"
-                        placeholder="Select race"
-                        initialValue={raceId}
-                        items={items}
-                        onChange={(e) => {
-                            // selectRace(e.target.value);
-                            router.push(`/panel/${e.target.value}`);
-                        }}
-                    ></PoorSelect>
-                ) : null}
-            </div>
-            {sessionData && (
-                <Button onClick={openCreateDialog}>
-                    <Icon size={1} path={mdiPlus} />
-                    <span className="ml-2">Create Race</span>
-                </Button>
-            )}
-            <div className="grow"></div>
-            {sessionData && (
-                <div className="flex items-center mr-4">
-                    <div className="mr-8 flex opacity-80 hover:opacity-100 transition-opacity items-center cursor-pointer text-sm" onClick={() => signOut()}>
-                        <Icon path={mdiPowerStandby} size={0.5}></Icon>
-                        <span className="ml-1">Logout</span>
-                    </div>
-                    <div className="mr-4 flex flex-col">
-                        <div className="font-semibold">{sessionData.user?.name}</div>
-                        <div className="text-xs font-light">Organizer</div>
-                    </div>
-                    <img className="rounded-full h-10 w-10" src={sessionData.user?.image ?? ""} />
-                </div>
-            )}
-        </div>
-    );
-};
-
-const Layout = ({ children }: Props) => {
-    const router = useRouter();
-    const raceId = useCurrentRaceId();
-
-    const menuItems = raceId ? [generalMenuItems, raceMenuItems, adminMenuItems] : [generalMenuItems, adminMenuItems];
+    // const menuItems = [generalMenuItems, raceMenuItems, adminMenuItems];
 
     return (
         <>
             <Meta />
-            <div className="h-full relative bg-gray-100">
-                <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"></div>
-                <div className="will-change-transform h-full w-full flex flex-col">
-                    <Status />
-                    <div className="flex flex-grow overflow-y-hidden">
-                        <nav className="w-60 shrink-0 py-4 flex-col shadow-lg rounded-tr-md bg-white">
-                            {menuItems.map((mi) => (
-                                <Fragment key={mi.name}>
-                                    <div className="uppercase px-6 py-4 text-2xs">{mi.name}</div>
-                                    {mi.items.map((n) => (
-                                        <MenuButton key={n.to} {...n} to={n.to.replace(":raceId", String(raceId))} isActive={router.asPath === n.to} />
-                                    ))}
-                                </Fragment>
-                            ))}
+            <div className="h-full relative">
+                {/* <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"></div> */}
+                <div className="will-change-transform h-full w-full flex">
+                    {/* <Status /> */}
+
+                    <div className="flex flex-grow overflow-y-hidden shadow-md">
+                        <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
+                            <Link href={"/"}>
+                                <div className="transition-opacity cursor-pointer text-center px-4 py-4 text-3xl">r</div>
+                            </Link>
+                            <div className="flex-grow h-full justify-center flex flex-col">
+                                {menuGroups.map((mg) => (
+                                    <Link href={mg.to.replace(":raceId", String(raceId))}>
+                                        <div
+                                            key={mg.name}
+                                            className={`transition-opacity cursor-pointer uppercase p-2 mx-3 my-4 rounded-xl text-2xs ${
+                                                currentMenuGroup.name === mg.name
+                                                    ? `bg-[#0b161d] opacity-100`
+                                                    : "opacity-30 hover:opacity-50"
+                                            }`}
+                                        >
+                                            <Icon path={mg.icon} size={1}></Icon>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
                         </nav>
-                        <main className="grow h-full overflow-y-auto p-8">
-                            <div className="p-4 h-full bg-white rounded-md shadow-md">{children}</div>
+                        <nav className="w-52 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
+                            {/* <div className="pt-4 pb-12 flex justify-center">
+                                <img className="invert" src="/assets/logo_ravelo.png" />
+                            </div> */}
+
+                            <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.name}</div>
+
+                            {currentMenuGroup.name === raceMenuGroup.name ? (
+                                <div className="w-full flex flex-col my-8 items-center">
+                                    <div
+                                        className="flex-shrink-0 w-6 ml-2 hidden mr-2 opacity-60 cursor-pointer hover:opacity-100 text-gray-600"
+                                        onClick={openCreateDialog}
+                                    >
+                                        <Icon size={1} path={mdiPlus}></Icon>
+                                    </div>
+                                    <PoorSelect2
+                                        placeholder="Select race"
+                                        initialValue={raceId}
+                                        onChange={(e) => {
+                                            // selectRace(e.target.value);
+                                            router.push(`/panel/${e.target.value}`);
+                                        }}
+                                        valueKey="id"
+                                        nameKey="name"
+                                        items={items}
+                                    />
+                                </div>
+                            ) : null}
+
+                            {(currentMenuGroup.name === raceMenuGroup.name && raceId) || currentMenuGroup.name !== raceMenuGroup.name
+                                ? menuItems.map((n) => (
+                                      <MenuButton
+                                          key={n.to}
+                                          {...n}
+                                          to={n.to.replace(":raceId", String(raceId))}
+                                          isActive={router.asPath === n.to.replace(":raceId", String(raceId))}
+                                      />
+                                  ))
+                                : null}
+                        </nav>
+                        <main className="flex flex-col grow h-full overflow-y-auto">
+                            <Status />
+                            <div className="p-4 h-full bg-white">{children}</div>
                         </main>
                     </div>
                 </div>

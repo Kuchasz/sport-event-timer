@@ -1,4 +1,4 @@
-import { trpc } from "../../connection";
+import { trpc } from "../../../connection";
 
 export default function IndexPage() {
     const { data } = trpc.classification.classifications.useQuery({ raceId: 0 });
@@ -12,4 +12,4 @@ export default function IndexPage() {
     );
 }
 
-export { getSecuredServerSideProps as getServerSideProps } from "../../auth";
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

@@ -1,4 +1,4 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -9,24 +9,12 @@ import { trpc } from "../../../connection";
 import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../hooks";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
 type CreatedClassification = AppRouterInputs["classification"]["add"];
-
-type Comparator = (a: Classification, b: Classification) => number;
-function getComparator(sortColumn: string): Comparator {
-    switch (sortColumn) {
-        case "name":
-            return (a, b) => {
-                return a[sortColumn].localeCompare(b[sortColumn]);
-            };
-        default:
-            throw new Error(`unsupported sortColumn: "${sortColumn}"`);
-    }
-}
 
 const columns: Column<Classification, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -41,23 +29,11 @@ const Classifications = () => {
     const updateClassificationMutation = trpc.classification.update.useMutation();
     const addClassifiationMutation = trpc.classification.add.useMutation();
 
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
-
     const sortedPlayers = useMemo((): readonly Classification[] => {
         if (!classifications) return [];
-        if (sortColumns.length === 0) return classifications;
 
-        return [...classifications].sort((a, b) => {
-            for (const sort of sortColumns) {
-                const comparator = getComparator(sort.columnKey);
-                const compResult = comparator(a, b);
-                if (compResult !== 0) {
-                    return sort.direction === "ASC" ? compResult : -compResult;
-                }
-            }
-            return 0;
-        });
-    }, [classifications, sortColumns]);
+        return [...classifications];
+    }, [classifications]);
 
     const openCreateDialog = async () => {
         const classification = await Demodal.open<CreatedClassification>(NiceModal, {
@@ -104,13 +80,11 @@ const Classifications = () => {
                     </Button>
                 </div>
                 <DataGrid className='rdg-light h-full'
-                    sortColumns={sortColumns}
                     defaultColumnOptions={{
-                        sortable: true,
+                        sortable: false,
                         resizable: true
                     }}
                     onRowDoubleClick={e => openEditDialog(e)}
-                    onSortColumnsChange={setSortColumns}
                     columns={columns}
                     rows={sortedPlayers}
                 />

@@ -1,4 +1,4 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -11,7 +11,6 @@ import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "../../../hooks";
-import { useState } from "react";
 import Link from "next/link";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
@@ -61,7 +60,6 @@ const TimingPoint = () => {
     const { data: races, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openCreateDialog = async () => {
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
@@ -112,13 +110,11 @@ const TimingPoint = () => {
                 {races && (
                     <DataGrid
                         className="rdg-light h-full"
-                        sortColumns={sortColumns}
                         defaultColumnOptions={{
-                            sortable: true,
+                            sortable: false,
                             resizable: true,
                         }}
                         onRowDoubleClick={(e) => openEditDialog(e)}
-                        onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={races}
                     />

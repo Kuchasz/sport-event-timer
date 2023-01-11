@@ -1,4 +1,4 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import Icon from "@mdi/react";
 import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
@@ -13,7 +13,6 @@ import {
 import { NiceModal } from "components/modal";
 import { SplitTimeEdit } from "../../../components/split-time-edit";
 import { useCurrentRaceId } from "../../../hooks";
-import { useState } from "react";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -94,7 +93,6 @@ const SplitTimes = () => {
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
     const revertSplitTimeMuttaion = trpc.splitTime.revert.useMutation();
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {
         const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
@@ -156,12 +154,10 @@ const SplitTimes = () => {
                 </div> */}
                 {splitTimes && (
                     <DataGrid className='rdg-light h-full'
-                        sortColumns={sortColumns}
                         defaultColumnOptions={{
-                            sortable: true,
+                            sortable: false,
                             resizable: true
                         }}
-                        onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={splitTimes}
                     />
