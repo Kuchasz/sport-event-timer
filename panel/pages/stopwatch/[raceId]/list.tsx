@@ -68,7 +68,6 @@ const PlayersList = () => {
                 {rowVirtualizer.getVirtualItems().map((virtualRow) => (
                     <div
                         key={players[virtualRow.index].bibNumber}
-                        ref={virtualRow.measureElement}
                         className="absolute w-full t-0 left-0 py-0.5"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
