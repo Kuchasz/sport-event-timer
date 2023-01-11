@@ -172,7 +172,7 @@ const Layout = ({ children }: Props) => {
 
     const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
-    const raceId = useCurrentRaceId() || items[0].id;
+    const raceId = useCurrentRaceId() || items[0]?.id;
 
     const addRaceMuttaion = trpc.race.add.useMutation();
 
