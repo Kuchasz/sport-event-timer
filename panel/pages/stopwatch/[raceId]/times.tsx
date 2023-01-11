@@ -201,7 +201,6 @@ const PlayersTimes = () => {
                         <Item
                             style={{ transform: `translateY(${virtualRow.start}px)` }}
                             key={times[virtualRow.index].id}
-                            reff={virtualRow.measureElement}
                             dispatch={dispatch}
                             navigate={push}
                             t={times[virtualRow.index]}
