@@ -146,12 +146,8 @@ const SplitTimes = () => {
 
     return (
         <>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                {/* <div className="mb-4 inline-flex">
-                    <Button onClick={() => {}}>
-                        <Icon size={1} path={mdiPlus} />
-                    </Button>
-                </div> */}
+        {/* <div className="flex bg-white p-8 rounded-lg shadow-md flex-col h-full"></div> */}
+            <div className="flex bg-white flex-col h-full">
                 {splitTimes && (
                     <DataGrid className='rdg-light h-full'
                         defaultColumnOptions={{
