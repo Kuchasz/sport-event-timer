@@ -1,4 +1,4 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
 
