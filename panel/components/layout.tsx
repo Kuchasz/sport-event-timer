@@ -27,6 +27,7 @@ import { Demodal } from "demodal";
 import { AppRouterInputs } from "trpc";
 import { RaceCreate } from "./race-create";
 import { NiceModal } from "./modal";
+import { Fragment } from "react";
 
 type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -35,7 +36,8 @@ type Props = {
 };
 
 const generalMenuGroup = {
-    name: "Your dashboard",
+    desc: "Your dashboard",
+    name: "General",
     icon: mdiHomeOutline,
     color: "bg-[#64b3f4]",
     to: "/panel",
@@ -51,7 +53,8 @@ const generalMenuGroup = {
 };
 
 const adminMenuGroup = {
-    name: "Admin the system",
+    desc: "Admin the system",
+    name: "Administrator",
     icon: mdiBriefcaseOutline,
     color: "bg-orange-500",
     to: "/panel/admin",
@@ -84,7 +87,8 @@ const adminMenuGroup = {
 };
 
 const raceMenuGroup = {
-    name: "Manage your races",
+    desc: "Manage your races",
+    name: "Race",
     icon: mdiAlarm,
     color: "bg-[#c2e59c]",
     to: "/panel/:raceId",
@@ -140,11 +144,23 @@ const raceMenuGroup = {
     ],
 };
 
-const Status = () => {
+const Status = ({ segments }: { segments: (string | undefined)[] }) => {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex items-center my-4 px-4">
+        <div className="flex items-center cursor-default py-6 px-4">
+            <div className="uppercase text-md font-semibold">
+                {segments.filter(i => i).map((s, i) =>
+                    i === 0 ? (
+                        <span key={i}>{s}</span>
+                    ) : (
+                        <Fragment key={i}>
+                            <span className="mx-4">/</span>
+                            <span>{s}</span>
+                        </Fragment>
+                    )
+                )}
+            </div>
             <div className="grow"></div>
             {sessionData && (
                 <div className="flex items-center mr-4">
@@ -184,6 +200,8 @@ const Layout = ({ children }: Props) => {
         ? adminMenuGroup
         : generalMenuGroup;
 
+    const currentMenuItem = currentMenuGroup.items.find(n => router.asPath === n.to.replace(":raceId", String(raceId)));
+
     const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
     const menuItems = currentMenuGroup.items;
 
@@ -219,9 +237,9 @@ const Layout = ({ children }: Props) => {
                                 {menuGroups.map((mg) => (
                                     <Link href={mg.to.replace(":raceId", String(raceId))}>
                                         <div
-                                            key={mg.name}
+                                            key={mg.desc}
                                             className={`transition-opacity cursor-pointer uppercase p-2 mx-3 my-4 rounded-xl text-2xs ${
-                                                currentMenuGroup.name === mg.name
+                                                currentMenuGroup.desc === mg.desc
                                                     ? `bg-[#0b161d] opacity-100`
                                                     : "opacity-30 hover:opacity-50"
                                             }`}
@@ -237,9 +255,9 @@ const Layout = ({ children }: Props) => {
                                 <img className="invert" src="/assets/logo_ravelo.png" />
                             </div> */}
 
-                            <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.name}</div>
+                            <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div>
 
-                            {currentMenuGroup.name === raceMenuGroup.name ? (
+                            {currentMenuGroup.desc === raceMenuGroup.desc ? (
                                 <div className="w-full flex flex-col my-8 items-center">
                                     <div
                                         className="flex-shrink-0 w-6 ml-2 hidden mr-2 opacity-60 cursor-pointer hover:opacity-100 text-gray-600"
@@ -261,7 +279,7 @@ const Layout = ({ children }: Props) => {
                                 </div>
                             ) : null}
 
-                            {(currentMenuGroup.name === raceMenuGroup.name && raceId) || currentMenuGroup.name !== raceMenuGroup.name
+                            {(currentMenuGroup.desc === raceMenuGroup.desc && raceId) || currentMenuGroup.desc !== raceMenuGroup.desc
                                 ? menuItems.map((n) => (
                                       <MenuButton
                                           key={n.to}
@@ -273,8 +291,8 @@ const Layout = ({ children }: Props) => {
                                 : null}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
-                            <Status />
-                            <div className="p-4 h-full bg-white">{children}</div>
+                            <Status segments={[currentMenuGroup.name, currentMenuItem?.text]} />
+                            <div className="px-4 pb-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>
                 </div>
