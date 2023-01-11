@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export const PoorTimepicker = ({
     value: initialValue,
-    date,
     onChange
 }: {
     value?: number;
@@ -21,7 +20,7 @@ export const PoorTimepicker = ({
                 setValue(e.currentTarget.value);
             }}
             onBlur={e => {
-                onChange({ target: { value: (date ?? 0) + (timeStringToMiliseconds(e.target.value) ?? 0) } });
+                onChange({ target: { value: (timeStringToMiliseconds(e.target.value) ?? 0) } });
             }}
         />
     );
@@ -29,7 +28,6 @@ export const PoorTimepicker = ({
 
 export const PoorFullTimepicker = ({
     value: initialValue,
-    date,
     onChange
 }: {
     value?: number;
@@ -44,7 +42,7 @@ export const PoorFullTimepicker = ({
                 setValue(e.currentTarget.value);
             }}
             onBlur={e => {
-                onChange({ target: { value: date + (fullTimeStringToMiliseconds(e.target.value) ?? 0) } });
+                onChange({ target: { value: (fullTimeStringToMiliseconds(e.target.value) ?? 0) } });
             }}
         />
     );
