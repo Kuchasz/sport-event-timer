@@ -1,4 +1,4 @@
-import DataGrid, { Column, SortColumn } from "react-data-grid";
+import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -9,7 +9,6 @@ import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
-import { useState } from "react";
 import { Confirmation } from "components/confirmation";
 
 type Race = AppRouterOutputs["race"]["races"][0];
@@ -56,7 +55,6 @@ const MyRaces = () => {
     const { data: races, refetch } = trpc.race.races.useQuery();
     const updateRaceMutation = trpc.race.update.useMutation();
     const addRaceMuttaion = trpc.race.add.useMutation();
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -99,13 +97,11 @@ const MyRaces = () => {
                 </div>
                 {races && (
                     <DataGrid className='rdg-light h-full'
-                        sortColumns={sortColumns}
                         defaultColumnOptions={{
-                            sortable: true,
+                            sortable: false,
                             resizable: true
                         }}
                         onRowDoubleClick={e => openEditDialog(e)}
-                        onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={races}
                     />

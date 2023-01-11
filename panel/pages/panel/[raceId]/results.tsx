@@ -5,14 +5,12 @@ import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
 
 import { useCurrentRaceId } from "../../../hooks";
-import { useState } from "react";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
 const Results = () => {
     const raceId = useCurrentRaceId();
     const { data: results } = trpc.result.results.useQuery({ raceId: raceId! });
-    const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
     const columns: Column<Result, unknown>[] = [
         { key: "bibNumber", name: "Bib", width: 10 },
@@ -33,12 +31,10 @@ const Results = () => {
                 </div> */}
                 {results && (
                     <DataGrid className='rdg-light h-full'
-                        sortColumns={sortColumns}
                         defaultColumnOptions={{
-                            sortable: true,
+                            sortable: false,
                             resizable: true
                         }}
-                        onSortColumnsChange={setSortColumns}
                         columns={columns}
                         rows={results}
                     />

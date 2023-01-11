@@ -158,7 +158,7 @@ const PlayerRegistrations = () => {
                     <DataGrid
                         className="rdg-light h-full"
                         defaultColumnOptions={{
-                            sortable: true,
+                            sortable: false,
                             resizable: true,
                         }}
                         onRowDoubleClick={(e) => openEditDialog(e)}
