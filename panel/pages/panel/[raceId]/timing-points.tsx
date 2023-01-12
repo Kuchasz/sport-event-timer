@@ -23,13 +23,13 @@ const columns: Column<TimingPoint, unknown>[] = [
     { key: "name", name: "Name" },
     {
         key: "actions",
-        width: 15,
+        width: 250,
         name: "Actions",
-        formatter: (props) => <TimingPointDeleteButton timingPoint={props.row} />,
+        formatter: (props) => <TimingPointActions timingPoint={props.row} />,
     },
 ];
 
-const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) => {
+const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     const raceId = useCurrentRaceId();
     const { refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
@@ -48,10 +48,18 @@ const TimingPointDeleteButton = ({ timingPoint }: { timingPoint: TimingPoint }) 
         }
     };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
-            <Icon size={1} path={mdiTrashCan} />
-            delete
-        </span>
+        <div className="flex">
+            <Link target="_blank" href={`/stopwatch/${raceId}?timingPointId=${timingPoint.id}`}>
+                <span className="flex items-center hover:text-red-600 cursor-pointer">
+                    <Icon size={1} path={mdiTimerOutline} />
+                    Open Stopwatch
+                </span>
+            </Link>
+            <span className="ml-4 flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
+                <Icon size={1} path={mdiTrashCan} />
+                delete
+            </span>
+        </div>
     );
 };
 
@@ -99,13 +107,6 @@ const TimingPoint = () => {
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
-                    <div className="px-1"></div>
-                    <Link href={`/stopwatch/${raceId}`}>
-                        <Button autoCapitalize="false">
-                            <Icon size={1} path={mdiTimerOutline} />
-                            <span className="ml-2">Open Stopwatch</span>
-                        </Button>
-                    </Link>
                 </div>
                 {races && (
                     <DataGrid

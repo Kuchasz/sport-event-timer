@@ -1,9 +1,19 @@
+import { useAtom } from "jotai";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { timingPointIdAtom } from "stopwatch-states";
 
 type Props = {
 };
 
 const Index = ({}: Props) => {
+    const {timingPointId} = useRouter().query;
+
+    const [_, chooseTimingPoint] = useAtom(timingPointIdAtom);
+
+    if(timingPointId)
+        chooseTimingPoint(parseInt(timingPointId as string));
+
     return (
         <>
             <Head>

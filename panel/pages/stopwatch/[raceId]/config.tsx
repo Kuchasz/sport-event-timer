@@ -9,7 +9,7 @@ import classNames from "classnames";
 import { trpc } from "connection";
 
 const Config = () => {
-    const [timingPointId, chooseTimeKeeper] = useAtom(timingPointIdAtom);
+    const [timingPointId, chooseTimingPoint] = useAtom(timingPointIdAtom);
     const {
         query: { raceId },
     } = useRouter();
@@ -19,7 +19,7 @@ const Config = () => {
     const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order);
 
     const setTimingPointId = (timingPointId: number) => {
-        chooseTimeKeeper(timingPointId);
+        chooseTimingPoint(timingPointId);
     };
 
     return (
