@@ -108,18 +108,7 @@ const TimingPoint = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
-                {timingPoints && (
-                    <DataGrid
-                        className="rdg-light h-full"
-                        defaultColumnOptions={{
-                            sortable: false,
-                            resizable: true,
-                        }}
-                        onRowDoubleClick={(e) => openEditDialog(e)}
-                        columns={columns}
-                        rows={timingPoints}
-                    />
-                )}
+                <div className="self-start">{timingPoints && timingPoints.map((e) => <div className="bg-gray-100 p-4">{e.name}</div>)}</div>
             </div>
         </>
     );

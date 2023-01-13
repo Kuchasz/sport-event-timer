@@ -138,6 +138,7 @@ model Player {
 model TimingPoint {
     id              Int               @id @default(autoincrement())
     name            String
+    description     String?
     order           Int
     race            Race              @relation(fields: [raceId], references: [id])
     raceId          Int
