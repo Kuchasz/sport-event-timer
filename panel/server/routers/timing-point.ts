@@ -6,7 +6,7 @@ const timingPointSchema = z.object({
     id: z.number().min(1).nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
     name: z.string({ required_error: "name is required" }),
-    description: z.string().length(100).optional(),
+    description: z.string().max(100).nullish(),
     order: z.number({ required_error: "order is required" })
 });
 

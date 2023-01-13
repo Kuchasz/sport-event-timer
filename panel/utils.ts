@@ -1,4 +1,5 @@
 import { createLogPrinter } from "@set/utils/dist/logger";
+import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
 
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
@@ -34,3 +35,7 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
 export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";
 export const parseJSON = (jsonString: string) => typeof window !== 'undefined' ? JSON.parse(jsonString || "{}") : {};
 export const logger = createLogPrinter("@set");
+
+export const getTimingPointIcon = (isFirst: boolean, isLast: boolean) => {
+    return isFirst ? mdiRayStartArrow : isLast ? mdiFlagCheckered : mdiRayVertex;
+};
