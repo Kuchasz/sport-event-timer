@@ -66,14 +66,22 @@ const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
 
 const TimingPointCard = ({ timingPoint, isFirst, isLast }: { isFirst: boolean; isLast: boolean; timingPoint: TimingPoint }) => {
     return (
-        <div className="p-1 mx-auto my-4 max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
-            <div className="bg-white py-4 px-6 rounded-lg flex">
-                <div className="bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4">
-                    <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />
-                </div>
-                <div>
-                    <h4 className="text-lg font-bold">{timingPoint.name}</h4>
-                    <span className="text-gray-500">{timingPoint.description ?? "Timing point where time should be registered"}</span>
+        <div className="flex flex-col">
+            {!isFirst && (
+                <button className="bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center p-2 cursor-pointer rounded-full mr-4">
+                    <Icon path={mdiPlus} size={1} />
+                </button>
+            )}
+
+            <div className="p-1 mx-auto my-4 max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
+                <div className="bg-white py-4 px-6 rounded-lg flex">
+                    <div className="bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4">
+                        <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-bold">{timingPoint.name}</h4>
+                        <span className="text-gray-500">{timingPoint.description ?? "Timing point where time should be registered"}</span>
+                    </div>
                 </div>
             </div>
         </div>
