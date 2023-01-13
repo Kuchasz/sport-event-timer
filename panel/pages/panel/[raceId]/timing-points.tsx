@@ -12,6 +12,7 @@ import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "../../../hooks";
 import Link from "next/link";
+import { getTimingPointIcon } from "utils";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"];
@@ -63,6 +64,22 @@ const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     );
 };
 
+const TimingPointCard = ({ timingPoint, isFirst, isLast }: { isFirst: boolean; isLast: boolean; timingPoint: TimingPoint }) => {
+    return (
+        <div className="p-1 mx-auto my-4 max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
+            <div className="bg-white py-4 px-6 rounded-lg flex">
+                <div className="bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4">
+                    <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold">{timingPoint.name}</h4>
+                    <span className="text-gray-500">{timingPoint.description ?? "Timing point where time should be registered"}</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();
     const { data: timingPoints, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
@@ -108,7 +125,12 @@ const TimingPoint = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
-                <div className="self-start">{timingPoints && timingPoints.map((e) => <div className="bg-gray-100 p-4">{e.name}</div>)}</div>
+                <div className="self-start">
+                    {timingPoints &&
+                        timingPoints.map((e, id) => (
+                            <TimingPointCard key={e.id} timingPoint={e} isFirst={id === 0} isLast={id === timingPoints.length - 1} />
+                        ))}
+                </div>
             </div>
         </>
     );
