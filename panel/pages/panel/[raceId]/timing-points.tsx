@@ -65,7 +65,7 @@ const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
 
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();
-    const { data: races, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const { data: timingPoints, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
 
@@ -100,7 +100,7 @@ const TimingPoint = () => {
     return (
         <>
             <Head>
-                <title>Timing Points list</title>
+                <title>Timing Points</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
@@ -108,7 +108,7 @@ const TimingPoint = () => {
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
-                {races && (
+                {timingPoints && (
                     <DataGrid
                         className="rdg-light h-full"
                         defaultColumnOptions={{
@@ -117,7 +117,7 @@ const TimingPoint = () => {
                         }}
                         onRowDoubleClick={(e) => openEditDialog(e)}
                         columns={columns}
-                        rows={races}
+                        rows={timingPoints}
                     />
                 )}
             </div>

@@ -42,7 +42,7 @@ const generalMenuGroup = {
     color: "bg-[#64b3f4]",
     to: "/panel",
     items: [
-        { text: "Home", icon: mdiHome, to: "/panel", color: "text-yellow-600" },
+        { text: "Dashboard", icon: mdiViewDashboardEditOutline, to: "/panel", color: "text-yellow-600" },
         {
             text: "My Races",
             icon: mdiBikeFast,
