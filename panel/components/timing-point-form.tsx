@@ -30,6 +30,13 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
                     <PoorNumberInput value={timingPoint.order} onChange={changeHandler("order")} />
                 </div>
             </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>Description</Label>
+                    <PoorInput value={timingPoint.description} onChange={changeHandler("description")} />
+                </div>
+            </div>
             <div className="mt-4 flex">
                 <Button onClick={() => onResolve({ ...timingPoint })}>
                     <Icon size={1} path={mdiContentSaveCheck} />

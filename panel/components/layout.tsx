@@ -7,7 +7,6 @@ import {
     mdiBikeFast,
     mdiBriefcaseOutline,
     mdiCog,
-    mdiHome,
     mdiHomeOutline,
     mdiPlus,
     mdiPowerStandby,
