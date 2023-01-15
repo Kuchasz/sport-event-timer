@@ -41,7 +41,21 @@ export const raceRouter =
             .input(raceSchema)
             .mutation(async (req) => {
                 const { id, ...data } = req.input;
-                return await db.race.create({ data });
+                const race = await db.race.create({ data });
+
+                const timingPoints = [{
+                    name: "Start",
+                    order: 1,
+                    description: "Where the players start",
+                    raceId: race.id
+                }, {
+                    name: "Finish",
+                    order: Math.pow(2, 24),
+                    description: "Where the players finish",
+                    raceId: race.id
+                }].map(tp => db.timingPoint.create({ data: tp }));
+
+                await db.$transaction(timingPoints);
             })
     });
 

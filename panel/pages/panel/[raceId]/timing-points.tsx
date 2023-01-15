@@ -128,11 +128,11 @@ const TimingPoint = () => {
                 <title>Timing Points</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <div className="mb-4 inline-flex">
+                {/* <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
-                </div>
+                </div> */}
                 <div className="self-start">
                     {timingPoints &&
                         timingPoints.map((e, id) => (
