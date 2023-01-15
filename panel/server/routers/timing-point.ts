@@ -6,9 +6,10 @@ const timingPointSchema = z.object({
     id: z.number().min(1).nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
     name: z.string({ required_error: "name is required" }),
-    description: z.string().max(100).nullish(),
-    order: z.number({ required_error: "order is required" })
+    description: z.string().max(100).nullish()
 });
+
+const timingPointCreateSchema = timingPointSchema.and(z.object({ desiredIndex: z.number() }));
 
 export const timingPointRouter =
     router({
@@ -33,17 +34,24 @@ export const timingPointRouter =
                 return await db.timingPoint.delete({ where: { id: id! } });
             }),
         add: protectedProcedure
-            .input(timingPointSchema)
+            .input(timingPointCreateSchema)
             .mutation(async (req) => {
                 const { input } = req;
 
                 const newTimingPoint = await db.timingPoint.create({
                     data: {
                         name: input.name,
-                        order: input.order,
+                        description: input.description,
                         raceId: input.raceId
                     }
                 });
+
+                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
+
+                const oldOrder = JSON.parse(timingPointOrder.order) as number[];
+                const newOrder = oldOrder.splice(input.desiredIndex, 0, newTimingPoint.id);
+
+                await db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
 
                 return newTimingPoint;
             })
