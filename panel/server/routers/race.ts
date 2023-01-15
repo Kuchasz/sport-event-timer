@@ -43,7 +43,7 @@ export const raceRouter =
                 const { id, ...data } = req.input;
                 const race = await db.race.create({ data });
 
-                const timingPoints = [{
+                const timingPointsToCreate = [{
                     name: "Start",
                     order: 1,
                     description: "Where the players start",
@@ -55,7 +55,9 @@ export const raceRouter =
                     raceId: race.id
                 }].map(tp => db.timingPoint.create({ data: tp }));
 
-                await db.$transaction(timingPoints);
+                const timingPoints = await db.$transaction(timingPointsToCreate);
+
+                await db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
             })
     });
 

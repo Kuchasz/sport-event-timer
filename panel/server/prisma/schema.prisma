@@ -67,6 +67,7 @@ model Race {
     stopwatch          Stopwatch?
     playerRegistration PlayerRegistration[]
     apiKey             ApiKey[]
+    TimingPointOrder   TimingPointOrder[]
 }
 
 model ApiKey {
@@ -139,14 +140,20 @@ model TimingPoint {
     id              Int               @id @default(autoincrement())
     name            String
     description     String?
-    order           Int
     race            Race              @relation(fields: [raceId], references: [id])
     raceId          Int
     splitTime       SplitTime[]
     manualSplitTime ManualSplitTime[]
 
     @@unique([raceId, name])
-    @@unique([raceId, order])
+}
+
+model TimingPointOrder {
+    order  String
+    race   Race   @relation(fields: [raceId], references: [id])
+    raceId Int
+
+    @@id([raceId])
 }
 
 model SplitTime {
