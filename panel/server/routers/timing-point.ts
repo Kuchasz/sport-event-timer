@@ -9,8 +9,6 @@ const timingPointSchema = z.object({
     description: z.string().max(100).nullish()
 });
 
-const timingPointCreateSchema = timingPointSchema.and(z.object({ desiredIndex: z.number() }));
-
 export const timingPointRouter =
     router({
         timingPoints: protectedProcedure
@@ -18,6 +16,13 @@ export const timingPointRouter =
             .query(async (req) => {
                 const raceId = req.input.raceId;
                 return await db.timingPoint.findMany({ where: { raceId } });
+            }),
+        timingPointsOrder: protectedProcedure
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async (req) => {
+                const raceId = req.input.raceId;
+                const { order } = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
+                return JSON.parse(order) as number[];
             }),
         update: protectedProcedure
             .input(timingPointSchema)
@@ -34,24 +39,27 @@ export const timingPointRouter =
                 return await db.timingPoint.delete({ where: { id: id! } });
             }),
         add: protectedProcedure
-            .input(timingPointCreateSchema)
+            .input(z.object({
+                timingPoint: timingPointSchema,
+                desiredIndex: z.number({ required_error: 'Desired Index is required' })
+            }))
             .mutation(async (req) => {
                 const { input } = req;
 
                 const newTimingPoint = await db.timingPoint.create({
                     data: {
-                        name: input.name,
-                        description: input.description,
-                        raceId: input.raceId
+                        name: input.timingPoint.name,
+                        description: input.timingPoint.description,
+                        raceId: input.timingPoint.raceId
                     }
                 });
 
-                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
+                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } })
 
-                const oldOrder = JSON.parse(timingPointOrder.order) as number[];
-                const newOrder = oldOrder.splice(input.desiredIndex, 0, newTimingPoint.id);
+                const order = JSON.parse(timingPointOrder.order) as number[];
+                order.splice(input.desiredIndex, 0, newTimingPoint.id);
 
-                await db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
+                await db.timingPointOrder.update({ where: { raceId: input.timingPoint.raceId }, data: { order: JSON.stringify(order) } })
 
                 return newTimingPoint;
             })
