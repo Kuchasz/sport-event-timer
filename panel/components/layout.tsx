@@ -147,7 +147,7 @@ const Status = ({ segments }: { segments: (string | undefined)[] }) => {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex items-center cursor-default py-6 px-4">
+        <div className="flex items-center cursor-default py-6 px-8">
             <div className="uppercase text-md font-semibold">
                 {segments.filter(i => i).map((s, i) =>
                     i === 0 ? (
@@ -291,7 +291,7 @@ const Layout = ({ children }: Props) => {
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
                             <Status segments={[currentMenuGroup.name, currentMenuItem?.text]} />
-                            <div className="px-4 pb-4 flex-grow overflow-y-scroll">{children}</div>
+                            <div className="px-8 pb-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>
                 </div>
