@@ -21,8 +21,11 @@ export const splitTimeRouter =
                     where: { raceId },
                     include: { splitTime: true, manualSplitTime: true }
                 });
-
-                const startTimingPoint = await db.timingPoint.findFirst({ where: { raceId }, orderBy: { order: "asc" } });
+                const unorderTimingPoints = await db.timingPoint.findMany({ where: { raceId } });
+                const timingPointsOrder = await db.timingPointOrder.findUniqueOrThrow({where: {raceId}});
+                const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p));
+                const startTimingPoint = timingPoints[0];
+                
                 const race = await db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
                 const raceDateStart = race?.date.getTime();

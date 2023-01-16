@@ -1,7 +1,7 @@
 import { AppRouterInputs } from "trpc";
 import { TimingPointForm } from "./timing-point-form";
 
-type CreateTimingPoint = AppRouterInputs["timingPoint"]["add"];
+type CreateTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
 
 type TimingPointCreateProps = {
     raceId: number;
@@ -12,8 +12,7 @@ type TimingPointCreateProps = {
 export const TimingPointCreate = ({ raceId, onReject, onResolve }: TimingPointCreateProps) => {
     const timingPoint: CreateTimingPoint = {
         raceId,
-        name: "",
-        order: 0
+        name: ""
     };
 
     return <TimingPointForm onReject={onReject} onResolve={onResolve} initialTimingPoint={timingPoint} />;

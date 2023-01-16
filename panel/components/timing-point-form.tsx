@@ -3,11 +3,10 @@ import { Button } from "./button";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
-import { PoorNumberInput } from "./poor-number-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
 
-type TimingPoint = AppRouterInputs["timingPoint"]["add"];
+type TimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 type TimingPointFormProps = {
     onReject: () => void;
@@ -23,11 +22,6 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
                 <div className="grow">
                     <Label>Name</Label>
                     <PoorInput value={timingPoint.name} onChange={changeHandler("name")} />
-                </div>
-                <div className="p-2"></div>
-                <div className="grow">
-                    <Label>Order</Label>
-                    <PoorNumberInput value={timingPoint.order} onChange={changeHandler("order")} />
                 </div>
             </div>
             <div className="p-2"></div>

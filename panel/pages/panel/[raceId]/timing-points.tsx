@@ -15,7 +15,7 @@ import Link from "next/link";
 import { getTimingPointIcon } from "utils";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
-type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"];
+type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
 type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 const columns: Column<TimingPoint, unknown>[] = [
@@ -64,11 +64,42 @@ const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     );
 };
 
-const TimingPointCard = ({ timingPoint, isFirst, isLast }: { isFirst: boolean; isLast: boolean; timingPoint: TimingPoint }) => {
+const TimingPointCard = ({
+    onCreate,
+    index,
+    raceId,
+    timingPoint,
+    isFirst,
+    isLast,
+}: {
+    onCreate: () => void;
+    index: number;
+    raceId: number;
+    isFirst: boolean;
+    isLast: boolean;
+    timingPoint: TimingPoint;
+}) => {
+    const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
+    const openCreateDialog = async () => {
+        const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
+            title: "Create new timing point",
+            component: TimingPointCreate,
+            props: { raceId: raceId! },
+        });
+
+        if (TimingPoint) {
+            await addTimingPointMuttaion.mutateAsync({ desiredIndex: index, timingPoint: TimingPoint });
+            onCreate();
+        }
+    };
+
     return (
         <div className="flex flex-col">
             {!isFirst && (
-                <button className="bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center p-2 cursor-pointer rounded-full mr-4">
+                <button
+                    onClick={openCreateDialog}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center p-2 cursor-pointer rounded-full mr-4"
+                >
                     <Icon path={mdiPlus} size={1} />
                 </button>
             )}
@@ -92,20 +123,15 @@ const TimingPoint = () => {
     const raceId = useCurrentRaceId();
     const { data: timingPoints, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
-    const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
 
-    const openCreateDialog = async () => {
-        const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
-            title: "Create new timing point",
-            component: TimingPointCreate,
-            props: { raceId: raceId! },
-        });
-
-        if (TimingPoint) {
-            await addTimingPointMuttaion.mutateAsync(TimingPoint);
-            refetch();
+    const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
+        { raceId: raceId! },
+        {
+            initialData: [],
         }
-    };
+    );
+
+    const sortedTimingPoints = timingPointsOrder.map((point) => timingPoints?.find((tp) => point === tp.id)!);
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
         const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
@@ -134,9 +160,20 @@ const TimingPoint = () => {
                     </Button>
                 </div> */}
                 <div className="self-start">
-                    {timingPoints &&
-                        timingPoints.map((e, id) => (
-                            <TimingPointCard key={e.id} timingPoint={e} isFirst={id === 0} isLast={id === timingPoints.length - 1} />
+                    {sortedTimingPoints &&
+                        sortedTimingPoints.map((e, index) => (
+                            <TimingPointCard
+                                key={e.id}
+                                index={index}
+                                raceId={raceId!}
+                                onCreate={() => {
+                                    refetch();
+                                    refetchOrder();
+                                }}
+                                timingPoint={e}
+                                isFirst={index === 0}
+                                isLast={index === sortedTimingPoints.length - 1}
+                            />
                         ))}
                 </div>
             </div>

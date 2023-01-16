@@ -6,11 +6,14 @@
 */
 -- CreateTable
 CREATE TABLE "TimingPointOrder" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "order" TEXT NOT NULL,
-    "raceId" INTEGER NOT NULL,
+    "raceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     CONSTRAINT "TimingPointOrder_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+-- Fill existing TimingPointsOrder
+INSERT INTO TimingPointOrder ("raceId", "order")
+SELECT * FROM (SELECT raceId, '[' || (SELECT group_concat(Id) from TimingPoint WHERE tp.raceId = raceId ORDER BY 'order' DESC) || ']' as 'order' FROM TimingPoint tp GROUP BY raceId);
 
 -- RedefineTables
 PRAGMA foreign_keys=OFF;
