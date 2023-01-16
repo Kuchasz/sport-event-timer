@@ -56,18 +56,19 @@ model VerificationToken {
 // Domain models
 
 model Race {
-    id                 Int                  @id @default(autoincrement())
-    name               String
-    date               DateTime
-    classifications    Classification[]
-    timeKeeper         TimingPoint[]
-    player             Player[]
-    splitTime          SplitTime[]
-    manualSplitTime    ManualSplitTime[]
-    stopwatch          Stopwatch?
-    playerRegistration PlayerRegistration[]
-    apiKey             ApiKey[]
-    TimingPointOrder   TimingPointOrder[]
+    id                   Int                    @id @default(autoincrement())
+    name                 String
+    date                 DateTime
+    classifications      Classification[]
+    timeKeeper           TimingPoint[]
+    player               Player[]
+    splitTime            SplitTime[]
+    manualSplitTime      ManualSplitTime[]
+    stopwatch            Stopwatch?
+    playerRegistration   PlayerRegistration[]
+    apiKey               ApiKey[]
+    TimingPointOrder     TimingPointOrder[]
+    TimingPointAccessKey TimingPointAccessKey[]
 }
 
 model ApiKey {
@@ -137,13 +138,14 @@ model Player {
 }
 
 model TimingPoint {
-    id              Int               @id @default(autoincrement())
-    name            String
-    description     String?
-    race            Race              @relation(fields: [raceId], references: [id])
-    raceId          Int
-    splitTime       SplitTime[]
-    manualSplitTime ManualSplitTime[]
+    id                   Int                    @id @default(autoincrement())
+    name                 String
+    description          String?
+    race                 Race                   @relation(fields: [raceId], references: [id])
+    raceId               Int
+    splitTime            SplitTime[]
+    manualSplitTime      ManualSplitTime[]
+    TimingPointAccessKey TimingPointAccessKey[]
 
     @@unique([raceId, name])
 }
@@ -154,6 +156,19 @@ model TimingPointOrder {
     raceId Int
 
     @@id([raceId])
+}
+
+model TimingPointAccessKey {
+    id              Int     @id @default(autoincrement())
+    name            String
+    code            String?
+    canAccessOthers Boolean
+    token           String
+
+    timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
+    timingPointId Int
+    race          Race        @relation(fields: [raceId], references: [id])
+    raceId        Int
 }
 
 model SplitTime {
