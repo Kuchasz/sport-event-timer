@@ -32,9 +32,96 @@ const columns: Column<TimingPoint, unknown>[] = [
     },
 ];
 
+const SortTick = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
+        <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
+    </svg>
+);
+
+const PoorTable = () => (
+    <div className="mt-4 relative overflow-x-auto sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-400 uppercase">
+                <tr>
+                    <th scope="col" className="py-3">
+                        Product name
+                    </th>
+                    <th scope="col" className="py-3">
+                        <div className="flex items-center">
+                            Color
+                            <a href="#">
+                                <SortTick />
+                            </a>
+                        </div>
+                    </th>
+                    <th scope="col" className="py-3">
+                        <div className="flex items-center">
+                            Category
+                            <a href="#">
+                                <SortTick />
+                            </a>
+                        </div>
+                    </th>
+                    <th scope="col" className="py-3">
+                        <div className="flex items-center">
+                            Price
+                            <a href="#">
+                                <SortTick />
+                            </a>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Edit</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr className="bg-white border-b">
+                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
+                        Apple MacBook Pro 17"
+                    </th>
+                    <td className="py-4">Sliver</td>
+                    <td className="py-4">Laptop</td>
+                    <td className="py-4">$2999</td>
+                    <td className="px-6 py-4 text-right">
+                        <a href="#" className="font-medium text-blue-600 hover:underline">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                <tr className="bg-white border-b">
+                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
+                        Microsoft Surface Pro
+                    </th>
+                    <td className="py-4">White</td>
+                    <td className="py-4">Laptop PC</td>
+                    <td className="py-4">$1999</td>
+                    <td className="px-6 py-4 text-right">
+                        <a href="#" className="font-medium text-blue-600 hover:underline">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                <tr className="bg-white">
+                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
+                        Magic Mouse 2
+                    </th>
+                    <td className="py-4">Black</td>
+                    <td className="py-4">Accessories</td>
+                    <td className="py-4">$99</td>
+                    <td className="px-6 py-4 text-right">
+                        <a href="#" className="font-medium text-blue-600 hover:underline">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+);
+
 const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     const raceId = useCurrentRaceId();
-    const { refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
 
     return (
         <div className="flex">
@@ -123,7 +210,7 @@ const TimingPointCard = ({
 
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();
-    const [activeTimingPointId, setActiveTimingPointId] = useState<number>(40);
+    const [activeTimingPointId, setActiveTimingPointId] = useState<number>(38);
     const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
@@ -201,13 +288,13 @@ const TimingPoint = () => {
                         ))}
                 </div>
                 {activeTimingPoint && (
-                    <div className="flex-grow ml-4 mt-1 w-full">
-                        <div className="bg-gray-50 p-6 rounded-lg flex">
-                            <div className="flex flex-col">
+                    <div className="flex-grow ml-8 mt-1 w-full">
+                        <div className="flex">
+                            <div className="bg-gray-50 p-6 rounded-lg flex flex-col">
                                 <h3 className="text-xl font-semibold">{activeTimingPoint.name}</h3>
                                 <div>{activeTimingPoint.description}</div>
                             </div>
-                            <div className="flex-grow"></div>
+                            <div className="mx-6  p-6 rounded-lg flex-grow"></div>
                             <div className="flex items-center">
                                 <button
                                     onClick={() => openEditDialog(activeTimingPoint)}
@@ -223,9 +310,11 @@ const TimingPoint = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="mt-4 bg-gray-50 p-6 rounded-lg">
+                        {/* <div className="mt-4 bg-gray-50 p-6 rounded-lg"> */}
+                        <div className="mt-8">
                             <h3 className="text-xl font-semibold">Access URLs</h3>
                             <div>Copy access URLs and send them to your timekeepers</div>
+                            <PoorTable />
                         </div>
                     </div>
                 )}

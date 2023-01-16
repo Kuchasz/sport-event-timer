@@ -27,6 +27,8 @@ CREATE TABLE "new_TimingPoint" (
 INSERT INTO "new_TimingPoint" ("description", "id", "name", "raceId") SELECT "description", "id", "name", "raceId" FROM "TimingPoint";
 DROP TABLE "TimingPoint";
 ALTER TABLE "new_TimingPoint" RENAME TO "TimingPoint";
+UPDATE "TimingPoint"
+SET "description" = "Timing point description";
 CREATE UNIQUE INDEX "TimingPoint_raceId_name_key" ON "TimingPoint"("raceId", "name");
 PRAGMA foreign_key_check;
 PRAGMA foreign_keys=ON;
