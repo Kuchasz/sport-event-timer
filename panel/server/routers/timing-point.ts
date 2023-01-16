@@ -36,6 +36,13 @@ export const timingPointRouter =
             .mutation(async ({ input }) => {
                 const { id } = input;
 
+                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
+
+                const order = JSON.parse(timingPointOrder.order) as number[];
+                const newOrder = order.filter(i => i !== id);
+
+                await db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
+
                 return await db.timingPoint.delete({ where: { id: id! } });
             }),
         add: protectedProcedure
@@ -57,9 +64,10 @@ export const timingPointRouter =
                 const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } })
 
                 const order = JSON.parse(timingPointOrder.order) as number[];
-                order.splice(input.desiredIndex, 0, newTimingPoint.id);
+                const newOrder = [...order];
+                newOrder.splice(input.desiredIndex, 0, newTimingPoint.id);
 
-                await db.timingPointOrder.update({ where: { raceId: input.timingPoint.raceId }, data: { order: JSON.stringify(order) } })
+                await db.timingPointOrder.update({ where: { raceId: input.timingPoint.raceId }, data: { order: JSON.stringify(newOrder) } })
 
                 return newTimingPoint;
             })
