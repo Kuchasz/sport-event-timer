@@ -38,87 +38,71 @@ const SortTick = () => (
     </svg>
 );
 
-const PoorTable = () => (
-    <div className="mt-4 relative overflow-x-auto sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-400 uppercase">
-                <tr>
-                    <th scope="col" className="py-3">
-                        Product name
-                    </th>
-                    <th scope="col" className="py-3">
-                        <div className="flex items-center">
-                            Color
-                            <a href="#">
-                                <SortTick />
-                            </a>
-                        </div>
-                    </th>
-                    <th scope="col" className="py-3">
-                        <div className="flex items-center">
-                            Category
-                            <a href="#">
-                                <SortTick />
-                            </a>
-                        </div>
-                    </th>
-                    <th scope="col" className="py-3">
-                        <div className="flex items-center">
-                            Price
-                            <a href="#">
-                                <SortTick />
-                            </a>
-                        </div>
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        <span className="sr-only">Edit</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr className="bg-white border-b">
-                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td className="py-4">Sliver</td>
-                    <td className="py-4">Laptop</td>
-                    <td className="py-4">$2999</td>
-                    <td className="px-6 py-4 text-right">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-                <tr className="bg-white border-b">
-                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Microsoft Surface Pro
-                    </th>
-                    <td className="py-4">White</td>
-                    <td className="py-4">Laptop PC</td>
-                    <td className="py-4">$1999</td>
-                    <td className="px-6 py-4 text-right">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-                <tr className="bg-white">
-                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Magic Mouse 2
-                    </th>
-                    <td className="py-4">Black</td>
-                    <td className="py-4">Accessories</td>
-                    <td className="py-4">$99</td>
-                    <td className="px-6 py-4 text-right">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-);
+const PoorTable = ({ raceId, timingPointId }: { raceId: number; timingPointId: number }) => {
+    const { data: accessKeys } = trpc.timingPoint.timingPointAccessKeys.useQuery({ raceId, timingPointId });
+
+    return (
+        <>
+            {accessKeys && (
+                <div className="mt-4 relative overflow-x-auto sm:rounded-lg">
+                    <table className="w-full text-sm text-left text-gray-500">
+                        <thead className="text-xs text-gray-400 uppercase">
+                            <tr>
+                                <th scope="col" className="py-3">
+                                    Key name
+                                </th>
+                                <th scope="col" className="py-3">
+                                    <div className="flex items-center">
+                                        Code
+                                        <a href="#">
+                                            <SortTick />
+                                        </a>
+                                    </div>
+                                </th>
+                                <th scope="col" className="py-3">
+                                    <div className="flex items-center">
+                                        Can access others
+                                        <a href="#">
+                                            <SortTick />
+                                        </a>
+                                    </div>
+                                </th>
+                                <th scope="col" className="py-3">
+                                    <div className="flex items-center">
+                                        Token
+                                        <a href="#">
+                                            <SortTick />
+                                        </a>
+                                    </div>
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    <span className="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {accessKeys.map((a) => (
+                                <tr key={a.id} className="bg-white border-b">
+                                    <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {a.name}
+                                    </th>
+                                    <td className="py-4">{a.code}</td>
+                                    <td className="py-4">{a.canAccessOthers ? 'true' : 'false'}</td>
+                                    <td className="py-4">{a.token}</td>
+                                    <td className="px-6 py-4 text-right">
+                                        <a href="#" className="font-medium text-blue-600 hover:underline">
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </>
+    );
+};
 
 const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     const raceId = useCurrentRaceId();
@@ -314,7 +298,7 @@ const TimingPoint = () => {
                         <div className="mt-8">
                             <h3 className="text-xl font-semibold">Access URLs</h3>
                             <div>Copy access URLs and send them to your timekeepers</div>
-                            <PoorTable />
+                            <PoorTable raceId={raceId!} timingPointId={activeTimingPoint.id} />
                         </div>
                     </div>
                 )}
