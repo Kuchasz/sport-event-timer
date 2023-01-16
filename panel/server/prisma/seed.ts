@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange, sort } from "@set/utils/dist/array";
+import { createRange } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string"
-import { Classification, Player, Race, TimingPoint } from "@prisma/client";
+import { Classification, Player, Race, TimingPoint, TimingPointOrder } from "@prisma/client";
 
 async function main() {
     const userId = 'cla34zyas000852dulvt5oua7';
@@ -20,7 +20,10 @@ async function main() {
     const _timingPoints = createTimingPoints(races.map(r => r.id));
     const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
 
-    const _stopwatches = createStopwatches(races, players, timingPoints);
+    const _timingPointsOrders = createTimingPointsOrders(races.map(r => r.id), timingPoints);
+    const timingPointsOrders = await db.$transaction(_timingPointsOrders.map(data => db.timingPointOrder.create({data})));
+
+    const _stopwatches = createStopwatches(races, players, timingPoints, timingPointsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
@@ -67,14 +70,22 @@ const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
         { name: 'Start', description: 'Where the players start', raceId: r },
         ...createRange({ from: 0, to: faker.mersenne.rand(2, 0) })
-            .map((i) => ({ name: capitalizeFirstLetter(faker.word.noun()), description: faker.lorem.sentence(), raceId: r })),
+            .map(() => ({ name: capitalizeFirstLetter(faker.word.noun()), description: faker.lorem.sentence(), raceId: r })),
         { name: 'Finish', description: 'Where the players ends', raceId: r }]);
 
-const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[]) => {
+const createTimingPointsOrders = (raceIds: number[], timingPoints: TimingPoint[]): TimingPointOrder[] =>
+    raceIds.map(raceId => ({
+        raceId,
+        order: JSON.stringify(timingPoints.filter(tp => tp.raceId === raceId).map(tp => tp.id))
+    }));
+
+const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[], timingPointsOrders: TimingPointOrder[]) => {
     const store = {};
     return races.map(r => {
         const playersForRace = players.filter(p => p.raceId === r.id);
-        const timingPointsForRace = sort(timingPoints.filter(tp => tp.raceId === r.id), r => r.order);
+        const timingPointsOrder = JSON.parse(timingPointsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];
+
+        const timingPointsForRace = timingPointsOrder.map(timingPointId => timingPoints.find(tp => tp.raceId === r.id && tp.id === timingPointId)!);
 
         const chosenPlayersNumber = faker.mersenne.rand(playersForRace.length, 0);
 
