@@ -24,6 +24,38 @@ export const timingPointRouter =
                 const { order } = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
                 return JSON.parse(order) as number[];
             }),
+        addTimingPointAccessKey: protectedProcedure
+            .input(z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                timingPointId: z.number({ required_error: "timingPointId is required" }),
+                code: z.string().nullable(),
+                name: z.string({ required_error: "name is required" }),
+                canAccessOthers: z.boolean()
+            })).mutation(async (req) => {
+                const { input } = req;
+
+                const timingPointAccessKey = await db.timingPointAccessKey.create({
+                    data: {
+                        name: input.name,
+                        token: 'blah',
+                        timingPointId: input.timingPointId,
+                        raceId: input.raceId,
+                        code: input.code,
+                        canAccessOthers:
+                            input.canAccessOthers
+                    }
+                });
+
+                return timingPointAccessKey;
+            }),
+        timingPointAccessKeys: protectedProcedure
+            .input(z.object({
+                timingPointId: z.number({ required_error: "timingPointId is required" }),
+                raceId: z.number({ required_error: "raceId is required" })
+            })).query(async (req) => {
+                const { input } = req;
+                return await db.timingPointAccessKey.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
+            }),
         update: protectedProcedure
             .input(timingPointSchema)
             .mutation(async (req) => {
