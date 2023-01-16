@@ -98,13 +98,13 @@ const TimingPointCard = ({
             {!isFirst && (
                 <button
                     onClick={openCreateDialog}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center p-2 cursor-pointer rounded-full mr-4"
+                    className="bg-gray-100 font-medium flex px-5 py-2 items-center text-sm hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center cursor-pointer rounded-full"
                 >
-                    <Icon path={mdiPlus} size={1} />
+                    <Icon path={mdiPlus} size={0.7} /><span className="ml-1">Add timing point</span>
                 </button>
             )}
 
-            <div className="p-1 mx-auto my-4 max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
+            <div className="p-1 mx-auto my-4 w-full max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
                 <div className="bg-white py-4 px-6 rounded-lg flex">
                     <div className="bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4">
                         <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />

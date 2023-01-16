@@ -88,7 +88,7 @@ export const Status = () => {
                 <span className="mr-2">{getTextFromConnectionState(connectionState)}</span>
                 <Icon path={getIconFromConnectionState(connectionState)} size={0.8} />
             </span>
-            <div className="p-4 rounded-b-2xl z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
+            <div className="p-4 rounded-b-lg z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
                 <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
