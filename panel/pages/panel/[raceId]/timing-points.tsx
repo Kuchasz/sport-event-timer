@@ -6,13 +6,15 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiPlus, mdiTimerOutline, mdiTrashCan } from "@mdi/js";
+import { mdiEmailEditOutline, mdiPencil, mdiPencilOutline, mdiPlus, mdiTimerOutline, mdiTrashCan, mdiTrashCanOutline } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "../../../hooks";
 import Link from "next/link";
 import { getTimingPointIcon } from "utils";
+import classNames from "classnames";
+import { useState } from "react";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
@@ -33,21 +35,7 @@ const columns: Column<TimingPoint, unknown>[] = [
 const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
     const raceId = useCurrentRaceId();
     const { refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
-    const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
-    const deleteTimingPoint = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete timing point`,
-            component: Confirmation,
-            props: {
-                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`,
-            },
-        });
 
-        if (confirmed) {
-            await deleteTimingPointMutation.mutateAsync(timingPoint);
-            refetch();
-        }
-    };
     return (
         <div className="flex">
             <Link target="_blank" href={`/stopwatch/${raceId}?timingPointId=${timingPoint.id}`}>
@@ -56,25 +44,29 @@ const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
                     Open Stopwatch
                 </span>
             </Link>
-            <span className="ml-4 flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
+            {/* <span className="ml-4 flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
                 <Icon size={1} path={mdiTrashCan} />
                 delete
-            </span>
+            </span> */}
         </div>
     );
 };
 
 const TimingPointCard = ({
     onCreate,
+    onSelect,
     index,
     raceId,
+    isActive,
     timingPoint,
     isFirst,
     isLast,
 }: {
     onCreate: () => void;
+    onSelect: (timingPointId: number) => void;
     index: number;
     raceId: number;
+    isActive: boolean;
     isFirst: boolean;
     isLast: boolean;
     timingPoint: TimingPoint;
@@ -96,22 +88,32 @@ const TimingPointCard = ({
     return (
         <div className="flex flex-col">
             {!isFirst && (
-                <button
-                    onClick={openCreateDialog}
-                    className="bg-gray-100 font-medium flex px-5 py-2 items-center text-sm hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center cursor-pointer rounded-full"
-                >
-                    <Icon path={mdiPlus} size={0.7} /><span className="ml-1">Add timing point</span>
-                </button>
+                <div className="flex flex-col items-center">
+                    <div className="w-0.5 bg-gray-100 h-5"></div>
+                    <button
+                        onClick={openCreateDialog}
+                        className="bg-gray-100 font-medium flex my-1 px-5 py-2 items-center text-sm hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center cursor-pointer rounded-full"
+                    >
+                        <Icon path={mdiPlus} size={0.7} />
+                        <span className="ml-1.5">Add timing point</span>
+                    </button>
+                    <div className="w-0.5 bg-gray-100 h-5"></div>
+                </div>
             )}
 
-            <div className="p-1 mx-auto my-4 w-full max-w-md rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
-                <div className="bg-white py-4 px-6 rounded-lg flex">
-                    <div className="bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4">
+            <div
+                onClick={() => onSelect(timingPoint.id)}
+                className="p-1 cursor-pointer my-1 w-full rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"
+            >
+                <div className={classNames("py-4 px-6 rounded-lg flex", { ["bg-white"]: !isActive })}>
+                    <div className={classNames(`bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4`, { ["rotate-90"]: !isLast })}>
                         <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />
                     </div>
-                    <div>
-                        <h4 className="text-lg font-bold">{timingPoint.name}</h4>
-                        <span className="text-gray-500">{timingPoint.description ?? "Timing point where time should be registered"}</span>
+                    <div className="flex flex-col">
+                        <h4 className={classNames("text-md font-bold", { ["text-white"]: isActive })}>{timingPoint.name}</h4>
+                        <span className={classNames("text-sm", { ["text-white"]: isActive, ["text-gray-500"]: !isActive })}>
+                            {timingPoint.description ?? "Timing point where time should be registered"}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -121,8 +123,10 @@ const TimingPointCard = ({
 
 const TimingPoint = () => {
     const raceId = useCurrentRaceId();
-    const { data: timingPoints, refetch } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const [activeTimingPointId, setActiveTimingPointId] = useState<number>(40);
+    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
+    const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: raceId! },
@@ -132,6 +136,7 @@ const TimingPoint = () => {
     );
 
     const sortedTimingPoints = timingPointsOrder.map((point) => timingPoints?.find((tp) => point === tp.id)!);
+    const activeTimingPoint = sortedTimingPoints.find((tp) => tp.id === activeTimingPointId);
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
         const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
@@ -144,7 +149,24 @@ const TimingPoint = () => {
 
         if (TimingPoint) {
             await updateTimingPointMutation.mutateAsync(TimingPoint);
-            refetch();
+            refetchTimingPoints();
+        }
+    };
+
+    const openDeleteDialog = async (timingPoint: TimingPoint) => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete timing point`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await deleteTimingPointMutation.mutateAsync(timingPoint);
+
+            refetchOrder();
+            refetchTimingPoints();
         }
     };
 
@@ -153,13 +175,13 @@ const TimingPoint = () => {
             <Head>
                 <title>Timing Points</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full border-gray-600 border-solid">
                 {/* <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div> */}
-                <div className="self-start">
+                <div className="w-full max-w-md ">
                     {sortedTimingPoints &&
                         sortedTimingPoints.map((e, index) => (
                             <TimingPointCard
@@ -167,15 +189,46 @@ const TimingPoint = () => {
                                 index={index}
                                 raceId={raceId!}
                                 onCreate={() => {
-                                    refetch();
+                                    refetchTimingPoints();
                                     refetchOrder();
                                 }}
+                                onSelect={setActiveTimingPointId}
+                                isActive={e.id === activeTimingPointId}
                                 timingPoint={e}
                                 isFirst={index === 0}
                                 isLast={index === sortedTimingPoints.length - 1}
                             />
                         ))}
                 </div>
+                {activeTimingPoint && (
+                    <div className="flex-grow ml-4 mt-1 w-full">
+                        <div className="bg-gray-50 p-6 rounded-lg flex">
+                            <div className="flex flex-col">
+                                <h3 className="text-xl font-semibold">{activeTimingPoint.name}</h3>
+                                <div>{activeTimingPoint.description}</div>
+                            </div>
+                            <div className="flex-grow"></div>
+                            <div className="flex items-center">
+                                <button
+                                    onClick={() => openEditDialog(activeTimingPoint)}
+                                    className="text-gray-600 hover:bg-gray-200 bg-gray-100 p-3 rounded-lg"
+                                >
+                                    <Icon path={mdiPencilOutline} size={0.8}></Icon>
+                                </button>
+                                <button
+                                    onClick={() => openDeleteDialog(activeTimingPoint)}
+                                    className="ml-2 text-gray-600 hover:bg-gray-200 bg-gray-100 p-3 rounded-lg"
+                                >
+                                    <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-4 bg-gray-50 p-6 rounded-lg">
+                            <h3 className="text-xl font-semibold">Access URLs</h3>
+                            <div>Copy access URLs and send them to your timekeepers</div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

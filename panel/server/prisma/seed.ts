@@ -65,10 +65,10 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
 
 const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
-        { name: 'Start', order: 1, raceId: r },
+        { name: 'Start', description: 'Where the players start', raceId: r },
         ...createRange({ from: 0, to: faker.mersenne.rand(2, 0) })
-            .map((i) => ({ name: capitalizeFirstLetter(faker.word.noun()), order: 2 + i, raceId: r })),
-        { name: 'Finish', order: 5, raceId: r }]);
+            .map((i) => ({ name: capitalizeFirstLetter(faker.word.noun()), description: faker.lorem.sentence(), raceId: r })),
+        { name: 'Finish', description: 'Where the players ends', raceId: r }]);
 
 const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[]) => {
     const store = {};
