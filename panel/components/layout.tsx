@@ -234,7 +234,7 @@ const Layout = ({ children }: Props) => {
                             </Link>
                             <div className="flex-grow h-full justify-center flex flex-col">
                                 {menuGroups.map((mg) => (
-                                    <Link href={mg.to.replace(":raceId", String(raceId))}>
+                                    <Link key={mg.to} href={mg.to.replace(":raceId", String(raceId))}>
                                         <div
                                             key={mg.desc}
                                             className={`transition-opacity cursor-pointer uppercase p-2 mx-3 my-4 rounded-xl text-2xs ${
