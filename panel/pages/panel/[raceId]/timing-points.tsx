@@ -6,7 +6,18 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiEmailEditOutline, mdiPencil, mdiPencilOutline, mdiPlus, mdiTimerOutline, mdiTrashCan, mdiTrashCanOutline } from "@mdi/js";
+import {
+    mdiClipboard,
+    mdiClipboardFileOutline,
+    mdiClipboardOutline,
+    mdiEmailEditOutline,
+    mdiPencil,
+    mdiPencilOutline,
+    mdiPlus,
+    mdiTimerOutline,
+    mdiTrashCan,
+    mdiTrashCanOutline,
+} from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
@@ -75,6 +86,14 @@ const PoorTable = ({ raceId, timingPointId }: { raceId: number; timingPointId: n
                                         </a>
                                     </div>
                                 </th>
+                                <th scope="col" className="py-3">
+                                    <div className="flex items-center">
+                                        URL
+                                        <a href="#">
+                                            <SortTick />
+                                        </a>
+                                    </div>
+                                </th>
                                 <th scope="col" className="px-6 py-3">
                                     <span className="sr-only">Edit</span>
                                 </th>
@@ -87,12 +106,18 @@ const PoorTable = ({ raceId, timingPointId }: { raceId: number; timingPointId: n
                                         {a.name}
                                     </th>
                                     <td className="py-4">{a.code}</td>
-                                    <td className="py-4">{a.canAccessOthers ? 'true' : 'false'}</td>
+                                    <td className="py-4">{a.canAccessOthers ? "true" : "false"}</td>
                                     <td className="py-4">{a.token}</td>
+                                    <td className="py-4 text-ellipsis flex items-center">
+                                        <span>http://app.url/{a.token}</span>
+                                        <button className="hover:text-blue-600">
+                                            <Icon className="ml-2" path={mdiClipboardFileOutline} size={0.8}></Icon>
+                                        </button>
+                                    </td>
                                     <td className="px-6 py-4 text-right">
-                                        <a href="#" className="font-medium text-blue-600 hover:underline">
-                                            Edit
-                                        </a>
+                                        <button className="font-medium hover:text-red-600 hover:underline">
+                                            <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -224,6 +249,21 @@ const TimingPoint = () => {
         }
     };
 
+    const openCreateAccessKeyDialog = async (timingPoint: TimingPoint) => {
+        // const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
+        //     title: "Edit timing point",
+        //     component: TimingPointEdit,
+        //     props: {
+        //         editedTimingPoint,
+        //     },
+        // });
+
+        // if (TimingPoint) {
+        //     await updateTimingPointMutation.mutateAsync(TimingPoint);
+        //     refetchTimingPoints();
+        // }
+    };
+
     const openDeleteDialog = async (timingPoint: TimingPoint) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete timing point`,
@@ -296,8 +336,19 @@ const TimingPoint = () => {
                         </div>
                         {/* <div className="mt-4 bg-gray-50 p-6 rounded-lg"> */}
                         <div className="mt-8">
-                            <h3 className="text-xl font-semibold">Access URLs</h3>
-                            <div>Copy access URLs and send them to your timekeepers</div>
+                            <div className="flex items-center">
+                                <div>
+                                    <h3 className="text-xl font-semibold">Access URLs</h3>
+                                    <div>Copy access URLs and send them to your timekeepers</div>
+                                </div>
+                                <div className="flex-grow"></div>
+                                <button
+                                    onClick={() => openCreateAccessKeyDialog(activeTimingPoint)}
+                                    className="text-gray-600 hover:bg-gray-200 bg-gray-100 p-3 rounded-lg"
+                                >
+                                    <Icon path={mdiPlus} size={0.8}></Icon>
+                                </button>
+                            </div>
                             <PoorTable raceId={raceId!} timingPointId={activeTimingPoint.id} />
                         </div>
                     </div>
