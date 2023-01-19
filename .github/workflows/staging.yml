@@ -93,8 +93,8 @@ jobs:
                     cp ../app.rura.cc.env panel/.env
                     yarn install
                     cd panel
+                    cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
                     npx prisma generate
                     npx prisma migrate deploy
-                    cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
                     chmod -R 777 server/prisma
                     pm2 start npm --name "app.rura.cc" -- start
