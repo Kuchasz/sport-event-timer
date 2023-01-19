@@ -1,28 +1,19 @@
-import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
-import { Button } from "components/button";
 import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
 import {
-    mdiClipboard,
     mdiClipboardFileOutline,
-    mdiClipboardOutline,
-    mdiEmailEditOutline,
-    mdiPencil,
     mdiPencilOutline,
     mdiPlus,
-    mdiTimerOutline,
-    mdiTrashCan,
     mdiTrashCanOutline,
 } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
 import { useCurrentRaceId } from "../../../hooks";
-import Link from "next/link";
 import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
@@ -34,25 +25,13 @@ type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
 type CreatedTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessKey"];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessKeys"];
 
-const columns: Column<TimingPoint, unknown>[] = [
-    { key: "id", name: "Id", width: 10 },
-    { key: "order", name: "Order", width: 10 },
-    { key: "name", name: "Name" },
-    {
-        key: "actions",
-        width: 250,
-        name: "Actions",
-        formatter: (props) => <TimingPointActions timingPoint={props.row} />,
-    },
-];
-
 const SortTick = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
         <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
     </svg>
 );
 
-const PoorTable = ({ items: accessKeys }: { items: AccessKeys }) => {
+const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelete: (accessKey: AccessKeys[0]) => void }) => {
     return (
         <>
             {accessKeys && (
@@ -116,7 +95,7 @@ const PoorTable = ({ items: accessKeys }: { items: AccessKeys }) => {
                                         </button>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className="font-medium hover:text-red-600 hover:underline">
+                                        <button onClick={() => onDelete(a)} className="font-medium hover:text-red-600 hover:underline">
                                             <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                         </button>
                                     </td>
@@ -127,25 +106,6 @@ const PoorTable = ({ items: accessKeys }: { items: AccessKeys }) => {
                 </div>
             )}
         </>
-    );
-};
-
-const TimingPointActions = ({ timingPoint }: { timingPoint: TimingPoint }) => {
-    const raceId = useCurrentRaceId();
-
-    return (
-        <div className="flex">
-            <Link target="_blank" href={`/stopwatch/${raceId}?timingPointId=${timingPoint.id}`}>
-                <span className="flex items-center hover:text-red-600 cursor-pointer">
-                    <Icon size={1} path={mdiTimerOutline} />
-                    Open Stopwatch
-                </span>
-            </Link>
-            {/* <span className="ml-4 flex items-center hover:text-red-600 cursor-pointer" onClick={deleteTimingPoint}>
-                <Icon size={1} path={mdiTrashCan} />
-                delete
-            </span> */}
-        </div>
     );
 };
 
@@ -374,7 +334,7 @@ const TimingPoint = () => {
                                     <Icon path={mdiPlus} size={0.8}></Icon>
                                 </button>
                             </div>
-                            <PoorTable items={accessKeys} />
+                            <PoorTable onDelete={openDeleteAccesKeyDialog} items={accessKeys} />
                         </div>
                     </div>
                 )}
