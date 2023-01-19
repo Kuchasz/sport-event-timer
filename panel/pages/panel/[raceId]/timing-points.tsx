@@ -26,10 +26,13 @@ import Link from "next/link";
 import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
+import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
 type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
+type CreatedTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessKey"];
+type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessKeys"];
 
 const columns: Column<TimingPoint, unknown>[] = [
     { key: "id", name: "Id", width: 10 },
@@ -49,9 +52,7 @@ const SortTick = () => (
     </svg>
 );
 
-const PoorTable = ({ raceId, timingPointId }: { raceId: number; timingPointId: number }) => {
-    const { data: accessKeys } = trpc.timingPoint.timingPointAccessKeys.useQuery({ raceId, timingPointId });
-
+const PoorTable = ({ items: accessKeys }: { items: AccessKeys }) => {
     return (
         <>
             {accessKeys && (
@@ -221,8 +222,15 @@ const TimingPoint = () => {
     const raceId = useCurrentRaceId();
     const [activeTimingPointId, setActiveTimingPointId] = useState<number>(38);
     const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessKeys.useQuery(
+        { raceId: raceId!, timingPointId: activeTimingPointId },
+        { initialData: [] }
+    );
+
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
+    const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessKey.useMutation();
+    const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessKey.useMutation();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: raceId! },
@@ -250,18 +258,19 @@ const TimingPoint = () => {
     };
 
     const openCreateAccessKeyDialog = async (timingPoint: TimingPoint) => {
-        // const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
-        //     title: "Edit timing point",
-        //     component: TimingPointEdit,
-        //     props: {
-        //         editedTimingPoint,
-        //     },
-        // });
+        const timingPointAccessKey = await Demodal.open<CreatedTimingPointAccessKey>(NiceModal, {
+            title: "Edit timing point",
+            component: TimingPointAccessKeyCreate,
+            props: {
+                timingPointId: timingPoint.id,
+                raceId: timingPoint.raceId,
+            },
+        });
 
-        // if (TimingPoint) {
-        //     await updateTimingPointMutation.mutateAsync(TimingPoint);
-        //     refetchTimingPoints();
-        // }
+        if (timingPointAccessKey) {
+            await createTimingPointAccessKeyMutation.mutateAsync(timingPointAccessKey);
+            refetchAccessKeys();
+        }
     };
 
     const openDeleteDialog = async (timingPoint: TimingPoint) => {
@@ -278,6 +287,22 @@ const TimingPoint = () => {
 
             refetchOrder();
             refetchTimingPoints();
+        }
+    };
+
+    const openDeleteAccesKeyDialog = async (timingPointAccessKey: AccessKeys[0]) => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete timing point access url`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete the Timing Point Access URL ${timingPointAccessKey.name}. Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessKeyId: timingPointAccessKey.id });
+
+            refetchAccessKeys();
         }
     };
 
@@ -349,7 +374,7 @@ const TimingPoint = () => {
                                     <Icon path={mdiPlus} size={0.8}></Icon>
                                 </button>
                             </div>
-                            <PoorTable raceId={raceId!} timingPointId={activeTimingPoint.id} />
+                            <PoorTable items={accessKeys} />
                         </div>
                     </div>
                 )}

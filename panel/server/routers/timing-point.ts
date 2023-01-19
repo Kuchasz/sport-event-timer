@@ -56,6 +56,13 @@ export const timingPointRouter =
                 const { input } = req;
                 return await db.timingPointAccessKey.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
             }),
+        deleteTimingPointAccessKey: protectedProcedure
+            .input(z.object({
+                timingPointAccessKeyId: z.number()
+            }))
+            .mutation(async (req) => {
+                return await db.timingPointAccessKey.delete({ where: { id: req.input.timingPointAccessKeyId } });
+            }),
         update: protectedProcedure
             .input(timingPointSchema)
             .mutation(async (req) => {
