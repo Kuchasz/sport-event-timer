@@ -1,7 +1,6 @@
 import { ConnectionState, trpc } from "../../connection";
 import { Icon } from "@mdi/react";
 import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherCloudyAlert } from "@mdi/js";
-import { sort } from "@set/utils/dist/array";
 import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
@@ -70,10 +69,11 @@ export const Status = () => {
     const { data: allTimeKeepers } = trpc.timingPoint.timingPoints.useQuery({ raceId: parseInt(raceId as string)}, {
         initialData: [],
     });
+    const {data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({raceId: parseInt(raceId as string)}, {initialData: []});
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
     const timeKeeperName = allTimeKeepers!.find((tk) => tk.id === timingPointId)?.name;
-    const sortedTimeKeepers = sort(allTimeKeepers || [], (tk) => tk.order).map((tk) => tk.id);
+    const sortedTimeKeepers = timingPointOrder;
 
     return (
         <div>
