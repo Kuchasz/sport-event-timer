@@ -1,6 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
 import { db } from "../db";
 import { z } from "zod";
+import { daysFromNow } from "@set/utils/dist/datetime";
 
 const timingPointSchema = z.object({
     id: z.number().min(1).nullish(),
@@ -42,7 +43,8 @@ export const timingPointRouter =
                         raceId: input.raceId,
                         code: input.code,
                         canAccessOthers:
-                            input.canAccessOthers
+                            input.canAccessOthers,
+                        expireDate: daysFromNow(5)
                     }
                 });
 

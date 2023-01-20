@@ -62,3 +62,5 @@ export const milisecondsToTimeString = (miliseconds: number | undefined | null) 
 
     return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 };
+
+export const daysFromNow = (days: number) => new Date(new Date().getTime() + days * 86_400_000);

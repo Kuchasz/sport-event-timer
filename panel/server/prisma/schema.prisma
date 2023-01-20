@@ -159,11 +159,12 @@ model TimingPointOrder {
 }
 
 model TimingPointAccessKey {
-    id              Int     @id @default(autoincrement())
+    id              Int      @id @default(autoincrement())
     name            String
     code            String?
     canAccessOthers Boolean
     token           String
+    expireDate      DateTime
 
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
     timingPointId Int
