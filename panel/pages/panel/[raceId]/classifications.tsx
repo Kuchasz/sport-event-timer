@@ -17,7 +17,7 @@ type EditedClassification = AppRouterInputs["classification"]["update"];
 type CreatedClassification = AppRouterInputs["classification"]["add"];
 
 const columns: Column<Classification, unknown>[] = [
-    { key: "id", name: "Id", width: 10 },
+    { key: "index", name: "", width: 10 },
     { key: "name", name: "Name" }
 ];
 

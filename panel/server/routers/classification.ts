@@ -25,7 +25,8 @@ export const classificationRouter =
             raceId: z.number({ required_error: "raceId is required" })
         })).query(async (req) => {
             const raceId = req.input.raceId;
-            return await db.classification.findMany({ where: { raceId } });
+            const classifications = await db.classification.findMany({ where: { raceId } });
+            return classifications.map((c, index) => ({ ...c, index: index + 1 }));
         }),
         categories: protectedProcedure.input(z.object({
             classificationId: z.number({ required_error: "classificationId is required" })
