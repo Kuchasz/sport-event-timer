@@ -19,8 +19,6 @@ type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
 };
 
-// const sort = (times: TimeStampWithPlayer[]) => [...times].sort((a, b) => b.time - a.time);
-
 const Item = ({
     t,
     navigate,

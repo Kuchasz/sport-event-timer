@@ -18,6 +18,7 @@ import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
 import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
+import { formatTimeWithSec } from "@set/utils/dist/datetime";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
@@ -41,6 +42,14 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                             <tr>
                                 <th scope="col" className="py-3">
                                     Key name
+                                </th>
+                                <th scope="col" className="py-3">
+                                    <div className="flex items-center">
+                                        Expires At
+                                        <a href="#">
+                                            <SortTick />
+                                        </a>
+                                    </div>
                                 </th>
                                 <th scope="col" className="py-3">
                                     <div className="flex items-center">
@@ -85,6 +94,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                     <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {a.name}
                                     </th>
+                                    <td className="py-4">{formatTimeWithSec(a.expireDate.getTime())}</td>
                                     <td className="py-4">{a.code}</td>
                                     <td className="py-4">{a.canAccessOthers ? "true" : "false"}</td>
                                     <td className="py-4">{a.token}</td>
