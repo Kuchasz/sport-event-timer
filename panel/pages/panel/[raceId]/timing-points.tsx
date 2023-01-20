@@ -18,7 +18,6 @@ import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
 import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
-import { formatTimeWithSec } from "@set/utils/dist/datetime";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
