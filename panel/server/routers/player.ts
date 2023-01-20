@@ -38,10 +38,12 @@ export const playerRouter =
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .query(async ({ input }) => {
                 const { raceId } = input;
-                return await db.player.findMany({
+                const players = await db.player.findMany({
                     where: { raceId: raceId },
                     include: { classification: true }
                 });
+
+                return players.map((p, index) => ({ ...p, index: index + 1 }));
             }),
         stopwatchPlayers: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))

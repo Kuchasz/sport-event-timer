@@ -19,7 +19,7 @@ type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
 type EditedPlayer = AppRouterInputs["player"]["add"]["player"];
 
 const columns: Column<Player, unknown>[] = [
-    { key: "id", name: "Id", width: 10, sortable: false, resizable: false },
+    { key: "index", name: "", width: 10, sortable: false, resizable: false },
     {
         key: "classificationId",
         name: "Classification Id"
