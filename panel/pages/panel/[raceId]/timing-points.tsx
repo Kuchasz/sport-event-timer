@@ -94,7 +94,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                     <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {a.name}
                                     </th>
-                                    <td className="py-4">{formatTimeWithSec(a.expireDate.getTime())}</td>
+                                    <td className="py-4">{a.expireDate.toLocaleString()}</td>
                                     <td className="py-4">{a.code}</td>
                                     <td className="py-4">{a.canAccessOthers ? "true" : "false"}</td>
                                     <td className="py-4">{a.token}</td>

@@ -27,9 +27,11 @@ export const playerRegistrationRouter =
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .query(async ({ input }) => {
                 const { raceId } = input;
-                return await db.playerRegistration.findMany({
+                const registrations = await db.playerRegistration.findMany({
                     where: { raceId: raceId }
                 });
+
+                return registrations.map((r, index) => ({...r, index: index + 1}));
             }),
         delete: protectedProcedure
             .input(z.object({ playerId: z.number() }))

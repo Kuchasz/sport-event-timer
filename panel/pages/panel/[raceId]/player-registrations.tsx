@@ -17,7 +17,7 @@ type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["p
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
 const columns: Column<PlayerRegistration, unknown>[] = [
-    { key: "id", name: "Id", sortable: false, resizable: false, width: 5 },
+    { key: "index", name: "", sortable: false, resizable: false, width: 5 },
     { key: "name", name: "Name" },
     { key: "lastName", name: "Last Name" },
     {
