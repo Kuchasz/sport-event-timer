@@ -39,10 +39,10 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                     <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-gray-400 uppercase">
                             <tr>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     Key name
                                 </th>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     <div className="flex items-center">
                                         Expires At
                                         <a href="#">
@@ -50,7 +50,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                         </a>
                                     </div>
                                 </th>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     <div className="flex items-center">
                                         Code
                                         <a href="#">
@@ -58,15 +58,15 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                         </a>
                                     </div>
                                 </th>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        Can access others
+                                        Supervisor
                                         <a href="#">
                                             <SortTick />
                                         </a>
                                     </div>
                                 </th>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     <div className="flex items-center">
                                         Token
                                         <a href="#">
@@ -74,7 +74,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                         </a>
                                     </div>
                                 </th>
-                                <th scope="col" className="py-3">
+                                <th scope="col" className="py-4">
                                     <div className="flex items-center">
                                         URL
                                         <a href="#">
@@ -82,14 +82,14 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                         </a>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th scope="col" className="py-4">
                                     <span className="sr-only">Edit</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {accessKeys.map((a) => (
-                                <tr key={a.id} className="bg-white border-b">
+                                <tr key={a.id} className="bg-white border-t">
                                     <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {a.name}
                                     </th>
