@@ -4,12 +4,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import {
-    mdiClipboardFileOutline,
-    mdiPencilOutline,
-    mdiPlus,
-    mdiTrashCanOutline,
-} from "@mdi/js";
+import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/timing-point-create";
 import { TimingPointEdit } from "components/timing-point-edit";
@@ -31,7 +26,21 @@ const SortTick = () => (
     </svg>
 );
 
-const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelete: (accessKey: AccessKeys[0]) => void }) => {
+const generateAccessUrl = async () => {
+    const { csrfToken } = await fetch("/api/auth/csrf").then((r) => r.json());
+
+    fetch("/api/auth/signin/email", { 
+        headers: { "Content-Type": "application/json" }, 
+        method: "POST", 
+        body: JSON.stringify({
+            csrfToken,
+            email: '@'
+        }) 
+    });
+
+};
+
+const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelete: (accessKey: AccessKeys[0]) => void }) => {
     return (
         <>
             {accessKeys && (
@@ -99,7 +108,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys, onDelet
                                     <td className="py-4">{a.token}</td>
                                     <td className="py-4 text-ellipsis flex items-center">
                                         <span>http://app.url/{a.token}</span>
-                                        <button className="hover:text-blue-600">
+                                        <button onClick={generateAccessUrl} className="hover:text-blue-600">
                                             <Icon className="ml-2" path={mdiClipboardFileOutline} size={0.8}></Icon>
                                         </button>
                                     </td>
