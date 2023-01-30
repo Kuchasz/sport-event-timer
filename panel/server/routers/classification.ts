@@ -26,6 +26,7 @@ export const classificationRouter =
         })).query(async (req) => {
             const raceId = req.input.raceId;
             const classifications = await db.classification.findMany({ where: { raceId } });
+
             return classifications.map((c, index) => ({ ...c, index: index + 1 }));
         }),
         categories: protectedProcedure.input(z.object({
