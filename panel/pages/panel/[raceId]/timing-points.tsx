@@ -27,17 +27,16 @@ const SortTick = () => (
 );
 
 const generateAccessUrl = async () => {
-    const { csrfToken } = await fetch("/api/auth/csrf").then((r) => r.json());
+    const { csrfToken } = await fetch("/api/auth/csrf").then(r => r.json());
 
-    fetch("/api/auth/signin/email", { 
-        headers: { "Content-Type": "application/json" }, 
-        method: "POST", 
+    fetch("/api/auth/signin/email", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
         body: JSON.stringify({
             csrfToken,
-            email: '@'
-        }) 
+            email: "@",
+        }),
     });
-
 };
 
 const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelete: (accessKey: AccessKeys[0]) => void }) => {
@@ -97,7 +96,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                             </tr>
                         </thead>
                         <tbody>
-                            {accessKeys.map((a) => (
+                            {accessKeys.map(a => (
                                 <tr key={a.id} className="bg-white border-t">
                                     <th scope="row" className="py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {a.name}
@@ -217,8 +216,8 @@ const TimingPoint = () => {
         }
     );
 
-    const sortedTimingPoints = timingPointsOrder.map((point) => timingPoints?.find((tp) => point === tp.id)!);
-    const activeTimingPoint = sortedTimingPoints.find((tp) => tp.id === activeTimingPointId);
+    const sortedTimingPoints = timingPointsOrder.map(point => timingPoints?.find(tp => point === tp.id)!);
+    const activeTimingPoint = sortedTimingPoints.find(tp => tp.id === activeTimingPointId);
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
         const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
@@ -316,28 +315,26 @@ const TimingPoint = () => {
                 </div>
                 {activeTimingPoint && (
                     <div className="flex-grow ml-8 mt-1 w-full">
-                        <div className="flex">
-                            <div className="bg-gray-50 p-6 rounded-lg flex flex-col">
+                        <div className="bg-gray-50 p-6 rounded-lg flex-grow flex">
+                            <div className="flex-grow">
                                 <h3 className="text-xl font-semibold">{activeTimingPoint.name}</h3>
                                 <div>{activeTimingPoint.description}</div>
                             </div>
-                            <div className="mx-6  p-6 rounded-lg flex-grow"></div>
                             <div className="flex items-center">
                                 <button
                                     onClick={() => openEditDialog(activeTimingPoint)}
-                                    className="text-gray-600 hover:bg-gray-200 bg-gray-100 p-3 rounded-lg"
+                                    className="text-gray-600 hover:bg-gray-100 p-3 rounded-lg"
                                 >
                                     <Icon path={mdiPencilOutline} size={0.8}></Icon>
                                 </button>
                                 <button
                                     onClick={() => openDeleteDialog(activeTimingPoint)}
-                                    className="ml-2 text-gray-600 hover:bg-gray-200 bg-gray-100 p-3 rounded-lg"
+                                    className="ml-2 text-gray-600 hover:bg-gray-100 p-3 rounded-lg"
                                 >
                                     <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                 </button>
                             </div>
                         </div>
-                        {/* <div className="mt-4 bg-gray-50 p-6 rounded-lg"> */}
                         <div className="mt-8">
                             <div className="flex items-center">
                                 <div>
