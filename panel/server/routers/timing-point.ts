@@ -1,5 +1,4 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 import { z } from "zod";
 import { daysFromNow } from "@set/utils/dist/datetime";
 
@@ -14,15 +13,15 @@ export const timingPointRouter =
     router({
         timingPoints: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async (req) => {
-                const raceId = req.input.raceId;
-                return await db.timingPoint.findMany({ where: { raceId } });
+            .query(async ({ input, ctx }) => {
+                const raceId = input.raceId;
+                return await ctx.db.timingPoint.findMany({ where: { raceId } });
             }),
         timingPointsOrder: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async (req) => {
-                const raceId = req.input.raceId;
-                const { order } = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
+            .query(async ({ input, ctx }) => {
+                const raceId = input.raceId;
+                const { order } = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
                 return JSON.parse(order) as number[];
             }),
         addTimingPointAccessKey: protectedProcedure
@@ -32,10 +31,8 @@ export const timingPointRouter =
                 code: z.string().nullable(),
                 name: z.string({ required_error: "name is required" }),
                 canAccessOthers: z.boolean()
-            })).mutation(async (req) => {
-                const { input } = req;
-
-                const timingPointAccessKey = await db.timingPointAccessKey.create({
+            })).mutation(async ({ input, ctx }) => {
+                const timingPointAccessKey = await ctx.db.timingPointAccessKey.create({
                     data: {
                         name: input.name,
                         token: 'blah',
@@ -54,47 +51,45 @@ export const timingPointRouter =
             .input(z.object({
                 timingPointId: z.number({ required_error: "timingPointId is required" }),
                 raceId: z.number({ required_error: "raceId is required" })
-            })).query(async (req) => {
-                const { input } = req;
-                return await db.timingPointAccessKey.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
+            })).query(async ({ input, ctx }) => {
+                return await ctx.db.timingPointAccessKey.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
             }),
         deleteTimingPointAccessKey: protectedProcedure
             .input(z.object({
                 timingPointAccessKeyId: z.number()
             }))
-            .mutation(async (req) => {
-                return await db.timingPointAccessKey.delete({ where: { id: req.input.timingPointAccessKeyId } });
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.timingPointAccessKey.delete({ where: { id: input.timingPointAccessKeyId } });
             }),
         update: protectedProcedure
             .input(timingPointSchema)
-            .mutation(async (req) => {
-                const { id, ...data } = req.input;
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...data } = input;
 
-                return await db.timingPoint.update({ where: { id: id! }, data });
+                return await ctx.db.timingPoint.update({ where: { id: id! }, data });
             }),
         delete: protectedProcedure
             .input(timingPointSchema)
-            .mutation(async ({ input }) => {
+            .mutation(async ({ input, ctx }) => {
                 const { id } = input;
 
-                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
+                const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
 
                 const order = JSON.parse(timingPointOrder.order) as number[];
                 const newOrder = order.filter(i => i !== id);
 
-                await db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
+                await ctx.db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
 
-                return await db.timingPoint.delete({ where: { id: id! } });
+                return await ctx.db.timingPoint.delete({ where: { id: id! } });
             }),
         add: protectedProcedure
             .input(z.object({
                 timingPoint: timingPointSchema,
                 desiredIndex: z.number({ required_error: 'Desired Index is required' })
             }))
-            .mutation(async (req) => {
-                const { input } = req;
+            .mutation(async ({ input, ctx }) => {
 
-                const newTimingPoint = await db.timingPoint.create({
+                const newTimingPoint = await ctx.db.timingPoint.create({
                     data: {
                         name: input.timingPoint.name,
                         description: input.timingPoint.description,
@@ -102,13 +97,13 @@ export const timingPointRouter =
                     }
                 });
 
-                const timingPointOrder = await db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } })
+                const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } })
 
                 const order = JSON.parse(timingPointOrder.order) as number[];
                 const newOrder = [...order];
                 newOrder.splice(input.desiredIndex, 0, newTimingPoint.id);
 
-                await db.timingPointOrder.update({ where: { raceId: input.timingPoint.raceId }, data: { order: JSON.stringify(newOrder) } })
+                await ctx.db.timingPointOrder.update({ where: { raceId: input.timingPoint.raceId }, data: { order: JSON.stringify(newOrder) } })
 
                 return newTimingPoint;
             })

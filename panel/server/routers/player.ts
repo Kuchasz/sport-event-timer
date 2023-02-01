@@ -1,5 +1,4 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { GenderEnum } from "../schema";
@@ -36,9 +35,9 @@ export const playerRouter =
     router({
         players: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async ({ input }) => {
+            .query(async ({ input, ctx }) => {
                 const { raceId } = input;
-                const players = await db.player.findMany({
+                const players = await ctx.db.player.findMany({
                     where: { raceId: raceId },
                     include: { classification: true }
                 });
@@ -48,9 +47,9 @@ export const playerRouter =
         stopwatchPlayers: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .output(stopwatchPlayersSchema)
-            .query(async ({ input }) => {
+            .query(async ({ input, ctx }) => {
                 const { raceId } = input;
-                const players = await db.player.findMany({
+                const players = await ctx.db.player.findMany({
                     where: { raceId: raceId, bibNumber: { not: null } },
                     select: {
                         name: true,
@@ -63,10 +62,10 @@ export const playerRouter =
             }),
         startList: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async ({ input }) => {
+            .query(async ({ input, ctx }) => {
                 const { raceId } = input;
-                const race = await db.race.findFirstOrThrow({ where: { id: raceId } });
-                const playersWithTimes = await db.player.findMany({
+                const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId } });
+                const playersWithTimes = await ctx.db.player.findMany({
                     where: { raceId: raceId },
                     select: {
                         name: true,
@@ -91,27 +90,26 @@ export const playerRouter =
             }),
         delete: protectedProcedure
             .input(z.object({ playerId: z.number() }))
-            .mutation(async ({ input }) => {
+            .mutation(async ({ input, ctx }) => {
                 // dispatchAction({
                 //     clientId: "",
                 //     action: remove({ id: id! })
                 // });
 
-                return await db.player.delete({ where: { id: input.playerId } });
+                return await ctx.db.player.delete({ where: { id: input.playerId } });
             }),
         add: protectedProcedure
             .input(playerSchema)
-            .mutation(async (req) => {
-                const { input } = req;
-                const classification = await db.classification.findFirstOrThrow({
+            .mutation(async ({ input, ctx }) => {
+                const classification = await ctx.db.classification.findFirstOrThrow({
                     where: { id: input.player.classificationId, race: { id: input.raceId } },
                     include: { race: true }
                 });
                 if (!classification) return;
 
-                const user = await db.user.findFirstOrThrow();
+                const user = await ctx.db.user.findFirstOrThrow();
 
-                return await db.player.create({
+                return await ctx.db.player.create({
                     data: {
                         raceId: input.raceId,
                         name: input.player.name,
@@ -133,18 +131,17 @@ export const playerRouter =
             }),
         edit: protectedProcedure
             .input(playerSchema)
-            .mutation(async (req) => {
-                const { input } = req;
-                const classification = await db.classification.findFirstOrThrow({
+            .mutation(async ({ input, ctx }) => {
+                const classification = await ctx.db.classification.findFirstOrThrow({
                     where: { id: input.player.classificationId, race: { id: input.raceId } },
                     include: { race: true }
                 });
                 if (!classification) return;
 
-                const user = await db.user.findFirst();
+                const user = await ctx.db.user.findFirst();
                 if (!user) return;
 
-                return await db.player.update({
+                return await ctx.db.player.update({
                     where: { id: input.player.id! },
                     data: {
                         name: input.player.name,

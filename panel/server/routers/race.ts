@@ -1,5 +1,4 @@
 import { protectedProcedure, router } from "../trpc"
-import { db } from "../db";
 import { z } from "zod";
 
 const raceSchema = z.object({
@@ -11,37 +10,37 @@ const raceSchema = z.object({
 export const raceRouter =
     router({
         races: protectedProcedure
-            .query(async () => {
-                return await db.race.findMany();
+            .query(async ({ ctx }) => {
+                return await ctx.db.race.findMany();
             }),
         myRaces: protectedProcedure
-            .query(async () => {
-                return await db.race.findMany({ orderBy: { id: "desc" } });
+            .query(async ({ ctx }) => {
+                return await ctx.db.race.findMany({ orderBy: { id: "desc" } });
             }),
         race: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async (req) => {
-                const id = req.input.raceId;
-                return await db.race.findUnique({ where: { id } });
+            .query(async ({ input, ctx }) => {
+                const id = input.raceId;
+                return await ctx.db.race.findUnique({ where: { id } });
             }),
         delete: protectedProcedure
             .input(z.object({
                 raceId: z.number()
             }))
-            .mutation(async ({ input }) => {
-                return await db.race.delete({ where: { id: input.raceId } });
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.race.delete({ where: { id: input.raceId } });
             }),
         update: protectedProcedure
             .input(raceSchema)
-            .mutation(async (req) => {
-                const { id, ...data } = req.input;
-                return await db.race.update({ where: { id: id! }, data });
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...data } = input;
+                return await ctx.db.race.update({ where: { id: id! }, data });
             }),
         add: protectedProcedure
             .input(raceSchema)
-            .mutation(async (req) => {
-                const { id, ...data } = req.input;
-                const race = await db.race.create({ data });
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...data } = input;
+                const race = await ctx.db.race.create({ data });
 
                 const timingPointsToCreate = [{
                     name: "Start",
@@ -51,11 +50,11 @@ export const raceRouter =
                     name: "Finish",
                     description: "Where the players finish",
                     raceId: race.id
-                }].map(tp => db.timingPoint.create({ data: tp }));
+                }].map(tp => ctx.db.timingPoint.create({ data: tp }));
 
-                const timingPoints = await db.$transaction(timingPointsToCreate);
+                const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
 
-                await db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
+                await ctx.db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
             })
     });
 

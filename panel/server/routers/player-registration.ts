@@ -1,5 +1,4 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 import { z } from "zod";
 import { GenderEnum } from "../schema";
 
@@ -25,30 +24,28 @@ export const playerRegistrationRouter =
     router({
         registrations: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-            .query(async ({ input }) => {
+            .query(async ({ input, ctx }) => {
                 const { raceId } = input;
-                const registrations = await db.playerRegistration.findMany({
+                const registrations = await ctx.db.playerRegistration.findMany({
                     where: { raceId: raceId }
                 });
 
-                return registrations.map((r, index) => ({...r, index: index + 1}));
+                return registrations.map((r, index) => ({ ...r, index: index + 1 }));
             }),
         delete: protectedProcedure
             .input(z.object({ playerId: z.number() }))
-            .mutation(async ({ input }) => {
-                return await db.playerRegistration.delete({ where: { id: input.playerId } });
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.playerRegistration.delete({ where: { id: input.playerId } });
             }),
         setPaymentStatus: protectedProcedure
             .input(z.object({ playerId: z.number(), hasPaid: z.boolean() }))
-            .mutation(async ({ input }) => {
-                return await db.playerRegistration.update({ where: { id: input.playerId }, data: { hasPaid: input.hasPaid, paymentDate: input.hasPaid ? new Date() : null } });
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.playerRegistration.update({ where: { id: input.playerId }, data: { hasPaid: input.hasPaid, paymentDate: input.hasPaid ? new Date() : null } });
             }),
         add: protectedProcedure
             .input(playerRegistrationSchema)
-            .mutation(async (req) => {
-                const { input } = req;
-
-                return await db.playerRegistration.create({
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.playerRegistration.create({
                     data: {
                         raceId: input.raceId,
                         registrationDate: new Date(),
@@ -68,9 +65,8 @@ export const playerRegistrationRouter =
             }),
         edit: protectedProcedure
             .input(playerRegistrationSchema)
-            .mutation(async (req) => {
-                const { input } = req;
-                return await db.playerRegistration.update({
+            .mutation(async ({ input, ctx }) => {
+                return await ctx.db.playerRegistration.update({
                     where: { id: input.player.id! },
                     data: {
                         name: input.player.name,

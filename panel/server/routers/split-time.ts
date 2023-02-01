@@ -1,5 +1,4 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 import { z } from "zod";
 
 const manualSplitTimeSchema = z.object({
@@ -13,20 +12,20 @@ const manualSplitTimeSchema = z.object({
 export const splitTimeRouter =
     router({
         splitTimes: protectedProcedure
-            .input(z.object({raceId: z.number({ required_error: "raceId is required" })}))
-            .query(async (req) => {
-                const raceId = req.input.raceId;
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async ({ input, ctx }) => {
+                const raceId = input.raceId;
 
-                const allPlayers = await db.player.findMany({
+                const allPlayers = await ctx.db.player.findMany({
                     where: { raceId },
                     include: { splitTime: true, manualSplitTime: true }
                 });
-                const unorderTimingPoints = await db.timingPoint.findMany({ where: { raceId } });
-                const timingPointsOrder = await db.timingPointOrder.findUniqueOrThrow({where: {raceId}});
+                const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+                const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
                 const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p));
                 const startTimingPoint = timingPoints[0];
-                
-                const race = await db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
+
+                const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
                 const raceDateStart = race?.date.getTime();
 
@@ -46,13 +45,13 @@ export const splitTimeRouter =
                         )
                     }
                 }));
-        }),
+            }),
         update: protectedProcedure
             .input(manualSplitTimeSchema)
-            .mutation(async (req) => {
-                const { id, ...splitTime } = req.input;
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...splitTime } = input;
 
-                const existingManualSplitTime = await db.manualSplitTime.findFirst({
+                const existingManualSplitTime = await ctx.db.manualSplitTime.findFirst({
                     where: {
                         raceId: splitTime.raceId,
                         bibNumber: splitTime.bibNumber,
@@ -61,9 +60,9 @@ export const splitTimeRouter =
                 });
 
                 if (!existingManualSplitTime) {
-                    return await db.manualSplitTime.create({ data: splitTime });
+                    return await ctx.db.manualSplitTime.create({ data: splitTime });
                 } else
-                    await db.manualSplitTime.update({
+                    await ctx.db.manualSplitTime.update({
                         where: {
                             timingPointId_bibNumber: {
                                 bibNumber: splitTime.bibNumber,
@@ -72,12 +71,12 @@ export const splitTimeRouter =
                         },
                         data: splitTime
                     });
-        }),
+            }),
         revert: protectedProcedure
             .input(z.object({ bibNumber: z.number(), timingPointId: z.number() }))
-            .mutation(async (req) => {
-                const { ...data } = req.input;
-                return await db.manualSplitTime.delete({
+            .mutation(async ({ input, ctx }) => {
+                const { ...data } = input;
+                return await ctx.db.manualSplitTime.delete({
                     where: { timingPointId_bibNumber: { bibNumber: data.bibNumber, timingPointId: data.timingPointId } }
                 });
             })
