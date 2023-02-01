@@ -1,11 +1,10 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 
 export const accountRouter =
     router({
         accounts: protectedProcedure
-            .query(async () => {
-                return await db.user.findMany({ select: { email: true } })
+            .query(async ({ctx}) => {
+                return await ctx.db.user.findMany({ select: { email: true } })
             })
     });
 

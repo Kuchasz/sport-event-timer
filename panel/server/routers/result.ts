@@ -1,23 +1,22 @@
 import { protectedProcedure, router } from "../trpc";
-import { db } from "../db";
 import { sort } from "@set/utils/dist/array";
 import { z } from "zod";
 
 export const resultRouter = router({
     results: protectedProcedure
-        .input(z.object({raceId: z.number({ required_error: "raceId is required" })}))
-        .query(async (req) => {
-            const raceId = req.input.raceId;
+        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
 
-            const allPlayers = await db.player.findMany({
+            const allPlayers = await ctx.db.player.findMany({
                 where: { raceId },
                 include: { splitTime: true, manualSplitTime: true }
             });
 
-            const unorderTimingPoints = await db.timingPoint.findMany({ where: { raceId } });
-            const timingPointsOrder = await db.timingPointOrder.findUniqueOrThrow({where: {raceId}});
+            const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+            const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p));
-            const race = await db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
+            const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
             const startTimingPoint = timingPoints.at(0);
             const endTimingPoint = timingPoints.at(-1);
@@ -53,7 +52,7 @@ export const resultRouter = router({
                 }));
 
             return sort(results, r => r.result);
-    })
+        })
 });
 
 export type ResultRouter = typeof resultRouter;

@@ -1,4 +1,3 @@
-import { db } from "../db";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 import { GenderEnum } from "../schema";
@@ -23,17 +22,17 @@ export const classificationRouter =
     router({
         classifications: protectedProcedure.input(z.object({
             raceId: z.number({ required_error: "raceId is required" })
-        })).query(async (req) => {
-            const raceId = req.input.raceId;
-            const classifications = await db.classification.findMany({ where: { raceId } });
+        })).query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+            const classifications = await ctx.db.classification.findMany({ where: { raceId } });
 
             return classifications.map((c, index) => ({ ...c, index: index + 1 }));
         }),
         categories: protectedProcedure.input(z.object({
             classificationId: z.number({ required_error: "classificationId is required" })
-        })).query(async (req) => {
-            const classificationId = req.input.classificationId;
-            const ageCategories = await db.category.findMany({ where: { classificationId } });
+        })).query(async ({ input, ctx }) => {
+            const classificationId = input.classificationId;
+            const ageCategories = await ctx.db.category.findMany({ where: { classificationId } });
 
             return await ageCategoriesSchema.parseAsync(ageCategories);
         }),
@@ -44,19 +43,19 @@ export const classificationRouter =
                 })
             ),
             raceId: z.number().min(1)
-        })).mutation(async (req) => {
-            const { classifications, raceId } = req.input;
+        })).mutation(async ({ input, ctx }) => {
+            const { classifications, raceId } = input;
             classifications.forEach(async classification => {
-                await db.classification.create({ data: { ...classification, raceId } });
+                await ctx.db.classification.create({ data: { ...classification, raceId } });
             });
         }),
-        update: protectedProcedure.input(classificationSchema).mutation(async (req) => {
-            const { id, ...data } = req.input;
+        update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
+            const { id, ...data } = input;
             const { ageCategories, ...classification } = data;
 
             const categories = ageCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
 
-            return await db.classification.update({
+            return await ctx.db.classification.update({
                 where: { id: id! },
                 data: {
                     ...classification,
@@ -66,9 +65,9 @@ export const classificationRouter =
                 }
             });
         }),
-        add: protectedProcedure.input(classificationSchema).mutation(async (req) => {
-            const { id, ...data } = req.input;
-            return await db.classification.create({ data });
+        add: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
+            const { id, ...data } = input;
+            return await ctx.db.classification.create({ data });
         })
     });
 
