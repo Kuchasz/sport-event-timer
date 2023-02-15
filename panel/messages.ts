@@ -274,7 +274,8 @@ export const template = ({ name, lastName, raceName }: { name: string, lastName:
                             margin-bottom: 15px;
                           "
                         >
-                          70194010763227801100000000 <br />
+                          Bank Spółdzielczy Zator <br />
+                          89 8136 0000 0022 6934 2000 0010 <br />
                           Innergy Racing Team <br />
                           Ul. Okrężna 19 <br />
                           32-641 Przeciszów
