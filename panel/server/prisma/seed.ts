@@ -21,7 +21,7 @@ async function main() {
     const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
 
     const _timingPointsOrders = createTimingPointsOrders(races.map(r => r.id), timingPoints);
-    const timingPointsOrders = await db.$transaction(_timingPointsOrders.map(data => db.timingPointOrder.create({data})));
+    const timingPointsOrders = await db.$transaction(_timingPointsOrders.map(data => db.timingPointOrder.create({ data })));
 
     const _stopwatches = createStopwatches(races, players, timingPoints, timingPointsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
@@ -59,7 +59,7 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
                     email: faker.internet.email(),
                     icePhoneNumber: faker.phone.number("###-###-###"),
                     phoneNumber: faker.phone.number("###-###-###"),
-                    startTime: faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime(),
+                    startTime: Math.floor(faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
                     team: faker.company.name()
                 })
             })

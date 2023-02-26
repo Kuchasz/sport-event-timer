@@ -5,6 +5,11 @@ const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
 const hourMillis = minuteMillis * 60;
 
+const minuteSeconds = 60;
+const hourSeconds = minuteSeconds * 60;
+const daySeconds = hourSeconds * 24;
+
+
 export const timeStringToMiliseconds = (timeString: string) => {
     if (!/\d\d:\d\d/gm.test(timeString)) {
         alert("Passed value does not match pattern HH:MM");
@@ -30,6 +35,16 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
         minuteMillis * Number(minutes) +
         hourMillis * Number(hour)
     );
+};
+
+export const formatSecondsToTimeSpan = (seconds: number) => {
+
+    const day = Math.floor(seconds / daySeconds);
+    const hour = Math.floor((seconds - (day * daySeconds)) / hourSeconds);
+    const minute = Math.floor((seconds - (day * daySeconds) - (hour * hourSeconds)) / minuteSeconds);
+    const second = (seconds - (day * daySeconds) - (hour * hourSeconds) - (minute * minuteSeconds));
+
+    return day ? `${day}d ${hour}:${minute}:${second}` : hour ? `${hour}:${minute}:${second}` : minute ? `${minute}:${second}` : second;
 };
 
 export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";

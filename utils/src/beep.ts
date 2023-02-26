@@ -2,16 +2,10 @@ export type BeepFunction = (freq?: number, duration?: number, vol?: number) => v
 export const createBeep = () => {
     if (typeof window === "undefined") return (_freq = 520, _duration = 500, _vol = 100) => undefined;
 
-    // console.log("create.beep");
-
     const ContextConstructor = window.AudioContext || (window as any).webkitAudioContext;
 
     const context = new ContextConstructor();
     if (context.state !== "running") context.resume();
-
-    context.onstatechange = function () {
-        // console.log(context.state);
-    };
 
     const runBeep = (freq: number, duration: number, vol: number) => {
         const oscillator = context.createOscillator();
@@ -27,10 +21,8 @@ export const createBeep = () => {
 
     return ((freq = 520, duration = 500, vol = 100) => {
         if (context.state !== "running") context.resume();
-        // {
-        //     context.resume().then(() => runBeep(freq, duration, vol));
-        // } else {
+
         runBeep(freq, duration, vol);
-        // }
+
     }) as BeepFunction;
 };

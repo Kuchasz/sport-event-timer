@@ -3,15 +3,15 @@ import Icon from "@mdi/react";
 import React from "react";
 import { BeepFunction, createBeep } from "@set/utils/dist/beep";
 import { Clock } from "../../components/clock";
-import { ConfigMenu } from "../../components/config-menu";
-import { Countdown } from "components/countdown";
+import { ConfigMenu } from "../../components/timer/config-menu";
+import { Countdown } from "components/timer/countdown";
 import { sort } from "@set/utils/dist/array";
 import { getCountdownTime } from "@set/utils/dist/datetime";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { timerSettingsAtom } from "timer-states";
+import { timerSettingsAtom } from "states/timer-states";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "connection";
 
@@ -73,7 +73,7 @@ const Timer = () => {
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const { raceId } = useRouter().query;
 
-    const { data: players } = trpc.player.startList.useQuery({ raceId: Number.parseInt(raceId! as string) });
+    const { data: players } = trpc.player.startList.useQuery({ raceId: Number.parseInt(raceId! as string) }, { enabled: raceId !== undefined });
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     // const [players, setPlayers] = useState<ClockListPlayer[]>([]);
@@ -101,17 +101,17 @@ const Timer = () => {
 
             if (miliseconds <= clockTimeout) {
                 const playersWithPosiviteTimeToStart = players
-                    .map((p) => ({
+                    .map(p => ({
                         player: p,
                         timeToStart: p.absoluteStartTime - globalTime,
                     }))
-                    .filter((p) => p.timeToStart > 0);
+                    .filter(p => p.timeToStart > 0);
 
-                const nextPlayers = sort(playersWithPosiviteTimeToStart, (p) => p.timeToStart);
+                const nextPlayers = sort(playersWithPosiviteTimeToStart, p => p.timeToStart);
                 const nextPlayer = nextPlayers[0];
 
                 //it will re-render that react tree each second, too often
-                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map((p) => p.player));
+                setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
 
                 const secondsToNextStart = Math.floor((nextPlayer?.timeToStart || getCountdownTime(globalTime)) / 1_000);
 
@@ -176,7 +176,7 @@ const Timer = () => {
                             >
                                 <div style={{ padding: "0.1em" }} className="flex justify-between">
                                     {nextPlayers.length > 0 ? (
-                                        nextPlayers.map((p) => <NextPlayer key={p.bibNumber} player={p} />)
+                                        nextPlayers.map(p => <NextPlayer key={p.bibNumber} player={p} />)
                                     ) : (
                                         <NoPlayersLeft />
                                     )}

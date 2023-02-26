@@ -1,5 +1,5 @@
 import { TimeKeeperIcon } from "../../../components/stopwatch/time-keeper-icon";
-import { timingPointIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "states/stopwatch-states";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import Icon from "@mdi/react";

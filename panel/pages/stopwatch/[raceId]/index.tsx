@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { timingPointIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "states/stopwatch-states";
 
 type Props = {
 };

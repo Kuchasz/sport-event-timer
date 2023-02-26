@@ -1,4 +1,4 @@
-import { protectedProcedure, router } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { GenderEnum } from "../schema";
@@ -60,7 +60,7 @@ export const playerRouter =
                 });
                 return players as z.TypeOf<typeof stopwatchPlayersSchema>;
             }),
-        startList: protectedProcedure
+        startList: publicProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
             .query(async ({ input, ctx }) => {
                 const { raceId } = input;

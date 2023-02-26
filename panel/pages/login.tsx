@@ -3,7 +3,7 @@ import { logIn } from "../api";
 import { mdiAccountOutline } from "@mdi/js";
 import { useState } from "react";
 import { useAtom } from "jotai";
-import { userAtom } from "stopwatch-states";
+import { userAtom } from "states/stopwatch-states";
 
 // type LoginAppProps = {
 //     onLoggedIn?: () => void;

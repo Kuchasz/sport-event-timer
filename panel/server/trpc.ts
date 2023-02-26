@@ -9,10 +9,11 @@ import superjson from "superjson";
 import { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import { IncomingMessage } from "http";
 import ws from "ws";
-import { db } from "./db";
+// import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
+import { PrismaClient } from "@prisma/client";
 
 type CreateContextOptions = {
     session: Session | null;
@@ -20,7 +21,7 @@ type CreateContextOptions = {
 
 export const createContextInner = async ({ session }: CreateContextOptions) => ({
     session,
-    db
+    db: new PrismaClient()
 });
 
 export const createContext = async (

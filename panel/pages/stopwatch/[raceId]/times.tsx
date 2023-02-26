@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { sortDesc } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useAtom } from "jotai";
-import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { trpc } from "connection";
