@@ -1,7 +1,7 @@
 import { Icon } from "@mdi/react";
 import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
-import { StopWatchMode } from "../../stopwatch-states";
+import { StopWatchMode } from "../../states/stopwatch-states";
 import { useRouter } from "next/router";
 
 type PathTypes = StopWatchMode | "config" | "history";

@@ -1,7 +1,7 @@
 import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { timingPointIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "states/stopwatch-states";
 import { PlayersCheckIn } from "../../../../components/stopwatch/players-check-in";
 import { useTimerDispatch } from "../../../../hooks";
 

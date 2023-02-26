@@ -11,7 +11,7 @@ import { Status } from "../components/stopwatch/status";
 import { uuidv4 } from "@set/utils//dist/uuid";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { connectionStateAtom, timeOffsetAtom, userAtom } from "stopwatch-states";
+import { connectionStateAtom, timeOffsetAtom, userAtom } from "states/stopwatch-states";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 

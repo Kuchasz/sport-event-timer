@@ -3,7 +3,7 @@ import { reassignTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { useTimerDispatch } from "../../../../hooks";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { timingPointIdAtom } from "stopwatch-states";
+import { timingPointIdAtom } from "states/stopwatch-states";
 
 const PlayersReassignTime = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);

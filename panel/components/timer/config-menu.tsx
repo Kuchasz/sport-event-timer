@@ -5,7 +5,7 @@ import {
     mdiFormatFontSizeIncrease,
     mdiWindowClose
     } from "@mdi/js";
-import { TextActions, TimerSettings } from "../pages/timer/[raceId]";
+import { TextActions, TimerSettings } from "../../pages/timer/[raceId]";
 
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (
     <span className="flex items-center py-2 cursor-pointer" onClick={click}>

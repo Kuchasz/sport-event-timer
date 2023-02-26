@@ -5,7 +5,7 @@ import { TimeKeeperIcon } from "./time-keeper-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
 import Link from "next/link";
-import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { useRouter } from "next/router";
 
 import classNames from "classnames";

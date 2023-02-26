@@ -2,7 +2,7 @@ import { onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { trpc } from "./connection";
 import { useSetAtom } from "jotai";
-import { connectionStateAtom, timeOffsetAtom } from "stopwatch-states";
+import { connectionStateAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { logger } from "utils";
 
 export const ServerConnectionHandler = ({

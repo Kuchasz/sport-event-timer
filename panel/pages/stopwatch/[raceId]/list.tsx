@@ -7,7 +7,7 @@ import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-tim
 import { useTimerDispatch, useTimerSelector } from "hooks";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { timingPointIdAtom, timeOffsetAtom } from "stopwatch-states";
+import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import { trpc } from "connection";
