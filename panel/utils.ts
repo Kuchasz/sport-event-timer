@@ -1,5 +1,6 @@
 import { createLogPrinter } from "@set/utils/dist/logger";
 import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
+import { formatNumber } from "@set/utils/dist/datetime";
 
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
@@ -44,7 +45,7 @@ export const formatSecondsToTimeSpan = (seconds: number) => {
     const minute = Math.floor((seconds - (day * daySeconds) - (hour * hourSeconds)) / minuteSeconds);
     const second = (seconds - (day * daySeconds) - (hour * hourSeconds) - (minute * minuteSeconds));
 
-    return day ? `${day}d ${hour}:${minute}:${second}` : hour ? `${hour}:${minute}:${second}` : minute ? `${minute}:${second}` : second;
+    return day ? `${formatNumber(day)}d ${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}` : hour ? `${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}` : minute ? `${formatNumber(minute)}:${formatNumber(second)}` : second;
 };
 
 export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";
