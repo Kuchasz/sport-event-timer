@@ -228,9 +228,17 @@ const Timer = () => {
                         </div>
 
                         <div className="flex w-full flex-grow overflow-y-hidden">
-                            <div className="flex flex-grow flex-col">
+                            <div className="flex flex-grow items-center flex-col">
                                 {clockState.countdown.enabled && (
                                     <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
+                                )}
+                                {clockState.currentPlayer.enabled && nextPlayers.length && (
+                                    <div
+                                    className="transition-all"
+                                        style={{
+                                            fontSize: `${clockState.currentPlayer.size}px`,
+                                        }}
+                                    ><NextPlayer isNext={true} player={nextPlayers[0]}/></div>
                                 )}
                                 {clockState.nextPlayers.enabled && <NextPlayers players={nextPlayers} clockState={clockState} />}
                             </div>
