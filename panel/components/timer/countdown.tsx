@@ -29,10 +29,31 @@ export const Countdown = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
-    const size = useSize(containerRef);
+    const containerSize = useSize(containerRef);
+    const textSize = useSize(textRef);
 
-    // if(textRef.current)
-    //     console.log(textRef.current.getClientRects()[0].width)
+    useEffect(() => {
+        if (textRef.current && containerSize) {
+            // const containerProportion = containerSize.width > containerSize.height;
+            const textSize = {width: textRef.current.offsetWidth, height: textRef.current.offsetHeight};//textRef.current.getBoundingClientRect();
+            // const textProportion = textSize.width > textSize.height;
+
+            const scale = Math.min(containerSize.width/textSize.width, containerSize.height/textSize.height)
+
+            textRef.current.style.transform = `scale(${scale})`;
+
+            // if (containerProportion > textProportion) {
+            //     const scale = containerSize.height / textSize.height;
+            //     textRef.current.style.transform = `scale(${scale})`;
+            //     //math by height
+            // } else {
+            //     const scale =
+            //         textSize.width > containerSize.width ? 1 - containerSize.width / textSize.width : containerSize.width / textSize.width;
+            //     textRef.current.style.transform = `scale(${scale})`;
+            //     //math by width
+            // }
+        }
+    }, [containerSize, textSize]);
 
     useEffect(() => {
         if (beep && secondsToPlay.includes(seconds)) {
@@ -59,7 +80,7 @@ export const Countdown = ({
                 {/* {seconds} */}
                 {formatSecondsToTimeSpan(seconds)}
             </div>
-            {JSON.stringify(size)}
+            {/* {JSON.stringify(containerSize)} */}
         </div>
     );
 };
