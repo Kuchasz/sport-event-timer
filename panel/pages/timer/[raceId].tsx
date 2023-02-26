@@ -147,13 +147,16 @@ const Timer = () => {
 
     useEffect(() => {
         if (globalTimeOffset === undefined || players === undefined) return;
-        const clockStartTimeLatency = new Date().getMilliseconds();
-        const secondsToPlayerInterval = setInterval(() => {
+        //const clockStartTimeMiliseconds = new Date().getMilliseconds();
+        const tickSecondsToPlayer = () => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds() - clockStartTimeLatency;
+            const miliseconds = globalDateTime.getMilliseconds()// - clockStartTimeMiliseconds + 1_000;
+
+            //console.log(globalDateTime.getMilliseconds(), clockStartTimeMiliseconds, clockTimeout);
 
             if (miliseconds <= clockTimeout) {
+                console.log(miliseconds);
                 const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
 
                 const nextPlayer = nextPlayers[0];
@@ -161,16 +164,18 @@ const Timer = () => {
                 //it will re-render that react tree each second, too often
                 // setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
 
-                setNextPlayers(nextPlayers.slice(0, clockState.nextPlayers.count));
-
                 const nextPlayerTimeToStart = nextPlayer?.absoluteStartTime - globalTime;
 
                 const secondsToNextStart = Math.floor((nextPlayerTimeToStart || getCountdownTime(globalTime)) / 1_000);
 
+                setNextPlayers(nextPlayers.slice(0, clockState.nextPlayers.count));
                 setSecondsToNextPlayer(secondsToNextStart);
                 setGlobalTime(globalTime);
             }
-        }, clockTimeout);
+        };
+
+        tickSecondsToPlayer();
+        const secondsToPlayerInterval = setInterval(tickSecondsToPlayer, clockTimeout);
 
         return () => {
             clearInterval(secondsToPlayerInterval);
@@ -232,13 +237,15 @@ const Timer = () => {
                                 {clockState.countdown.enabled && (
                                     <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
                                 )}
-                                {clockState.currentPlayer.enabled && nextPlayers.length && (
+                                {clockState.currentPlayer.enabled && nextPlayers.length > 0 && (
                                     <div
-                                    className="transition-all"
+                                        className="transition-all"
                                         style={{
                                             fontSize: `${clockState.currentPlayer.size}px`,
                                         }}
-                                    ><NextPlayer isNext={true} player={nextPlayers[0]}/></div>
+                                    >
+                                        <NextPlayer isNext={true} player={nextPlayers[0]} />
+                                    </div>
                                 )}
                                 {clockState.nextPlayers.enabled && <NextPlayers players={nextPlayers} clockState={clockState} />}
                             </div>

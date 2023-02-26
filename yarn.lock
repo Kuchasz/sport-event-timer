@@ -1063,7 +1063,7 @@ __metadata:
     dotenv: ^16.0.0
     event-stream: ^4.0.1
     fastq: ^1.13.0
-    jotai: ^1.7.8
+    jotai: ^2.0.2
     jspdf: ^2.5.1
     jspdf-autotable: ^3.5.25
     next: ^13.2.1
@@ -3927,43 +3927,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^1.7.8":
-  version: 1.10.0
-  resolution: "jotai@npm:1.10.0"
+"jotai@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "jotai@npm:2.0.2"
   peerDependencies:
-    "@babel/core": "*"
-    "@babel/template": "*"
-    jotai-immer: "*"
-    jotai-optics: "*"
-    jotai-redux: "*"
-    jotai-tanstack-query: "*"
-    jotai-urql: "*"
-    jotai-valtio: "*"
-    jotai-xstate: "*"
-    jotai-zustand: "*"
-    react: ">=16.8"
+    react: ">=17.0.0"
   peerDependenciesMeta:
-    "@babel/core":
+    react:
       optional: true
-    "@babel/template":
-      optional: true
-    jotai-immer:
-      optional: true
-    jotai-optics:
-      optional: true
-    jotai-redux:
-      optional: true
-    jotai-tanstack-query:
-      optional: true
-    jotai-urql:
-      optional: true
-    jotai-valtio:
-      optional: true
-    jotai-xstate:
-      optional: true
-    jotai-zustand:
-      optional: true
-  checksum: 72047e84fc24916ea3054822cfe85b381102b5eeae61c36e8d52700b7679b8b10d44f2a7aa545b7efc7c15257f9ed410c90769889141ffe9db925424b2a5d79e
+  checksum: f107d2b8e3b0853cf3fb3978e3a8b0d5b4925957d1901d038ddf534de7f1967d6bfd81b1ef69442fc3d8047176933bf3d9c9b5830d8a01b02ee1daae6d412ef3
   languageName: node
   linkType: hard
 
