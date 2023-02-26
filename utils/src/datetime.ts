@@ -26,6 +26,7 @@ export const getCountdownTime = (time: number) => {
 export const formatTimeNoSec = (time?: number) => {
     if (!time) return "--:--";
     const dateTime = new Date(time);
+
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
 };
 

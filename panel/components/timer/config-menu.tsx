@@ -5,7 +5,8 @@ import {
     mdiFormatFontSizeIncrease,
     mdiWindowClose
     } from "@mdi/js";
-import { TextActions, TimerSettings } from "../../pages/timer/[raceId]";
+import { TextActions } from "../../pages/timer/[raceId]";
+import { TimerSettings } from "states/timer-states";
 
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (
     <span className="flex items-center py-2 cursor-pointer" onClick={click}>
@@ -76,7 +77,8 @@ export const ConfigMenu = ({
                 <div>
                     <ConfigMenuOption actions={textActions("clock")} showDivider={false} name="Zegar" />
                     <ConfigMenuOption actions={textActions("countdown", 6)} showDivider={true} name="Stoper" />
-                    <ConfigMenuOption actions={textActions("players")} showDivider={true} name="Zawodnicy" />
+                    <ConfigMenuOption actions={textActions("nextPlayers")} showDivider={true} name="Następni zawodnicy" />
+                    <ConfigMenuOption actions={textActions("players")} showDivider={true} name="Lista zawodników" />
                 </div>
             </div>
         </div>

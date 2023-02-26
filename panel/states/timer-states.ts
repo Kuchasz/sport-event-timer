@@ -9,14 +9,16 @@ export type TimerSettings = {
     showSettings: boolean;
     clock: TextSettings;
     countdown: TextSettings;
-    players: TextSettings & { count: number };
+    nextPlayers: TextSettings & { count: number, showTime: boolean };
+    players: TextSettings;
 };
 
 const defaultTimerSettings: TimerSettings = {
     showSettings: false,
     clock: { enabled: true, size: 6 },
     countdown: { enabled: true, size: 40 },
-    players: { enabled: true, size: 14, count: 3 },
+    nextPlayers: { enabled: true, size: 14, count: 3, showTime: false },
+    players: { enabled: true, size: 14 }
 };
 
 export const timerSettingsAtom = atomWithStorage<TimerSettings>("set.timerSettings", defaultTimerSettings);

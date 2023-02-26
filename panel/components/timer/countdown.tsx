@@ -42,11 +42,11 @@ export const Countdown = ({
     }, [seconds, beep]);
 
     return (
-        <div ref={container} className="flex-grow w-full flex flex-col items-center justify-center bg-red-900">
+        <div ref={container} className="flex-grow w-full flex flex-col items-center justify-center">
             <div
-                style={{ fontSize: `${fontSize}vh`, lineHeight: 1 }}
+                style={{ fontSize: `${fontSize}vh` }}
                 className={classNames(
-                    ["font-mono font-black transition-all text-center"],
+                    ["font-mono font-black leading-none transition-all text-center"],
                     {
                         ["text-white"]: seconds > 4,
                         ["text-orange-500"]: seconds <= 4
@@ -56,7 +56,6 @@ export const Countdown = ({
                 {/* {seconds} */}
                 {formatSecondsToTimeSpan(seconds)}
             </div>
-            <div className="bg-green-900">{JSON.stringify(size)}</div>
         </div>
     );
 };
