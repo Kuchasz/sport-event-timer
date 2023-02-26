@@ -1,22 +1,22 @@
 import classNames from "classnames";
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
-// import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
-// import useResizeObserver from "@react-hook/resize-observer";
+import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import useResizeObserver from "@react-hook/resize-observer";
 import { formatSecondsToTimeSpan } from "utils";
 
 const secondsToPlay = [0, 1, 2, 3, 4, 5];
 
-// const useSize = <T extends HTMLElement,>(target: RefObject<T>) => {
-//     const [size, setSize] = useState<DOMRect>()
-  
-//     useLayoutEffect(() => {
-//       setSize(target?.current?.getBoundingClientRect())
-//     }, [target])
-  
-//     useResizeObserver(target, (entry) => setSize(entry.contentRect))
-//     return size
-//   };
+const useSize = <T extends HTMLElement>(target: RefObject<T>) => {
+    const [size, setSize] = useState<DOMRect>();
+
+    useLayoutEffect(() => {
+        setSize(target?.current?.getBoundingClientRect());
+    }, [target]);
+
+    useResizeObserver(target, entry => setSize(entry.contentRect));
+    return size;
+};
 
 export const Countdown = ({
     seconds,
@@ -27,8 +27,12 @@ export const Countdown = ({
     fontSize: number;
     beep?: (freq?: number, duration?: number, vol?: number) => void;
 }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const textRef = useRef<HTMLDivElement>(null);
+    const size = useSize(containerRef);
 
-    const container = useRef<HTMLDivElement>(null);
+    // if(textRef.current)
+    //     console.log(textRef.current.getClientRects()[0].width)
 
     useEffect(() => {
         if (beep && secondsToPlay.includes(seconds)) {
@@ -43,20 +47,19 @@ export const Countdown = ({
     }, [seconds, beep]);
 
     return (
-        <div ref={container} className="flex-grow w-full flex flex-col items-center justify-center">
+        <div ref={containerRef} className="flex-grow w-full flex flex-col items-center justify-center">
             <div
+                ref={textRef}
                 style={{ fontSize: `${fontSize}vh` }}
-                className={classNames(
-                    ["font-mono font-black leading-none transition-all text-center"],
-                    {
-                        ["text-white"]: seconds > 4,
-                        ["text-orange-500"]: seconds <= 4
-                    }
-                )}
+                className={classNames(["font-mono font-black leading-none transition-all text-center"], {
+                    ["text-white"]: seconds > 4,
+                    ["text-orange-500"]: seconds <= 4,
+                })}
             >
                 {/* {seconds} */}
                 {formatSecondsToTimeSpan(seconds)}
             </div>
+            {JSON.stringify(size)}
         </div>
     );
 };

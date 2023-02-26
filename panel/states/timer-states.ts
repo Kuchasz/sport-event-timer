@@ -18,7 +18,7 @@ const defaultTimerSettings: TimerSettings = {
     showSettings: false,
     clock: { enabled: true, size: 4 },
     countdown: { enabled: true, size: 40 },
-    nextPlayers: { enabled: true, size: 14, count: 3, showTime: false },
+    nextPlayers: { enabled: true, size: 24, count: 3, showTime: false },
     players: { enabled: false, size: 14 },
     currentPlayer: { enabled: true, size: 64 }
 };
