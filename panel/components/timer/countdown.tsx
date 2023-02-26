@@ -27,7 +27,6 @@ export const Countdown = ({
 }) => {
 
     const container = useRef<HTMLDivElement>(null);
-    const size = useSize(container);
 
     useEffect(() => {
         if (beep && secondsToPlay.includes(seconds)) {
