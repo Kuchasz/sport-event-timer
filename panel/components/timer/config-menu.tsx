@@ -67,14 +67,14 @@ export const ConfigMenu = ({
 
     return (
         <div className="absolute left-0 top-0 h-full select-none">
-            <div className="w-80 bg-zinc-100 h-full text-zinc-600 overflow-y-auto">
-                <div className="flex p-2 items-center justify-between bg-orange-500 text-white text-2xl mb-4 font-medium">
+            <div className="w-80 bg-zinc-100 h-full text-zinc-600 overflow-y-hidden">
+                <div className="flex p-2 items-center justify-between bg-orange-500 text-white text-2xl font-medium">
                     Ustawienia
                     <div onClick={toggleMenu}>
                         <Icon className="cursor-pointer m-2" size={1} path={mdiWindowClose} />
                     </div>
                 </div>
-                <div>
+                <div className="h-full overflow-y-auto">
                     <ConfigMenuOption actions={textActions("clock")} showDivider={false} name="Zegar" />
                     <ConfigMenuOption actions={textActions("countdown", 6)} showDivider={true} name="Stoper" />
                     <ConfigMenuOption actions={textActions("nextPlayers")} showDivider={true} name="Następni zawodnicy" />

@@ -3,7 +3,7 @@ import { formatTimeWithSec } from "@set/utils/dist/datetime";
 const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
     <div
         style={{ fontSize: `${fontSize}rem` }}
-        className="leading-none font-mono text-white text-center transition-all"
+        className="leading-none p-2 self-center font-mono text-white text-center transition-all"
     >
         {formatTimeWithSec(time)}
     </div>
