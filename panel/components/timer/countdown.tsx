@@ -1,20 +1,22 @@
 import classNames from "classnames";
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
-import useResizeObserver from "@react-hook/resize-observer";
+import { useEffect, useRef } from "react";
+
+// import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+// import useResizeObserver from "@react-hook/resize-observer";
 import { formatSecondsToTimeSpan } from "utils";
 
 const secondsToPlay = [0, 1, 2, 3, 4, 5];
 
-const useSize = <T extends HTMLElement,>(target: RefObject<T>) => {
-    const [size, setSize] = useState<DOMRect>()
+// const useSize = <T extends HTMLElement,>(target: RefObject<T>) => {
+//     const [size, setSize] = useState<DOMRect>()
   
-    useLayoutEffect(() => {
-      setSize(target?.current?.getBoundingClientRect())
-    }, [target])
+//     useLayoutEffect(() => {
+//       setSize(target?.current?.getBoundingClientRect())
+//     }, [target])
   
-    useResizeObserver(target, (entry) => setSize(entry.contentRect))
-    return size
-  };
+//     useResizeObserver(target, (entry) => setSize(entry.contentRect))
+//     return size
+//   };
 
 export const Countdown = ({
     seconds,
