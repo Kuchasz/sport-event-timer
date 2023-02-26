@@ -34,20 +34,24 @@ const clockTimeout = 100;
 const NextPlayer = ({
     padBib,
     isNext,
+    hasPassed,
     showTime,
     player,
 }: {
     padBib?: number;
+    hasPassed?: boolean;
     isNext: boolean;
     showTime?: boolean;
     player: StartListPlayer;
 }) => {
-    const bibText = padBib ? '&nbsp;'.repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber : player.bibNumber?.toString() || '';
+    const bibText = padBib
+        ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
+        : player.bibNumber?.toString() || "";
     return (
-        <span className={classNames("flex items-center mx-1", { ["font-semibold text-orange-500"]: isNext })}>
+        <span className={classNames("flex items-center mx-1", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
             <Icon className={classNames("visible", { ["invisible"]: !isNext })} size="2em" path={mdiChevronDoubleRight} />
             {showTime && <span className="font-mono font-bold">{formatTimeNoSec(player.absoluteStartTime)}</span>}
-            <div className="p-1 font-mono" dangerouslySetInnerHTML={{__html: bibText}}></div>
+            <div className="p-1 font-mono" dangerouslySetInnerHTML={{ __html: bibText }}></div>
             {player.name} {player.lastName}
         </span>
     );
@@ -89,6 +93,7 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
 const Players = ({ globalTime, clockState, players }: { globalTime: number; clockState: TimerSettings; players: StartListPlayer[] }) => {
     const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
     const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
+    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : 0;
     return (
         <div
             style={{
@@ -97,10 +102,11 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
             className="leading-none max-w-[30%] transition-all w-full overflow-y-auto"
         >
             <div style={{ padding: "0.1em" }} className="flex flex-col overflow-y-auto justify-between">
-                {players.map(p => (
+                {players.map((p, index) => (
                     <NextPlayer
                         padBib={maxBibNumber}
                         isNext={p.bibNumber === nextStartPlayer?.bibNumber}
+                        hasPassed={index < nextStartPlayerIndex}
                         showTime={true}
                         key={p.bibNumber}
                         player={p}
@@ -209,7 +215,18 @@ const Timer = () => {
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
-                        {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
+                        <div className="flex w-full justify-between">
+                            <div className="flex">
+                                <div onClick={toggleMenu} className="cursor-pointer p-4">
+                                    <Icon size={1.5} path={mdiCog} />
+                                </div>
+                                <div onClick={toggleSoundEnabled} className="cursor-pointer p-4">
+                                    <Icon size={1.5} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
+                                </div>
+                            </div>
+                            {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
+                        </div>
+
                         <div className="flex w-full flex-grow overflow-y-hidden">
                             <div className="flex flex-grow flex-col">
                                 {clockState.countdown.enabled && (
@@ -219,16 +236,9 @@ const Timer = () => {
                             </div>
                             {clockState.players.enabled && <Players globalTime={globalTime} players={players} clockState={clockState} />}
                         </div>
-                        {clockState.showSettings ? (
+                        {clockState.showSettings && (
                             <ConfigMenu clockState={clockState} toggleMenu={toggleMenu} setClockState={setClockState} />
-                        ) : (
-                            <div onClick={toggleMenu} className="cursor-pointer absolute top-0 left-0 p-4">
-                                <Icon size={2} path={mdiCog} />
-                            </div>
                         )}
-                        <div onClick={toggleSoundEnabled} className="cursor-pointer absolute top-0 right-0 p-4">
-                            <Icon size={2} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
-                        </div>
                     </div>
                 )}
             </div>
