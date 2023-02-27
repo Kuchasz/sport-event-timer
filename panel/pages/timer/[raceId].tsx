@@ -93,7 +93,7 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
 const Players = ({ globalTime, clockState, players }: { globalTime: number; clockState: TimerSettings; players: StartListPlayer[] }) => {
     const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
     const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
-    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : 0;
+    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : players.length;
     return (
         <div
             style={{
@@ -156,7 +156,7 @@ const Timer = () => {
             //console.log(globalDateTime.getMilliseconds(), clockStartTimeMiliseconds, clockTimeout);
 
             if (miliseconds <= clockTimeout) {
-                console.log(miliseconds);
+
                 const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
 
                 const nextPlayer = nextPlayers[0];
