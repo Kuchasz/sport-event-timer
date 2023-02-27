@@ -29,7 +29,7 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 50;
+const clockTimeout = 100;
 
 const NextPlayer = ({
     padBib,
