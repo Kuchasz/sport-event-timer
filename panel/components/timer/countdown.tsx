@@ -34,24 +34,9 @@ export const Countdown = ({
 
     useEffect(() => {
         if (textRef.current && containerSize) {
-            // const containerProportion = containerSize.width > containerSize.height;
-            const textSize = {width: textRef.current.offsetWidth, height: textRef.current.offsetHeight};//textRef.current.getBoundingClientRect();
-            // const textProportion = textSize.width > textSize.height;
-
-            const scale = Math.min(containerSize.width/textSize.width, containerSize.height/textSize.height)
-
+            const textSize = { width: textRef.current.offsetWidth, height: textRef.current.offsetHeight };
+            const scale = Math.min(containerSize.width / textSize.width, containerSize.height / textSize.height);
             textRef.current.style.transform = `scale(${scale})`;
-
-            // if (containerProportion > textProportion) {
-            //     const scale = containerSize.height / textSize.height;
-            //     textRef.current.style.transform = `scale(${scale})`;
-            //     //math by height
-            // } else {
-            //     const scale =
-            //         textSize.width > containerSize.width ? 1 - containerSize.width / textSize.width : containerSize.width / textSize.width;
-            //     textRef.current.style.transform = `scale(${scale})`;
-            //     //math by width
-            // }
         }
     }, [containerSize, textSize]);
 
