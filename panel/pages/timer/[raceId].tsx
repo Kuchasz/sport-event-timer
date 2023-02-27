@@ -151,12 +151,11 @@ const Timer = () => {
         const tickSecondsToPlayer = () => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds()// - clockStartTimeMiliseconds + 1_000;
+            const miliseconds = globalDateTime.getMilliseconds(); // - clockStartTimeMiliseconds + 1_000;
 
             //console.log(globalDateTime.getMilliseconds(), clockStartTimeMiliseconds, clockTimeout);
 
             if (miliseconds <= clockTimeout) {
-
                 const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
 
                 const nextPlayer = nextPlayers[0];
@@ -183,7 +182,9 @@ const Timer = () => {
     }, [globalTimeOffset, players]);
 
     useEffect(() => {
+        
         let loadStartTime = Date.now();
+        let timeout: NodeJS.Timeout;
 
         const requestTimeSync = async () => {
             const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
@@ -194,18 +195,16 @@ const Timer = () => {
 
             setGlobalTimeOffset(timeOffset);
 
-            if (latency <= 200) {
-                clearInterval(timeSyncInterval);
+            if (latency >= 200) {
+                loadStartTime = Date.now();
+                timeout = setTimeout(requestTimeSync, 1000);
             }
         };
 
-        const timeSyncInterval = setInterval(() => {
-            loadStartTime = Date.now();
-            requestTimeSync();
-        }, 1000);
+        requestTimeSync();
 
         return () => {
-            clearInterval(timeSyncInterval);
+            clearTimeout(timeout);
         };
     }, []);
 
