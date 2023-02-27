@@ -42,9 +42,10 @@ export const ServerConnectionHandler = ({
 
         refetchState();
 
-        let loadStartTime = Date.now();
+        // let loadStartTime = Date.now();
         let timeout: NodeJS.Timeout;
         const requestTimeSync = async () => {
+            const loadStartTime = Date.now();
             const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
             const loadEndTime = Date.now();
             const latency = loadEndTime - loadStartTime;
@@ -54,7 +55,6 @@ export const ServerConnectionHandler = ({
             setTimeOffset(timeOffset);
 
             if (latency > 200) {
-                loadStartTime = Date.now();
                 timeout = setTimeout(requestTimeSync, 1000);
             }
         };
