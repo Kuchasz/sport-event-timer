@@ -204,10 +204,11 @@ const Timer = () => {
 
             const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
 
-            setSystemTime({
-                timeOffset,
-                latency,
-            });
+            if (!systemTime || latency < systemTime.latency)
+                setSystemTime({
+                    timeOffset,
+                    latency,
+                });
 
             if (latency > allowedLatency) {
                 timeout = setTimeout(requestTimeSync, 1000);
