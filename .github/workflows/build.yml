@@ -13,22 +13,22 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
+            - name: Set up Node.js version
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "16"
+                  cache: 'yarn'
+
             - uses: actions/cache@v3
-              id: yarn-cache
               with:
                   path: |
                       ~./npm
-                      ${{ github.workspace }}/.next/cache
+                      ${{ github.workspace }}/panel/.next/cache
                       **/node_modules
                       ${{ steps.yarn-cache-dir-path.outputs.dir }}
                   key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
                   restore-keys: |
                       ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
-
-            - name: Set up Node.js version
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "16"
 
             - name: Install dependencies
               run: yarn install
