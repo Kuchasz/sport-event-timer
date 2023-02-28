@@ -204,15 +204,13 @@ const Timer = () => {
 
             const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
 
-            if (!systemTime || latency < systemTime.latency)
+            if (systemTime === undefined || latency < systemTime.latency)
                 setSystemTime({
                     timeOffset,
                     latency,
                 });
 
-            if (latency > allowedLatency) {
-                timeout = setTimeout(requestTimeSync, 1000);
-            }
+            if (latency > allowedLatency) timeout = setTimeout(requestTimeSync, 1000);
         };
 
         requestTimeSync();
@@ -220,7 +218,7 @@ const Timer = () => {
         return () => {
             clearTimeout(timeout);
         };
-    }, []);
+    }, [systemTime]);
 
     return (
         <>
