@@ -86,3 +86,5 @@ export const onConnectionStateChanged = (handler: ConnectionStateHandler) => {
         onStateChangedHandlers.splice(onStateChangedHandlers.indexOf(handler), 1);
     };
 }; //possible memory leaks
+
+export const allowedLatency = 200;

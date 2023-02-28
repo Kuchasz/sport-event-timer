@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { TimerSettings, timerSettingsAtom } from "states/timer-states";
 import { AppRouterOutputs } from "trpc";
-import { trpc } from "connection";
+import { allowedLatency, trpc } from "connection";
 import classNames from "classnames";
 
 type StartListPlayer = AppRouterOutputs["player"]["startList"][0];
@@ -183,7 +183,6 @@ const Timer = () => {
 
     useEffect(() => {
 
-        // let loadStartTime = Date.now();
         let timeout: NodeJS.Timeout;
 
         const requestTimeSync = async () => {
@@ -196,7 +195,7 @@ const Timer = () => {
 
             setGlobalTimeOffset(timeOffset);
 
-            if (latency >= 200) {
+            if (latency > allowedLatency) {
                 timeout = setTimeout(requestTimeSync, 1000);
             }
         };
