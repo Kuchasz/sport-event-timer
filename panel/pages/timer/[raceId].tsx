@@ -130,7 +130,6 @@ const Timer = () => {
     );
     const ntpMutation = trpc.ntp.sync.useMutation();
 
-    // const [players, setPlayers] = useState<ClockListPlayer[]>([]);
     const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
 
@@ -147,13 +146,11 @@ const Timer = () => {
 
     useEffect(() => {
         if (globalTimeOffset === undefined || players === undefined) return;
-        //const clockStartTimeMiliseconds = new Date().getMilliseconds();
+
         const tickSecondsToPlayer = () => {
             const globalTime = Date.now() + globalTimeOffset;
             const globalDateTime = new Date(globalTime);
             const miliseconds = globalDateTime.getMilliseconds(); // - clockStartTimeMiliseconds + 1_000;
-
-            //console.log(globalDateTime.getMilliseconds(), clockStartTimeMiliseconds, clockTimeout);
 
             if (miliseconds <= clockTimeout) {
                 const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);

@@ -38,11 +38,8 @@ export const ServerConnectionHandler = ({
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     useEffect(() => {
-        // socket.on("receive-state", state => dispatch({ type: "REPLACE_STATE", state, __remote: true }));
-
         refetchState();
 
-        // let loadStartTime = Date.now();
         let timeout: NodeJS.Timeout;
         const requestTimeSync = async () => {
             const loadStartTime = Date.now();
