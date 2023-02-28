@@ -1,4 +1,4 @@
-import { onConnectionStateChanged } from "./connection";
+import { allowedLatency, onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
 import { trpc } from "./connection";
 import { useSetAtom } from "jotai";
@@ -54,7 +54,7 @@ export const ServerConnectionHandler = ({
 
             setTimeOffset(timeOffset);
 
-            if (latency > 200) {
+            if (latency > allowedLatency) {
                 timeout = setTimeout(requestTimeSync, 1000);
             }
         };
