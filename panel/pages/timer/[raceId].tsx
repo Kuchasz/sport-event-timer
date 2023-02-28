@@ -94,8 +94,13 @@ const Latency = ({ latency }: { latency: number }) => {
     const [showLatency, setShowLatency] = useState<boolean>(false);
     return (
         <div className="p-2 flex items-center" onClick={() => setShowLatency(!showLatency)}>
-            <span className={classNames("block rounded-full w-4 h-4 bg-orange-400")}></span>
-            <span className={classNames("ml-2 transition-opacity font-semibold", {['opacity-0']: !showLatency})}>{latency}ms</span>
+            <span
+                className={classNames("block rounded-full w-4 h-4", {
+                    ["bg-orange-500"]: latency > allowedLatency,
+                    ["bg-lime-500"]: latency <= allowedLatency,
+                })}
+            ></span>
+            <span className={classNames("ml-2 transition-opacity font-semibold", { ["opacity-0"]: !showLatency })}>{latency}ms</span>
         </div>
     );
 };
