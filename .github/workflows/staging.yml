@@ -21,9 +21,9 @@ jobs:
                       ${{ github.workspace }}/.next/cache
                       **/node_modules
                       ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
                   restore-keys: |
-                      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
 
             - name: Set up Node.js version
               uses: actions/setup-node@v3
