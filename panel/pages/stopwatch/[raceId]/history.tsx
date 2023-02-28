@@ -2,13 +2,8 @@ import { formatTime } from "@set/utils/dist/datetime";
 import { sortDesc } from "@set/utils/dist/array";
 import { HistoricAction } from "@set/timer/dist/model";
 import { useTimerSelector } from "../../../hooks";
-// import { reset } from "@set/timer/dist/slices/time-stamps";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
-    // if (reset.match(historicAction.action)) {
-    //     return null;
-    // }
-
     return (
         <div className="my-1 flex py-2 px-3 items-center justify-between relative rounded-xl shadow bg-white">
             <div className="flex flex-col text-sm">
