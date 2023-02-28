@@ -90,6 +90,16 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
     );
 };
 
+const Latency = ({ latency }: { latency: number }) => {
+    const [showLatency, setShowLatency] = useState<boolean>(false);
+    return (
+        <div className="p-2 flex items-center" onClick={() => setShowLatency(!showLatency)}>
+            <span className={classNames("block rounded-full w-4 h-4 bg-orange-400")}></span>
+            <span className={classNames("ml-2 transition-opacity font-semibold", {['opacity-0']: !showLatency})}>{latency}ms</span>
+        </div>
+    );
+};
+
 const Players = ({ globalTime, clockState, players }: { globalTime: number; clockState: TimerSettings; players: StartListPlayer[] }) => {
     const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
     const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
@@ -118,7 +128,7 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
 };
 
 const Timer = () => {
-    const [globalTimeOffset, setGlobalTimeOffset] = useState<number>();
+    const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
     const [globalTime, setGlobalTime] = useState<number>();
     const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
@@ -145,10 +155,10 @@ const Timer = () => {
     };
 
     useEffect(() => {
-        if (globalTimeOffset === undefined || players === undefined) return;
+        if (systemTime === undefined || players === undefined) return;
 
         const tickSecondsToPlayer = () => {
-            const globalTime = Date.now() + globalTimeOffset;
+            const globalTime = Date.now() + systemTime.timeOffset;
             const globalDateTime = new Date(globalTime);
             const miliseconds = globalDateTime.getMilliseconds(); // - clockStartTimeMiliseconds + 1_000;
 
@@ -176,10 +186,9 @@ const Timer = () => {
         return () => {
             clearInterval(secondsToPlayerInterval);
         };
-    }, [globalTimeOffset, players]);
+    }, [systemTime, players]);
 
     useEffect(() => {
-
         let timeout: NodeJS.Timeout;
 
         const requestTimeSync = async () => {
@@ -190,7 +199,10 @@ const Timer = () => {
 
             const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
 
-            setGlobalTimeOffset(timeOffset);
+            setSystemTime({
+                timeOffset,
+                latency,
+            });
 
             if (latency > allowedLatency) {
                 timeout = setTimeout(requestTimeSync, 1000);
@@ -216,13 +228,14 @@ const Timer = () => {
                 ) : (
                     <div className="w-full h-full flex flex-col items-center">
                         <div className="flex w-full justify-between">
-                            <div className="flex">
+                            <div className="flex self-start items-center">
                                 <div onClick={toggleMenu} className="cursor-pointer p-4">
                                     <Icon size={1.5} path={mdiCog} />
                                 </div>
                                 <div onClick={toggleSoundEnabled} className="cursor-pointer p-4">
                                     <Icon size={1.5} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
                                 </div>
+                                {systemTime && <Latency latency={systemTime.latency} />}
                             </div>
                             {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
                         </div>
