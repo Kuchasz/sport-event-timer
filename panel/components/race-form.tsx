@@ -6,6 +6,7 @@ import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
+import { PoorNumberInput } from "./poor-number-input";
 
 type Race = AppRouterInputs["race"]["add"];
 
@@ -28,6 +29,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                 <div className="grow">
                     <Label>Date</Label>
                     <PoorDatepicker value={race.date} onChange={changeHandler("date")} />
+                </div>
+            </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>Players limit</Label>
+                    <PoorNumberInput value={race.playersLimit} onChange={changeHandler("playersLimit")} />
                 </div>
             </div>
             <div className="mt-4 flex">

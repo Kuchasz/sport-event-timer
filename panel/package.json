@@ -52,6 +52,7 @@
         "dotenv": "^16.0.0",
         "event-stream": "^4.0.1",
         "fastq": "^1.13.0",
+        "fuzzysort": "^2.0.4",
         "jotai": "^2.0.2",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.25",
