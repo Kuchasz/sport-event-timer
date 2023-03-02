@@ -8,11 +8,11 @@ import "../globals.scss";
 import type { Session } from "next-auth";
 import "react-data-grid/lib/styles.css";
 import { ResultApp } from "apps/result";
+import { RegistrationApp } from "apps/registration";
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 
 const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps }, router }) => {
-
     return router.pathname.startsWith("/panel") ? (
         <SessionProvider session={session}>
             <PanelApp Component={Component} pageProps={pageProps} router={router} />
@@ -23,6 +23,8 @@ const App: AppType<{ session: Session | null }> = ({ Component, pageProps: { ses
         </SessionProvider>
     ) : router.pathname.startsWith("/result") ? (
         <ResultApp Component={Component} pageProps={pageProps} router={router} />
+    ) : router.pathname.startsWith("/registration") ? (
+        <RegistrationApp Component={Component} pageProps={pageProps} router={router} />
     ) : router.pathname.startsWith("/timer") ? (
         <TimerApp Component={Component} pageProps={pageProps} router={router} />
     ) : (

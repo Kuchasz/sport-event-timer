@@ -4,7 +4,8 @@ import { z } from "zod";
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
     name: z.string({ required_error: "name is required" }),
-    date: z.date({ required_error: "date is required" })
+    date: z.date({ required_error: "date is required" }),
+    playersLimit: z.number().int().positive().nullish()
 });
 
 export const raceRouter =

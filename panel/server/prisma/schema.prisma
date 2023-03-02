@@ -59,6 +59,7 @@ model Race {
     id                   Int                    @id @default(autoincrement())
     name                 String
     date                 DateTime
+    playersLimit         Int?
     classifications      Classification[]
     timeKeeper           TimingPoint[]
     player               Player[]
