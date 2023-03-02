@@ -87,4 +87,4 @@ export const onConnectionStateChanged = (handler: ConnectionStateHandler) => {
     };
 }; //possible memory leaks
 
-export const allowedLatency = 50;
+export const allowedLatency = 200;
