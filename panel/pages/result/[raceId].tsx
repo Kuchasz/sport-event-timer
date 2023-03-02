@@ -6,7 +6,7 @@ const Result = () => {
     const {
         query: { raceId },
     } = useRouter();
-    const { data: results } = trpc.result.results.useQuery({ raceId: parseInt(raceId! as string) });
+    const { data: results } = trpc.result.results.useQuery({ raceId: parseInt(raceId! as string) }, { enabled: raceId !== undefined });
 
     return (
         <div className="container flex justify-center mx-auto">
