@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import PoorCombo from "components/poor-combo";
 import { trpc } from "connection";
-import { countryCodes } from "contry-codes";
+// import { countryCodes } from "contry-codes";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -86,11 +86,11 @@ const RegistrationFormComponent = ({
                 </div>
                 <div>
                     <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900">
-                        Team
+                        Team (optional)
                     </label>
                     <PoorCombo name="team" id="team" placeholder="team name" items={teams} />
                 </div>
-                <div>
+                {/* <div>
                     <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">
                         City
                     </label>
@@ -112,7 +112,6 @@ const RegistrationFormComponent = ({
                         id="country"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
                         placeholder="country"
-                        defaultValue="PL"
                         required
                         disabled={disabled}
                     >
@@ -163,7 +162,7 @@ const RegistrationFormComponent = ({
                         placeholder="emergency phone number"
                         disabled={disabled}
                     />
-                </div>
+                </div> */}
                 <div className="flex items-start">
                     <div className="flex items-center h-5">
                         <input
@@ -177,9 +176,12 @@ const RegistrationFormComponent = ({
                     <div className="ml-3 text-sm">
                         <label htmlFor="terms" className="font-light text-gray-500">
                             I agree with the{" "}
-                            <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
+                            <span className="font-medium text-orange-600 hover:underline">
                                 Terms and conditions
-                            </a>
+                            </span>
+                            {/* <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
+                                Terms and conditions
+                            </a> */}
                         </label>
                     </div>
                 </div>
