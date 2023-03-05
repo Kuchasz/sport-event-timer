@@ -13,7 +13,8 @@ import ws from "ws";
 // import { getServerAuthSession } from "./auth";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+import { db } from "./db";
 
 type CreateContextOptions = {
     session: Session | null;
@@ -21,7 +22,7 @@ type CreateContextOptions = {
 
 export const createContextInner = async ({ session }: CreateContextOptions) => ({
     session,
-    db: new PrismaClient()
+    db
 });
 
 export const createContext = async (

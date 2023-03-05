@@ -7,6 +7,8 @@ import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "./poor-number-input";
+import { PoorSelect } from "./poor-select";
+import { PoorCheckbox } from "./poor-checkbox";
 
 type Race = AppRouterInputs["race"]["add"];
 
@@ -15,6 +17,11 @@ type RaceFormProps = {
     onResolve: (race: Race) => void;
     initialRace: Race;
 };
+
+export const registrationEnabledValues = [
+    { name: "Enabled", value: true },
+    { name: "Disabled", value: false },
+];
 
 export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) => {
     const [race, changeHandler] = useFormState(initialRace, [initialRace]);
@@ -34,6 +41,11 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
+                    <Label>Registration enabled</Label>
+                    <PoorCheckbox value={race.registrationEnabled} onChange={changeHandler("registrationEnabled")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="grow basis-full">
                     <Label>Players limit</Label>
                     <PoorNumberInput value={race.playersLimit} onChange={changeHandler("playersLimit")} />
                 </div>

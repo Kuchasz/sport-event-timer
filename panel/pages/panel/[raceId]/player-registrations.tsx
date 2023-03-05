@@ -25,25 +25,25 @@ const columns: Column<PlayerRegistration, unknown>[] = [
         name: "Gender",
         width: 10,
     },
-    { key: "birthDate", name: "Birth Date", width: 30, formatter: (props) => <div>{props.row.birthDate.toLocaleDateString()}</div> },
+    { key: "birthDate", name: "Birth Date", width: 30, formatter: props => <div>{props.row.birthDate.toLocaleDateString()}</div> },
     { key: "country", name: "Country", width: 10 },
     { key: "city", name: "City", width: 20 },
-    { key: "team", name: "Team", formatter: (props) => <div className="text-ellipsis">{props.row.team}</div> },
-    
+    { key: "team", name: "Team", formatter: props => <div className="text-ellipsis">{props.row.team}</div> },
+
     { key: "phoneNumber", name: "Phone", width: 20 },
     { key: "icePhoneNumber", name: "ICE Number", width: 20 },
     {
         key: "registrationDate",
         name: "Registration Date",
         width: 30,
-        formatter: (props) => <div>{props.row.registrationDate.toLocaleDateString()}</div>,
+        formatter: props => <div>{props.row.registrationDate.toLocaleDateString()}</div>,
     },
-    { key: "paymentDate", name: "Payment", width: 150, formatter: (props) => <PlayerRegistrationPayment playerRegistration={props.row} /> },
+    { key: "paymentDate", name: "Payment", width: 150, formatter: props => <PlayerRegistrationPayment playerRegistration={props.row} /> },
     {
         key: "actions",
         width: 30,
         name: "Actions",
-        formatter: (props) => <PlayerRegistrationActions playerRegistration={props.row} />,
+        formatter: props => <PlayerRegistrationActions playerRegistration={props.row} />,
     },
 ];
 
@@ -71,7 +71,7 @@ const PlayerRegistrationPayment = ({ playerRegistration }: { playerRegistration:
     return (
         <span className="flex h-full items-center hover:text-red-600 cursor-pointer" onClick={togglePlayerPayment}>
             {playerRegistration.hasPaid ? <Icon size={1} path={mdiCashCheck} /> : <Icon size={1} path={mdiCashRemove} />}
-            <span className="ml-2">{playerRegistration.paymentDate?.toLocaleDateString() ?? 'not paid'}</span>
+            <span className="ml-2">{playerRegistration.paymentDate?.toLocaleDateString() ?? "not paid"}</span>
         </span>
     );
 };
@@ -161,7 +161,7 @@ const PlayerRegistrations = () => {
                             sortable: false,
                             resizable: true,
                         }}
-                        onRowDoubleClick={(e) => openEditDialog(e)}
+                        onRowDoubleClick={e => openEditDialog(e)}
                         columns={columns}
                         rows={registrations}
                     />

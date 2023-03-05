@@ -5,7 +5,8 @@ const raceSchema = z.object({
     id: z.number().min(1).nullish(),
     name: z.string({ required_error: "name is required" }),
     date: z.date({ required_error: "date is required" }),
-    playersLimit: z.number().int().positive().nullish()
+    playersLimit: z.number().int().positive().nullish(),
+    registrationEnabled: z.boolean()
 });
 
 export const raceRouter =
