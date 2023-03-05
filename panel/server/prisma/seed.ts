@@ -29,7 +29,9 @@ async function main() {
 
 const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.mersenne.rand(20, 10) }).map(() => ({
     date: faker.date.future(1),
-    name: faker.company.name()
+    name: faker.company.name(),
+    registrationEnabled: false,
+    playersLimit: faker.datatype.number({ min: 100, max: 1000, precision: 0 })
 }));
 
 const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] =>
