@@ -7,7 +7,6 @@ import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "./poor-number-input";
-import { PoorSelect } from "./poor-select";
 import { PoorCheckbox } from "./poor-checkbox";
 
 type Race = AppRouterInputs["race"]["add"];
