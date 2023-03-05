@@ -54,7 +54,7 @@ const RaceDeleteButton = ({ race }: { race: Race }) => {
 const MyRaces = () => {
     const { data: races, refetch } = trpc.race.races.useQuery();
     const updateRaceMutation = trpc.race.update.useMutation();
-    const addRaceMuttaion = trpc.race.add.useMutation();
+    const addRaceMutation = trpc.race.add.useMutation();
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -64,7 +64,7 @@ const MyRaces = () => {
         });
 
         if (race) {
-            await addRaceMuttaion.mutateAsync(race);
+            await addRaceMutation.mutateAsync(race);
             refetch();
         }
     };

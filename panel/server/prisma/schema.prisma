@@ -60,6 +60,7 @@ model Race {
     name                 String
     date                 DateTime
     playersLimit         Int?
+    registrationEnabled  Boolean
     classifications      Classification[]
     timeKeeper           TimingPoint[]
     player               Player[]
