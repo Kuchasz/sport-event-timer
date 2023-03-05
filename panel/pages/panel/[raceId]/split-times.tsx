@@ -5,11 +5,7 @@ import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import {
-    mdiClockEditOutline,
-    mdiClockPlusOutline,
-    mdiReload
-    } from "@mdi/js";
+import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { SplitTimeEdit } from "../../../components/split-time-edit";
 import { useCurrentRaceId } from "../../../hooks";
@@ -41,7 +37,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                         openEditDialog({
                             bibNumber: splitTimeResult.bibNumber,
                             time: result?.time,
-                            timingPointId: timingPointId
+                            timingPointId: timingPointId,
                         } as any)
                     }
                     className="flex items-center hover:text-red-600 cursor-pointer"
@@ -56,7 +52,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                         openEditDialog({
                             bibNumber: splitTimeResult.bibNumber,
                             time: 0,
-                            timingPointId: timingPointId
+                            timingPointId: timingPointId,
                         } as any)
                     }
                     className="flex items-center hover:text-red-600 cursor-pointer"
@@ -71,7 +67,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                         openResetDialog({
                             bibNumber: splitTimeResult.bibNumber,
                             time: result?.time,
-                            timingPointId: timingPointId
+                            timingPointId: timingPointId,
                         } as any)
                     }
                     className="flex items-center ml-2 hover:text-red-600 cursor-pointer"
@@ -87,9 +83,13 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
 const SplitTimes = () => {
     const raceId = useCurrentRaceId();
     const { data: splitTimes, refetch: refetchSplitTimes } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId! });
-    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! }, {
-        initialData: []
-    });
+    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery(
+        { raceId: raceId! },
+        {
+            initialData: [],
+        }
+    );
+    const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId! }, { initialData: [] });
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
     const revertSplitTimeMuttaion = trpc.splitTime.revert.useMutation();
@@ -101,8 +101,8 @@ const SplitTimes = () => {
             props: {
                 editedSplitTime,
                 raceId,
-                raceDate: race?.date?.getTime()
-            }
+                raceDate: race?.date?.getTime(),
+            },
         });
 
         if (splitTime) {
@@ -116,8 +116,8 @@ const SplitTimes = () => {
             title: `Revert manual split time`,
             component: Confirmation,
             props: {
-                message: `You are trying to revert manual split time changes. Do you want to proceed?`
-            }
+                message: `You are trying to revert manual split time changes. Do you want to proceed?`,
+            },
         });
 
         if (confirmed) {
@@ -130,29 +130,32 @@ const SplitTimes = () => {
         { key: "bibNumber", name: "Bib", width: 10 },
         { key: "player.name", name: "Name", formatter: p => <span>{p.row.name}</span> },
         { key: "player.lastName", name: "Last Name", formatter: p => <span>{p.row.lastName}</span> },
-        ...timingPoints!.map(tp => ({
-            key: tp.name,
-            name: tp.name,
-            formatter: (p: any) => (
-                <SplitTimeResult
-                    openEditDialog={openEditDialog}
-                    openResetDialog={openRevertDialog}
-                    splitTimeResult={p.row}
-                    timingPointId={tp.id}
-                />
-            )
-        }))
+        ...timingPointsOrder
+            .map(id => timingPoints.find(tp => tp.id === id)!)!
+            .map(tp => ({
+                key: tp.name,
+                name: tp.name,
+                formatter: (p: any) => (
+                    <SplitTimeResult
+                        openEditDialog={openEditDialog}
+                        openResetDialog={openRevertDialog}
+                        splitTimeResult={p.row}
+                        timingPointId={tp.id}
+                    />
+                ),
+            })),
     ];
 
     return (
         <>
-        {/* <div className="flex bg-white p-8 rounded-lg shadow-md flex-col h-full"></div> */}
+            {/* <div className="flex bg-white p-8 rounded-lg shadow-md flex-col h-full"></div> */}
             <div className="flex bg-white flex-col h-full">
                 {splitTimes && (
-                    <DataGrid className='rdg-light h-full'
+                    <DataGrid
+                        className="rdg-light h-full"
                         defaultColumnOptions={{
                             sortable: false,
-                            resizable: true
+                            resizable: true,
                         }}
                         columns={columns}
                         rows={splitTimes}
