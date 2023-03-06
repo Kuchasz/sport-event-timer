@@ -114,27 +114,29 @@ model Category {
 }
 
 model Player {
-    id                 Int               @id @default(autoincrement())
-    name               String
-    lastName           String
-    birthDate          DateTime
-    gender             String
-    bibNumber          Int?
-    startTime          Int?
-    team               String?
-    city               String?
-    country            String?
-    email              String?
-    phoneNumber        String?
-    icePhoneNumber     String?
-    race               Race              @relation(fields: [raceId], references: [id])
-    raceId             Int
-    classification     Classification    @relation(fields: [classificationId], references: [id])
-    classificationId   Int
-    registeredBy       User              @relation(fields: [registeredByUserId], references: [id])
-    registeredByUserId String
-    splitTime          SplitTime[]
-    manualSplitTime    ManualSplitTime[]
+    id                   Int                 @id @default(autoincrement())
+    name                 String
+    lastName             String
+    birthDate            DateTime
+    gender               String
+    bibNumber            Int?
+    startTime            Int?
+    team                 String?
+    city                 String?
+    country              String?
+    email                String?
+    phoneNumber          String?
+    icePhoneNumber       String?
+    race                 Race                @relation(fields: [raceId], references: [id])
+    raceId               Int
+    classification       Classification      @relation(fields: [classificationId], references: [id])
+    classificationId     Int
+    registeredBy         User                @relation(fields: [registeredByUserId], references: [id])
+    registeredByUserId   String
+    splitTime            SplitTime[]
+    manualSplitTime      ManualSplitTime[]
+    fromRegistration     PlayerRegistration? @relation(fields: [playerRegistrationId], references: [id])
+    playerRegistrationId Int?
 
     @@unique([raceId, bibNumber])
     @@unique([classificationId, startTime])
@@ -227,4 +229,5 @@ model PlayerRegistration {
     paymentDate      DateTime?
     race             Race      @relation(fields: [raceId], references: [id])
     raceId           Int
+    Player           Player[]
 }

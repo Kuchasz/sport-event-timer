@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GenderEnum } from "../schema";
 
 const playerSchema = z.object({
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
+    raceId: z.number({ required_error: "raceId is required" }),
     player: z.object({
         id: z.number().nullish(),
         classificationId: z.number({ required_error: "classification is required" }),
@@ -27,9 +27,19 @@ const stopwatchPlayersSchema = z.array(
     z.object({
         name: z.string(),
         lastName: z.string(),
-        bibNumber: z.number(),
+        bibNumber: z.number().int(),
         startTime: z.number().optional()
     }));
+
+const promoteRegistrationSchema = z.object({
+    raceId: z.number({ required_error: "raceId is required" }),
+    registrationId: z.number({ required_error: "registrationId is required" }),
+    player: z.object({
+        bibNumber: z.number().int().nullish(),
+        startTime: z.number().optional(),
+        classificationId: z.number().int()
+    })
+})
 
 export const playerRouter =
     router({
@@ -43,6 +53,24 @@ export const playerRouter =
                 });
 
                 return players.map((p, index) => ({ ...p, index: index + 1 }));
+            }),
+        lastAvailableStartTime: protectedProcedure
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async ({ input, ctx }) => {
+                const { raceId } = input;
+
+                const lastStartingPlayer = await ctx.db.player.findFirst({ where: { raceId }, orderBy: { startTime: 'desc' } });
+
+                return (lastStartingPlayer?.startTime ?? 0) + 60 * 1_000;
+            }),
+        lastAvailableBibNumber: protectedProcedure
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async ({ input, ctx }) => {
+                const { raceId } = input;
+
+                const lastPlayerBibNumber = await ctx.db.player.findFirst({ where: { raceId }, orderBy: { bibNumber: 'desc' } });
+
+                return (lastPlayerBibNumber?.bibNumber ?? 0) + 1;
             }),
         stopwatchPlayers: protectedProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -128,6 +156,56 @@ export const playerRouter =
                         registeredByUserId: user.id
                     }
                 });
+            }),
+        promoteRegistration: protectedProcedure
+            .input(promoteRegistrationSchema)
+            .mutation(async ({ input, ctx }) => {
+
+                const { player } = input;
+
+                const playerWithTheSameTime = player.startTime ? await ctx.db.player.findFirst({
+                    where: {
+                        raceId: input.raceId, startTime: player.startTime
+                    }
+                }) : null;
+
+                const playerWithTheSameBibNumber = player.bibNumber ? await ctx.db.player.findFirst({
+                    where: {
+                        raceId: input.raceId, bibNumber: player.bibNumber
+                    }
+                }) : null;
+
+                if (playerWithTheSameTime || playerWithTheSameBibNumber)
+                    return new TRPCError({ code: "CONFLICT", message: "Already there is a player with that Bib Number or Start Time" });
+
+                const registration = await ctx.db.playerRegistration.findFirstOrThrow({ where: { id: input.registrationId } });
+                const classification = await ctx.db.classification.findFirstOrThrow({
+                    where: { id: player.classificationId, race: { id: input.raceId } },
+                    include: { race: true }
+                });
+                if (!classification) return;
+
+                const user = await ctx.db.user.findFirstOrThrow();
+
+                return await ctx.db.player.create({
+                    data: {
+                        raceId: registration.raceId,
+                        name: registration.name,
+                        lastName: registration.lastName,
+                        gender: registration.gender,
+                        bibNumber: player.bibNumber,
+                        startTime: player.startTime,
+                        birthDate: registration.birthDate,
+                        country: registration.country,
+                        city: registration.city,
+                        team: registration.team,
+                        email: registration.email,
+                        phoneNumber: registration.phoneNumber,
+                        icePhoneNumber: registration.icePhoneNumber,
+                        classificationId: classification.id,
+                        registeredByUserId: user.id
+                    }
+                })
             }),
         edit: protectedProcedure
             .input(playerSchema)
