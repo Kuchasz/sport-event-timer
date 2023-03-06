@@ -22,11 +22,11 @@ export const classificationRouter =
     router({
         classifications: protectedProcedure.input(z.object({
             raceId: z.number({ required_error: "raceId is required" })
-        })).query(async ({ input, ctx }) => {
+        })).output(z.array(classificationSchema)).query(async ({ input, ctx }) => {
             const raceId = input.raceId;
             const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
 
-            return classifications.map((c, index) => ({ ...c, index: index + 1 }));
+            return classifications.map((c, index) => ({ ...c, index: index + 1 }) as z.infer<typeof classificationSchema>);
         }),
         categories: protectedProcedure.input(z.object({
             classificationId: z.number({ required_error: "classificationId is required" })
