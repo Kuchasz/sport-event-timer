@@ -36,7 +36,7 @@ const getPercentage = (category: { minAge?: number; maxAge?: number }) => {
 export const ClassificationForm = ({ onReject, onResolve, initialClassification }: ClassificationFormProps) => {
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
 
-    const categories = initialClassification.ageCategories;
+    const categories = initialClassification.categories;
 
     const qc = useQueryClient();
 
@@ -160,7 +160,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 ))}
             </div> */}
             <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...classification, ageCategories: categories! })}>
+                <Button onClick={() => onResolve({ ...classification, categories: categories! })}>
                     <Icon size={1} path={mdiContentSaveCheck} />
                     <span className="ml-2">Save</span>
                 </Button>

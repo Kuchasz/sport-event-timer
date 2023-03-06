@@ -58,8 +58,8 @@ export const playerRegistrationRouter =
                     registered: registeredPlayers,
                     raceName: race.name,
                     raceDate: race.date,
-                    status: (!race.registrationEnabled 
-                        ? 'disabled' 
+                    status: (!race.registrationEnabled
+                        ? 'disabled'
                         : race.playersLimit
                             ? registeredPlayers >= race.playersLimit
                                 ? 'limit-reached'
@@ -74,6 +74,10 @@ export const playerRegistrationRouter =
                 const race = await ctx.db.race.findFirstOrThrow({ where: { id: input.raceId }, include: { playerRegistration: true } });
 
                 const raceRegistrationsCount = race.playerRegistration.length;
+
+                if (!race.registrationEnabled) {
+                    return new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
+                }
 
                 if (race.playersLimit && (race.playersLimit <= raceRegistrationsCount)) {
                     return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
