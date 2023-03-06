@@ -2,7 +2,7 @@ import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 import { GenderEnum } from "../schema";
 
-const ageCategoriesSchema = z.array(z.object({
+const categoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),
     name: z.string({ required_error: "name is required" }),
     gender: GenderEnum.optional(),
@@ -12,10 +12,10 @@ const ageCategoriesSchema = z.array(z.object({
 }));
 
 const classificationSchema = z.object({
-    id: z.number().min(1).nullish(),
+    id: z.number().nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
     name: z.string({ required_error: "name is required" }),
-    ageCategories: ageCategoriesSchema
+    categories: categoriesSchema
 });
 
 export const classificationRouter =
@@ -24,7 +24,7 @@ export const classificationRouter =
             raceId: z.number({ required_error: "raceId is required" })
         })).query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            const classifications = await ctx.db.classification.findMany({ where: { raceId } });
+            const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
 
             return classifications.map((c, index) => ({ ...c, index: index + 1 }));
         }),
@@ -34,24 +34,24 @@ export const classificationRouter =
             const classificationId = input.classificationId;
             const ageCategories = await ctx.db.category.findMany({ where: { classificationId } });
 
-            return await ageCategoriesSchema.parseAsync(ageCategories);
+            return await categoriesSchema.parseAsync(ageCategories);
         }),
-        upload: protectedProcedure.input(z.object({
-            classifications: z.array(
-                z.object({
-                    name: z.string({ required_error: "name is required" })
-                })
-            ),
-            raceId: z.number().min(1)
-        })).mutation(async ({ input, ctx }) => {
-            const { classifications, raceId } = input;
-            classifications.forEach(async classification => {
-                await ctx.db.classification.create({ data: { ...classification, raceId } });
-            });
-        }),
+        // upload: protectedProcedure.input(z.object({
+        //     classifications: z.array(
+        //         z.object({
+        //             name: z.string({ required_error: "name is required" })
+        //         })
+        //     ),
+        //     raceId: z.number().min(1)
+        // })).mutation(async ({ input, ctx }) => {
+        //     const { classifications, raceId } = input;
+        //     classifications.forEach(async classification => {
+        //         await ctx.db.classification.create({ data: { ...classification, raceId } });
+        //     });
+        // }),
         update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            const { ageCategories, ...classification } = data;
+            const { categories: ageCategories, ...classification } = data;
 
             const categories = ageCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
 
@@ -67,7 +67,14 @@ export const classificationRouter =
         }),
         add: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            return await ctx.db.classification.create({ data });
+            return await ctx.db.classification.create({
+                data: {
+                    ...data,
+                    categories: {
+                        create: data.categories
+                    }
+                }
+            });
         })
     });
 
