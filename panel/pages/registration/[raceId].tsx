@@ -233,7 +233,7 @@ const Rejestracja = () => {
     const { raceId } = useRouter().query;
     const [registrationStatus, setRegistrationStatus] = useState<RegistrationStatuses>("pending");
 
-    const { data: registrationSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
+    const { data: registrationSystemStatus, refetch: refetchSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
         { raceId: Number(raceId) },
         { enabled: raceId !== undefined }
     );
@@ -247,7 +247,7 @@ const Rejestracja = () => {
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setRegistrationStatus("progress");
-        console.log((e.currentTarget.elements as any).team);
+        
         const formElements = e.currentTarget.elements as unknown as {
             name: HTMLInputElement;
             lastName: HTMLInputElement;
@@ -261,20 +261,22 @@ const Rejestracja = () => {
             icePhoneNumber: HTMLInputElement;
         };
         const formData = {
-            name: formElements.name.value,
-            lastName: formElements.lastName.value,
-            birthDate: new Date(formElements.birthDate.value),
-            gender: formElements.gender.value as "male" | "female",
-            team: formElements.team.value,
-            city: formElements.city.value,
-            country: formElements.country.value,
-            email: formElements.email.value,
-            phoneNumber: formElements.phoneNumber.value,
-            icePhoneNumber: formElements.icePhoneNumber.value,
+            name: formElements.name?.value,
+            lastName: formElements.lastName?.value,
+            birthDate: new Date(formElements.birthDate?.value),
+            gender: formElements.gender?.value as "male" | "female",
+            team: formElements.team?.value,
+            city: formElements.city?.value,
+            country: formElements.country?.value,
+            email: formElements.email?.value,
+            phoneNumber: formElements.phoneNumber?.value,
+            icePhoneNumber: formElements.icePhoneNumber?.value,
             hasPaid: false,
         };
 
         await registerMutation.mutateAsync({ raceId: Number(raceId), player: formData });
+        
+        refetchSystemStatus();
 
         setRegistrationStatus(!registerMutation.error ? "successful" : "error");
     };
@@ -302,7 +304,7 @@ const Rejestracja = () => {
                                 />
                             )}
 
-                            {registrationSystemStatus.status === "enabled" ? (
+                            {registrationSystemStatus.status === "enabled" || registrationStatus !== 'pending' ? (
                                 ["pending", "progress"].includes(registrationStatus) ? (
                                     <RegistrationFormComponent
                                         disabled={registrationStatus !== "pending"}
