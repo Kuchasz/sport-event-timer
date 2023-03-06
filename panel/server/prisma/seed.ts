@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
 import { createRange } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string"
-import { Classification, Player, Race, TimingPoint, TimingPointOrder } from "@prisma/client";
+import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber } from "@prisma/client";
 
 async function main() {
     const userId = 'cla34zyas000852dulvt5oua7';
@@ -22,6 +22,9 @@ async function main() {
 
     const _timingPointsOrders = createTimingPointsOrders(races.map(r => r.id), timingPoints);
     const timingPointsOrders = await db.$transaction(_timingPointsOrders.map(data => db.timingPointOrder.create({ data })));
+
+    const _bibNumbers = createBibNumbers(races.map(r => r.id), players);
+    await db.$transaction(_bibNumbers.map(data => db.bibNumber.create({ data })));
 
     const _stopwatches = createStopwatches(races, players, timingPoints, timingPointsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
@@ -80,6 +83,14 @@ const createTimingPointsOrders = (raceIds: number[], timingPoints: TimingPoint[]
         raceId,
         order: JSON.stringify(timingPoints.filter(tp => tp.raceId === raceId).map(tp => tp.id))
     }));
+
+const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
+    raceIds.flatMap(raceId => (
+        players.filter(p => p.raceId === raceId).map(p => ({
+            number: p.bibNumber,
+            raceId
+        }) as BibNumber)
+    ));
 
 const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[], timingPointsOrders: TimingPointOrder[]) => {
     const store = {};

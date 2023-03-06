@@ -8,6 +8,7 @@ import {
     mdiBriefcaseOutline,
     mdiCog,
     mdiHomeOutline,
+    mdiNumeric,
     mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
@@ -97,6 +98,12 @@ const raceMenuGroup = {
             icon: mdiViewDashboardEditOutline,
             to: "/panel/:raceId",
             color: "text-yellow-600",
+        },
+        {
+            text: "Bib Numbers",
+            icon: mdiNumeric,
+            to: '/panel/:raceId/bib-numbers',
+            color: 'text-green-600'
         },
         {
             text: "Players",

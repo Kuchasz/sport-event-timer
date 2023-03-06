@@ -1,0 +1,6 @@
+-- CreateTable
+CREATE TABLE "BibNumbers" (
+    "numbers" TEXT NOT NULL,
+    "raceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    CONSTRAINT "BibNumbers_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

@@ -71,6 +71,7 @@ model Race {
     apiKey               ApiKey[]
     TimingPointOrder     TimingPointOrder[]
     TimingPointAccessKey TimingPointAccessKey[]
+    bibNumber            BibNumber[]
 }
 
 model ApiKey {
@@ -158,6 +159,15 @@ model TimingPointOrder {
     raceId Int
 
     @@id([raceId])
+}
+
+model BibNumber {
+    id     Int  @id @default(autoincrement())
+    number Int
+    race   Race @relation(fields: [raceId], references: [id])
+    raceId Int
+
+    @@unique([raceId, number])
 }
 
 model TimingPointAccessKey {
