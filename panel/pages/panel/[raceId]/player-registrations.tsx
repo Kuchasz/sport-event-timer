@@ -6,15 +6,17 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiCashCheck, mdiCashRemove, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
 import { PlayerRegistrationEdit } from "components/player-registration-edit";
+import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
+type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
 const columns: Column<PlayerRegistration, unknown>[] = [
     { key: "index", name: "", sortable: false, resizable: false, width: 5 },
@@ -41,7 +43,7 @@ const columns: Column<PlayerRegistration, unknown>[] = [
     { key: "paymentDate", name: "Payment", width: 150, formatter: props => <PlayerRegistrationPayment playerRegistration={props.row} /> },
     {
         key: "actions",
-        width: 30,
+        width: 50,
         name: "Actions",
         formatter: props => <PlayerRegistrationActions playerRegistration={props.row} />,
     },
@@ -80,7 +82,9 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
     const raceId = useCurrentRaceId();
     const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
-    const deletePlayerRegistration = async () => {
+    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+
+    const openDeleteDialog = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete player registration`,
             component: Confirmation,
@@ -95,9 +99,27 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
         }
     };
 
+    const openPromoteMutation = async () => {
+        const player = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
+            title: "Promote player registration to player",
+            component: PlayerRegistrationPromotion,
+            props: {
+                raceId: raceId!,
+            },
+        });
+
+        if (player) {
+            await promotePlayerRegistration.mutateAsync({ raceId: raceId!, registrationId: playerRegistration.id, player });
+            refetch();
+        }
+    };
+
     return (
         <span className="flex">
-            <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayerRegistration}>
+            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openPromoteMutation}>
+                <Icon size={1} path={mdiAccountPlusOutline} />
+            </span>
+            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
                 <Icon size={1} path={mdiTrashCan} />
             </span>
         </span>
