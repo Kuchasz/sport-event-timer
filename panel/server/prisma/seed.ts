@@ -66,7 +66,7 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
                     phoneNumber: faker.phone.number("###-###-###"),
                     startTime: Math.floor(faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
                     team: faker.company.name(),
-                    playerRegistrationId: undefined
+                    playerRegistrationId: null
                 })
             })
     }
