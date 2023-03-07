@@ -83,6 +83,7 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
     const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
     const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+    const utils = trpc.useContext();
 
     const openDeleteDialog = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
@@ -110,6 +111,10 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
 
         if (player) {
             await promotePlayerRegistration.mutateAsync({ raceId: raceId!, registrationId: playerRegistration.id, player });
+
+            utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
+            utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
+            
             refetch();
         }
     };
