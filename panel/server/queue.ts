@@ -5,13 +5,11 @@ type ActualSplitTime = { id: number; bibNumber: number; time: number; timingPoin
 type ExistingSplitTime = { id: number; bibNumber: number; time: bigint; timingPointId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
-    actual.bibNumber === existing.bibNumber &&
-    actual.time === Number(existing.time) &&
-    actual.timingPointId === existing.timingPointId;
+    actual.bibNumber === existing.bibNumber && actual.time === Number(existing.time) && actual.timingPointId === existing.timingPointId;
 
 type UpdateSplitTimesTask = {
-    raceId: number
-}
+    raceId: number;
+};
 
 const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     const existingSplitTimes = await db.splitTime.findMany({ where: { raceId } });
@@ -29,36 +27,28 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     const toUpdate = new Set([...existing].filter(x => actual.has(x)));
     const toDelete = new Set([...existing].filter(e => !actual.has(e)));
 
-    for (const id of toCreate) {
-        const data = actualSplitTimesMap.get(id);
-        await db.splitTime.create({
-            data: {
-                id,
-                bibNumber: data?.bibNumber!,
-                time: data?.time!,
-                raceId,
-                timingPointId: data?.timingPointId!
-            }
-        });
-    }
+    const newSplitTimes = [...toCreate]
+        .map(id => ({ id, data: actualSplitTimesMap.get(id) }))
+        .map(({ id, data }) => ({
+            id,
+            bibNumber: data?.bibNumber!,
+            time: data?.time!,
+            raceId,
+            timingPointId: data?.timingPointId!,
+        }));
 
-    for (const id of toUpdate) {
-        const existing = existingSplitTimesMap.get(id)! as ExistingSplitTime;
-        const actual = actualSplitTimesMap.get(id) as ActualSplitTime;
-        if (!areSplitTimesEqual(actual, existing)) {
-            await db.splitTime.update({
-                where: { id },
-                data: {
-                    time: actual.time,
-                    bibNumber: actual.bibNumber
-                }
-            });
-        }
-    }
+    await db.$transaction(newSplitTimes.map(data => db.splitTime.create({ data })));
 
-    for (const id of toDelete) {
-        await db.splitTime.delete({ where: { id } });
-    }
+    const splitTimesToUpdate = [...toUpdate]
+        .map(id => ({
+            existing: existingSplitTimesMap.get(id)! as ExistingSplitTime,
+            actual: actualSplitTimesMap.get(id) as ActualSplitTime,
+        }))
+        .filter(({ actual, existing }) => !areSplitTimesEqual(actual, existing));
+
+    await db.$transaction(splitTimesToUpdate.map(data => db.splitTime.update({ where: { id: data.actual.id }, data: data.actual })));
+
+    await db.$transaction([...toDelete].map(id => db.splitTime.delete({ where: { id } })));
 };
 
-export const updateSplitTimesQueue: fastq.queueAsPromised<UpdateSplitTimesTask> = fastq.promise(updateSplitTimes, 1)
+export const updateSplitTimesQueue: fastq.queueAsPromised<UpdateSplitTimesTask> = fastq.promise(updateSplitTimes, 1);
