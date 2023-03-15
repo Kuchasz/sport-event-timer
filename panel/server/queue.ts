@@ -12,14 +12,15 @@ type UpdateSplitTimesTask = {
 };
 
 const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
-    const existingSplitTimes = await db.splitTime.findMany({ where: { raceId } });
     const existingPlayers = await db.player.findMany({ where: { raceId, NOT: { bibNumber: null } }, select: { bibNumber: true } });
+    
+    const existingSplitTimes = await db.splitTime.findMany({ where: { raceId } });
     const existingSplitTimesMap = new Map(existingSplitTimes.map(st => [st.id, st]));
 
-    const actualBibNumbers = existingPlayers.map(p => p.bibNumber!);
+    const actualBibNumbers = new Set(existingPlayers.map(p => p.bibNumber!));
     const stopwatchState = await stopwatchStateProvider.get(raceId);
 
-    const actualSplitTimes = stopwatchState.timeStamps!.filter(st => st.bibNumber && actualBibNumbers.includes(st.bibNumber));
+    const actualSplitTimes = stopwatchState.timeStamps!.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber));
     const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
 
     const existing = new Set(existingSplitTimes.map(e => e.id));
