@@ -4,7 +4,7 @@ import { protectedProcedure, router } from "../trpc";
 const bibNumberSchema = z.object({
     id: z.number().nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
-    number: z.number({ required_error: "number is required" })
+    number: z.string({ required_error: "number is required" })
 });
 
 export const bibNumberRouter =
