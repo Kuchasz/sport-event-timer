@@ -5,11 +5,11 @@ import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 // import { PoorDatepicker } from "./poor-datepicker";
 // import { PoorInput } from "./poor-input";
-import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
 import { trpc } from "connection";
+import { PoorInput } from "./poor-input";
 
 type PlayerPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
@@ -41,7 +41,7 @@ const PlayerRegistrationPromotionForm = ({ onReject, onResolve, initialPlayerPro
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Bib Number</Label>
-                    <PoorNumberInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
+                    <PoorInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
                 </div>
             </div>
             {/* <div className="p-2"></div>
