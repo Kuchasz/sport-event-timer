@@ -4,7 +4,7 @@ import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
-import { PoorNumberInput } from "./poor-number-input";
+import { PoorInput } from "./poor-input";
 
 type BibNumber = AppRouterInputs["bibNumber"]["add"];
 
@@ -22,7 +22,7 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber }: BibNumb
             <div className="flex">
                 <div className="grow">
                     <Label>Bib Number</Label>
-                    <PoorNumberInput value={BibNumber.number} onChange={changeHandler("number")} />
+                    <PoorInput value={BibNumber.number} onChange={changeHandler("number")} />
                 </div>
             </div>
             <div className="mt-4 flex">
