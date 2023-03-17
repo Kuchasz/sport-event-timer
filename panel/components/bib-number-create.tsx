@@ -13,7 +13,7 @@ export const BibNumberCreate = ({ raceId, onReject, onResolve }: BibNumberCreate
     const BibNumber: CreateBibNumber = {
         id: 0,
         raceId,
-        number: 0
+        number: ""
     };
 
     return <BibNumberForm onReject={onReject} onResolve={onResolve} initialBibNumber={BibNumber} />;
