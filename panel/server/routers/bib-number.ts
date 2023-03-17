@@ -17,6 +17,18 @@ export const bibNumberRouter =
 
             return bibNumbers.map((c, index) => ({ ...c, index: index + 1 }));
         }),
+        availableNumbers: protectedProcedure.input(z.object({
+            raceId: z.number({ required_error: "raceId is required" })
+        })).query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, select: { number: true } });
+            const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId, NOT: { bibNumber: null } }, select: { bibNumber: true } });
+
+            const allBibNumbers = bibNumbers.map(x => x.number);
+            const allPlayersBibNumbers = new Set(playersBibNumbers.map(x => x.bibNumber!));
+
+            return allBibNumbers.filter(n => !allPlayersBibNumbers.has(n)).map(x => x.toString());
+        }),
         delete: protectedProcedure
             .input(z.object({ bibNumberId: z.number() }))
             .mutation(async ({ input, ctx }) => {

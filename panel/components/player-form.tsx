@@ -5,10 +5,10 @@ import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
-import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
+import { PoorCombo } from "./poor-combo";
 
 type Player = AppRouterInputs["player"]["add"]["player"];
 
@@ -17,16 +17,17 @@ type PlayerFormProps = {
     onResolve: (player: Player) => void;
     initialPlayer: Player;
     classifications: AppRouterOutputs["classification"]["classifications"];
+    bibNumbers: string[];
 };
 
 export type Gender = "male" | "female";
 
 export const genders = [
     { name: "Male", value: "male" as Gender },
-    { name: "Female", value: "female" as Gender }
+    { name: "Female", value: "female" as Gender },
 ];
 
-export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications }: PlayerFormProps) => {
+export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications, bibNumbers }: PlayerFormProps) => {
     const [player, changeHandler] = useFormState(initialPlayer, [classifications]);
 
     return (
@@ -47,7 +48,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Bib Number</Label>
-                    <PoorNumberInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
+                    <PoorCombo placeholder="bib number" items={bibNumbers} onChange={changeHandler("bibNumber")} />
                 </div>
             </div>
             <div className="p-2"></div>
