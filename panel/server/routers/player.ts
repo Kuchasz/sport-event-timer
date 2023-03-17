@@ -27,7 +27,7 @@ const stopwatchPlayersSchema = z.array(
     z.object({
         name: z.string(),
         lastName: z.string(),
-        bibNumber: z.string(),
+        bibNumber: z.number(),
         startTime: z.number().optional(),
     })
 );
@@ -89,7 +89,7 @@ export const playerRouter = router({
                     startTime: true,
                 },
             });
-            return players as z.TypeOf<typeof stopwatchPlayersSchema>;
+            return players.map(p => ({...p, bibNumber: Number(p.bibNumber)})) as z.TypeOf<typeof stopwatchPlayersSchema>;
         }),
     startList: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
