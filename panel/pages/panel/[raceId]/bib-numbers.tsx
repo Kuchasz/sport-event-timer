@@ -24,8 +24,8 @@ const columns: Column<BibNumber, unknown>[] = [
         key: "actions",
         width: 15,
         name: "Actions",
-        formatter: props => <BibNumberDeleteButton bibNumber={props.row} />
-    }
+        formatter: props => <BibNumberDeleteButton bibNumber={props.row} />,
+    },
 ];
 
 const BibNumberDeleteButton = ({ bibNumber }: { bibNumber: BibNumber }) => {
@@ -37,8 +37,8 @@ const BibNumberDeleteButton = ({ bibNumber }: { bibNumber: BibNumber }) => {
             title: `Delete bibNumber`,
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Bib Number ${bibNumber.number}. Do you want to proceed?`
-            }
+                message: `You are trying to delete the Bib Number ${bibNumber.number}. Do you want to proceed?`,
+            },
         });
 
         if (confirmed) {
@@ -79,12 +79,12 @@ const BibNumbers = () => {
         }
     };
 
-    const openEditDialog = async (editedbibNumber?: BibNumber) => {
+    const openEditDialog = async (editedBibNumber?: BibNumber) => {
         const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
             title: "Edit BibNumber",
             component: BibNumberEdit,
             props: {
-                editedbibNumber,
+                editedBibNumber,
             },
         });
 
