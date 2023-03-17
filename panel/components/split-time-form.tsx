@@ -3,10 +3,10 @@ import { Button } from "./button";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorFullTimepicker } from "./poor-timepicker";
-import { PoorNumberInput } from "./poor-number-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { PoorInput } from "./poor-input";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
 
@@ -46,7 +46,7 @@ export const SplitTimeForm = ({
             <div className="flex">
                 <div className="grow">
                     <Label>Bib Number</Label>
-                    <PoorNumberInput value={splitTime.bibNumber} onChange={changeHandler("bibNumber")} />
+                    <PoorInput value={splitTime.bibNumber} onChange={changeHandler("bibNumber")} />
                 </div>
                 <div className="p-2"></div>
                 <div className="grow">
