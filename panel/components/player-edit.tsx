@@ -14,7 +14,8 @@ type PlayerEditProps = {
 
 export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: PlayerEditProps) => {
     const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId! });
-    if (!classifications) return;
+    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId! });
+    if (!classifications || !availableNumbers) return;
 
     const player: EditPlayer = {
         id: editedPlayer.id,
@@ -38,6 +39,7 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
             onResolve={onResolve}
             classifications={classifications}
             initialPlayer={player}
+            bibNumbers={availableNumbers}
         />
     );
 };

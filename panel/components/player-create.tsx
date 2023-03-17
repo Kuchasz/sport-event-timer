@@ -12,7 +12,8 @@ type PlayerCreateProps = {
 
 export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps) => {
     const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId! });
-    if (!classifications) return;
+    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId! });
+    if (!classifications || !availableNumbers) return;
 
     const player: CreatePlayer = {
         classificationId: classifications[0]?.id ?? 0,
@@ -28,6 +29,7 @@ export const PlayerCreate = ({ raceId, onReject, onResolve }: PlayerCreateProps)
             onResolve={onResolve}
             classifications={classifications}
             initialPlayer={player}
+            bibNumbers={availableNumbers}
         />
     );
 };

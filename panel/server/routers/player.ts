@@ -10,7 +10,7 @@ const playerSchema = z.object({
         classificationId: z.number({ required_error: "classification is required" }),
         name: z.string({ required_error: "name is required" }).min(3),
         lastName: z.string({ required_error: "lastName is required" }).min(3),
-        bibNumber: z.number().nullish(),
+        bibNumber: z.string().nullish(),
         startTime: z.number().optional(),
         gender: GenderEnum,
         birthDate: z.date({ required_error: "birthDate is required" }),
@@ -27,7 +27,7 @@ const stopwatchPlayersSchema = z.array(
     z.object({
         name: z.string(),
         lastName: z.string(),
-        bibNumber: z.number().int(),
+        bibNumber: z.string(),
         startTime: z.number().optional(),
     })
 );
@@ -36,7 +36,7 @@ const promoteRegistrationSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }),
     registrationId: z.number({ required_error: "registrationId is required" }),
     player: z.object({
-        bibNumber: z.number().int().nullish(),
+        bibNumber: z.string().nullish(),
         startTime: z.number().optional(),
         classificationId: z.number().int(),
     }),
@@ -68,9 +68,12 @@ export const playerRouter = router({
         .query(async ({ input, ctx }) => {
             const { raceId } = input;
 
-            const lastPlayerBibNumber = await ctx.db.player.findFirst({ where: { raceId }, orderBy: { bibNumber: "desc" } });
+            const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId } });
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId } });
 
-            return (lastPlayerBibNumber?.bibNumber ?? 0) + 1;
+            const usedBibNumbers = new Set(playersBibNumbers.filter(p => !p.bibNumber).map(p => p.bibNumber));
+
+            return bibNumbers.find(b => !usedBibNumbers.has(b.number))?.number ?? "";
         }),
     stopwatchPlayers: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -163,20 +166,20 @@ export const playerRouter = router({
 
         const playerWithTheSameTime = player.startTime
             ? await ctx.db.player.findFirst({
-                  where: {
-                      raceId: input.raceId,
-                      startTime: player.startTime,
-                  },
-              })
+                where: {
+                    raceId: input.raceId,
+                    startTime: player.startTime,
+                },
+            })
             : null;
 
         const playerWithTheSameBibNumber = player.bibNumber
             ? await ctx.db.player.findFirst({
-                  where: {
-                      raceId: input.raceId,
-                      bibNumber: player.bibNumber,
-                  },
-              })
+                where: {
+                    raceId: input.raceId,
+                    bibNumber: player.bibNumber,
+                },
+            })
             : null;
 
         if (playerWithTheSameTime || playerWithTheSameBibNumber)

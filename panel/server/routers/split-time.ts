@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const manualSplitTimeSchema = z.object({
     id: z.number().min(1).nullish(),
-    bibNumber: z.number({ required_error: "bibNumber is required" }),
+    bibNumber: z.string({ required_error: "bibNumber is required" }),
     time: z.number().optional(),
     raceId: z.number({ required_error: "raceId is required" }),
     timingPointId: z.number({ required_error: "timingPointId is required" })
@@ -73,7 +73,7 @@ export const splitTimeRouter =
                     });
             }),
         revert: protectedProcedure
-            .input(z.object({ bibNumber: z.number(), timingPointId: z.number() }))
+            .input(z.object({ bibNumber: z.string(), timingPointId: z.number() }))
             .mutation(async ({ input, ctx }) => {
                 const { ...data } = input;
                 return await ctx.db.manualSplitTime.delete({

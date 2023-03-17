@@ -119,7 +119,7 @@ model Player {
     lastName             String
     birthDate            DateTime
     gender               String
-    bibNumber            Int?
+    bibNumber            String?
     startTime            Int?
     team                 String?
     city                 String?
@@ -164,9 +164,9 @@ model TimingPointOrder {
 }
 
 model BibNumber {
-    id     Int  @id @default(autoincrement())
-    number Int
-    race   Race @relation(fields: [raceId], references: [id])
+    id     Int    @id @default(autoincrement())
+    number String
+    race   Race   @relation(fields: [raceId], references: [id])
     raceId Int
 
     @@unique([raceId, number])
@@ -188,7 +188,7 @@ model TimingPointAccessKey {
 
 model SplitTime {
     id            Int         @id @default(autoincrement())
-    bibNumber     Int
+    bibNumber     String
     time          BigInt?
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
@@ -201,7 +201,7 @@ model SplitTime {
 
 model ManualSplitTime {
     id            Int         @id @default(autoincrement())
-    bibNumber     Int
+    bibNumber     String
     time          BigInt?
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int

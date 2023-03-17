@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import PoorCombo from "components/poor-combo";
+import { PoorCombo } from "components/poor-combo";
 import { trpc } from "connection";
 // import { countryCodes } from "contry-codes";
 import Head from "next/head";
@@ -175,10 +175,7 @@ const RegistrationFormComponent = ({
                     </div>
                     <div className="ml-3 text-sm">
                         <label htmlFor="terms" className="font-light text-gray-500">
-                            I agree with the{" "}
-                            <span className="font-medium text-orange-600 hover:underline">
-                                Terms and conditions
-                            </span>
+                            I agree with the <span className="font-medium text-orange-600 hover:underline">Terms and conditions</span>
                             {/* <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
                                 Terms and conditions
                             </a> */}
@@ -247,7 +244,7 @@ const Rejestracja = () => {
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setRegistrationStatus("progress");
-        
+
         const formElements = e.currentTarget.elements as unknown as {
             name: HTMLInputElement;
             lastName: HTMLInputElement;
@@ -275,7 +272,7 @@ const Rejestracja = () => {
         };
 
         await registerMutation.mutateAsync({ raceId: Number(raceId), player: formData });
-        
+
         refetchSystemStatus();
 
         setRegistrationStatus(!registerMutation.error ? "successful" : "error");
@@ -304,7 +301,7 @@ const Rejestracja = () => {
                                 />
                             )}
 
-                            {registrationSystemStatus.status === "enabled" || registrationStatus !== 'pending' ? (
+                            {registrationSystemStatus.status === "enabled" || registrationStatus !== "pending" ? (
                                 ["pending", "progress"].includes(registrationStatus) ? (
                                     <RegistrationFormComponent
                                         disabled={registrationStatus !== "pending"}
