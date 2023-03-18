@@ -98,9 +98,10 @@ const RegistrationFormComponent = ({
                     />
                 </div>
                 <div>
-                    <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900">
+                    {/* <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900">
                         Team (optional)
-                    </label>
+                    </label> */}
+                    <Label>Team (optional)</Label>
                     <PoorCombo placeholder="team name" items={teams} onChange={changeHandler("team")} />
                 </div>
                 {/* <div>
