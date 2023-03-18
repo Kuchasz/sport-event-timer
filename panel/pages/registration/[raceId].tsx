@@ -1,33 +1,45 @@
+import { Gender, genders } from "@set/utils/dist/gender";
 import classNames from "classnames";
+import { Button } from "components/button";
+import { Label } from "components/label";
 import { PoorCombo } from "components/poor-combo";
+import { PoorDatepicker } from "components/poor-datepicker";
+import { PoorInput } from "components/poor-input";
+import { PoorSelect } from "components/poor-select";
 import { trpc } from "connection";
-// import { countryCodes } from "contry-codes";
+import { useFormState } from "hooks";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+const initialRegistration = () => ({
+    name: "",
+    lastName: "",
+    birthDate: new Date(),
+    gender: "male" as Gender,
+    team: "",
+});
+
 const RegistrationFormComponent = ({
     disabled,
     registrationStatus,
-    handleFormSubmit,
+    onResolve,
     teams,
 }: {
     disabled: boolean;
     registrationStatus: RegistrationStatuses;
-    handleFormSubmit: React.FormEventHandler<HTMLFormElement>;
+    onResolve: (registration: ReturnType<typeof initialRegistration>) => void;
     teams: string[];
 }) => {
+    const [registration, changeHandler] = useFormState(initialRegistration(), []);
+
     return (
-        <form
-            className="space-y-4 md:space-y-6"
-            onSubmit={e => {
-                e.preventDefault();
-                handleFormSubmit(e);
-            }}
-        >
+        <div className="space-y-4 md:space-y-6">
             <div className={classNames("space-y-4 md:space-y-6", { ["opacity-50"]: disabled })}>
                 <div>
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
+                    <Label>First Name</Label>
+                    <PoorInput value={registration.name} onChange={changeHandler("name")} />
+                    {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
                         First Name
                     </label>
                     <input
@@ -38,10 +50,12 @@ const RegistrationFormComponent = ({
                         placeholder="first name"
                         required
                         disabled={disabled}
-                    />
+                    /> */}
                 </div>
                 <div>
-                    <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900">
+                    <Label>Last Name</Label>
+                    <PoorInput value={registration.lastName} onChange={changeHandler("lastName")} />
+                    {/* <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900">
                         Last name
                     </label>
                     <input
@@ -52,13 +66,15 @@ const RegistrationFormComponent = ({
                         placeholder="last name"
                         required
                         disabled={disabled}
-                    />
+                    /> */}
                 </div>
                 <div>
-                    <label htmlFor="birthDate" className="block mb-2 text-sm font-medium text-gray-900">
+                    <Label>Birth Date</Label>
+                    <PoorDatepicker value={registration.birthDate} onChange={changeHandler("birthDate")} />
+                    {/* <label htmlFor="birthDate" className="block mb-2 text-sm font-medium text-gray-900">
                         Birth date
-                    </label>
-                    <input
+                    </label> */}
+                    {/* <input
                         type="date"
                         name="birthDate"
                         id="birthDate"
@@ -66,29 +82,26 @@ const RegistrationFormComponent = ({
                         placeholder="birth date"
                         required
                         disabled={disabled}
-                    />
+                    /> */}
                 </div>
                 <div>
-                    <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">
+                    <Label>Gender</Label>
+                    {/* <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">
                         Gender
-                    </label>
-                    <select
-                        name="gender"
-                        id="gender"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="gender"
-                        required
-                        disabled={disabled}
-                    >
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+                    </label> */}
+                    <PoorSelect
+                        initialValue={registration.gender}
+                        items={genders}
+                        nameKey="name"
+                        valueKey="value"
+                        onChange={changeHandler("gender")}
+                    />
                 </div>
                 <div>
                     <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900">
                         Team (optional)
                     </label>
-                    <PoorCombo name="team" id="team" placeholder="team name" items={teams} />
+                    <PoorCombo placeholder="team name" items={teams} onChange={changeHandler("team")} />
                 </div>
                 {/* <div>
                     <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">
@@ -183,21 +196,23 @@ const RegistrationFormComponent = ({
                     </div>
                 </div>
             </div>
-            <button
+            <Button onClick={() => onResolve(registration)}>
+                {registrationStatus === "progress" ? "Registration pending" : "Register"}
+            </Button>
+            {/* <button
                 type="submit"
                 className="flex justify-center w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 disabled={disabled}
             >
                 {registrationStatus === "progress" ? (
                     <>
-                        <span className="mr-2">Registration pending</span>
-                        {/* <Loader /> */}
+                        <span>Registration pending</span>
                     </>
                 ) : (
-                    <span className="mr-2">Register</span>
+                    <span>Register</span>
                 )}
-            </button>
-        </form>
+            </button> */}
+        </div>
     );
 };
 
@@ -242,32 +257,11 @@ const Rejestracja = () => {
 
     const registerMutation = trpc.playerRegistration.register.useMutation();
 
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (registration: ReturnType<typeof initialRegistration>) => {
         setRegistrationStatus("progress");
 
-        const formElements = e.currentTarget.elements as unknown as {
-            name: HTMLInputElement;
-            lastName: HTMLInputElement;
-            birthDate: HTMLInputElement;
-            gender: HTMLInputElement;
-            team: HTMLInputElement;
-            city: HTMLInputElement;
-            country: HTMLInputElement;
-            email: HTMLInputElement;
-            phoneNumber: HTMLInputElement;
-            icePhoneNumber: HTMLInputElement;
-        };
         const formData = {
-            name: formElements.name?.value,
-            lastName: formElements.lastName?.value,
-            birthDate: new Date(formElements.birthDate?.value),
-            gender: formElements.gender?.value as "male" | "female",
-            team: formElements.team?.value,
-            city: formElements.city?.value,
-            country: formElements.country?.value,
-            email: formElements.email?.value,
-            phoneNumber: formElements.phoneNumber?.value,
-            icePhoneNumber: formElements.icePhoneNumber?.value,
+            ...registration,
             hasPaid: false,
         };
 
@@ -307,7 +301,7 @@ const Rejestracja = () => {
                                         disabled={registrationStatus !== "pending"}
                                         teams={teams}
                                         registrationStatus={registrationStatus}
-                                        handleFormSubmit={handleFormSubmit}
+                                        onResolve={handleFormSubmit}
                                     />
                                 ) : registrationStatus === "error" ? (
                                     <RegistrationFailed />
