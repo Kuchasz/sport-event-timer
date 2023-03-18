@@ -56,7 +56,7 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
                     gender,
                     birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
                     registeredByUserId: userId,
-                    bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }),
+                    bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }).toString(),
                     city: faker.address.cityName(),
                     classificationId: c.id,
                     raceId: c.raceId,
