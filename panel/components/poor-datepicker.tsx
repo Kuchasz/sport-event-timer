@@ -1,35 +1,27 @@
 import { Input } from "./input";
-import { useState } from "react";
 
-const toDateString = (date: Date) => `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-const toDate = (dateString: string) => {
-    if (!/\d\d?.\d\d?.\d\d\d\d/gm.test(dateString)) {
-        alert("Passed value does not match pattern DD.MM.YYYY");
-        return undefined;
-    }
-
-    const [day, month, year] = dateString.split(".");
-    return new Date(Number(year), Number(month) - 1, Number(day));
-};
+const toDateString = (date: Date) => date.toLocaleDateString("en-CA");
+const toDate = (dateString: string) => new Date(dateString);
 
 export const PoorDatepicker = ({
     value: initialValue,
-    onChange
+    onChange,
 }: {
     value?: Date;
     onChange: (event: { target: { value: Date } }) => void;
 }) => {
-    const [value, setValue] = useState<string>(toDateString(initialValue ?? new Date()));
-    // const dateTextValue = value ? toDateString(value) : "";
+    const value = toDateString(initialValue ?? new Date());
+
     return (
         <Input
-            value={value}
+            defaultValue={value}
             onChange={e => {
-                setValue(e.currentTarget.value);
+                onChange({ target: { value: toDate(e.currentTarget.value) ?? new Date() } });
             }}
             onBlur={e => {
                 onChange({ target: { value: toDate(e.target.value) ?? new Date() } });
             }}
+            type="date"
         />
     );
 };
