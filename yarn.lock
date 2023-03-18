@@ -2016,7 +2016,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:latest":
+"@prisma/client@npm:^4.11.0":
   version: 4.11.0
   resolution: "@prisma/client@npm:4.11.0"
   dependencies:
@@ -2162,7 +2162,7 @@ __metadata:
     "@mdi/js": ^7.0.96
     "@mdi/react": ^1.6.1
     "@next-auth/prisma-adapter": ^1.0.5
-    "@prisma/client": latest
+    "@prisma/client": ^4.11.0
     "@react-hook/resize-observer": ^1.2.6
     "@set/timer": 1.0.0
     "@set/utils": 1.0.0
@@ -2205,7 +2205,6 @@ __metadata:
     postcss: ^8.4.14
     prisma: ^4.11.0
     react: ^18.2.0
-    react-daisyui: ^2.0.5
     react-data-grid: 7.0.0-beta.19
     react-dom: ^18.2.0
     react-location: ^3.3.4
@@ -7194,18 +7193,6 @@ __metadata:
   dependencies:
     safe-buffer: ^5.1.0
   checksum: d779499376bd4cbb435ef3ab9a957006c8682f343f14089ed5f27764e4645114196e75b7f6abf1cbd84fd247c0cb0651698444df8c9bf30e62120fbbc52269d6
-  languageName: node
-  linkType: hard
-
-"react-daisyui@npm:^2.0.5":
-  version: 2.4.6
-  resolution: "react-daisyui@npm:2.4.6"
-  peerDependencies:
-    daisyui: ^2.24.0
-    react: ">=16"
-    react-dom: ">=16"
-    tailwindcss: ^3.0.23
-  checksum: ecce31de7176c911a17df7ce3d2973f8743eee3a1924afbe9ab70cd347fb9fc71922059993e09d944ab94a934b0c1e1d8c65ac45c7f085f8252a5fb8615048b1
   languageName: node
   linkType: hard
 

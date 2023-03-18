@@ -7,6 +7,7 @@ import { PoorDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
+import { genders } from "@set/utils/dist/gender";
 
 type PlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
@@ -15,13 +16,6 @@ type PlayerRegistrationFormProps = {
     onResolve: (player: PlayerRegistration) => void;
     initialPlayerRegistration: PlayerRegistration;
 };
-
-export type Gender = "male" | "female";
-
-export const genders = [
-    { name: "Male", value: "male" as Gender },
-    { name: "Female", value: "female" as Gender }
-];
 
 export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegistration }: PlayerRegistrationFormProps) => {
     const [playerRegistration, changeHandler] = useFormState(initialPlayerRegistration, []);

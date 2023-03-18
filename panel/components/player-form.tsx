@@ -9,6 +9,7 @@ import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
 import { PoorCombo } from "./poor-combo";
+import { genders } from "@set/utils/dist/gender";
 
 type Player = AppRouterInputs["player"]["add"]["player"];
 
@@ -19,13 +20,6 @@ type PlayerFormProps = {
     classifications: AppRouterOutputs["classification"]["classifications"];
     bibNumbers: string[];
 };
-
-export type Gender = "male" | "female";
-
-export const genders = [
-    { name: "Male", value: "male" as Gender },
-    { name: "Female", value: "female" as Gender },
-];
 
 export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications, bibNumbers }: PlayerFormProps) => {
     const [player, changeHandler] = useFormState(initialPlayer, [classifications]);

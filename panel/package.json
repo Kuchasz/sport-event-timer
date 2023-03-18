@@ -66,7 +66,6 @@
         "postcss": "^8.4.14",
         "prisma": "^4.11.0",
         "react": "^18.2.0",
-        "react-daisyui": "^2.0.5",
         "react-data-grid": "7.0.0-beta.19",
         "react-dom": "^18.2.0",
         "react-location": "^3.3.4",
