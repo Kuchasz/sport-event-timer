@@ -5,12 +5,17 @@ import { Label } from "components/label";
 import { PoorCombo } from "components/poor-combo";
 import { PoorDatepicker } from "components/poor-datepicker";
 import { PoorInput } from "components/poor-input";
+import { PoorNumberInput } from "components/poor-number-input";
 import { PoorSelect } from "components/poor-select";
 import { trpc } from "connection";
+import { countryCodes } from "contry-codes";
+import { Form, FormInput } from "form";
 import { useFormState } from "hooks";
+import { playerRegistrationSchema } from "models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { z } from "zod";
 
 const initialRegistration = () => ({
     name: "",
@@ -19,6 +24,10 @@ const initialRegistration = () => ({
     gender: "male" as Gender,
     team: "",
 });
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+const initialValues = {};
 
 const RegistrationFormComponent = ({
     disabled,
@@ -35,148 +44,127 @@ const RegistrationFormComponent = ({
 
     return (
         <div className="space-y-4 md:space-y-6">
+            <Form onSubmit={console.log} initialValues={initialValues} validationSchema={playerRegistrationSchema}>
+                <FormInput
+                    label="First Name"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Your first name"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="name"
+                />
+                <FormInput
+                    label="Last Name"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Your last name"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="lastName"
+                />
+                <FormInput
+                    label="Birth Date"
+                    render={({ value, onChange }) => (
+                        <PoorDatepicker
+                            placeholder="Your birth date"
+                            value={value as Date}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="birthDate"
+                />
+                <FormInput
+                    label="Gender"
+                    render={({ value, onChange }) => (
+                        <PoorSelect
+                            initialValue={value as any}
+                            items={genders}
+                            placeholder="Select gender"
+                            nameKey="name"
+                            valueKey="value"
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="gender"
+                />
+                <FormInput
+                    label="Team (optional)"
+                    render={({ value, onChange }) => (
+                        <PoorCombo
+                            placeholder="Your team"
+                            initialValue={value as string}
+                            items={teams}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="team"
+                />
+                <FormInput
+                    label="City"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Your city"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="city"
+                />
+                <FormInput
+                    label="Country"
+                    render={({ value, onChange }) => (
+                        <PoorSelect
+                            initialValue={value as any}
+                            items={countryCodes}
+                            nameKey="name_en"
+                            placeholder="Select country"
+                            valueKey="code"
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="country"
+                />
+                <FormInput
+                    label="Email"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Your email address"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="email"
+                />
+                <FormInput
+                    label="Phone number"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Your email phone number"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="phoneNumber"
+                />
+                <FormInput
+                    label="ICE phone number (optional)"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder="Resque phone number"
+                            value={value as string}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
+                    )}
+                    name="icePhoneNumber"
+                />
+            </Form>
+
             <div className={classNames("space-y-4 md:space-y-6", { ["opacity-50"]: disabled })}>
-                <div>
-                    <Label>First Name</Label>
-                    <PoorInput value={registration.name} onChange={changeHandler("name")} />
-                    {/* <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
-                        First Name
-                    </label>
-                    <input
-                        type="name"
-                        name="name"
-                        id="name"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="first name"
-                        required
-                        disabled={disabled}
-                    /> */}
-                </div>
-                <div>
-                    <Label>Last Name</Label>
-                    <PoorInput value={registration.lastName} onChange={changeHandler("lastName")} />
-                    {/* <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900">
-                        Last name
-                    </label>
-                    <input
-                        type="lastName"
-                        name="lastName"
-                        id="lastName"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="last name"
-                        required
-                        disabled={disabled}
-                    /> */}
-                </div>
-                <div>
-                    <Label>Birth Date</Label>
-                    <PoorDatepicker value={registration.birthDate} onChange={changeHandler("birthDate")} />
-                    {/* <label htmlFor="birthDate" className="block mb-2 text-sm font-medium text-gray-900">
-                        Birth date
-                    </label> */}
-                    {/* <input
-                        type="date"
-                        name="birthDate"
-                        id="birthDate"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="birth date"
-                        required
-                        disabled={disabled}
-                    /> */}
-                </div>
-                <div>
-                    <Label>Gender</Label>
-                    {/* <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">
-                        Gender
-                    </label> */}
-                    <PoorSelect
-                        initialValue={registration.gender}
-                        items={genders}
-                        nameKey="name"
-                        valueKey="value"
-                        onChange={changeHandler("gender")}
-                    />
-                </div>
-                <div>
-                    {/* <label htmlFor="team" className="block mb-2 text-sm font-medium text-gray-900">
-                        Team (optional)
-                    </label> */}
-                    <Label>Team (optional)</Label>
-                    <PoorCombo placeholder="team name" items={teams} onChange={changeHandler("team")} />
-                </div>
-                {/* <div>
-                    <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">
-                        City
-                    </label>
-                    <input
-                        name="city"
-                        id="city"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="city"
-                        required
-                        disabled={disabled}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="country" className="block mb-2 text-sm font-medium text-gray-900">
-                        Country
-                    </label>
-                    <select
-                        name="country"
-                        id="country"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="country"
-                        required
-                        disabled={disabled}
-                    >
-                        {countryCodes.map(cc => (
-                            <option key={cc.code} value={cc.code}>
-                                {cc.name_en}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="email address"
-                        required
-                        disabled={disabled}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900">
-                        Phone number
-                    </label>
-                    <input
-                        type="tel"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="phone number"
-                        required
-                        disabled={disabled}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="icePhoneNumber" className="block mb-2 text-sm font-medium text-gray-900">
-                        ICE phone number
-                    </label>
-                    <input
-                        type="tel"
-                        name="icePhoneNumber"
-                        id="icePhoneNumber"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5"
-                        placeholder="emergency phone number"
-                        disabled={disabled}
-                    />
-                </div> */}
                 <div className="flex items-start">
                     <div className="flex items-center h-5">
                         <input

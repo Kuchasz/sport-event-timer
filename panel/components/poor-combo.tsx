@@ -36,8 +36,8 @@ export const PoorCombo = ({
                             onChange(event);
                         }}
                     />
-                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                        <Icon className="h-5 w-5 text-gray-400" path={mdiChevronDoubleDown}></Icon>
+                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-4">
+                        <Icon className="h-5 w-5" path={mdiChevronDoubleDown}></Icon>
                     </Combobox.Button>
                 </div>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
