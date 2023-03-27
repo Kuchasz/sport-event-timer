@@ -1,28 +1,7 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
-import { GenderEnum } from "../schema";
 import { TRPCError } from "@trpc/server";
-
-const playerRegistrationSchema = z.object({
-    id: z.number().nullish(),
-    name: z.string({ required_error: "name is required" }).min(3),
-    lastName: z.string({ required_error: "lastName is required" }).min(3),
-    gender: GenderEnum,
-    birthDate: z.date({ required_error: "birthDate is required" }),
-    country: z.string().nullish(),
-    city: z.string().nullish(),
-    team: z.string().nullish(),
-    email: z.string().email("email is not valid").nullish(),
-    phoneNumber: z.string().nullish(),
-    icePhoneNumber: z.string().nullish(),
-    hasPaid: z.boolean()
-});
-
-const racePlayerRegistrationSchema = z.object({
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
-    player: playerRegistrationSchema
-});
-
+import { racePlayerRegistrationSchema } from "models";
 
 type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
 

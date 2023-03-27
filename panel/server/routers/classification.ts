@@ -1,6 +1,6 @@
+import { GenderEnum } from "models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
-import { GenderEnum } from "../schema";
 
 const categoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),

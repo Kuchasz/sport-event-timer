@@ -9,20 +9,18 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     nameKey,
     valueKey,
     onChange,
-    placeholder
+    placeholder,
 }: {
     initialValue?: T[TValueKey];
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
     onChange: (event: { target: { value: T[TValueKey] } }) => void;
-    placeholder?: string
+    placeholder?: string;
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
-    const desiredItem = selected
-        ? items.find(i => String(i[valueKey]) === String(selected))!
-        : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
+    const desiredItem = selected ? items.find(i => String(i[valueKey]) === String(selected))! : undefined; //({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     return (
         <Listbox
@@ -34,20 +32,19 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
             }}
         >
             {/* <div className="relative mt-1"></div> */}
-            <div className="relative">
+            <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border-gray-300 border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                    <span className="block truncate">{String(desiredItem[nameKey])}</span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                    {desiredItem ? (
+                        <span className="block truncate">{String(desiredItem[nameKey])}</span>
+                    ) : (
+                        <span className="text-gray-400 block truncate">{placeholder}</span>
+                    )}
+                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                         {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
-                        <Icon className="text-gray-400" path={mdiArrowUpDown} size={0.7} />
+                        <Icon path={mdiArrowUpDown} size={0.7} />
                     </span>
                 </Listbox.Button>
-                <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
+                <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {items.map((item, personIdx) => (
                             <Listbox.Option
@@ -81,27 +78,27 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     );
 };
 
-
 export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
     items,
     initialValue,
     nameKey,
     valueKey,
     onChange,
-    placeholder
+    placeholder,
 }: {
     initialValue?: T[TValueKey];
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
     onChange: (event: { target: { value: T[TValueKey] } }) => void;
-    placeholder?: string
+    placeholder?: string;
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
-    const desiredItem = selected && items?.length > 0
-        ? items.find(i => String(i[valueKey]) === String(selected))!
-        : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
+    const desiredItem =
+        selected && items?.length > 0
+            ? items.find(i => String(i[valueKey]) === String(selected))!
+            : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     return (
         <Listbox
@@ -120,14 +117,9 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                         {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
                         <Icon className="text-gray-400" path={mdiChevronDown} size={1} />
-                    </span> 
+                    </span>
                 </Listbox.Button>
-                <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
+                <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {items.map((item, personIdx) => (
                             <Listbox.Option
