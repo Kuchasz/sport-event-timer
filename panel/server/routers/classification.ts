@@ -1,4 +1,4 @@
-import { GenderEnum } from "models";
+import { GenderEnum } from "../../models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 
