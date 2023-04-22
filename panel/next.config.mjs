@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-import nextPWA from "next-pwa";
-const withPWA = nextPWA({
-    dest: 'public',
-})
 
 /**
  * Don't be scared of the generics here.
@@ -16,7 +12,7 @@ function defineNextConfig(config) {
     return config;
 }
 
-export default withPWA(defineNextConfig({
+export default defineNextConfig({
     // reactStrictMode: true,
     // swcMinify: true,
     // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
@@ -29,4 +25,4 @@ export default withPWA(defineNextConfig({
     //     runtime: 'nodejs',
     //     appDir: true
     // }
-}));
+});
