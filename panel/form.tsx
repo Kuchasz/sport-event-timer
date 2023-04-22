@@ -75,51 +75,12 @@ export const FormInput = ({ label, name, render }: FormInputProps) => {
     );
 };
 
-// function applyFormPropsToFormInputs(
-//     values: FormValues,
-//     errors: FormErrors,
-//     handleChange: (name: string, value: string) => void,
-//     children: ReactNode
-// ): ReactNode {
-//     return React.Children.map(children, (child, key) => {
-//         if (React.isValidElement(child)) {
-//             const { type } = child;
-//             const { originalComponentType, name, children, ...props } = child.props;
-//             console.log(originalComponentType, originalComponentType == FormInput, type == FormInput, type);
-//             if (originalComponentType == FormInput || type == FormInput) {
-//                 return React.cloneElement(child, {
-//                     ...props,
-//                     key,
-//                     value: values[name],
-//                     error: errors[name],
-//                     // onChange: (e: { target: { value: string } }) => handleChange(child.props.name, e.target.value),
-//                     handleChange,
-//                     children: applyFormPropsToFormInputs(values, errors, handleChange, children),
-//                     originalComponentType: FormInput,
-//                 } as any);
-//             } else {
-//                 return React.cloneElement(child, {
-//                     children: applyFormPropsToFormInputs(values, errors, handleChange, child.props.children),
-//                 } as any);
-//             }
-//         } else {
-//             return child;
-//         }
-//     });
-// }
-
 export function Form({ children, initialValues, onSubmit, validationSchema }: { children: ReactNode } & FormStateProps) {
     const { formValues, formErrors, handleSubmit, handleChange } = useForm({ initialValues, onSubmit, validationSchema });
 
-    // const formAppliedChildren = applyFormPropsToFormInputs(formValues, formErrors, handleChange, children);
     return (
         <form onSubmit={handleSubmit}>
             <FormContext.Provider value={{ formValues, formErrors, handleChange }}>{children}</FormContext.Provider>
-            <div>
-                <button type="submit">SEND</button>
-            </div>
-
-            <div className="text-2xs opacity-50">{JSON.stringify(formValues)}</div>
         </form>
     );
 }
