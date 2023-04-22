@@ -14,6 +14,10 @@ export const PlayerRegistrationCreate = ({ onReject, onResolve }: PlayerRegistra
         lastName: undefined as unknown as string,
         gender: "male",
         birthDate: new Date(1990, 0, 1),
+        city: "",
+        email: "",
+        phoneNumber: "",
+        country: "POL",
         hasPaid: false
     };
 

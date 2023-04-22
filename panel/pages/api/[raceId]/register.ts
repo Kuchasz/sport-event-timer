@@ -6,7 +6,7 @@ import { env } from "env/server.mjs";
 import { template } from "messages";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
-import { GenderEnum } from "server/schema";
+import { GenderEnum } from "models";
 
 const transporter = nodemailer.createTransport({
     host: env.NOTIFICATIONS_SERVER_HOST,
