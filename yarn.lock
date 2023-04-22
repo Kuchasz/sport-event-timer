@@ -1057,7 +1057,7 @@ __metadata:
     csv-parse: ^5.3.0
     csv-stringify: ^6.2.0
     daisyui: ^2.18.0
-    demodal: ^1.1.0
+    demodal: ^1.1.2
     dotenv: ^16.0.0
     event-stream: ^4.0.1
     fastq: ^1.13.0
@@ -2514,19 +2514,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"demodal@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "demodal@npm:1.1.1"
+"demodal@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "demodal@npm:1.1.2"
   dependencies:
     "@babel/runtime": ^7.5.5
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0
+    react: ">=16.3"
   peerDependenciesMeta:
     react-dom:
       optional: true
     react-native:
       optional: true
-  checksum: 948cd385fec1a6460a71aaf8f2a6d5100e5fc35ee17530a84270dbb39deb0bd3c490faa515bbf342be22a74e2acfd6a5cee6766ded245c250299601c9a61cf10
+  checksum: ef6d48530ab2ab30d22790bd5de4577ad985d609fc98a94a6f610d9fa53c812cf68e67cb190f12c5d777219054122e43042350ff99d282cc62a4846f88b7a321
   languageName: node
   linkType: hard
 
