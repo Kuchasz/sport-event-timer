@@ -17,11 +17,11 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         gender: editedPlayerRegistration.gender as "male" | "female",
         lastName: editedPlayerRegistration.lastName,
         name: editedPlayerRegistration.name,
-        city: editedPlayerRegistration.city,
-        country: editedPlayerRegistration.country,
-        email: editedPlayerRegistration.email,
+        city: editedPlayerRegistration.city ?? "",
+        country: editedPlayerRegistration.country ?? "POL",
+        email: editedPlayerRegistration.email ?? "",
         icePhoneNumber: editedPlayerRegistration.icePhoneNumber,
-        phoneNumber: editedPlayerRegistration.phoneNumber,
+        phoneNumber: editedPlayerRegistration.phoneNumber ?? "",
         team: editedPlayerRegistration.team,
         hasPaid: editedPlayerRegistration.hasPaid
     };

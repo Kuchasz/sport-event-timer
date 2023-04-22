@@ -1,11 +1,9 @@
 import { Gender, genders } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
-import { Label } from "components/label";
 import { PoorCombo } from "components/poor-combo";
 import { PoorDatepicker } from "components/poor-datepicker";
 import { PoorInput } from "components/poor-input";
-import { PoorNumberInput } from "components/poor-number-input";
 import { PoorSelect } from "components/poor-select";
 import { trpc } from "connection";
 import { countryCodes } from "contry-codes";
@@ -15,7 +13,6 @@ import { playerRegistrationSchema } from "models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { z } from "zod";
 
 const initialRegistration = () => ({
     name: "",
@@ -23,9 +20,13 @@ const initialRegistration = () => ({
     birthDate: new Date(),
     gender: "male" as Gender,
     team: "",
+    country: "",
+    city: "",
+    email: "",
+    phoneNumber: ""
 });
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+// interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const initialValues = {};
 
@@ -40,7 +41,8 @@ const RegistrationFormComponent = ({
     onResolve: (registration: ReturnType<typeof initialRegistration>) => void;
     teams: string[];
 }) => {
-    const [registration, changeHandler] = useFormState(initialRegistration(), []);
+    // const [registration, changeHandler] = useFormState(initialRegistration(), []);
+    const [registration] = useFormState(initialRegistration(), []);
 
     return (
         <div className="space-y-4 md:space-y-6">
