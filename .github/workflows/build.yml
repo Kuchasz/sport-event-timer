@@ -31,7 +31,7 @@ jobs:
                       ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
 
             - name: Install dependencies
-              run: yarn install
+              run: yarn install --frozen-lockfile
 
             - name: Build utils
               run: |
