@@ -9,7 +9,7 @@ import { trpc } from "connection";
 import { countryCodes } from "contry-codes";
 import { Form, FormInput } from "form";
 import { useFormState } from "hooks";
-import { playerRegistrationSchema } from "models";
+import { playerRegistrationSchema } from "../../models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
