@@ -12,9 +12,10 @@ import ws from "ws";
 // import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
 import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 // import { PrismaClient } from "@prisma/client";
 import { db } from "./db";
+import { getServerAuthSession } from "./auth";
 
 type CreateContextOptions = {
     session: Session | null;
@@ -28,14 +29,15 @@ export const createContextInner = async ({ session }: CreateContextOptions) => (
 export const createContext = async (
     opts:
         | CreateNextContextOptions
-        | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
+    // | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+) => {
     // export const createContext = async (opts: CreateNextContextOptions) => {
     // const { req, res } = opts;
 
     // req.headers.cookie
 
     // Get the session from the server using the unstable_getServerSession wrapper function
-    const session = await getSession(opts);
+    const session = await getServerAuthSession({ req: opts.req, res: opts.res });
 
     return await createContextInner({
         session,
