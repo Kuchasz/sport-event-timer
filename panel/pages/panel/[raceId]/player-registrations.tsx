@@ -12,6 +12,7 @@ import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
 import { PlayerRegistrationEdit } from "components/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
+import classNames from "classnames";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -71,7 +72,13 @@ const PlayerRegistrationPayment = ({ playerRegistration }: { playerRegistration:
         }
     };
     return (
-        <span className="flex h-full items-center hover:text-red-600 cursor-pointer" onClick={togglePlayerPayment}>
+        <span
+            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
+                ["text-green-600 font-semibold"]: playerRegistration.paymentDate !== null,
+                ["text-red-600"]: playerRegistration.paymentDate === null,
+            })}
+            onClick={togglePlayerPayment}
+        >
             {playerRegistration.hasPaid ? <Icon size={1} path={mdiCashCheck} /> : <Icon size={1} path={mdiCashRemove} />}
             <span className="ml-2">{playerRegistration.paymentDate?.toLocaleDateString() ?? "not paid"}</span>
         </span>
@@ -114,7 +121,7 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
 
             utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
             utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
-            
+
             refetch();
         }
     };
