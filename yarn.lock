@@ -431,7 +431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^7.6.0":
+"@faker-js/faker@npm:^7.4.0":
   version: 7.6.0
   resolution: "@faker-js/faker@npm:7.6.0"
   checksum: 942af6221774e8c98a0eb6bc75265e05fb81a941170377666c3439aab9495dd321d6beedc5406f07e6ad44262b3e43c20961f666d116ad150b78e7437dd1bb2b
@@ -445,7 +445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:^1.7.14":
+"@headlessui/react@npm:^1.6.6":
   version: 1.7.14
   resolution: "@headlessui/react@npm:1.7.14"
   dependencies:
@@ -777,7 +777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdi/js@npm:^7.2.96":
+"@mdi/js@npm:^7.0.96":
   version: 7.2.96
   resolution: "@mdi/js@npm:7.2.96"
   checksum: f8e22da5d994a4b764580d22290c825c1d789a6e015c166e271e2164fb80d33551d6632632897e30ae9033a3fe4aa6a28f2e97c5d3ad56c823f89f859944899e
@@ -793,7 +793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next-auth/prisma-adapter@npm:^1.0.6":
+"@next-auth/prisma-adapter@npm:^1.0.5":
   version: 1.0.6
   resolution: "@next-auth/prisma-adapter@npm:1.0.6"
   peerDependencies:
@@ -927,7 +927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:^4.13.0":
+"@prisma/client@npm:^4.11.0":
   version: 4.13.0
   resolution: "@prisma/client@npm:4.13.0"
   dependencies:
@@ -1010,62 +1010,62 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@set/panel@workspace:panel"
   dependencies:
-    "@faker-js/faker": ^7.6.0
-    "@headlessui/react": ^1.7.14
-    "@mdi/js": ^7.2.96
+    "@faker-js/faker": ^7.4.0
+    "@headlessui/react": ^1.6.6
+    "@mdi/js": ^7.0.96
     "@mdi/react": ^1.6.1
-    "@next-auth/prisma-adapter": ^1.0.6
-    "@prisma/client": ^4.13.0
+    "@next-auth/prisma-adapter": ^1.0.5
+    "@prisma/client": ^4.11.0
     "@react-hook/resize-observer": ^1.2.6
     "@set/timer": 1.0.0
     "@set/utils": 1.0.0
-    "@tailwindcss/forms": ^0.5.3
+    "@tailwindcss/forms": ^0.5.2
     "@tanstack/react-query": ^4.29.3
     "@tanstack/react-virtual": 3.0.0-beta.36
-    "@trpc/client": ^10.21.1
-    "@trpc/next": ^10.21.1
-    "@trpc/react-query": ^10.21.1
-    "@trpc/server": ^10.21.1
+    "@trpc/client": ^10.8.1
+    "@trpc/next": ^10.8.1
+    "@trpc/react-query": ^10.8.1
+    "@trpc/server": ^10.8.1
     "@types/express": ^4.17.13
     "@types/jest": ^28.1.4
     "@types/node": ^18.11.17
     "@types/nodemailer": ^6.4.7
     "@types/papaparse": ^5.3.2
-    "@types/react": ^18.0.38
-    "@types/react-dom": ^18.0.11
-    autoprefixer: ^10.4.14
-    classnames: ^2.3.2
-    csv-parse: ^5.3.8
-    csv-stringify: ^6.3.2
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.6
+    autoprefixer: ^10.4.7
+    classnames: ^2.3.1
+    csv-parse: ^5.3.0
+    csv-stringify: ^6.2.0
     daisyui: ^2.18.0
     demodal: ^1.1.2
-    dotenv: ^16.0.3
+    dotenv: ^16.0.0
     event-stream: ^4.0.1
-    fastq: ^1.15.0
+    fastq: ^1.13.0
     fuzzysort: ^2.0.4
-    jotai: ^2.0.4
+    jotai: ^2.0.2
     jspdf: ^2.5.1
-    jspdf-autotable: ^3.5.28
-    next: ^13.3.1
+    jspdf-autotable: ^3.5.25
+    next: ^13.2.1
     next-auth: ^4.22.1
-    node-fetch: 2.6.6
-    node-html-parser: ^6.1.5
-    nodemailer: ^6.9.1
-    papaparse: ^5.4.1
-    postcss: ^8.4.23
-    prisma: ^4.13.0
+    node-fetch: 2.6.1
+    node-html-parser: ^6.1.1
+    nodemailer: ^6.8.0
+    papaparse: ^5.3.2
+    postcss: ^8.4.14
+    prisma: ^4.11.0
     react: ^18.2.0
     react-data-grid: 7.0.0-beta.19
     react-dom: ^18.2.0
     react-location: ^3.3.4
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    sass: ^1.62.0
-    superjson: ^1.12.3
-    tailwindcss: ^3.3.1
-    tailwindcss-classnames: ^3.0.7
+    react-redux: ^8.0.2
+    redux: ^4.2.0
+    sass: ^1.54.4
+    superjson: ^1.9.1
+    tailwindcss: ^3.1.6
+    tailwindcss-classnames: ^3.0.5
     ts-node: ^10.9.1
-    typescript: ^4.9.5
+    typescript: ^4.9.4
     xlsx: ^0.18.5
     zod: ^3.21.4
   languageName: unknown
@@ -1128,7 +1128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/forms@npm:^0.5.3":
+"@tailwindcss/forms@npm:^0.5.2":
   version: 0.5.3
   resolution: "@tailwindcss/forms@npm:0.5.3"
   dependencies:
@@ -1190,7 +1190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/client@npm:^10.21.1":
+"@trpc/client@npm:^10.8.1":
   version: 10.21.1
   resolution: "@trpc/client@npm:10.21.1"
   peerDependencies:
@@ -1199,7 +1199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/next@npm:^10.21.1":
+"@trpc/next@npm:^10.8.1":
   version: 10.21.1
   resolution: "@trpc/next@npm:10.21.1"
   dependencies:
@@ -1216,7 +1216,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/react-query@npm:^10.21.1":
+"@trpc/react-query@npm:^10.8.1":
   version: 10.21.1
   resolution: "@trpc/react-query@npm:10.21.1"
   peerDependencies:
@@ -1229,7 +1229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trpc/server@npm:^10.21.1":
+"@trpc/server@npm:^10.8.1":
   version: 10.21.1
   resolution: "@trpc/server@npm:10.21.1"
   checksum: 7d6dcb9a3c02fde95573ee80a83b4fa120c243d8af3c53e8a3b1109ccc9348cd8fe030a6104bf16f547ca72beeed48bf0a9ab8e9239030f674d5c932d7925e70
@@ -1475,7 +1475,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.11":
+"@types/react-dom@npm:^18.0.6":
   version: 18.0.11
   resolution: "@types/react-dom@npm:18.0.11"
   dependencies:
@@ -1495,7 +1495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.38":
+"@types/react@npm:^18.0.14":
   version: 18.0.38
   resolution: "@types/react@npm:18.0.38"
   dependencies:
@@ -1756,7 +1756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.14":
+"autoprefixer@npm:^10.4.7":
   version: 10.4.14
   resolution: "autoprefixer@npm:10.4.14"
   dependencies:
@@ -2174,7 +2174,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.3.2":
+"classnames@npm:^2.3.1":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -2465,14 +2465,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csv-parse@npm:^5.3.8":
+"csv-parse@npm:^5.3.0":
   version: 5.3.8
   resolution: "csv-parse@npm:5.3.8"
   checksum: 24d17fad0720d6e2ed8cf895817e5758bfcbf68350277bb9a6e58dd89797d7db626ef67aa62784b7ab3549e1a4527212ff8b4bdc5c7e66e0be2b9963162677d8
   languageName: node
   linkType: hard
 
-"csv-stringify@npm:^6.3.2":
+"csv-stringify@npm:^6.2.0":
   version: 6.3.2
   resolution: "csv-stringify@npm:6.3.2"
   checksum: 504e7501be659eadc6c3bdcbab2389ee6eb3865aa46d2910596469ecf3645367769f6076d1e1e296349f1809692295fa5da8d131e9b9dbc24a8625f88b52d640
@@ -2666,7 +2666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.3":
+"dotenv@npm:^16.0.0":
   version: 16.0.3
   resolution: "dotenv@npm:16.0.3"
   checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
@@ -2868,7 +2868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastq@npm:^1.15.0":
+"fastq@npm:^1.13.0":
   version: 1.15.0
   resolution: "fastq@npm:1.15.0"
   dependencies:
@@ -3989,7 +3989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^2.0.4":
+"jotai@npm:^2.0.2":
   version: 2.0.4
   resolution: "jotai@npm:2.0.4"
   peerDependencies:
@@ -4045,7 +4045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jspdf-autotable@npm:^3.5.28":
+"jspdf-autotable@npm:^3.5.25":
   version: 3.5.28
   resolution: "jspdf-autotable@npm:3.5.28"
   peerDependencies:
@@ -4456,7 +4456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^13.3.1":
+"next@npm:^13.2.1":
   version: 13.3.1
   resolution: "next@npm:13.3.1"
   dependencies:
@@ -4523,16 +4523,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.6":
-  version: 2.6.6
-  resolution: "node-fetch@npm:2.6.6"
-  dependencies:
-    whatwg-url: ^5.0.0
-  checksum: ee8290626bdb73629c59722b75dcf4b9b6a67c1ed7eb9102e368479c4a13b56a48c2bb3ad71571e378e98c8b2c64c820e11f9cd39e4b8557dd138ad571ef9a42
+"node-fetch@npm:2.6.1":
+  version: 2.6.1
+  resolution: "node-fetch@npm:2.6.1"
+  checksum: 91075bedd57879117e310fbcc36983ad5d699e522edb1ebcdc4ee5294c982843982652925c3532729fdc86b2d64a8a827797a745f332040d91823c8752ee4d7c
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^3.3.1":
+"node-fetch@npm:^3.2.10":
   version: 3.3.1
   resolution: "node-fetch@npm:3.3.1"
   dependencies:
@@ -4563,7 +4561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-html-parser@npm:^6.1.5":
+"node-html-parser@npm:^6.1.1":
   version: 6.1.5
   resolution: "node-html-parser@npm:6.1.5"
   dependencies:
@@ -4594,7 +4592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.9.1":
+"nodemailer@npm:^6.8.0":
   version: 6.9.1
   resolution: "nodemailer@npm:6.9.1"
   checksum: b1b9670afc170b4454665abae3fc9acd7e781adb9f579d1c2cd991bf75c647ebe345593f8a057e48d7bf9e4c9a9218869f87db8fb7171c614f557000ab654572
@@ -4788,7 +4786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"papaparse@npm:^5.4.1":
+"papaparse@npm:^5.3.2":
   version: 5.4.1
   resolution: "papaparse@npm:5.4.1"
   checksum: fc9e52f7158dca3517c229e3309065b1ab5da6c7194572fba4f31ff138bc43e3c91182cc40365cc828f97fe10d0aca416068fd731661058bea0f69ddb84a411a
@@ -4979,7 +4977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.9, postcss@npm:^8.4.23":
+"postcss@npm:^8.0.9, postcss@npm:^8.4.14":
   version: 8.4.23
   resolution: "postcss@npm:8.4.23"
   dependencies:
@@ -5038,7 +5036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^4.13.0":
+"prisma@npm:^4.11.0":
   version: 4.13.0
   resolution: "prisma@npm:4.13.0"
   dependencies:
@@ -5161,7 +5159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^8.0.5":
+"react-redux@npm:^8.0.2":
   version: 8.0.5
   resolution: "react-redux@npm:8.0.5"
   dependencies:
@@ -5249,7 +5247,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^4.2.1":
+"redux@npm:^4.2.0, redux@npm:^4.2.1":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
   dependencies:
@@ -5375,7 +5373,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@types/ws": ^8.5.4
-    node-fetch: ^3.3.1
+    node-fetch: ^3.2.10
     ws: ^8.13.0
   languageName: unknown
   linkType: soft
@@ -5419,7 +5417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.62.0":
+"sass@npm:^1.54.4":
   version: 1.62.0
   resolution: "sass@npm:1.62.0"
   dependencies:
@@ -5727,7 +5725,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superjson@npm:^1.12.3":
+"superjson@npm:^1.9.1":
   version: 1.12.3
   resolution: "superjson@npm:1.12.3"
   dependencies:
@@ -5787,7 +5785,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss-classnames@npm:^3.0.7":
+"tailwindcss-classnames@npm:^3.0.5":
   version: 3.0.7
   resolution: "tailwindcss-classnames@npm:3.0.7"
   dependencies:
@@ -5839,7 +5837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.3.1":
+"tailwindcss@npm:^3.1.6":
   version: 3.3.1
   resolution: "tailwindcss@npm:3.3.1"
   dependencies:
@@ -5977,13 +5975,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tr46@npm:~0.0.3":
-  version: 0.0.3
-  resolution: "tr46@npm:0.0.3"
-  checksum: 726321c5eaf41b5002e17ffbd1fb7245999a073e8979085dacd47c4b4e8068ff5777142fc6726d6ca1fd2ff16921b48788b87225cbc57c72636f6efa8efbffe3
-  languageName: node
-  linkType: hard
-
 "ts-interface-checker@npm:^0.1.9":
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
@@ -6083,7 +6074,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.9.5":
+"typescript@npm:^4.9.4, typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -6093,7 +6084,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.9.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=f456af"
   bin:
@@ -6223,23 +6214,6 @@ __metadata:
   version: 3.2.1
   resolution: "web-streams-polyfill@npm:3.2.1"
   checksum: b119c78574b6d65935e35098c2afdcd752b84268e18746606af149e3c424e15621b6f1ff0b42b2676dc012fc4f0d313f964b41a4b5031e525faa03997457da02
-  languageName: node
-  linkType: hard
-
-"webidl-conversions@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "webidl-conversions@npm:3.0.1"
-  checksum: c92a0a6ab95314bde9c32e1d0a6dfac83b578f8fa5f21e675bc2706ed6981bc26b7eb7e6a1fab158e5ce4adf9caa4a0aee49a52505d4d13c7be545f15021b17c
-  languageName: node
-  linkType: hard
-
-"whatwg-url@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "whatwg-url@npm:5.0.0"
-  dependencies:
-    tr46: ~0.0.3
-    webidl-conversions: ^3.0.0
-  checksum: b8daed4ad3356cc4899048a15b2c143a9aed0dfae1f611ebd55073310c7b910f522ad75d727346ad64203d7e6c79ef25eafd465f4d12775ca44b90fa82ed9e2c
   languageName: node
   linkType: hard
 
