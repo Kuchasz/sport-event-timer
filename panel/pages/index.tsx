@@ -1,9 +1,9 @@
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
 export default () => <></>;
 
 export function getServerSideProps() {
-    const session = getSession();
+    const session = getServerSession();
 
     if (!session)
         return {
