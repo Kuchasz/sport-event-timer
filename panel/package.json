@@ -8,13 +8,13 @@
         "export": "next build && next export",
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "generate-prisma": "prisma generate --schema=./server/prisma/schema.prisma",
-        "dev:ws": "ts-node --esm server/wsDevServer.ts --tsconfig tsconfig.server.json",
-        "start": "ts-node --esm server/prodServer.ts --tsconfig tsconfig.server.json",
+        "dev:ws": "ts-node server/wsDevServer.ts --tsconfig tsconfig.server.json",
+        "start": "ts-node server/prodServer.ts --tsconfig tsconfig.server.json",
         "dev:next": "next dev",
         "start:dev": "yarn dev:ws & yarn dev:next"
     },
     "prisma": {
-        "seed": "ts-node --esm server/prisma/seed.ts",
+        "seed": "ts-node server/prisma/seed.ts",
         "schema": "server/prisma/schema.prisma"
     },
     "dependencies": {
@@ -55,7 +55,7 @@
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.25",
         "next": "^13.2.1",
-        "next-auth": "^4.22.1",
+        "next-auth": "4.18.8",
         "node-fetch": "2.6.1",
         "node-html-parser": "^6.1.1",
         "nodemailer": "^6.8.0",
