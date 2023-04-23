@@ -359,7 +359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.20.13":
+"@babel/runtime@npm:^7.16.3":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
@@ -920,7 +920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@panva/hkdf@npm:^1.0.2":
+"@panva/hkdf@npm:^1.0.1":
   version: 1.0.4
   resolution: "@panva/hkdf@npm:1.0.4"
   checksum: d93b511eba76f5f1f1525834c3effb86e236e6a7d08d0abc067075694c6814909e172b7bed94b9eaeceb074306a6edd7981eb6a2a46922dd36b2f3d30ee9764e
@@ -1047,7 +1047,7 @@ __metadata:
     jspdf: ^2.5.1
     jspdf-autotable: ^3.5.25
     next: ^13.2.1
-    next-auth: ^4.22.1
+    next-auth: 4.18.8
     node-fetch: 2.6.1
     node-html-parser: ^6.1.1
     nodemailer: ^6.8.0
@@ -3982,7 +3982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.11.4, jose@npm:^4.14.1":
+"jose@npm:^4.14.1, jose@npm:^4.9.3":
   version: 4.14.1
   resolution: "jose@npm:4.14.1"
   checksum: 08e1a2b7d1e5c546fe3e6ac1a4037e5da2fc9df85f4681cada9c1723d748d53f4580330a01a8bc595fd649dab954719e17756312662b69231ef4ce67e31d1dd4
@@ -4431,16 +4431,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.22.1":
-  version: 4.22.1
-  resolution: "next-auth@npm:4.22.1"
+"next-auth@npm:4.18.8":
+  version: 4.18.8
+  resolution: "next-auth@npm:4.18.8"
   dependencies:
-    "@babel/runtime": ^7.20.13
-    "@panva/hkdf": ^1.0.2
+    "@babel/runtime": ^7.16.3
+    "@panva/hkdf": ^1.0.1
     cookie: ^0.5.0
-    jose: ^4.11.4
+    jose: ^4.9.3
     oauth: ^0.9.15
-    openid-client: ^5.4.0
+    openid-client: ^5.1.0
     preact: ^10.6.3
     preact-render-to-string: ^5.1.19
     uuid: ^8.3.2
@@ -4452,7 +4452,7 @@ __metadata:
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 42bae16b62bac4b3d215d991c7c964dfc071a84df32900a28d4cbc20d4b6a65689b3ba9f10633780a22ff0cbc420248d012614a5b0d82918f9bbb56f7f92f7c5
+  checksum: 8095346c168c34d3578f71f43bfb607280af8024b2de39c9edff7ddd7f759455501923b738a45e0c85e471a6283130c5060e68bfb534e784d66edff12a88374e
   languageName: node
   linkType: hard
 
@@ -4707,7 +4707,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openid-client@npm:^5.4.0":
+"openid-client@npm:^5.1.0":
   version: 5.4.1
   resolution: "openid-client@npm:5.4.1"
   dependencies:
