@@ -6,9 +6,6 @@ import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 // import { getServerAuthSession } from "./auth";
 // import { db } from "./db";
 import superjson from "superjson";
-import { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
-import { IncomingMessage } from "http";
-import ws from "ws";
 // import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
 import { Session } from "next-auth";
@@ -29,7 +26,7 @@ export const createContextInner = async ({ session }: CreateContextOptions) => (
 export const createContext = async (
     opts:
         | CreateNextContextOptions
-    // | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+    // | NodeHTTPCreateContextFnOptions<IncomingMessage , ws>
 ) => {
     // export const createContext = async (opts: CreateNextContextOptions) => {
     // const { req, res } = opts;
