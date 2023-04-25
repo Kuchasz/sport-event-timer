@@ -35,7 +35,12 @@ const columns: ColDef<PlayerRegistration>[] = [
         sortable: true,
         resizable: true,
         width: 150,
-        cellRenderer: (props: any) => props.data.gender === "male" ? <div className="text-blue-500 font-bold">M</div> : <div className="text-red-500 font-bold">F</div>
+        cellRenderer: (props: any) =>
+            props.data.gender === "male" ? (
+                <div className="text-blue-500 font-bold">M</div>
+            ) : (
+                <div className="text-red-500 font-bold">F</div>
+            ),
     },
     {
         field: "birthDate",
@@ -52,7 +57,6 @@ const columns: ColDef<PlayerRegistration>[] = [
         resizable: true,
         cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
     },
-
     { field: "phoneNumber", headerName: "Phone", resizable: true }, // width: 20 },
     { field: "icePhoneNumber", headerName: "ICE Number", resizable: true }, // width: 20 },
     {
@@ -146,9 +150,11 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
 
     return (
         <div className="flex h-full">
-            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openPromoteMutation}>
-                <Icon size={1} path={mdiAccountPlusOutline} />
-            </span>
+            {!playerRegistration.promotedToPlayer && (
+                <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openPromoteMutation}>
+                    <Icon size={1} path={mdiAccountPlusOutline} />
+                </span>
+            )}
             <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
                 <Icon size={1} path={mdiTrashCan} />
             </span>

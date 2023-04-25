@@ -211,6 +211,7 @@ export const playerRouter = router({
                 icePhoneNumber: registration.icePhoneNumber,
                 classificationId: classification.id,
                 registeredByUserId: user.id,
+                playerRegistrationId: registration.id
             },
         });
     }),
