@@ -229,5 +229,5 @@ model PlayerRegistration {
     paymentDate      DateTime?
     race             Race      @relation(fields: [raceId], references: [id])
     raceId           Int
-    Player           Player[]
+    player           Player[]
 }

@@ -12,10 +12,10 @@ export const playerRegistrationRouter =
             .query(async ({ input, ctx }) => {
                 const { raceId } = input;
                 const registrations = await ctx.db.playerRegistration.findMany({
-                    where: { raceId: raceId }
+                    where: { raceId: raceId }, include: { player: true }
                 });
 
-                return registrations.map((r, index) => ({ ...r, index: index + 1 }));
+                return registrations.map((r, index) => ({ ...r, index: index + 1, promotedToPlayer: r.player.length > 0 }));
             }),
         teams: publicProcedure
             .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
