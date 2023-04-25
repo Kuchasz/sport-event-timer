@@ -27,8 +27,8 @@ const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={prop
 
 const columns: ColDef<PlayerRegistration>[] = [
     { field: "index", headerName: "", sortable: false, resizable: false, width: 25 }, //, width: 5 },
-    { field: "name", headerName: "Name", sortable: true },
-    { field: "lastName", headerName: "Last Name", sortable: true },
+    { field: "name", headerName: "Name", sortable: true, filter: true },
+    { field: "lastName", headerName: "Last Name", sortable: true, filter: true },
     {
         field: "gender",
         headerName: "Gender",
@@ -131,14 +131,14 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
     };
 
     return (
-        <span className="flex">
+        <div className="flex h-full">
             <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openPromoteMutation}>
                 <Icon size={1} path={mdiAccountPlusOutline} />
             </span>
             <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
                 <Icon size={1} path={mdiTrashCan} />
             </span>
-        </span>
+        </div>
     );
 };
 
