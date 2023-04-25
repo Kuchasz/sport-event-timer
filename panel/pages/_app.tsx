@@ -7,8 +7,14 @@ import { TimerApp } from "../apps/timer";
 import "../globals.scss";
 import type { Session } from "next-auth";
 import "react-data-grid/lib/styles.css";
+import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
+import "ag-grid-community/styles/ag-theme-material.css"; // Optional theme CSS
 import { ResultApp } from "apps/result";
 import { RegistrationApp } from "apps/registration";
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const StopwatchApp = dynamic(() => import("../apps/stopwatch"), { ssr: false });
 

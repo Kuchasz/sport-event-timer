@@ -5,6 +5,35 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@ag-grid-community/client-side-row-model@npm:29.2.0":
+  version: 29.2.0
+  resolution: "@ag-grid-community/client-side-row-model@npm:29.2.0"
+  dependencies:
+    "@ag-grid-community/core": ~29.2.0
+  checksum: fbf11ec7f8bcc2f008615197a1b458f7c1c68b429274649398a2e948649e787a98043ac91f0a2a2a52b44267b2f173e9edcce205b4b079e15e229871ddf4ecbd
+  languageName: node
+  linkType: hard
+
+"@ag-grid-community/core@npm:29.2.0, @ag-grid-community/core@npm:~29.2.0":
+  version: 29.2.0
+  resolution: "@ag-grid-community/core@npm:29.2.0"
+  checksum: 74218f6468e119ceb543917c04973abd8957388c4f9a298578c689eccf49d06ddf86b7da700b20f64ce796a023309ec295b72a6ddb945db9a76da1e38048a46f
+  languageName: node
+  linkType: hard
+
+"@ag-grid-community/react@npm:29.2.0":
+  version: 29.2.0
+  resolution: "@ag-grid-community/react@npm:29.2.0"
+  dependencies:
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@ag-grid-community/core": ~29.2.0
+    react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+  checksum: 78c7621aba8134dcff3c4757e0dcd393bb08c87eb4df82ba0e392966ce9fdbae3d26e7b56f5d4d46c75011cc00aa9e8f1928b29220d77f92ef998decda7a5f15
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.1.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -1010,6 +1039,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@set/panel@workspace:panel"
   dependencies:
+    "@ag-grid-community/client-side-row-model": 29.2.0
+    "@ag-grid-community/core": 29.2.0
+    "@ag-grid-community/react": 29.2.0
     "@faker-js/faker": ^7.4.0
     "@headlessui/react": ^1.6.6
     "@mdi/js": ^7.0.96
@@ -1033,6 +1065,7 @@ __metadata:
     "@types/papaparse": ^5.3.2
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.6
+    ag-grid-community: 29.2.0
     autoprefixer: ^10.4.7
     classnames: ^2.3.1
     csv-parse: ^5.3.0
@@ -1046,7 +1079,7 @@ __metadata:
     jotai: ^2.0.2
     jspdf: ^2.5.1
     jspdf-autotable: ^3.5.25
-    next: ^13.2.1
+    next: ^13.3.1
     next-auth: 4.18.8
     node-fetch: 2.6.1
     node-html-parser: ^6.1.1
@@ -1616,6 +1649,13 @@ __metadata:
   version: 1.3.1
   resolution: "adler-32@npm:1.3.1"
   checksum: c7f6b02df64a4392fcf1591862344f56733716a558e97a8b06a553dadeeaec792054512389000f42f371b13d2be5370e056e18db3b573944b595c4cb7742c5c6
+  languageName: node
+  linkType: hard
+
+"ag-grid-community@npm:29.2.0":
+  version: 29.2.0
+  resolution: "ag-grid-community@npm:29.2.0"
+  checksum: b69904674110cdf95ce7223854821bfaa0b9da972b07a0d6306857abeeb5b231b2c28a966f050cc4569337822458edf58f0b7e7d29632ee2a4d5fdee9236f2f7
   languageName: node
   linkType: hard
 
@@ -4456,7 +4496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^13.2.1":
+"next@npm:^13.3.1":
   version: 13.3.1
   resolution: "next@npm:13.3.1"
   dependencies:
@@ -5075,7 +5115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
