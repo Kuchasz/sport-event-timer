@@ -1,6 +1,7 @@
-import DataGrid, { Column } from "react-data-grid";
+// import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
+import { AgGridReact } from "@ag-grid-community/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
@@ -13,46 +14,50 @@ import { PlayerRegistrationCreate } from "components/player-registration-create"
 import { PlayerRegistrationEdit } from "components/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import classNames from "classnames";
+import { ColDef } from "@ag-grid-community/core";
+import { useCallback, useRef } from "react";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
-const columns: Column<PlayerRegistration, unknown>[] = [
-    { key: "index", name: "", sortable: false, resizable: false, width: 5 },
-    { key: "name", name: "Name" },
-    { key: "lastName", name: "Last Name" },
-    {
-        key: "gender",
-        name: "Gender",
-        width: 10,
-    },
-    { key: "birthDate", name: "Birth Date", width: 30, formatter: props => <div>{props.row.birthDate.toLocaleDateString()}</div> },
-    { key: "country", name: "Country", width: 10 },
-    { key: "city", name: "City", width: 20 },
-    { key: "team", name: "Team", formatter: props => <div className="text-ellipsis">{props.row.team}</div> },
+const ActionsRenderer = (props: any) => <PlayerRegistrationActions refetch={props.context.refetch} playerRegistration={props.data} />;
+const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
 
-    { key: "phoneNumber", name: "Phone", width: 20 },
-    { key: "icePhoneNumber", name: "ICE Number", width: 20 },
+const columns: ColDef<PlayerRegistration>[] = [
+    { field: "index", headerName: "", sortable: false, resizable: false, width: 25 }, //, width: 5 },
+    { field: "name", headerName: "Name", sortable: true },
+    { field: "lastName", headerName: "Last Name", sortable: true },
     {
-        key: "registrationDate",
-        name: "Registration Date",
-        width: 30,
-        formatter: props => <div>{props.row.registrationDate.toLocaleDateString()}</div>,
+        field: "gender",
+        headerName: "Gender",
+        sortable: true,
+        width: 150,
     },
-    { key: "paymentDate", name: "Payment", width: 150, formatter: props => <PlayerRegistrationPayment playerRegistration={props.row} /> },
+    { field: "birthDate", headerName: "Birth Date", cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div> },
+    { field: "country", headerName: "Country", width: 150}, // width: 10 },
+    { field: "city", headerName: "City" }, // width: 20 },
+    { field: "team", headerName: "Team", sortable: true, cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div> },
+
+    { field: "phoneNumber", headerName: "Phone" }, // width: 20 },
+    { field: "icePhoneNumber", headerName: "ICE Number" }, // width: 20 },
     {
-        key: "actions",
-        width: 50,
-        name: "Actions",
-        formatter: props => <PlayerRegistrationActions playerRegistration={props.row} />,
+        field: "registrationDate",
+        headerName: "Registration Date",
+        // width: 30,
+        cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
+    },
+    { field: "paymentDate", headerName: "Payment", sortable: true, cellRenderer: PaymentRenderer },
+    {
+        field: "actions",
+        // width: 50,
+        headerName: "Actions",
+        cellRenderer: ActionsRenderer,
     },
 ];
 
-const PlayerRegistrationPayment = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
-    const raceId = useCurrentRaceId();
-    const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
+const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
 
     const togglePlayerPayment = async () => {
@@ -85,9 +90,8 @@ const PlayerRegistrationPayment = ({ playerRegistration }: { playerRegistration:
     );
 };
 
-const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
+const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const raceId = useCurrentRaceId();
-    const { refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
     const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
     const utils = trpc.useContext();
@@ -140,9 +144,10 @@ const PlayerRegistrationActions = ({ playerRegistration }: { playerRegistration:
 
 const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
-    const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! });
+    const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! }, { initialData: [] });
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
+    const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
@@ -158,6 +163,10 @@ const PlayerRegistrations = () => {
             refetch();
         }
     };
+
+    const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.api.sizeColumnsToFit();
+    }, []);
 
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
         const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
@@ -181,25 +190,26 @@ const PlayerRegistrations = () => {
                 <title>Rejestracje zawodników</title>
             </Head>
 
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                     <div className="px-1"></div>
                 </div>
-                {registrations && (
-                    <DataGrid
-                        className="rdg-light h-full"
-                        defaultColumnOptions={{
-                            sortable: false,
-                            resizable: true,
-                        }}
-                        onRowDoubleClick={e => openEditDialog(e)}
-                        columns={columns}
-                        rows={registrations}
-                    />
-                )}
+
+                <AgGridReact<PlayerRegistration>
+                    ref={gridRef}
+                    context={{ refetch }}
+                    
+                    onRowDoubleClicked={e => openEditDialog(e.data)}
+                    suppressCellFocus={true}
+                    suppressAnimationFrame={true}
+                    columnDefs={columns}
+                    rowData={registrations}
+                    onFirstDataRendered={onFirstDataRendered}
+                    onGridSizeChanged={onFirstDataRendered}
+                ></AgGridReact>
             </div>
         </>
     );
