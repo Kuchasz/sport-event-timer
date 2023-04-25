@@ -27,28 +27,42 @@ const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={prop
 
 const columns: ColDef<PlayerRegistration>[] = [
     { field: "index", headerName: "", sortable: false, resizable: false, width: 25 }, //, width: 5 },
-    { field: "name", headerName: "Name", sortable: true, filter: true },
-    { field: "lastName", headerName: "Last Name", sortable: true, filter: true },
+    { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
+    { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
     {
         field: "gender",
         headerName: "Gender",
         sortable: true,
+        resizable: true,
         width: 150,
+        cellRenderer: (props: any) => props.data.gender === "male" ? <div className="text-blue-500 font-bold">M</div> : <div className="text-red-500 font-bold">F</div>
     },
-    { field: "birthDate", headerName: "Birth Date", cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div> },
-    { field: "country", headerName: "Country", width: 150}, // width: 10 },
-    { field: "city", headerName: "City" }, // width: 20 },
-    { field: "team", headerName: "Team", sortable: true, cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div> },
+    {
+        field: "birthDate",
+        headerName: "Birth Date",
+        resizable: true,
+        cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
+    },
+    { field: "country", headerName: "Country", resizable: true, width: 150 }, // width: 10 },
+    { field: "city", headerName: "City", resizable: true }, // width: 20 },
+    {
+        field: "team",
+        headerName: "Team",
+        sortable: true,
+        resizable: true,
+        cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
+    },
 
-    { field: "phoneNumber", headerName: "Phone" }, // width: 20 },
-    { field: "icePhoneNumber", headerName: "ICE Number" }, // width: 20 },
+    { field: "phoneNumber", headerName: "Phone", resizable: true }, // width: 20 },
+    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true }, // width: 20 },
     {
         field: "registrationDate",
         headerName: "Registration Date",
         // width: 30,
+        resizable: true,
         cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
     },
-    { field: "paymentDate", headerName: "Payment", sortable: true, cellRenderer: PaymentRenderer },
+    { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
     {
         field: "actions",
         // width: 50,
@@ -201,7 +215,6 @@ const PlayerRegistrations = () => {
                 <AgGridReact<PlayerRegistration>
                     ref={gridRef}
                     context={{ refetch }}
-                    
                     onRowDoubleClicked={e => openEditDialog(e.data)}
                     suppressCellFocus={true}
                     suppressAnimationFrame={true}
