@@ -7,7 +7,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
@@ -47,7 +47,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         headerName: "Birth Date",
         resizable: true,
         cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
-        sortable: true
+        sortable: true,
     },
     { field: "country", headerName: "Country", resizable: true, width: 150 }, // width: 10 },
     { field: "city", headerName: "City", resizable: true }, // width: 20 },
@@ -215,6 +215,17 @@ const PlayerRegistrations = () => {
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                    </Button>
+                    <Button
+                        className="ml-2"
+                        onClick={() => {
+                            gridRef.current?.api.exportDataAsCsv({
+                                fileName: `player-registrations-${new Date().toLocaleDateString()}.csv`,
+                            });
+                        }}
+                    >
+                        <Icon size={1} path={mdiExport} />
+                        <span className="ml-2">export</span>
                     </Button>
                     <div className="px-1"></div>
                 </div>
