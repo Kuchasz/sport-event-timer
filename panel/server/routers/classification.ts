@@ -58,9 +58,9 @@ export const classificationRouter =
         // }),
         update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            const { categories: ageCategories, ...classification } = data;
+            const { categories: subCategories, ...classification } = data;
 
-            const categories = ageCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
+            const categories = subCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
 
             return await ctx.db.classification.update({
                 where: { id: id! },

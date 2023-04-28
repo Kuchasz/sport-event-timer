@@ -86,13 +86,13 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
     const id = await db.playerRegistration.create({
         data: {
             raceId: parseInt(raceId as string),
-            name,
-            lastName,
+            name: name.trim(),
+            lastName: lastName.trim(),
             registrationDate: new Date(),
             birthDate: new Date(birthDate),
             gender: registrationEntry.gender,
-            team,
-            city,
+            team: team?.trim(),
+            city: city.trim(),
             country,
             email: registrationEntry.email,
             phoneNumber: registrationEntry.phoneNumber,
