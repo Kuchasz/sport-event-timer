@@ -47,6 +47,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         headerName: "Birth Date",
         resizable: true,
         cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
+        sortable: true
     },
     { field: "country", headerName: "Country", resizable: true, width: 150 }, // width: 10 },
     { field: "city", headerName: "City", resizable: true }, // width: 20 },
