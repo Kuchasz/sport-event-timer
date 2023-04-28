@@ -1,6 +1,6 @@
 import { router } from "../trpc";
 import { actionRouter } from "./action";
-import { apiKeyRouter } from "./apiKey";
+import { apiKeyRouter } from "./api-key";
 import { classificationRouter } from "./classification";
 import { ntpRouter } from "./ntp";
 import { playerRouter } from "./player";
