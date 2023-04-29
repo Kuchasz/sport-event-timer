@@ -4,7 +4,7 @@ import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck, mdiPlus } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
-import { useQueryClient } from "@tanstack/react-query";
+// import { useQueryClient } from "@tanstack/react-query";
 import { groupBy } from "@set/utils/dist/array";
 import { AppRouterInputs } from "trpc";
 import { useState } from "react";
@@ -39,7 +39,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
 
     const [categories, setCategories] = useState(initialClassification.categories);
 
-    const qc = useQueryClient();
+    // const qc = useQueryClient();
 
     const addCategory = () => {
         // const category = {
