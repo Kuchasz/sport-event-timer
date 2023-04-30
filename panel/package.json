@@ -20,7 +20,7 @@
     "dependencies": {
         "@ag-grid-community/client-side-row-model": "29.2.0",
         "@ag-grid-community/core": "29.2.0",
-        "@ag-grid-community/csv-export": "^29.3.3",
+        "@ag-grid-community/csv-export": "29.2.0",
         "@ag-grid-community/react": "29.2.0",
         "@faker-js/faker": "^7.4.0",
         "@headlessui/react": "^1.6.6",
