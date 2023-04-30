@@ -21,19 +21,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ag-grid-community/core@npm:~29.3.3":
-  version: 29.3.3
-  resolution: "@ag-grid-community/core@npm:29.3.3"
-  checksum: cafb44ee3f286846cd58a26e19d478857fb7c054cf4f75793b38bedc40fab9b76a25adf718832423628176b4cb49f96af7ba6529e84c719a06345d182257beb6
-  languageName: node
-  linkType: hard
-
-"@ag-grid-community/csv-export@npm:^29.3.3":
-  version: 29.3.3
-  resolution: "@ag-grid-community/csv-export@npm:29.3.3"
+"@ag-grid-community/csv-export@npm:29.2.0":
+  version: 29.2.0
+  resolution: "@ag-grid-community/csv-export@npm:29.2.0"
   dependencies:
-    "@ag-grid-community/core": ~29.3.3
-  checksum: de777ff8f9477ac4bc6e9d647b9feb74dc0751e37fe980b6039b316397254312282b43ea280556831702f80396621a61327b62e18660b09ed200edb0ea7bb5d8
+    "@ag-grid-community/core": ~29.2.0
+  checksum: 59631a8ac7baf6d9e4df96fe27f46fefb44741fe2f3a72b7118baf281f57ecaf1151b1b311814e0c1225c6ea48e28a8f62a826b91a724934ccdcdfaff8c17a98
   languageName: node
   linkType: hard
 
@@ -1057,7 +1050,7 @@ __metadata:
   dependencies:
     "@ag-grid-community/client-side-row-model": 29.2.0
     "@ag-grid-community/core": 29.2.0
-    "@ag-grid-community/csv-export": ^29.3.3
+    "@ag-grid-community/csv-export": 29.2.0
     "@ag-grid-community/react": 29.2.0
     "@faker-js/faker": ^7.4.0
     "@headlessui/react": ^1.6.6
