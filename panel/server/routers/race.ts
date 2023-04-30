@@ -15,6 +15,11 @@ export const raceRouter =
             .query(async ({ ctx }) => {
                 return await ctx.db.race.findMany();
             }),
+        raport: protectedProcedure
+            .query(async ({ ctx }) => {
+                const numberOfRaces = await ctx.db.race.count();
+                return { numberOfRaces };
+            }),
         myRaces: protectedProcedure
             .query(async ({ ctx }) => {
                 return await ctx.db.race.findMany({ orderBy: { id: "desc" } });

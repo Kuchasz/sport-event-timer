@@ -69,8 +69,8 @@ model Race {
     stopwatch            Stopwatch?
     playerRegistration   PlayerRegistration[]
     apiKey               ApiKey[]
-    TimingPointOrder     TimingPointOrder[]
-    TimingPointAccessKey TimingPointAccessKey[]
+    timingPointOrder     TimingPointOrder[]
+    timingPointAccessKey TimingPointAccessKey[]
     bibNumber            BibNumber[]
 }
 
@@ -150,7 +150,7 @@ model TimingPoint {
     raceId               Int
     splitTime            SplitTime[]
     manualSplitTime      ManualSplitTime[]
-    TimingPointAccessKey TimingPointAccessKey[]
+    timingPointAccessKey TimingPointAccessKey[]
 
     @@unique([raceId, name])
 }
