@@ -32,6 +32,9 @@
       }
     ]
   },
+  "ts-node": {
+    "swc": true
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
