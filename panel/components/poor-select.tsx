@@ -9,7 +9,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     nameKey,
     valueKey,
     onChange,
-    placeholder,
+    placeholder
 }: {
     initialValue?: T[TValueKey];
     items: T[];
@@ -103,13 +103,11 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
         <Listbox
             value={selected}
             onChange={(e: T[TValueKey]) => {
-                // console.log(e);
                 setSelected(e);
                 const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
                 onChange({ target: { value: desiredItem[valueKey] } });
             }}
         >
-            {/* <div className="relative mt-1"></div> */}
             <div className="relative w-full flex-shrink px-2">
                 <Listbox.Button className="relative w-full rounded-lg bg-gray-100 cursor-pointer hover:bg-gray-200 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                     <span className="block truncate">{String(desiredItem[nameKey])}</span>

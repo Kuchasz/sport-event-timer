@@ -16,6 +16,8 @@ import { PlayerRegistrationPromotion } from "components/player-registration-prom
 import classNames from "classnames";
 import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
+import { PoorSelect } from "components/poor-select";
+import { PoorColumnChooser } from "components/poor-column-chooser";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -205,6 +207,8 @@ const PlayerRegistrations = () => {
         }
     };
 
+    const colTypes = [{ value: "aaaa" }, { value: "bbbbb" }, { value: "ccccc" }, { value: "dddd" }, { value: "eeee" }];
+
     return (
         <>
             <Head>
@@ -227,7 +231,7 @@ const PlayerRegistrations = () => {
                         <Icon size={1} path={mdiExport} />
                         <span className="ml-2">export</span>
                     </Button>
-                    <div className="px-1"></div>
+                    <PoorColumnChooser items={colTypes} valueKey="value" nameKey="value" onChange={() => {}} />
                 </div>
 
                 <AgGridReact<PlayerRegistration>
