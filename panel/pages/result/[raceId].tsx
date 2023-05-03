@@ -33,7 +33,7 @@ const Result = () => {
                                 <tbody className="bg-white divide-y divide-gray-300">
                                     {results &&
                                         results.map((s, i) => (
-                                            <tr className="whitespace-nowrap">
+                                            <tr key={i} className="whitespace-nowrap">
                                                 <td className="px-6 py-4">{i + 1}</td>
                                                 <td className="px-6 py-4">{s.bibNumber}</td>
                                                 <td className="px-6 py-4">{s.name}</td>
