@@ -16,7 +16,6 @@ import { PlayerRegistrationPromotion } from "components/player-registration-prom
 import classNames from "classnames";
 import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
-import { PoorSelect } from "components/poor-select";
 import { PoorColumnChooser } from "components/poor-column-chooser";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
@@ -28,7 +27,7 @@ const ActionsRenderer = (props: any) => <PlayerRegistrationActions refetch={prop
 const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
 
 const columns: ColDef<PlayerRegistration>[] = [
-    { field: "index", headerName: "", sortable: false, resizable: false, width: 25 }, //, width: 5 },
+    { field: "index", headerName: "Index", headerClass: "hidden", sortable: false, resizable: false, width: 25 }, //, width: 5 },
     { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
     { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
     {
@@ -58,6 +57,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         headerName: "Team",
         sortable: true,
         resizable: true,
+        filter: true,
         cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
     },
     { field: "phoneNumber", headerName: "Phone", resizable: true }, // width: 20 },
@@ -171,6 +171,7 @@ const PlayerRegistrations = () => {
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
+    // const [selectedColumns, setSelectedColumns] = useState(columns.map(c => c.field));
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
@@ -207,7 +208,8 @@ const PlayerRegistrations = () => {
         }
     };
 
-    const colTypes = [{ value: "aaaa" }, { value: "bbbbb" }, { value: "ccccc" }, { value: "dddd" }, { value: "eeee" }];
+    const colTypes = columns.map(c => ({ value: c.field, name: c.headerName }));
+    const initialSelectedColumns = columns.filter(c => c.hide !== true).map(c => c.field);
 
     return (
         <>
@@ -231,7 +233,18 @@ const PlayerRegistrations = () => {
                         <Icon size={1} path={mdiExport} />
                         <span className="ml-2">export</span>
                     </Button>
-                    <PoorColumnChooser items={colTypes} valueKey="value" nameKey="value" onChange={() => {}} />
+                    <PoorColumnChooser
+                        items={colTypes}
+                        initialValue={initialSelectedColumns}
+                        valueKey="value"
+                        nameKey="name"
+                        onChange={e => {
+                            const notSelectedColumns = columns.map(c => c.field).filter(c => !e.target.value.includes(c));
+                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
+                            gridRef.current?.columnApi.setColumnsVisible(e.target.value as string[], true);
+                            gridRef.current?.api.sizeColumnsToFit();
+                        }}
+                    />
                 </div>
 
                 <AgGridReact<PlayerRegistration>

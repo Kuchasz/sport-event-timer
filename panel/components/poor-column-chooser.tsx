@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiArrowUpDown, mdiCheck } from "@mdi/js";
+import { mdiArrowUpDown, mdiCheck, mdiTableCog } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Fragment, useState } from "react";
 
@@ -14,7 +14,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
-    onChange: (event: { target: { value: T[TValueKey] } }) => void;
+    onChange: (event: { target: { value: T[TValueKey][] } }) => void;
 }) => {
     const [selected, setSelected] = useState(initialValue ?? []);
 
@@ -24,15 +24,14 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
             multiple={true}
             onChange={(e: T[TValueKey][]) => {
                 setSelected(e);
-                // const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
-                // onChange({ target: { value: desiredItem[valueKey] } });
+                const selectedItemsValueKeys = e.map(ee => String(ee));
+                const desiredItems = items.filter(i => selectedItemsValueKeys.includes(String(i[valueKey]))).map(i => i[valueKey]);
+                onChange({ target: { value: desiredItems } });
             }}
         >
-            <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border-gray-300 border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                        <Icon path={mdiArrowUpDown} size={1} />
-                    </span>
+            <div className="">
+                <Listbox.Button className="relative cursor-pointer rounded-lg bg-white py-2 px-5 text-left">
+                    <Icon path={mdiTableCog} size={1} />
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute z-10 w-auto mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
