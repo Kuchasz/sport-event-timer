@@ -171,7 +171,6 @@ const PlayerRegistrations = () => {
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
-    // const [selectedColumns, setSelectedColumns] = useState(columns.map(c => c.field));
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
