@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiArrowUpDown, mdiCheck, mdiTableCog } from "@mdi/js";
+import { mdiCheck, mdiTableCog } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Fragment, useState } from "react";
 
