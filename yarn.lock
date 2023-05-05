@@ -5,41 +5,41 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@ag-grid-community/client-side-row-model@npm:29.2.0":
-  version: 29.2.0
-  resolution: "@ag-grid-community/client-side-row-model@npm:29.2.0"
+"@ag-grid-community/client-side-row-model@npm:29.3.4":
+  version: 29.3.4
+  resolution: "@ag-grid-community/client-side-row-model@npm:29.3.4"
   dependencies:
-    "@ag-grid-community/core": ~29.2.0
-  checksum: fbf11ec7f8bcc2f008615197a1b458f7c1c68b429274649398a2e948649e787a98043ac91f0a2a2a52b44267b2f173e9edcce205b4b079e15e229871ddf4ecbd
+    "@ag-grid-community/core": ~29.3.4
+  checksum: 8c94d593cb2606e0151854447f7eae5d19db4da2215059ea0e45f77750f62f7cc36c68fd5120bf74db110630d8370d65bafcd10eab485b40f1d3733fab84f8eb
   languageName: node
   linkType: hard
 
-"@ag-grid-community/core@npm:29.2.0, @ag-grid-community/core@npm:~29.2.0":
-  version: 29.2.0
-  resolution: "@ag-grid-community/core@npm:29.2.0"
-  checksum: 74218f6468e119ceb543917c04973abd8957388c4f9a298578c689eccf49d06ddf86b7da700b20f64ce796a023309ec295b72a6ddb945db9a76da1e38048a46f
+"@ag-grid-community/core@npm:29.3.4, @ag-grid-community/core@npm:~29.3.4":
+  version: 29.3.4
+  resolution: "@ag-grid-community/core@npm:29.3.4"
+  checksum: 008ef5726f1a04442dab0e757c6f0286441ac7f33fa2b5c941851a549c959d9d98229cb4001ad61db40d4feb7ab31f4c8cc4caa0884858fcaaa8e8418c941a66
   languageName: node
   linkType: hard
 
-"@ag-grid-community/csv-export@npm:29.2.0":
-  version: 29.2.0
-  resolution: "@ag-grid-community/csv-export@npm:29.2.0"
+"@ag-grid-community/csv-export@npm:29.3.4":
+  version: 29.3.4
+  resolution: "@ag-grid-community/csv-export@npm:29.3.4"
   dependencies:
-    "@ag-grid-community/core": ~29.2.0
-  checksum: 59631a8ac7baf6d9e4df96fe27f46fefb44741fe2f3a72b7118baf281f57ecaf1151b1b311814e0c1225c6ea48e28a8f62a826b91a724934ccdcdfaff8c17a98
+    "@ag-grid-community/core": ~29.3.4
+  checksum: a72881232d6e3c60169bf31e5fbcb8b645a6da1c36896b9769ce3143be1b7ecb7449695aebb46b522253a77355d724fd95e63e148a7c97db67b918da04c78e59
   languageName: node
   linkType: hard
 
-"@ag-grid-community/react@npm:29.2.0":
-  version: 29.2.0
-  resolution: "@ag-grid-community/react@npm:29.2.0"
+"@ag-grid-community/react@npm:29.3.4":
+  version: 29.3.4
+  resolution: "@ag-grid-community/react@npm:29.3.4"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    "@ag-grid-community/core": ~29.2.0
+    "@ag-grid-community/core": ~29.3.4
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 78c7621aba8134dcff3c4757e0dcd393bb08c87eb4df82ba0e392966ce9fdbae3d26e7b56f5d4d46c75011cc00aa9e8f1928b29220d77f92ef998decda7a5f15
+  checksum: 567a1c3637889d4b73949e67276135e2114317a0faf5d877e6687d6fcedc177ec451c7f7b1a3ab592c79963a4781078757dd8d289a30d2fc7c4b810bade364a7
   languageName: node
   linkType: hard
 
@@ -1048,10 +1048,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@set/panel@workspace:panel"
   dependencies:
-    "@ag-grid-community/client-side-row-model": 29.2.0
-    "@ag-grid-community/core": 29.2.0
-    "@ag-grid-community/csv-export": 29.2.0
-    "@ag-grid-community/react": 29.2.0
+    "@ag-grid-community/client-side-row-model": 29.3.4
+    "@ag-grid-community/core": 29.3.4
+    "@ag-grid-community/csv-export": 29.3.4
+    "@ag-grid-community/react": 29.3.4
     "@faker-js/faker": ^7.4.0
     "@headlessui/react": ^1.6.6
     "@mdi/js": ^7.0.96
@@ -1076,7 +1076,7 @@ __metadata:
     "@types/papaparse": ^5.3.2
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.6
-    ag-grid-community: 29.2.0
+    ag-grid-community: 29.3.4
     autoprefixer: ^10.4.7
     classnames: ^2.3.1
     csv-parse: ^5.3.0
@@ -1777,10 +1777,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:29.2.0":
-  version: 29.2.0
-  resolution: "ag-grid-community@npm:29.2.0"
-  checksum: b69904674110cdf95ce7223854821bfaa0b9da972b07a0d6306857abeeb5b231b2c28a966f050cc4569337822458edf58f0b7e7d29632ee2a4d5fdee9236f2f7
+"ag-grid-community@npm:29.3.4":
+  version: 29.3.4
+  resolution: "ag-grid-community@npm:29.3.4"
+  checksum: 8307cc0dc32884f91205f6f2043ea4d31e7c0182d28b228ccb575f0368c3e7fbc56260444915ae984e1f47e4c6f5450c1ff5c89fe22fc8fb70b361d4c088cde1
   languageName: node
   linkType: hard
 
