@@ -14,7 +14,7 @@ import { PlayerRegistrationCreate } from "components/player-registration-create"
 import { PlayerRegistrationEdit } from "components/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import classNames from "classnames";
-import { ColDef, ColumnState } from "@ag-grid-community/core";
+import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
 import { useAtom } from "jotai";
@@ -90,8 +90,6 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         cellRenderer: ActionsRenderer,
     },
 ];
-
-const defaultShownColumns = defaultColumns.filter(c => c.hide !== true).map(c => c.field!);
 
 const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
