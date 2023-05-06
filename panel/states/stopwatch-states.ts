@@ -1,4 +1,4 @@
-import { ConnectionState } from "connection";
+import type { ConnectionState } from "connection";
 import { atom } from "jotai";
 import { atomWithStorage } from 'jotai/utils'
 
