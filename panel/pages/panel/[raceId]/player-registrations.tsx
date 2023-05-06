@@ -14,9 +14,11 @@ import { PlayerRegistrationCreate } from "components/player-registration-create"
 import { PlayerRegistrationEdit } from "components/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import classNames from "classnames";
-import { ColDef } from "@ag-grid-community/core";
+import { ColDef, ColumnState } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
+import { useAtom } from "jotai";
+import { getGridColumnStateAtom } from "states/grid-states";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -26,7 +28,7 @@ type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistratio
 const ActionsRenderer = (props: any) => <PlayerRegistrationActions refetch={props.context.refetch} playerRegistration={props.data} />;
 const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
 
-const columns: ColDef<PlayerRegistration>[] = [
+const defaultColumns: ColDef<PlayerRegistration>[] = [
     { field: "index", headerName: "Index", headerClass: "hidden", sortable: false, resizable: false, width: 25 }, //, width: 5 },
     { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
     { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
@@ -35,7 +37,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         headerName: "Gender",
         sortable: true,
         resizable: true,
-        cellStyle: { "justify-content": "center", display: "flex" },
+        cellStyle: { justifyContent: "center", display: "flex" },
         width: 150,
         cellRenderer: (props: any) =>
             props.data.gender === "male" ? (
@@ -61,7 +63,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         hide: true,
     },
     { field: "country", headerName: "Country", resizable: true, width: 150, hide: true }, // width: 10 },
-    { field: "city", headerName: "City", resizable: true }, // width: 20 },
+    { field: "city", headerName: "City", resizable: true, hide: true }, // width: 20 },
     {
         field: "team",
         headerName: "Team",
@@ -70,7 +72,7 @@ const columns: ColDef<PlayerRegistration>[] = [
         filter: true,
         cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
     },
-    { field: "phoneNumber", headerName: "Phone", resizable: true }, // width: 20 },
+    { field: "phoneNumber", headerName: "Phone", resizable: true, hide: true }, // width: 20 },
     { field: "email", headerName: "E-mail", resizable: true, hide: true }, // width: 20 },
     { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, hide: true }, // width: 20 },
     {
@@ -88,6 +90,8 @@ const columns: ColDef<PlayerRegistration>[] = [
         cellRenderer: ActionsRenderer,
     },
 ];
+
+const defaultShownColumns = defaultColumns.filter(c => c.hide !== true).map(c => c.field!);
 
 const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
@@ -182,6 +186,14 @@ const PlayerRegistrations = () => {
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
+    const [gridColumnState, setGridColumnState] = useAtom(
+        getGridColumnStateAtom(
+            "player-registrations",
+            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
+        )
+    );
+
+    const columns = gridColumnState;
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
@@ -199,8 +211,9 @@ const PlayerRegistrations = () => {
     };
 
     const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
         gridRef.current?.api.sizeColumnsToFit();
-    }, []);
+    }, [gridColumnState]);
 
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
         const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
@@ -217,9 +230,6 @@ const PlayerRegistrations = () => {
             refetch();
         }
     };
-
-    const colTypes = columns.map(c => ({ value: c.field, name: c.headerName }));
-    const initialSelectedColumns = columns.filter(c => c.hide !== true).map(c => c.field);
 
     return (
         <>
@@ -244,15 +254,21 @@ const PlayerRegistrations = () => {
                         <span className="ml-2">export</span>
                     </Button>
                     <PoorColumnChooser
-                        items={colTypes}
-                        initialValue={initialSelectedColumns}
-                        valueKey="value"
-                        nameKey="name"
+                        items={defaultColumns}
+                        initialValue={gridColumnState.filter(c => !c.hide).map(c => c.colId)}
+                        valueKey="field"
+                        nameKey="headerName"
                         onChange={e => {
-                            const notSelectedColumns = columns.map(c => c.field).filter(c => !e.target.value.includes(c));
+                            const visibleColumns = e.target.value as string[];
+                            const notSelectedColumns = columns.map(c => c.colId).filter(c => !e.target.value.includes(c));
+
                             gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
-                            gridRef.current?.columnApi.setColumnsVisible(e.target.value as string[], true);
+                            gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
                             gridRef.current?.api.sizeColumnsToFit();
+
+                            const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
+
+                            setGridColumnState(saveState);
                         }}
                     />
                 </div>
@@ -263,7 +279,7 @@ const PlayerRegistrations = () => {
                     onRowDoubleClicked={e => openEditDialog(e.data)}
                     suppressCellFocus={true}
                     suppressAnimationFrame={true}
-                    columnDefs={columns}
+                    columnDefs={defaultColumns}
                     rowData={registrations}
                     onFirstDataRendered={onFirstDataRendered}
                     onGridSizeChanged={onFirstDataRendered}
