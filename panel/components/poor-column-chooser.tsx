@@ -29,8 +29,8 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                 onChange({ target: { value: desiredItems } });
             }}
         >
-            <div className="">
-                <Listbox.Button className="relative cursor-pointer rounded-lg text-gray-500 hover:text-black py-2 px-5 text-left">
+            <div className="flex">
+                <Listbox.Button className="relative cursor-pointer rounded-lg text-gray-500 hover:text-black self-center px-5 text-left">
                     <Icon path={mdiTableCog} size={1} />
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
