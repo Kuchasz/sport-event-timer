@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiCheck, mdiTableCog } from "@mdi/js";
+import { mdiCheck, mdiEye, mdiEyeOff, mdiTableCog } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Fragment, useState } from "react";
 
@@ -51,10 +51,14 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                                             {String(item[nameKey])}
                                         </span>
                                         {selected ? (
-                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                                <Icon path={mdiCheck} size={1} />
+                                            <span className="absolute inset-y-0 left-0 flex items-center px-3">
+                                                <Icon path={mdiEye} size={.7} />
                                             </span>
-                                        ) : null}
+                                        ) : (
+                                            <span className="absolute inset-y-0 left-0 flex text-gray-300 items-center px-3">
+                                                <Icon path={mdiEyeOff} size={.7} />
+                                            </span>
+                                        )}
                                     </>
                                 )}
                             </Listbox.Option>
