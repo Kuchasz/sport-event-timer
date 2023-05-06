@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiCheck, mdiEye, mdiEyeOff, mdiTableCog } from "@mdi/js";
+import { mdiEye, mdiEyeOff, mdiTableCog } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Fragment, useState } from "react";
 

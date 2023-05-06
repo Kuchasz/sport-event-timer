@@ -35,12 +35,21 @@ const columns: ColDef<PlayerRegistration>[] = [
         headerName: "Gender",
         sortable: true,
         resizable: true,
+        cellStyle: { "justify-content": "center", display: "flex" },
         width: 150,
         cellRenderer: (props: any) =>
             props.data.gender === "male" ? (
-                <div className="text-blue-500 font-bold">M</div>
+                <div className="h-full flex items-center">
+                    <div className="flex items-center justify-center bg-blue-500 h-7 w-7 text-center text-white rounded-full font-bold">
+                        M
+                    </div>
+                </div>
             ) : (
-                <div className="text-red-500 font-bold">F</div>
+                <div className="h-full flex items-center">
+                    <div className="flex items-center justify-center bg-red-500 h-7 w-7 text-center text-white rounded-full font-bold">
+                        F
+                    </div>
+                </div>
             ),
     },
     {
@@ -49,8 +58,9 @@ const columns: ColDef<PlayerRegistration>[] = [
         resizable: true,
         cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
         sortable: true,
+        hide: true,
     },
-    { field: "country", headerName: "Country", resizable: true, width: 150 }, // width: 10 },
+    { field: "country", headerName: "Country", resizable: true, width: 150, hide: true }, // width: 10 },
     { field: "city", headerName: "City", resizable: true }, // width: 20 },
     {
         field: "team",
@@ -61,7 +71,8 @@ const columns: ColDef<PlayerRegistration>[] = [
         cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
     },
     { field: "phoneNumber", headerName: "Phone", resizable: true }, // width: 20 },
-    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true }, // width: 20 },
+    { field: "email", headerName: "E-mail", resizable: true, hide: true }, // width: 20 },
+    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, hide: true }, // width: 20 },
     {
         field: "registrationDate",
         headerName: "Registration Date",
