@@ -21,8 +21,6 @@ const columns: Column<Classification, unknown>[] = [
     { key: "name", name: "Name" }
 ];
 
-// const sortColumns = columns.slice(1).map(x => x.key);
-
 const Classifications = () => {
     const raceId = useCurrentRaceId();
     const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId! });
