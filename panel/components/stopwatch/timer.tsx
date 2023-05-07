@@ -2,7 +2,7 @@ import { splitTime } from "@set/utils/dist/datetime";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { connectionStateAtom } from "states/stopwatch-states";
+import { connectionStateAtom, timingPointIdAtom } from "states/stopwatch-states";
 
 const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     const splits = splitTime(new Date(time));
@@ -32,11 +32,14 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
 export const Timer = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
     const [connectionState] = useAtom(connectionStateAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
+
+    const shouldBeStopped = connectionState !== 'connected' || !timingPointId;
 
     useEffect(() => {
         console.log(offset);
 
-        if (connectionState === "connected") {
+        if (!shouldBeStopped) {
             const interval = setInterval(() => setTime(Date.now() + offset), 100);
             return () => clearInterval(interval);
         }
@@ -44,5 +47,5 @@ export const Timer = ({ offset }: { offset: number }) => {
         return () => {};
     }, [offset, connectionState]);
 
-    return <Time time={time} stopped={connectionState !== "connected"} />;
+    return <Time time={time} stopped={shouldBeStopped} />;
 };
