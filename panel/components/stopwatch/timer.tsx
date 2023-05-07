@@ -1,11 +1,14 @@
 import { splitTime } from "@set/utils/dist/datetime";
+import classNames from "classnames";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
+import { connectionStateAtom } from "states/stopwatch-states";
 
-const Time = ({ time }: { time: number }) => {
+const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     const splits = splitTime(new Date(time));
 
     return (
-        <div className="text-3xl flex items-end">
+        <div className={classNames("text-3xl flex items-end", { ["animate-pulse"]: stopped })}>
             <div className="flex flex-col items-center">
                 <div className="text-xs text-zinc-600">HRS</div>
                 <div className="font-mono text-center font-normal w-10">{splits.hours}</div>
@@ -28,13 +31,18 @@ const Time = ({ time }: { time: number }) => {
 
 export const Timer = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(Date.now() + offset);
+    const [connectionState] = useAtom(connectionStateAtom);
 
     useEffect(() => {
         console.log(offset);
-        const interval = setInterval(() => setTime(Date.now() + offset), 100);
 
-        return () => clearInterval(interval);
-    }, [offset]);
+        if (connectionState === "connected") {
+            const interval = setInterval(() => setTime(Date.now() + offset), 100);
+            return () => clearInterval(interval);
+        }
 
-    return <Time time={time} />;
+        return () => {};
+    }, [offset, connectionState]);
+
+    return <Time time={time} stopped={connectionState !== "connected"} />;
 };

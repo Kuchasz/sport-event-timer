@@ -52,7 +52,7 @@ const StatusBar = ({
 }) => (
     <span
         className={classNames(
-            `text-xs w-full overflow-hidden text-white font-semibold ease-out transition-all flex justify-center items-center ${color}`,
+            `absolute z-10 text-xs w-full overflow-hidden text-white font-semibold ease-out transition-all flex justify-center items-center ${color}`,
             {
                 ['h-0']:  connectionState !== desiredState,
                 ["h-auto py-2"]: connectionState === desiredState,
@@ -114,10 +114,9 @@ export const Status = () => {
                 displayOn="error"
                 text="CONNECTION ERROR"
                 connectionState={connectionState}
-                pulse
             />
             <StatusBar
-                color="bg-red-600"
+                color="bg-zinc-600"
                 icon={mdiCloudOffOutline}
                 displayOn="disconnected"
                 text="OFF-LINE"
