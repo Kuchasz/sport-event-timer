@@ -14,6 +14,8 @@ import { useAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom, userAtom } from "states/stopwatch-states";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
+import Icon from "@mdi/react";
+import { mdiCloudOffOutline } from "@mdi/js";
 
 const clientId = uuidv4();
 
@@ -80,17 +82,18 @@ const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
                     <Status />
                     <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
                         {isOffline ? (
-                            <div className="w-full h-full flex items-center justify-center">
-                                <div className="flex-col">
+                            <div className="w-full h-full px-4 flex items-center justify-center">
+                                <div className="flex flex-col items-center">
+                                    <Icon path={mdiCloudOffOutline} size={2}></Icon>
                                     <div className="text-xl font-semibold">APP IS OFFLINE</div>
-                                    <div className="">Wait for the app to reconnect or kill the app and run it again</div>
+                                    <div className="mt-8">Wait for the app to reconnect or kill the app and run it again</div>
                                 </div>
                             </div>
                         ) : (
                             <Component {...pageProps} />
                         )}
                     </div>
-                    <BottomMenu />
+                    <BottomMenu isOffline={isOffline}/>
                 </div>
             </ServerConnectionHandler>
         </ReduxStoreProvider>
