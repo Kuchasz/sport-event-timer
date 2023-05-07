@@ -1,6 +1,6 @@
 import { ConnectionState, trpc } from "../../connection";
 import { Icon } from "@mdi/react";
-import { mdiCloudOffOutline, mdiSync, mdiWeatherCloudyAlert } from "@mdi/js";
+import { mdiAutorenew, mdiCloudOffOutline, mdiCog, mdiWeatherCloudyAlert } from "@mdi/js";
 import { TimingPointIcon } from "./timing-point-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
@@ -26,8 +26,9 @@ const SelectedTimingPoint = ({
     </span>
 );
 
-const WarningMessage = ({ contents }: { contents: string }) => (
-    <span className="cursor-pointer flex text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+const WarningMessage = ({ icon, contents }: { icon?: string; contents: string }) => (
+    <span className="cursor-pointer flex items-center text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+        {icon && <Icon className="mr-1" path={icon} size={.7}/>}
         <span>{contents}</span>
     </span>
 );
@@ -101,7 +102,7 @@ export const Status = () => {
         <div>
             <StatusBar
                 color="bg-orange-600"
-                icon={mdiSync}
+                icon={mdiAutorenew}
                 displayOn="connecting"
                 text="CONNECTING"
                 connectionState={connectionState}
@@ -132,7 +133,7 @@ export const Status = () => {
                           timingPointId === null ||
                           timingPointId === 0 ||
                           !sortedTimingPoints.includes(timingPointId) ? (
-                            <WarningMessage contents={"SET TIMING POINT"} />
+                            <WarningMessage icon={mdiCog} contents="CONFIG" />
                         ) : (
                             <SelectedTimingPoint
                                 timingPointId={timingPointId}

@@ -11,11 +11,11 @@ import { Status } from "../components/stopwatch/status";
 import { uuidv4 } from "@set/utils//dist/uuid";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { connectionStateAtom, timeOffsetAtom, userAtom } from "states/stopwatch-states";
+import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom, userAtom } from "states/stopwatch-states";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import Icon from "@mdi/react";
-import { mdiCloudOffOutline } from "@mdi/js";
+import { mdiCloudOffOutline, mdiCogOutline } from "@mdi/js";
 
 const clientId = uuidv4();
 
@@ -26,7 +26,7 @@ let externals = {
     trpc: undefined,
 } as { raceId?: number; user?: string; timeOffset?: number; trpc?: ReturnType<typeof trpc.useContext>["client"] };
 
-export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = (_) => (next) => (action) => {
+export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = _ => next => action => {
     if (!getConnection) return;
 
     const socket = getConnection();
@@ -36,7 +36,7 @@ export const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = 
     next(action);
 };
 
-export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = (_) => (next) => (action) => {
+export const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = _ => next => action => {
     if (!action.__remote) {
         action.__issuer = externals.user;
         action.__issuedAt = Date.now() + (externals.timeOffset || 0);
@@ -64,11 +64,14 @@ type StopwatchAppProps = AppProps;
 const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
     const { data: loggedIn } = useSession();
     const [connectionState] = useAtom(connectionStateAtom);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const {
         query: { raceId },
+        pathname
     } = useRouter();
 
     const isOffline = connectionState !== "connected";
+    const timingPointMissing = !timingPointId;
 
     return loggedIn ? (
         <ReduxStoreProvider store={store}>
@@ -86,14 +89,22 @@ const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
                                 <div className="flex flex-col items-center">
                                     <Icon path={mdiCloudOffOutline} size={2}></Icon>
                                     <div className="text-xl font-semibold">APP IS OFFLINE</div>
-                                    <div className="mt-8">Wait for the app to reconnect or kill the app and run it again</div>
+                                    <div className="mt-8 text-center">Wait for the app to reconnect or kill the app and run it again.</div>
+                                </div>
+                            </div>
+                        ) : (timingPointMissing && !pathname.includes('config')) ? (
+                            <div className="w-full h-full px-4 flex items-center justify-center">
+                                <div className="flex flex-col items-center">
+                                    <Icon path={mdiCogOutline} size={2}></Icon>
+                                    <div className="text-xl font-semibold">CONFIG REQUIRED</div>
+                                    <div className="mt-8 text-center">Stopwatch needs timing point to be chosen. Choose timing point to make an measurements.</div>
                                 </div>
                             </div>
                         ) : (
                             <Component {...pageProps} />
                         )}
                     </div>
-                    <BottomMenu isOffline={isOffline}/>
+                    <BottomMenu isOffline={isOffline} timingPointMissing={timingPointMissing} />
                 </div>
             </ServerConnectionHandler>
         </ReduxStoreProvider>
