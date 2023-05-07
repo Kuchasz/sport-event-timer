@@ -67,8 +67,7 @@ module.exports = {
                     '100%': { transfrm: 'scale(0.9)' }
                 },
                 pushInLittle: {
-                    '0%': { transform: 'scale(1)' },
-                    '30%': { transform: 'scale(0.95)' },
+                    '0%': { transform: 'scale(0.95)' },
                     '100%': { transfrm: 'scale(1)' }
                 }
             },
