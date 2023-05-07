@@ -1,8 +1,12 @@
 import { Icon } from "@mdi/react";
 import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
+// import { connectionStateAtom, StopWatchMode } from "../../states/stopwatch-states";
 import { StopWatchMode } from "../../states/stopwatch-states";
 import { useRouter } from "next/router";
+// import { ConnectionState } from "@set/timer/dist/model";
+import classNames from "classnames";
+// import { useAtom } from "jotai";
 
 type PathTypes = StopWatchMode | "config" | "history";
 type Paths = `${string}/${PathTypes}`;
@@ -29,15 +33,36 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     );
 };
 
-export const BottomMenu = () => {
+export const BottomMenu = ({ isOffline }: { isOffline: boolean }) => {
     const {
         asPath,
         query: { raceId },
     } = useRouter();
     const mode = asPath as Paths;
+    // const [connectionState, setConnectionState] = useAtom(connectionStateAtom);
 
     return (
-        <div className="flex rounded-t-lg justify-around select-none bg-white py-3">
+        <div
+            className={classNames("flex transition-transform ease-out rounded-t-lg justify-around select-none bg-white py-3", {
+                ["translate-y-full"]: isOffline,
+            })}
+        >
+            {/* <button
+                className="absolute bg-orange-500 text-white font-bold px-4 shadow-md rounded-full py-1 -translate-y-24"
+                onClick={() => {
+                    if (connectionState === "connected") {
+                        setConnectionState("error");
+                    } else if (connectionState === "error") {
+                        setConnectionState("disconnected");
+                    } else if (connectionState === "disconnected") {
+                        setConnectionState("connecting");
+                    } else {
+                        setConnectionState("connected");
+                    }
+                }}
+            >
+                FAKE STATE
+            </button> */}
             <BottomMenuButton path={raceId + "/list"} text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/pad"} text="Pad" icon={mdiDialpad} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/times"} text="Times" icon={mdiTimetable} chosenPath={mode} />
