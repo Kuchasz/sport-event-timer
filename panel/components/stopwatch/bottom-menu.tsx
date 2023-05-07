@@ -33,7 +33,7 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     );
 };
 
-export const BottomMenu = ({ isOffline }: { isOffline: boolean }) => {
+export const BottomMenu = ({ isOffline, timingPointMissing }: { isOffline: boolean, timingPointMissing: boolean }) => {
     const {
         asPath,
         query: { raceId },
@@ -44,7 +44,7 @@ export const BottomMenu = ({ isOffline }: { isOffline: boolean }) => {
     return (
         <div
             className={classNames("flex transition-transform ease-out rounded-t-lg justify-around select-none bg-white py-3", {
-                ["translate-y-full"]: isOffline,
+                ["translate-y-full"]: isOffline || timingPointMissing,
             })}
         >
             {/* <button
