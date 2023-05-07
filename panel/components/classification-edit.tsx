@@ -11,6 +11,4 @@ type ClassificationEditProps = {
 };
 
 export const ClassificationEdit = ({ editedClassification, onReject, onResolve }: ClassificationEditProps) =>
-// export const ClassificationEdit = () => (
-    // null
     <ClassificationForm onReject={onReject} onResolve={onResolve} initialClassification={editedClassification} />;

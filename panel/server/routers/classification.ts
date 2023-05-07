@@ -5,9 +5,9 @@ import { protectedProcedure, router } from "../trpc";
 const categoriesSchema = z.array(z.object({
     id: z.number().min(1).optional(),
     name: z.string({ required_error: "name is required" }),
-    gender: GenderEnum.optional(),
-    minAge: z.number().min(1).optional(),
-    maxAge: z.number().max(199).optional(),
+    gender: GenderEnum.nullish(),
+    minAge: z.number().min(1).nullish(),
+    maxAge: z.number().max(199).nullish(),
     isSpecial: z.boolean()
 }));
 
@@ -43,6 +43,13 @@ export const classificationRouter =
 
             return await categoriesSchema.parseAsync(ageCategories);
         }),
+        removeCategory: protectedProcedure.input(z.object({ 
+            categoryId: z.number({ required_error: "categoryId is required" }) 
+        })).mutation(async ({ input, ctx }) => {
+            const categoryId = input.categoryId;
+
+            return await ctx.db.category.delete({ where: { id: categoryId } });
+        }),
         // upload: protectedProcedure.input(z.object({
         //     classifications: z.array(
         //         z.object({
@@ -58,9 +65,9 @@ export const classificationRouter =
         // }),
         update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            const { categories: subCategories, ...classification } = data;
+            const { categories: subCategories, raceId, ...classification } = data;
 
-            const categories = subCategories.map(c => ({ where: { id: c.id }, create: c, update: c }));
+            const categories = subCategories.map(c => ({ where: { id: c.id ?? 0 }, create: c, update: c }));
 
             return await ctx.db.classification.update({
                 where: { id: id! },

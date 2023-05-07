@@ -5,11 +5,11 @@ export const PoorNumberInput = ({
     onChange
 }: {
     value?: number | null;
-    onChange: (event: { target: { value: number } }) => void;
+    onChange: (event: { target: { value?: number } }) => void;
 }) => (
     <Input
         type="number"
         value={value || ""}
-        onChange={e => onChange({ target: { value: Number(e.currentTarget.value) } })}
+        onChange={e => onChange({ target: { value: isNaN(parseInt(e.currentTarget.value)) ? undefined : Number(e.currentTarget.value) }})}
     />
 );
