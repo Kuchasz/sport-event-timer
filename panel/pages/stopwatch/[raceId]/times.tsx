@@ -25,12 +25,14 @@ const Item = ({
     dispatch,
     raceId,
     style,
+    padBibNumber
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: string) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
     style: CSSProperties;
+    padBibNumber: number;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -98,8 +100,9 @@ const Item = ({
                         timeStamp: t,
                         bibNumber: t.player?.bibNumber,
                         name: t.player?.name,
-                        lastName: t.player?.lastName,
+                        lastName: t.player?.lastName
                     }}
+                    padBibNumber={padBibNumber}
                 />
                 {!t.player ? (
                     <PrimaryActionButton
@@ -173,7 +176,7 @@ const PlayersTimes = () => {
         estimateSize: () => 64 + 4,
     });
 
-    console.log("render times!");
+    const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 
     return (
         <div className="h-full flex flex-col">
@@ -201,6 +204,7 @@ const PlayersTimes = () => {
                             navigate={push}
                             t={times[virtualRow.index]}
                             raceId={parseInt(raceId as string)}
+                            padBibNumber={highestBibNumber}
                         />
                     ))}
                 </div>

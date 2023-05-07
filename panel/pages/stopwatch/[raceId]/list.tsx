@@ -56,6 +56,8 @@ const PlayersList = () => {
         estimateSize: () => 64 + 4,
     });
 
+    const highestBibNumber = Math.max(...players.map(p => p.bibNumber));
+
     return (
         <div ref={parentRef} className="px-2 py-2 w-full h-full overflow-auto">
             <div
@@ -72,7 +74,7 @@ const PlayersList = () => {
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
                         <div className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white">
-                            <PlayerWithTimeStampDisplay playerWithTimeStamp={players[virtualRow.index]} />
+                            <PlayerWithTimeStampDisplay padBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={players[virtualRow.index]} />
                             {players[virtualRow.index].timeStamp && (
                                 <ActionButton
                                     icon={mdiWrenchOutline}

@@ -8,13 +8,13 @@ type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
 };
 
-export const PlayerWithTimeStampDisplay = ({ playerWithTimeStamp }: { playerWithTimeStamp: Partial<PlayerWithTimeStamp> }) => {
+export const PlayerWithTimeStampDisplay = ({ padBibNumber, playerWithTimeStamp }: { padBibNumber: number, playerWithTimeStamp: Partial<PlayerWithTimeStamp> }) => {
     const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
 
     return (
         <span className="flex items-center grow h-12">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="text-3xl mr-4">{formatNumber(playerWithTimeStamp.bibNumber, 3)}</span>
+                <span className="text-3xl mr-4">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
             ) : null}
 
             <span className="grow">
