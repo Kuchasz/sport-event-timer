@@ -1,4 +1,4 @@
-import { TimeKeeperIcon } from "../../../components/stopwatch/time-keeper-icon";
+import { TimingPointIcon } from "../../../components/stopwatch/timing-point-icon";
 import { timingPointIdAtom } from "states/stopwatch-states";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -36,7 +36,7 @@ const Config = () => {
                         className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white transition-opacity my-2"
                         key={tk.id}
                     >
-                        <TimeKeeperIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />
+                        <TimingPointIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />
                         <span className="ml-4 text-xl">{tk.name}</span>
                         <Icon
                             className={classNames("transition-all", { ["ml-3"]: tk.id === timingPointId })}

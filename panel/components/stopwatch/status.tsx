@@ -1,7 +1,7 @@
 import { ConnectionState, trpc } from "../../connection";
 import { Icon } from "@mdi/react";
 import { mdiCloudOffOutline, mdiCloudOutline, mdiCloudSyncOutline, mdiWeatherCloudyAlert } from "@mdi/js";
-import { TimeKeeperIcon } from "./time-keeper-icon";
+import { TimingPointIcon } from "./timing-point-icon";
 import { Timer } from "./timer";
 import { useAtom } from "jotai";
 import Link from "next/link";
@@ -49,7 +49,7 @@ const SelectedTimingPoint = ({
     timingPointName: string | undefined;
 }) => (
     <span className="cursor-pointer flex transition-colors hover:bg-zinc-700 bg-zinc-800 text-zinc-300 px-4 py-1 rounded-xl">
-        <TimeKeeperIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
+        <TimingPointIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
 
         <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
     </span>
@@ -66,19 +66,19 @@ export const Status = () => {
     const {
         query: { raceId },
     } = useRouter();
-    const { data: allTimeKeepers } = trpc.timingPoint.timingPoints.useQuery({ raceId: parseInt(raceId as string)}, {
+    const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: parseInt(raceId as string)}, {
         initialData: [],
     });
     const {data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({raceId: parseInt(raceId as string)}, {initialData: []});
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
-    const timeKeeperName = allTimeKeepers!.find((tk) => tk.id === timingPointId)?.name;
-    const sortedTimeKeepers = timingPointOrder;
+    const timingPointName = allTimingPoints!.find((tk) => tk.id === timingPointId)?.name;
+    const sortedTimingPoints = timingPointOrder;
 
     return (
         <div>
             <span
-                className={classNames("text-xs w-full text-white font-semibold transition-all bg-transparent h-0 flex justify-center items-center", {
+                className={classNames("text-xs w-full text-white font-semibold transition-all h-0 flex justify-center items-center", {
                     ["invisible"]: connectionState === "connected",
                     ["visible h-auto py-2"]: connectionState !== "connected",
                     ["bg-red-600"]: connectionState === "disconnected" || connectionState === "error",
@@ -92,15 +92,15 @@ export const Status = () => {
                 <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
-                        {sortedTimeKeepers.length === 0 ? (
+                        {sortedTimingPoints.length === 0 ? (
                             <WarningMessage contents={"NO TIMING POINTS"} />
-                        ) : timingPointId === undefined || timingPointId === null || timingPointId === 0 || !sortedTimeKeepers.includes(timingPointId) ? (
+                        ) : timingPointId === undefined || timingPointId === null || timingPointId === 0 || !sortedTimingPoints.includes(timingPointId) ? (
                             <WarningMessage contents={"SET TIMING POINT"} />
                         ) : (
                             <SelectedTimingPoint
                                 timingPointId={timingPointId}
-                                timingPointName={timeKeeperName}
-                                timingPoints={sortedTimeKeepers}
+                                timingPointName={timingPointName}
+                                timingPoints={sortedTimingPoints}
                             />
                         )}
                     </span>
