@@ -53,7 +53,7 @@ const PlayersList = () => {
     const rowVirtualizer = useVirtualizer({
         count: players.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 64,
+        estimateSize: () => 64 + 4,
     });
 
     return (

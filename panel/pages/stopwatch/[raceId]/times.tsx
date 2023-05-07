@@ -170,7 +170,7 @@ const PlayersTimes = () => {
     const rowVirtualizer = useVirtualizer({
         count: times.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 64,
+        estimateSize: () => 64 + 4,
     });
 
     console.log("render times!");
