@@ -89,7 +89,7 @@ const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
                                 <div className="flex flex-col items-center">
                                     <Icon path={mdiCloudOffOutline} size={2}></Icon>
                                     <div className="text-xl font-semibold">APP IS OFFLINE</div>
-                                    <div className="mt-8 text-center">Wait for the app to reconnect or kill the app and run it again.</div>
+                                    <div className="mt-8 text-center">Stopwatch requires stable internet connection. Wait for the app to reconnect itself or kill the app and try to run it again.</div>
                                 </div>
                             </div>
                         ) : (timingPointMissing && !pathname.includes('config')) ? (
@@ -97,7 +97,7 @@ const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
                                 <div className="flex flex-col items-center">
                                     <Icon path={mdiCogOutline} size={2}></Icon>
                                     <div className="text-xl font-semibold">CONFIG REQUIRED</div>
-                                    <div className="mt-8 text-center">Stopwatch needs timing point to be chosen. Choose timing point to make an measurements.</div>
+                                    <div className="mt-8 text-center">Stopwatch has to measure the time at a specific timing point. Choose a timing point in the configuration to make the measurements.</div>
                                 </div>
                             </div>
                         ) : (
