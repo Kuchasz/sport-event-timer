@@ -141,7 +141,7 @@ const Timer = () => {
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId! as string) },
-        { enabled: raceId !== undefined, select: data => sort(data, d => d.absoluteStartTime) }
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
     );
     const ntpMutation = trpc.ntp.sync.useMutation();
 

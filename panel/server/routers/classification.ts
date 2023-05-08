@@ -2,27 +2,27 @@ import { GenderEnum } from "../../models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 
-const categoriesSchema = z.array(z.object({
+const categorySchema = z.object({
     id: z.number().min(1).optional(),
+    raceId: z.number({ required_error: "raceId is required" }).min(1),
+    classificationId: z.number({ required_error: "classificationId is required" }).min(1),
     name: z.string({ required_error: "name is required" }),
     gender: GenderEnum.nullish(),
     minAge: z.number().min(1).nullish(),
     maxAge: z.number().max(199).nullish(),
     isSpecial: z.boolean()
-}));
+});
 
 const classificationSchema = z.object({
     id: z.number().nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
-    name: z.string({ required_error: "name is required" }),
-    categories: categoriesSchema
+    name: z.string({ required_error: "name is required" })
 });
 
 const classificationsSchema = z.object({
     id: z.number(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
-    name: z.string({ required_error: "name is required" }),
-    categories: categoriesSchema
+    name: z.string({ required_error: "name is required" })
 });
 
 export const classificationRouter =
@@ -39,12 +39,16 @@ export const classificationRouter =
             classificationId: z.number({ required_error: "classificationId is required" })
         })).query(async ({ input, ctx }) => {
             const classificationId = input.classificationId;
-            const categories = await ctx.db.category.findMany({ where: { classificationId } });
-
-            return await categoriesSchema.parseAsync(categories);
+            return await ctx.db.category.findMany({ where: { classificationId } });
         }),
-        removeCategory: protectedProcedure.input(z.object({ 
-            categoryId: z.number({ required_error: "categoryId is required" }) 
+        addCategory: protectedProcedure.input(categorySchema)
+            .mutation(async ({ input, ctx }) => {
+                const { id, raceId, ...classification } = input;
+
+                return await ctx.db.category.create({ data: classification });
+            }),
+        removeCategory: protectedProcedure.input(z.object({
+            categoryId: z.number({ required_error: "categoryId is required" })
         })).mutation(async ({ input, ctx }) => {
             const categoryId = input.categoryId;
 
@@ -65,17 +69,14 @@ export const classificationRouter =
         // }),
         update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            const { categories: subCategories, raceId, ...classification } = data;
+            const { raceId, ...classification } = data;
 
-            const categories = subCategories.map(c => ({ where: { id: c.id ?? 0 }, create: c, update: c }));
+            // const categories = subCategories.map(c => ({ where: { id: c.id ?? 0 }, create: c, update: c }));
 
             return await ctx.db.classification.update({
                 where: { id: id! },
                 data: {
-                    ...classification,
-                    categories: {
-                        upsert: categories
-                    }
+                    ...classification
                 }
             });
         }),
@@ -83,10 +84,7 @@ export const classificationRouter =
             const { id, ...data } = input;
             return await ctx.db.classification.create({
                 data: {
-                    ...data,
-                    categories: {
-                        create: data.categories
-                    }
+                    ...data
                 }
             });
         })

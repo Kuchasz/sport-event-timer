@@ -238,12 +238,12 @@ const Rejestracja = () => {
 
     const { data: registrationSystemStatus, refetch: refetchSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
         { raceId: Number(raceId) },
-        { enabled: raceId !== undefined }
+        { enabled: !!raceId }
     );
 
     const { data: teams } = trpc.playerRegistration.teams.useQuery(
         { raceId: Number(raceId) },
-        { enabled: raceId !== undefined, initialData: [] }
+        { enabled: !!raceId, initialData: [] }
     );
 
     const registerMutation = trpc.playerRegistration.register.useMutation();
