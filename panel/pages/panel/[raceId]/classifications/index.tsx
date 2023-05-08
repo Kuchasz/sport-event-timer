@@ -5,21 +5,43 @@ import { Button } from "components/button";
 import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
-import { trpc } from "../../../connection";
-import { mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
+import { trpc } from "../../../../connection";
+import { mdiAccountMultiplePlusOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { useCurrentRaceId } from "../../../hooks";
+import { useCurrentRaceId } from "../../../../hooks";
 import { useMemo } from "react";
-import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
+import { AppRouterInputs, AppRouterOutputs } from "../../../../trpc";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
+type Category = AppRouterOutputs["classification"]["categories"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
 type CreatedClassification = AppRouterInputs["classification"]["add"];
 
 const columns: Column<Classification, unknown>[] = [
-    { key: "index", name: "", width: 10 },
-    { key: "name", name: "Name" }
+    { key: "index", name: ""},
+    { key: "name", name: "Name" },
+    {
+        key: "actions",
+        name: "Actions",
+        formatter: props => <OpenCategoriesButton classification={props.row} />
+    }
 ];
+
+const OpenCategoriesButton = ({ classification }: { classification: Classification }) => {
+    const router = useRouter();
+    // const openCategories = async () => {
+    //     router.push(`./${classification.id!}`)
+    // };
+
+    return (
+        <span className="flex items-center hover:text-red-600 cursor-pointer" >
+            <Icon size={1} path={mdiTrashCan} />
+            <Link href={`${router.asPath}/${classification.id}`}><span>categories</span></Link>
+        </span>
+    );
+};
 
 const Classifications = () => {
     const raceId = useCurrentRaceId();
@@ -93,4 +115,4 @@ const Classifications = () => {
 
 export default Classifications;
 
-export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";
+export { getSecuredServerSideProps as getServerSideProps } from "../../../../auth";
