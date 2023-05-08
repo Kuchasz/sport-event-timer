@@ -39,9 +39,9 @@ export const classificationRouter =
             classificationId: z.number({ required_error: "classificationId is required" })
         })).query(async ({ input, ctx }) => {
             const classificationId = input.classificationId;
-            const ageCategories = await ctx.db.category.findMany({ where: { classificationId } });
+            const categories = await ctx.db.category.findMany({ where: { classificationId } });
 
-            return await categoriesSchema.parseAsync(ageCategories);
+            return await categoriesSchema.parseAsync(categories);
         }),
         removeCategory: protectedProcedure.input(z.object({ 
             categoryId: z.number({ required_error: "categoryId is required" }) 
