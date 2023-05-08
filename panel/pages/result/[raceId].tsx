@@ -7,7 +7,7 @@ const Result = () => {
     const {
         query: { raceId },
     } = useRouter();
-    const { data: results } = trpc.result.results.useQuery({ raceId: parseInt(raceId! as string) }, { enabled: raceId !== undefined });
+    const { data: results } = trpc.result.results.useQuery({ raceId: parseInt(raceId! as string) }, { enabled: !!raceId });
 
     return (
         <>

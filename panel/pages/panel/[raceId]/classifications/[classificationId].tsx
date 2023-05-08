@@ -2,10 +2,10 @@ import Icon from "@mdi/react";
 
 import { mdiClose, mdiContentSaveCheck, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 
-import { useFormState } from "hooks";
+import { useCurrentRaceId, useFormState } from "hooks";
 // import { useQueryClient } from "@tanstack/react-query";
 import { groupBy } from "@set/utils/dist/array";
-import { AppRouterInputs } from "trpc";
+import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { useState } from "react";
 
 import { RadioGroup } from "@headlessui/react";
@@ -21,11 +21,11 @@ import { useRouter } from "next/router";
 export const useCurrentClassificationId = () => {
     const { classificationId } = useRouter().query;
 
-    return parseInt(classificationId as string);
-}
+    return classificationId ? parseInt(classificationId as string) : undefined;
+};
 
 type Classification = AppRouterInputs["classification"]["add"];
-type Category = Classification["categories"][0];
+type Category = AppRouterOutputs["classification"]["categories"][0];
 
 type ClassificationFormProps = {
     onReject: () => void;
@@ -51,9 +51,13 @@ const getColorFromIndex = (index: number) =>
 // };
 
 export const ClassificationCategories = () => {
-    
+    const raceId = useCurrentRaceId();
     const classificationId = useCurrentClassificationId();
-    const {data: categories} = trpc.classification.categories.useQuery({classificationId}, {initialData: []});
+    const { data: categories, refetch } = trpc.classification.categories.useQuery(
+        { classificationId: classificationId! },
+        { initialData: [], enabled: !!classificationId }
+    );
+    const addCategoryMutation = trpc.classification.addCategory.useMutation();
 
     const [categoryName, setCategoryName] = useState("");
     const [minAge, setMinAge] = useState<number | undefined>(1);
@@ -64,7 +68,7 @@ export const ClassificationCategories = () => {
 
     // const qc = useQueryClient();
 
-    const addCategory = () => {
+    const addCategory = async () => {
         // const category = {
         //     name: "New Category",
         //     gender: "male",
@@ -78,6 +82,16 @@ export const ClassificationCategories = () => {
         // setMinAge(1);
         // setMaxAge(99);
         // setGender(undefined);
+        await addCategoryMutation.mutateAsync({
+            minAge,
+            maxAge,
+            gender,
+            isSpecial: false,
+            name: categoryName,
+            raceId: raceId!,
+            classificationId:classificationId!,
+        });
+        refetch();
     };
 
     const removeCategory = (category: Category) => {
@@ -188,11 +202,11 @@ export const ClassificationCategories = () => {
                 <div className="grow">
                     <Label>AGE Categories</Label>
                     {ageCategories.map(([gender, categories]) => (
-                        <div className="flex flex-col">
+                        <div key={gender} className="flex flex-col">
                             <div>{gender}</div>
                             <div className="flex">
                                 {categories.map((c, i) => (
-                                    <div
+                                    <div key={c.id}
                                         className={`flex min-w-36 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(
                                             i
                                         )} items-center justify-center text-white`}

@@ -14,7 +14,7 @@ import { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 
 type Classification = AppRouterInputs["classification"]["add"];
-type Category = Classification["categories"][0];
+// type Category = Classification["categories"][0];
 
 type ClassificationFormProps = {
     onReject: () => void;
@@ -47,39 +47,39 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     const [maxAge, setMaxAge] = useState<number | undefined>(99);
     const [gender, setGender] = useState<Gender | undefined>();
 
-    const [categories, setCategories] = useState(initialClassification.categories);
+    // const [categories, setCategories] = useState(initialClassification.categories);
 
     // const qc = useQueryClient();
 
-    const addCategory = () => {
-        // const category = {
-        //     name: "New Category",
-        //     gender: "male",
-        // };
+    // const addCategory = () => {
+    //     // const category = {
+    //     //     name: "New Category",
+    //     //     gender: "male",
+    //     // };
 
-        // qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
+    //     // qc.setQueryData(["classification.categories", { classificationId: initialClassification.id }], () => [...categories!, category]);
 
-        setCategories([...categories!, { isSpecial: false, name: categoryName, gender: gender, minAge, maxAge }]);
+    //     setCategories([...categories!, { isSpecial: false, name: categoryName, gender: gender, minAge, maxAge }]);
 
-        setCategoryName("");
-        setMinAge(1);
-        setMaxAge(99);
-        setGender(undefined);
-    };
+    //     setCategoryName("");
+    //     setMinAge(1);
+    //     setMaxAge(99);
+    //     setGender(undefined);
+    // };
 
-    const removeCategory = (category: Category) => {
-        setCategories([...categories.filter(c => c.name !== category.name)]);
-    };
+    // const removeCategory = (category: Category) => {
+    //     setCategories([...categories.filter(c => c.name !== category.name)]);
+    // };
 
-    const autoCategories = categories.filter(c => c.isSpecial === true);
-    const openCategories = categories.filter(c => c.isSpecial === false && c.minAge == null && c.maxAge == null);
+    // const autoCategories = categories.filter(c => c.isSpecial === true);
+    // const openCategories = categories.filter(c => c.isSpecial === false && c.minAge == null && c.maxAge == null);
 
-    const ageCategories = Object.entries(
-        groupBy(
-            categories.filter(c => c.minAge != null || c.maxAge != null),
-            c => c.gender ?? ""
-        )
-    );
+    // const ageCategories = Object.entries(
+    //     groupBy(
+    //         categories.filter(c => c.minAge != null || c.maxAge != null),
+    //         c => c.gender ?? ""
+    //     )
+    // );
 
     return (
         <div className="flex flex-col">
@@ -153,14 +153,14 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                     </RadioGroup>
                 </div>
             </div>
-            <div className="flex">
+            {/* <div className="flex">
                 <div className="grow">
                     <Button onClick={addCategory} className="w-full">
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">Add category</span>
                     </Button>
                 </div>
-            </div>
+            </div> */}
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
@@ -169,19 +169,19 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                         <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-1">Add category</span>
                     </div> */}
-                    {openCategories.map((a, i) => (
+                    {/* {openCategories.map((a, i) => (
                         <div key={i}>
                             <span>{a.id}</span>
                             <span>{a.name}</span>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
                     <Label>AGE Categories</Label>
-                    {ageCategories.map(([gender, categories]) => (
+                    {/* {ageCategories.map(([gender, categories]) => (
                         <div className="flex flex-col">
                             <div>{gender}</div>
                             <div className="flex">
@@ -208,7 +208,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                                 ))}
                             </div>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
             <div className="p-2"></div>
@@ -219,12 +219,12 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                         <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-1">Add category</span>
                     </div> */}
-                    {autoCategories.map((a, i) => (
+                    {/* {autoCategories.map((a, i) => (
                         <div key={i}>
                             <span>{a.id}</span>
                             <span>{a.name}</span>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
             <div className="p-2"></div>
@@ -255,7 +255,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
                 ))}
             </div> */}
             <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...classification, categories: categories! })}>
+                <Button onClick={() => onResolve({ ...classification })}>
                     <Icon size={1} path={mdiContentSaveCheck} />
                     <span className="ml-2">Save</span>
                 </Button>

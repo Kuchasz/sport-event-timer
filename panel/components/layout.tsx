@@ -121,7 +121,7 @@ const raceMenuGroup = {
             text: "Classifications",
             icon: mdiAccountCogOutline,
             to: "/panel/:raceId/classifications",
-            color: "text-purple-600",
+            color: "text-purple-600"
         },
         {
             text: "Timing Points",
@@ -152,11 +152,13 @@ const raceMenuGroup = {
 
 const Status = ({ segments }: { segments: (string | undefined)[] }) => {
     const { data: sessionData } = useSession();
+    const router = useRouter()
 
     return (
         <div className="flex items-center cursor-default py-6 px-8">
             <div className="uppercase text-md font-semibold">
-                {segments.filter(i => i).map((s, i) =>
+                {router.asPath}
+                {/* {segments.filter(i => i).map((s, i) =>
                     i === 0 ? (
                         <span key={i}>{s}</span>
                     ) : (
@@ -165,7 +167,7 @@ const Status = ({ segments }: { segments: (string | undefined)[] }) => {
                             <span>{s}</span>
                         </Fragment>
                     )
-                )}
+                )} */}
             </div>
             <div className="grow"></div>
             {sessionData && (
