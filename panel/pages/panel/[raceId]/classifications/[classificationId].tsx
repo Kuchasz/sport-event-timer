@@ -1,11 +1,11 @@
 import Icon from "@mdi/react";
 
-import { mdiClose, mdiContentSaveCheck, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 
-import { useCurrentRaceId, useFormState } from "hooks";
+import { useCurrentRaceId } from "hooks";
 // import { useQueryClient } from "@tanstack/react-query";
 import { groupBy } from "@set/utils/dist/array";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { AppRouterOutputs } from "trpc";
 import { useState } from "react";
 
 import { RadioGroup } from "@headlessui/react";
@@ -24,14 +24,8 @@ export const useCurrentClassificationId = () => {
     return classificationId ? parseInt(classificationId as string) : undefined;
 };
 
-type Classification = AppRouterInputs["classification"]["add"];
+// type Classification = AppRouterInputs["classification"]["add"];
 type Category = AppRouterOutputs["classification"]["categories"][0];
-
-type ClassificationFormProps = {
-    onReject: () => void;
-    onResolve: (classification: Classification) => void;
-    initialClassification: Classification;
-};
 
 const getColorFromIndex = (index: number) =>
     ({
@@ -60,9 +54,9 @@ export const ClassificationCategories = () => {
     const addCategoryMutation = trpc.classification.addCategory.useMutation();
 
     const [categoryName, setCategoryName] = useState("");
-    const [minAge, setMinAge] = useState<number | undefined>(1);
-    const [maxAge, setMaxAge] = useState<number | undefined>(99);
-    const [gender, setGender] = useState<Gender | undefined>();
+    const [minAge, setMinAge] = useState<number | undefined | null>(1);
+    const [maxAge, setMaxAge] = useState<number | undefined | null>(99);
+    const [gender, setGender] = useState<Gender | undefined | null>();
 
     // const [categories, setCategories] = useState(initialClassification.categories);
 
@@ -94,7 +88,7 @@ export const ClassificationCategories = () => {
         refetch();
     };
 
-    const removeCategory = (category: Category) => {
+    const removeCategory = (_category: Category) => {
         // setCategories([...categories.filter(c => c.name !== category.name)]);
     };
 
