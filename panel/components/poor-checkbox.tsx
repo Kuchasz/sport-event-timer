@@ -10,7 +10,7 @@ export const PoorCheckbox = ({
     <Input
         type="checkbox"
         checked={value!}
-        onChange={e => {
+        onChange={() => {
             onChange({ target: { value: !value } });
         }}
     />
