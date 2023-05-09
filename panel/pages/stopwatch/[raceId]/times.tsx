@@ -204,7 +204,7 @@ const PlayersTimes = () => {
                             navigate={push}
                             t={times[virtualRow.index]}
                             raceId={parseInt(raceId as string)}
-                            padBibNumber={highestBibNumber}
+                            padBibNumber={highestBibNumber.toString().length}
                         />
                     ))}
                 </div>
