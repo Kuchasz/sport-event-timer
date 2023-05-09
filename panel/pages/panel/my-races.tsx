@@ -29,9 +29,9 @@ const columns: Column<Race, unknown>[] = [
 const RaceDeleteButton = ({ race }: { race: Race }) => {
     const { refetch } = trpc.race.races.useQuery();
     const deleteRaceMutation = trpc.race.delete.useMutation();
-    const deletePlayer = async () => {
+    const deleteRace = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete player`,
+            title: `Delete race`,
             component: Confirmation,
             props: {
                 message: `You are trying to delete the Race ${race.name} (${race.date}). Do you want to proceed?`
@@ -44,7 +44,7 @@ const RaceDeleteButton = ({ race }: { race: Race }) => {
         }
     };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayer}>
+        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteRace}>
             <Icon size={1} path={mdiTrashCan} />
             delete
         </span>
@@ -71,7 +71,7 @@ const MyRaces = () => {
 
     const openEditDialog = async (editedRace?: Race) => {
         const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: "Edit player",
+            title: "Edit race",
             component: RaceEdit,
             props: {
                 editedRace
