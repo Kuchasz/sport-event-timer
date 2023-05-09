@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
-type Category = AppRouterOutputs["classification"]["categories"][0];
+// type Category = AppRouterOutputs["classification"]["categories"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
 type CreatedClassification = AppRouterInputs["classification"]["add"];
 
