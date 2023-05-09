@@ -32,9 +32,9 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification 
     const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
 
     const [categoryName, setCategoryName] = useState("");
-    const [minAge, setMinAge] = useState<number | undefined>(1);
-    const [maxAge, setMaxAge] = useState<number | undefined>(99);
-    const [gender, setGender] = useState<Gender | undefined>();
+    const [minAge, setMinAge] = useState<number | undefined|null>(1);
+    const [maxAge, setMaxAge] = useState<number | undefined|null>(99);
+    const [gender, setGender] = useState<Gender | undefined|null>();
 
     // const [categories, setCategories] = useState(initialClassification.categories);
 
