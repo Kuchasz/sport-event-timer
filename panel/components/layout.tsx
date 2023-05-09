@@ -27,7 +27,6 @@ import { Demodal } from "demodal";
 import { AppRouterInputs } from "trpc";
 import { RaceCreate } from "./race-create";
 import { NiceModal } from "./modal";
-import { Fragment } from "react";
 
 type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -150,7 +149,7 @@ const raceMenuGroup = {
     ],
 };
 
-const Status = ({ segments }: { segments: (string | undefined)[] }) => {
+const Status = () => {
     const { data: sessionData } = useSession();
     const router = useRouter()
 
