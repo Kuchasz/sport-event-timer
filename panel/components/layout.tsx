@@ -207,7 +207,7 @@ const Layout = ({ children }: Props) => {
         ? adminMenuGroup
         : generalMenuGroup;
 
-    const currentMenuItem = currentMenuGroup.items.find(n => router.asPath === n.to.replace(":raceId", String(raceId)));
+    // const currentMenuItem = currentMenuGroup.items.find(n => router.asPath === n.to.replace(":raceId", String(raceId)));
 
     const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
     const menuItems = currentMenuGroup.items;
@@ -298,7 +298,7 @@ const Layout = ({ children }: Props) => {
                                 : null}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
-                            <Status segments={[currentMenuGroup.name, currentMenuItem?.text]} />
+                            <Status/>
                             <div className="px-8 pb-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>
