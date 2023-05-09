@@ -22,17 +22,6 @@ type ClassificationFormProps = {
     initialClassification: Classification;
 };
 
-const getColorFromIndex = (index: number) =>
-    ({
-        0: "bg-red-300",
-        1: "bg-orange-300",
-        2: "bg-yellow-300",
-        3: "bg-green-300",
-        4: "bg-indigo-300",
-        5: "bg-pink-300",
-        6: "bg-lime-300",
-    }[index]);
-
 // const getPercentage = (category: { minAge?: number; maxAge?: number }) => {
 //     const range = (category.maxAge ?? Number.MAX_VALUE) - (category.minAge ?? 0);
 
