@@ -5,7 +5,7 @@ export const PoorNumberInput = ({
     onChange
 }: {
     value?: number | null;
-    onChange: (event: { target: { value?: number } }) => void;
+    onChange: (event: { target: { value: number | null | undefined } }) => void;
 }) => (
     <Input
         type="number"
