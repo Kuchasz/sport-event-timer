@@ -63,12 +63,14 @@ const TweakTimeStamps = () => {
 
     const p = player ? { ...player, timeStamp } : { timeStamp };
 
+    const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
+
     return (
         <div className="flex h-full flex-col items-center">
             <h1 className="text-2xl py-4">Tweak time stamp</h1>
             <div className="flex flex-col grow items-center justify-center">
                 <div>
-                    <PlayerWithTimeStampDisplay playerWithTimeStamp={p} />
+                    <PlayerWithTimeStampDisplay padBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
                 </div>
                 <div className="flex items-center mt-10">
                     <div className="flex-col flex items-center">
