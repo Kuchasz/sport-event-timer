@@ -44,19 +44,22 @@ const getColorFromIndex = (index: number) =>
 //     return (100 / (99 - 18 - 4)) * range + "%";
 // };
 
+type GenderOptions = Gender | "none";
+
 export const ClassificationCategories = () => {
     const raceId = useCurrentRaceId();
     const classificationId = useCurrentClassificationId();
-    const { data: categories, refetch } = trpc.classification.categories.useQuery(
+    const { data: categories, refetch: refetchCategories } = trpc.classification.categories.useQuery(
         { classificationId: classificationId! },
         { initialData: [], enabled: !!classificationId }
     );
     const addCategoryMutation = trpc.classification.addCategory.useMutation();
+    const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
 
     const [categoryName, setCategoryName] = useState("");
     const [minAge, setMinAge] = useState<number | undefined | null>(1);
     const [maxAge, setMaxAge] = useState<number | undefined | null>(99);
-    const [gender, setGender] = useState<Gender | undefined | null>();
+    const [gender, setGender] = useState<GenderOptions>("none");
 
     // const [categories, setCategories] = useState(initialClassification.categories);
 
@@ -79,17 +82,18 @@ export const ClassificationCategories = () => {
         await addCategoryMutation.mutateAsync({
             minAge,
             maxAge,
-            gender,
+            gender: gender === "none" ? undefined : (gender as Gender),
             isSpecial: false,
             name: categoryName,
             raceId: raceId!,
-            classificationId:classificationId!,
+            classificationId: classificationId!,
         });
-        refetch();
+        refetchCategories();
     };
 
-    const removeCategory = (_category: Category) => {
-        // setCategories([...categories.filter(c => c.name !== category.name)]);
+    const removeCategory = async (category: Category) => {
+        await removeCategoryMutation.mutateAsync({ categoryId: category.id });
+        refetchCategories();
     };
 
     const autoCategories = categories.filter(c => c.isSpecial === true);
@@ -143,7 +147,7 @@ export const ClassificationCategories = () => {
                             setGender(e);
                         }}
                     >
-                        <RadioGroup.Option value={undefined}>
+                        <RadioGroup.Option value={"none"}>
                             {({ checked }) => (
                                 <span className={classNames("cursor-pointer text-xs p-1 rounded-md", { ["bg-blue-200"]: checked })}>
                                     None
@@ -186,6 +190,7 @@ export const ClassificationCategories = () => {
                     {openCategories.map((a, i) => (
                         <div key={i}>
                             <span>{a.id}</span>
+                            <span> ({a.gender}) </span>
                             <span>{a.name}</span>
                         </div>
                     ))}
@@ -197,10 +202,11 @@ export const ClassificationCategories = () => {
                     <Label>AGE Categories</Label>
                     {ageCategories.map(([gender, categories]) => (
                         <div key={gender} className="flex flex-col">
-                            <div>{gender}</div>
+                            <div>{gender || "open"}</div>
                             <div className="flex">
                                 {categories.map((c, i) => (
-                                    <div key={c.id}
+                                    <div
+                                        key={c.id}
                                         className={`flex min-w-36 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(
                                             i
                                         )} items-center justify-center text-white`}

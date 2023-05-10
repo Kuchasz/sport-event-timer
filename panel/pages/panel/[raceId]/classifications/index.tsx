@@ -6,7 +6,7 @@ import { ClassificationCreate } from "components/classification-create";
 import { ClassificationEdit } from "components/classification-edit";
 import { Demodal } from "demodal";
 import { trpc } from "../../../../connection";
-import { mdiAccountMultiplePlusOutline, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../../hooks";
 import { useMemo } from "react";
@@ -31,13 +31,10 @@ const columns: Column<Classification, unknown>[] = [
 
 const OpenCategoriesButton = ({ classification }: { classification: Classification }) => {
     const router = useRouter();
-    // const openCategories = async () => {
-    //     router.push(`./${classification.id!}`)
-    // };
 
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer" >
-            <Icon size={1} path={mdiTrashCan} />
+            <Icon size={1} path={mdiAccountMultiple} />
             <Link href={`${router.asPath}/${classification.id}`}><span>categories</span></Link>
         </span>
     );
