@@ -81,6 +81,8 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
     }
 
+    //validate race registration state
+
     const race = await db.race.findFirstOrThrow({ where: { id: parseInt(raceId as string) } });
 
     const id = await db.playerRegistration.create({

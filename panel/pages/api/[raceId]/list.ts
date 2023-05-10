@@ -9,7 +9,7 @@ const getRegisteredPlayersForRace = async (req: NextApiRequest, res: NextApiResp
 
     const results = await db.playerRegistration.findMany({ 
         where: { raceId: Number(raceId) }, 
-        select: { name: true, lastName: true, team: true, city: true } });
+        select: { name: true, lastName: true, team: true, city: true, hasPaid: true } });
 
     res.json(results);
 }
