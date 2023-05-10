@@ -44,7 +44,7 @@ const getColorFromIndex = (index: number) =>
 //     return (100 / (99 - 18 - 4)) * range + "%";
 // };
 
-type GenderOptions = Gender | "none";
+type GenderOptions = Gender | "any";
 
 export const ClassificationCategories = () => {
     const raceId = useCurrentRaceId();
@@ -59,7 +59,7 @@ export const ClassificationCategories = () => {
     const [categoryName, setCategoryName] = useState("");
     const [minAge, setMinAge] = useState<number | undefined | null>(1);
     const [maxAge, setMaxAge] = useState<number | undefined | null>(99);
-    const [gender, setGender] = useState<GenderOptions>("none");
+    const [gender, setGender] = useState<GenderOptions>("any");
 
     // const [categories, setCategories] = useState(initialClassification.categories);
 
@@ -82,7 +82,7 @@ export const ClassificationCategories = () => {
         await addCategoryMutation.mutateAsync({
             minAge,
             maxAge,
-            gender: gender === "none" ? undefined : (gender as Gender),
+            gender: gender === "any" ? undefined : (gender as Gender),
             isSpecial: false,
             name: categoryName,
             raceId: raceId!,
@@ -147,10 +147,10 @@ export const ClassificationCategories = () => {
                             setGender(e);
                         }}
                     >
-                        <RadioGroup.Option value={"none"}>
+                        <RadioGroup.Option value={"any"}>
                             {({ checked }) => (
                                 <span className={classNames("cursor-pointer text-xs p-1 rounded-md", { ["bg-blue-200"]: checked })}>
-                                    None
+                                    Any
                                 </span>
                             )}
                         </RadioGroup.Option>
