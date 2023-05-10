@@ -1,6 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
-import { sort } from "@set/utils/dist/array";
+import { groupBy, sort } from "@set/utils/dist/array";
 import { z } from "zod";
+import { calculateAge } from "@set/utils/dist/datetime";
 
 export const resultRouter = router({
     results: protectedProcedure
@@ -29,8 +30,10 @@ export const resultRouter = router({
                 bibNumber: p.bibNumber,
                 name: p.name,
                 lastName: p.lastName,
+                classificationId: p.classificationId,
                 team: p.team,
                 gender: p.gender,
+                age: calculateAge(p.birthDate),
                 times: {
                     ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
                     ...Object.fromEntries(
@@ -51,7 +54,34 @@ export const resultRouter = router({
                     result: t.times[endTimingPoint.id].time - t.times[startTimingPoint.id].time
                 }));
 
-            return sort(results, r => r.result);
+            const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
+
+            // const classificationsWithPlayers = classifications.map(c => ({ ...c, players: allPlayers.filter(p => p.classificationId === c.id) }));
+
+            const resultsWithCategories = results.map(r => ({
+                ...r,
+                ageCategory:
+                    classifications
+                        .find(c => r.classificationId === c.id)!
+                        .categories
+                        .filter(c => !!c.minAge && !!c.maxAge)
+                        .find(c => c.minAge! <= r.age && c.maxAge! >= r.age),
+                openCategory:
+                    classifications
+                        .find(c => r.classificationId === c.id)!
+                        .categories
+                        .filter(c => !c.minAge && !c.maxAge && !!c.gender)
+                        .find(c => c.gender === r.gender),
+            }));
+
+            const playersByAgeCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.ageCategory), r => r.ageCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
+            const playersByOpenCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.openCategory), r => r.openCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
+
+            return sort(resultsWithCategories, r => r.result).map(r => ({
+                ...r, 
+                ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) : undefined,
+                openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) : undefined
+            }));
         })
 });
 
