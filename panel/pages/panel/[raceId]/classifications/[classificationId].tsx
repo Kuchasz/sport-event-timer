@@ -187,13 +187,22 @@ export const ClassificationCategories = () => {
                         <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-1">Add category</span>
                     </div> */}
+                    <div className="flex flex-col items-start">
                     {openCategories.map((a, i) => (
-                        <div key={i}>
+                        <div key={i} className={`flex min-w-36 py-1 my-1 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(i)} items-center justify-center text-white`}>
                             <span>{a.id}</span>
                             <span> ({a.gender}) </span>
                             <span>{a.name}</span>
+                            <div
+                                onClick={() => {
+                                    removeCategory(a);
+                                }}
+                            >
+                                <Icon size={1} className="hover:text-black ml-2" path={mdiTrashCanOutline}></Icon>
+                            </div>
                         </div>
                     ))}
+                    </div>
                 </div>
             </div>
             <div className="p-2"></div>
@@ -207,9 +216,7 @@ export const ClassificationCategories = () => {
                                 {categories.map((c, i) => (
                                     <div
                                         key={c.id}
-                                        className={`flex min-w-36 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(
-                                            i
-                                        )} items-center justify-center text-white`}
+                                        className={`flex min-w-36 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(i)} items-center justify-center text-white`}
                                     >
                                         <div className="grow py-1">
                                             <div>{c.name}</div>
