@@ -28,3 +28,5 @@ export const History = () => {
 };
 
 export default History;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

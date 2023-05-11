@@ -27,3 +27,5 @@ const PlayersReassignTime = () => {
 };
 
 export default PlayersReassignTime;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../../auth";

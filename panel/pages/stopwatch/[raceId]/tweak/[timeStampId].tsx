@@ -119,3 +119,5 @@ const TweakTimeStamps = () => {
 };
 
 export default TweakTimeStamps;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../../auth";
