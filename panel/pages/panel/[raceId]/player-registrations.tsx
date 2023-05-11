@@ -7,7 +7,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiCross, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
