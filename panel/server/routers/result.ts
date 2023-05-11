@@ -56,8 +56,6 @@ export const resultRouter = router({
 
             const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
 
-            // const classificationsWithPlayers = classifications.map(c => ({ ...c, players: allPlayers.filter(p => p.classificationId === c.id) }));
-
             const resultsWithCategories = results.map(r => ({
                 ...r,
                 ageCategory:
