@@ -71,7 +71,7 @@ export const playerRouter = router({
             const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId } });
             const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId } });
 
-            const usedBibNumbers = new Set(playersBibNumbers.filter(p => !p.bibNumber).map(p => p.bibNumber));
+            const usedBibNumbers = new Set(playersBibNumbers.filter(p => !!p.bibNumber).map(p => p.bibNumber));
 
             return bibNumbers.find(b => !usedBibNumbers.has(b.number))?.number ?? "";
         }),
