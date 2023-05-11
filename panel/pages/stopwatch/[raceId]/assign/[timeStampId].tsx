@@ -27,3 +27,5 @@ const PlayersAssignTime = () => {
 };
 
 export default PlayersAssignTime;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../../auth";

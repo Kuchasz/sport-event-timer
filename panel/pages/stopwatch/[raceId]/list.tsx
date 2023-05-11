@@ -97,3 +97,5 @@ const PlayersList = () => {
 };
 
 export default PlayersList;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

@@ -27,3 +27,5 @@ const PlayersDialPad = () => {
 };
 
 export default PlayersDialPad;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

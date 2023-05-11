@@ -214,3 +214,5 @@ const PlayersTimes = () => {
 };
 
 export default PlayersTimes;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";

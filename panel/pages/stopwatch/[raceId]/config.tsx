@@ -51,3 +51,5 @@ const Config = () => {
 };
 
 export default Config;
+
+export { getSecuredServerSideProps as getServerSideProps } from "../../../auth";
