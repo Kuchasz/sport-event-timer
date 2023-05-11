@@ -1,4 +1,3 @@
-import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -9,22 +8,26 @@ import { trpc } from "../../../connection";
 import { mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../hooks";
-import { useMemo } from "react";
+import { useCallback, useRef } from "react";
 import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { Confirmation } from "components/confirmation";
+import { AgGridReact } from "@ag-grid-community/react";
+import { getGridColumnStateAtom } from "states/grid-states";
+import { useAtom } from "jotai";
+import { ColDef } from "@ag-grid-community/core";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
 type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
 
-const columns: Column<BibNumber, unknown>[] = [
-    { key: "index", name: "", width: 10 },
-    { key: "number", name: "Bib Number" },
+const defaultColumns: ColDef<BibNumber>[] = [
+    { field: "index", headerName: "", width: 10 },
+    { field: "number", sortable: true, filter: true, headerName: "Bib Number" },
     {
-        key: "actions",
+        field: "actions",
         width: 15,
-        name: "Actions",
-        formatter: props => <BibNumberDeleteButton bibNumber={props.row} />,
+        headerName: "Actions",
+        cellRenderer: (props: { data: BibNumber }) => <BibNumberDeleteButton bibNumber={props.data} />,
     },
 ];
 
@@ -57,14 +60,15 @@ const BibNumberDeleteButton = ({ bibNumber }: { bibNumber: BibNumber }) => {
 const BibNumbers = () => {
     const raceId = useCurrentRaceId();
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId! });
+    const gridRef = useRef<AgGridReact<BibNumber>>(null);
     const updatebibNumberMutation = trpc.bibNumber.update.useMutation();
     const addClassifiationMutation = trpc.bibNumber.add.useMutation();
-
-    const sortedbibNumbers = useMemo((): readonly BibNumber[] => {
-        if (!bibNubers) return [];
-
-        return [...bibNubers];
-    }, [bibNubers]);
+    const [gridColumnState, _setGridColumnState] = useAtom(
+        getGridColumnStateAtom(
+            "bib-numbers",
+            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
+        )
+    );
 
     const openCreateDialog = async () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
@@ -78,6 +82,11 @@ const BibNumbers = () => {
             refetch();
         }
     };
+
+    const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
+        gridRef.current?.api.sizeColumnsToFit();
+    }, [gridColumnState]);
 
     const openEditDialog = async (editedBibNumber?: BibNumber) => {
         const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
@@ -99,22 +108,23 @@ const BibNumbers = () => {
             <Head>
                 <title>Bib Numbers</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div>
-                <DataGrid
-                    className="rdg-light h-full"
-                    defaultColumnOptions={{
-                        sortable: false,
-                        resizable: true,
-                    }}
-                    onRowDoubleClick={e => openEditDialog(e)}
-                    columns={columns}
-                    rows={sortedbibNumbers}
-                />
+                <AgGridReact<BibNumber>
+                    ref={gridRef}
+                    context={{ refetch }}
+                    onRowDoubleClicked={e => openEditDialog(e.data)}
+                    suppressCellFocus={true}
+                    suppressAnimationFrame={true}
+                    columnDefs={defaultColumns}
+                    rowData={bibNubers}
+                    onFirstDataRendered={onFirstDataRendered}
+                    onGridSizeChanged={onFirstDataRendered}
+                ></AgGridReact>
             </div>
         </>
     );

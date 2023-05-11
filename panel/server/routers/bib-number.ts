@@ -13,7 +13,7 @@ export const bibNumberRouter =
             raceId: z.number({ required_error: "raceId is required" })
         })).query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId } });
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, orderBy: { number: 'asc' } });
 
             return bibNumbers.map((c, index) => ({ ...c, index: index + 1 }));
         }),
