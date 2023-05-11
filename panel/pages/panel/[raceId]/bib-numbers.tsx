@@ -21,8 +21,8 @@ type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
 type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
 
 const defaultColumns: ColDef<BibNumber>[] = [
-    { field: "index", headerName: "", width: 10 },
-    { field: "number", sortable: true, filter: true, headerName: "Bib Number" },
+    // { field: "index", headerName: "", width: 10 },
+    { field: "number", sortable: true, sort: 'asc', filter: true, headerName: "Bib Number", comparator: (valueA, valueB) => valueA - valueB},
     {
         field: "actions",
         width: 15,
