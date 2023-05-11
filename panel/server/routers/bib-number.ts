@@ -15,7 +15,7 @@ export const bibNumberRouter =
             const raceId = input.raceId;
             const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, orderBy: { number: 'asc' } });
 
-            return bibNumbers.map((c, index) => ({ ...c, index: index + 1 }));
+            return bibNumbers.map((c, index) => ({ ...c, number: Number(c.number), index: index + 1 }));
         }),
         availableNumbers: protectedProcedure.input(z.object({
             raceId: z.number({ required_error: "raceId is required" })
