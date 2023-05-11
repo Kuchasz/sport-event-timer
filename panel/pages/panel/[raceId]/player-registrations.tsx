@@ -7,7 +7,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiCross, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { PlayerRegistrationCreate } from "components/player-registration-create";
@@ -27,6 +27,7 @@ type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistratio
 
 const ActionsRenderer = (props: any) => <PlayerRegistrationActions refetch={props.context.refetch} playerRegistration={props.data} />;
 const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
+const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
 
 const defaultColumns: ColDef<PlayerRegistration>[] = [
     { field: "index", headerName: "Index", headerClass: "hidden", sortable: false, resizable: false, width: 25 }, //, width: 5 },
@@ -83,6 +84,7 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
     },
     { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
+    { field: "promotedToPlayer", headerName: "Promoted", sortable: true, filter: true, resizable: true, cellRenderer: PromotedToPlayerRenderer },
     {
         field: "actions",
         // width: 50,
@@ -90,6 +92,19 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         cellRenderer: ActionsRenderer,
     },
 ];
+
+const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
+    return (
+        <span
+            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
+                ["text-green-600 font-semibold"]: playerRegistration.promotedToPlayer,
+                ["text-red-600"]: !playerRegistration.promotedToPlayer,
+            })}
+        >
+            {playerRegistration.promotedToPlayer ? <Icon size={1} path={mdiCheck} /> : <Icon size={1} path={mdiClose} />}
+        </span>
+    );
+};
 
 const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
