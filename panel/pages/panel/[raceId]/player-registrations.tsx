@@ -19,6 +19,8 @@ import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
 import { useAtom } from "jotai";
 import { getGridColumnStateAtom } from "states/grid-states";
+import { GenderIcon } from "components/gender-icon";
+import { Gender } from "@set/timer/dist/model";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -30,7 +32,7 @@ const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={prop
 const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
 
 const defaultColumns: ColDef<PlayerRegistration>[] = [
-    { field: "index", headerName: "Index", headerClass: "hidden", sortable: false, resizable: false, width: 25 }, //, width: 5 },
+    { field: "index", width: 25, headerName: "Index", headerClass: "hidden", valueGetter: "node.rowIndex + 1", sortable: false, filter: false },
     { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
     { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
     {
@@ -38,22 +40,10 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         headerName: "Gender",
         sortable: true,
         resizable: true,
+        filter: true,
         cellStyle: { justifyContent: "center", display: "flex" },
         width: 150,
-        cellRenderer: (props: any) =>
-            props.data.gender === "male" ? (
-                <div className="h-full flex items-center">
-                    <div className="flex items-center justify-center bg-blue-500 h-7 w-7 text-center text-white rounded-full font-bold">
-                        M
-                    </div>
-                </div>
-            ) : (
-                <div className="h-full flex items-center">
-                    <div className="flex items-center justify-center bg-red-500 h-7 w-7 text-center text-white rounded-full font-bold">
-                        F
-                    </div>
-                </div>
-            ),
+        cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
     },
     {
         field: "birthDate",
@@ -63,8 +53,8 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         sortable: true,
         hide: true,
     },
-    { field: "country", headerName: "Country", resizable: true, width: 150, hide: true }, // width: 10 },
-    { field: "city", headerName: "City", resizable: true, hide: true }, // width: 20 },
+    { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, width: 150, hide: true }, // width: 10 },
+    { field: "city", headerName: "City", resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
     {
         field: "team",
         headerName: "Team",
@@ -73,18 +63,26 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
         filter: true,
         cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
     },
-    { field: "phoneNumber", headerName: "Phone", resizable: true, hide: true }, // width: 20 },
-    { field: "email", headerName: "E-mail", resizable: true, hide: true }, // width: 20 },
-    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, hide: true }, // width: 20 },
+    { field: "phoneNumber", headerName: "Phone", resizable: true, filter: true, hide: true }, // width: 20 },
+    { field: "email", headerName: "E-mail", resizable: true, filter: true, hide: true }, // width: 20 },
+    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, filter: true, hide: true }, // width: 20 },
     {
         field: "registrationDate",
         headerName: "Registration Date",
         // width: 30,
         resizable: true,
+        sortable: true,
         cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
     },
     { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
-    { field: "promotedToPlayer", headerName: "Promoted", sortable: true, filter: true, resizable: true, cellRenderer: PromotedToPlayerRenderer },
+    {
+        field: "promotedToPlayer",
+        headerName: "Promoted",
+        sortable: true,
+        filter: true,
+        resizable: true,
+        cellRenderer: PromotedToPlayerRenderer,
+    },
     {
         field: "actions",
         // width: 50,
@@ -206,8 +204,6 @@ const PlayerRegistrations = () => {
         )
     );
 
-    const columns = gridColumnState;
-
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
             title: "Create new player registration",
@@ -273,7 +269,7 @@ const PlayerRegistrations = () => {
                         nameKey="headerName"
                         onChange={e => {
                             const visibleColumns = e.target.value as string[];
-                            const notSelectedColumns = columns.map(c => c.colId).filter(c => !e.target.value.includes(c));
+                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !e.target.value.includes(c));
 
                             gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
