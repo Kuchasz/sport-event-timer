@@ -149,6 +149,7 @@ const PlayersTimes = () => {
     } = useRouter();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId as string) });
 
     const times = sortDesc(
         allTimeStamps
@@ -164,7 +165,7 @@ const PlayersTimes = () => {
         dispatch(
             add({
                 timingPointId: timingPointId!,
-                time: getCurrentTime(offset!),
+                time: getCurrentTime(offset!, race!.date),
             })
         );
 

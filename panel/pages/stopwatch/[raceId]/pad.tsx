@@ -4,11 +4,17 @@ import { useTimerDispatch } from "../../../hooks";
 import { PlayersCheckIn } from "components/stopwatch/players-check-in";
 import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { useAtom } from "jotai";
+import { trpc } from "connection";
+import { useRouter } from "next/router";
 
 const PlayersDialPad = () => {
     const dispatch = useTimerDispatch();
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
+    const {
+        query: { raceId },
+    } = useRouter();
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId as string) });
 
     return (
         <PlayersCheckIn
@@ -17,7 +23,7 @@ const PlayersDialPad = () => {
                     add({
                         bibNumber,
                         timingPointId,
-                        time: getCurrentTime(offset)
+                        time: getCurrentTime(offset, race!.date)
                     })
                 );
             }}
