@@ -120,15 +120,11 @@ export const playerRouter = router({
             }));
         }),
     delete: protectedProcedure.input(z.object({ playerId: z.number() })).mutation(async ({ input, ctx }) => {
-        // dispatchAction({
-        //     clientId: "",
-        //     action: remove({ id: id! })
-        // });
-
         const player = await ctx.db.player.findFirstOrThrow({ where: { id: input.playerId } });
 
         await ctx.db.splitTime.deleteMany({ where: { player } });
         await ctx.db.manualSplitTime.deleteMany({ where: { player } });
+        await ctx.db.absence.deleteMany({ where: { player } });
 
         return await ctx.db.player.delete({ where: { id: input.playerId } });
     }),
