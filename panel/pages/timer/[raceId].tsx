@@ -226,10 +226,6 @@ const Timer = () => {
 
     return (
         <>
-            <Head>
-                <title>Timer</title>
-                <link key="manifest" rel="manifest" href="/favicon/clock.webmanifest" />
-            </Head>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {globalTime === undefined || players === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
