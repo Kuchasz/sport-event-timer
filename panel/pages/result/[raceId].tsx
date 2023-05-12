@@ -17,22 +17,23 @@ const Result = () => {
     );
 
     const openCategories = [...new Set<string>(results?.filter(r => r.openCategory).map(r => r.openCategory!.name))];
+    const ageCategoriesExist = results?.some(r => !!r.ageCategory);
 
     return (
         <>
             <Head>
                 <title>Results</title>
             </Head>
-           <div className="flex flex-col items-center">
-           <div className="max-w-[800px] flex my-8 px-4 flex-col">
-                <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
-                <h3>{race?.date?.toLocaleDateString()}</h3>
-                <div className="mt-2">
-                    <span>Results refresh automatically each 10 seconds.</span>
-                    <span className="ml-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString("pl")}</span>
+            <div className="flex flex-col items-center">
+                <div className="max-w-[800px] flex my-8 px-4 flex-col">
+                    <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
+                    <h3>{race?.date?.toLocaleDateString()}</h3>
+                    <div className="mt-2">
+                        <span>Results refresh automatically each 10 seconds.</span>
+                        <span className="ml-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString("pl")}</span>
+                    </div>
                 </div>
             </div>
-           </div>
             <div className="flex justify-center mx-auto">
                 <div className="flex flex-col">
                     <div className="w-full">
@@ -49,7 +50,7 @@ const Result = () => {
                                                 {c}
                                             </th>
                                         ))}
-                                        <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>
+                                        {ageCategoriesExist && <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>}
                                         <th className="px-4 py-2 text-xs text-gray-500">Result</th>
                                         <th className="px-4 py-2 text-xs text-gray-500">Gap</th>
                                     </tr>
@@ -69,11 +70,15 @@ const Result = () => {
                                                         {s.openCategory?.name === c && s.openCategoryPlace}
                                                     </td>
                                                 ))}
-                                                <td className="px-4 py-2 text-center text-xs">
-                                                    {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                {ageCategoriesExist && (
+                                                    <td className="px-4 py-2 text-center text-xs">
+                                                        {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                    </td>
+                                                )}
+                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">
+                                                    {formatTimeWithMilliSecUTC(s.result)}
                                                 </td>
-                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">{formatTimeWithMilliSecUTC(s.result)}</td>
-                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">{formatGap(s.gap)}</td>
+                                                <td className="px-4 text-right font-mono py-2 text-xs">{formatGap(s.gap)}</td>
                                             </tr>
                                         ))}
                                 </tbody>
