@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AppProps } from "next/app";
 import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
