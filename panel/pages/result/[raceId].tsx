@@ -4,7 +4,7 @@ import { trpc } from "connection";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const Gender = ({gender}: {gender: Gender}) => <div>{gender.slice(0,1)}</div>
+const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</div>;
 
 const Result = () => {
     const {
@@ -15,6 +15,8 @@ const Result = () => {
         { raceId: parseInt(raceId! as string) },
         { enabled: !!raceId, refetchInterval: 10_000 }
     );
+
+    const openCategories = [...new Set<string>(results?.filter(r => r.openCategory).map(r => r.openCategory!.name))];
 
     return (
         <>
@@ -34,26 +36,40 @@ const Result = () => {
                     <div className="w-full">
                         <div className="border-b border-gray-200 shadow">
                             <table className="divide-y divide-gray-300 ">
-                                <thead className="bg-gray-50">
+                                <thead className="top-0 sticky bg-gray-50">
                                     <tr>
-                                        <th className="px-6 py-2 text-xs text-gray-500">#</th>
-                                        <th className="px-6 py-2 text-xs text-gray-500">Bib</th>
-                                        <th className="px-6 py-2 text-xs text-gray-500">Name</th>
-                                        <th className="px-6 py-2 text-xs text-gray-500">Team</th>
-                                        <th className="px-6 py-2 text-xs text-gray-500">Cat.</th>
-                                        <th className="px-6 py-2 text-xs text-gray-500">Result</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">#</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">Bib</th>
+                                        <th className="px-4 py-2 text-xs text-left text-gray-500">Name</th>
+                                        <th className="px-4 py-2 text-xs text-left text-gray-500">Team</th>
+                                        {openCategories.map(c => (
+                                            <th key={c} className="px-4 py-2 text-xs text-gray-500">
+                                                {c}
+                                            </th>
+                                        ))}
+                                        <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">Result</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
                                     {results &&
                                         results.map((s, i) => (
                                             <tr key={i} className="whitespace-nowrap">
-                                                <td className="px-6 py-4">{i + 1}</td>
-                                                <td className="px-6 py-4">{s.bibNumber}</td>
-                                                <td className="px-6 py-4">{s.name} {s.lastName}</td>
-                                                <td className="px-6 py-4 text-xs text-ellipsis">{s.team ?? ""}</td>
-                                                <td className="px-6 py-4">{s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}</td>
-                                                <td className="px-6 py-4">{formatTimeWithMilliSecUTC(s.result)}</td>
+                                                <td className="px-4 py-2 text-center text-xs">{i + 1}</td>
+                                                <td className="px-4 py-2 text-center text-xs">{s.bibNumber}</td>
+                                                <td className="px-4 font-semibold py-2 text-xs">
+                                                    {s.name} {s.lastName}
+                                                </td>
+                                                <td className="px-4 py-2 text-xs text-ellipsis">{s.team ?? ""}</td>
+                                                {openCategories.map(c => (
+                                                    <td key={c} className="px-4 text-center py-2 text-xs">
+                                                        {s.openCategory?.name === c && s.openCategoryPlace}
+                                                    </td>
+                                                ))}
+                                                <td className="px-4 py-2 text-center text-xs">
+                                                    {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                </td>
+                                                <td className="px-4 font-semibold py-2 text-xs">{formatTimeWithMilliSecUTC(s.result)}</td>
                                             </tr>
                                         ))}
                                 </tbody>
