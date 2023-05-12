@@ -21,8 +21,10 @@ const Result = () => {
             <div className="flex my-8 flex-col items-center">
                 <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
                 <h3>{race?.date?.toLocaleDateString()}</h3>
-                <div className="mt-2">Results refresh automatically each 10 seconds.</div>
-                <div className="mt-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString()}</div>
+                <div className="mt-2">
+                    <span>Results refresh automatically each 10 seconds.</span>
+                    <span className="ml-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString("pl")}</span>
+                </div>
             </div>
             <div className="container flex justify-center mx-auto">
                 <div className="flex flex-col">
