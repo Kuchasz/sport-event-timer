@@ -120,17 +120,9 @@ const SplitTimes = () => {
             })),
     ];
 
-    const [gridColumnState, _setGridColumnState] = useAtom(
-        getGridColumnStateAtom(
-            "split-times",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
-        )
-    );
-
     const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
         gridRef.current?.api.sizeColumnsToFit();
-    }, [gridColumnState]);
+    }, []);
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {
         const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
@@ -171,19 +163,9 @@ const SplitTimes = () => {
             {/* <div className="flex bg-white p-8 rounded-lg shadow-md flex-col h-full"></div> */}
             <div className="ag-theme-material flex bg-white flex-col h-full">
                 {splitTimes && (
-                    // <DataGrid
-                    //     className="rdg-light h-full"
-                    //     defaultColumnOptions={{
-                    //         sortable: false,
-                    //         resizable: true,
-                    //     }}
-                    //     columns={columns}
-                    //     rows={splitTimes}
-                    // />
                     <AgGridReact<SplitTime>
                         ref={gridRef}
                         context={{ refetch }}
-                        // onRowDoubleClicked={e => openEditDialog(e.data)}
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}
                         columnDefs={defaultColumns}
