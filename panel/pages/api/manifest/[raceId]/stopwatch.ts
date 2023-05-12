@@ -31,8 +31,8 @@ export default function handler(
                 "type": "image/png"
             }
         ],
-        "theme_color": "#f69435",
-        "background_color": "#f69435",
+        "theme_color": "#000000",
+        "background_color": "#000000",
         "display": "standalone",
         "start_url": `/stopwatch/${raceId}`
     };
