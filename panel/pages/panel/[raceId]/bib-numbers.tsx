@@ -21,8 +21,14 @@ type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
 type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
 
 const defaultColumns: ColDef<BibNumber>[] = [
-    // { field: "index", headerName: "", width: 10 },
-    { field: "number", sortable: true, sort: 'asc', filter: true, headerName: "Bib Number", comparator: (valueA, valueB) => valueA - valueB},
+    {
+        field: "number",
+        sortable: true,
+        sort: "asc",
+        filter: true,
+        headerName: "Bib Number",
+        comparator: (valueA, valueB) => valueA - valueB,
+    },
     {
         field: "actions",
         width: 15,
@@ -63,12 +69,6 @@ const BibNumbers = () => {
     const gridRef = useRef<AgGridReact<BibNumber>>(null);
     const updatebibNumberMutation = trpc.bibNumber.update.useMutation();
     const addClassifiationMutation = trpc.bibNumber.add.useMutation();
-    const [gridColumnState, _setGridColumnState] = useAtom(
-        getGridColumnStateAtom(
-            "bib-numbers",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
-        )
-    );
 
     const openCreateDialog = async () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
@@ -84,9 +84,8 @@ const BibNumbers = () => {
     };
 
     const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
         gridRef.current?.api.sizeColumnsToFit();
-    }, [gridColumnState]);
+    }, []);
 
     const openEditDialog = async (editedBibNumber?: BibNumber) => {
         const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
