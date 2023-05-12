@@ -1,10 +1,10 @@
-import { protectedProcedure, router } from "../trpc";
+import { publicProcedure, router } from "../trpc";
 import { groupBy, sort } from "@set/utils/dist/array";
 import { z } from "zod";
 import { calculateAge } from "@set/utils/dist/datetime";
 
 export const resultRouter = router({
-    results: protectedProcedure
+    results: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;

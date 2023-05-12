@@ -1,4 +1,4 @@
-import { protectedProcedure, router } from "../trpc"
+import { protectedProcedure, publicProcedure, router } from "../trpc"
 import { z } from "zod";
 
 const raceSchema = z.object({
@@ -11,6 +11,12 @@ const raceSchema = z.object({
 
 export const raceRouter =
     router({
+        basicInfo: publicProcedure
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async ({ input, ctx }) => {
+                const id = input.raceId;
+                return await ctx.db.race.findUnique({ where: { id }, select: { name: true, date: true } });
+            }),
         races: protectedProcedure
             .query(async ({ ctx }) => {
                 return await ctx.db.race.findMany();
