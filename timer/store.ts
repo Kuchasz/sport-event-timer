@@ -1,15 +1,17 @@
 import actionsHistory from "./slices/actions-history";
 import timeStamps from "./slices/time-stamps";
+import absences from "./slices/absences";
 import {
     AnyAction,
     combineReducers,
     configureStore,
     Middleware
-    } from "@reduxjs/toolkit";
+} from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
     timeStamps,
-    actionsHistory
+    actionsHistory,
+    absences
 });
 
 const resettableRootReducer = (state: TimerState, action: AnyAction) => {

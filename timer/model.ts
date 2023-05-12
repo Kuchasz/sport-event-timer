@@ -86,6 +86,12 @@ export type TimeStamp = {
     time: number;
 };
 
+export type Absence = {
+    id: number;
+    bibNumber: number;
+    timingPointId: number;
+}
+
 export type State = {
     timeStamps: TimeStamp[];
 };
@@ -132,16 +138,16 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
 export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
     updateBy(items, item, i => i.id === item.id);
 
-export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
-    pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
+// export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
+//     pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
 
 // export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
 //     pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
 
-export const updateTimeKeeper = (timeKeepers: TimeKeeper[], modifiedTimeKeeper: Partial<TimeKeeper>): TimeKeeper[] =>
-    updateItem(timeKeepers, modifiedTimeKeeper);
+// export const updateTimeKeeper = (timeKeepers: TimeKeeper[], modifiedTimeKeeper: Partial<TimeKeeper>): TimeKeeper[] =>
+//     updateItem(timeKeepers, modifiedTimeKeeper);
 
-export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
+// export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
 
 export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp, "id">): TimeStamp[] =>
     pipe(timeStamps, Arr.append({ ...timeStamp, id: getNextId(timeStamps) }));
@@ -154,10 +160,16 @@ export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[]
 export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Partial<TimeStamp>): TimeStamp[] =>
     updateItem(timeStamps, modifiedTimeStamp);
 
-export const addRaceCategory = (
-    raceCategories: RaceCategory[],
-    raceCategory: Omit<RaceCategory, "id">
-): RaceCategory[] => pipe(raceCategories, Arr.append({ ...raceCategory, id: getNextId(raceCategories) }));
+export const addAbsence = (absences: Absence[], absence: Omit<Absence, "id">): Absence[] =>
+    pipe(absences, Arr.append({ ...absence, id: getNextId(absences) }));
 
-export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
-    removeById(raceCategories, id);
+export const resetAbsence = (absences: Absence[], id: number): Absence[] => removeById(absences, id);
+
+
+// export const addRaceCategory = (
+//     raceCategories: RaceCategory[],
+//     raceCategory: Omit<RaceCategory, "id">
+// ): RaceCategory[] => pipe(raceCategories, Arr.append({ ...raceCategory, id: getNextId(raceCategories) }));
+
+// export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
+//     removeById(raceCategories, id);
