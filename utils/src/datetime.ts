@@ -23,9 +23,13 @@ export const getCountdownTime = (time: number) => {
     return 60_000 - (currentTime.getSeconds() * 1000 + currentTime.getMilliseconds());
 };
 
-export const formatTimeNoSec = (time?: number) => {
+export const timeOnlyFormatTimeNoSec = (time?: number) => {
     if (!time) return "--:--";
-    const dateTime = new Date(time);
+    
+    const timeStampAsDate = new Date(time);
+    const offset = timeStampAsDate.getTimezoneOffset();
+
+    const dateTime = new Date(time + offset * 60_000);
 
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
 };
