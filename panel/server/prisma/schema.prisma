@@ -187,7 +187,7 @@ model TimingPointAccessKey {
 }
 
 model SplitTime {
-    id            Int         @id @default(autoincrement())
+    id            Int
     bibNumber     String
     time          BigInt?
     race          Race        @relation(fields: [raceId], references: [id])
@@ -196,6 +196,7 @@ model SplitTime {
     timingPointId Int
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
+    @@id([id, raceId])
     @@unique([timingPointId, bibNumber])
 }
 

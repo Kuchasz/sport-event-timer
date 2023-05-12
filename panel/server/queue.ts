@@ -49,9 +49,9 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
         }))
         .filter(({ actual, existing }) => !areSplitTimesEqual(actual, existing));
 
-    await db.$transaction(splitTimesToUpdate.map(data => db.splitTime.update({ where: { id: data.actual.id }, data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() } })));
+    await db.$transaction(splitTimesToUpdate.map(data => db.splitTime.update({ where: { id_raceId: { id: data.actual.id, raceId } }, data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() } })));
 
-    await db.$transaction([...toDelete].map(id => db.splitTime.delete({ where: { id } })));
+    await db.$transaction([...toDelete].map(id => db.splitTime.delete({ where: { id_raceId: { id, raceId } } })));
 };
 
 export const updateSplitTimesQueue: fastq.queueAsPromised<UpdateSplitTimesTask> = fastq.promise(updateSplitTimes, 1);
