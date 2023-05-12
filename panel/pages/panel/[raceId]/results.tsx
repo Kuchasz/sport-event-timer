@@ -1,43 +1,78 @@
-import DataGrid, { Column } from "react-data-grid";
-
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
 
 import { useCurrentRaceId } from "../../../hooks";
+import { ColDef } from "@ag-grid-community/core";
+import { AgGridReact } from "@ag-grid-community/react";
+import { useCallback, useRef } from "react";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
+const defaultColumns: ColDef<Result>[] = [
+    { field: "bibNumber", sortable: true, filter: true, headerName: "Bib" },
+    {
+        field: "player.name",
+        sortable: true,
+        filter: true,
+        headerName: "Name",
+        cellRenderer: (p: { data: Result }) => <span>{p.data.name}</span>,
+    },
+    {
+        field: "player.lastName",
+        sortable: true,
+        filter: true,
+        headerName: "Last Name",
+        cellRenderer: (p: { data: Result }) => <span>{p.data.lastName}</span>,
+    },
+    {
+        field: "start",
+        headerName: "Start",
+        sortable: true,
+        cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSec(p.data.start)}</span>,
+    },
+    {
+        field: "finish",
+        headerName: "Finish",
+        sortable: true,
+        cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSec(p.data.finish)}</span>,
+    },
+    {
+        field: "result",
+        headerName: "Result",
+        sort: 'asc',
+        sortable: true,
+        cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSecUTC(p.data.result)}</span>,
+    },
+];
+
 const Results = () => {
     const raceId = useCurrentRaceId();
-    const { data: results } = trpc.result.results.useQuery({ raceId: raceId! });
-
-    const columns: Column<Result, unknown>[] = [
-        { key: "bibNumber", name: "Bib", width: 10 },
-        { key: "player.name", name: "Name", formatter: p => <span>{p.row.name}</span> },
-        { key: "player.lastName", name: "Last Name", formatter: p => <span>{p.row.lastName}</span> },
-        { key: "start", name: "Start", formatter: p => <span>{formatTimeWithMilliSec(p.row.start)}</span> },
-        { key: "finish", name: "Finish", formatter: p => <span>{formatTimeWithMilliSec(p.row.finish)}</span> },
-        { key: "result", name: "Result", formatter: p => <span>{formatTimeWithMilliSecUTC(p.row.result)}</span> }
-    ];
+    const { data: results, refetch } = trpc.result.results.useQuery({ raceId: raceId! });
+    const gridRef = useRef<AgGridReact<Result>>(null);
+    const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.api.sizeColumnsToFit();
+    }, []);
 
     return (
         <>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
                 {/* <div className="mb-4 inline-flex">
                     <Button onClick={() => {}}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div> */}
                 {results && (
-                    <DataGrid className='rdg-light h-full'
-                        defaultColumnOptions={{
-                            sortable: false,
-                            resizable: true
-                        }}
-                        columns={columns}
-                        rows={results}
-                    />
+                    <AgGridReact<Result>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        suppressCellFocus={true}
+                        suppressAnimationFrame={true}
+                        columnDefs={defaultColumns}
+                        rowData={results}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
                 )}
             </div>
         </>
