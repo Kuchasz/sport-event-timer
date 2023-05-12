@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Icon from "@mdi/react";
 import React from "react";
 import { BeepFunction, createBeep } from "@set/utils/dist/beep";
