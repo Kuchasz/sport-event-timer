@@ -47,7 +47,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                     className="flex items-center hover:text-red-600 cursor-pointer"
                 >
                     <Icon size={0.75} path={mdiClockEditOutline} />
-                    <span className="ml-1">change</span>
+                    {/* <span className="ml-1">change</span> */}
                 </span>
             )}
             {result == null && (
@@ -62,7 +62,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                     className="flex items-center hover:text-red-600 cursor-pointer"
                 >
                     <Icon size={0.75} path={mdiClockPlusOutline} />
-                    <span className="ml-1">change</span>
+                    {/* <span className="ml-1">change</span> */}
                 </span>
             )}
             {result?.manual == true && (
@@ -77,7 +77,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                     className="flex items-center ml-2 hover:text-red-600 cursor-pointer"
                 >
                     <Icon size={0.75} path={mdiReload} />
-                    <span className="ml-1">revert</span>
+                    {/* <span className="ml-1">revert</span> */}
                 </span>
             )}
         </div>
@@ -101,13 +101,14 @@ const SplitTimes = () => {
 
     const defaultColumns: ColDef<SplitTime>[] = [
         { field: "bibNumber", headerName: "Bib", sortable: true, sort: 'asc', width: 100, comparator: (valueA, valueB) => valueA - valueB },
-        { field: "player.name", headerName: "Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span> },
-        { field: "player.lastName", headerName: "Last Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span> },
+        { field: "player.name", resizable: true, headerName: "Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span> },
+        { field: "player.lastName", resizable: true, headerName: "Last Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span> },
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .map(tp => ({
                 field: tp.name,
                 headerName: tp.name,
+                resizable: true, 
                 cellRenderer: (p: { data: SplitTime }) => (
                     <SplitTimeResult
                         openEditDialog={openEditDialog}
