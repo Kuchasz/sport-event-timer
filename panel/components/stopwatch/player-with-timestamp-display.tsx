@@ -14,7 +14,7 @@ export const PlayerWithTimeStampDisplay = ({ padBibNumber, playerWithTimeStamp }
     return (
         <span className="flex items-center grow h-12">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="text-3xl mr-4">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
+                <span className="font-mono text-3xl mr-4">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
             ) : null}
 
             <span className="grow">
