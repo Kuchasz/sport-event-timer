@@ -25,7 +25,7 @@ export const getCountdownTime = (time: number) => {
 
 export const timeOnlyFormatTimeNoSec = (time?: number) => {
     if (!time) return "--:--";
-    
+
     const dateTime = new Date(time);
 
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
@@ -67,9 +67,5 @@ export const milisecondsToTimeString = (miliseconds: number | undefined | null) 
 
 export const daysFromNow = (days: number) => new Date(new Date().getTime() + days * 86_400_000);
 
-export const calculateAge = (birthDate: Date): number => {
-    const now = new Date();
-    const diff = now.getTime() - birthDate.getTime();
-    const ageDate = new Date(diff);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  }
+export const calculateAge = (birthDate: Date): number =>
+    new Date().getFullYear() - birthDate.getFullYear();
