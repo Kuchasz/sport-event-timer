@@ -76,9 +76,11 @@ const Result = () => {
                                                     </td>
                                                 )}
                                                 <td className="px-4 font-semibold text-right font-mono py-2 text-xs">
-                                                    {formatTimeWithMilliSecUTC(s.result)}
+                                                    {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
                                                 </td>
-                                                <td className="px-4 text-right font-mono py-2 text-xs">{formatGap(s.gap)}</td>
+                                                <td className="px-4 text-right font-mono py-2 text-xs">
+                                                    {!s.invalidState && formatGap(s.gap)}
+                                                </td>
                                             </tr>
                                         ))}
                                 </tbody>

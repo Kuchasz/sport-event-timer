@@ -11,7 +11,7 @@ export const resultRouter = router({
 
             const allPlayers = await ctx.db.player.findMany({
                 where: { raceId },
-                include: { splitTime: true, manualSplitTime: true }
+                include: { splitTime: true, manualSplitTime: true, absence: true }
             });
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
@@ -42,16 +42,30 @@ export const resultRouter = router({
                     ...Object.fromEntries(
                         p.manualSplitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: true }])
                     )
+                },
+                absences: {
+                    ...Object.fromEntries(p.absence.map(a => [a.timingPointId, true]))
                 }
             }));
+
+            const absentPlayers = times
+                .filter(t => t.absences[startTimingPoint?.id] || t.absences[endTimingPoint?.id])
+                .map(t => ({
+                    ...t,
+                    invalidState: t.absences[startTimingPoint.id] ? "dns" : t.absences[endTimingPoint.id] ? 'dnf' : undefined,
+                    result: Number.MAX_VALUE,
+                    ageCategory: undefined,
+                    openCategory: undefined
+                }));
 
             const results = times
                 .filter(t => t.times[startTimingPoint?.id] && t.times[endTimingPoint?.id])
                 .map(t => ({
                     ...t,
-                    start: t.times[startTimingPoint.id].time,
-                    finish: t.times[endTimingPoint.id].time,
-                    result: t.times[endTimingPoint.id].time - t.times[startTimingPoint.id].time
+                    start: t.times[startTimingPoint.id]?.time,
+                    finish: t.times[endTimingPoint.id]?.time,
+                    result: t.times[endTimingPoint.id]?.time - t.times[startTimingPoint.id]?.time,
+                    invalidState: undefined
                 }));
 
             const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
@@ -75,7 +89,7 @@ export const resultRouter = router({
             const playersByAgeCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.ageCategory), r => r.ageCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
             const playersByOpenCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.openCategory), r => r.openCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
 
-            const sorted = sort(resultsWithCategories, r => r.result).map(r => ({
+            const sorted = sort([...resultsWithCategories, ...absentPlayers], r => r.result).map(r => ({
                 ...r,
                 ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) + 1 : undefined,
                 openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) + 1 : undefined

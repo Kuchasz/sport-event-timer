@@ -72,6 +72,7 @@ model Race {
     timingPointOrder     TimingPointOrder[]
     timingPointAccessKey TimingPointAccessKey[]
     bibNumber            BibNumber[]
+    absence              Absence[]
 }
 
 model ApiKey {
@@ -137,6 +138,7 @@ model Player {
     manualSplitTime      ManualSplitTime[]
     fromRegistration     PlayerRegistration? @relation(fields: [playerRegistrationId], references: [id])
     playerRegistrationId Int?
+    absence              Absence[]
 
     @@unique([raceId, bibNumber])
     @@unique([classificationId, startTime])
@@ -151,6 +153,7 @@ model TimingPoint {
     splitTime            SplitTime[]
     manualSplitTime      ManualSplitTime[]
     timingPointAccessKey TimingPointAccessKey[]
+    absence              Absence[]
 
     @@unique([raceId, name])
 }
@@ -190,6 +193,19 @@ model SplitTime {
     id            Int
     bibNumber     String
     time          BigInt?
+    race          Race        @relation(fields: [raceId], references: [id])
+    raceId        Int
+    timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
+    timingPointId Int
+    player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+
+    @@id([id, raceId])
+    @@unique([timingPointId, bibNumber])
+}
+
+model Absence {
+    id            Int
+    bibNumber     String
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
