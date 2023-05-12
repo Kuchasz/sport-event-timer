@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../connection";
-import { mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/race-create";
 import { RaceEdit } from "components/race-edit";
@@ -20,22 +20,23 @@ const columns: Column<Race, unknown>[] = [
     { key: "name", name: "Name" },
     {
         key: "actions",
-        width: 15,
+        width: 200,
         name: "Actions",
-        formatter: props => <RaceDeleteButton race={props.row} />
-    }
+        formatter: props => <RaceDeleteButton race={props.row} />,
+    },
 ];
 
 const RaceDeleteButton = ({ race }: { race: Race }) => {
     const { refetch } = trpc.race.races.useQuery();
     const deleteRaceMutation = trpc.race.delete.useMutation();
+    const wipeRaceMutation = trpc.action.wipe.useMutation();
     const deleteRace = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
             title: `Delete race`,
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Race ${race.name} (${race.date}). Do you want to proceed?`
-            }
+                message: `You are trying to delete the Race ${race.name} (${race.date.toLocaleDateString()}). Do you want to proceed?`,
+            },
         });
 
         if (confirmed) {
@@ -43,11 +44,31 @@ const RaceDeleteButton = ({ race }: { race: Race }) => {
             refetch();
         }
     };
+    const wipeRace = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Wipe race`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to wipe the Race ${race.name} (${race.date.toLocaleDateString()}). Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await wipeRaceMutation.mutateAsync({ raceId: race.id });
+            refetch();
+        }
+    };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteRace}>
-            <Icon size={1} path={mdiTrashCan} />
-            delete
-        </span>
+        <div className="flex">
+            <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteRace}>
+                <Icon size={1} path={mdiTrashCan} />
+                delete
+            </span>
+            <span className="flex ml-4 items-center hover:text-red-600 cursor-pointer" onClick={wipeRace}>
+                <Icon size={1} path={mdiRestore} />
+                wipe
+            </span>
+        </div>
     );
 };
 
@@ -60,7 +81,7 @@ const MyRaces = () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
             title: "Create new race",
             component: RaceCreate,
-            props: {}
+            props: {},
         });
 
         if (race) {
@@ -74,8 +95,8 @@ const MyRaces = () => {
             title: "Edit race",
             component: RaceEdit,
             props: {
-                editedRace
-            }
+                editedRace,
+            },
         });
 
         if (race) {
@@ -96,10 +117,11 @@ const MyRaces = () => {
                     </Button>
                 </div>
                 {races && (
-                    <DataGrid className='rdg-light h-full'
+                    <DataGrid
+                        className="rdg-light h-full"
                         defaultColumnOptions={{
                             sortable: false,
-                            resizable: true
+                            resizable: true,
                         }}
                         onRowDoubleClick={e => openEditDialog(e)}
                         columns={columns}
