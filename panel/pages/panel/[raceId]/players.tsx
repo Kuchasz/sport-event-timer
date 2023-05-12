@@ -166,27 +166,6 @@ const Players = () => {
         }
     };
 
-    // const playerCreate = async (player: CreatedPlayer) => {
-    //     await addPlayerMutation.mutateAsync(player);
-    //     toggleCreateVisible();
-    //     refetch();
-    // };
-
-    // const gridElement = (
-    //     <DataGrid
-    //         sortColumns={sortColumns}
-    //         className="h-full"
-    //         defaultColumnOptions={{
-    //             sortable: true,
-    //             resizable: true
-    //         }}
-    //         onRowDoubleClick={e => toggleEditVisible(e)}
-    //         onSortColumnsChange={setSortColumns}
-    //         columns={columns}
-    //         rows={players}
-    //     />
-    // );
-
     return (
         <>
             <Head>
@@ -238,15 +217,6 @@ const Players = () => {
                 </div>
                 {/* {gridElement} */}
                 {players && (
-                    // <DataGrid className='rdg-light h-full'
-                    //     defaultColumnOptions={{
-                    //         sortable: false,
-                    //         resizable: true
-                    //     }}
-                    //     onRowDoubleClick={e => openEditDialog(e)}
-                    //     columns={defaultColumns}
-                    //     rows={players}
-                    // />
                     <AgGridReact<Player>
                         ref={gridRef}
                         context={{ refetch }}
