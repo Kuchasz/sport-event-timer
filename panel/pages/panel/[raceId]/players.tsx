@@ -5,7 +5,7 @@ import { Confirmation } from "../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
-import { mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../../components/modal";
 import { PlayerCreate } from "../../../components/player-create";
@@ -25,7 +25,15 @@ type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
 type EditedPlayer = AppRouterInputs["player"]["add"]["player"];
 
 const defaultColumns: ColDef<Player>[] = [
-    { field: "index", width: 25, headerName: "Index", headerClass: "hidden", valueGetter: "node.rowIndex + 1", sortable: false, filter: false },
+    {
+        field: "index",
+        width: 25,
+        headerName: "Index",
+        headerClass: "hidden",
+        valueGetter: "node.rowIndex + 1",
+        sortable: false,
+        filter: false,
+    },
     {
         field: "classificationId",
         headerName: "Classification Id",
@@ -180,6 +188,18 @@ const Players = () => {
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                    </Button>
+                    <div className="px-1"></div>
+                    <Button
+                        className="ml-2"
+                        onClick={() => {
+                            gridRef.current?.api.exportDataAsCsv({
+                                fileName: `player-registrations-${new Date().toLocaleDateString()}.csv`,
+                            });
+                        }}
+                    >
+                        <Icon size={1} path={mdiExport} />
+                        <span className="ml-2">export</span>
                     </Button>
                     <div className="px-1"></div>
                     <PoorColumnChooser
