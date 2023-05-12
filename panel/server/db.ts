@@ -10,11 +10,11 @@ export const stopwatchStateProvider = {
         .stopwatch
         .findUnique({ where: { raceId }, select: { state: true } })
         .then(result => result?.state ? JSON.parse(result.state) as Partial<TimerState> : defaultState as Partial<TimerState>),
-    save: (raceId: number, state: TimerState) => db
+    save: (raceId: number, state?: TimerState) => db
         .stopwatch
-        .upsert({ 
-            create: { raceId, state: JSON.stringify(state) },
-            update: { state: JSON.stringify(state) },
+        .upsert({
+            create: { raceId, state: state ? JSON.stringify(state) : JSON.stringify(defaultState) },
+            update: { state: state ? JSON.stringify(state) : JSON.stringify(defaultState) },
             where: { raceId }
         })
 };

@@ -60,6 +60,13 @@ export const actionRouter =
                         clients = clients.filter(c => c.clientId !== clientId);
                     };
                 });
+            }),
+        wipe: protectedProcedure
+            .input(z.object({  raceId: z.number() }))
+            .mutation(async ({input}) => {
+                const { raceId } = input;
+                await stopwatchStateProvider.save(raceId, undefined);
+                return "success";
             })
     });
 
