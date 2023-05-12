@@ -12,8 +12,6 @@ import { useCallback, useRef } from "react";
 import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { Confirmation } from "components/confirmation";
 import { AgGridReact } from "@ag-grid-community/react";
-import { getGridColumnStateAtom } from "states/grid-states";
-import { useAtom } from "jotai";
 import { ColDef } from "@ag-grid-community/core";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
