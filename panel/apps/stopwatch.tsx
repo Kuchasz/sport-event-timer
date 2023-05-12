@@ -14,6 +14,7 @@ import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom } from "states/s
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { mdiCloudOffOutline, mdiCogOutline } from "@mdi/js";
+import { useSession } from "next-auth/react";
 
 const clientId = uuidv4();
 
@@ -47,13 +48,14 @@ const store = createStore([addIssuerMiddleware, postActionsMiddleware], {});
 
 const ExternalsExposer = () => {
     const [timeOffset] = useAtom(timeOffsetAtom);
+    const { data: sessionData } = useSession();
 
     const {
         query: { raceId },
     } = useRouter();
     const trpcHack = trpc.useContext().client;
 
-    externals = { timeOffset, raceId: parseInt(raceId as string), trpc: trpcHack };
+    externals = { timeOffset, user: sessionData?.user?.name!,raceId: parseInt(raceId as string), trpc: trpcHack };
 
     return <></>;
 };
