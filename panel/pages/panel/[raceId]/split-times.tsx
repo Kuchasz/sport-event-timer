@@ -11,8 +11,6 @@ import { useCurrentRaceId } from "../../../hooks";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
-import { getGridColumnStateAtom } from "states/grid-states";
-import { useAtom } from "jotai";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
