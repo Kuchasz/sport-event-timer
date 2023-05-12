@@ -63,7 +63,7 @@ export const resultRouter = router({
                         .find(c => r.classificationId === c.id)!
                         .categories
                         .filter(c => !!c.minAge && !!c.maxAge)
-                        .find(c => c.minAge! <= r.age && c.maxAge! >= r.age),
+                        .find(c => c.minAge! <= r.age && c.maxAge! >= r.age && (!c.gender || (c.gender === r.gender))),
                 openCategory:
                     classifications
                         .find(c => r.classificationId === c.id)!
@@ -77,8 +77,8 @@ export const resultRouter = router({
 
             return sort(resultsWithCategories, r => r.result).map(r => ({
                 ...r, 
-                ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) : undefined,
-                openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) : undefined
+                ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) + 1 : undefined,
+                openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) + 1 : undefined
             }));
         })
 });
