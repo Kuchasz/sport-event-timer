@@ -21,7 +21,7 @@ export const timeStringToMiliseconds = (timeString: string) => {
     return minuteMillis * Number(minutes) + hourMillis * Number(hour);
 };
 
-export const fullTimeStringToMiliseconds = (timeString: string) => {
+export const fullTimeStringToEpochMiliseconds = (timeString: string, date: number) => {
     if (!/\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}/gm.test(timeString)) {
         alert("Passed value does not match pattern HH:MM:SS.Ms");
         return undefined;
@@ -31,6 +31,8 @@ export const fullTimeStringToMiliseconds = (timeString: string) => {
     const [seconds, miliseconds] = sec_ms.split(".");
 
     return (
+        date +
+        new Date().getTimezoneOffset() * minuteMillis +
         Number(miliseconds.padEnd(3, "0")) +
         secondMillis * Number(seconds) +
         minuteMillis * Number(minutes) +
