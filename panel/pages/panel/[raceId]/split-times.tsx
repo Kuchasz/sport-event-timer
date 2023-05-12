@@ -106,7 +106,7 @@ const SplitTimes = () => {
             .map(tp => ({
                 field: tp.name,
                 headerName: tp.name,
-                resizable: true, 
+                resizable: true,
                 cellRenderer: (p: { data: SplitTime }) => (
                     <SplitTimeResult
                         openEditDialog={openEditDialog}

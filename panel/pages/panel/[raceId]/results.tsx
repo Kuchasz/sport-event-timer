@@ -42,7 +42,7 @@ const defaultColumns: ColDef<Result>[] = [
         headerName: "Result",
         sort: 'asc',
         sortable: true,
-        cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSecUTC(p.data.result)}</span>,
+        cellRenderer: (p: { data: Result }) => <span className="flex flex-col items-end font-mono">{formatTimeWithMilliSecUTC(p.data.result)}</span>,
     },
 ];
 
