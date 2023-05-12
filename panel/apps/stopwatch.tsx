@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { BottomMenu } from "../components/stopwatch/bottom-menu";
 import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
@@ -78,7 +78,7 @@ const StopwatchApp = ({ Component, pageProps }: StopwatchAppProps) => {
             <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
                 <Head>
                     <title>Stopwatch</title>
-                    <link key="manifest" rel="manifest" href="/favicon/stopwatch.webmanifest" />
+                    <link key="manifest" rel="manifest" href={`/api/manifest/${raceId}/stopwatch`} />
                 </Head>
                 <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
                     <Status />

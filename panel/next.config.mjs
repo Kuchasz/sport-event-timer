@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 
+import withPWAModule from 'next-pwa';
+
+const withPWA = withPWAModule({
+    dest: 'public',
+});
+
 /**
  * Don't be scared of the generics here.
  * All they do is to give us autocompletion when using this.
@@ -12,7 +18,7 @@ function defineNextConfig(config) {
     return config;
 }
 
-export default defineNextConfig({
+export default withPWA(defineNextConfig({
     // reactStrictMode: true,
     // swcMinify: true,
     // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
@@ -25,4 +31,4 @@ export default defineNextConfig({
     //     runtime: 'nodejs',
     //     appDir: true
     // }
-});
+}));
