@@ -50,17 +50,19 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: Player
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
     const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+    const allAbsences = useTimerSelector((x) => x.absences);
 
     const playersWithTimeStamps = allPlayers!.map((x) => ({
         ...x,
         timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+        absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
     }));
 
-    const playersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined);
-    const playersNumbersWithoutTimeStamps = playersWithoutTimeStamps.map((x) => x.bibNumber);
+    const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined && x.absent === undefined);
+    const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map((x) => x.bibNumber);
 
     const availableNumbers = getAvailableNumbers(playerNumber, playersNumbersWithoutTimeStamps);
-    const availablePlayers = playersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.bibNumber));
+    const availablePlayers = nonAbsentPlayersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.bibNumber));
 
     return (
         <div className="flex h-full flex-col">

@@ -1,47 +1,45 @@
-import { mdiAlarmCheck, mdiAlarmOff, mdiWrenchOutline } from "@mdi/js";
-import { getCurrentTime } from "@set/utils/dist/datetime";
+import { mdiAccount, mdiAccountOff } from "@mdi/js";
 import { sort } from "@set/utils/dist/array";
-import { add, reset } from "@set/timer/dist/slices/time-stamps";
-import { PrimaryActionButton, ActionButton } from "components/stopwatch/action-button";
+import { add as addAbsence, reset as resetAbsence } from "@set/timer/dist/slices/absences";
+import { ActionButton } from "components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-timestamp-display";
 import { useTimerDispatch, useTimerSelector } from "hooks";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
+import { timingPointIdAtom } from "states/stopwatch-states";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import { trpc } from "connection";
 
 const PlayersList = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
-    const [offset] = useAtom(timeOffsetAtom);
 
     const {
         query: { raceId },
     } = useRouter();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId as string) });
 
-    const onReset = (id: number) => dispatch(reset({ id }));
-    const onRecord = (bibNumber: number) =>
+    const onResetAbsence = (id: number) => dispatch(resetAbsence({ id }));
+    const onRecordAbsence = (bibNumber: number) =>
         dispatch(
-            add({
+            addAbsence({
                 bibNumber,
                 timingPointId: timingPointId!,
-                time: getCurrentTime(offset!, race!.date),
             })
         );
     const { push } = useRouter();
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allAbsences = useTimerSelector(x => x.absences);
 
     const players = sort(
         allPlayers!.map(x => ({
             ...x,
             timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
-            onReset,
-            onRecord,
+            absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            onReset: onResetAbsence,
+            onRecord: onRecordAbsence,
             push,
         })),
         p => p.startTime || Number.MAX_VALUE
@@ -79,19 +77,33 @@ const PlayersList = () => {
                                 padBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}
                             />
-                            {players[virtualRow.index].timeStamp && (
+                            {!players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
                                 <ActionButton
-                                    icon={mdiWrenchOutline}
+                                    icon={mdiAccount}
                                     onClick={() => {
-                                        push(`/stopwatch/${raceId}/tweak/${players[virtualRow.index].timeStamp?.id}`);
+                                        onRecordAbsence(players[virtualRow.index].bibNumber);
                                     }}
                                 />
                             )}
-                            {players[virtualRow.index].timeStamp ? (
-                                <PrimaryActionButton icon={mdiAlarmOff} onClick={() => onReset(players[virtualRow.index].timeStamp!.id)} />
-                            ) : (
-                                <PrimaryActionButton icon={mdiAlarmCheck} onClick={() => onRecord(players[virtualRow.index].bibNumber)} />
+                            {!players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
+                                <ActionButton
+                                    icon={mdiAccountOff}
+                                    onClick={() => {
+                                        onResetAbsence(players[virtualRow.index].absent!.id);
+                                    }}
+                                />
                             )}
+                            {/* {players[virtualRow.index].timeStamp ? (
+                                <PrimaryActionButton
+                                    icon={mdiAlarmOff}
+                                    onClick={() => onResetTimeStamp(players[virtualRow.index].timeStamp!.id)}
+                                />
+                            ) : (
+                                <PrimaryActionButton
+                                    icon={mdiAlarmCheck}
+                                    onClick={() => onRecordTimeStamp(players[virtualRow.index].bibNumber)}
+                                />
+                            )} */}
                         </div>
                     </div>
                 ))}
