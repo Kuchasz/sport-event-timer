@@ -2,7 +2,16 @@ const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
 const hourMillis = minuteMillis * 60;
 
-export const getCurrentTime = (offset: number) => Date.now() + offset;
+export const getCurrentTime = (offset: number, date: Date) => {
+    const utcMillis = Date.now() + offset;
+    const newDate = new Date(utcMillis);
+    
+    newDate.setFullYear(date.getFullYear());
+    newDate.setMonth(date.getMonth());
+    newDate.setDate(date.getDate());
+
+    return newDate.getTime();
+}
 export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision });
 
@@ -54,6 +63,23 @@ export const formatTimeWithMilliSecUTC = (time?: number) => {
         dateTime.getSeconds()
     )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
 };
+
+export const formatGap = (totalMilliseconds?: number) => {
+    if(!totalMilliseconds) return "";
+
+    const hours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
+    const minutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((totalMilliseconds % (1000 * 60)) / 1000);
+    const milliseconds = totalMilliseconds % 1000;
+    
+    if(hours > 0)
+    return `+${hours}:${minutes.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}.${milliseconds.toString().padStart(3, '0')}`;
+    if(minutes > 0)
+    return `+${minutes.toString()}:${seconds.toString().padStart(2,'0')}.${milliseconds.toString().padStart(3, '0')}`;
+    if(seconds >= 0)
+    return `+${seconds.toString()}.${milliseconds.toString().padStart(3, '0')}`;
+};
+
 
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 

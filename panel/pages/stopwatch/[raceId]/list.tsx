@@ -21,6 +21,7 @@ const PlayersList = () => {
     } = useRouter();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId as string) });
 
     const onReset = (id: number) => dispatch(reset({ id }));
     const onRecord = (bibNumber: number) =>
@@ -28,22 +29,22 @@ const PlayersList = () => {
             add({
                 bibNumber,
                 timingPointId: timingPointId!,
-                time: getCurrentTime(offset!),
+                time: getCurrentTime(offset!, race!.date),
             })
         );
     const { push } = useRouter();
 
-    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
+    const allTimeStamps = useTimerSelector(x => x.timeStamps);
 
     const players = sort(
-        allPlayers!.map((x) => ({
+        allPlayers!.map(x => ({
             ...x,
-            timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             onReset,
             onRecord,
             push,
         })),
-        (p) => p.startTime || Number.MAX_VALUE
+        p => p.startTime || Number.MAX_VALUE
     );
 
     const dispatch = useTimerDispatch();
@@ -67,14 +68,17 @@ const PlayersList = () => {
                     position: "relative",
                 }}
             >
-                {rowVirtualizer.getVirtualItems().map((virtualRow) => (
+                {rowVirtualizer.getVirtualItems().map(virtualRow => (
                     <div
                         key={players[virtualRow.index].bibNumber}
                         className="absolute w-full t-0 left-0 py-0.5"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
                         <div className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white">
-                            <PlayerWithTimeStampDisplay padBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={players[virtualRow.index]} />
+                            <PlayerWithTimeStampDisplay
+                                padBibNumber={highestBibNumber.toString().length}
+                                playerWithTimeStamp={players[virtualRow.index]}
+                            />
                             {players[virtualRow.index].timeStamp && (
                                 <ActionButton
                                     icon={mdiWrenchOutline}
