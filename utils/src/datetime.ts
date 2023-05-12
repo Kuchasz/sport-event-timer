@@ -26,10 +26,7 @@ export const getCountdownTime = (time: number) => {
 export const timeOnlyFormatTimeNoSec = (time?: number) => {
     if (!time) return "--:--";
     
-    const timeStampAsDate = new Date(time);
-    const offset = timeStampAsDate.getTimezoneOffset();
-
-    const dateTime = new Date(time + offset * 60_000);
+    const dateTime = new Date(time);
 
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}`;
 };

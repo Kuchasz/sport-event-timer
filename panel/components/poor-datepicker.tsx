@@ -28,3 +28,37 @@ export const PoorDatepicker = ({
         />
     );
 };
+
+const toDateStringUTC = (date: Date) => date.toLocaleDateString("en-CA");
+const toDateUTC = (dateString: string) => {
+    const date = new Date(dateString);
+    const dateOffset = date.getTimezoneOffset();
+    const finalDate = new Date(date.getTime() + dateOffset * 60_000);
+    return finalDate;
+};
+
+export const PoorUTCDatepicker = ({
+    value: initialValue,
+    onChange,
+    placeholder,
+}: {
+    value?: Date;
+    onChange: (event: { target: { value: Date } }) => void;
+    placeholder?: string;
+}) => {
+    const value = initialValue ? toDateStringUTC(initialValue) : undefined;
+
+    return (
+        <Input
+            placeholder={placeholder}
+            defaultValue={value}
+            onChange={e => {
+                onChange({ target: { value: toDateUTC(e.currentTarget.value) ?? new Date() } });
+            }}
+            onBlur={e => {
+                onChange({ target: { value: toDateUTC(e.target.value) ?? new Date() } });
+            }}
+            type="date"
+        />
+    );
+};

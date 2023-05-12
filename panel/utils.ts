@@ -32,7 +32,6 @@ export const fullTimeStringToEpochMiliseconds = (timeString: string, date: numbe
 
     return (
         date +
-        new Date().getTimezoneOffset() * minuteMillis +
         Number(miliseconds.padEnd(3, "0")) +
         secondMillis * Number(seconds) +
         minuteMillis * Number(minutes) +

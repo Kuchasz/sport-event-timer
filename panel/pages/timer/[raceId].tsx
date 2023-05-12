@@ -165,12 +165,16 @@ const Timer = () => {
         const tickSecondsToPlayer = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
             const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds(); // - clockStartTimeMiliseconds + 1_000;
+            const miliseconds = globalDateTime.getMilliseconds();// - clockStartTimeMiliseconds + 1_000;
 
             if (miliseconds <= clockTimeout) {
+                // console.log(offset * 60_000);
                 const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
+                
 
                 const nextPlayer = nextPlayers[0];
+
+                // console.log(new Date(globalTime), new Date(nextPlayer.absoluteStartTime));
 
                 //it will re-render that react tree each second, too often
                 // setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
