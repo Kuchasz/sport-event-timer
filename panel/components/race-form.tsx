@@ -2,7 +2,7 @@ import Icon from "@mdi/react";
 import { Button } from "./button";
 import { Label } from "./label";
 import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
-import { PoorDatepicker } from "./poor-datepicker";
+import { PoorUTCDatepicker } from "./poor-datepicker";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
@@ -34,7 +34,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                 <div className="p-2"></div>
                 <div className="grow">
                     <Label>Date</Label>
-                    <PoorDatepicker value={race.date} onChange={changeHandler("date")} />
+                    <PoorUTCDatepicker value={race.date} onChange={changeHandler("date")} />
                 </div>
             </div>
             <div className="p-2"></div>
