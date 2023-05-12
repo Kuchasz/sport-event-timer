@@ -31,13 +31,13 @@ const defaultColumns: ColDef<BibNumber>[] = [
         field: "actions",
         width: 15,
         headerName: "Actions",
-        cellRenderer: (props: { data: BibNumber }) => <BibNumberDeleteButton bibNumber={props.data} />,
+        cellRenderer: (props: { context: any; data: BibNumber }) => (
+            <BibNumberDeleteButton refetch={props.context.refetch} bibNumber={props.data} />
+        ),
     },
 ];
 
-const BibNumberDeleteButton = ({ bibNumber }: { bibNumber: BibNumber }) => {
-    const raceId = useCurrentRaceId();
-    const { refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId! });
+const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
     const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
     const deletebibNumber = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
