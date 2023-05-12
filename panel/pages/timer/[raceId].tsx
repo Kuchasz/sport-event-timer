@@ -6,7 +6,7 @@ import { Clock } from "../../components/timer/clock";
 import { ConfigMenu } from "../../components/timer/config-menu";
 import { Countdown } from "components/timer/countdown";
 import { sort } from "@set/utils/dist/array";
-import { formatTimeNoSec, getCountdownTime } from "@set/utils/dist/datetime";
+import { timeOnlyFormatTimeNoSec, getCountdownTime } from "@set/utils/dist/datetime";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -50,7 +50,7 @@ const NextPlayer = ({
     return (
         <span className={classNames("flex items-center mx-1", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
             <Icon className={classNames("visible", { ["invisible"]: !isNext })} size="2em" path={mdiChevronDoubleRight} />
-            {showTime && <span className="font-mono font-bold">{formatTimeNoSec(player.absoluteStartTime)}</span>}
+            {showTime && <span className="font-mono font-bold">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
             <div className="p-1 font-mono" dangerouslySetInnerHTML={{ __html: bibText }}></div>
             {player.name} {player.lastName}
         </span>
