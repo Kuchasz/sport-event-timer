@@ -72,8 +72,8 @@ const Result = () => {
                                                 <td className="px-4 py-2 text-center text-xs">
                                                     {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                 </td>
-                                                <td className="px-4 font-semibold py-2 text-xs">{formatTimeWithMilliSecUTC(s.result)}</td>
-                                                <td className="px-4 font-semibold py-2 text-xs">{formatGap(s.gap)}</td>
+                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">{formatTimeWithMilliSecUTC(s.result)}</td>
+                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">{formatGap(s.gap)}</td>
                                             </tr>
                                         ))}
                                 </tbody>
