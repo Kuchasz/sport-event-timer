@@ -1,5 +1,5 @@
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { fullTimeStringToMiliseconds, timeStringToMiliseconds } from "utils";
+import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "utils";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime"
 import { Input } from "./input";
 import { useState } from "react";
@@ -28,7 +28,8 @@ export const PoorTimepicker = ({
 
 export const PoorFullTimepicker = ({
     value: initialValue,
-    onChange
+    onChange,
+    date
 }: {
     value?: number;
     date: number;
@@ -42,7 +43,7 @@ export const PoorFullTimepicker = ({
                 setValue(e.currentTarget.value);
             }}
             onBlur={e => {
-                onChange({ target: { value: (fullTimeStringToMiliseconds(e.target.value) ?? 0) } });
+                onChange({ target: { value: (fullTimeStringToEpochMiliseconds(e.target.value, date) ?? 0) } });
             }}
         />
     );
