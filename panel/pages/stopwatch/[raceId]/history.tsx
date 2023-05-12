@@ -10,7 +10,7 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
                 <div>{formatTime(new Date(historicAction.issuedAt))}</div>
                 <div>{historicAction.issuer}</div>
             </div>
-            <div>{historicAction.action.type.split('/')[1]}</div>
+            <div>{historicAction.action.type.replaceAll("/", ".")}</div>
         </div>
     );
 };
