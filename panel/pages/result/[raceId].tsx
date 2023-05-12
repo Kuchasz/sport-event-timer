@@ -1,5 +1,5 @@
 import { Gender } from "@set/timer/dist/model";
-import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
+import { formatGap, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { trpc } from "connection";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -23,7 +23,8 @@ const Result = () => {
             <Head>
                 <title>Results</title>
             </Head>
-            <div className="flex my-8 flex-col items-center">
+           <div className="flex flex-col items-center">
+           <div className="max-w-[800px] flex my-8 px-4 flex-col">
                 <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
                 <h3>{race?.date?.toLocaleDateString()}</h3>
                 <div className="mt-2">
@@ -31,6 +32,7 @@ const Result = () => {
                     <span className="ml-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString("pl")}</span>
                 </div>
             </div>
+           </div>
             <div className="flex justify-center mx-auto">
                 <div className="flex flex-col">
                     <div className="w-full">
@@ -49,6 +51,7 @@ const Result = () => {
                                         ))}
                                         <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>
                                         <th className="px-4 py-2 text-xs text-gray-500">Result</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">Gap</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
@@ -56,7 +59,7 @@ const Result = () => {
                                         results.map((s, i) => (
                                             <tr key={i} className="whitespace-nowrap">
                                                 <td className="px-4 py-2 text-center text-xs">{i + 1}</td>
-                                                <td className="px-4 py-2 text-center text-xs">{s.bibNumber}</td>
+                                                <td className="px-4 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
                                                 <td className="px-4 font-semibold py-2 text-xs">
                                                     {s.name} {s.lastName}
                                                 </td>
@@ -70,6 +73,7 @@ const Result = () => {
                                                     {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                 </td>
                                                 <td className="px-4 font-semibold py-2 text-xs">{formatTimeWithMilliSecUTC(s.result)}</td>
+                                                <td className="px-4 font-semibold py-2 text-xs">{formatGap(s.gap)}</td>
                                             </tr>
                                         ))}
                                 </tbody>

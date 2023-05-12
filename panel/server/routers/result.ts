@@ -75,11 +75,15 @@ export const resultRouter = router({
             const playersByAgeCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.ageCategory), r => r.ageCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
             const playersByOpenCategories = Object.fromEntries(Object.entries(groupBy(resultsWithCategories.filter(r => !!r.openCategory), r => r.openCategory!.id!.toString())).map(([catId, results]) => [catId, sort(results, r => r.result)]));
 
-            return sort(resultsWithCategories, r => r.result).map(r => ({
-                ...r, 
+            const sorted = sort(resultsWithCategories, r => r.result).map(r => ({
+                ...r,
                 ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) + 1 : undefined,
                 openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) + 1 : undefined
             }));
+
+            const winningResult = sorted[0]?.result;
+
+            return sorted.map(s => ({ ...s, gap: (winningResult && s.result) ? s.result - winningResult : undefined }));
         })
 });
 
