@@ -53,6 +53,8 @@ export const resultRouter = router({
                 .map(t => ({
                     ...t,
                     invalidState: t.absences[startTimingPoint.id] ? "dns" : t.absences[endTimingPoint.id] ? 'dnf' : undefined,
+                    start: undefined,
+                    finish: undefined,
                     result: Number.MAX_VALUE,
                     ageCategory: undefined,
                     openCategory: undefined

@@ -75,7 +75,7 @@ const Result = () => {
                                                         {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                     </td>
                                                 )}
-                                                <td className="px-4 font-semibold text-right font-mono py-2 text-xs">
+                                                <td className="px-4 font-semibold uppercase text-right font-mono py-2 text-xs">
                                                     {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
                                                 </td>
                                                 <td className="px-4 text-right font-mono py-2 text-xs">
