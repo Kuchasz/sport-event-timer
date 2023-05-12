@@ -91,6 +91,7 @@ const PlayersList = () => {
                                     onClick={() => {
                                         onResetAbsence(players[virtualRow.index].absent!.id);
                                     }}
+                                    alert={true}
                                 />
                             )}
                             {/* {players[virtualRow.index].timeStamp ? (
