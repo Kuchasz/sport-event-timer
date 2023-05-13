@@ -50,7 +50,7 @@ const Result = () => {
                                                 {c}
                                             </th>
                                         ))}
-                                        {ageCategoriesExist && <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>}
+                                        <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>
                                         <th className="px-4 py-2 text-xs text-gray-500">Result</th>
                                         <th className="px-4 py-2 text-xs text-gray-500">Gap</th>
                                     </tr>
@@ -70,11 +70,11 @@ const Result = () => {
                                                         {s.openCategory?.name === c && s.openCategoryPlace}
                                                     </td>
                                                 ))}
-                                                {ageCategoriesExist && (
+                                                
                                                     <td className="px-4 py-2 text-center text-xs">
                                                         {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                     </td>
-                                                )}
+                                               
                                                 <td className="px-4 font-semibold uppercase text-right font-mono py-2 text-xs">
                                                     {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
                                                 </td>
