@@ -1,14 +1,14 @@
-import { formatTimeWithSec } from "@set/utils/dist/datetime";
+import { formatTimeWithMilliSec, formatTimeWithSec } from "@set/utils/dist/datetime";
 
-const Time = ({ time, fontSize }: { time: number; fontSize: number }) => (
+const Time = ({ time, fontSize, full = false }: { time: number; fontSize: number, full?: boolean }) => (
     <div
         style={{ fontSize: `${fontSize}rem` }}
         className="leading-none p-2 self-center font-mono text-white text-center transition-all"
     >
-        {formatTimeWithSec(time)}
+        {full ? formatTimeWithMilliSec(time) : formatTimeWithSec(time)}
     </div>
 );
 
-export const Clock = ({ time, fontSize }: { time: number; fontSize: number }) => {
-    return <Time time={time} fontSize={fontSize} />;
+export const Clock = ({ time, fontSize, full = false }: { time: number; fontSize: number, full?: boolean }) => {
+    return <Time time={time} fontSize={fontSize} full={full}/>;
 };
