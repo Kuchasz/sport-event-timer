@@ -3,7 +3,6 @@ import { sort } from "@set/utils/dist/array";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { allowedLatency, trpc } from "connection";
-import { Clock } from "components/timer/clock";
 import { splitTime } from "@set/utils/dist/datetime";
 import classNames from "classnames";
 
