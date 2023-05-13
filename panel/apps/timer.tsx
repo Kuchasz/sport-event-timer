@@ -13,7 +13,7 @@ export const TimerApp = ({ Component, pageProps }: TimerAppProps) => {
         <>
             <Head>
                 <title>Timer</title>
-                <link key="manifest" rel="manifest" href={`/api/manifest/${raceId}/timer`} />
+                {raceId && <link key="manifest" rel="manifest" href={`/api/manifest/${raceId}/timer`} />}
             </Head>
             <Component {...pageProps} />
         </>
