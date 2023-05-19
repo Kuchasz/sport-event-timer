@@ -13,22 +13,21 @@ import { playerRegistrationSchema } from "../../models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 
 const initialRegistration = () => ({
     name: "",
     lastName: "",
-    birthDate: new Date(),
+    birthDate: dateFromYearsAgo(18),
     gender: "male" as Gender,
     team: "",
     country: "",
     city: "",
     email: "",
-    phoneNumber: ""
+    phoneNumber: "",
 });
 
 // interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const initialValues = {};
 
 const RegistrationFormComponent = ({
     disabled,
@@ -42,11 +41,11 @@ const RegistrationFormComponent = ({
     teams: string[];
 }) => {
     // const [registration, changeHandler] = useFormState(initialRegistration(), []);
-    const [registration] = useFormState(initialRegistration(), []);
+    // const [registration] = useFormState(initialRegistration(), []);
 
     return (
         <div className="space-y-4 md:space-y-6">
-            <Form onSubmit={console.log} initialValues={initialValues} validationSchema={playerRegistrationSchema}>
+            <Form onSubmit={r => onResolve(r)} initialValues={initialRegistration()} validationSchema={playerRegistrationSchema}>
                 <FormInput
                     label="First Name"
                     render={({ value, onChange }) => (
@@ -164,32 +163,35 @@ const RegistrationFormComponent = ({
                     )}
                     name="icePhoneNumber"
                 />
-            </Form>
-
-            <div className={classNames("space-y-4 md:space-y-6", { ["opacity-50"]: disabled })}>
-                <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                        <input
-                            id="terms"
-                            aria-describedby="terms"
-                            type="checkbox"
-                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-orange-300"
-                            required
-                        />
-                    </div>
-                    <div className="ml-3 text-sm">
-                        <label htmlFor="terms" className="font-light text-gray-500">
-                            I agree with the <span className="font-medium text-orange-600 hover:underline">Terms and conditions</span>
-                            {/* <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
-                                Terms and conditions
-                            </a> */}
-                        </label>
+                <div className={classNames("my-4 md:my-6", { ["opacity-50"]: disabled })}>
+                    <div className="flex items-start">
+                        <div className="flex items-center h-5">
+                            <input
+                                id="terms"
+                                aria-describedby="terms"
+                                type="checkbox"
+                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-orange-300"
+                                required
+                            />
+                        </div>
+                        <div className="ml-3 text-sm">
+                            <label htmlFor="terms" className="font-light text-gray-500">
+                                I agree with the <span className="font-medium text-orange-600 hover:underline">Terms and conditions</span>
+                                {/* <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
+                                    Terms and conditions
+                                </a> */}
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <Button onClick={() => onResolve(registration)}>
+                <Button type="submit">
+                    {registrationStatus === "progress" ? "Registration pending" : "Register"}
+                </Button>
+            </Form>
+
+            {/* <Button onClick={() => onResolve(undefinedregistration)}>
                 {registrationStatus === "progress" ? "Registration pending" : "Register"}
-            </Button>
+            </Button> */}
             {/* <button
                 type="submit"
                 className="flex justify-center w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -241,10 +243,7 @@ const Rejestracja = () => {
         { enabled: !!raceId }
     );
 
-    const { data: teams } = trpc.playerRegistration.teams.useQuery(
-        { raceId: Number(raceId) },
-        { enabled: !!raceId, initialData: [] }
-    );
+    const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
 
     const registerMutation = trpc.playerRegistration.register.useMutation();
 
