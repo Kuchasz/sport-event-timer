@@ -32,3 +32,4 @@ jobs:
                     npx prisma migrate deploy
                     chmod -R 777 server/prisma
                     pm2 start npm --name app.rura.cc -- start
+                    pm2 restart app.rura.cc
