@@ -1,4 +1,3 @@
-// import DataGrid, { Column } from "react-data-grid";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { AgGridReact } from "@ag-grid-community/react";
