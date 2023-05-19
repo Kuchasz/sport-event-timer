@@ -1,28 +1,33 @@
-import DataGrid, { Column } from "react-data-grid";
+import { ColDef } from "@ag-grid-community/core";
+import { AgGridReact } from "@ag-grid-community/react";
+import { useCallback, useRef } from "react";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../connection";
 
 type Account = AppRouterOutputs["account"]["accounts"][0];
 
-const Accounts = () => {
-    const { data: accounts } = trpc.account.accounts.useQuery();
+const defaultColumns: ColDef<Account>[] = [{ field: "email", headerName: "Email", sortable: true, filter: true }];
 
-    const columns: Column<Account, unknown>[] = [{ key: "email", name: "Email" }];
+const Accounts = () => {
+    const { data: accounts } = trpc.account.accounts.useQuery(undefined, { initialData: [] });
+    const gridRef = useRef<AgGridReact<Account>>(null);
+
+    const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.api.sizeColumnsToFit();
+    }, []);
 
     return (
         <>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                {accounts && (
-                    <DataGrid
-                        className="rdg-light h-full"
-                        defaultColumnOptions={{
-                            sortable: false,
-                            resizable: true,
-                        }}
-                        columns={columns}
-                        rows={accounts}
-                    />
-                )}
+            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+                <AgGridReact<Account>
+                    ref={gridRef}
+                    suppressCellFocus={true}
+                    suppressAnimationFrame={true}
+                    columnDefs={defaultColumns}
+                    rowData={accounts}
+                    onFirstDataRendered={onFirstDataRendered}
+                    onGridSizeChanged={onFirstDataRendered}
+                ></AgGridReact>
             </div>
         </>
     );
