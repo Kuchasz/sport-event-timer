@@ -6,7 +6,6 @@ import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
 import type { Session } from "next-auth";
-import "react-data-grid/lib/styles.css";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional theme CSS
 import { ResultApp } from "apps/result";
