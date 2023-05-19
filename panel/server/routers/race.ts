@@ -23,8 +23,22 @@ export const raceRouter =
             }),
         raport: protectedProcedure
             .query(async ({ ctx }) => {
-                const numberOfRaces = await ctx.db.race.count();
-                return { numberOfRaces };
+                const totalRaces = await ctx.db.race.count();
+                const pastRaces = await ctx.db.race.count({ where: { date: { lte: new Date() } } });
+                const futureRaces = await ctx.db.race.count({ where: { date: { gte: new Date() } } });
+                const nextRace = await ctx.db.race.findFirst({ where: { date: { gte: new Date() } }, orderBy: { date: 'asc' }, include: { playerRegistration: true, player: true } });
+                return { 
+                    totalRaces, 
+                    pastRaces, 
+                    futureRaces, 
+                    nextRace: { 
+                        name: nextRace?.name, 
+                        registeredPlayers: nextRace?.playerRegistration.length, 
+                        players: nextRace?.player.length, 
+                        playersLimit: nextRace?.playersLimit, 
+                        date: nextRace?.date, 
+                        registrationEnabled: nextRace?.registrationEnabled} 
+                    };
             }),
         myRaces: protectedProcedure
             .query(async ({ ctx }) => {
