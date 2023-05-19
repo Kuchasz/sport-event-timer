@@ -103,3 +103,9 @@ export const daysFromNow = (days: number) => new Date(new Date().getTime() + day
 
 export const calculateAge = (birthDate: Date): number =>
     new Date().getFullYear() - birthDate.getFullYear();
+
+export const dateFromYearsAgo = (years: number) => {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth(), currentDate.getDate());
+    return newDate;
+}

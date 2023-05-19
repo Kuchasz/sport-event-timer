@@ -5,9 +5,9 @@ import { ZodObject, ZodType } from "zod";
 type FormValues = { [k: string]: string | number | Date };
 type FormErrors = { [k: string]: string[] | undefined };
 
-type FormStateProps = {
-    initialValues: FormValues;
-    onSubmit: (values: FormValues) => void;
+type FormStateProps<TItem extends FormValues> = {
+    initialValues: TItem;
+    onSubmit: (values: TItem) => void;
     validationSchema: ZodObject<Record<string, ZodType<any, any>>>;
 };
 
@@ -23,8 +23,8 @@ const FormContext = createContext<FormContextType>({
     handleChange: () => {},
 });
 
-const useForm = ({ initialValues, onSubmit, validationSchema }: FormStateProps) => {
-    const [formValues, setFormValues] = React.useState<FormValues>(initialValues);
+const useForm = <TItem extends FormValues>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
+    const [formValues, setFormValues] = React.useState<TItem>(initialValues);
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,7 +75,12 @@ export const FormInput = ({ label, name, render }: FormInputProps) => {
     );
 };
 
-export function Form({ children, initialValues, onSubmit, validationSchema }: { children: ReactNode } & FormStateProps) {
+export function Form<TItem extends FormValues>({
+    children,
+    initialValues,
+    onSubmit,
+    validationSchema,
+}: { children: ReactNode } & FormStateProps<TItem>) {
     const { formValues, formErrors, handleSubmit, handleChange } = useForm({ initialValues, onSubmit, validationSchema });
 
     return (
