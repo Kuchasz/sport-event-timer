@@ -8,7 +8,6 @@ import { PoorSelect } from "components/poor-select";
 import { trpc } from "connection";
 import { countryCodes } from "contry-codes";
 import { Form, FormInput } from "form";
-import { useFormState } from "hooks";
 import { playerRegistrationSchema } from "../../models";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -27,8 +26,6 @@ const initialRegistration = () => ({
     phoneNumber: "",
 });
 
-// interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-
 const RegistrationFormComponent = ({
     disabled,
     registrationStatus,
@@ -40,8 +37,6 @@ const RegistrationFormComponent = ({
     onResolve: (registration: ReturnType<typeof initialRegistration>) => void;
     teams: string[];
 }) => {
-    // const [registration, changeHandler] = useFormState(initialRegistration(), []);
-    // const [registration] = useFormState(initialRegistration(), []);
 
     return (
         <div className="space-y-4 md:space-y-6">
@@ -188,23 +183,6 @@ const RegistrationFormComponent = ({
                     {registrationStatus === "progress" ? "Registration pending" : "Register"}
                 </Button>
             </Form>
-
-            {/* <Button onClick={() => onResolve(undefinedregistration)}>
-                {registrationStatus === "progress" ? "Registration pending" : "Register"}
-            </Button> */}
-            {/* <button
-                type="submit"
-                className="flex justify-center w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                disabled={disabled}
-            >
-                {registrationStatus === "progress" ? (
-                    <>
-                        <span>Registration pending</span>
-                    </>
-                ) : (
-                    <span>Register</span>
-                )}
-            </button> */}
         </div>
     );
 };
