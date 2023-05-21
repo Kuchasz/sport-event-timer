@@ -18,7 +18,7 @@ type CreatedRace = AppRouterInputs["race"]["add"];
 type EditedRace = AppRouterInputs["race"]["update"];
 
 const defaultColumns: ColDef<Race>[] = [
-    { field: "id", headerName: "Id", sortable: true },
+    { field: "index", width: 25, headerName: "", headerClass: "hidden", valueGetter: "node.rowIndex + 1", sortable: false, filter: false },
     { field: "name", headerName: "Name", sortable: true, filter: true },
     {
         field: "date",
