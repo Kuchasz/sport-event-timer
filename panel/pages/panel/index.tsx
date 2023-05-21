@@ -31,7 +31,7 @@ const Index = () => {
                             <div className="self-end font-semibold text-center">{dashboardData.nextRace.date?.toLocaleDateString()}</div>
                             <div className="text-2xl my-2 font-semibold text-center">{dashboardData.nextRace.name}</div>
                             <div className="text-gray-400 font-normal text-sm">
-                                Registered: {dashboardData?.nextRace.registeredPlayers} / {dashboardData.nextRace.playersLimit}
+                                Registered: {dashboardData?.nextRace.registeredPlayers} {dashboardData.nextRace.playersLimit && <span>/ {dashboardData.nextRace.playersLimit}</span>}
                             </div>
                             <div className="text-gray-400 font-normal text-sm">
                                 Registration:{" "}
