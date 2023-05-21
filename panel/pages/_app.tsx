@@ -6,8 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import { TimerApp } from "../apps/timer";
 import "../globals.scss";
 import type { Session } from "next-auth";
-import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-material.css"; // Optional theme CSS
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 import { ResultApp } from "apps/result";
 import { RegistrationApp } from "apps/registration";
 import { ModuleRegistry } from "@ag-grid-community/core";
