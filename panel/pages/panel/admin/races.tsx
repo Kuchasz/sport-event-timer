@@ -21,6 +21,14 @@ const defaultColumns: ColDef<Race>[] = [
     { field: "id", headerName: "Id", sortable: true },
     { field: "name", headerName: "Name", sortable: true, filter: true },
     {
+        field: "date",
+        headerName: "Date",
+        sort: 'asc',
+        sortable: true,
+        filter: true,
+        cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString()}</div>,
+    },
+    {
         field: "actions",
         width: 200,
         headerName: "Actions",
