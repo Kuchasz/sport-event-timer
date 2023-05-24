@@ -32,3 +32,7 @@ export const groupBy = <TItem>(xs: TItem[], key: (item: TItem) => string): { [ke
         return rv;
     }, {});
 };
+
+export const excludeItems = <T>(array: T[], itemsToExclude: T[]): T[] => {
+    return array.filter(item => !itemsToExclude.includes(item));
+}
