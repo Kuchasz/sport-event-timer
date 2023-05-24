@@ -93,7 +93,7 @@ const raceMenuGroup = {
     to: "/panel/:raceId",
     items: [
         {
-            text: "Dashboard",
+            text: "Base Info",
             icon: mdiViewDashboardEditOutline,
             to: "/panel/:raceId",
             color: "text-yellow-600",
