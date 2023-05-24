@@ -13,10 +13,12 @@ import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { Confirmation } from "components/confirmation";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
+import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
 type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
+type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
 const defaultColumns: ColDef<BibNumber>[] = [
     {
@@ -66,7 +68,8 @@ const BibNumbers = () => {
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId! });
     const gridRef = useRef<AgGridReact<BibNumber>>(null);
     const updatebibNumberMutation = trpc.bibNumber.update.useMutation();
-    const addClassifiationMutation = trpc.bibNumber.add.useMutation();
+    const addBibNumberMutation = trpc.bibNumber.add.useMutation();
+    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
 
     const openCreateDialog = async () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
@@ -76,7 +79,20 @@ const BibNumbers = () => {
         });
 
         if (bibNumber) {
-            await addClassifiationMutation.mutateAsync(bibNumber);
+            await addBibNumberMutation.mutateAsync(bibNumber);
+            refetch();
+        }
+    };
+
+    const openCreateManyDialog = async () => {
+        const createManyBibNumbers = await Demodal.open<CreateManyBibNumbers>(NiceModal, {
+            title: "Create many bib numbers",
+            component: BibNumberCreateManyForm,
+            props: { initialConfig: { raceId: raceId!, omitDuplicates: true } },
+        });
+
+        if (createManyBibNumbers) {
+            await addRangeBibNumberMutation.mutateAsync(createManyBibNumbers);
             refetch();
         }
     };
@@ -109,6 +125,10 @@ const BibNumbers = () => {
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                    </Button>
+                    <Button className="ml-2" onClick={openCreateManyDialog}>
+                        {/* <Icon size={1} path={mdiPlusM} /> */}
+                        add many
                     </Button>
                 </div>
                 <AgGridReact<BibNumber>

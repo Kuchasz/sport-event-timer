@@ -1,3 +1,4 @@
+import { createRange, excludeItems } from "@set/utils/dist/array";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 
@@ -5,6 +6,13 @@ const bibNumberSchema = z.object({
     id: z.number().nullish(),
     raceId: z.number({ required_error: "raceId is required" }).min(1),
     number: z.string({ required_error: "number is required" })
+});
+
+const addRangeBibNumberSchema = z.object({
+    raceId: z.number({ required_error: "raceId is required" }).min(1),
+    startNumber: z.number({ required_error: "startNumber is required" }),
+    endNumber: z.number({ required_error: "endNumber is required" }),
+    omitDuplicates: z.boolean().nullish()
 });
 
 export const bibNumberRouter =
@@ -47,6 +55,20 @@ export const bibNumberRouter =
             return await ctx.db.bibNumber.create({
                 data
             });
+        }),
+        addRange: protectedProcedure.input(addRangeBibNumberSchema).mutation(async ({ input, ctx }) => {
+            const { raceId, startNumber, endNumber, omitDuplicates } = input;
+
+            let omitNumbers: string[] = [];
+            if (omitDuplicates) {
+                omitNumbers = (await ctx.db.bibNumber.findMany({ where: { raceId } })).map(n => n.number);
+            }
+
+            const potentialBibNumbers = createRange({ from: startNumber, to: endNumber }).map(s => s.toString());
+            const excludedBibNumbers = excludeItems(potentialBibNumbers, omitNumbers);
+
+            const createBibNumbers = excludedBibNumbers.map(number => ctx.db.bibNumber.create({ data: { raceId, number } }));
+            await ctx.db.$transaction(createBibNumbers);
         })
     });
 
