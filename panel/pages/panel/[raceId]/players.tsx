@@ -108,22 +108,6 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
         </span>
     );
 };
-// const ExportButton = ({ onExport, children }: { onExport: () => Promise<unknown>; children: React.ReactChild }) => {
-//     const [exporting, setExporting] = useState(false);
-//     return (
-//         <Button
-//             disabled={exporting}
-//             loading={exporting}
-//             onClick={async () => {
-//                 setExporting(true);
-//                 await onExport();
-//                 setExporting(false);
-//             }}
-//         >
-//             {exporting ? "Exporting" : children}
-//         </Button>
-//     );
-// };
 
 const Players = () => {
     const raceId = useCurrentRaceId();
@@ -189,7 +173,6 @@ const Players = () => {
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
-                    <div className="px-1"></div>
                     <Button
                         className="ml-2"
                         onClick={() => {
@@ -201,7 +184,6 @@ const Players = () => {
                         <Icon size={1} path={mdiExport} />
                         <span className="ml-2">export</span>
                     </Button>
-                    <div className="px-1"></div>
                     <PoorColumnChooser
                         items={defaultColumns}
                         initialValue={gridColumnState.filter(c => !c.hide).map(c => c.colId)}
@@ -225,15 +207,6 @@ const Players = () => {
                         <Icon size={1} path={mdiNumeric} />
                         <span className="ml-2">Set numbers</span>
                     </Button> */}
-
-                    {/* <div className="grow"></div>
-                    <ExportButton onExport={() => exportToCsv(gridElement, "Players.csv")}>Export to CSV</ExportButton>
-                    <div className="px-1"></div>
-                    <ExportButton onExport={() => exportToXlsx(gridElement, "Players.xlsx")}>
-                        Export to XSLX
-                    </ExportButton>
-                    <div className="px-1"></div>
-                    <ExportButton onExport={() => exportToPdf(gridElement, "Players.pdf")}>Export to PDF</ExportButton> */}
                 </div>
                 {/* {gridElement} */}
                 {players && (
