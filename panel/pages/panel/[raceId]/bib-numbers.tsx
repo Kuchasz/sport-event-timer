@@ -5,7 +5,7 @@ import { BibNumberCreate } from "components/bib-number-create";
 import { BibNumberEdit } from "components/bib-number-edit";
 import { Demodal } from "demodal";
 import { trpc } from "../../../connection";
-import { mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../hooks";
 import { useCallback, useRef } from "react";
@@ -70,6 +70,7 @@ const BibNumbers = () => {
     const updatebibNumberMutation = trpc.bibNumber.update.useMutation();
     const addBibNumberMutation = trpc.bibNumber.add.useMutation();
     const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
+    const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
     const openCreateDialog = async () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
@@ -80,6 +81,21 @@ const BibNumbers = () => {
 
         if (bibNumber) {
             await addBibNumberMutation.mutateAsync(bibNumber);
+            refetch();
+        }
+    };
+
+    const openDeleteAllDialog = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete bibNumber`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete all Bib Numbers. Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await deleteAllMutation.mutateAsync({ raceId: raceId! });
             refetch();
         }
     };
@@ -129,6 +145,10 @@ const BibNumbers = () => {
                     <Button className="ml-2" onClick={openCreateManyDialog}>
                         {/* <Icon size={1} path={mdiPlusM} /> */}
                         add many
+                    </Button>{" "}
+                    <Button className="ml-2" onClick={openDeleteAllDialog}>
+                        <Icon size={1} path={mdiRestore} className="mr-2" />
+                        remove all
                     </Button>
                 </div>
                 <AgGridReact<BibNumber>
