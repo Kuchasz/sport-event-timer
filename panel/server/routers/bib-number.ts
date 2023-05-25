@@ -14,10 +14,10 @@ const addRangeBibNumberSchema = z.object({
     endNumber: z.number({ required_error: "endNumber is required" }),
     omitDuplicates: z.boolean().nullish()
 }).refine(
-    data => data.endNumber <= data.startNumber, 
-    { 
-        message: "endNumber must be higher than startNumber", 
-        path: ['endNumber'] 
+    data => data.endNumber <= data.startNumber,
+    {
+        message: "endNumber must be higher than startNumber",
+        path: ['endNumber']
     });
 
 export const bibNumberRouter =
@@ -47,6 +47,13 @@ export const bibNumberRouter =
             .mutation(async ({ input, ctx }) => {
                 return await ctx.db.bibNumber.delete({ where: { id: input.bibNumberId } });
             }),
+        deleteAll: protectedProcedure.input(z.object({
+            raceId: z.number({ required_error: "raceId is required" })
+        })).mutation(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+
+            await ctx.db.bibNumber.deleteMany({ where: { raceId } });
+        }),
         update: protectedProcedure.input(bibNumberSchema).mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
 
