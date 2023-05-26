@@ -19,7 +19,15 @@ export const raceRouter =
             }),
         races: protectedProcedure
             .query(async ({ ctx }) => {
-                return await ctx.db.race.findMany();
+                const racesWithRegistrations = await ctx.db.race.findMany({ include: { playerRegistration: true } });
+                return racesWithRegistrations.map(r => ({
+                    id: r.id,
+                    name: r.name,
+                    date: r.date,
+                    playersLimit: r.playersLimit,
+                    registrationEnabled: r.registrationEnabled,
+                    registeredPlayers: r.playerRegistration.length
+                }));
             }),
         raport: protectedProcedure
             .query(async ({ ctx }) => {
@@ -27,18 +35,19 @@ export const raceRouter =
                 const pastRaces = await ctx.db.race.count({ where: { date: { lte: new Date() } } });
                 const futureRaces = await ctx.db.race.count({ where: { date: { gte: new Date() } } });
                 const nextRace = await ctx.db.race.findFirst({ where: { date: { gte: new Date() } }, orderBy: { date: 'asc' }, include: { playerRegistration: true, player: true } });
-                return { 
-                    totalRaces, 
-                    pastRaces, 
-                    futureRaces, 
-                    nextRace: { 
-                        name: nextRace?.name, 
-                        registeredPlayers: nextRace?.playerRegistration.length, 
-                        players: nextRace?.player.length, 
-                        playersLimit: nextRace?.playersLimit, 
-                        date: nextRace?.date, 
-                        registrationEnabled: nextRace?.registrationEnabled} 
-                    };
+                return {
+                    totalRaces,
+                    pastRaces,
+                    futureRaces,
+                    nextRace: {
+                        name: nextRace?.name,
+                        registeredPlayers: nextRace?.playerRegistration.length,
+                        players: nextRace?.player.length,
+                        playersLimit: nextRace?.playersLimit,
+                        date: nextRace?.date,
+                        registrationEnabled: nextRace?.registrationEnabled
+                    }
+                };
             }),
         myRaces: protectedProcedure
             .query(async ({ ctx }) => {

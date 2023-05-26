@@ -34,7 +34,7 @@ const Index = () => {
                                 Registered: {dashboardData?.nextRace.registeredPlayers} {dashboardData.nextRace.playersLimit && <span>/ {dashboardData.nextRace.playersLimit}</span>}
                             </div>
                             <div className="text-gray-400 font-normal text-sm">
-                                Registration:{" "}
+                                Registration:
                                 {dashboardData?.nextRace.registrationEnabled ? (
                                     <span className="font-semibold text-green-600">enabled</span>
                                 ) : (
