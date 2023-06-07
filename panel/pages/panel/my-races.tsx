@@ -13,6 +13,7 @@ import { useCallback, useRef } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
+import { PoorActions } from "components/poor-actions";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -48,8 +49,10 @@ const defaultColumns: ColDef<Race>[] = [
         field: "actions",
         width: 200,
         headerName: "Actions",
+        cellStyle: { overflow: "visible" },
         cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
-            <RaceDeleteButton refetch={props.context.refetch} race={props.data} />
+            <PoorActions />
+            // <RaceDeleteButton refetch={props.context.refetch} race={props.data} />
         ),
     },
 ];
@@ -171,19 +174,30 @@ const MyRaces = () => {
             <Head>
                 <title>Lista wyścigów</title>
             </Head>
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="ag-theme-material relative border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
+                    <PoorActions />
                 </div>
 
                 <AgGridReact<Race>
                     ref={gridRef}
                     context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data)}
-                    suppressCellFocus={true}
+                    // onRowDoubleClicked={e => openEditDialog(e.data)}
+                    // rowClass="absolute z-1"
+                    rowClassRules={{
+                        'z-10': p => {console.log(p); return false;}
+                    }}
+                    
+                    suppressRowVirtualisation={true}
                     suppressAnimationFrame={true}
+                    suppressContextMenu={true}
+                    suppressRowClickSelection={true}
+                    suppressCellFocus={true}
+                    suppressChangeDetection={true}
+                    onRowClicked={console.log}
                     columnDefs={defaultColumns}
                     rowData={races}
                     onFirstDataRendered={onFirstDataRendered}
