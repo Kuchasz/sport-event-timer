@@ -15,6 +15,7 @@ import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 
+
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
 type EditedRace = AppRouterInputs["race"]["update"];
