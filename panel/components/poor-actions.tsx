@@ -2,26 +2,26 @@ import { Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
-import { mdiDelete, mdiDotsVertical } from "@mdi/js";
+import { mdiDotsVertical, mdiLockOpenVariantOutline, mdiRestore, mdiTrashCan } from "@mdi/js";
 
 const solutions = [
     {
-        name: "Insights",
-        description: "Measure actions your users take",
+        name: "Turn off registration",
+        description: "Online registration will be turned off",
         href: "##",
-        icon: <Icon className="text-black" path={mdiDelete} />,
+        icon: <Icon size={1} className="text-black" path={mdiLockOpenVariantOutline} />,
     },
     {
-        name: "Automations",
-        description: "Create your own targeted content",
+        name: "Wipe stopwatch",
+        description: "Wipe all stopwatch data",
         href: "##",
-        icon: <Icon className="text-black" path={mdiDelete} />,
+        icon: <Icon size={1} className="text-black" path={mdiRestore} />,
     },
     {
-        name: "Reports",
-        description: "Keep track of your growth",
+        name: "Delete",
+        description: "Delete race",
         href: "##",
-        icon: <Icon className="text-black" path={mdiDelete} />,
+        icon: <Icon size={1} className="text-black" path={mdiTrashCan} />,
     },
 ];
 
