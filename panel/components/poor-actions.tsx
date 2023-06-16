@@ -4,28 +4,14 @@ import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
 import { mdiDotsVertical, mdiLockOpenVariantOutline, mdiRestore, mdiTrashCan } from "@mdi/js";
 
-const solutions = [
-    {
-        name: "Turn off registration",
-        description: "Online registration will be turned off",
-        href: "##",
-        icon: <Icon size={1} className="text-black" path={mdiLockOpenVariantOutline} />,
-    },
-    {
-        name: "Wipe stopwatch",
-        description: "Wipe all stopwatch data",
-        href: "##",
-        icon: <Icon size={1} className="text-black" path={mdiRestore} />,
-    },
-    {
-        name: "Delete",
-        description: "Delete race",
-        href: "##",
-        icon: <Icon size={1} className="text-black" path={mdiTrashCan} />,
-    },
-];
+type Action<TItem> = {
+    name: string;
+    description: string;
+    iconPath: string;
+    execute: (param: TItem) => void;
+};
 
-export const PoorActions = () => {
+export const PoorActions = <TItem,>({ actions }: { actions: Action<TItem>[] }) => {
     return (
         <Popover className="h-full flex items-center">
             <Float
@@ -47,18 +33,17 @@ export const PoorActions = () => {
                 <Popover.Panel className="mt-3 w-screen max-w-sm px-4 sm:px-0">
                     <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                         <div className="relative grid gap-8 bg-white p-7">
-                            {solutions.map(item => (
+                            {actions.map(action => (
                                 <a
-                                    key={item.name}
-                                    href={item.href}
+                                    key={action.name}
                                     className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                                 >
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                                        {item.icon}
+                                        <Icon size={1} className="text-black" path={action.iconPath} />,
                                     </div>
                                     <div className="ml-4">
-                                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                                        <p className="text-sm text-gray-500">{item.description}</p>
+                                        <p className="text-sm font-medium text-gray-900">{action.name}</p>
+                                        <p className="text-sm text-gray-500">{action.description}</p>
                                     </div>
                                 </a>
                             ))}
