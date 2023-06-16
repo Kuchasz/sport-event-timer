@@ -15,13 +15,36 @@ import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 
-
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
 type EditedRace = AppRouterInputs["race"]["update"];
 
 const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
 const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
+
+const solutions = [
+    {
+        name: "Turn off registration",
+        description: "Online registration will be turned off",
+        href: "##",
+        iconPath: mdiLockOpenVariantOutline,
+        execute: () => null,
+    },
+    {
+        name: "Wipe stopwatch",
+        description: "Wipe all stopwatch data",
+        href: "##",
+        iconPath: mdiRestore,
+        execute: () => null,
+    },
+    {
+        name: "Delete",
+        description: "Delete race",
+        href: "##",
+        iconPath: mdiTrashCan,
+        execute: () => null,
+    },
+];
 
 const defaultColumns: ColDef<Race>[] = [
     { field: "index", width: 25, headerName: "", headerClass: "hidden", valueGetter: "node.rowIndex + 1", sortable: false, filter: false },
@@ -52,7 +75,7 @@ const defaultColumns: ColDef<Race>[] = [
         headerName: "Actions",
         cellStyle: { overflow: "visible" },
         cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
-            <PoorActions />
+            <PoorActions actions={solutions} />
             // <RaceDeleteButton refetch={props.context.refetch} race={props.data} />
         ),
     },
@@ -180,7 +203,6 @@ const MyRaces = () => {
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
-                    <PoorActions />
                 </div>
 
                 <AgGridReact<Race>
@@ -189,9 +211,11 @@ const MyRaces = () => {
                     // onRowDoubleClicked={e => openEditDialog(e.data)}
                     // rowClass="absolute z-1"
                     rowClassRules={{
-                        'z-10': p => {console.log(p); return false;}
+                        "z-10": p => {
+                            console.log(p);
+                            return false;
+                        },
                     }}
-                    
                     suppressRowVirtualisation={true}
                     suppressAnimationFrame={true}
                     suppressContextMenu={true}
