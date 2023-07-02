@@ -64,6 +64,14 @@ export const raceRouter =
                 raceId: z.number()
             }))
             .mutation(async ({ input, ctx }) => {
+
+                await ctx.db.timingPoint.deleteMany({
+                    where: {
+                        raceId: input.raceId
+                    }
+                });
+                await ctx.db.timingPointOrder.delete({ where: { raceId: input.raceId } });
+
                 return await ctx.db.race.delete({ where: { id: input.raceId } });
             }),
         update: protectedProcedure
