@@ -40,6 +40,7 @@ export const playerRegistrationRouter =
                     registered: registeredPlayers,
                     raceName: race.name,
                     raceDate: race.date,
+                    termsUrl: race.termsUrl,
                     status: (!race.registrationEnabled
                         ? 'disabled'
                         : race.playersLimit

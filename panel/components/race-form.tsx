@@ -49,6 +49,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                     <PoorNumberInput value={race.playersLimit} onChange={changeHandler("playersLimit")} />
                 </div>
             </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>Terms and conditions url</Label>
+                    <PoorInput value={race.termsUrl} onChange={changeHandler("termsUrl")} />
+                </div>
+            </div>
             <div className="mt-4 flex">
                 <Button onClick={() => onResolve({ ...race })}>
                     <Icon size={1} path={mdiContentSaveCheck} />

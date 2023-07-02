@@ -31,13 +31,14 @@ const RegistrationFormComponent = ({
     registrationStatus,
     onResolve,
     teams,
+    termsUrl,
 }: {
     disabled: boolean;
     registrationStatus: RegistrationStatuses;
     onResolve: (registration: ReturnType<typeof initialRegistration>) => void;
     teams: string[];
+    termsUrl: string | null;
 }) => {
-
     return (
         <div className="space-y-4 md:space-y-6">
             <Form onSubmit={r => onResolve(r)} initialValues={initialRegistration()} validationSchema={playerRegistrationSchema}>
@@ -171,17 +172,19 @@ const RegistrationFormComponent = ({
                         </div>
                         <div className="ml-3 text-sm">
                             <label htmlFor="terms" className="font-light text-gray-500">
-                                I agree with the <span className="font-medium text-orange-600 hover:underline">Terms and conditions</span>
-                                {/* <a className="font-medium text-orange-600 hover:underline" href="/files/regulamin_rnk23.pdf">
-                                    Terms and conditions
-                                </a> */}
+                                I agree with the{" "}
+                                {termsUrl ? (
+                                    <a className="font-medium text-orange-600 hover:underline" href={termsUrl}>
+                                        Terms and conditions
+                                    </a>
+                                ) : (
+                                    <span className="font-medium">Terms and conditions</span>
+                                )}
                             </label>
                         </div>
                     </div>
                 </div>
-                <Button type="submit">
-                    {registrationStatus === "progress" ? "Registration pending" : "Register"}
-                </Button>
+                <Button type="submit">{registrationStatus === "progress" ? "Registration pending" : "Register"}</Button>
             </Form>
         </div>
     );
@@ -270,6 +273,7 @@ const Rejestracja = () => {
                                         teams={teams}
                                         registrationStatus={registrationStatus}
                                         onResolve={handleFormSubmit}
+                                        termsUrl={registrationSystemStatus.termsUrl}
                                     />
                                 ) : registrationStatus === "error" ? (
                                     <RegistrationFailed />
