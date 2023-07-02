@@ -2,7 +2,7 @@ import { Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
-import { mdiDotsVertical, mdiLockOpenVariantOutline, mdiRestore, mdiTrashCan } from "@mdi/js";
+import { mdiDotsVertical } from "@mdi/js";
 
 type Action<TItem> = {
     name: string;
