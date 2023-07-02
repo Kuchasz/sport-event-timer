@@ -11,7 +11,7 @@ type Action<TItem> = {
     execute: (param: TItem) => void;
 };
 
-export const PoorActions = <TItem,>({ actions }: { actions: Action<TItem>[] }) => {
+export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: Action<TItem>[] }) => {
     return (
         <Popover className="h-full flex items-center">
             <Float
@@ -36,7 +36,8 @@ export const PoorActions = <TItem,>({ actions }: { actions: Action<TItem>[] }) =
                             {actions.map(action => (
                                 <a
                                     key={action.name}
-                                    className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                    className="-m-3 flex items-center cursor-pointer rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                                    onClick={() => action.execute(item)}
                                 >
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
                                         <Icon size={1} className="text-black" path={action.iconPath} />,
