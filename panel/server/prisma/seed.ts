@@ -34,6 +34,7 @@ const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.m
     date: faker.date.future(1),
     name: faker.company.name(),
     registrationEnabled: false,
+    termsUrl: '',
     playersLimit: faker.datatype.number({ min: 100, max: 1000, precision: 0 })
 }));
 
