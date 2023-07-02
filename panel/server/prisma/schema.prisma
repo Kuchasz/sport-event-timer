@@ -59,6 +59,7 @@ model Race {
     id                   Int                    @id @default(autoincrement())
     name                 String
     date                 DateTime
+    termsUrl             String?
     playersLimit         Int?
     registrationEnabled  Boolean
     classifications      Classification[]
