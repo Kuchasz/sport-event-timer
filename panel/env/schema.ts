@@ -1,4 +1,4 @@
-// @ts-check
+//@ts-nocheck
 import { z } from "zod";
 
 /**

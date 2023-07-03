@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { racePlayerRegistrationSchema } from "../../models";
 import nodemailer from "nodemailer";
-import { env } from "../../env/server.mjs";
+import { env } from "../../env/server";
 
 // import { sendRegistrationConfirmation } from "../../messages";
 
@@ -88,14 +88,14 @@ export const playerRegistrationRouter =
                     }
                 });
 
-                await sendRegistrationConfirmation({
-                    email: input.player.email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
-                        ['name', input.player.name.trim()],
-                        ['lastName', input.player.lastName.trim()],
-                        ['raceName', race.name],
-                        ['raceDate', race.date.toLocaleDateString()]
-                    ]
-                })
+                // await sendRegistrationConfirmation({
+                //     email: input.player.email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
+                //         ['name', input.player.name.trim()],
+                //         ['lastName', input.player.lastName.trim()],
+                //         ['raceName', race.name],
+                //         ['raceDate', race.date.toLocaleDateString()]
+                //     ]
+                // })
             }),
         delete: protectedProcedure
             .input(z.object({ playerId: z.number() }))
@@ -160,11 +160,6 @@ export const playerRegistrationRouter =
 
 export type PlayerRouter = typeof playerRegistrationRouter;
 
-
-
-
-
-
 const transporter = nodemailer.createTransport({
   host: env.NOTIFICATIONS_SERVER_HOST,
   port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
@@ -175,38 +170,38 @@ const transporter = nodemailer.createTransport({
   },
 } as any);
 
-type ConfirmationTarget = {
-  email: string;
-  raceName: string;
-  template: string | null;
-  placeholderValues: [string, string][]
-}
+// type ConfirmationTarget = {
+//   email: string;
+//   raceName: string;
+//   template: string | null;
+//   placeholderValues: [string, string][]
+// }
 
-export const sendRegistrationConfirmation = async ({ email, raceName, template, placeholderValues }: ConfirmationTarget) =>
-  new Promise<void>((res, rej) => {
+// export const sendRegistrationConfirmation = async ({ email, raceName, template, placeholderValues }: ConfirmationTarget) =>
+//   new Promise<void>((res, rej) => {
 
-    const finalTemplate = defaultTemplate.replace('%template%', template ?? '');
+//     const finalTemplate = defaultTemplate.replace('%template%', template ?? '');
 
-    const [_, __, messageContent] =
-      placeholderValues
-        .reduce(([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)], ["", "", finalTemplate]);
+//     const [_, __, messageContent] =
+//       placeholderValues
+//         .reduce(([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)], ["", "", finalTemplate]);
 
-    const message = {
-      from: env.NOTIFICATIONS_MESSAGE_FROM,
-      bcc: email,
-      subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
-      html: messageContent,
-      replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
-    };
+//     const message = {
+//       from: env.NOTIFICATIONS_MESSAGE_FROM,
+//       bcc: email,
+//       subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
+//       html: messageContent,
+//       replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
+//     };
 
-    transporter.sendMail(message, (err) => {
-      if (err) {
-        rej(err);
-      } else {
-        res();
-      }
-    });
-  });
+//     transporter.sendMail(message, (err) => {
+//       if (err) {
+//         rej(err);
+//       } else {
+//         res();
+//       }
+//     });
+//   });
 
 export const defaultTemplate = `<!DOCTYPE html>
 <html>
