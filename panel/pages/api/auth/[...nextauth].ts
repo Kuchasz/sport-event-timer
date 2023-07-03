@@ -2,7 +2,7 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "../../../env/server.js";
+import { env } from "../../../env/server";
 import { db } from "server/db";
 
 export const authOptions: NextAuthOptions = {
