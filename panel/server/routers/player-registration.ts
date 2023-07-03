@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { racePlayerRegistrationSchema } from "../../models";
 import nodemailer from "nodemailer";
-import { env } from "env/server.mjs";
+import { env } from "../../env/server.mjs";
 
 // import { sendRegistrationConfirmation } from "../../messages";
 
