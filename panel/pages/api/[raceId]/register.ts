@@ -1,50 +1,12 @@
 import { withRaceApiKey } from "auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
-import nodemailer from "nodemailer";
-import { env } from "env/server.mjs";
-import { template } from "messages";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
 import { GenderEnum } from "../../../models";
+import { sendRegistrationConfirmation } from "messages";
 
-const transporter = nodemailer.createTransport({
-    host: env.NOTIFICATIONS_SERVER_HOST,
-    port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
-    secure: env.NOTIFICATIONS_SERVER_SECURE,
-    auth: {
-        user: env.NOTIFICATIONS_SERVER_AUTH_USER,
-        pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
-    },
-} as any);
-
-type ConfirmationTarget = {
-    name: string;
-    email: string;
-    lastName: string;
-    raceName: string;
-}
-
-const stripNonNumbers = (string: string) => string.replace(/\D/g,'');
-
-const sendRegistrationConfirmation = async ({ email, name, lastName, raceName }: ConfirmationTarget) =>
-    new Promise<void>((res, rej) => {
-        const message = {
-            from: env.NOTIFICATIONS_MESSAGE_FROM,
-            bcc: email,
-            subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
-            html: template({ name, lastName, raceName }),
-            replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
-        };
-
-        transporter.sendMail(message, (err) => {
-            if (err) {
-                rej(err);
-            } else {
-                res();
-            }
-        });
-    });
+const stripNonNumbers = (string: string) => string.replace(/\D/g, '');
 
 const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
 
@@ -62,21 +24,21 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         phoneNumber,
         icePhoneNumber } = req.body;
 
-    const registrationEntryModel = z.object({ 
-        email: z.string().email(), 
-        gender: GenderEnum, 
-        phoneNumber: z.string(), 
-        icePhoneNumber: z.string() 
+    const registrationEntryModel = z.object({
+        email: z.string().email(),
+        gender: GenderEnum,
+        phoneNumber: z.string(),
+        icePhoneNumber: z.string()
     });
 
-    const registrationEntry = { 
-        email, 
-        gender, 
-        phoneNumber: stripNonNumbers(phoneNumber), 
+    const registrationEntry = {
+        email,
+        gender,
+        phoneNumber: stripNonNumbers(phoneNumber),
         icePhoneNumber: stripNonNumbers(icePhoneNumber)
     };
 
-    if(!registrationEntryModel.safeParse(registrationEntry).success){
+    if (!registrationEntryModel.safeParse(registrationEntry).success) {
         res.status(500).send('Invalid registration entry');
         return;
     }
@@ -103,7 +65,14 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         }
     });
 
-    await sendRegistrationConfirmation({ email, name, lastName, raceName: race.name })
+    await sendRegistrationConfirmation({
+        email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
+            ['name', name.trim()], 
+            ['lastName', lastName.trim()], 
+            ['raceName', race.name], 
+            ['raceDate', race.date.toLocaleDateString()]
+        ]
+    })
 
     res.json(id);
 }

@@ -1,4 +1,51 @@
-export const template = ({ name, lastName, raceName }: { name: string, lastName: string, raceName: string }) => `<!DOCTYPE html>
+
+import nodemailer from "nodemailer";
+import { env } from "env/server.mjs";
+
+const transporter = nodemailer.createTransport({
+  host: env.NOTIFICATIONS_SERVER_HOST,
+  port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
+  secure: env.NOTIFICATIONS_SERVER_SECURE,
+  auth: {
+    user: env.NOTIFICATIONS_SERVER_AUTH_USER,
+    pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
+  },
+} as any);
+
+type ConfirmationTarget = {
+  email: string;
+  raceName: string;
+  template: string | null;
+  placeholderValues: [string, string][]
+}
+
+export const sendRegistrationConfirmation = async ({ email, raceName, template, placeholderValues }: ConfirmationTarget) =>
+  new Promise<void>((res, rej) => {
+
+    const finalTemplate = defaultTemplate.replace('%template%', template ?? '');
+
+    const [_, __, messageContent] =
+      placeholderValues
+        .reduce(([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)], ["", "", finalTemplate]);
+
+    const message = {
+      from: env.NOTIFICATIONS_MESSAGE_FROM,
+      bcc: email,
+      subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
+      html: messageContent,
+      replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
+    };
+
+    transporter.sendMail(message, (err) => {
+      if (err) {
+        rej(err);
+      } else {
+        res();
+      }
+    });
+  });
+
+export const defaultTemplate = `<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -215,7 +262,7 @@ export const template = ({ name, lastName, raceName }: { name: string, lastName:
                             margin-bottom: 50px;
                           "
                         >
-                          Rejestracja w ${raceName}
+                          Rejestracja w %raceName%
                         </p>
                         <p
                           style="
@@ -226,18 +273,7 @@ export const template = ({ name, lastName, raceName }: { name: string, lastName:
                             margin-bottom: 15px;
                           "
                         >
-                          Cześć ${name} ${lastName}!
-                        </p>
-                        <p
-                          style="
-                            font-family: sans-serif;
-                            font-size: 14px;
-                            font-weight: normal;
-                            margin: 0;
-                            margin-bottom: 50px;
-                          "
-                        >
-                          Zarejestrowałeś się w ${raceName}.
+                          Cześć %name% %lastName%!
                         </p>
                         <p
                           style="
@@ -248,63 +284,19 @@ export const template = ({ name, lastName, raceName }: { name: string, lastName:
                             margin-bottom: 15px;
                           "
                         >
-                          Opłaty za zawody dokonać możesz drogą elektroniczną,
-                          wpłacając opłatę startową zgodną z regulaminem na
-                          podany niżej numer konta:
+                          Zarejestrowałeś się w %raceName% (%raceDate%).
                         </p>
                         <p
-                          style="
-                            font-family: sans-serif;
-                            font-size: 14px;
-                            font-weight: normal;
-                            margin: 0;
-                            margin-bottom: 15px;
-                          "
-                        >
-                          80 PLN w terminie do 31 stycznia 2023r. <br />
-                          100 PLN w terminie do 30 kwietnia 2023r. <br />
-                          120 PLN w terminie do 10 maja 2023r. <br />
-                        </p>
-                        <p
-                          style="
-                            font-family: sans-serif;
-                            font-size: 14px;
-                            font-weight: normal;
-                            margin: 0;
-                            margin-bottom: 15px;
-                          "
-                        >
-                          Bank Spółdzielczy Zator <br />
-                          89 8136 0000 0022 6934 2000 0010 <br />
-                          Innergy Racing Team <br />
-                          Ul. Okrężna 19 <br />
-                          32-641 Przeciszów
-                        </p>
-                        <p
-                          style="
-                            font-family: sans-serif;
-                            font-size: 14px;
-                            font-weight: normal;
-                            margin: 0;
-                            margin-bottom: 15px;
-                          "
-                        >
-                          W tytule podając: ${name} ${lastName} - Wpłata na cele
-                          statutowe
-                        </p>
-                        <p
-                          style="
-                            font-family: sans-serif;
-                            font-size: 14px;
-                            font-weight: bold;
-                            margin: 0;
-                            margin-bottom: 50px;
-                            margin-top: 50px;
-                          "
-                        >
-                          Nie zwlekaj z opłatą za zawody, przy wcześniejszym
-                          przelewie wpisowe jest niższe.
-                        </p>
+                        style="
+                          font-family: sans-serif;
+                          font-size: 14px;
+                          font-weight: normal;
+                          margin: 0;
+                          margin-bottom: 15px;
+                        "
+                      >
+                        %template%
+                      </p>
                         <p
                           style="
                             font-family: sans-serif;

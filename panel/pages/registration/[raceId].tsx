@@ -20,7 +20,7 @@ const initialRegistration = () => ({
     birthDate: dateFromYearsAgo(18),
     gender: "male" as Gender,
     team: "",
-    country: "",
+    country: "PL",
     city: "",
     email: "",
     phoneNumber: "",
@@ -174,7 +174,7 @@ const RegistrationFormComponent = ({
                             <label htmlFor="terms" className="font-light text-gray-500">
                                 I agree with the{" "}
                                 {termsUrl ? (
-                                    <a className="font-medium text-orange-600 hover:underline" href={termsUrl}>
+                                    <a className="font-medium text-orange-600 hover:underline" target="_blank" href={termsUrl}>
                                         Terms and conditions
                                     </a>
                                 ) : (
