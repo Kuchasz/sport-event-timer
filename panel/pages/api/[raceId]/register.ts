@@ -4,7 +4,7 @@ import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
 import { GenderEnum } from "../../../models";
-import { sendRegistrationConfirmation } from "../../../messages";
+// import { sendRegistrationConfirmation } from "../../../messages";
 
 const stripNonNumbers = (string: string) => string.replace(/\D/g, '');
 
@@ -45,7 +45,7 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
 
     //validate race registration state
 
-    const race = await db.race.findFirstOrThrow({ where: { id: parseInt(raceId as string) } });
+    // const race = await db.race.findFirstOrThrow({ where: { id: parseInt(raceId as string) } });
 
     const id = await db.playerRegistration.create({
         data: {
@@ -65,14 +65,14 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         }
     });
 
-    await sendRegistrationConfirmation({
-        email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
-            ['name', name.trim()], 
-            ['lastName', lastName.trim()], 
-            ['raceName', race.name], 
-            ['raceDate', race.date.toLocaleDateString()]
-        ]
-    })
+    // await sendRegistrationConfirmation({
+    //     email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
+    //         ['name', name.trim()], 
+    //         ['lastName', lastName.trim()], 
+    //         ['raceName', race.name], 
+    //         ['raceDate', race.date.toLocaleDateString()]
+    //     ]
+    // })
 
     res.json(id);
 }
