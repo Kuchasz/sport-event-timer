@@ -8,6 +8,7 @@ import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorCheckbox } from "./poor-checkbox";
+import { PoorTextArea } from "./poor-text-area";
 
 type Race = AppRouterInputs["race"]["add"];
 
@@ -60,7 +61,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
             <div className="flex">
                 <div className="grow">
                     <Label>Registration email appendix template</Label>
-                    <PoorInput value={race.emailTemplate} onChange={changeHandler("emailTemplate")} />
+                    <PoorTextArea value={race.emailTemplate} onChange={changeHandler("emailTemplate")} />
                 </div>
             </div>
             <div className="mt-4 flex">

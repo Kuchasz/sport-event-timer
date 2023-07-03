@@ -26,6 +26,7 @@ export const raceRouter =
                     id: r.id,
                     name: r.name,
                     date: r.date,
+                    emailTemplate: r.emailTemplate,
                     playersLimit: r.playersLimit,
                     registrationEnabled: r.registrationEnabled,
                     registeredPlayers: r.playerRegistration.length
