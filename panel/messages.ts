@@ -1,6 +1,6 @@
 
+import { env } from "./env/server.mjs";
 import nodemailer from "nodemailer";
-import { env } from "env/server.mjs";
 
 const transporter = nodemailer.createTransport({
   host: env.NOTIFICATIONS_SERVER_HOST,
