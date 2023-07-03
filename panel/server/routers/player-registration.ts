@@ -2,7 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { racePlayerRegistrationSchema } from "../../models";
-import { sendRegistrationConfirmation } from "messages";
+import { sendRegistrationConfirmation } from "../../messages";
 
 type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
 

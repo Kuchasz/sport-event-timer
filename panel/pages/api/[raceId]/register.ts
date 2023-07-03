@@ -4,7 +4,7 @@ import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
 import { GenderEnum } from "../../../models";
-import { sendRegistrationConfirmation } from "messages";
+import { sendRegistrationConfirmation } from "../../../messages";
 
 const stripNonNumbers = (string: string) => string.replace(/\D/g, '');
 
