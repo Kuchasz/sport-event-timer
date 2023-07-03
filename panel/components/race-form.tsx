@@ -56,6 +56,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                     <PoorInput value={race.termsUrl} onChange={changeHandler("termsUrl")} />
                 </div>
             </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
+                    <Label>Registration email appendix template</Label>
+                    <PoorInput value={race.emailTemplate} onChange={changeHandler("emailTemplate")} />
+                </div>
+            </div>
             <div className="mt-4 flex">
                 <Button onClick={() => onResolve({ ...race })}>
                     <Icon size={1} path={mdiContentSaveCheck} />

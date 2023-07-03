@@ -2,6 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { racePlayerRegistrationSchema } from "../../models";
+import { sendRegistrationConfirmation } from "messages";
 
 type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
 
@@ -66,7 +67,7 @@ export const playerRegistrationRouter =
                     return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
                 }
 
-                return await ctx.db.playerRegistration.create({
+                await ctx.db.playerRegistration.create({
                     data: {
                         raceId: input.raceId,
                         registrationDate: new Date(),
@@ -83,6 +84,15 @@ export const playerRegistrationRouter =
                         hasPaid: false
                     }
                 });
+
+                await sendRegistrationConfirmation({
+                    email: input.player.email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
+                        ['name', input.player.name.trim()],
+                        ['lastName', input.player.lastName.trim()],
+                        ['raceName', race.name],
+                        ['raceDate', race.date.toLocaleDateString()]
+                    ]
+                })
             }),
         delete: protectedProcedure
             .input(z.object({ playerId: z.number() }))

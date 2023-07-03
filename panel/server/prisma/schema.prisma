@@ -60,6 +60,7 @@ model Race {
     name                 String
     date                 DateTime
     termsUrl             String?
+    emailTemplate        String?
     playersLimit         Int?
     registrationEnabled  Boolean
     classifications      Classification[]
