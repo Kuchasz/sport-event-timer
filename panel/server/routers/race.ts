@@ -83,6 +83,15 @@ export const raceRouter =
                 const { id, ...data } = input;
                 return await ctx.db.race.update({ where: { id: id! }, data });
             }),
+        setRegistrationStatus: protectedProcedure
+            .input(z.object({
+                id: z.number({ required_error: "raceId is required" }),
+                registrationEnabled: z.boolean()
+            }))
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...data } = input;
+                return await ctx.db.race.update({ where: { id: id! }, data: { registrationEnabled: data.registrationEnabled } });
+            }),
         add: protectedProcedure
             .input(raceSchema)
             .mutation(async ({ input, ctx }) => {

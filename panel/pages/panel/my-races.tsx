@@ -51,53 +51,36 @@ const Registrations = ({ race }: { race: Race }) => {
     );
 };
 
-// const RaceDeleteButton = ({ race, refetch }: { race: Race; refetch: () => void }) => {
-//     const deleteRaceMutation = trpc.race.delete.useMutation();
-//     const wipeRaceMutation = trpc.action.wipe.useMutation();
-//     const deleteRace = async () => {
-//         const confirmed = await Demodal.open<boolean>(NiceModal, {
-//             title: `Delete race`,
-//             component: Confirmation,
-//             props: {
-//                 message: `You are trying to delete the Race ${race.name} (${race.date.toLocaleDateString()}). Do you want to proceed?`,
-//             },
-//         });
-
-//         if (confirmed) {
-//             await deleteRaceMutation.mutateAsync({ raceId: race.id });
-//             refetch();
-//         }
-//     };
-
-//     return (
-//         <div className="flex">
-//             {/* <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deleteRace}>
-//                 <Icon size={1} path={mdiTrashCan} />
-//                 delete
-//             </span>
-//             <span className="flex ml-4 items-center hover:text-red-600 cursor-pointer" onClick={wipeRace}>
-//                 <Icon size={1} path={mdiRestore} />
-//                 wipe
-//             </span> */}
-//         </div>
-//     );
-// };
-
 const MyRaces = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
     const updateRaceMutation = trpc.race.update.useMutation();
     const wipeRaceMutation = trpc.action.wipe.useMutation();
     const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
+    const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const gridRef = useRef<AgGridReact<Race>>(null);
 
-    const myRacesActions = [
-        {
-            name: "Turn off registration",
-            description: "Online registration will be turned off",
-            iconPath: mdiLockOpenVariantOutline,
-            execute: () => null,
+    const turnOffRegistrationAction = {
+        name: "Turn off registration",
+        description: "Online registration will be turned off",
+        iconPath: mdiLockOutline,
+        execute: async (race: Race) => {
+            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
+            refetch();
         },
+    };
+
+    const turnOnRegistrationAction = {
+        name: "Turn on registration",
+        description: "Online registration will be turned on",
+        iconPath: mdiLockOpenVariantOutline,
+        execute: async (race: Race) => {
+            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
+            refetch();
+        },
+    };
+
+    const myRacesActions = [
         {
             name: "Wipe stopwatch",
             description: "Wipe all stopwatch data",
@@ -179,7 +162,14 @@ const MyRaces = () => {
             headerName: "Actions",
             cellStyle: { overflow: "visible" },
             cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
-                <PoorActions item={props.data} actions={myRacesActions} />
+                <PoorActions
+                    item={props.data}
+                    actions={
+                        props.data.registrationEnabled
+                            ? [turnOffRegistrationAction, ...myRacesActions]
+                            : [turnOnRegistrationAction, ...myRacesActions]
+                    }
+                />
             ),
         },
     ];
