@@ -14,7 +14,7 @@ const addRangeBibNumberSchema = z.object({
     endNumber: z.number({ required_error: "endNumber is required" }),
     omitDuplicates: z.boolean().nullish()
 }).refine(
-    data => data.endNumber <= data.startNumber,
+    data => data.endNumber > data.startNumber,
     {
         message: "endNumber must be higher than startNumber",
         path: ['endNumber']
