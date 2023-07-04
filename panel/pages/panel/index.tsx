@@ -1,13 +1,6 @@
+import { DashboardCard } from "components/dashboard-card";
 import { trpc } from "connection";
 import Head from "next/head";
-import { ReactNode } from "react";
-
-const DashboardCard = ({ title, children }: { title: string; children: ReactNode }) => (
-    <div className="self-start w-64 h-64 shadow-md m-2 px-6 py-4 rounded-md flex flex-col items-center">
-        <div className="self-start font-semibold">{title}</div>
-        <div className="w-full h-full flex items-center justify-center">{children}</div>
-    </div>
-);
 
 const Index = () => {
     const { data: dashboardData } = trpc.race.raport.useQuery();
