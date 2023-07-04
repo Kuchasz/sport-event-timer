@@ -1,12 +1,10 @@
 import Icon from "@mdi/react";
 
-import { mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
 
 import { useCurrentRaceId } from "hooks";
-// import { useQueryClient } from "@tanstack/react-query";
-import { groupBy } from "@set/utils/dist/array";
 import { AppRouterOutputs } from "trpc";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { RadioGroup } from "@headlessui/react";
 import { Gender } from "@set/utils/dist/gender";
@@ -17,6 +15,12 @@ import { PoorNumberInput } from "components/poor-number-input";
 import { Button } from "components/button";
 import { trpc } from "connection";
 import { useRouter } from "next/router";
+import { AgGridReact } from "@ag-grid-community/react";
+import { ColDef } from "@ag-grid-community/core";
+import { GenderIcon } from "components/gender-icon";
+import { Demodal } from "demodal";
+import { NiceModal } from "components/modal";
+import { Confirmation } from "components/confirmation";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useRouter().query;
@@ -26,6 +30,50 @@ export const useCurrentClassificationId = () => {
 
 // type Classification = AppRouterInputs["classification"]["add"];
 type Category = AppRouterOutputs["classification"]["categories"][0];
+
+const CategoryIsSpecialRenderer = (props: { data: Category }) => <CategoryIsSpecial category={props.data} />;
+const ActionsRenderer = (props: { context: { refetch: () => void }; data: Category }) => (
+    <CategoryActions refetch={props.context.refetch} category={props.data} />
+);
+
+const defaultColumns: ColDef<Category>[] = [
+    {
+        field: "index",
+        width: 25,
+        headerName: "Index",
+        headerClass: "hidden",
+        valueGetter: "node.rowIndex + 1",
+        sortable: false,
+        filter: false,
+    },
+    { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
+    { field: "minAge", headerName: "Min Age", sortable: true, resizable: true, filter: true },
+    { field: "maxAge", headerName: "Max Age", sortable: true, resizable: true, filter: true },
+    {
+        field: "gender",
+        headerName: "Gender",
+        sortable: true,
+        resizable: true,
+        filter: true,
+        cellStyle: { justifyContent: "center", display: "flex" },
+        width: 150,
+        cellRenderer: (props: { data: Category }) => <GenderIcon gender={props.data.gender as Gender} />,
+    },
+    {
+        field: "isSpecial",
+        headerName: "Is Special",
+        sortable: true,
+        filter: true,
+        resizable: true,
+        cellRenderer: CategoryIsSpecialRenderer,
+    },
+    {
+        field: "actions",
+        // width: 50,
+        headerName: "Actions",
+        cellRenderer: ActionsRenderer,
+    },
+];
 
 const getColorFromIndex = (index: number) =>
     ({
@@ -46,20 +94,65 @@ const getColorFromIndex = (index: number) =>
 
 type GenderOptions = Gender | "any";
 
+const CategoryIsSpecial = ({ category }: { category: Category }) => {
+    return (
+        <span
+            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
+                ["text-green-600 font-semibold"]: category.isSpecial,
+                ["text-red-600"]: !category.isSpecial,
+            })}
+        >
+            {category.isSpecial ? <Icon size={1} path={mdiCheck} /> : <Icon size={1} path={mdiClose} />}
+        </span>
+    );
+};
+
+const CategoryActions = ({ category, refetch }: { category: Category; refetch: () => void }) => {
+    const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
+
+    const openDeleteDialog = async () => {
+        const confirmed = await Demodal.open<boolean>(NiceModal, {
+            title: `Delete category`,
+            component: Confirmation,
+            props: {
+                message: `You are trying to delete the Category ${category.name}. Do you want to proceed?`,
+            },
+        });
+
+        if (confirmed) {
+            await removeCategoryMutation.mutateAsync({ categoryId: category.id });
+            refetch();
+        }
+    };
+
+    return (
+        <div className="flex h-full">
+            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
+                <Icon size={1} path={mdiTrashCan} />
+            </span>
+        </div>
+    );
+};
+
 export const ClassificationCategories = () => {
     const raceId = useCurrentRaceId();
     const classificationId = useCurrentClassificationId();
-    const { data: categories, refetch: refetchCategories } = trpc.classification.categories.useQuery(
+    const gridRef = useRef<AgGridReact<Category>>(null);
+    const { data: categories, refetch } = trpc.classification.categories.useQuery(
         { classificationId: classificationId! },
         { initialData: [], enabled: !!classificationId }
     );
     const addCategoryMutation = trpc.classification.addCategory.useMutation();
-    const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
+    // const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
 
     const [categoryName, setCategoryName] = useState("");
     const [minAge, setMinAge] = useState<number | undefined | null>(1);
     const [maxAge, setMaxAge] = useState<number | undefined | null>(99);
     const [gender, setGender] = useState<GenderOptions>("any");
+
+    const onFirstDataRendered = useCallback(() => {
+        gridRef.current?.api.sizeColumnsToFit();
+    }, []);
 
     // const [categories, setCategories] = useState(initialClassification.categories);
 
@@ -88,26 +181,41 @@ export const ClassificationCategories = () => {
             raceId: raceId!,
             classificationId: classificationId!,
         });
-        refetchCategories();
+        refetch();
     };
 
-    const removeCategory = async (category: Category) => {
-        await removeCategoryMutation.mutateAsync({ categoryId: category.id });
-        refetchCategories();
+    const openEditDialog = async (_editedCategory?: Category) => {
+        // const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
+        //     title: "Edit player registration",
+        //     component: PlayerRegistrationEdit,
+        //     props: {
+        //         raceId: raceId!,
+        //         editedPlayerRegistration,
+        //     },
+        // });
+        // if (playerRegistration) {
+        //     await editPlayerRegistrationMutation.mutateAsync({ raceId: raceId!, player: playerRegistration });
+        //     refetch();
+        // }
     };
 
-    const autoCategories = categories.filter(c => c.isSpecial === true);
-    const openCategories = categories.filter(c => c.isSpecial === false && c.minAge == null && c.maxAge == null);
+    // const removeCategory = async (category: Category) => {
+    //     await removeCategoryMutation.mutateAsync({ categoryId: category.id });
+    //     refetchCategories();
+    // };
 
-    const ageCategories = Object.entries(
-        groupBy(
-            categories.filter(c => c.minAge != null || c.maxAge != null),
-            c => c.gender ?? ""
-        )
-    );
+    // const autoCategories = categories.filter(c => c.isSpecial === true);
+    // const openCategories = categories.filter(c => c.isSpecial === false && c.minAge == null && c.maxAge == null);
+
+    // const ageCategories = Object.entries(
+    //     groupBy(
+    //         categories.filter(c => c.minAge != null || c.maxAge != null),
+    //         c => c.gender ?? ""
+    //     )
+    // );
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full">
             <div className="flex">
                 <div className="grow basis-full">
                     <Label>Name</Label>
@@ -180,90 +288,18 @@ export const ClassificationCategories = () => {
                 </div>
             </div>
             <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>OPEN Categories</Label>
-                    {/* <div className="flex py-2 items-center text-xs text-blue-900">
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-1">Add category</span>
-                    </div> */}
-                    <div className="flex flex-col items-start">
-                    {openCategories.map((a, i) => (
-                        <div key={i} className={`flex min-w-36 py-1 my-1 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(i)} items-center justify-center text-white`}>
-                            <span>{a.id}</span>
-                            <span> ({a.gender}) </span>
-                            <span>{a.name}</span>
-                            <div
-                                onClick={() => {
-                                    removeCategory(a);
-                                }}
-                            >
-                                <Icon size={1} className="hover:text-black ml-2" path={mdiTrashCanOutline}></Icon>
-                            </div>
-                        </div>
-                    ))}
-                    </div>
-                </div>
-            </div>
-            <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>AGE Categories</Label>
-                    {ageCategories.map(([gender, categories]) => (
-                        <div key={gender} className="flex flex-col">
-                            <div>{gender || "open"}</div>
-                            <div className="flex">
-                                {categories.map((c, i) => (
-                                    <div
-                                        key={c.id}
-                                        className={`flex min-w-36 px-4 hover:opacity-80 cursor-pointer ${getColorFromIndex(i)} items-center justify-center text-white`}
-                                    >
-                                        <div className="grow py-1">
-                                            <div>{c.name}</div>
-                                            <div>
-                                                {c.minAge} - {c.maxAge}
-                                            </div>
-                                        </div>
-                                        <div
-                                            onClick={() => {
-                                                removeCategory(c);
-                                            }}
-                                        >
-                                            <Icon size={1} className="hover:text-black ml-2" path={mdiTrashCanOutline}></Icon>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>SPECIAL Categories</Label>
-                    {/* <div className="flex py-2 items-center text-xs text-blue-900">
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-1">Add category</span>
-                    </div> */}
-                    {autoCategories.map((a, i) => (
-                        <div key={i}>
-                            <span>{a.id}</span>
-                            <span>{a.name}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="p-2"></div>
-            <div className="mt-4 flex">
-                {/* <Button onClick={() => onResolve({ ...classification, categories: categories! })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
-                <Button onClick={onReject} className="ml-2">
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
-                </Button> */}
+            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+                <AgGridReact<Category>
+                    ref={gridRef}
+                    context={{ refetch }}
+                    onRowDoubleClicked={e => openEditDialog(e.data)}
+                    suppressCellFocus={true}
+                    suppressAnimationFrame={true}
+                    columnDefs={defaultColumns}
+                    rowData={categories}
+                    onFirstDataRendered={onFirstDataRendered}
+                    onGridSizeChanged={onFirstDataRendered}
+                ></AgGridReact>
             </div>
         </div>
     );
