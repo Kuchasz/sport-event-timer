@@ -128,7 +128,7 @@ export const ClassificationCategories = () => {
         const category = await Demodal.open<Category>(NiceModal, {
             title: "Create new category",
             component: CategoryCreate,
-            props: { raceId: raceId! },
+            props: { classificationId },
         });
 
         if (category) {

@@ -11,7 +11,6 @@ type CategoryCreateProps = {
 
 export const CategoryCreate = ({ classificationId, onReject, onResolve }: CategoryCreateProps) => {
     const category: CreateCategory = {
-        id: 0,
         classificationId,
         name: "",
         minAge: undefined,
