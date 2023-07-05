@@ -1,6 +1,5 @@
 import Icon from "@mdi/react";
 import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
-import { useCurrentRaceId } from "hooks";
 import { AppRouterOutputs } from "trpc";
 import { useCallback, useRef } from "react";
 import { Gender } from "@set/utils/dist/gender";
@@ -110,7 +109,6 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
 };
 
 export const ClassificationCategories = () => {
-    const raceId = useCurrentRaceId();
     const classificationId = useCurrentClassificationId();
     const gridRef = useRef<AgGridReact<Category>>(null);
     const { data: categories, refetch } = trpc.classification.categories.useQuery(
