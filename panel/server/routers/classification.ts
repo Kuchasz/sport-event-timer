@@ -1,10 +1,10 @@
 import { GenderEnum } from "../../models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
+import { Gender } from "@set/timer/dist/model";
 
 const categorySchema = z.object({
     id: z.number().min(1).optional(),
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
     classificationId: z.number({ required_error: "classificationId is required" }).min(1),
     name: z.string({ required_error: "name is required" }),
     gender: GenderEnum.nullish(),
@@ -39,11 +39,13 @@ export const classificationRouter =
             classificationId: z.number({ required_error: "classificationId is required" })
         })).query(async ({ input, ctx }) => {
             const classificationId = input.classificationId;
-            return await ctx.db.category.findMany({ where: { classificationId } });
+            const categories = await ctx.db.category.findMany({ where: { classificationId } });
+
+            return categories.map(c => ({ ...c, gender: c.gender as Gender }));
         }),
         addCategory: protectedProcedure.input(categorySchema)
             .mutation(async ({ input, ctx }) => {
-                const { id, raceId, ...classification } = input;
+                const { id, ...classification } = input;
 
                 return await ctx.db.category.create({ data: classification });
             }),
@@ -54,6 +56,18 @@ export const classificationRouter =
 
             return await ctx.db.category.delete({ where: { id: categoryId } });
         }),
+        updateCategory: protectedProcedure.input(categorySchema)
+            .mutation(async ({ input, ctx }) => {
+                const { id, ...data } = input;
+                const { ...category } = data;
+
+                return await ctx.db.category.update({
+                    where: { id: id! },
+                    data: {
+                        ...category
+                    }
+                });
+            }),
         // upload: protectedProcedure.input(z.object({
         //     classifications: z.array(
         //         z.object({
