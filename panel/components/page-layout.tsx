@@ -161,7 +161,6 @@ const raceMenuGroup = {
 
 const Status = () => {
     const { data: sessionData } = useSession();
-    const router = useRouter();
     const pathname = usePathname();
 
     return (
