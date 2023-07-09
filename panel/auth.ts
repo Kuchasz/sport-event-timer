@@ -33,7 +33,7 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
 
 export async function getSecuredServerSideProps(context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) {
     const { req, resolvedUrl } = context;
-    const session = await getSession({ req });
+    const session = await getServerSession(authConfig);
     const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
     const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
 
@@ -54,3 +54,30 @@ export async function getSecuredServerSideProps(context: GetServerSidePropsConte
         };
     }
 }
+
+export async function authenticate() {
+    // const { req, resolvedUrl } = context;
+    const session = await getServerSession(authConfig);
+
+    // const resolvedUrl = usePathname();
+
+    // const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
+    // const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
+    const callbackUrl = `/auth/signin`;
+
+    if (!session) {
+        redirect(callbackUrl);
+    }
+}
+
+import NextAuth, { getServerSession } from "next-auth"
+import authConfig from "auth-config"
+import { redirect } from "next/navigation";
+
+export const {
+    // handlers: { GET, POST },
+    auth,
+    CSRF_experimental,
+} = NextAuth({
+    ...authConfig,
+})

@@ -1,3 +1,5 @@
+"use client";
+
 import { Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import { Float } from "@headlessui-float/react";

@@ -1,6 +1,6 @@
 import { allowedLatency, onConnectionStateChanged } from "./connection";
 import { ReactNode, useEffect } from "react";
-import { trpc } from "./connection";
+import { trpc } from "./trpc-core";
 import { useSetAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { logger } from "utils";

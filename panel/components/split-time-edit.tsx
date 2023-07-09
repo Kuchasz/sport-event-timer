@@ -1,4 +1,4 @@
-import { trpc } from "connection";
+import { trpc } from "trpc-core";
 import { AppRouterInputs } from "trpc";
 import { SplitTimeForm } from "./split-time-form";
 

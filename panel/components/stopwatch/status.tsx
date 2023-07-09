@@ -1,14 +1,20 @@
-import { ConnectionState, trpc } from "../../connection";
+"use client";
+
+import { trpc } from "../../trpc-core";
 import { Icon } from "@mdi/react";
 import { mdiAutorenew, mdiCloudOffOutline, mdiCog, mdiWeatherCloudyAlert } from "@mdi/js";
 import { TimingPointIcon } from "./timing-point-icon";
-import { Timer } from "./timer";
 import { useAtom } from "jotai";
 import Link from "next/link";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
-import { useRouter } from "next/router";
-
 import classNames from "classnames";
+import { ConnectionState } from "connection";
+import { Timer } from "./timer";
+import dynamic from "next/dynamic";
+
+const NoSSRTimer = dynamic(() => Promise.resolve(Timer), {
+    ssr: false,
+});
 
 const SelectedTimingPoint = ({
     timingPoints,
@@ -28,7 +34,7 @@ const SelectedTimingPoint = ({
 
 const WarningMessage = ({ icon, contents }: { icon?: string; contents: string }) => (
     <span className="cursor-pointer flex items-center text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
-        {icon && <Icon className="mr-1" path={icon} size={.7}/>}
+        {icon && <Icon className="mr-1" path={icon} size={0.7} />}
         <span>{contents}</span>
     </span>
 );
@@ -40,7 +46,7 @@ const StatusBar = ({
     text,
     connectionState,
     pulse = false,
-    spin = false
+    spin = false,
 }: {
     displayOn: ConnectionState;
     color: React.ComponentProps<"div">["className"];
@@ -54,7 +60,7 @@ const StatusBar = ({
         className={classNames(
             `absolute z-10 text-xs w-full overflow-hidden text-white font-semibold ease-out transition-all flex justify-center items-center ${color}`,
             {
-                ['h-0']:  connectionState !== desiredState,
+                ["h-0"]: connectionState !== desiredState,
                 ["h-auto py-2"]: connectionState === desiredState,
                 ["animate-pulse"]: pulse,
             }
@@ -78,11 +84,9 @@ const StatusBar = ({
     </span>
 );
 
-export const Status = () => {
+export const Status = ({ raceId }: { raceId: string }) => {
     const [connectionState] = useAtom(connectionStateAtom);
-    const {
-        query: { raceId },
-    } = useRouter();
+
     const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
         { raceId: parseInt(raceId as string) },
         {
@@ -123,7 +127,7 @@ export const Status = () => {
                 connectionState={connectionState}
             />
             <div className="px-4 py-2 rounded-b-lg z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
-                <Timer offset={offset!} />
+                <NoSSRTimer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
                         {sortedTimingPoints.length === 0 ? (
