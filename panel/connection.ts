@@ -1,8 +1,8 @@
+"use client";
+
 import superjson from "superjson";
-import { createTRPCNext } from "@trpc/next";
 import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
 import { QueryClient } from "@tanstack/react-query";
-import type { AppRouter } from "./server/routers/app";
 import { env } from "./env/client";
 
 const url =
@@ -43,15 +43,14 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
                         ? "disconnected"
                         : "error"
         );
-    }, 500);
+    }, 5000);
 };
 
 if (getConnection)
     registerStateChangeHandlers(getConnection);
 
-export const queryClient = new QueryClient();
 
-const connectionConfig = ({
+export const connectionConfig = (queryClient: QueryClient) => ({
     transformer: superjson,
     queryClient,
     links: [
@@ -72,9 +71,7 @@ const connectionConfig = ({
             })
         })
     ]
-})
-
-export const trpc = createTRPCNext<AppRouter>({ config() { return connectionConfig }, ssr: false });
+});
 
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
 

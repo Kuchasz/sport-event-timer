@@ -3,7 +3,6 @@ import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
 // import { connectionStateAtom, StopWatchMode } from "../../states/stopwatch-states";
 import { StopWatchMode } from "../../states/stopwatch-states";
-import { useRouter } from "next/router";
 // import { ConnectionState } from "@set/timer/dist/model";
 import classNames from "classnames";
 // import { useAtom } from "jotai";
@@ -33,12 +32,8 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     );
 };
 
-export const BottomMenu = ({ isOffline, timingPointMissing }: { isOffline: boolean, timingPointMissing: boolean }) => {
-    const {
-        asPath,
-        query: { raceId },
-    } = useRouter();
-    const mode = asPath as Paths;
+export const BottomMenu = ({ pathname, raceId, isOffline, timingPointMissing }: { pathname: string, raceId: string, isOffline: boolean, timingPointMissing: boolean }) => {
+    const mode = pathname as Paths;
     // const [connectionState, setConnectionState] = useAtom(connectionStateAtom);
 
     return (

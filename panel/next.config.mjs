@@ -1,24 +1,25 @@
 /** @type {import('next').NextConfig} */
 
-import withPWAModule from 'next-pwa';
+// import withPWAModule from 'next-pwa';
 
-const withPWA = withPWAModule({
-    dest: 'public',
-});
+// const withPWA = withPWAModule({
+// dest: 'public',
+    // });
 
-/**
- * Don't be scared of the generics here.
- * All they do is to give us autocompletion when using this.
- *
- * @template {import('next').NextConfig} T
- * @param {T} config - A generic parameter that flows through to the return type
- * @constraint {{import('next').NextConfig}}
- */
-function defineNextConfig(config) {
-    return config;
-}
+    /**
+     * Don't be scared of the generics here.
+     * All they do is to give us autocompletion when using this.
+     *
+     * @template {import('next').NextConfig} T
+     * @param {T} config - A generic parameter that flows through to the return type
+     * @constraint {{import('next').NextConfig}}
+     */
+    function defineNextConfig(config) {
+        return config;
+    }
 
-export default withPWA(defineNextConfig({
+// export default withPWA(defineNextConfig({
+export default defineNextConfig({
     // reactStrictMode: true,
     // swcMinify: true,
     // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
@@ -27,8 +28,10 @@ export default withPWA(defineNextConfig({
         defaultLocale: "en",
     },
     poweredByHeader: false,
+    
+
     // experimental: {
-    //     runtime: 'nodejs',
+    //     // runtime: 'nodejs',
     //     appDir: true
     // }
-}));
+});

@@ -1,4 +1,4 @@
-import type { ConnectionState } from "connection";
+import type { ConnectionState } from "trpc-core";
 import { atom } from "jotai";
 import { atomWithStorage } from 'jotai/utils'
 

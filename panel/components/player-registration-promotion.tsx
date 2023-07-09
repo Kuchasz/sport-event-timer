@@ -8,7 +8,7 @@ import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
 import { useFormState } from "hooks";
-import { trpc } from "connection";
+import { trpc } from "trpc-core";
 import { PoorInput } from "./poor-input";
 
 type PlayerPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];

@@ -3,8 +3,8 @@ import { getAvailableDigits, getAvailableNumbers } from "@set/utils/dist/string"
 import { Player, TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerSelector } from "../../hooks";
-import { useRouter } from "next/router";
-import { trpc } from "connection";
+import { useParams } from "next/navigation";
+import { trpc } from "trpc-core";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -43,9 +43,7 @@ type PlayersDialPadProps = {
 export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
 
-    const {
-        query: { raceId },
-    } = useRouter();
+    const { raceId } = useParams() as { raceId: string };
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 

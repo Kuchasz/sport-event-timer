@@ -1,4 +1,4 @@
-import { trpc } from "connection";
+import { trpc } from "trpc-core";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PlayerForm } from "./player-form";
 
