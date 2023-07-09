@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, PreviewData } from "next";
-import { getSession } from "next-auth/react";
 import { ParsedUrlQuery } from "querystring";
 import { db } from "server/db";
 import { z } from "zod";
@@ -32,7 +31,7 @@ export const withRaceApiKey = (next: (req: NextApiRequest, res: NextApiResponse)
 }
 
 export async function getSecuredServerSideProps(context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) {
-    const { req, resolvedUrl } = context;
+    const { resolvedUrl } = context;
     const session = await getServerSession(authConfig);
     const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
     const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
