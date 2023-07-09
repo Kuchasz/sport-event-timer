@@ -1,13 +1,9 @@
 "use client";
 
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
-type SignInProps = {
-    providers: ReturnType<typeof getProviders>;
-};
-
-export default function SignIn({}: SignInProps) {
+export default function SignIn() {
     const searchParams = useSearchParams();
 
     return (
