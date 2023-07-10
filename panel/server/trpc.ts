@@ -61,7 +61,7 @@ export const createContext = (forWS: boolean) => async (
 
     const sessionPromise = forWS 
         ? getSession(opts as NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) 
-        : getServerSession(authOptions);
+        : getServerSession(authOptions());
 
     return ({
         session: await sessionPromise,

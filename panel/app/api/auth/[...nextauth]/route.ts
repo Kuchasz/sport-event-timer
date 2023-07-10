@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next"
 import { authOptions } from "server/auth"
 
 const handler = NextAuth({
-    ...authOptions
+    ...authOptions()
 })
 
 export { handler as GET, handler as POST }
