@@ -51,6 +51,7 @@ jobs:
             - name: Build panel
               run: |
                   cd ./panel
+                  yarn next telemetry disable
                   yarn build
 
             - name: Bundle ZIP package
