@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { clientEnv, clientSchema } from "./schema";
+import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 
 const _clientEnv = clientSchema.safeParse(clientEnv);
 
@@ -14,7 +15,7 @@ export const formatErrors = (
     })
     .filter(Boolean);
 
-if (!_clientEnv.success) {
+if (!_clientEnv.success && process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD) {
   console.error(
     "❌ Invalid environment variables:\n",
     ...formatErrors(_clientEnv.error.format()),
