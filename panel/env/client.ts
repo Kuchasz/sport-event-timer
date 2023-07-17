@@ -23,7 +23,7 @@ if (!_clientEnv.success && process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD) {
   throw new Error("Invalid environment variables");
 }
 
-for (let key of Object.keys(_clientEnv.data)) {
+for (let key of Object.keys(_clientEnv.data ?? {})) {
   if (!key.startsWith("NEXT_PUBLIC_")) {
     console.warn(
       `❌ Invalid public environment variable name: ${key}. It must begin with 'NEXT_PUBLIC_'`,
