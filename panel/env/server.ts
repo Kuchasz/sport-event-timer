@@ -3,6 +3,7 @@
  * This file is included in `/next.config.mjs` which ensures the app isn't built with invalid env vars.
  * It has to be a `.mjs`-file to be imported there.
  */
+import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 import { serverSchema } from "./schema";
 import { env as clientEnv, formatErrors } from "./client";
 
@@ -13,7 +14,8 @@ if (!_serverEnv.success) {
     "❌ Invalid environment variables:\n",
     ...formatErrors(_serverEnv.error.format()),
   );
-  throw new Error("Invalid environment variables");
+  if (process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD)
+    throw new Error("Invalid environment variables");
 }
 
 for (let key of Object.keys(_serverEnv.data)) {
