@@ -14,8 +14,10 @@ import {
     mdiAccountCogOutline,
     mdiAccountGroup,
     mdiAlarm,
+    mdiArrowRight,
     mdiBikeFast,
     mdiBriefcaseOutline,
+    mdiChevronRight,
     mdiCog,
     mdiHomeOutline,
     mdiNumeric,
@@ -27,7 +29,7 @@ import {
 } from "@mdi/js";
 import { Meta } from "./meta";
 import { useCurrentRaceId } from "../hooks";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { MenuButton } from "./menu-button";
 import Link from "next/link";
@@ -162,11 +164,27 @@ const raceMenuGroup = {
 const Status = () => {
     const { data: sessionData } = useSession();
     const pathname = usePathname();
+    const segments = useSelectedLayoutSegments();
 
     return (
         <div className="flex items-center cursor-default py-6 px-8">
-            <div className="uppercase text-md font-semibold">
-                {pathname}
+            <div className="uppercase text-md font-semibold flex">
+                {segments.map((s, id) => (
+                    <div key={s} className="flex items-center">
+                        {id === 0 ? (
+                            <Icon className="text-gray-500" size={1} path={mdiHomeOutline} />
+                        ) : (
+                            <>
+                                <Icon className="mx-2 text-gray-500" size={1} path={mdiChevronRight} />
+                                {s}
+                            </>
+                        )}
+
+                        {/* <Icon className="mx-2 text-gray-500" size={1} path={id === 0 ? mdiHomeOutline : mdiChevronRight} />
+                        {id === 0 ? "" : s} */}
+                    </div>
+                ))}
+                {/* {pathname} */}
                 {/* {segments.filter(i => i).map((s, i) =>
                     i === 0 ? (
                         <span key={i}>{s}</span>
@@ -203,9 +221,10 @@ const Status = () => {
 const PageLayout = ({ children }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
+    const segments = useSelectedLayoutSegments();
 
     const session = useSession();
-    console.log(session);
+    console.log(session, segments);
 
     const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
