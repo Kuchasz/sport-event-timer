@@ -13,15 +13,17 @@ import {
     mdiAccount,
     mdiAccountCogOutline,
     mdiAccountGroup,
-    mdiAlarm, mdiBikeFast,
-    mdiBriefcaseOutline, mdiCog,
+    mdiAlarm,
+    mdiBikeFast,
+    mdiBriefcaseOutline,
+    mdiCog,
     mdiHomeOutline,
     mdiNumeric,
     mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
     mdiTimetable,
-    mdiViewDashboardEditOutline
+    mdiViewDashboardEditOutline,
 } from "@mdi/js";
 import { Meta } from "./meta";
 import { useCurrentRaceId } from "../hooks";
@@ -164,21 +166,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 
     return (
         <div className="flex items-center cursor-default py-6 px-8">
-            {/* <div className="uppercase text-md font-semibold flex"> */}
-                {breadcrumbs}
-                {/* {segments.map((s, id) => (
-                    <div key={s} className="flex items-center">
-                        {id === 0 ? (
-                            <Icon className="text-gray-500" size={1} path={mdiHomeOutline} />
-                        ) : (
-                            <>
-                                <Icon className="mx-2 text-gray-500" size={1} path={mdiChevronRight} />
-                                {s}
-                            </>
-                        )}
-                    </div>
-                ))} */}
-            {/* </div> */}
+            {breadcrumbs}
             <div className="grow"></div>
             {sessionData && (
                 <div className="flex items-center mr-4">
@@ -210,15 +198,11 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
 
     const addRaceMuttaion = trpc.race.add.useMutation();
 
-    // const { query: { raceId }} = router;
-
     const currentMenuGroup = pathname!.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
         ? raceMenuGroup
         : pathname!.includes(adminMenuGroup.to.replace(":raceId", String(raceId)))
         ? adminMenuGroup
         : generalMenuGroup;
-
-    // const currentMenuItem = currentMenuGroup.items.find(n => router.asPath === n.to.replace(":raceId", String(raceId)));
 
     const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
     const menuItems = currentMenuGroup.items;
@@ -236,17 +220,12 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
         }
     };
 
-    // const menuItems = [generalMenuItems, raceMenuItems, adminMenuItems];
-
     return (
         <>
             <Demodal.Container />
             <Meta />
             <div className="h-full relative">
-                {/* <div className="h-64 w-full absolute top-0 left-0 bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]"></div> */}
                 <div className="will-change-transform h-full w-full flex">
-                    {/* <Status /> */}
-
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
                             <Link href={"/panel" as Route}>
@@ -270,10 +249,6 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                             </div>
                         </nav>
                         <nav className="w-52 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
-                            {/* <div className="pt-4 pb-12 flex justify-center">
-                                <img className="invert" src="/assets/logo_ravelo.png" />
-                            </div> */}
-
                             <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div>
 
                             {currentMenuGroup.desc === raceMenuGroup.desc ? (
@@ -310,7 +285,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                 : null}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
-                            <Status breadcrumbs={breadcrumbs}/>
+                            <Status breadcrumbs={breadcrumbs} />
                             <div className="px-8 pb-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>
