@@ -225,7 +225,7 @@ export const MyRaces = () => {
                     context={{ refetch }}
                     onRowDoubleClicked={e => openEditDialog(e.data)}
                     rowClassRules={{
-                        "z-10": p => {
+                        "z-10": () => {
                             return false;
                         },
                     }}
