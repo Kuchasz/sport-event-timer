@@ -13,23 +13,19 @@ import {
     mdiAccount,
     mdiAccountCogOutline,
     mdiAccountGroup,
-    mdiAlarm,
-    mdiArrowRight,
-    mdiBikeFast,
-    mdiBriefcaseOutline,
-    mdiChevronRight,
-    mdiCog,
+    mdiAlarm, mdiBikeFast,
+    mdiBriefcaseOutline, mdiCog,
     mdiHomeOutline,
     mdiNumeric,
     mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
     mdiTimetable,
-    mdiViewDashboardEditOutline,
+    mdiViewDashboardEditOutline
 } from "@mdi/js";
 import { Meta } from "./meta";
 import { useCurrentRaceId } from "../hooks";
-import { usePathname, useRouter, useSelectedLayoutSegments } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { MenuButton } from "./menu-button";
 import Link from "next/link";
@@ -207,10 +203,6 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 const PageLayout = ({ breadcrumbs, children }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
-    const segments = useSelectedLayoutSegments();
-
-    const session = useSession();
-
     const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
     const raceId = useCurrentRaceId() || items[0]?.id;
