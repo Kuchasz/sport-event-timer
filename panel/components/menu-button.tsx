@@ -1,8 +1,9 @@
 import Icon from "@mdi/react";
 import classNames from "classnames";
+import { Route } from "next";
 import Link from "next/link";
 
-export const MenuButton = (n: { color: string; text: string; icon: string; to: string; isActive: boolean }) => (
+export const MenuButton = (n: { color: string; text: string; icon: string; to: Route; isActive: boolean }) => (
     <Link href={n.to}>
         <div
             className={classNames("py-4 px-6 cursor-pointer flex items-center text-sm", {
