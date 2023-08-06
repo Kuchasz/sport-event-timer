@@ -39,10 +39,11 @@ import { Demodal } from "demodal";
 import { AppRouterInputs } from "trpc";
 import { RaceCreate } from "./race-create";
 import { NiceModal } from "./modal";
+import { ReactNode } from "react";
 
 type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
-    preview?: boolean;
+    breadcrumbs: React.ReactNode;
     children: React.ReactNode;
 };
 
@@ -161,15 +162,14 @@ const raceMenuGroup = {
     ],
 };
 
-const Status = () => {
+const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
-    const pathname = usePathname();
-    const segments = useSelectedLayoutSegments();
 
     return (
         <div className="flex items-center cursor-default py-6 px-8">
-            <div className="uppercase text-md font-semibold flex">
-                {segments.map((s, id) => (
+            {/* <div className="uppercase text-md font-semibold flex"> */}
+                {breadcrumbs}
+                {/* {segments.map((s, id) => (
                     <div key={s} className="flex items-center">
                         {id === 0 ? (
                             <Icon className="text-gray-500" size={1} path={mdiHomeOutline} />
@@ -179,23 +179,9 @@ const Status = () => {
                                 {s}
                             </>
                         )}
-
-                        {/* <Icon className="mx-2 text-gray-500" size={1} path={id === 0 ? mdiHomeOutline : mdiChevronRight} />
-                        {id === 0 ? "" : s} */}
                     </div>
-                ))}
-                {/* {pathname} */}
-                {/* {segments.filter(i => i).map((s, i) =>
-                    i === 0 ? (
-                        <span key={i}>{s}</span>
-                    ) : (
-                        <Fragment key={i}>
-                            <span className="mx-4">/</span>
-                            <span>{s}</span>
-                        </Fragment>
-                    )
-                )} */}
-            </div>
+                ))} */}
+            {/* </div> */}
             <div className="grow"></div>
             {sessionData && (
                 <div className="flex items-center mr-4">
@@ -218,13 +204,12 @@ const Status = () => {
     );
 };
 
-const PageLayout = ({ children }: Props) => {
+const PageLayout = ({ breadcrumbs, children }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const segments = useSelectedLayoutSegments();
 
     const session = useSession();
-    console.log(session, segments);
 
     const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
@@ -332,7 +317,7 @@ const PageLayout = ({ children }: Props) => {
                                 : null}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
-                            <Status />
+                            <Status breadcrumbs={breadcrumbs}/>
                             <div className="px-8 pb-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>

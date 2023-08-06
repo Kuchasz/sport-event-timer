@@ -2378,7 +2378,7 @@ __metadata:
     papaparse: 5.3.2
     postcss: 8.4.14
     prisma: 4.11.0
-    react: ^18.2.0
+    react: 18.2.0
     react-dom: 18.2.0
     react-location: 3.3.4
     react-redux: 8.0.2
@@ -7619,7 +7619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

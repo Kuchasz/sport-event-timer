@@ -226,7 +226,6 @@ export const MyRaces = () => {
                     onRowDoubleClicked={e => openEditDialog(e.data)}
                     rowClassRules={{
                         "z-10": p => {
-                            console.log(p);
                             return false;
                         },
                     }}
