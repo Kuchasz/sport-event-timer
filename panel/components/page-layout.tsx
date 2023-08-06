@@ -36,6 +36,7 @@ import { AppRouterInputs } from "trpc";
 import { RaceCreate } from "./race-create";
 import { NiceModal } from "./modal";
 import { ReactNode } from "react";
+import { Route } from "next";
 
 type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -58,7 +59,7 @@ const generalMenuGroup = {
             color: "text-red-600",
         },
     ],
-};
+} as const;
 
 const adminMenuGroup = {
     desc: "Admin the system",
@@ -92,7 +93,7 @@ const adminMenuGroup = {
             color: "text-pink-600",
         },
     ],
-};
+} as const;
 
 const raceMenuGroup = {
     desc: "Manage your races",
@@ -156,7 +157,7 @@ const raceMenuGroup = {
             color: "text-orange-600",
         },
     ],
-};
+} as const;
 
 const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
@@ -248,12 +249,12 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
 
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
-                            <Link href={"/"}>
+                            <Link href={"/panel" as Route}>
                                 <div className="transition-opacity cursor-pointer text-center px-4 py-4 text-3xl">r</div>
                             </Link>
                             <div className="flex-grow h-full justify-center flex flex-col">
                                 {menuGroups.map(mg => (
-                                    <Link key={mg.to} href={mg.to.replace(":raceId", String(raceId))}>
+                                    <Link key={mg.to} href={mg.to.replace(":raceId", String(raceId)) as Route}>
                                         <div
                                             key={mg.desc}
                                             className={`transition-opacity cursor-pointer uppercase p-2 mx-3 my-4 rounded-xl text-2xs ${
@@ -288,7 +289,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                         initialValue={raceId}
                                         onChange={e => {
                                             // selectRace(e.target.value);
-                                            router.push(`/panel/${e.target.value}`);
+                                            router.push(`/panel/${e.target.value}` as Route);
                                         }}
                                         valueKey="id"
                                         nameKey="name"
@@ -302,7 +303,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                       <MenuButton
                                           key={n.to}
                                           {...n}
-                                          to={n.to.replace(":raceId", String(raceId))}
+                                          to={n.to.replace(":raceId", String(raceId)) as Route}
                                           isActive={pathname === n.to.replace(":raceId", String(raceId))}
                                       />
                                   ))

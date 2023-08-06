@@ -15,6 +15,7 @@ import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { trpc } from "trpc-core";
+import { Route } from "next";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -29,7 +30,7 @@ const Item = ({
     padBibNumber,
 }: {
     t: TimeStampWithPlayer;
-    navigate: (path: string) => void;
+    navigate: (path: Route) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
     style: CSSProperties;
@@ -108,7 +109,7 @@ const Item = ({
                 {!t.player ? (
                     <PrimaryActionButton
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/assign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route);
                         }}
                         icon={mdiAccountAlertOutline}
                     />
@@ -116,14 +117,14 @@ const Item = ({
                     <ActionButton
                         icon={mdiAccountSupervisor}
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route);
                         }}
                     />
                 )}
                 <ActionButton
                     icon={mdiWrenchOutline}
                     onClick={() => {
-                        navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
+                        navigate(`/stopwatch/${raceId}/tweak/${t.id}` as Route);
                     }}
                 />
                 {/* <ActionButton

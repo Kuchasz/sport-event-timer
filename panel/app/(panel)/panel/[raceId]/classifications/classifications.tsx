@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
+import { Route } from "next";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
@@ -36,7 +37,7 @@ const OpenCategoriesButton = ({ classification }: { classification: Classificati
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer">
             <Icon size={1} path={mdiAccountMultiple} />
-            <Link href={`${pathname}/${classification.id}`}>
+            <Link href={`${pathname}/${classification.id}` as Route}>
                 <span>categories</span>
             </Link>
         </span>
