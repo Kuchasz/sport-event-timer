@@ -1,19 +1,21 @@
 import { mdiChevronRight, mdiHomeOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import type { Route } from "next";
+import Link from "next/link";
 import React from "react";
 import { ReactNode } from "react";
 
-type BreadcrumbItemProps = { text: string };
+type BreadcrumbItemProps<T extends string> = { text: string; href: Route<T> | URL };
 
-const BreadcrumbItem = ({ text }: BreadcrumbItemProps) => (
+const BreadcrumbItem = <T extends string,>({ text, href }: BreadcrumbItemProps<T>) => (
     <div className="flex items-center">
         <Icon className="mx-2 text-gray-500" size={1} path={mdiChevronRight} />
-        {text}
+        <Link href={href as Route}>{text}</Link>
     </div>
 );
 
 export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
-    const areValidChildren = (children: ReactNode): children is React.ReactElement<BreadcrumbItemProps>[] => {
+    const areValidChildren = (children: ReactNode): children is React.ReactElement<BreadcrumbItemProps<string>>[] => {
         return !!children || React.Children.toArray(children).every(child => React.isValidElement(child) && child.type === BreadcrumbItem);
     };
 
@@ -25,14 +27,8 @@ export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
         <div className="uppercase text-xs font-semibold flex">
             <div className="flex items-center">
                 <Icon className="text-gray-500" size={1} path={mdiHomeOutline} />
-                {/* <Icon className="mx-2 text-gray-500" size={1} path={mdiChevronRight} /> */}
             </div>
             {children}
-            {/* <div className="flex items-center">admin</div>
-            <div className="flex items-center">
-                <Icon className="mx-2 text-gray-500" size={1} path={mdiChevronRight} />
-                hello
-            </div> */}
         </div>
     );
 };
