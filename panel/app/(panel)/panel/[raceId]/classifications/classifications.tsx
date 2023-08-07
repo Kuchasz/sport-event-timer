@@ -11,7 +11,6 @@ import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { useCallback, useRef } from "react";
 import { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
@@ -32,12 +31,11 @@ const defaultColumns: ColDef<Classification>[] = [
 ];
 
 const OpenCategoriesButton = ({ classification }: { classification: Classification }) => {
-    const pathname = usePathname();
 
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer">
             <Icon size={1} path={mdiAccountMultiple} />
-            <Link href={`${pathname}/${classification.id}` as Route}>
+            <Link href={`/panel/${classification.raceId}/classifications/${classification.id}` as Route}>
                 <span>categories</span>
             </Link>
         </span>
