@@ -264,7 +264,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                         initialValue={raceId}
                                         onChange={e => {
                                             // selectRace(e.target.value);
-                                            router.push(`/panel/${e.target.value}` as Route);
+                                            router.push(`/panel/${e.target.value}`);
                                         }}
                                         valueKey="id"
                                         nameKey="name"

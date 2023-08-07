@@ -1,5 +1,4 @@
 import { Breadcrumbs } from "components/breadcrumbs";
-import { Route } from "next";
 import { db } from "server/db";
 
 export default async ({ params }: { params: { raceId: string } }) => {
@@ -7,8 +6,8 @@ export default async ({ params }: { params: { raceId: string } }) => {
 
     return (
         <Breadcrumbs>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}` as Route} text={race.name}></Breadcrumbs.Item>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}/players` as Route} text="players"></Breadcrumbs.Item>
+            <Breadcrumbs.Item href={`/panel/${params.raceId}`} text={race.name}></Breadcrumbs.Item>
+            <Breadcrumbs.Item href={`/panel/${params.raceId}/players`} text="players"></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };

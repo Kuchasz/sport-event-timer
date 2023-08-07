@@ -109,7 +109,7 @@ const Item = ({
                 {!t.player ? (
                     <PrimaryActionButton
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route);
+                            navigate(`/stopwatch/${raceId}/assign/${t.id}`);
                         }}
                         icon={mdiAccountAlertOutline}
                     />
@@ -117,14 +117,14 @@ const Item = ({
                     <ActionButton
                         icon={mdiAccountSupervisor}
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route);
+                            navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
                         }}
                     />
                 )}
                 <ActionButton
                     icon={mdiWrenchOutline}
                     onClick={() => {
-                        navigate(`/stopwatch/${raceId}/tweak/${t.id}` as Route);
+                        navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
                     }}
                 />
                 {/* <ActionButton
