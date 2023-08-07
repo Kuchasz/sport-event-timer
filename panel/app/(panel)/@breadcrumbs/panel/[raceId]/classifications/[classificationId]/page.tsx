@@ -10,7 +10,6 @@ export default async ({ params }: { params: { raceId: string, classificationId: 
             <Breadcrumbs.Item href={`/panel/${params.raceId}`} text={race.name}></Breadcrumbs.Item>
             <Breadcrumbs.Item href={`/panel/${params.raceId}/classifications`} text="classifications"></Breadcrumbs.Item>
             <Breadcrumbs.Item href={`/panel/${params.raceId}/classifications/${params.classificationId}`} text={classification.name}></Breadcrumbs.Item>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}/classifications/${params.classificationId}`} text="categories"></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };
