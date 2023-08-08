@@ -21,7 +21,7 @@ type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
 };
 
-const Item = ({
+const Item = <T extends string>({
     t,
     navigate,
     dispatch,
@@ -30,7 +30,7 @@ const Item = ({
     padBibNumber,
 }: {
     t: TimeStampWithPlayer;
-    navigate: (path: Route) => void;
+    navigate: (path: Route<T> | URL) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
     style: CSSProperties;
@@ -109,7 +109,7 @@ const Item = ({
                 {!t.player ? (
                     <PrimaryActionButton
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/assign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route);
                         }}
                         icon={mdiAccountAlertOutline}
                     />
@@ -117,14 +117,14 @@ const Item = ({
                     <ActionButton
                         icon={mdiAccountSupervisor}
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/reassign/${t.id}`);
+                            navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route);
                         }}
                     />
                 )}
                 <ActionButton
                     icon={mdiWrenchOutline}
                     onClick={() => {
-                        navigate(`/stopwatch/${raceId}/tweak/${t.id}`);
+                        navigate(`/stopwatch/${raceId}/tweak/${t.id}` as Route);
                     }}
                 />
                 {/* <ActionButton
@@ -202,7 +202,7 @@ export const PlayersTimes = () => {
                             style={{ transform: `translateY(${virtualRow.start}px)` }}
                             key={times[virtualRow.index].id}
                             dispatch={dispatch}
-                            navigate={push}
+                            navigate={(s) => push(s as Route)}
                             t={times[virtualRow.index]}
                             raceId={parseInt(raceId as string)}
                             padBibNumber={highestBibNumber.toString().length}

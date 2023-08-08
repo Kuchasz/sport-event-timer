@@ -28,9 +28,9 @@ export default defineNextConfig({
         defaultLocale: "en",
     },
     poweredByHeader: false,
-    experimental: {
-        typedRoutes: true
-    }
+    // experimental: {
+    //     typedRoutes: true
+    // }
 
 
     // experimental: {
