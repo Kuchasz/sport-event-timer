@@ -165,7 +165,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
 
     return (
-        <div className="flex items-center cursor-default py-6 px-8">
+        <div className="flex items-center bg-gray-50 cursor-default py-6 px-8">
             {breadcrumbs}
             <div className="grow"></div>
             {sessionData && (
@@ -286,7 +286,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
-                            <div className="px-8 pb-4 flex-grow overflow-y-scroll">{children}</div>
+                            <div className="px-8 py-4 flex-grow overflow-y-scroll">{children}</div>
                         </main>
                     </div>
                 </div>
