@@ -27,7 +27,7 @@ export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
 
     return (
         <div className="uppercase text-xs font-semibold flex">
-            <div className="flex items-center text-gray-500">
+            <div className="flex items-center mx-1 text-gray-500">
                 <Link href="/panel">
                     <Icon className="hover:text-gray-700 cursor-pointer transition-colors rounded-md" size={0.8} path={mdiHomeOutline} />
                 </Link>
