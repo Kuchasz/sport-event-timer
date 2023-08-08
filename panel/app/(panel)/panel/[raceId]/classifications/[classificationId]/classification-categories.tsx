@@ -72,7 +72,7 @@ const defaultColumns: ColDef<Category>[] = [
 const CategoryIsSpecial = ({ category }: { category: Category }) => {
     return (
         <span
-            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
+            className={classNames("flex h-full items-center hover:text-black", {
                 ["text-green-600 font-semibold"]: category.isSpecial,
                 ["text-red-600"]: !category.isSpecial,
             })}
