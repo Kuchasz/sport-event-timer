@@ -10,7 +10,7 @@ type BreadcrumbItemProps<T extends string> = { text: string; href: Route<T> | UR
 const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>) => (
     <div className="last:font-bold font-medium flex items-center">
         <Icon className="mx-1" size={0.8} path={mdiChevronRight} />
-        <Link className="text-gray-700 hover:bg-gray-100 transition-colors px-2 py-1 rounded-md" href={href as Route}>
+        <Link className="text-gray-700 hover:bg-gray-200 transition-colors px-2 py-1 rounded-md" href={href as Route}>
             {text}
         </Link>
     </div>
