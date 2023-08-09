@@ -94,7 +94,7 @@ const defaultColumns: ColDef<PlayerRegistration>[] = [
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
     return (
         <span
-            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
+            className={classNames("flex h-full items-center hover:text-black", {
                 ["text-green-600 font-semibold"]: playerRegistration.promotedToPlayer,
                 ["text-red-600"]: !playerRegistration.promotedToPlayer,
             })}
