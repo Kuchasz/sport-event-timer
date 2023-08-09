@@ -5,14 +5,18 @@ import Link from "next/link";
 import React from "react";
 import { ReactNode } from "react";
 
-type BreadcrumbItemProps<T extends string> = { text: string; href: Route<T> | URL };
+type BreadcrumbItemProps<T extends string> = { text: string; href?: Route<T> | URL };
 
 const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>) => (
-    <div className="last:font-bold font-medium flex items-center">
+    <div className="last:text-gray-800 text-gray-500 flex items-center">
         <Icon className="mx-1" size={0.8} path={mdiChevronRight} />
-        <Link className="text-gray-700 hover:bg-gray-200 transition-colors px-2 py-1 rounded-md" href={href as Route}>
-            {text}
-        </Link>
+        {href ? (
+            <Link className="hover:bg-gray-200 transition-colors px-2 py-1 rounded-md" href={href as Route}>
+                {text}
+            </Link>
+        ) : (
+            <span className="hover:bg-gray-200 transition-colors px-2 py-1 rounded-md">{text}</span>
+        )}
     </div>
 );
 
