@@ -8,10 +8,10 @@ import { ReactNode } from "react";
 type BreadcrumbItemProps<T extends string> = { text: string; href?: Route<T> | URL };
 
 const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>) => (
-    <div className="last:text-gray-800 text-gray-500 flex items-center">
+    <div className="last:text-gray-800 text-gray-400 flex items-center">
         <Icon className="mx-1" size={0.8} path={mdiChevronRight} />
         {href ? (
-            <Link className="hover:bg-gray-200 transition-colors px-2 py-1 rounded-md" href={href as Route}>
+            <Link className="hover:bg-gray-200 hover:text-gray-800 transition-colors px-2 py-1 rounded-md" href={href as Route}>
                 {text}
             </Link>
         ) : (

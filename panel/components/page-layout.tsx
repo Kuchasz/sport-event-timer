@@ -19,7 +19,7 @@ import {
     mdiCog,
     mdiHomeOutline,
     mdiNumeric,
-    mdiPlus,
+    // mdiPlus,
     mdiPowerStandby,
     mdiTimerCogOutline,
     mdiTimetable,
@@ -27,20 +27,22 @@ import {
 } from "@mdi/js";
 import { Meta } from "./meta";
 import { useCurrentRaceId } from "../hooks";
-import { usePathname, useRouter } from "next/navigation";
+// import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { MenuButton } from "./menu-button";
 import Link from "next/link";
-import { PoorSelect2 } from "./poor-select";
+// import { PoorSelect2 } from "./poor-select";
 import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
-import { AppRouterInputs } from "trpc";
-import { RaceCreate } from "./race-create";
-import { NiceModal } from "./modal";
+// import { AppRouterInputs } from "trpc";
+// import { RaceCreate } from "./race-create";
+// import { NiceModal } from "./modal";
 import { ReactNode } from "react";
 import { Route } from "next";
+import { MenuHeader } from "./menu-header";
 
-type CreatedRace = AppRouterInputs["race"]["add"];
+// type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
     breadcrumbs: React.ReactNode;
     children: React.ReactNode;
@@ -53,15 +55,16 @@ const generalMenuGroup = {
     color: "bg-[#64b3f4]",
     to: "/panel",
     items: [
-        { text: "Dashboard", icon: mdiViewDashboardEditOutline, to: "/panel", color: "text-yellow-600" },
+        { text: "Dashboard", icon: mdiViewDashboardEditOutline, to: "/panel", color: "text-yellow-700", bg: "bg-yellow-100" },
         {
             text: "My Races",
             icon: mdiBikeFast,
             to: "/panel/my-races",
-            color: "text-red-600",
+            color: "text-red-700",
+            bg: "bg-red-50",
         },
     ],
-} as const;
+};
 
 const adminMenuGroup = {
     desc: "Admin the system",
@@ -74,28 +77,32 @@ const adminMenuGroup = {
             text: "Dashboard",
             icon: mdiViewDashboardEditOutline,
             to: "/panel/admin",
-            color: "text-yellow-600",
+            color: "text-yellow-700",
+            bg: "bg-yellow-50",
         },
         {
             text: "Races",
             icon: mdiBikeFast,
             to: "/panel/admin/races",
-            color: "text-green-600",
+            color: "text-green-700",
+            bg: "bg-green-50",
         },
         {
             text: "Say hay!",
             icon: mdiTimetable,
             to: "/panel/admin/hello",
-            color: "text-red-600",
+            color: "text-red-700",
+            bg: "bg-red-50",
         },
         {
             text: "Accounts",
             icon: mdiAccount,
             to: "/panel/admin/accounts",
-            color: "text-pink-600",
+            color: "text-pink-700",
+            bg: "bg-pink-50",
         },
     ],
-} as const;
+};
 
 const raceMenuGroup = {
     desc: "Manage your races",
@@ -108,58 +115,67 @@ const raceMenuGroup = {
             text: "Base Info",
             icon: mdiViewDashboardEditOutline,
             to: "/panel/:raceId",
-            color: "text-yellow-600",
+            color: "text-yellow-700",
+            bg: "bg-yellow-50",
         },
         {
             text: "Bib Numbers",
             icon: mdiNumeric,
             to: "/panel/:raceId/bib-numbers",
-            color: "text-green-600",
+            color: "text-green-700",
+            bg: "bg-green-50",
         },
         {
             text: "Players",
             icon: mdiAccountGroup,
             to: "/panel/:raceId/players",
-            color: "text-pink-600",
+            color: "text-pink-700",
+            bg: "bg-pink-50",
         },
         {
             text: "Registrations",
             icon: mdiAccountGroup,
             to: "/panel/:raceId/player-registrations",
-            color: "text-yellow-600",
+            color: "text-yellow-700",
+            bg: "bg-yellow-50",
         },
         {
             text: "Classifications",
             icon: mdiAccountCogOutline,
             to: "/panel/:raceId/classifications",
-            color: "text-purple-600",
+            color: "text-purple-700",
+            bg: "bg-purple-50",
         },
         {
             text: "Timing Points",
             icon: mdiTimerCogOutline,
             to: "/panel/:raceId/timing-points",
-            color: "text-lime-600",
+            color: "text-lime-700",
+            bg: "bg-lime-50",
         },
         {
             text: "Split Times",
             icon: mdiAlarm,
             to: "/panel/:raceId/split-times",
-            color: "text-red-600",
+            color: "text-red-700",
+            bg: "bg-red-50",
         },
         {
             text: "Results",
             icon: mdiTimetable,
             to: "/panel/:raceId/results",
-            color: "text-blue-600",
+            color: "text-blue-700",
+            bg: "bg-blue-50",
         },
         {
             text: "Settings",
             icon: mdiCog,
             to: "/panel/:raceId/settings",
-            color: "text-orange-600",
+            color: "text-orange-700",
+            bg: "bg-orange-50",
         },
     ],
-} as const;
+};
 
 const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
@@ -190,35 +206,36 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 };
 
 const PageLayout = ({ breadcrumbs, children }: Props) => {
-    const router = useRouter();
+    // const router = useRouter();
     const pathname = usePathname();
-    const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
+    // const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
+    const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
     const raceId = useCurrentRaceId() || items[0]?.id;
 
-    const addRaceMuttaion = trpc.race.add.useMutation();
+    // const addRaceMuttaion = trpc.race.add.useMutation();
 
-    const currentMenuGroup = pathname!.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
-        ? raceMenuGroup
-        : pathname!.includes(adminMenuGroup.to.replace(":raceId", String(raceId)))
-        ? adminMenuGroup
-        : generalMenuGroup;
+    // const currentMenuGroup = pathname!.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
+    //     ? raceMenuGroup
+    //     : pathname!.includes(adminMenuGroup.to.replace(":raceId", String(raceId)))
+    //     ? adminMenuGroup
+    //     : generalMenuGroup;
 
     const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
-    const menuItems = currentMenuGroup.items;
+    // const menuItems = menuGroups.flatMap(g => g.items); //currentMenuGroup.items;
 
-    const openCreateDialog = async () => {
-        const race = await Demodal.open<CreatedRace>(NiceModal, {
-            title: "Create new race",
-            component: RaceCreate,
-            props: {},
-        });
+    // const openCreateDialog = async () => {
+    //     const race = await Demodal.open<CreatedRace>(NiceModal, {
+    //         title: "Create new race",
+    //         component: RaceCreate,
+    //         props: {},
+    //     });
 
-        if (race) {
-            await addRaceMuttaion.mutateAsync(race);
-            refetch();
-        }
-    };
+    //     if (race) {
+    //         await addRaceMuttaion.mutateAsync(race);
+    //         refetch();
+    //     }
+    // };
 
     return (
         <>
@@ -227,7 +244,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
             <div className="h-full relative">
                 <div className="will-change-transform h-full w-full flex">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
+                        {/* <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
                             <Link href={"/panel" as Route}>
                                 <div className="transition-opacity cursor-pointer text-center px-4 py-4 text-3xl">r</div>
                             </Link>
@@ -247,14 +264,19 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                     </Link>
                                 ))}
                             </div>
-                        </nav>
-                        <nav className="w-52 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
-                            <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div>
+                        </nav> */}
+                        <nav className="w-64 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
+                            <Link href={"/panel" as Route}>
+                                <div className="transition-opacity flex flex-col items-center cursor-pointer text-center px-4 py-4">
+                                    <img className="invert" src="/assets/logo_ravelo.png"></img>
+                                </div>
+                            </Link>
+                            {/* <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div> */}
 
-                            {currentMenuGroup.desc === raceMenuGroup.desc ? (
+                            {/* {currentMenuGroup.desc === raceMenuGroup.desc ? (
                                 <div className="w-full flex flex-col my-8 items-center">
                                     <div
-                                        className="flex-shrink-0 w-6 ml-2 hidden mr-2 opacity-60 cursor-pointer hover:opacity-100 text-gray-600"
+                                        className="flex-shrink-0 w-6 ml-2 hidden mr-2 opacity-60 cursor-pointer hover:opacity-100 text-gray-700"
                                         onClick={openCreateDialog}
                                     >
                                         <Icon size={1} path={mdiPlus}></Icon>
@@ -271,9 +293,25 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                         items={items}
                                     />
                                 </div>
-                            ) : null}
+                            ) : null} */}
 
-                            {(currentMenuGroup.desc === raceMenuGroup.desc && raceId) || currentMenuGroup.desc !== raceMenuGroup.desc
+                            {menuGroups.map(g => (
+                                <div>
+                                    <MenuHeader text={g.name} />
+                                    <div>
+                                        {g.items.map(n => (
+                                            <MenuButton
+                                                key={n.to}
+                                                {...n}
+                                                to={n.to.replace(":raceId", String(raceId)) as Route}
+                                                isActive={pathname === n.to.replace(":raceId", String(raceId))}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+
+                            {/* {(currentMenuGroup.desc === raceMenuGroup.desc && raceId) || currentMenuGroup.desc !== raceMenuGroup.desc
                                 ? menuItems.map(n => (
                                       <MenuButton
                                           key={n.to}
@@ -282,7 +320,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                           isActive={pathname === n.to.replace(":raceId", String(raceId))}
                                       />
                                   ))
-                                : null}
+                                : null} */}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
