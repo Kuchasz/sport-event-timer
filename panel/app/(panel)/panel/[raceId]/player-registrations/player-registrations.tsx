@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -21,75 +21,15 @@ import { useAtom } from "jotai";
 import { getGridColumnStateAtom } from "states/grid-states";
 import { GenderIcon } from "components/gender-icon";
 import { Gender } from "@set/timer/dist/model";
+import { PoorActions } from "components/poor-actions";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
-const ActionsRenderer = (props: any) => <PlayerRegistrationActions refetch={props.context.refetch} playerRegistration={props.data} />;
 const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
 const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
-
-const defaultColumns: ColDef<PlayerRegistration>[] = [
-    { field: "index", width: 25, headerName: "Index", headerClass: "hidden", valueGetter: "node.rowIndex + 1", sortable: false, filter: false },
-    { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
-    { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
-    {
-        field: "gender",
-        headerName: "Gender",
-        sortable: true,
-        resizable: true,
-        filter: true,
-        cellStyle: { justifyContent: "center", display: "flex" },
-        width: 150,
-        cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
-    },
-    {
-        field: "birthDate",
-        headerName: "Birth Date",
-        resizable: true,
-        cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
-        sortable: true,
-        hide: true,
-    },
-    { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, width: 150, hide: true }, // width: 10 },
-    { field: "city", headerName: "City", resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
-    {
-        field: "team",
-        headerName: "Team",
-        sortable: true,
-        resizable: true,
-        filter: true,
-        cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
-    },
-    { field: "phoneNumber", headerName: "Phone", resizable: true, filter: true, hide: true }, // width: 20 },
-    { field: "email", headerName: "E-mail", resizable: true, filter: true, hide: true }, // width: 20 },
-    { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, filter: true, hide: true }, // width: 20 },
-    {
-        field: "registrationDate",
-        headerName: "Registration Date",
-        // width: 30,
-        resizable: true,
-        sortable: true,
-        cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
-    },
-    { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
-    {
-        field: "promotedToPlayer",
-        headerName: "Promoted",
-        sortable: true,
-        filter: true,
-        resizable: true,
-        cellRenderer: PromotedToPlayerRenderer,
-    },
-    {
-        field: "actions",
-        // width: 50,
-        headerName: "Actions",
-        cellRenderer: ActionsRenderer,
-    },
-];
 
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
     return (
@@ -137,66 +77,133 @@ const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegi
     );
 };
 
-const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
-    const raceId = useCurrentRaceId();
-    const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
-    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
-    const utils = trpc.useContext();
-
-    const openDeleteDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete player registration`,
-            component: Confirmation,
-            props: {
-                message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`,
-            },
-        });
-
-        if (confirmed) {
-            await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
-            refetch();
-        }
-    };
-
-    const openPromoteMutation = async () => {
-        const player = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
-            title: "Promote player registration to player",
-            component: PlayerRegistrationPromotion,
-            props: {
-                raceId: raceId!,
-            },
-        });
-
-        if (player) {
-            await promotePlayerRegistration.mutateAsync({ raceId: raceId!, registrationId: playerRegistration.id, player });
-
-            utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
-            utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
-
-            refetch();
-        }
-    };
-
-    return (
-        <div className="flex h-full">
-            {!playerRegistration.promotedToPlayer && (
-                <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openPromoteMutation}>
-                    <Icon size={1} path={mdiAccountPlusOutline} />
-                </span>
-            )}
-            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
-                <Icon size={1} path={mdiTrashCan} />
-            </span>
-        </div>
-    );
-};
-
 export const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! }, { initialData: [] });
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
+    const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
+    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+    const utils = trpc.useContext();
+
+    const promoteToPlayerAction = {
+        name: "Promote to Player",
+        description: "Promoted player will be available in stopwatch",
+        iconPath: mdiAccountPlusOutline,
+        execute: async (playerRegistration: PlayerRegistration) => {
+            const player = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
+                title: "Promote player registration to player",
+                component: PlayerRegistrationPromotion,
+                props: {
+                    raceId: raceId!,
+                },
+            });
+
+            if (player) {
+                await promotePlayerRegistration.mutateAsync({ raceId: raceId!, registrationId: playerRegistration.id, player });
+
+                utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
+                utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
+
+                refetch();
+            }
+        },
+    };
+
+    const deleteRegistrationAction = {
+        name: "Delete registered Player",
+        description: "It is permanent action",
+        iconPath: mdiTrashCan,
+        execute: async (playerRegistration: PlayerRegistration) => {
+            const confirmed = await Demodal.open<boolean>(NiceModal, {
+                title: `Delete player registration`,
+                component: Confirmation,
+                props: {
+                    message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`,
+                },
+            });
+
+            if (confirmed) {
+                await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
+                refetch();
+            }
+        },
+    };
+
+    const defaultColumns: ColDef<PlayerRegistration>[] = [
+        {
+            field: "index",
+            width: 25,
+            headerName: "Index",
+            headerClass: "hidden",
+            valueGetter: "node.rowIndex + 1",
+            sortable: false,
+            filter: false,
+        },
+        { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
+        { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
+        {
+            field: "gender",
+            headerName: "Gender",
+            sortable: true,
+            resizable: true,
+            filter: true,
+            cellStyle: { justifyContent: "center", display: "flex" },
+            width: 150,
+            cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
+        },
+        {
+            field: "birthDate",
+            headerName: "Birth Date",
+            resizable: true,
+            cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
+            sortable: true,
+            hide: true,
+        },
+        { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, width: 150, hide: true }, // width: 10 },
+        { field: "city", headerName: "City", resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
+        {
+            field: "team",
+            headerName: "Team",
+            sortable: true,
+            resizable: true,
+            filter: true,
+            cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
+        },
+        { field: "phoneNumber", headerName: "Phone", resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "email", headerName: "E-mail", resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, filter: true, hide: true }, // width: 20 },
+        {
+            field: "registrationDate",
+            headerName: "Registration Date",
+            // width: 30,
+            resizable: true,
+            sortable: true,
+            cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
+        },
+        { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
+        {
+            field: "promotedToPlayer",
+            headerName: "Promoted",
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellRenderer: PromotedToPlayerRenderer,
+        },
+        {
+            field: "actions",
+            // width: 50,
+            headerName: "Actions",
+            cellRenderer: (props: { data: PlayerRegistration; context: { refetch: () => void } }) => (
+                <PoorActions
+                    item={props.data}
+                    actions={props.data.promotedToPlayer ? [deleteRegistrationAction] : [promoteToPlayerAction, deleteRegistrationAction]}
+                />
+            ),
+        },
+    ];
+
     const [gridColumnState, setGridColumnState] = useAtom(
         getGridColumnStateAtom(
             "player-registrations",
