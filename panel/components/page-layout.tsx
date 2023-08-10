@@ -27,12 +27,12 @@ import {
 } from "@mdi/js";
 import { Meta } from "./meta";
 import { useCurrentRaceId } from "../hooks";
-// import { usePathname, useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { MenuButton } from "./menu-button";
 import Link from "next/link";
-// import { PoorSelect2 } from "./poor-select";
+import { PoorSelect2 } from "./poor-select";
 import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
 // import { AppRouterInputs } from "trpc";
@@ -179,6 +179,9 @@ const raceMenuGroup = {
 
 const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
+    const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
+    const router = useRouter();
+    const raceId = useCurrentRaceId() || items[0]?.id;
 
     return (
         <div className="flex items-center bg-gray-50 cursor-default py-6 px-8">
@@ -186,7 +189,18 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
             <div className="grow"></div>
             {sessionData && (
                 <div className="flex items-center mr-4">
-                    <img className="rounded-full h-8 w-8" src={sessionData.user?.image ?? ""} />
+                    <PoorSelect2
+                        placeholder="Select race"
+                        initialValue={raceId}
+                        onChange={e => {
+                            // selectRace(e.target.value);
+                            router.push(`/panel/${e.target.value}`);
+                        }}
+                        valueKey="id"
+                        nameKey="name"
+                        items={items}
+                    />
+                    <img className="ml-4 rounded-full h-8 w-8" src={sessionData.user?.image ?? ""} />
                     <div className="ml-4 flex flex-col">
                         <div className="text-sm">{sessionData.user?.name}</div>
                         <div className="text-2xs font-light">Organizer</div>
