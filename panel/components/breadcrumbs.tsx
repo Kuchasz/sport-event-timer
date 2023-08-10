@@ -15,7 +15,7 @@ const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>
                 {text}
             </Link>
         ) : (
-            <span className="hover:bg-gray-200 transition-colors px-2 py-1 rounded-md">{text}</span>
+            <span className="select-none px-2 py-1">{text}</span>
         )}
     </div>
 );
