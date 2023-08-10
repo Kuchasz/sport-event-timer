@@ -100,6 +100,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
             : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     return (
+        <div className="min-w-[14rem]">
         <Listbox
             value={selected}
             onChange={(e: T[TValueKey]) => {
@@ -147,5 +148,6 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                 </Transition>
             </div>
         </Listbox>
+        </div>
     );
 };
