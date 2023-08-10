@@ -7,7 +7,7 @@ export default async ({ params }: { params: { raceId: string } }) => {
     return (
         <Breadcrumbs>
             <Breadcrumbs.Item href={`/panel/${params.raceId}`} text={race.name}></Breadcrumbs.Item>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}/player-registrations`} text="player registrations"></Breadcrumbs.Item>
+            <Breadcrumbs.Item text="player registrations"></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };
