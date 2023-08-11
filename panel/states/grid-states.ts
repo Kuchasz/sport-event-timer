@@ -9,7 +9,7 @@ export const getGridColumnStateAtom = (gridName: string, defaultGridSettings: Hi
         return gridColumnStateAtoms.get(gridName)!;
     }
 
-    const newAtom = atomWithWebStorage<HiddenColumnState[]>(`set.grid-column-state.${gridName}`, defaultGridSettings, typeof window !== 'undefined' ? localStorage : undefined);
+    const newAtom = atomWithWebStorage<HiddenColumnState[]>(`set.panel.grid-column-state.${gridName}`, defaultGridSettings, typeof window !== 'undefined' ? localStorage : undefined);
 
     gridColumnStateAtoms.set(gridName, newAtom);
 

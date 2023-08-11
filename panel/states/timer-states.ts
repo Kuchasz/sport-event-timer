@@ -23,4 +23,4 @@ const defaultTimerSettings: TimerSettings = {
     currentPlayer: { enabled: true, size: 64 }
 };
 
-export const timerSettingsAtom = atomWithStorage<TimerSettings>("set.timerSettings", defaultTimerSettings);
+export const timerSettingsAtom = atomWithStorage<TimerSettings>("set.timer.settings", defaultTimerSettings);
