@@ -41,6 +41,8 @@ import { Demodal } from "demodal";
 import { ReactNode } from "react";
 import { Route } from "next";
 import { MenuHeader } from "./menu-header";
+import { useAtom } from "jotai";
+import { selectedRaceIdAtom } from "states/panel-states";
 
 // type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -181,7 +183,8 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
     const router = useRouter();
-    const raceId = useCurrentRaceId() || items[0]?.id;
+    const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
+    const raceId = useCurrentRaceId() || selectedRaceId || items[0]?.id;
 
     return (
         <div className="flex items-center bg-gray-50 cursor-default py-6 px-8">
@@ -194,6 +197,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
                         initialValue={raceId}
                         onChange={e => {
                             // selectRace(e.target.value);
+                            selectRaceId(e.target.value);
                             router.push(`/panel/${e.target.value}`);
                         }}
                         valueKey="id"
@@ -310,7 +314,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                             ) : null} */}
 
                             {menuGroups.map(g => (
-                                <div>
+                                <div key={g.name}>
                                     <MenuHeader text={g.name} />
                                     <div>
                                         {g.items.map(n => (
