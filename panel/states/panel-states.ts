@@ -1,3 +1,5 @@
-import { atomWithStorage } from 'jotai/utils'
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
-export const selectedRaceIdAtom = atomWithStorage<number>("set.panel.selected-race-id", 0);
+export const selectedRaceIdAtom = atomWithStorage("set.panel.selected-race-id", 0, {
+    ...createJSONStorage(() => localStorage)
+});
