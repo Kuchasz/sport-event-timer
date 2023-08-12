@@ -147,10 +147,10 @@ export const PlayerRegistrations = () => {
             field: "gender",
             headerName: "Gender",
             sortable: true,
-            resizable: true,
             filter: true,
             cellStyle: { justifyContent: "center", display: "flex" },
-            width: 150,
+            resizable: true,
+            width: 120,
             cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
         },
         {
@@ -189,11 +189,13 @@ export const PlayerRegistrations = () => {
             sortable: true,
             filter: true,
             resizable: true,
+            width: 130,
             cellRenderer: PromotedToPlayerRenderer,
         },
         {
             field: "actions",
-            // width: 50,
+            resizable: true,
+            width: 130,
             headerName: "Actions",
             cellRenderer: (props: { data: PlayerRegistration; context: { refetch: () => void } }) => (
                 <PoorActions
@@ -295,6 +297,7 @@ export const PlayerRegistrations = () => {
                     onRowDoubleClicked={e => openEditDialog(e.data)}
                     suppressCellFocus={true}
                     suppressAnimationFrame={true}
+                    suppressColumnVirtualisation={true}
                     columnDefs={defaultColumns}
                     rowData={registrations}
                     onFirstDataRendered={onFirstDataRendered}
