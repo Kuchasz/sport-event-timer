@@ -141,8 +141,8 @@ export const PlayerRegistrations = () => {
             sortable: false,
             filter: false,
         },
-        { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
-        { field: "lastName", headerName: "Last Name", sortable: true, resizable: true, filter: true },
+        { field: "name", headerName: "Name", flex: 1, sortable: true, resizable: true, filter: true },
+        { field: "lastName", headerName: "Last Name", flex: 1, sortable: true, resizable: true, filter: true },
         {
             field: "gender",
             headerName: "Gender",
@@ -150,7 +150,7 @@ export const PlayerRegistrations = () => {
             filter: true,
             cellStyle: { justifyContent: "center", display: "flex" },
             resizable: true,
-            width: 120,
+            maxWidth: 120,
             cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
         },
         {
@@ -160,12 +160,14 @@ export const PlayerRegistrations = () => {
             cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
             sortable: true,
             hide: true,
+            maxWidth: 120,
         },
-        { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, width: 150, hide: true }, // width: 10 },
+        { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, maxWidth: 150, hide: true }, // width: 10 },
         { field: "city", headerName: "City", resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
         {
             field: "team",
             headerName: "Team",
+            flex: 1,
             sortable: true,
             resizable: true,
             filter: true,
@@ -176,13 +178,13 @@ export const PlayerRegistrations = () => {
         { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, filter: true, hide: true }, // width: 20 },
         {
             field: "registrationDate",
-            headerName: "Registration Date",
-            // width: 30,
+            headerName: "Registered",
+            maxWidth: 120,
             resizable: true,
             sortable: true,
             cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
         },
-        { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, cellRenderer: PaymentRenderer },
+        { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, maxWidth: 140, cellRenderer: PaymentRenderer },
         {
             field: "promotedToPlayer",
             headerName: "Promoted",
@@ -229,8 +231,8 @@ export const PlayerRegistrations = () => {
     };
 
     const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
-        gridRef.current?.api.sizeColumnsToFit();
+        gridColumnState && gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
+        // gridRef.current?.api.sizeColumnsToFit();
     }, [gridColumnState]);
 
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {

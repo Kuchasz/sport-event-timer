@@ -227,6 +227,12 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     );
 };
 
+const routeMatched = (route: string, currentPath: string) => {
+    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\w+')}$`);
+    console.log(reg, currentPath);
+    return reg.test(currentPath);
+}
+
 const PageLayout = ({ breadcrumbs, children }: Props) => {
     // const router = useRouter();
     const pathname = usePathname();
@@ -326,7 +332,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                                 key={n.to}
                                                 {...n}
                                                 to={n.to.replace(":raceId", String(raceId)) as Route}
-                                                isActive={pathname === n.to.replace(":raceId", String(raceId))}
+                                                isActive={routeMatched(n.to, pathname!)}
                                             />
                                         ))}
                                     </div>
