@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { mdiArrowUpDown, mdiCheck, mdiChevronDown } from "@mdi/js";
 
@@ -94,10 +94,16 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
+    // useEffect(() => {
+    //     !selected && setSelected(initialValue);
+    // }, [initialValue]);
+
     const desiredItem =
         selected && items?.length > 0
             ? items.find(i => String(i[valueKey]) === String(selected))!
-            : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
+            : initialValue 
+                ? items.find(i => String(i[valueKey]) === String(initialValue))!
+                : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     return (
         <div className="min-w-[14rem]">

@@ -38,7 +38,7 @@ import { Demodal } from "demodal";
 // import { AppRouterInputs } from "trpc";
 // import { RaceCreate } from "./race-create";
 // import { NiceModal } from "./modal";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Route } from "next";
 import { MenuHeader } from "./menu-header";
 import { useAtom } from "jotai";
@@ -184,7 +184,11 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
     const router = useRouter();
     const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
-    const raceId = useCurrentRaceId() || selectedRaceId || items[0]?.id;
+    const raceId = useCurrentRaceId() || selectedRaceId;// || items[0]?.id;
+
+    useEffect(() => {
+        !selectedRaceId && selectRaceId(items[0]?.id);
+    }, [items]);
 
     return (
         <div className="flex items-center bg-gray-50 cursor-default py-6 px-8">
@@ -227,9 +231,9 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
     // const router = useRouter();
     const pathname = usePathname();
     // const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
-    const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
+    // const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
-    const raceId = useCurrentRaceId() || items[0]?.id;
+    const [raceId] = useAtom(selectedRaceIdAtom);
 
     // const addRaceMuttaion = trpc.race.add.useMutation();
 
