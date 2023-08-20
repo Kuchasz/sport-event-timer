@@ -6,34 +6,36 @@ export function Dashboard() {
     const { data: dashboardData } = trpc.race.raport.useQuery();
 
     return (
-        <>
-            <DashboardCard title="Number of races">
-                <div className="flex flex-col items-center">
-                    <div className="text-5xl my-2 font-semibold">{dashboardData?.totalRaces}</div>
-                    <div className="text-gray-400 font-normal text-sm">Future races: {dashboardData?.futureRaces}</div>
-                    <div className="text-gray-400 font-normal text-sm">Past races: {dashboardData?.pastRaces}</div>
-                </div>
-            </DashboardCard>
-            {dashboardData?.nextRace && (
-                <DashboardCard title="Incoming race">
-                    <div className="flex flex-col items-center">
-                        <div className="self-end font-semibold text-center">{dashboardData.nextRace.date?.toLocaleDateString()}</div>
-                        <div className="text-2xl my-2 font-semibold text-center">{dashboardData.nextRace.name}</div>
-                        <div className="text-gray-400 font-normal text-sm">
-                            Registered: {dashboardData?.nextRace.registeredPlayers}{" "}
-                            {dashboardData.nextRace.playersLimit && <span>/ {dashboardData.nextRace.playersLimit}</span>}
-                        </div>
-                        <div className="text-gray-400 font-normal text-sm">
-                            Registration:
-                            {dashboardData?.nextRace.registrationEnabled ? (
-                                <span className="font-semibold text-green-600">enabled</span>
-                            ) : (
-                                <span className="font-semibold text-red-600">disabled</span>
-                            )}
+        <div className="flex flex-col">
+            {dashboardData && (
+                <>
+                    <div className="mt-8 mb-4">
+                        <div className="mx-3 text-xl font-semibold">Statistics</div>
+                        <div className="flex">
+                            <DashboardCard.Range title="Future races" min={dashboardData.futureRaces} max={dashboardData.totalRaces} />
+                            <DashboardCard.Range title="Past races" min={dashboardData.pastRaces} max={dashboardData.totalRaces} />
                         </div>
                     </div>
-                </DashboardCard>
+
+                    {dashboardData.nextRace ? (
+                        <div className="mt-8 mb-4">
+                            <div className="mx-3 text-xl font-semibold">Incoming race statistics</div>
+                            <div className="flex">
+                                <DashboardCard.Info title="date" text={dashboardData.nextRace.date?.toLocaleDateString()!} />
+                                <DashboardCard.Info title="Name" text={dashboardData.nextRace.name!} />
+                                <DashboardCard.Range
+                                    title="Registered Players"
+                                    min={dashboardData.nextRace.players!}
+                                    max={dashboardData.nextRace.playersLimit!}
+                                />
+                                <DashboardCard.Discrete title="Registration status" enabled={dashboardData.nextRace.registrationEnabled!} />
+                            </div>
+                        </div>
+                    ) : (
+                        <DashboardCard.Info title="Next race" text="No next race" />
+                    )}
+                </>
             )}
-        </>
+        </div>
     );
 }
