@@ -62,6 +62,23 @@ export const raceRouter =
                 const id = input.raceId;
                 return await ctx.db.race.findUnique({ where: { id } });
             }),
+        raceRaport: protectedProcedure
+            .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+            .query(async ({ input, ctx }) => {
+                const { raceId } = input;
+
+                const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, include: { playerRegistration: true, player: true } });
+
+                return {
+                    name: race.name,
+                    registeredPlayers: race.playerRegistration.length,
+                    players: race.player.length,
+                    playersLimit: race.playersLimit,
+                    date: race.date,
+                    registrationEnabled: race.registrationEnabled
+
+                };
+            }),
         delete: protectedProcedure
             .input(z.object({
                 raceId: z.number()
