@@ -229,7 +229,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 };
 
 const routeMatched = (route: string, currentPath: string) => {
-    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\w+')}(\/?\\w*)*$`);
+    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\d+')}(\/?\\w*)*$`);
     return reg.test(currentPath);
 }
 
