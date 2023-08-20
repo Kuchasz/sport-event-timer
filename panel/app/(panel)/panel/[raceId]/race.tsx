@@ -15,13 +15,13 @@ export const Race = () => {
                     <div>
                         <h1 className="text-3xl">{race.name}</h1>
                         <h2>{race.date.toLocaleDateString()}</h2>
-                        <div className="mt-8">
-                            <DashboardCard title="Players limit">
-                                <div className="text-5xl my-2 font-semibold">{race.playersLimit}</div>
-                            </DashboardCard>
-                            <DashboardCard title="Registration status">
-                                <div className="text-5xl my-2 font-semibold">{race.registrationEnabled ? "enabled" : "disbled"}</div>
-                            </DashboardCard>
+
+                        <div className="mt-8 mb-4">
+                            <div className="mx-3 text-xl font-semibold">Statistics</div>
+                            <div className="flex">
+                                <DashboardCard.Range min={125} max={race.playersLimit} title="Players limit" />
+                                <DashboardCard.Discrete enabled={race.registrationEnabled} title="Registration status" />
+                            </div>
                         </div>
                     </div>
                 </div>
