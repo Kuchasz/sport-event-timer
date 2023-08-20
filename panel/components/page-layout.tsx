@@ -43,6 +43,7 @@ import { Route } from "next";
 import { MenuHeader } from "./menu-header";
 import { useAtom } from "jotai";
 import { selectedRaceIdAtom } from "states/panel-states";
+import { sortDesc } from "@set/utils/dist/array";
 
 // type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -228,8 +229,8 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 };
 
 const routeMatched = (route: string, currentPath: string) => {
-    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\w+')}$`);
-    console.log(reg, currentPath);
+    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\w+')}(\/?\\w*)*$`);
+    console.log(reg.test(currentPath) ? '✅' : '❌', currentPath, reg);
     return reg.test(currentPath);
 }
 
@@ -251,6 +252,12 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
 
     const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
     // const menuItems = menuGroups.flatMap(g => g.items); //currentMenuGroup.items;
+
+    const matchedRoutes = menuGroups
+        .flatMap(g => g.items)
+        .filter(r => routeMatched(r.to, pathname!));
+
+    const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 
     // const openCreateDialog = async () => {
     //     const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -332,7 +339,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                                 key={n.to}
                                                 {...n}
                                                 to={n.to.replace(":raceId", String(raceId)) as Route}
-                                                isActive={routeMatched(n.to, pathname!)}
+                                                isActive={n === longestMatchedRoute}
                                             />
                                         ))}
                                     </div>
