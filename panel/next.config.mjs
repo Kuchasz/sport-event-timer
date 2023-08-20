@@ -28,6 +28,9 @@ export default defineNextConfig({
         defaultLocale: "en",
     },
     poweredByHeader: false,
+    redirects: async () => {
+        return [{ source: '/', destination: '/panel', permanent: true }]
+    }
     // experimental: {
     //     typedRoutes: true
     // }
