@@ -302,7 +302,7 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                         <nav className="w-64 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
                             <Link href={"/panel" as Route}>
                                 <div className="transition-opacity flex flex-col items-center cursor-pointer text-center px-4 py-4">
-                                    <img className="invert" src="/assets/logo_ravelo.png"></img>
+                                    <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
                             {/* <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div> */}
