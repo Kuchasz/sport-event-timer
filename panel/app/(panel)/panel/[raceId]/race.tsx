@@ -6,7 +6,7 @@ import { useCurrentRaceId } from "hooks";
 
 export const Race = () => {
     const raceId = useCurrentRaceId();
-    const { data: race } = trpc.race.race.useQuery({ raceId: raceId! }, { enabled: !!raceId });
+    const { data: race } = trpc.race.raceRaport.useQuery({ raceId: raceId! }, { enabled: !!raceId });
 
     return (
         <>
@@ -19,7 +19,7 @@ export const Race = () => {
                         <div className="mt-8 mb-4">
                             <div className="mx-3 text-xl font-semibold">Statistics</div>
                             <div className="flex">
-                                <DashboardCard.Range min={125} max={race.playersLimit} title="Players limit" />
+                                <DashboardCard.Range min={race.players} max={race.playersLimit} title="Players limit" />
                                 <DashboardCard.Discrete enabled={race.registrationEnabled} title="Registration status" />
                             </div>
                         </div>
