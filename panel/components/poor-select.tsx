@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { mdiArrowUpDown, mdiCheck, mdiChevronDown } from "@mdi/js";
 
