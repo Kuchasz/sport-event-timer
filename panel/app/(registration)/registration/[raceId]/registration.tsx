@@ -154,7 +154,7 @@ const RegistrationFormComponent = ({
                     label="ICE phone number (optional)"
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Resque phone number"
+                            placeholder="Rescue phone number"
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
