@@ -170,6 +170,10 @@ export const Players = () => {
                     <h1 className="text-xl font-semibold uppercase">Players</h1>
                     <div className="flex-grow max-w-xs border-t-2 mt-2 border-pink-400"></div>
                 </div> */}
+                <div className="mb-4">
+                    <h2 className="text-xl font-semibold">Players</h2>
+                    <h3 className="">Players available in the stopwatch, their times may be measured</h3>
+                </div>
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
