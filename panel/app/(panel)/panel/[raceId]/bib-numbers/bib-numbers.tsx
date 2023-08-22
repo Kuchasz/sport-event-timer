@@ -140,6 +140,11 @@ export const BibNumbers = () => {
                 <title>Bib Numbers</title>
             </Head>
             <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+                <div className="mb-4">
+                    <h2 className="text-xl font-semibold">Bib Numbers</h2>
+                    <h3 className="">Configure the bib numbers to easily assign them to players</h3>
+                </div>
+
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />

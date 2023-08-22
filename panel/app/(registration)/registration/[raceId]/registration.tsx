@@ -143,7 +143,7 @@ const RegistrationFormComponent = ({
                     label="Phone number"
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your email phone number"
+                            placeholder="Your phone number"
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
