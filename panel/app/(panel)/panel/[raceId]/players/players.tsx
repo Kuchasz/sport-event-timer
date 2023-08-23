@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -20,6 +20,7 @@ import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
 import { Gender } from "@set/timer/dist/model";
 import { GenderIcon } from "components/gender-icon";
+import { PageHeader } from "components/page-header";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
@@ -165,15 +166,8 @@ export const Players = () => {
                 <title>Lista zawodników</title>
             </Head>
 
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
-                {/* <div className="pb-4">
-                    <h1 className="text-xl font-semibold uppercase">Players</h1>
-                    <div className="flex-grow max-w-xs border-t-2 mt-2 border-pink-400"></div>
-                </div> */}
-                <div className="mb-4">
-                    <h2 className="text-xl font-semibold">Players</h2>
-                    <h3 className="">Players available in the stopwatch, their times may be measured</h3>
-                </div>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Players" description="Players available in the stopwatch, their times may be measured" />
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
@@ -215,17 +209,19 @@ export const Players = () => {
                 </div>
                 {/* {gridElement} */}
                 {players && (
-                    <AgGridReact<Player>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        rowData={players}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                    <div className="ag-theme-material h-full">
+                        <AgGridReact<Player>
+                            ref={gridRef}
+                            context={{ refetch }}
+                            onRowDoubleClicked={e => openEditDialog(e.data)}
+                            suppressCellFocus={true}
+                            suppressAnimationFrame={true}
+                            columnDefs={defaultColumns}
+                            rowData={players}
+                            onFirstDataRendered={onFirstDataRendered}
+                            onGridSizeChanged={onFirstDataRendered}
+                        ></AgGridReact>
+                    </div>
                 )}
             </div>
         </>

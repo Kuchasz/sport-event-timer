@@ -22,6 +22,7 @@ import { getGridColumnStateAtom } from "states/grid-states";
 import { GenderIcon } from "components/gender-icon";
 import { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
+import { PageHeader } from "components/page-header";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -254,10 +255,10 @@ export const PlayerRegistrations = () => {
     return (
         <>
             <Head>
-                <title>Rejestracje zawodników</title>
+                <title>Player registrations</title>
             </Head>
-
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Registered players" description="Players registered for the race, may be promoted to players" />
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
@@ -292,19 +293,20 @@ export const PlayerRegistrations = () => {
                         }}
                     />
                 </div>
-
-                <AgGridReact<PlayerRegistration>
-                    ref={gridRef}
-                    context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data)}
-                    suppressCellFocus={true}
-                    suppressAnimationFrame={true}
-                    suppressColumnVirtualisation={true}
-                    columnDefs={defaultColumns}
-                    rowData={registrations}
-                    onFirstDataRendered={onFirstDataRendered}
-                    onGridSizeChanged={onFirstDataRendered}
-                ></AgGridReact>
+                <div className="ag-theme-material h-full">
+                    <AgGridReact<PlayerRegistration>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        onRowDoubleClicked={e => openEditDialog(e.data)}
+                        suppressCellFocus={true}
+                        suppressAnimationFrame={true}
+                        suppressColumnVirtualisation={true}
+                        columnDefs={defaultColumns}
+                        rowData={registrations}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
+                </div>
             </div>
         </>
     );

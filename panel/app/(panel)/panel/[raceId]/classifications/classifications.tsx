@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
@@ -15,6 +15,7 @@ import Link from "next/link";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import { Route } from "next";
+import { PageHeader } from "components/page-header";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
@@ -31,7 +32,6 @@ const defaultColumns: ColDef<Classification>[] = [
 ];
 
 const OpenCategoriesButton = ({ classification }: { classification: Classification }) => {
-
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer">
             <Icon size={1} path={mdiAccountMultiple} />
@@ -84,9 +84,10 @@ export const Classifications = () => {
     return (
         <>
             <Head>
-                <title>Lista zawodników</title>
+                <title>Classifications</title>
             </Head>
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Classifications" description="Configure race classifications" />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
@@ -97,17 +98,19 @@ export const Classifications = () => {
                         <span className="ml-2">Load</span>
                     </Button>
                 </div>
-                <AgGridReact<Classification>
-                    ref={gridRef}
-                    context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data)}
-                    suppressCellFocus={true}
-                    suppressAnimationFrame={true}
-                    columnDefs={defaultColumns}
-                    rowData={classifications}
-                    onFirstDataRendered={onFirstDataRendered}
-                    onGridSizeChanged={onFirstDataRendered}
-                ></AgGridReact>
+                <div className="ag-theme-material h-full">
+                    <AgGridReact<Classification>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        onRowDoubleClicked={e => openEditDialog(e.data)}
+                        suppressCellFocus={true}
+                        suppressAnimationFrame={true}
+                        columnDefs={defaultColumns}
+                        rowData={classifications}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
+                </div>
             </div>
         </>
     );

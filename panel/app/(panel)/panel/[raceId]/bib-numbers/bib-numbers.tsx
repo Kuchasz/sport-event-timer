@@ -16,6 +16,7 @@ import { Confirmation } from "components/confirmation";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
+import { PageHeader } from "components/page-header";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
@@ -139,12 +140,8 @@ export const BibNumbers = () => {
             <Head>
                 <title>Bib Numbers</title>
             </Head>
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
-                <div className="mb-4">
-                    <h2 className="text-xl font-semibold">Bib Numbers</h2>
-                    <h3 className="">Configure the bib numbers to easily assign them to players</h3>
-                </div>
-
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Bib Numbers" description="Configure the bib numbers to easily assign them to players" />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
@@ -158,17 +155,19 @@ export const BibNumbers = () => {
                         remove all
                     </Button>
                 </div>
-                <AgGridReact<BibNumber>
-                    ref={gridRef}
-                    context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data)}
-                    suppressCellFocus={true}
-                    suppressAnimationFrame={true}
-                    columnDefs={defaultColumns}
-                    rowData={bibNubers}
-                    onFirstDataRendered={onFirstDataRendered}
-                    onGridSizeChanged={onFirstDataRendered}
-                ></AgGridReact>
+                <div className="ag-theme-material h-full">
+                    <AgGridReact<BibNumber>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        onRowDoubleClicked={e => openEditDialog(e.data)}
+                        suppressCellFocus={true}
+                        suppressAnimationFrame={true}
+                        columnDefs={defaultColumns}
+                        rowData={bibNubers}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
+                </div>
             </div>
         </>
     );

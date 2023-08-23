@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import Icon from "@mdi/react";
 import { Confirmation } from "../../../../../components/confirmation";
 import { Demodal } from "demodal";
@@ -12,6 +13,8 @@ import { useCurrentRaceId } from "../../../../../hooks";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
+import { PageHeader } from "components/page-header";
+import Head from "next/head";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -99,9 +102,23 @@ export const SplitTimes = () => {
     const revertSplitTimeMuttaion = trpc.splitTime.revert.useMutation();
 
     const defaultColumns: ColDef<SplitTime>[] = [
-        { field: "bibNumber", headerName: "Bib", sortable: true, sort: 'asc', width: 100, comparator: (valueA, valueB) => valueA - valueB },
-        { field: "player.name", resizable: true, headerName: "Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span> },
-        { field: "player.lastName", resizable: true, headerName: "Last Name", sortable: true, filter: true, cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span> },
+        { field: "bibNumber", headerName: "Bib", sortable: true, sort: "asc", width: 100, comparator: (valueA, valueB) => valueA - valueB },
+        {
+            field: "player.name",
+            resizable: true,
+            headerName: "Name",
+            sortable: true,
+            filter: true,
+            cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span>,
+        },
+        {
+            field: "player.lastName",
+            resizable: true,
+            headerName: "Last Name",
+            sortable: true,
+            filter: true,
+            cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span>,
+        },
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .map(tp => ({
@@ -155,23 +172,26 @@ export const SplitTimes = () => {
         }
     };
 
-
-
     return (
         <>
-            {/* <div className="flex bg-white p-8 rounded-lg shadow-md flex-col h-full"></div> */}
-            <div className="ag-theme-material flex bg-white flex-col h-full">
+            <Head>
+                <title>Split times</title>
+            </Head>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Split times" description="Times measured by the stopwatches" />
                 {splitTimes && (
-                    <AgGridReact<SplitTime>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        rowData={splitTimes}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                    <div className="ag-theme-material h-full">
+                        <AgGridReact<SplitTime>
+                            ref={gridRef}
+                            context={{ refetch }}
+                            suppressCellFocus={true}
+                            suppressAnimationFrame={true}
+                            columnDefs={defaultColumns}
+                            rowData={splitTimes}
+                            onFirstDataRendered={onFirstDataRendered}
+                            onGridSizeChanged={onFirstDataRendered}
+                        ></AgGridReact>
+                    </div>
                 )}
             </div>
         </>

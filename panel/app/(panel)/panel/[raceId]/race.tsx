@@ -19,7 +19,7 @@ export const Race = () => {
                         <div className="mt-8 mb-4">
                             <div className="mx-3 text-xl font-semibold">Statistics</div>
                             <div className="flex">
-                                <DashboardCard.Range min={race.players} max={race.playersLimit} title="Players limit" />
+                                <DashboardCard.Range min={race.registeredPlayers} max={race.playersLimit} title="Registered players" />
                                 <DashboardCard.Discrete enabled={race.registrationEnabled} title="Registration status" />
                             </div>
                         </div>

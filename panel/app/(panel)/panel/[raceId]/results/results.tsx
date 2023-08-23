@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
@@ -7,6 +7,8 @@ import { useCurrentRaceId } from "../../../../../hooks";
 import { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import { useCallback, useRef } from "react";
+import Head from "next/head";
+import { PageHeader } from "components/page-header";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
@@ -41,9 +43,13 @@ const defaultColumns: ColDef<Result>[] = [
     {
         field: "result",
         headerName: "Result",
-        sort: 'asc',
+        sort: "asc",
         sortable: true,
-        cellRenderer: (p: { data: Result }) => <span className="flex uppercase flex-col items-end font-mono">{p.data.invalidState ? p.data.invalidState : formatTimeWithMilliSecUTC(p.data.result)}</span>,
+        cellRenderer: (p: { data: Result }) => (
+            <span className="flex uppercase flex-col items-end font-mono">
+                {p.data.invalidState ? p.data.invalidState : formatTimeWithMilliSecUTC(p.data.result)}
+            </span>
+        ),
     },
 ];
 
@@ -57,23 +63,29 @@ export const Results = () => {
 
     return (
         <>
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+            <Head>
+                <title>Race results</title>
+            </Head>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Race Results" description="Results measured by the stopwatch, each may be overriden" />
                 {/* <div className="mb-4 inline-flex">
                     <Button onClick={() => {}}>
                         <Icon size={1} path={mdiPlus} />
                     </Button>
                 </div> */}
                 {results && (
-                    <AgGridReact<Result>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        rowData={results}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                    <div className="ag-theme-material h-full">
+                        <AgGridReact<Result>
+                            ref={gridRef}
+                            context={{ refetch }}
+                            suppressCellFocus={true}
+                            suppressAnimationFrame={true}
+                            columnDefs={defaultColumns}
+                            rowData={results}
+                            onFirstDataRendered={onFirstDataRendered}
+                            onGridSizeChanged={onFirstDataRendered}
+                        ></AgGridReact>
+                    </div>
                 )}
             </div>
         </>

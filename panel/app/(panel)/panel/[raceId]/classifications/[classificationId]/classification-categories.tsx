@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Icon from "@mdi/react";
 import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { AppRouterOutputs } from "trpc";
@@ -16,6 +16,8 @@ import { NiceModal } from "components/modal";
 import { Confirmation } from "components/confirmation";
 import { CategoryCreate } from "components/category-create";
 import { CategoryEdit } from "components/category-edit";
+import { PageHeader } from "components/page-header";
+import Head from "next/head";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams() as { classificationId: string };
@@ -151,28 +153,34 @@ export const ClassificationCategories = () => {
     };
 
     return (
-        <div className="flex flex-col h-full">
-            <div className="flex">
-                <Button onClick={openCreateDialog} className="w-full">
-                    <Icon size={1} path={mdiPlus} />
-                    <span className="ml-2">Add category</span>
-                </Button>
+        <>
+            <Head>
+                <title>Categories</title>
+            </Head>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Categories" description="Configure categories for category" />
+                <div className="flex">
+                    <Button onClick={openCreateDialog} className="w-full">
+                        <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add category</span>
+                    </Button>
+                </div>
+                <div className="p-2"></div>
+                <div className="ag-theme-material h-full">
+                    <AgGridReact<Category>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        onRowDoubleClicked={e => openEditDialog(e.data!)}
+                        suppressCellFocus={true}
+                        suppressAnimationFrame={true}
+                        columnDefs={defaultColumns}
+                        rowData={categories}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
+                </div>
             </div>
-            <div className="p-2"></div>
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
-                <AgGridReact<Category>
-                    ref={gridRef}
-                    context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data!)}
-                    suppressCellFocus={true}
-                    suppressAnimationFrame={true}
-                    columnDefs={defaultColumns}
-                    rowData={categories}
-                    onFirstDataRendered={onFirstDataRendered}
-                    onGridSizeChanged={onFirstDataRendered}
-                ></AgGridReact>
-            </div>
-        </div>
+        </>
     );
 };
 
