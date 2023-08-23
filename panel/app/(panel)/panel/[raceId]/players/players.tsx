@@ -171,6 +171,7 @@ export const Players = () => {
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add Player</span>
                     </Button>
                     <Button
                         className="ml-2"

@@ -262,6 +262,7 @@ export const PlayerRegistrations = () => {
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Register Player</span>
                     </Button>
                     <Button
                         className="ml-2"
@@ -272,7 +273,7 @@ export const PlayerRegistrations = () => {
                         }}
                     >
                         <Icon size={1} path={mdiExport} />
-                        <span className="ml-2">export</span>
+                        <span className="ml-2">Export</span>
                     </Button>
                     <PoorColumnChooser
                         items={defaultColumns}

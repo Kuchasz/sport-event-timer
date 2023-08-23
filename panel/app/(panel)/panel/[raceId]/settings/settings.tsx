@@ -80,6 +80,7 @@ export const Settings = () => {
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add API Key</span>
                     </Button>
                 </div>
                 {apiKeys &&
