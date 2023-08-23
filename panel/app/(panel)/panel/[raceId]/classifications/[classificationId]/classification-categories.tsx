@@ -160,7 +160,7 @@ export const ClassificationCategories = () => {
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title="Categories" description="Configure categories for category" />
                 <div className="flex">
-                    <Button onClick={openCreateDialog} className="w-full">
+                    <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">Add category</span>
                     </Button>

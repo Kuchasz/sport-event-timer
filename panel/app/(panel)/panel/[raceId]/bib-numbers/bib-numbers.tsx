@@ -145,6 +145,7 @@ export const BibNumbers = () => {
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add Bib Numbers</span>
                     </Button>
                     <Button className="ml-2" onClick={openCreateManyDialog}>
                         {/* <Icon size={1} path={mdiPlusM} /> */}

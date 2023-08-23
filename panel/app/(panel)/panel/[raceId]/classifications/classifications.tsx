@@ -91,6 +91,7 @@ export const Classifications = () => {
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add Classification</span>
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false">

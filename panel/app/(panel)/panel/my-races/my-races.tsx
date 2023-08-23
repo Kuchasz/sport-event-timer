@@ -213,34 +213,36 @@ export const MyRaces = () => {
             <Head>
                 <title>Lista wyścigów</title>
             </Head>
-            <div className="ag-theme-material relative border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
+                        <span className="ml-2">Add Race</span>
                     </Button>
                 </div>
-
-                <AgGridReact<Race>
-                    ref={gridRef}
-                    context={{ refetch }}
-                    onRowDoubleClicked={e => openEditDialog(e.data)}
-                    rowClassRules={{
-                        "z-10": () => {
-                            return false;
-                        },
-                    }}
-                    suppressRowVirtualisation={true}
-                    suppressAnimationFrame={true}
-                    suppressContextMenu={true}
-                    suppressRowClickSelection={true}
-                    suppressCellFocus={true}
-                    suppressChangeDetection={true}
-                    onRowClicked={console.log}
-                    columnDefs={defaultColumns}
-                    rowData={races}
-                    onFirstDataRendered={onFirstDataRendered}
-                    onGridSizeChanged={onFirstDataRendered}
-                ></AgGridReact>
+                <div className="ag-theme-material h-full">
+                    <AgGridReact<Race>
+                        ref={gridRef}
+                        context={{ refetch }}
+                        onRowDoubleClicked={e => openEditDialog(e.data)}
+                        rowClassRules={{
+                            "z-10": () => {
+                                return false;
+                            },
+                        }}
+                        suppressRowVirtualisation={true}
+                        suppressAnimationFrame={true}
+                        suppressContextMenu={true}
+                        suppressRowClickSelection={true}
+                        suppressCellFocus={true}
+                        suppressChangeDetection={true}
+                        onRowClicked={console.log}
+                        columnDefs={defaultColumns}
+                        rowData={races}
+                        onFirstDataRendered={onFirstDataRendered}
+                        onGridSizeChanged={onFirstDataRendered}
+                    ></AgGridReact>
+                </div>
             </div>
         </>
     );
