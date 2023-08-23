@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { mdiPen, mdiPlus, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import { ApiKeyCreate } from "components/api-key-create";
@@ -10,6 +10,8 @@ import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
 import { useCurrentRaceId } from "hooks";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import Head from "next/head";
+import { PageHeader } from "components/page-header";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
@@ -69,31 +71,33 @@ export const Settings = () => {
     };
 
     return (
-        <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-            <div className="pb-4">
-                <h1 className="text-xl font-semibold uppercase">API Keys</h1>
-                <div className="flex-grow max-w-xs border-t-2 mt-2 border-pink-400"></div>
-            </div>
-            <div className="mb-4 flex">
-                <Button onClick={openCreateDialog}>
-                    <Icon size={1} path={mdiPlus} />
-                </Button>
-            </div>
-            {apiKeys &&
-                apiKeys.map((key) => (
-                    <div key={key.key} className="flex flex-col">
-                        <div>{key.name}</div>
-                        <div className="flex items-center">
-                            <div className="my-2 mr-2 bg-[#c2e59c] rounded-md px-4 py-2">{key.key}</div>
-                            <Button className="mr-2" onClick={() => openEditDialog(key)}>
-                                <Icon size={1} path={mdiPen} />
-                            </Button>
-                            <Button onClick={() => openDeleteDialog(key)}>
-                                <Icon size={1} path={mdiTrashCan} />
-                            </Button>
+        <>
+            <Head>
+                <title>Settings</title>
+            </Head>
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Settings" description="API Keys may be configured here" />
+                <div className="mb-4 flex">
+                    <Button onClick={openCreateDialog}>
+                        <Icon size={1} path={mdiPlus} />
+                    </Button>
+                </div>
+                {apiKeys &&
+                    apiKeys.map(key => (
+                        <div key={key.key} className="flex flex-col">
+                            <div>{key.name}</div>
+                            <div className="flex items-center">
+                                <div className="my-2 mr-2 bg-[#c2e59c] rounded-md px-4 py-2">{key.key}</div>
+                                <Button className="mr-2" onClick={() => openEditDialog(key)}>
+                                    <Icon size={1} path={mdiPen} />
+                                </Button>
+                                <Button onClick={() => openDeleteDialog(key)}>
+                                    <Icon size={1} path={mdiTrashCan} />
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                ))}
-        </div>
+                    ))}
+            </div>
+        </>
     );
 };

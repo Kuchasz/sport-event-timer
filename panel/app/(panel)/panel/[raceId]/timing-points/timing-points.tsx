@@ -15,6 +15,7 @@ import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
 import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
+import { PageHeader } from "components/page-header";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
@@ -288,9 +289,10 @@ export const TimingPoints = () => {
     return (
         <>
             <Head>
-                <title>Timing Points</title>
+                <title>Timing points</title>
             </Head>
-            <div className="border-1 flex h-full border-gray-600 border-solid">
+            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="Timing points" description="Configure points where time will be measured, used in stopwatch" />
                 {/* <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
