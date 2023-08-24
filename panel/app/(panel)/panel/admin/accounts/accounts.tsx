@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
+import { PageHeader } from "components/page-header";
 import { useCallback, useRef } from "react";
 import { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
@@ -19,6 +20,7 @@ export const Accounts = () => {
 
     return (
         <>
+            <PageHeader title="Accounts" description="Manage accounts having access to the races" />
             <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
                 <AgGridReact<Account>
                     ref={gridRef}

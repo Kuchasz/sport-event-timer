@@ -1,5 +1,6 @@
 "use client";
 import { DashboardCard } from "components/dashboard-card";
+import { PageHeader } from "components/page-header";
 import { trpc } from "trpc-core";
 
 export function Dashboard() {
@@ -7,6 +8,7 @@ export function Dashboard() {
 
     return (
         <div className="flex flex-col">
+            <PageHeader title="Dashboard" description="Monitor what is the most important" />
             {dashboardData && (
                 <>
                     <div className="mt-8 mb-4">

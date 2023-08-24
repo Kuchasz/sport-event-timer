@@ -1,4 +1,5 @@
 "use client"
+import { PageHeader } from "components/page-header";
 import { trpc } from "../../../../../trpc-core";
 
 export const Hello = () => {
@@ -8,7 +9,7 @@ export const Hello = () => {
     }
     return (
         <div>
-            <h2 className="text-2xl font-semibold">Hi!</h2>
+            <PageHeader title="Hi Page!" description="That is just a page for testing purposes" />
         </div>
     );
 }

@@ -16,6 +16,7 @@ import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
+import { PageHeader } from "components/page-header";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -211,9 +212,10 @@ export const Races = () => {
     return (
         <>
             <Head>
-                <title>Lista wyścigów</title>
+                <title>All Races</title>
             </Head>
             <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
+                <PageHeader title="All Races" description="Manage all past and future races" />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
