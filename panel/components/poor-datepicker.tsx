@@ -33,7 +33,10 @@ const toDateStringUTC = (date: Date) => date.toLocaleDateString("en-CA");
 const toDateUTC = (dateString: string) => {
     const date = new Date(dateString);
     const dateOffset = date.getTimezoneOffset();
+    
     const finalDate = new Date(date.getTime() + dateOffset * 60_000);
+
+    console.log("dateOffset: ", dateOffset, "date: ", date, "finalDate: ", finalDate);
     return finalDate;
 };
 
@@ -53,10 +56,10 @@ export const PoorUTCDatepicker = ({
             placeholder={placeholder}
             defaultValue={value}
             onChange={e => {
-                onChange({ target: { value: toDateUTC(e.currentTarget.value) ?? new Date() } });
+                onChange({ target: { value: toDateUTC(e.currentTarget.value) } });
             }}
             onBlur={e => {
-                onChange({ target: { value: toDateUTC(e.target.value) ?? new Date() } });
+                onChange({ target: { value: toDateUTC(e.target.value) } });
             }}
             type="date"
         />

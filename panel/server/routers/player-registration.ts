@@ -93,7 +93,7 @@ export const playerRegistrationRouter =
                         ['name', input.player.name.trim()],
                         ['lastName', input.player.lastName.trim()],
                         ['raceName', race.name],
-                        ['raceDate', race.date.toLocaleDateString()]
+                        ['raceDate', race.date.toLocaleDateString('pl-PL')]
                     ]
                 })
             }),
