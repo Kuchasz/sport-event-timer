@@ -77,7 +77,7 @@ export const PlayersList = () => {
                                 padBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}
                             />
-                            {!players[virtualRow.index].absent && (
+                            {!players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
@@ -85,7 +85,7 @@ export const PlayersList = () => {
                                     }}
                                 />
                             )}
-                            {players[virtualRow.index].absent && (
+                            {!players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {
