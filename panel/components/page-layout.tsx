@@ -44,6 +44,7 @@ import { MenuHeader } from "./menu-header";
 import { useAtom } from "jotai";
 import { selectedRaceIdAtom } from "states/panel-states";
 import { sortDesc } from "@set/utils/dist/array";
+import { Translation, useTranslations } from "i18n";
 
 // type CreatedRace = AppRouterInputs["race"]["add"];
 type Props = {
@@ -51,25 +52,31 @@ type Props = {
     children: React.ReactNode;
 };
 
-const generalMenuGroup = {
+const generalMenuGroup = (t: Translation) => ({
     desc: "Your dashboard",
     name: "General",
     icon: mdiHomeOutline,
     color: "bg-[#64b3f4]",
     to: "/panel",
     items: [
-        { text: "Dashboard", icon: mdiViewDashboardEditOutline, to: "/panel", color: "text-yellow-700", bg: "bg-yellow-100" },
         {
-            text: "My Races",
+            text: t.menuOptions.general.dashboard,
+            icon: mdiViewDashboardEditOutline,
+            to: "/panel",
+            color: "text-yellow-700",
+            bg: "bg-yellow-100",
+        },
+        {
+            text: t.menuOptions.general.races,
             icon: mdiBikeFast,
             to: "/panel/my-races",
             color: "text-red-700",
             bg: "bg-red-50",
         },
     ],
-};
+});
 
-const adminMenuGroup = {
+const adminMenuGroup = (t: Translation) => ({
     desc: "Admin the system",
     name: "Administrator",
     icon: mdiBriefcaseOutline,
@@ -77,37 +84,37 @@ const adminMenuGroup = {
     to: "/panel/admin",
     items: [
         {
-            text: "Dashboard",
+            text: t.menuOptions.admin.dashboard,
             icon: mdiViewDashboardEditOutline,
             to: "/panel/admin",
             color: "text-yellow-700",
             bg: "bg-yellow-50",
         },
         {
-            text: "Races",
+            text: t.menuOptions.admin.races,
             icon: mdiBikeFast,
             to: "/panel/admin/races",
             color: "text-green-700",
             bg: "bg-green-50",
         },
         {
-            text: "Say hay!",
+            text: t.menuOptions.admin.hello,
             icon: mdiTimetable,
             to: "/panel/admin/hello",
             color: "text-red-700",
             bg: "bg-red-50",
         },
         {
-            text: "Accounts",
+            text: t.menuOptions.admin.accounts,
             icon: mdiAccount,
             to: "/panel/admin/accounts",
             color: "text-pink-700",
             bg: "bg-pink-50",
         },
     ],
-};
+});
 
-const raceMenuGroup = {
+const raceMenuGroup = (t: Translation) => ({
     desc: "Manage your races",
     name: "Race",
     icon: mdiAlarm,
@@ -115,80 +122,80 @@ const raceMenuGroup = {
     to: "/panel/:raceId",
     items: [
         {
-            text: "Base Info",
+            text: t.menuOptions.race.index,
             icon: mdiViewDashboardEditOutline,
             to: "/panel/:raceId",
             color: "text-yellow-700",
             bg: "bg-yellow-50",
         },
         {
-            text: "Bib Numbers",
+            text: t.menuOptions.race.bibNumbers,
             icon: mdiNumeric,
             to: "/panel/:raceId/bib-numbers",
             color: "text-green-700",
             bg: "bg-green-50",
         },
         {
-            text: "Players",
+            text: t.menuOptions.race.players,
             icon: mdiAccountGroup,
             to: "/panel/:raceId/players",
             color: "text-pink-700",
             bg: "bg-pink-50",
         },
         {
-            text: "Registrations",
+            text: t.menuOptions.race.registrations,
             icon: mdiAccountGroup,
             to: "/panel/:raceId/player-registrations",
             color: "text-yellow-700",
             bg: "bg-yellow-50",
         },
         {
-            text: "Classifications",
+            text: t.menuOptions.race.classifications,
             icon: mdiAccountCogOutline,
             to: "/panel/:raceId/classifications",
             color: "text-purple-700",
             bg: "bg-purple-50",
         },
         {
-            text: "Timing Points",
+            text: t.menuOptions.race.timingPoints,
             icon: mdiTimerCogOutline,
             to: "/panel/:raceId/timing-points",
             color: "text-lime-700",
             bg: "bg-lime-50",
         },
         {
-            text: "Split Times",
+            text: t.menuOptions.race.splitTimes,
             icon: mdiAlarm,
             to: "/panel/:raceId/split-times",
             color: "text-red-700",
             bg: "bg-red-50",
         },
         {
-            text: "Results",
+            text: t.menuOptions.race.results,
             icon: mdiTimetable,
             to: "/panel/:raceId/results",
             color: "text-blue-700",
             bg: "bg-blue-50",
         },
         {
-            text: "Settings",
+            text: t.menuOptions.race.settings,
             icon: mdiCog,
             to: "/panel/:raceId/settings",
             color: "text-orange-700",
             bg: "bg-orange-50",
         },
     ],
-};
+});
 
 const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
     const router = useRouter();
     const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
-    const raceId = useCurrentRaceId() || selectedRaceId;// || items[0]?.id;
+    const raceId = useCurrentRaceId() || selectedRaceId; // || items[0]?.id;
 
     useEffect(() => {
-        !selectedRaceId && selectRaceId(items[0]?.id);
+        !selectedRaceId && items && items.length && selectRaceId(items[0]?.id);
     }, [items]);
 
     return (
@@ -201,6 +208,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
                         placeholder="Select race"
                         initialValue={raceId}
                         onChange={e => {
+                            if (!e.target.value) return;
                             // selectRace(e.target.value);
                             selectRaceId(e.target.value);
                             router.push(`/panel/${e.target.value}`);
@@ -229,9 +237,9 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
 };
 
 const routeMatched = (route: string, currentPath: string) => {
-    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, '\\d+')}(\/?\\w*)*$`);
+    const reg = new RegExp(`^${route.replaceAll(/:\w+/g, "\\d+")}(\/?\\w*)*$`);
     return reg.test(currentPath);
-}
+};
 
 const PageLayout = ({ breadcrumbs, children }: Props) => {
     // const router = useRouter();
@@ -241,6 +249,8 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
 
     const [raceId] = useAtom(selectedRaceIdAtom);
 
+    const trans = useTranslations();
+
     // const addRaceMuttaion = trpc.race.add.useMutation();
 
     // const currentMenuGroup = pathname!.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
@@ -249,12 +259,10 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
     //     ? adminMenuGroup
     //     : generalMenuGroup;
 
-    const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
+    const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup].map(g => g(trans));
     // const menuItems = menuGroups.flatMap(g => g.items); //currentMenuGroup.items;
 
-    const matchedRoutes = menuGroups
-        .flatMap(g => g.items)
-        .filter(r => routeMatched(r.to, pathname!));
+    const matchedRoutes = menuGroups.flatMap(g => g.items).filter(r => routeMatched(r.to, pathname!));
 
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 
