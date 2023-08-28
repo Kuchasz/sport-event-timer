@@ -6,7 +6,7 @@ import { connectionStateAtom, timingPointIdAtom } from "states/stopwatch-states"
 import { Time } from "./time";
 
 export const Timer = ({ offset }: { offset: number }) => {
-    const [time, setTime] = useState<number>(Date.now() + offset);
+    const [time, setTime] = useState<number>(0);
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
     // const pathname = usePathname();
