@@ -16,15 +16,15 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
 
     const existingSplitTimes = await db.splitTime.findMany({ where: { raceId } });
     const existingSplitTimesMap = new Map(existingSplitTimes.map(st => [st.id, st]));
-    const existingAbsences = await db.absence.findMany({where: {raceId}});
+    const existingAbsences = await db.absence.findMany({ where: { raceId } });
 
     const actualBibNumbers = new Set(existingPlayers.map(p => p.bibNumber!));
     const stopwatchState = await stopwatchStateProvider.get(raceId);
 
     const actualSplitTimes = stopwatchState.timeStamps!.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
     const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
-    const actualAbsences = stopwatchState.absences!.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
-    const actualAbsencesMap = new Map(actualAbsences.map(st => [st.id, st]));
+    const actualAbsences = stopwatchState.absences!.filter(a => a.bibNumber && actualBibNumbers.has(a.bibNumber.toString()));
+    const actualAbsencesMap = new Map(actualAbsences.map(a => [a.id, a]));
 
     const splitTimes_existing = new Set(existingSplitTimes.map(e => e.id));
     const splitTimes_actual = new Set(actualSplitTimes.map(a => a.id));
@@ -56,6 +56,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
         }));
 
     await db.$transaction(newSplitTimes.map(data => db.splitTime.create({ data })));
+
     await db.$transaction(newAbsences.map(data => db.absence.create({ data })));
 
     const splitTimesToUpdate = [...splitTimes_toUpdate]
