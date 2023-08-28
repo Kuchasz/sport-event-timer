@@ -19,7 +19,10 @@ export const ServerConnectionHandler = ({
     trpc.action.actionDispatched.useSubscription(
         { raceId, clientId },
         {
-            onData: (action) => {logger.log(action); dispatch({ ...action, __remote: true })},
+            onData: action => {
+                logger.log(action);
+                dispatch({ ...action, __remote: true });
+            },
             onError: console.error,
         }
     );
@@ -52,11 +55,12 @@ export const ServerConnectionHandler = ({
             setTimeOffset(timeOffset);
 
             if (latency > allowedLatency) {
-                timeout = setTimeout(requestTimeSync, 1000);
+                requestTimeSync();
+                timeout = setTimeout(requestTimeSync, 250);
             }
         };
 
-        const connectionStateChangedUnsub = onConnectionStateChanged((connectionState) => {
+        const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             //dispatch connectionState !== "connected"
             // console.log("dispatch connectionState ", connectionState);
             setConnectionState(connectionState);
