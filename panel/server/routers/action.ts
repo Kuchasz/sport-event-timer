@@ -23,6 +23,7 @@ type Client = {
 let clients: Client[] = [];
 
 export const dispatchAction = async (raceId: number, clientId: string, action: any) => {
+    logger.log('dispatch action!!');
     const messageRecipents = clients
         .filter(c => c.raceId === raceId && c.clientId !== clientId);
         

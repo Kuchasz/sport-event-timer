@@ -2206,10 +2206,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:4.11.0":
-  version: 4.11.0
-  resolution: "@prisma/engines@npm:4.11.0"
-  checksum: 98030cead39e5009b7a91fd2463433ccdb16cbeb6c7345ed7950c25dbe0731a425fc888458a1423b594d659972e081ca3d63d301ef647f05a634209c75769db2
+"@prisma/engines@npm:5.2.0":
+  version: 5.2.0
+  resolution: "@prisma/engines@npm:5.2.0"
+  checksum: c4d0a424b211ab5f02c977bd87e03a151a7d297d8448b08ef9de931a0dcebbbea76cdefc15a17fd06dacac692b164fd88b32c23eb84f7822dbaf3d0885b700a7
   languageName: node
   linkType: hard
 
@@ -2370,14 +2370,14 @@ __metadata:
     jspdf: 2.5.1
     jspdf-autotable: 3.5.25
     next: 13.4.12
-    next-auth: ^4.22.1
+    next-auth: 4.22.5
     next-pwa: 5.6.0
     node-fetch: 2.6.1
     node-html-parser: 6.1.1
     nodemailer: 6.8.0
     papaparse: 5.3.2
     postcss: 8.4.14
-    prisma: 4.11.0
+    prisma: 5.2.0
     react: 18.2.0
     react-dom: 18.2.0
     react-location: 3.3.4
@@ -6768,9 +6768,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.22.1":
-  version: 4.22.1
-  resolution: "next-auth@npm:4.22.1"
+"next-auth@npm:4.22.5":
+  version: 4.22.5
+  resolution: "next-auth@npm:4.22.5"
   dependencies:
     "@babel/runtime": ^7.20.13
     "@panva/hkdf": ^1.0.2
@@ -6789,7 +6789,7 @@ __metadata:
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 42bae16b62bac4b3d215d991c7c964dfc071a84df32900a28d4cbc20d4b6a65689b3ba9f10633780a22ff0cbc420248d012614a5b0d82918f9bbb56f7f92f7c5
+  checksum: 94e8cb4d72a68636d2f26ba7cd330085c5589227449b180ee559fdb4100ee4e3d8f541776d2dc059c6878d640fe6e177a6ab22e375916529424ab0f6c369f482
   languageName: node
   linkType: hard
 
@@ -7458,15 +7458,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:4.11.0":
-  version: 4.11.0
-  resolution: "prisma@npm:4.11.0"
+"prisma@npm:5.2.0":
+  version: 5.2.0
+  resolution: "prisma@npm:5.2.0"
   dependencies:
-    "@prisma/engines": 4.11.0
+    "@prisma/engines": 5.2.0
   bin:
     prisma: build/index.js
-    prisma2: build/index.js
-  checksum: 760d80766ae16ad2d25cfc20d75433b020dff0937eab864b94b95beadd89e481508e4d3c6370a5df90749d5ac5c7af77c9c2f293b74bfdee0e548b04a905c2e7
+  checksum: 8b99ab5a5f801c72b2eb1809db980bd104dfd699cb14c5d5db5b675566c89e46501267399bb2f02bc3ea8fb86fc2f029cccd7178768109dc4d198bc93552b1da
   languageName: node
   linkType: hard
 
