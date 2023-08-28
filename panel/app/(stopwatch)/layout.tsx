@@ -92,10 +92,10 @@ export default function StopwatchLayout({ children }: { children: ReactNode }) {
                                             <div className="w-full h-full px-4 flex items-center justify-center">
                                                 <div className="flex flex-col items-center">
                                                     <Icon path={mdiCloudOffOutline} size={2}></Icon>
-                                                    <div className="text-xl font-semibold">APP IS OFFLINE</div>
-                                                    <div className="mt-8 text-center">
-                                                        Stopwatch requires stable internet connection. Wait for the app to reconnect itself
-                                                        or kill the app and try to run it again.
+                                                    <div className="text-xl font-bold">DISCONNECTED</div>
+                                                    <div className="font-medium">Stable internet connection required.</div>
+                                                    <div className="mt-8 text-sm text-center">
+                                                         Wait for the reconnect or restart the app.
                                                     </div>
                                                 </div>
                                             </div>
