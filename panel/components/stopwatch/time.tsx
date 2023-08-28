@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { splitTime } from "@set/utils/dist/datetime";
+import { splitTime, zeroSplits } from "@set/utils/dist/datetime";
 import classNames from "classnames";
 
 export const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
-    const splits = splitTime(new Date(time));
+    const splits = time === 0 ? zeroSplits : splitTime(new Date(time));
 
     return (
         <div className={classNames("text-3xl flex items-end", { ["animate-pulse"]: stopped })}>

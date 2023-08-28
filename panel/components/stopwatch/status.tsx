@@ -10,11 +10,6 @@ import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "states/s
 import classNames from "classnames";
 import { ConnectionState } from "connection";
 import { Timer } from "./timer";
-import dynamic from "next/dynamic";
-
-const NoSSRTimer = dynamic(() => Promise.resolve(Timer), {
-    ssr: false,
-});
 
 const SelectedTimingPoint = ({
     timingPoints,
@@ -127,11 +122,11 @@ export const Status = ({ raceId }: { raceId: string }) => {
                 connectionState={connectionState}
             />
             <div className="px-4 py-2 rounded-b-lg z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
-                <NoSSRTimer offset={offset!} />
+                <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
                         {sortedTimingPoints.length === 0 ? (
-                            <WarningMessage contents={"NO TIMING POINTS"} />
+                            <WarningMessage contents="NO TIMING POINTS" />
                         ) : timingPointId === undefined ||
                           timingPointId === null ||
                           timingPointId === 0 ||

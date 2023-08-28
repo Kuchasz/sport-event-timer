@@ -26,6 +26,8 @@ export const splitTime = (time: Date) => ({
     ), miliseconds: formatNumber(time.getMilliseconds(), 3).slice(0, 1)
 });
 
+export const zeroSplits = { hours: '00', minutes: '00', seconds: '00', miliseconds: '0' };
+
 export const getCountdownTime = (time: number) => {
     const currentTime = new Date(time);
 
