@@ -35,15 +35,15 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
         previousState = currentState;
 
         runStateChangedHandlers(
-            currentState === 0
+            currentState === socket.CONNECTING
                 ? "connecting"
-                : currentState === 1
+                : currentState === socket.OPEN
                     ? "connected"
-                    : currentState === 2
+                    : currentState === socket.CLOSED
                         ? "disconnected"
                         : "error"
         );
-    }, 5000);
+    }, 250);
 };
 
 if (getConnection)
