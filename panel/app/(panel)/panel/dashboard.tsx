@@ -27,7 +27,7 @@ export function Dashboard() {
                                 <DashboardCard.Info title="Name" text={dashboardData.nextRace.name!} />
                                 <DashboardCard.Range
                                     title="Registered Players"
-                                    min={dashboardData.nextRace.players!}
+                                    min={dashboardData.nextRace.registeredPlayers!}
                                     max={dashboardData.nextRace.playersLimit!}
                                 />
                                 <DashboardCard.Discrete title="Registration status" enabled={dashboardData.nextRace.registrationEnabled!} />
