@@ -18,26 +18,28 @@ function defineNextConfig(config) {
     return config;
 }
 
+import NextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = NextIntlPlugin(
+    // This is the default (also the `src` folder is supported out of the box)
+    './i18n/index.ts'
+);
+
 // export default withPWA(defineNextConfig({
-export default defineNextConfig({
+export default withNextIntl(defineNextConfig({
     // reactStrictMode: true,
     // swcMinify: true,
-    // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
-    i18n: {
-        locales: ["en"],
-        defaultLocale: "en",
-    },
+    // i18n: {
+    //     locales: ["en"],
+    //     defaultLocale: "en",
+    // },
     poweredByHeader: false,
     redirects: async () => {
         return [{ source: '/', destination: '/panel', permanent: true }]
     }
-    // experimental: {
-    //     typedRoutes: true
-    // }
-
 
     // experimental: {
     //     // runtime: 'nodejs',
     //     appDir: true
     // }
-});
+}));
