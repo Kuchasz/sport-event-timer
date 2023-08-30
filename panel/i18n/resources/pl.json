@@ -413,6 +413,17 @@
       "races": {
         "title": "Wyścigi"
       }
+    },
+    "race": {
+      "statistics": {
+        "widgets": {
+          "registeredPlayers": "Zarejestrowani Zawodnicy",
+          "registrationStatus": "Status Rejestracji"
+        },
+        "header": {
+          "title": "Statystyki"
+        }
+      }
     }
   },
   "registration": {
