@@ -16,6 +16,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
 import { PageHeader } from "components/page-header";
+import { useTranslations } from "next-intl";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
@@ -43,6 +44,7 @@ const generateAccessUrl = async () => {
 };
 
 const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelete: (accessKey: AccessKeys[0]) => void }) => {
+    const t = useTranslations();
     return (
         <>
             {accessKeys && (
@@ -51,11 +53,11 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                         <thead className="text-xs text-gray-400 uppercase">
                             <tr>
                                 <th scope="col" className="py-4">
-                                    Key name
+                                    {t('pages.timingPoints.accessUrls.grid.columns.keyName')}
                                 </th>
                                 <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        Expires At
+                                        {t('pages.timingPoints.accessUrls.grid.columns.expiresAt')}
                                         <a href="#">
                                             <SortTick />
                                         </a>
@@ -63,7 +65,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                                 </th>
                                 <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        Code
+                                        {t('pages.timingPoints.accessUrls.grid.columns.code')}
                                         <a href="#">
                                             <SortTick />
                                         </a>
@@ -71,7 +73,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                                 </th>
                                 <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        Supervisor
+                                        {t('pages.timingPoints.accessUrls.grid.columns.supervisor')}
                                         <a href="#">
                                             <SortTick />
                                         </a>
@@ -79,7 +81,7 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                                 </th>
                                 <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        Token
+                                        {t('pages.timingPoints.accessUrls.grid.columns.token')}
                                         <a href="#">
                                             <SortTick />
                                         </a>
@@ -87,14 +89,14 @@ const PoorTable = ({ items: accessKeys, onDelete }: { items: AccessKeys; onDelet
                                 </th>
                                 <th scope="col" className="py-4">
                                     <div className="flex items-center">
-                                        URL
+                                        {t('pages.timingPoints.accessUrls.grid.columns.url')}
                                         <a href="#">
                                             <SortTick />
                                         </a>
                                     </div>
                                 </th>
                                 <th scope="col" className="py-4">
-                                    <span className="sr-only">Edit</span>
+                                    <span className="sr-only">{t('pages.timingPoints.accessUrls.edit.button')}</span>
                                 </th>
                             </tr>
                         </thead>
@@ -148,10 +150,11 @@ const TimingPointCard = ({
     isLast: boolean;
     timingPoint: TimingPoint;
 }) => {
+    const t = useTranslations();
     const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
     const openCreateDialog = async () => {
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
-            title: "Create new timing point",
+            title: t('pages.timingPoints.create.title'),
             component: TimingPointCreate,
             props: { raceId: raceId! },
         });
@@ -172,7 +175,7 @@ const TimingPointCard = ({
                         className="bg-gray-100 font-medium flex my-1 px-5 py-2 items-center text-sm hover:bg-gray-200 text-gray-500 hover:text-gray-600 self-center cursor-pointer rounded-full"
                     >
                         <Icon path={mdiPlus} size={0.7} />
-                        <span className="ml-1.5">Add timing point</span>
+                        <span className="ml-1.5">{t('pages.timingPoints.create.button')}</span>
                     </button>
                     <div className="w-0.5 bg-gray-100 h-5"></div>
                 </div>
@@ -206,6 +209,7 @@ export const TimingPoints = () => {
         { raceId: raceId!, timingPointId: activeTimingPointId },
         { initialData: [] }
     );
+    const t = useTranslations();
 
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
@@ -224,7 +228,7 @@ export const TimingPoints = () => {
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
         const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
-            title: "Edit timing point",
+            title: t('pages.timingPoints.edit.title'),
             component: TimingPointEdit,
             props: {
                 editedTimingPoint,
@@ -239,7 +243,7 @@ export const TimingPoints = () => {
 
     const openCreateAccessKeyDialog = async (timingPoint: TimingPoint) => {
         const timingPointAccessKey = await Demodal.open<CreatedTimingPointAccessKey>(NiceModal, {
-            title: "Edit timing point",
+            title: t('pages.timingPoints.accessUrls.create.title'),
             component: TimingPointAccessKeyCreate,
             props: {
                 timingPointId: timingPoint.id,
@@ -255,10 +259,10 @@ export const TimingPoints = () => {
 
     const openDeleteDialog = async (timingPoint: TimingPoint) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete timing point`,
+            title: t('pages.timingPoints.delete.confirmation.title'),
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Timing Point ${timingPoint.name}. Do you want to proceed?`,
+                message: t('pages.timingPoints.delete.confirmation.text', {name: timingPoint.name}),
             },
         });
 
@@ -272,10 +276,10 @@ export const TimingPoints = () => {
 
     const openDeleteAccesKeyDialog = async (timingPointAccessKey: AccessKeys[0]) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete timing point access url`,
+            title: t('pages.timingPoints.accessUrls.delete.confirmation.title'),
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Timing Point Access URL ${timingPointAccessKey.name}. Do you want to proceed?`,
+                message: t('pages.timingPoints.accessUrls.delete.confirmation.text', {name: timingPointAccessKey.name}),
             },
         });
 
@@ -289,15 +293,10 @@ export const TimingPoints = () => {
     return (
         <>
             <Head>
-                <title>Timing points</title>
+                <title>{t('pages.timingPoints.header.title')}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Timing points" description="Configure points where time will be measured, used in stopwatch" />
-                {/* <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
-                    </Button>
-                </div> */}
+                <PageHeader title={t('pages.timingPoints.header.title')} description={t('pages.timingPoints.header.description')} />
                 <div className="w-full max-w-md ">
                     {sortedTimingPoints &&
                         sortedTimingPoints.map((e, index) => (
@@ -342,8 +341,8 @@ export const TimingPoints = () => {
                         <div className="mt-8">
                             <div className="flex items-center">
                                 <div>
-                                    <h3 className="text-xl font-semibold">Access URLs</h3>
-                                    <div>Copy access URLs and send them to your timekeepers</div>
+                                    <h3 className="text-xl font-semibold">{t('pages.timingPoints.accessUrls.header.title')}</h3>
+                                    <div>{t('pages.timingPoints.accessUrls.header.description')}</div>
                                 </div>
                                 <div className="flex-grow"></div>
                                 <button
