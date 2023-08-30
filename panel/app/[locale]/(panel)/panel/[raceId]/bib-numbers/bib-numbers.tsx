@@ -44,7 +44,7 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletebibNumber}>
             <Icon size={1} path={mdiTrashCan} />
-            delete
+            {t('pages.bibNumbers.delete.button')}
         </span>
     );
 };

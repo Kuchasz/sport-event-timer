@@ -103,7 +103,8 @@
         "confirmation": {
           "title": "Delete bibNumber",
           "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?"
-        }
+        },
+        "button": "Delete"
       },
       "grid": {
         "columns": {
