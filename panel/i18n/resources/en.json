@@ -359,6 +359,22 @@
         "title": "Split times",
         "description": "Times measured by the stopwatches"
       }
+    },
+    "results": {
+      "grid": {
+        "columns": {
+          "bibNumber": "Bib",
+          "playerName": "Name",
+          "playerLastName": "Last Name",
+          "start": "Start",
+          "finish": "Finish",
+          "result": "Result"
+        }
+      },
+      "header": {
+        "title": "Race Results",
+        "description": "Results measured by the stopwatch, each may be overriden"
+      }
     }
   },
   "registration": {
