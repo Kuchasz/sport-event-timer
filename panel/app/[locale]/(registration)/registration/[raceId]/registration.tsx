@@ -1,6 +1,6 @@
 "use client";
 
-import { Gender, genders } from "@set/utils/dist/gender";
+import { Gender, getGenders } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { PoorCombo } from "components/poor-combo";
@@ -84,7 +84,7 @@ const RegistrationFormComponent = ({
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value as any}
-                            items={genders}
+                            items={getGenders({male: t('registration.gender.male'), female: t('registration.gender.female')})}
                             placeholder={t("registration.fields.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
