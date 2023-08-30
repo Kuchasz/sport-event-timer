@@ -17,39 +17,22 @@ import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { PageHeader } from "components/page-header";
+import { useTranslations } from "next-intl";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
 type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
 type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
-const defaultColumns: ColDef<BibNumber>[] = [
-    {
-        field: "number",
-        sortable: true,
-        sort: "asc",
-        filter: true,
-        headerName: "Bib Number",
-        comparator: (valueA, valueB) => valueA - valueB,
-    },
-    {
-        field: "actions",
-        width: 15,
-        headerName: "Actions",
-        cellRenderer: (props: { context: any; data: BibNumber }) => (
-            <BibNumberDeleteButton refetch={props.context.refetch} bibNumber={props.data} />
-        ),
-    },
-];
-
 const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
     const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
+    const t = useTranslations();
     const deletebibNumber = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete bibNumber`,
+            title: t("pages.bibNumbers.delete.confirmation.title"),
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Bib Number ${bibNumber.number}. Do you want to proceed?`,
+                message: t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number }),
             },
         });
 
@@ -75,9 +58,30 @@ export const BibNumbers = () => {
     const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
     const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
+    const t = useTranslations();
+
+    const defaultColumns: ColDef<BibNumber>[] = [
+        {
+            field: "number",
+            sortable: true,
+            sort: "asc",
+            filter: true,
+            headerName: t("pages.bibNumbers.grid.columns.bibNumber"),
+            comparator: (valueA, valueB) => valueA - valueB,
+        },
+        {
+            field: "actions",
+            width: 15,
+            headerName: t("pages.bibNumbers.grid.columns.actions"),
+            cellRenderer: (props: { context: any; data: BibNumber }) => (
+                <BibNumberDeleteButton refetch={props.context.refetch} bibNumber={props.data} />
+            ),
+        },
+    ];
+
     const openCreateDialog = async () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
-            title: "Create new BibNumber",
+            title: t("pages.bibNumbers.create.title"),
             component: BibNumberCreate,
             props: { raceId: raceId! },
         });
@@ -90,10 +94,10 @@ export const BibNumbers = () => {
 
     const openDeleteAllDialog = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete bibNumber`,
+            title: t("pages.bibNumbers.deleteAll.confirmation.title"),
             component: Confirmation,
             props: {
-                message: `You are trying to delete all Bib Numbers. Do you want to proceed?`,
+                message: t("pages.bibNumbers.deleteAll.confirmation.text"),
             },
         });
 
@@ -105,7 +109,7 @@ export const BibNumbers = () => {
 
     const openCreateManyDialog = async () => {
         const createManyBibNumbers = await Demodal.open<CreateManyBibNumbers>(NiceModal, {
-            title: "Create many bib numbers",
+            title: t("pages.bibNumbers.createMany.title"),
             component: BibNumberCreateManyForm,
             props: { initialConfig: { raceId: raceId!, omitDuplicates: true } },
         });
@@ -122,7 +126,7 @@ export const BibNumbers = () => {
 
     const openEditDialog = async (editedBibNumber?: BibNumber) => {
         const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
-            title: "Edit BibNumber",
+            title: t("pages.bibNumbers.edit.title"),
             component: BibNumberEdit,
             props: {
                 editedBibNumber,
@@ -138,22 +142,22 @@ export const BibNumbers = () => {
     return (
         <>
             <Head>
-                <title>Bib Numbers</title>
+                <title>{t("pages.bibNumbers.header.title")}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Bib Numbers" description="Configure the bib numbers to easily assign them to players" />
+                <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Add Bib Numbers</span>
+                        <span className="ml-2">{t('pages.bibNumbers.create.button')}</span>
                     </Button>
                     <Button className="ml-2" onClick={openCreateManyDialog}>
                         {/* <Icon size={1} path={mdiPlusM} /> */}
-                        add many
+                        {t('pages.bibNumbers.createMany.button')}
                     </Button>{" "}
                     <Button className="ml-2" onClick={openDeleteAllDialog}>
                         <Icon size={1} path={mdiRestore} className="mr-2" />
-                        remove all
+                        {t('pages.bibNumbers.deleteAll.button')}
                     </Button>
                 </div>
                 <div className="ag-theme-material h-full">
