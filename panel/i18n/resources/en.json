@@ -1,102 +1,173 @@
 {
-    "menuOptions": {
-        "general": {
-            "title": "General",
-            "dashboard": "Dashboard",
-            "races": "My Races"
-        },
-        "race": {
-            "title": "Race",
-            "index": "Base Info",
-            "bibNumbers": "Bib Numbers",
-            "players": "Players",
-            "registrations": "Registrations",
-            "classifications": "Classifications",
-            "timingPoints": "Timing Points",
-            "splitTimes": "Split Times",
-            "results": "Results",
-            "settings": "Settings"
-        },
-        "admin": {
-            "title": "Administrator",
-            "dashboard": "Dashboard",
-            "races": "All Races",
-            "hello": "Say hay!",
-            "accounts": "Accounts"
-        }
+  "menuOptions": {
+    "general": {
+      "title": "General",
+      "dashboard": "Dashboard",
+      "races": "My Races"
     },
-    "pages": {
-        "general": {
-            "dashboard": {
-                "header": {
-                    "title": "Dashboard",
-                    "description": "Monitor what is the most important"
-                },
-                "statistics": {
-                    "title": "Statistics",
-                    "widgets": {
-                        "futureRaces": "Future races",
-                        "pastRaces": "Past races"
-                    }
-                },
-                "raceStatistics": {
-                    "title": "Incoming race statistics",
-                    "widgets": {
-                        "date": "Date",
-                        "name": "Name",
-                        "registeredPlayers": "Registered Players",
-                        "registrationStatus": "Registration Status"
-                    }
-                }
-            }
-        },
-        "registration": {
-            "turnOffPopup": {
-                "title": "Turn off registration",
-                "description": "Online registration will be turned off"
-            },
-            "turnOnPopup": {
-                "title": "Turn on registration",
-                "description": "Online registration will be turned on"
-            }
-        },
-        "races": {
-            "addRace": "Add Race",
-            "header": {
-                "title": "My Races",
-                "description": "Manage all past and future races"
-            },
-            "wipeStopwatchPopup": {
-                "title": "Wipe stopwatch",
-                "description": "Wipe all stopwatch data",
-                "confirmation": {
-                    "title": "Wipe race data",
-                    "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?"
-                }
-            },
-            "deleteRacePopup": {
-                "title": "Delete",
-                "description": "Delete race",
-                "confirmation": {
-                    "title": "Delete race",
-                    "text": "You are trying to delete the Race {raceName}. Do you want to proceed?"
-                }
-            },
-            "grid": {
-                "columns": {
-                    "name": "Name",
-                    "date": "Date",
-                    "registrationEnabled": "Registration",
-                    "registeredPlayers": "Registrations",
-                    "actions": "Actions"
-                }
-            },
-            "createRace": {
-                "title": "Create new race"
-            },
-            "editRace": {
-                "title": "Create new race"
-            }
-        }
+    "race": {
+      "title": "Race",
+      "index": "Base Info",
+      "bibNumbers": "Bib Numbers",
+      "players": "Players",
+      "registrations": "Registrations",
+      "classifications": "Classifications",
+      "timingPoints": "Timing Points",
+      "splitTimes": "Split Times",
+      "results": "Results",
+      "settings": "Settings"
+    },
+    "admin": {
+      "title": "Administrator",
+      "dashboard": "Dashboard",
+      "races": "All Races",
+      "hello": "Say hay!",
+      "accounts": "Accounts"
     }
+  },
+  "pages": {
+    "general": {
+      "dashboard": {
+        "header": {
+          "title": "Dashboard",
+          "description": "Monitor what is the most important"
+        },
+        "statistics": {
+          "title": "Statistics",
+          "widgets": {
+            "futureRaces": "Future races",
+            "pastRaces": "Past races"
+          }
+        },
+        "raceStatistics": {
+          "title": "Incoming race statistics",
+          "widgets": {
+            "date": "Date",
+            "name": "Name",
+            "registeredPlayers": "Registered Players",
+            "registrationStatus": "Registration Status"
+          }
+        }
+      }
+    },
+    "registration": {
+      "turnOffPopup": {
+        "title": "Turn off registration",
+        "description": "Online registration will be turned off"
+      },
+      "turnOnPopup": {
+        "title": "Turn on registration",
+        "description": "Online registration will be turned on"
+      }
+    },
+    "races": {
+      "addRace": "Add Race",
+      "header": {
+        "title": "My Races",
+        "description": "Manage all past and future races"
+      },
+      "wipeStopwatchPopup": {
+        "title": "Wipe stopwatch",
+        "description": "Wipe all stopwatch data",
+        "confirmation": {
+          "title": "Wipe race data",
+          "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?"
+        }
+      },
+      "deleteRacePopup": {
+        "title": "Delete",
+        "description": "Delete race",
+        "confirmation": {
+          "title": "Delete race",
+          "text": "You are trying to delete the Race {raceName}. Do you want to proceed?"
+        }
+      },
+      "grid": {
+        "columns": {
+          "name": "Name",
+          "date": "Date",
+          "registrationEnabled": "Registration",
+          "registeredPlayers": "Registrations",
+          "actions": "Actions"
+        }
+      },
+      "createRace": {
+        "title": "Create new race"
+      },
+      "editRace": {
+        "title": "Edit race"
+      }
+    }
+  },
+  "registration": {
+    "fields": {
+      "gender": {
+        "placeholder": "Select gender",
+        "label": "Gender"
+      },
+      "birthDate": {
+        "label": "Birth Date",
+        "placeholder": "Your birth date"
+      },
+      "name": {
+        "label": "First Name",
+        "placeholder": "Your first name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Your last name"
+      },
+      "team": {
+        "label": "Team (optional)",
+        "placeholder": "Your team"
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Your city"
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select country"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Your email address"
+      },
+      "phoneNumber": {
+        "label": "Phone number",
+        "placeholder": "Your phone number"
+      },
+      "icePhoneNumber": {
+        "label": "ICE phone number (optional)",
+        "placeholder": "Rescue phone number"
+      },
+      "terms": {
+        "termsAndConditions": "Terms and conditions",
+        "agree": "I agree with the"
+      }
+    },
+    "buttons": {
+      "pending": "Registration pending",
+      "register": "Register"
+    },
+    "result": {
+      "failed": {
+        "header": "Registration went wrong",
+        "text": "Maybe limit of players has exceeded"
+      },
+      "success": {
+        "header": "Registration was successful",
+        "text": "Check your email address for confimation."
+      }
+    },
+    "status": {
+      "availableSpots": "Available spots",
+      "closed": "Registration is closed.",
+      "noSpotsLeft": "No available spots. Registration is closed."
+    },
+    "header": {
+      "title": "Registration",
+      "description": "Register new participant"
+    }
+  }
 }
