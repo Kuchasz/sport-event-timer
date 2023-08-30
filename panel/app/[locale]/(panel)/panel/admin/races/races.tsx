@@ -17,6 +17,7 @@ import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
+import { useTranslations } from "next-intl";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -63,9 +64,11 @@ export const Races = () => {
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const gridRef = useRef<AgGridReact<Race>>(null);
 
+    const t = useTranslations();
+
     const turnOffRegistrationAction = {
-        name: "Turn off registration",
-        description: "Online registration will be turned off",
+        name: t("pages.registration.turnOffPopup.title"),
+        description: t("pages.registration.turnOffPopup.description"),
         iconPath: mdiLockOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
@@ -74,8 +77,8 @@ export const Races = () => {
     };
 
     const turnOnRegistrationAction = {
-        name: "Turn on registration",
-        description: "Online registration will be turned on",
+        name: t("pages.registration.turnOnPopup.title"),
+        description: t("pages.registration.turnOnPopup.description"),
         iconPath: mdiLockOpenVariantOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
@@ -85,17 +88,15 @@ export const Races = () => {
 
     const myRacesActions = [
         {
-            name: "Wipe stopwatch",
-            description: "Wipe all stopwatch data",
+            name: t("pages.races.wipeStopwatchPopup.title"),
+            description: t("pages.races.wipeStopwatchPopup.description"),
             iconPath: mdiRestore,
             execute: async (race: Race) => {
                 const confirmed = await Demodal.open<boolean>(NiceModal, {
-                    title: `Wipe race`,
+                    title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
                     component: Confirmation,
                     props: {
-                        message: `You are trying to wipe the Race ${
-                            race.name
-                        } (${race.date.toLocaleDateString()}). Do you want to proceed?`,
+                        message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
                     },
                 });
 
@@ -106,17 +107,15 @@ export const Races = () => {
             },
         },
         {
-            name: "Delete",
-            description: "Delete race",
+            name: t("pages.races.deleteRacePopup.title"),
+            description: t("pages.races.deleteRacePopup.description"),
             iconPath: mdiTrashCan,
             execute: async (race: Race) => {
                 const confirmed = await Demodal.open<boolean>(NiceModal, {
-                    title: `Delete race`,
+                    title: t("pages.races.deleteRacePopup.confirmation.title"),
                     component: Confirmation,
                     props: {
-                        message: `You are trying to delete the Race ${
-                            race.name
-                        } (${race.date.toLocaleDateString()}). Do you want to proceed?`,
+                        message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
                     },
                 });
 
@@ -138,10 +137,10 @@ export const Races = () => {
             sortable: false,
             filter: false,
         },
-        { field: "name", headerName: "Name", sortable: true, filter: true },
+        { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
         {
             field: "date",
-            headerName: "Date",
+            headerName: t("pages.races.grid.columns.date"),
             sort: "asc",
             sortable: true,
             filter: true,
@@ -149,20 +148,20 @@ export const Races = () => {
         },
         {
             field: "registrationEnabled",
-            headerName: "Registration",
+            headerName: t("pages.races.grid.columns.registrationEnabled"),
             sortable: true,
             cellRenderer: RegistrationEnabledRenderer,
         },
         {
             field: "registeredPlayers",
-            headerName: "Registrations",
+            headerName: t("pages.races.grid.columns.registeredPlayers"),
             sortable: true,
             cellRenderer: RegistrationsRenderer,
         },
         {
             field: "actions",
             width: 200,
-            headerName: "Actions",
+            headerName: t("pages.races.grid.columns.actions"),
             cellStyle: { overflow: "visible" },
             cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
                 <PoorActions
@@ -179,7 +178,7 @@ export const Races = () => {
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
-            title: "Create new race",
+            title: t("pages.races.createRace.title"),
             component: RaceCreate,
             props: {},
         });
@@ -196,7 +195,7 @@ export const Races = () => {
 
     const openEditDialog = async (editedRace?: Race) => {
         const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: "Edit race",
+            title: t("pages.races.editRace.title"),
             component: RaceEdit,
             props: {
                 editedRace,
@@ -212,14 +211,14 @@ export const Races = () => {
     return (
         <>
             <Head>
-                <title>All Races</title>
+                <title>{t("pages.races.header.title")}</title>
             </Head>
             <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="All Races" description="Manage all past and future races" />
+                <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Add Race</span>
+                        <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>
                 </div>
                 <div className="ag-theme-material h-full">
