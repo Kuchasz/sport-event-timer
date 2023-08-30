@@ -139,7 +139,7 @@
       },
       "icePhoneNumber": {
         "label": "ICE phone number (optional)",
-        "placeholder": "Rescue phone number"
+        "placeholder": "Phone number in case of Emergency"
       },
       "terms": {
         "termsAndConditions": "Terms and conditions",

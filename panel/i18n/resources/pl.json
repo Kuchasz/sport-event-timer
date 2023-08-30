@@ -139,7 +139,7 @@
       },
       "icePhoneNumber": {
         "label": "Numer telefonu do ICE (opcjonalnie)",
-        "placeholder": "Numer telefonu do służb ratunkowych"
+        "placeholder": "Numer telefonu w nagłych wypadkach"
       },
       "terms": {
         "termsAndConditions": "Regulamin",
