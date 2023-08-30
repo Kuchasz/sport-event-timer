@@ -6,7 +6,7 @@ import {
     mdiFormatFontSizeIncrease,
     mdiWindowClose
     } from "@mdi/js";
-import { TextActions, TextSettings } from "../../app/(timer)/timer/[raceId]/timer";
+import { TextActions, TextSettings } from "../../app/[locale]/(timer)/timer/[raceId]/timer";
 import { TimerSettings } from "states/timer-states";
 
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (

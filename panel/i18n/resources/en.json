@@ -168,6 +168,10 @@
     "header": {
       "title": "Registration",
       "description": "Register new participant"
+    },
+    "gender": {
+      "male": "Male",
+      "female": "Female"
     }
   }
 }
