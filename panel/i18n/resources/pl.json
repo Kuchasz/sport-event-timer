@@ -21,7 +21,7 @@
       "title": "Administrator",
       "dashboard": "Panel",
       "races": "Wszystkie Wyścigi",
-      "hello": "Say hay!",
+      "hello": "Powiedz hej!",
       "accounts": "Konta"
     }
   },
@@ -97,6 +97,306 @@
       "editRace": {
         "title": "Edytuj wyścig"
       }
+    },
+    "bibNumbers": {
+      "delete": {
+        "confirmation": {
+          "title": "Usuń numer startowy",
+          "text": "Próbujesz usunąć Numer Startowy {bibNumber}. Czy chcesz kontynuować?"
+        },
+        "button": "Usuń"
+      },
+      "grid": {
+        "columns": {
+          "bibNumber": "Numer Startowy",
+          "actions": "Akcje"
+        }
+      },
+      "create": {
+        "title": "Utwórz nowy Numer Startowy",
+        "button": "Dodaj Numer Startowy"
+      },
+      "deleteAll": {
+        "confirmation": {
+          "title": "Usuń numery startowe",
+          "text": "Próbujesz usunąć wszystkie Numery Startowe. Czy chcesz kontynuować?"
+        },
+        "button": "Usuń wszystkie"
+      },
+      "createMany": {
+        "title": "Utwórz wiele numerów startowych",
+        "button": "Dodaj wiele"
+      },
+      "edit": {
+        "title": "Edytuj Numer Startowy"
+      },
+      "header": {
+        "title": "Numery Startowe",
+        "description": "Skonfiguruj numery startowe, aby łatwo przypisać je do zawodników"
+      }
+    },
+    "players": {
+      "grid": {
+        "columns": {
+          "index": "Indeks",
+          "classification": "Klasyfikacja Id",
+          "bibNumber": "Numer Startowy",
+          "name": "Imię",
+          "gender": "Płeć",
+          "startTime": "Czas Startu",
+          "birthDate": "Data Urodzenia",
+          "country": "Kraj",
+          "city": "Miasto",
+          "team": "Zespół",
+          "email": "Email",
+          "phoneNumber": "Numer Telefonu",
+          "icePhoneNumber": "Numer ICE",
+          "actions": "Akcje",
+          "lastName": "Nazwisko"
+        }
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Usuń zawodnika",
+          "text": "Próbujesz usunąć Zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+        },
+        "button": "Usuń"
+      },
+      "create": {
+        "title": "Utwórz nowego zawodnika",
+        "button": "Dodaj Zawodnika"
+      },
+      "edit": {
+        "title": "Edytuj zawodnika"
+      },
+      "header": {
+        "title": "Zawodnicy",
+        "description": "Zawodnicy dostępni w stoperze, ich czasy mogą być mierzone"
+      },
+      "export": {
+        "button": "Eksportuj"
+      }
+    },
+    "playerRegistrations": {
+      "togglePlayerPayment": {
+        "confirmation": {
+          "title": "Potwierdź zmianę płatności",
+          "text": "Próbujesz zmienić status płatności dla {name} {lastName} na: {hasPaid}. Czy chcesz kontynuować?"
+        }
+      },
+      "payment": {
+        "status": {
+          "notPaid": "nieopłacone",
+          "paid": "opłacone"
+        }
+      },
+      "promoteToPlayer": {
+        "title": "Awansuj do Zawodnika",
+        "description": "Zawodnik otrzyma dostęp w stoperze",
+        "confirmation": {
+          "title": "Awansuj rejestrację zawodnika na zawodnika"
+        }
+      },
+      "delete": {
+        "title": "Usuń zarejestrowanego Zawodnika",
+        "description": "To jest trwałe działanie",
+        "confirmation": {
+          "title": "Usuń rejestrację zawodnika",
+          "text": "Próbujesz usunąć Rejestrację Zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+        }
+      },
+      "grid": {
+        "columns": {
+          "index": "Indeks",
+          "name": "Imię",
+          "lastName": "Nazwisko",
+          "gender": "Płeć",
+          "birthDate": "Data Urodzenia",
+          "country": "Kraj",
+          "city": "Miasto",
+          "team": "Zespół",
+          "phone": "Telefon",
+          "email": "Email",
+          "icePhoneNumber": "Numer ICE",
+          "registrationDate": "Zarejestrowany",
+          "payment": "Płatność",
+          "promotedToPlayer": "Awansowany",
+          "actions": "Akcje"
+        }
+      },
+      "create": {
+        "title": "Utwórz nową rejestrację zawodnika",
+        "button": "Zarejestruj Zawodnika"
+      },
+      "edit": {
+        "title": "Edytuj rejestrację zawodnika"
+      },
+      "header": {
+        "title": "Zarejestrowani zawodnicy",
+        "description": "Zawodnicy zarejestrowani na wyścig, mogą być awansowani na zawodników"
+      },
+      "export": {
+        "button": "Eksportuj"
+      }
+    },
+    "classifications": {
+      "grid": {
+        "columns": {
+          "name": "Nazwa",
+          "actions": "Akcje"
+        }
+      },
+      "categories": {
+        "button": "kategorie",
+        "grid": {
+          "columns": {
+            "index": "Indeks",
+            "name": "Nazwa",
+            "minAge": "Minimalny Wiek",
+            "maxAge": "Maksymalny Wiek",
+            "gender": "Płeć",
+            "isSpecial": "Specjalne",
+            "actions": "Akcje"
+          }
+        },
+        "detele": {
+          "confirmation": {
+            "title": "Usuń kategorię",
+            "text": "Próbujesz usunąć Kategorię {name}. Czy chcesz kontynuować?"
+          }
+        },
+        "create": {
+          "title": "Utwórz nową kategorię",
+          "button": "Dodaj kategorię"
+        },
+        "edit": {
+          "title": "Edytuj kategorię"
+        },
+        "header": {
+          "title": "Kategorie",
+          "description": "Skonfiguruj kategorie dla klasyfikacji"
+        }
+      },
+      "create": {
+        "title": "Utwórz nową klasyfikację",
+        "button": "Dodaj klasyfikację"
+      },
+      "edit": {
+        "title": "Edytuj klasyfikację"
+      },
+      "header": {
+        "title": "Klasyfikacje",
+        "description": "Skonfiguruj klasyfikacje wyścigu"
+      },
+      "load": {
+        "button": "Wczytaj"
+      }
+    },
+    "timingPoints": {
+      "accessUrls": {
+        "grid": {
+          "columns": {
+            "keyName": "Nazwa Klucza",
+            "expiresAt": "Wygasa",
+            "code": "Kod",
+            "supervisor": "Kierownik",
+            "token": "Token",
+            "url": "URL"
+          }
+        },
+        "edit": {
+          "button": "Edytuj"
+        },
+        "create": {
+          "title": "Utwórz klucz dostępu"
+        },
+        "delete": {
+          "confirmation": {
+            "title": "Usuń URL dostępu do punktu pomiaru czasu",
+            "text": "Próbujesz usunąć URL dostępu do Punkt Pomiaru Czasu {name}. Czy chcesz kontynuować?"
+          }
+        },
+        "header": {
+          "title": "Adresy URL dostępu",
+          "description": "Skopiuj adresy URL dostępu i wyślij je do swoich czasomierzy"
+        }
+      },
+      "create": {
+        "title": "Utwórz nowy punkt pomiaru czasu",
+        "button": "Dodaj punkt pomiaru czasu"
+      },
+      "edit": {
+        "title": "Edytuj punkt pomiaru czasu"
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Usuń punkt pomiaru czasu",
+          "text": "Próbujesz usunąć Punkt Pomiaru Czasu {name}. Czy chcesz kontynuować?"
+        }
+      },
+      "header": {
+        "title": "Punkty Pomiaru Czasu",
+        "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze"
+      }
+    },
+    "splitTimes": {
+      "grid": {
+        "columns": {
+          "bibNumber": "Numer Startowy",
+          "playerName": "Imię",
+          "playerLastName": "Nazwisko"
+        }
+      },
+      "edit": {
+        "title": "Edytuj czas pomiaru pośredniego"
+      },
+      "revert": {
+        "confirmation": {
+          "title": "Cofnij ręczne zmiany czasu pośredniego",
+          "text": "Próbujesz cofnąć ręczne zmiany czasu pośredniego. Czy chcesz kontynuować?"
+        }
+      },
+      "header": {
+        "title": "Czasy Pomiaru Pośredniego",
+        "description": "Czasy mierzone przez stopery"
+      }
+    },
+    "results": {
+      "grid": {
+        "columns": {
+          "bibNumber": "Numer Startowy",
+          "playerName": "Imię",
+          "playerLastName": "Nazwisko",
+          "start": "Start",
+          "finish": "Meta",
+          "result": "Wynik"
+        }
+      },
+      "header": {
+        "title": "Wyniki Wyścigu",
+        "description": "Wyniki mierzone przez stopery, każdy może być zmieniany"
+      }
+    },
+    "settings": {
+      "apiKeys": {
+        "create": {
+          "title": "Utwórz klucz API",
+          "button": "Dodaj Klucz API"
+        },
+        "delete": {
+          "confirmation": {
+            "title": "Usuń Klucz API",
+            "text": "Próbujesz usunąć Klucz API {name}. Czy chcesz kontynuować?"
+          }
+        },
+        "edit": {
+          "title": "Edytuj Klucz API"
+        }
+      },
+      "header": {
+        "title": "Ustawienia",
+        "description": "Klucze API mogą być konfigurowane tutaj"
+      }
     }
   },
   "registration": {
@@ -106,7 +406,7 @@
         "label": "Płeć"
       },
       "birthDate": {
-        "label": "Data urodzenia",
+        "label": "Data Urodzenia",
         "placeholder": "Twoja data urodzenia"
       },
       "name": {
@@ -138,32 +438,32 @@
         "placeholder": "Twój numer telefonu"
       },
       "icePhoneNumber": {
-        "label": "Numer telefonu do ICE (opcjonalnie)",
-        "placeholder": "Numer telefonu w nagłych wypadkach"
+        "label": "Numer telefonu ICE (opcjonalnie)",
+        "placeholder": "Numer telefonu do skontaktowania w razie awaryjnej sytuacji"
       },
       "terms": {
         "termsAndConditions": "Regulamin",
-        "agree": "Akceptuję"
+        "agree": "Zgadzam się z"
       }
     },
     "buttons": {
       "pending": "Oczekiwanie na rejestrację",
-      "register": "Zarejestruj się"
+      "register": "Zarejestruj"
     },
     "result": {
       "failed": {
         "header": "Rejestracja nie powiodła się",
-        "text": "Może został osiągnięty limit zawodników"
+        "text": "Może limit miejsc dla zawodników został przekroczony"
       },
       "success": {
-        "header": "Rejestracja zakończona sukcesem",
+        "header": "Rejestracja udana",
         "text": "Sprawdź swój adres email w celu potwierdzenia."
       }
     },
     "status": {
       "availableSpots": "Dostępne miejsca",
-      "closed": "Rejestracja zamknięta.",
-      "noSpotsLeft": "Brak dostępnych miejsc. Rejestracja zamknięta."
+      "closed": "Rejestracja jest zamknięta.",
+      "noSpotsLeft": "Brak dostępnych miejsc. Rejestracja jest zamknięta."
     },
     "header": {
       "title": "Rejestracja",
