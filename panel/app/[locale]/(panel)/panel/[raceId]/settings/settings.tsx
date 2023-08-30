@@ -12,6 +12,7 @@ import { useCurrentRaceId } from "hooks";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
+import { useTranslations } from "next-intl";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
@@ -23,10 +24,11 @@ export const Settings = () => {
     const addKeyMutation = trpc.apiKey.addApiKey.useMutation();
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
     const editApiKeyMutation = trpc.apiKey.editApiKey.useMutation();
+    const t = useTranslations();
 
     const openCreateDialog = async () => {
         const apiKey = await Demodal.open<EditedApiKey>(NiceModal, {
-            title: "Create api key",
+            title: t('pages.settings.apiKeys.create.title'),
             component: ApiKeyCreate,
             props: {
                 raceId: raceId!,
@@ -41,10 +43,10 @@ export const Settings = () => {
 
     const openDeleteDialog = async (apiKey: ApiKey) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete ApiKey`,
+            title: t('pages.settings.apiKeys.delete.confirmation.title'),
             component: Confirmation,
             props: {
-                message: `You are trying to delete the ApiKey ${apiKey.name}. Do you want to proceed?`,
+                message: t('pages.settings.apiKeys.delete.confirmation.text', {name: apiKey.name}),
             },
         });
 
@@ -56,7 +58,7 @@ export const Settings = () => {
 
     const openEditDialog = async (editedApiKey?: ApiKey) => {
         const key = await Demodal.open<ApiKey>(NiceModal, {
-            title: "Edit player",
+            title: t('pages.settings.apiKeys.edit.title'),
             component: ApiKeyEdit,
             props: {
                 raceId: raceId!,
@@ -73,14 +75,14 @@ export const Settings = () => {
     return (
         <>
             <Head>
-                <title>Settings</title>
+                <title>{t('pages.settings.header.title')}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Settings" description="API Keys may be configured here" />
+                <PageHeader title={t('pages.settings.header.title')} description={t('pages.settings.header.description')} />
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Add API Key</span>
+                        <span className="ml-2">{t('pages.settings.apiKeys.create.button')}</span>
                     </Button>
                 </div>
                 {apiKeys &&
