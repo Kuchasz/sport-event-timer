@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { NextAuthProvider, TrpcProvider } from "providers";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import deepmerge from "deepmerge";
 
 export default async function PanelLayout(props: { children: ReactNode; breadcrumbs: ReactNode; params: { locale: string } }) {
     const locale = useLocale();
@@ -15,7 +16,12 @@ export default async function PanelLayout(props: { children: ReactNode; breadcru
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        const localeMessages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
+
+        messages = deepmerge(defaultMessages, localeMessages) as any;
+
+        console.log(props.params.locale);
     } catch (error) {
         notFound();
     }

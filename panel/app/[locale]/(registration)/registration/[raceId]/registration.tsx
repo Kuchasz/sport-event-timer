@@ -15,6 +15,7 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
+import { useTranslations } from "next-intl";
 
 const initialRegistration = () => ({
     name: "",
@@ -41,14 +42,15 @@ const RegistrationFormComponent = ({
     teams: string[];
     termsUrl: string | null;
 }) => {
+    const t = useTranslations();
     return (
         <div className="space-y-4 md:space-y-6">
             <Form onSubmit={r => onResolve(r)} initialValues={initialRegistration()} validationSchema={playerRegistrationSchema}>
                 <FormInput
-                    label="First Name"
+                    label={t("registration.fields.name.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your first name"
+                            placeholder={t("registration.fields.name.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -56,10 +58,10 @@ const RegistrationFormComponent = ({
                     name="name"
                 />
                 <FormInput
-                    label="Last Name"
+                    label={t("registration.fields.lastName.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your last name"
+                            placeholder={t("registration.fields.lastName.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -67,10 +69,10 @@ const RegistrationFormComponent = ({
                     name="lastName"
                 />
                 <FormInput
-                    label="Birth Date"
+                    label={t("registration.fields.birthDate.label")}
                     render={({ value, onChange }) => (
                         <PoorDatepicker
-                            placeholder="Your birth date"
+                            placeholder={t("registration.fields.birthDate.placeholder")}
                             value={value as Date}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -78,12 +80,12 @@ const RegistrationFormComponent = ({
                     name="birthDate"
                 />
                 <FormInput
-                    label="Gender"
+                    label={t("registration.fields.gender.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value as any}
                             items={genders}
-                            placeholder="Select gender"
+                            placeholder={t("registration.fields.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
                             onChange={e => onChange({ target: { value: e.target.value } })}
@@ -92,10 +94,10 @@ const RegistrationFormComponent = ({
                     name="gender"
                 />
                 <FormInput
-                    label="Team (optional)"
+                    label={t("registration.fields.team.label")}
                     render={({ value, onChange }) => (
                         <PoorCombo
-                            placeholder="Your team"
+                            placeholder={t("registration.fields.team.placeholder")}
                             initialValue={value as string}
                             items={teams}
                             onChange={e => onChange({ target: { value: e.target.value } })}
@@ -104,10 +106,10 @@ const RegistrationFormComponent = ({
                     name="team"
                 />
                 <FormInput
-                    label="City"
+                    label={t("registration.fields.city.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your city"
+                            placeholder={t("registration.fields.city.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -115,13 +117,13 @@ const RegistrationFormComponent = ({
                     name="city"
                 />
                 <FormInput
-                    label="Country"
+                    label={t("registration.fields.country.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value as any}
                             items={countryCodes}
                             nameKey="name_en"
-                            placeholder="Select country"
+                            placeholder={t("registration.fields.country.placeholder")}
                             valueKey="code"
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -129,10 +131,10 @@ const RegistrationFormComponent = ({
                     name="country"
                 />
                 <FormInput
-                    label="Email"
+                    label={t("registration.fields.email.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your email address"
+                            placeholder={t("registration.fields.email.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -140,10 +142,10 @@ const RegistrationFormComponent = ({
                     name="email"
                 />
                 <FormInput
-                    label="Phone number"
+                    label={t("registration.fields.phoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Your phone number"
+                            placeholder={t("registration.fields.phoneNumber.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -151,10 +153,10 @@ const RegistrationFormComponent = ({
                     name="phoneNumber"
                 />
                 <FormInput
-                    label="ICE phone number (optional)"
+                    label={t("registration.fields.icePhoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Rescue phone number"
+                            placeholder={t("registration.fields.icePhoneNumber.placeholder")}
                             value={value as string}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -174,19 +176,21 @@ const RegistrationFormComponent = ({
                         </div>
                         <div className="ml-3 text-sm">
                             <label htmlFor="terms" className="font-light text-gray-500">
-                                I agree with the{" "}
+                                {t("registration.fields.terms.agree")}{" "}
                                 {termsUrl ? (
                                     <a className="font-medium text-orange-600 hover:underline" target="_blank" href={termsUrl}>
-                                        Terms and conditions
+                                        {t("registration.fields.terms.termsAndConditions")}
                                     </a>
                                 ) : (
-                                    <span className="font-medium">Terms and conditions</span>
+                                    <span className="font-medium">{t("registration.fields.terms.termsAndConditions")}</span>
                                 )}
                             </label>
                         </div>
                     </div>
                 </div>
-                <Button type="submit">{registrationStatus === "progress" ? "Registration pending" : "Register"}</Button>
+                <Button type="submit">
+                    {registrationStatus === "progress" ? t("registration.buttons.pending") : t("registration.buttons.register")}
+                </Button>
             </Form>
         </div>
     );
@@ -194,32 +198,42 @@ const RegistrationFormComponent = ({
 
 type RegistrationStatuses = "pending" | "progress" | "successful" | "error";
 
-const RegistrationFailed = () => (
-    <div>
-        <h2 className="mb-8">Registration went wrong</h2>
-        <span>Maybe limit of players has exceeded</span>
-    </div>
-);
-
-const RegistrationSuccessful = () => (
-    <div>
-        <h2 className="mb-8">Registration was successful</h2>
-        {/* <span>Sprawdź swoją pocztę email. Znajdziesz tam instrukcję dokonywania wpłaty wpisowego.</span> */}
-    </div>
-);
-
-const AvailableSpots = ({ limit, registeredPlayers }: { limit: number; registeredPlayers: number }) => (
-    <div className="mb-4">
-        <div className="text-sm">Available spots</div>
-        <div className="text-xl">
-            {limit - registeredPlayers} / {limit}
+const RegistrationFailed = () => {
+    const t = useTranslations();
+    return (
+        <div>
+            <h2 className="mb-8">{t("registration.result.failed.header")}</h2>
+            <span>{t("registration.result.failed.text")}</span>
         </div>
-    </div>
-);
+    );
+};
+
+const RegistrationSuccessful = () => {
+    const t = useTranslations();
+    return (
+        <div>
+            <h2 className="mb-8">{t("registration.result.success.header")}</h2>
+            <span>{t("registration.result.success.text")}</span>
+        </div>
+    );
+};
+
+const AvailableSpots = ({ limit, registeredPlayers }: { limit: number; registeredPlayers: number }) => {
+    const t = useTranslations();
+    return (
+        <div className="mb-4">
+            <div className="text-sm">{t("registration.status.availableSpots")}</div>
+            <div className="text-xl">
+                {limit - registeredPlayers} / {limit}
+            </div>
+        </div>
+    );
+};
 
 export const Registration = () => {
     const { raceId } = useParams() as { raceId: string };
     const [registrationStatus, setRegistrationStatus] = useState<RegistrationStatuses>("pending");
+    const t = useTranslations();
 
     const { data: registrationSystemStatus, refetch: refetchSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
         { raceId: Number(raceId) },
@@ -248,17 +262,17 @@ export const Registration = () => {
     return (
         <>
             <Head>
-                <title>Registration</title>
+                <title>{t('registration.header.title')}</title>
             </Head>
             {registrationSystemStatus && (
-                <div className="flex f-full w-full overflow-y-scroll flex-col items-center px-6 py-8 mx-auto lg:py-0">
-                    <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+                <div className="flex f-full w-full overflow-y-scroll flex-col items-center px-6 py-8 mx-auto lg:py-2">
+                    <div className="w-full rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                 {registrationSystemStatus.raceName}
                             </h1>
                             <div className="text-base mb-4 leading-tight tracking-tight text-gray-900 md:text-md">
-                                Register new participant
+                                {t('registration.header.description')}
                             </div>
 
                             {registrationSystemStatus.limit && (
@@ -283,9 +297,9 @@ export const Registration = () => {
                                     <RegistrationSuccessful />
                                 )
                             ) : registrationSystemStatus.status === "disabled" ? (
-                                <span>Registration is closed.</span>
+                                <span>{t('registration.status.closed')}</span>
                             ) : (
-                                <span>No available spots. Registration is closed.</span>
+                                <span>{t('registration.status.noSpotsLeft')}</span>
                             )}
                         </div>
                     </div>
