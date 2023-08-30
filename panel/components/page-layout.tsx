@@ -44,148 +44,14 @@ import { MenuHeader } from "./menu-header";
 import { useAtom } from "jotai";
 import { selectedRaceIdAtom } from "states/panel-states";
 import { sortDesc } from "@set/utils/dist/array";
-import { Translation, useTranslations } from "i18n";
+import { useTranslations } from "next-intl";
 
 // type CreatedRace = AppRouterInputs["race"]["add"];
+
 type Props = {
     breadcrumbs: React.ReactNode;
     children: React.ReactNode;
 };
-
-const generalMenuGroup = (t: Translation) => ({
-    desc: "Your dashboard",
-    name: "General",
-    icon: mdiHomeOutline,
-    color: "bg-[#64b3f4]",
-    to: "/panel",
-    items: [
-        {
-            text: t.menuOptions.general.dashboard,
-            icon: mdiViewDashboardEditOutline,
-            to: "/panel",
-            color: "text-yellow-700",
-            bg: "bg-yellow-100",
-        },
-        {
-            text: t.menuOptions.general.races,
-            icon: mdiBikeFast,
-            to: "/panel/my-races",
-            color: "text-red-700",
-            bg: "bg-red-50",
-        },
-    ],
-});
-
-const adminMenuGroup = (t: Translation) => ({
-    desc: "Admin the system",
-    name: "Administrator",
-    icon: mdiBriefcaseOutline,
-    color: "bg-orange-500",
-    to: "/panel/admin",
-    items: [
-        {
-            text: t.menuOptions.admin.dashboard,
-            icon: mdiViewDashboardEditOutline,
-            to: "/panel/admin",
-            color: "text-yellow-700",
-            bg: "bg-yellow-50",
-        },
-        {
-            text: t.menuOptions.admin.races,
-            icon: mdiBikeFast,
-            to: "/panel/admin/races",
-            color: "text-green-700",
-            bg: "bg-green-50",
-        },
-        {
-            text: t.menuOptions.admin.hello,
-            icon: mdiTimetable,
-            to: "/panel/admin/hello",
-            color: "text-red-700",
-            bg: "bg-red-50",
-        },
-        {
-            text: t.menuOptions.admin.accounts,
-            icon: mdiAccount,
-            to: "/panel/admin/accounts",
-            color: "text-pink-700",
-            bg: "bg-pink-50",
-        },
-    ],
-});
-
-const raceMenuGroup = (t: Translation) => ({
-    desc: "Manage your races",
-    name: "Race",
-    icon: mdiAlarm,
-    color: "bg-[#c2e59c]",
-    to: "/panel/:raceId",
-    items: [
-        {
-            text: t.menuOptions.race.index,
-            icon: mdiViewDashboardEditOutline,
-            to: "/panel/:raceId",
-            color: "text-yellow-700",
-            bg: "bg-yellow-50",
-        },
-        {
-            text: t.menuOptions.race.bibNumbers,
-            icon: mdiNumeric,
-            to: "/panel/:raceId/bib-numbers",
-            color: "text-green-700",
-            bg: "bg-green-50",
-        },
-        {
-            text: t.menuOptions.race.players,
-            icon: mdiAccountGroup,
-            to: "/panel/:raceId/players",
-            color: "text-pink-700",
-            bg: "bg-pink-50",
-        },
-        {
-            text: t.menuOptions.race.registrations,
-            icon: mdiAccountGroup,
-            to: "/panel/:raceId/player-registrations",
-            color: "text-yellow-700",
-            bg: "bg-yellow-50",
-        },
-        {
-            text: t.menuOptions.race.classifications,
-            icon: mdiAccountCogOutline,
-            to: "/panel/:raceId/classifications",
-            color: "text-purple-700",
-            bg: "bg-purple-50",
-        },
-        {
-            text: t.menuOptions.race.timingPoints,
-            icon: mdiTimerCogOutline,
-            to: "/panel/:raceId/timing-points",
-            color: "text-lime-700",
-            bg: "bg-lime-50",
-        },
-        {
-            text: t.menuOptions.race.splitTimes,
-            icon: mdiAlarm,
-            to: "/panel/:raceId/split-times",
-            color: "text-red-700",
-            bg: "bg-red-50",
-        },
-        {
-            text: t.menuOptions.race.results,
-            icon: mdiTimetable,
-            to: "/panel/:raceId/results",
-            color: "text-blue-700",
-            bg: "bg-blue-50",
-        },
-        {
-            text: t.menuOptions.race.settings,
-            icon: mdiCog,
-            to: "/panel/:raceId/settings",
-            color: "text-orange-700",
-            bg: "bg-orange-50",
-        },
-    ],
-});
 
 const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: sessionData } = useSession();
@@ -242,42 +108,149 @@ const routeMatched = (route: string, currentPath: string) => {
 };
 
 const PageLayout = ({ breadcrumbs, children }: Props) => {
-    // const router = useRouter();
     const pathname = usePathname();
-    // const { data: items, refetch } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
-    // const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
 
     const [raceId] = useAtom(selectedRaceIdAtom);
 
-    const trans = useTranslations();
+    const t = useTranslations();
 
-    // const addRaceMuttaion = trpc.race.add.useMutation();
+    const generalMenuGroup = {
+        name: t('menuOptions.general.title'),
+        icon: mdiHomeOutline,
+        color: "bg-[#64b3f4]",
+        to: "/panel",
+        items: [
+            {
+                text: t("menuOptions.general.dashboard"),
+                icon: mdiViewDashboardEditOutline,
+                to: "/panel",
+                color: "text-yellow-700",
+                bg: "bg-yellow-100",
+            },
+            {
+                text: t("menuOptions.general.races"),
+                icon: mdiBikeFast,
+                to: "/panel/my-races",
+                color: "text-red-700",
+                bg: "bg-red-50",
+            },
+        ],
+    };
 
-    // const currentMenuGroup = pathname!.includes(raceMenuGroup.to.replace(":raceId", String(raceId)))
-    //     ? raceMenuGroup
-    //     : pathname!.includes(adminMenuGroup.to.replace(":raceId", String(raceId)))
-    //     ? adminMenuGroup
-    //     : generalMenuGroup;
+    const adminMenuGroup = {
+        name: t('menuOptions.admin.title'),
+        icon: mdiBriefcaseOutline,
+        color: "bg-orange-500",
+        to: "/panel/admin",
+        items: [
+            {
+                text: t("menuOptions.admin.dashboard"),
+                icon: mdiViewDashboardEditOutline,
+                to: "/panel/admin",
+                color: "text-yellow-700",
+                bg: "bg-yellow-50",
+            },
+            {
+                text: t("menuOptions.admin.races"),
+                icon: mdiBikeFast,
+                to: "/panel/admin/races",
+                color: "text-green-700",
+                bg: "bg-green-50",
+            },
+            {
+                text: t("menuOptions.admin.hello"),
+                icon: mdiTimetable,
+                to: "/panel/admin/hello",
+                color: "text-red-700",
+                bg: "bg-red-50",
+            },
+            {
+                text: t("menuOptions.admin.accounts"),
+                icon: mdiAccount,
+                to: "/panel/admin/accounts",
+                color: "text-pink-700",
+                bg: "bg-pink-50",
+            },
+        ],
+    };
 
-    const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup].map(g => g(trans));
-    // const menuItems = menuGroups.flatMap(g => g.items); //currentMenuGroup.items;
+    const raceMenuGroup = {
+        name: t('menuOptions.race.title'),
+        icon: mdiAlarm,
+        color: "bg-[#c2e59c]",
+        to: "/panel/:raceId",
+        items: [
+            {
+                text: t("menuOptions.race.index"),
+                icon: mdiViewDashboardEditOutline,
+                to: "/panel/:raceId",
+                color: "text-yellow-700",
+                bg: "bg-yellow-50",
+            },
+            {
+                text: t("menuOptions.race.bibNumbers"),
+                icon: mdiNumeric,
+                to: "/panel/:raceId/bib-numbers",
+                color: "text-green-700",
+                bg: "bg-green-50",
+            },
+            {
+                text: t("menuOptions.race.players"),
+                icon: mdiAccountGroup,
+                to: "/panel/:raceId/players",
+                color: "text-pink-700",
+                bg: "bg-pink-50",
+            },
+            {
+                text: t("menuOptions.race.registrations"),
+                icon: mdiAccountGroup,
+                to: "/panel/:raceId/player-registrations",
+                color: "text-yellow-700",
+                bg: "bg-yellow-50",
+            },
+            {
+                text: t("menuOptions.race.classifications"),
+                icon: mdiAccountCogOutline,
+                to: "/panel/:raceId/classifications",
+                color: "text-purple-700",
+                bg: "bg-purple-50",
+            },
+            {
+                text: t("menuOptions.race.timingPoints"),
+                icon: mdiTimerCogOutline,
+                to: "/panel/:raceId/timing-points",
+                color: "text-lime-700",
+                bg: "bg-lime-50",
+            },
+            {
+                text: t("menuOptions.race.splitTimes"),
+                icon: mdiAlarm,
+                to: "/panel/:raceId/split-times",
+                color: "text-red-700",
+                bg: "bg-red-50",
+            },
+            {
+                text: t("menuOptions.race.results"),
+                icon: mdiTimetable,
+                to: "/panel/:raceId/results",
+                color: "text-blue-700",
+                bg: "bg-blue-50",
+            },
+            {
+                text: t("menuOptions.race.settings"),
+                icon: mdiCog,
+                to: "/panel/:raceId/settings",
+                color: "text-orange-700",
+                bg: "bg-orange-50",
+            },
+        ],
+    };
+
+    const menuGroups = [generalMenuGroup, raceMenuGroup, adminMenuGroup];
 
     const matchedRoutes = menuGroups.flatMap(g => g.items).filter(r => routeMatched(r.to, pathname!));
 
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
-
-    // const openCreateDialog = async () => {
-    //     const race = await Demodal.open<CreatedRace>(NiceModal, {
-    //         title: "Create new race",
-    //         component: RaceCreate,
-    //         props: {},
-    //     });
-
-    //     if (race) {
-    //         await addRaceMuttaion.mutateAsync(race);
-    //         refetch();
-    //     }
-    // };
 
     return (
         <>
@@ -286,57 +259,12 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
             <div className="h-full relative">
                 <div className="will-change-transform h-full w-full flex">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        {/* <nav className="shrink-0 flex-col shadow-lg text-white bg-[#11212B] z-20">
-                            <Link href={"/panel" as Route}>
-                                <div className="transition-opacity cursor-pointer text-center px-4 py-4 text-3xl">r</div>
-                            </Link>
-                            <div className="flex-grow h-full justify-center flex flex-col">
-                                {menuGroups.map(mg => (
-                                    <Link key={mg.to} href={mg.to.replace(":raceId", String(raceId)) as Route}>
-                                        <div
-                                            key={mg.desc}
-                                            className={`transition-opacity cursor-pointer uppercase p-2 mx-3 my-4 rounded-xl text-2xs ${
-                                                currentMenuGroup.desc === mg.desc
-                                                    ? `bg-[#0b161d] opacity-100`
-                                                    : "opacity-30 hover:opacity-50"
-                                            }`}
-                                        >
-                                            <Icon path={mg.icon} size={1}></Icon>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </nav> */}
                         <nav className="w-64 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
                             <Link href={"/panel" as Route}>
                                 <div className="transition-opacity flex flex-col items-center cursor-pointer text-center px-4 py-4">
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
-                            {/* <div className="py-6 px-6 font-semibold text-xl">{currentMenuGroup.desc}</div> */}
-
-                            {/* {currentMenuGroup.desc === raceMenuGroup.desc ? (
-                                <div className="w-full flex flex-col my-8 items-center">
-                                    <div
-                                        className="flex-shrink-0 w-6 ml-2 hidden mr-2 opacity-60 cursor-pointer hover:opacity-100 text-gray-700"
-                                        onClick={openCreateDialog}
-                                    >
-                                        <Icon size={1} path={mdiPlus}></Icon>
-                                    </div>
-                                    <PoorSelect2
-                                        placeholder="Select race"
-                                        initialValue={raceId}
-                                        onChange={e => {
-                                            // selectRace(e.target.value);
-                                            router.push(`/panel/${e.target.value}`);
-                                        }}
-                                        valueKey="id"
-                                        nameKey="name"
-                                        items={items}
-                                    />
-                                </div>
-                            ) : null} */}
-
                             {menuGroups.map(g => (
                                 <div key={g.name}>
                                     <MenuHeader text={g.name} />
@@ -352,17 +280,6 @@ const PageLayout = ({ breadcrumbs, children }: Props) => {
                                     </div>
                                 </div>
                             ))}
-
-                            {/* {(currentMenuGroup.desc === raceMenuGroup.desc && raceId) || currentMenuGroup.desc !== raceMenuGroup.desc
-                                ? menuItems.map(n => (
-                                      <MenuButton
-                                          key={n.to}
-                                          {...n}
-                                          to={n.to.replace(":raceId", String(raceId)) as Route}
-                                          isActive={pathname === n.to.replace(":raceId", String(raceId))}
-                                      />
-                                  ))
-                                : null} */}
                         </nav>
                         <main className="flex flex-col grow h-full overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />

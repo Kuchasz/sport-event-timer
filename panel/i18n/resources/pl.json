@@ -1,0 +1,102 @@
+{
+    "menuOptions": {
+        "general": {
+            "title": "Ogólne",
+            "dashboard": "Panel",
+            "races": "Moje Wyścigi"
+        },
+        "race": {
+            "title": "Wyścig",
+            "index": "Informacje Podstawowe",
+            "bibNumbers": "Numery Startowe",
+            "players": "Zawodnicy",
+            "registrations": "Rejestracje",
+            "classifications": "Klasyfikacje",
+            "timingPoints": "Punkty Pomiaru Czasu",
+            "splitTimes": "Czasy Pomiaru Pośredniego",
+            "results": "Wyniki",
+            "settings": "Ustawienia"
+        },
+        "admin": {
+            "title": "Administrator",
+            "dashboard": "Panel",
+            "races": "Wszystkie Wyścigi",
+            "hello": "Cześć!",
+            "accounts": "Konta"
+        }
+    },
+    "pages": {
+        "general": {
+            "dashboard": {
+                "header": {
+                    "title": "Panel",
+                    "description": "Monitoruj to, co jest najważniejsze"
+                },
+                "statistics": {
+                    "title": "Statystyki",
+                    "widgets": {
+                        "futureRaces": "Przyszłe wyścigi",
+                        "pastRaces": "Minione wyścigi"
+                    }
+                },
+                "raceStatistics": {
+                    "title": "Statystyki nadchodzących wyścigów",
+                    "widgets": {
+                        "date": "Data",
+                        "name": "Nazwa",
+                        "registeredPlayers": "Zarejestrowani Zawodnicy",
+                        "registrationStatus": "Status Rejestracji"
+                    }
+                }
+            }
+        },
+        "registration": {
+            "turnOffPopup": {
+                "title": "Wyłącz rejestrację",
+                "description": "Rejestracja online zostanie wyłączona"
+            },
+            "turnOnPopup": {
+                "title": "Włącz rejestrację",
+                "description": "Rejestracja online zostanie włączona"
+            }
+        },
+        "races": {
+            "addRace": "Dodaj Wyścig",
+            "header": {
+                "title": "Moje Wyścigi",
+                "description": "Zarządzaj wszystkimi minionymi i przyszłymi wyścigami"
+            },
+            "wipeStopwatchPopup": {
+                "title": "Wyczyść stoper",
+                "description": "Wyczyść wszystkie dane stopera",
+                "confirmation": {
+                    "title": "Wyczyść dane wyścigu",
+                    "description": ""
+                }
+            },
+            "deleteRacePopup": {
+                "title": "Usuń",
+                "description": "Usuń wyścig",
+                "confirmation": {
+                    "title": "Usuń wyścig",
+                    "description": ""
+                }
+            },
+            "grid": {
+                "columns": {
+                    "name": "Nazwa",
+                    "date": "Data",
+                    "registrationEnabled": "Rejestracja",
+                    "registeredPlayers": "Rejestracje",
+                    "actions": "Akcje"
+                }
+            },
+            "createRace": {
+                "title": "Utwórz nowy wyścig"
+            },
+            "editRace": {
+                "title": "Edytuj wyścig"
+            }
+        }
+    }
+}

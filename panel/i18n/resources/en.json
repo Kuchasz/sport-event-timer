@@ -1,0 +1,102 @@
+{
+    "menuOptions": {
+        "general": {
+            "title": "General",
+            "dashboard": "Dashboard",
+            "races": "My Races"
+        },
+        "race": {
+            "title": "Race",
+            "index": "Base Info",
+            "bibNumbers": "Bib Numbers",
+            "players": "Players",
+            "registrations": "Registrations",
+            "classifications": "Classifications",
+            "timingPoints": "Timing Points",
+            "splitTimes": "Split Times",
+            "results": "Results",
+            "settings": "Settings"
+        },
+        "admin": {
+            "title": "Administrator",
+            "dashboard": "Dashboard",
+            "races": "All Races",
+            "hello": "Say hay!",
+            "accounts": "Accounts"
+        }
+    },
+    "pages": {
+        "general": {
+            "dashboard": {
+                "header": {
+                    "title": "Dashboard",
+                    "description": "Monitor what is the most important"
+                },
+                "statistics": {
+                    "title": "Statistics",
+                    "widgets": {
+                        "futureRaces": "Future races",
+                        "pastRaces": "Past races"
+                    }
+                },
+                "raceStatistics": {
+                    "title": "Incoming race statistics",
+                    "widgets": {
+                        "date": "Date",
+                        "name": "Name",
+                        "registeredPlayers": "Registered Players",
+                        "registrationStatus": "Registration Status"
+                    }
+                }
+            }
+        },
+        "registration": {
+            "turnOffPopup": {
+                "title": "Turn off registration",
+                "description": "Online registration will be turned off"
+            },
+            "turnOnPopup": {
+                "title": "Turn on registration",
+                "description": "Online registration will be turned on"
+            }
+        },
+        "races": {
+            "addRace": "Add Race",
+            "header": {
+                "title": "My Races",
+                "description": "Manage all past and future races"
+            },
+            "wipeStopwatchPopup": {
+                "title": "Wipe stopwatch",
+                "description": "Wipe all stopwatch data",
+                "confirmation": {
+                    "title": "Wipe race data",
+                    "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?"
+                }
+            },
+            "deleteRacePopup": {
+                "title": "Delete",
+                "description": "Delete race",
+                "confirmation": {
+                    "title": "Delete race",
+                    "text": "You are trying to delete the Race {raceName}. Do you want to proceed?"
+                }
+            },
+            "grid": {
+                "columns": {
+                    "name": "Name",
+                    "date": "Date",
+                    "registrationEnabled": "Registration",
+                    "registeredPlayers": "Registrations",
+                    "actions": "Actions"
+                }
+            },
+            "createRace": {
+                "title": "Create new race"
+            },
+            "editRace": {
+                "title": "Create new race"
+            }
+        }
+    }
+}
