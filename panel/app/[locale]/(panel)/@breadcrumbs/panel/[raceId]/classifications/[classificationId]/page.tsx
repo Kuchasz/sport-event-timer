@@ -1,15 +1,24 @@
 import { Breadcrumbs } from "components/breadcrumbs";
+import { useTranslations } from "next-intl";
 import { db } from "server/db";
+
+const CategoriesBreadcrumbs = ({ raceId, classificationName, raceName }: { raceId: string; classificationName: string; raceName: string }) => {
+    const t = useTranslations();
+
+    return (
+        <Breadcrumbs>
+            <Breadcrumbs.Item href={`/panel/${raceId}`} text={raceName}></Breadcrumbs.Item>
+            <Breadcrumbs.Item href={`/panel/${raceId}/classifications`} text={t('pages.classifications.header.title')}></Breadcrumbs.Item>
+            <Breadcrumbs.Item text={classificationName}></Breadcrumbs.Item>
+        </Breadcrumbs>
+    );
+};
 
 export default async ({ params }: { params: { raceId: string, classificationId: string } }) => {
     const race = await db.race.findFirstOrThrow({ where: { id: Number(params.raceId) } });
     const classification = await db.classification.findFirstOrThrow({ where: { id: Number(params.classificationId) } });
 
     return (
-        <Breadcrumbs>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}`} text={race.name}></Breadcrumbs.Item>
-            <Breadcrumbs.Item href={`/panel/${params.raceId}/classifications`} text="classifications"></Breadcrumbs.Item>
-            <Breadcrumbs.Item text={classification.name}></Breadcrumbs.Item>
-        </Breadcrumbs>
+        <CategoriesBreadcrumbs raceId={params.raceId} raceName={race.name} classificationName={classification.name}/>
     );
 };

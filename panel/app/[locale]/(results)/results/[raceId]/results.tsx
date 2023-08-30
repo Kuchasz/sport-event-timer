@@ -5,6 +5,7 @@ import { formatGap, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { trpc } from "trpc-core";
 import Head from "next/head";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</div>;
 
@@ -15,6 +16,7 @@ export const Results = () => {
         { raceId: parseInt(raceId! as string) },
         { enabled: !!raceId, refetchInterval: 10_000 }
     );
+    const t = useTranslations();
 
     const openCategories = [...new Set<string>(results?.filter(r => r.openCategory).map(r => r.openCategory!.name))];
     const ageCategoriesExist = results?.some(r => !!r.ageCategory);
@@ -22,15 +24,17 @@ export const Results = () => {
     return (
         <>
             <Head>
-                <title>Results</title>
+                <title>{t("results.header.title")}</title>
             </Head>
             <div className="flex flex-col items-center">
                 <div className="max-w-[800px] flex my-8 px-4 flex-col">
                     <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
                     <h3>{race?.date?.toLocaleDateString()}</h3>
                     <div className="mt-2">
-                        <span>Results refresh automatically every 10 seconds.</span>
-                        <span className="ml-2">Last update: {new Date(dataUpdatedAt).toLocaleTimeString("pl")}</span>
+                        <span>{t("results.refresh.message")}</span>
+                        <span className="ml-2">
+                            {t("results.refresh.lastUpdate", { updatedAt: new Date(dataUpdatedAt).toLocaleTimeString("pl") })}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -42,17 +46,17 @@ export const Results = () => {
                                 <thead className="top-0 sticky bg-gray-50">
                                     <tr>
                                         <th className="px-4 py-2 text-xs text-gray-500">#</th>
-                                        <th className="px-4 py-2 text-xs text-gray-500">Bib</th>
-                                        <th className="px-4 py-2 text-xs text-left text-gray-500">Name</th>
-                                        <th className="px-4 py-2 text-xs text-left text-gray-500">Team</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.bibNumber')}</th>
+                                        <th className="px-4 py-2 text-xs text-left text-gray-500">{t('results.grid.columns.name')}</th>
+                                        <th className="px-4 py-2 text-xs text-left text-gray-500">{t('results.grid.columns.team')}</th>
                                         {openCategories.map(c => (
                                             <th key={c} className="px-4 py-2 text-xs text-gray-500">
                                                 {c}
                                             </th>
                                         ))}
-                                        {ageCategoriesExist && <th className="px-4 py-2 text-xs text-gray-500">Cat.</th>}
-                                        <th className="px-4 py-2 text-xs text-gray-500">Result</th>
-                                        <th className="px-4 py-2 text-xs text-gray-500">Gap</th>
+                                        {ageCategoriesExist && <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.category')}</th>}
+                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.result')}</th>
+                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.gap')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">

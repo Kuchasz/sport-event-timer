@@ -1,8 +1,12 @@
 import { Breadcrumbs } from "components/breadcrumbs";
+import { useTranslations } from "next-intl";
 
-export default () => (
-    <Breadcrumbs>
-        <Breadcrumbs.Item href={`/panel/admin`} text="admin"></Breadcrumbs.Item>
-        <Breadcrumbs.Item text="accounts"></Breadcrumbs.Item>
-    </Breadcrumbs>
-);
+export default () => {
+    const t = useTranslations();
+    return (
+        <Breadcrumbs>
+            <Breadcrumbs.Item href={`/panel/admin`} text={t("pages.admin.header.title")}></Breadcrumbs.Item>
+            <Breadcrumbs.Item text={t("pages.admin.accounts.header.title")}></Breadcrumbs.Item>
+        </Breadcrumbs>
+    );
+};

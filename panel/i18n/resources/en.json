@@ -397,6 +397,22 @@
         "title": "Settings",
         "description": "API Keys may be configured here"
       }
+    },
+    "admin": {
+      "header": {
+        "title": "Admin"
+      },
+      "accounts": {
+        "header": {
+          "title": "accounts"
+        }
+      },
+      "hello": {
+        "title": "hello"
+      },
+      "races": {
+        "title": "races"
+      }
     }
   },
   "registration": {
@@ -472,6 +488,25 @@
     "gender": {
       "male": "Male",
       "female": "Female"
+    }
+  },
+  "results": {
+    "header": {
+      "title": "Results"
+    },
+    "refresh": {
+      "message": "Results refresh automatically every 10 seconds.",
+      "lastUpdate": "Last update: {updatedAt}"
+    },
+    "grid": {
+      "columns": {
+        "name": "Name",
+        "team": "Team",
+        "bibNumber": "Bib",
+        "category": "Category",
+        "result": "Result",
+        "gap": "Gap"
+      }
     }
   }
 }
