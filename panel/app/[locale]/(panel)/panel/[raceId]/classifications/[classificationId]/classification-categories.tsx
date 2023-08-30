@@ -18,6 +18,7 @@ import { CategoryCreate } from "components/category-create";
 import { CategoryEdit } from "components/category-edit";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
+import { useTranslations } from "next-intl";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams() as { classificationId: string };
@@ -31,45 +32,6 @@ const CategoryIsSpecialRenderer = (props: { data: Category }) => <CategoryIsSpec
 const ActionsRenderer = (props: { context: { refetch: () => void }; data: Category }) => (
     <CategoryActions refetch={props.context.refetch} category={props.data} />
 );
-
-const defaultColumns: ColDef<Category>[] = [
-    {
-        field: "index",
-        width: 25,
-        headerName: "Index",
-        headerClass: "hidden",
-        valueGetter: "node.rowIndex + 1",
-        sortable: false,
-        filter: false,
-    },
-    { field: "name", headerName: "Name", sortable: true, resizable: true, filter: true },
-    { field: "minAge", headerName: "Min Age", sortable: true, resizable: true, filter: true },
-    { field: "maxAge", headerName: "Max Age", sortable: true, resizable: true, filter: true },
-    {
-        field: "gender",
-        headerName: "Gender",
-        sortable: true,
-        resizable: true,
-        filter: true,
-        cellStyle: { justifyContent: "center", display: "flex" },
-        width: 150,
-        cellRenderer: (props: { data: Category }) => <GenderIcon gender={props.data.gender as Gender} />,
-    },
-    {
-        field: "isSpecial",
-        headerName: "Is Special",
-        sortable: true,
-        filter: true,
-        resizable: true,
-        cellRenderer: CategoryIsSpecialRenderer,
-    },
-    {
-        field: "actions",
-        // width: 50,
-        headerName: "Actions",
-        cellRenderer: ActionsRenderer,
-    },
-];
 
 const CategoryIsSpecial = ({ category }: { category: Category }) => {
     return (
@@ -86,13 +48,14 @@ const CategoryIsSpecial = ({ category }: { category: Category }) => {
 
 const CategoryActions = ({ category, refetch }: { category: Category; refetch: () => void }) => {
     const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
+    const t = useTranslations();
 
     const openDeleteDialog = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Delete category`,
+            title: t("pages.classifications.categories.detele.confirmation.title"),
             component: Confirmation,
             props: {
-                message: `You are trying to delete the Category ${category.name}. Do you want to proceed?`,
+                message: t("pages.classifications.categories.detele.confirmation.text", { name: category.name }),
             },
         });
 
@@ -120,6 +83,7 @@ export const ClassificationCategories = () => {
     );
     const addCategoryMutation = trpc.classification.addCategory.useMutation();
     const editCategoryMutation = trpc.classification.updateCategory.useMutation();
+    const t = useTranslations();
 
     const onFirstDataRendered = useCallback(() => {
         gridRef.current?.api.sizeColumnsToFit();
@@ -127,7 +91,7 @@ export const ClassificationCategories = () => {
 
     const openCreateDialog = async () => {
         const category = await Demodal.open<Category>(NiceModal, {
-            title: "Create new category",
+            title: t("pages.classifications.categories.create.title"),
             component: CategoryCreate,
             props: { classificationId },
         });
@@ -140,7 +104,7 @@ export const ClassificationCategories = () => {
 
     const openEditDialog = async (editedCategory: Category) => {
         const category = await Demodal.open<Category>(NiceModal, {
-            title: "Edit category",
+            title: t("pages.classifications.categories.edit.title"),
             component: CategoryEdit,
             props: {
                 editedCategory,
@@ -152,17 +116,77 @@ export const ClassificationCategories = () => {
         }
     };
 
+    const defaultColumns: ColDef<Category>[] = [
+        {
+            field: "index",
+            width: 25,
+            headerName: t("pages.classifications.categories.grid.columns.index"),
+            headerClass: "hidden",
+            valueGetter: "node.rowIndex + 1",
+            sortable: false,
+            filter: false,
+        },
+        {
+            field: "name",
+            headerName: t("pages.classifications.categories.grid.columns.name"),
+            sortable: true,
+            resizable: true,
+            filter: true,
+        },
+        {
+            field: "minAge",
+            headerName: t("pages.classifications.categories.grid.columns.minAge"),
+            sortable: true,
+            resizable: true,
+            filter: true,
+        },
+        {
+            field: "maxAge",
+            headerName: t("pages.classifications.categories.grid.columns.maxAge"),
+            sortable: true,
+            resizable: true,
+            filter: true,
+        },
+        {
+            field: "gender",
+            headerName: t("pages.classifications.categories.grid.columns.gender"),
+            sortable: true,
+            resizable: true,
+            filter: true,
+            cellStyle: { justifyContent: "center", display: "flex" },
+            width: 150,
+            cellRenderer: (props: { data: Category }) => <GenderIcon gender={props.data.gender as Gender} />,
+        },
+        {
+            field: "isSpecial",
+            headerName: t("pages.classifications.categories.grid.columns.isSpecial"),
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellRenderer: CategoryIsSpecialRenderer,
+        },
+        {
+            field: "actions",
+            // width: 50,
+            headerName: t("pages.classifications.categories.grid.columns.actions"),
+            cellRenderer: ActionsRenderer,
+        },
+    ];
+
     return (
         <>
             <Head>
-                <title>Categories</title>
+                <title>{t("pages.classifications.categories.header.title")}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Categories" description="Configure categories for category" />
+                <PageHeader
+                    title={t("pages.classifications.categories.header.title")}
+                    description={t("pages.classifications.categories.header.description")}
+                />
                 <div className="flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Add category</span>
+                        <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
                     </Button>
                 </div>
                 <div className="p-2"></div>

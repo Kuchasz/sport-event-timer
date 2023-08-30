@@ -237,6 +237,59 @@
       "export": {
         "button": "Export"
       }
+    },
+    "classifications": {
+      "grid": {
+        "columns": {
+          "name": "Name",
+          "actions": "Actions"
+        }
+      },
+      "categories": {
+        "button": "categories",
+        "grid": {
+          "columns": {
+            "index": "Index",
+            "name": "Name",
+            "minAge": "Min Age",
+            "maxAge": "Max Age",
+            "gender": "Gender",
+            "isSpecial": "Is Special",
+            "actions": "Actions"
+          }
+        },
+        "detele": {
+          "confirmation": {
+            "title": "Delete category",
+            "text": "You are trying to delete the Category {name}. Do you want to proceed?"
+          }
+        },
+        "create": {
+          "title": "Create new category",
+          "button": "Add category"
+        },
+        "edit": {
+          "title": "Edit category"
+        },
+        "header": {
+          "title": "Categories",
+          "description": "Configure categories for category"
+        }
+      },
+      "create": {
+        "title": "Create new classification",
+        "button": "Add Classification"
+      },
+      "edit": {
+        "title": "Edit classification"
+      },
+      "header": {
+        "title": "Classifications",
+        "description": "Configure race classifications"
+      },
+      "load": {
+        "button": "Load"
+      }
     }
   },
   "registration": {
