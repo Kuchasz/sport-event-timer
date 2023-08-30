@@ -133,6 +133,48 @@
         "title": "Bib Numbers",
         "description": "Configure the bib numbers to easily assign them to players"
       }
+    },
+    "players": {
+      "grid": {
+        "columns": {
+          "index": "Index",
+          "classification": "Classification Id",
+          "bibNumber": "Bib Number",
+          "name": "Name",
+          "gender": "Gender",
+          "startTime": "Start Time",
+          "birthDate": "Birth Date",
+          "country": "Country",
+          "city": "City",
+          "team": "Team",
+          "email": "Email",
+          "phoneNumber": "Phone Number",
+          "icePhoneNumber": "Ice Phone Number",
+          "actions": "Actions",
+          "lastName": "Last Name"
+        }
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Delete player",
+          "text": "You are trying to delete the Player {name} {lastName}. Do you want to proceed?"
+        },
+        "button": "delete"
+      },
+      "create": {
+        "title": "Create new player",
+        "button": "Add Player"
+      },
+      "edit": {
+        "title": "Edit player"
+      },
+      "header": {
+        "title": "Players",
+        "description": "Players available in the stopwatch, their times may be measured"
+      },
+      "export": {
+        "button": "export"
+      }
     }
   },
   "registration": {
