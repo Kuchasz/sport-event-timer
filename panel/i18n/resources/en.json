@@ -375,6 +375,27 @@
         "title": "Race Results",
         "description": "Results measured by the stopwatch, each may be overriden"
       }
+    },
+    "settings": {
+      "apiKeys": {
+        "create": {
+          "title": "Create api key",
+          "button": "Add API Key"
+        },
+        "delete": {
+          "confirmation": {
+            "title": "Delete ApiKey",
+            "text": "You are trying to delete the ApiKey {name}. Do you want to proceed?"
+          }
+        },
+        "edit": {
+          "title": "Edit Api Key"
+        }
+      },
+      "header": {
+        "title": "Settings",
+        "description": "API Keys may be configured here"
+      }
     }
   },
   "registration": {
