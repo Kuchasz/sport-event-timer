@@ -413,6 +413,17 @@
       "races": {
         "title": "races"
       }
+    },
+    "race": {
+      "statistics": {
+        "widgets": {
+          "registeredPlayers": "Registered players",
+          "registrationStatus": "Registration status"
+        },
+        "header": {
+          "title": "Statistics"
+        }
+      }
     }
   },
   "registration": {
