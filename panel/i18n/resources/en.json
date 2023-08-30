@@ -337,6 +337,28 @@
         "title": "Timing points",
         "description": "Configure points where time will be measured, used in stopwatch"
       }
+    },
+    "splitTimes": {
+      "grid": {
+        "columns": {
+          "bibNumber": "Bib",
+          "playerName": "Name",
+          "playerLastName": "Last Name"
+        }
+      },
+      "edit": {
+        "title": "Edit split time"
+      },
+      "revert": {
+        "confirmation": {
+          "title": "Revert manual split time",
+          "text": "You are trying to revert manual split time changes. Do you want to proceed?"
+        }
+      },
+      "header": {
+        "title": "Split times",
+        "description": "Times measured by the stopwatches"
+      }
     }
   },
   "registration": {
