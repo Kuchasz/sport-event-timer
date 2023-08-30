@@ -290,6 +290,53 @@
       "load": {
         "button": "Load"
       }
+    },
+    "timingPoints": {
+      "accessUrls": {
+        "grid": {
+          "columns": {
+            "keyName": "Key name",
+            "expiresAt": "Expires At",
+            "code": "Code",
+            "supervisor": "Supervisor",
+            "token": "Token",
+            "url": "URL"
+          }
+        },
+        "edit": {
+          "button": "Edit"
+        },
+        "create": {
+          "title": "Create access key"
+        },
+        "delete": {
+          "confirmation": {
+            "title": "Delete timing point access url",
+            "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?"
+          }
+        },
+        "header": {
+          "title": "Access URLs",
+          "description": "Copy access URLs and send them to your timekeepers"
+        }
+      },
+      "create": {
+        "title": "Create new timing point",
+        "button": "Add timing point"
+      },
+      "edit": {
+        "title": "Edit timing point"
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Delete timing point",
+          "text": "You are trying to delete the Timing Point {name}. Do you want to proceed?"
+        }
+      },
+      "header": {
+        "title": "Timing points",
+        "description": "Configure points where time will be measured, used in stopwatch"
+      }
     }
   },
   "registration": {
