@@ -97,6 +97,42 @@
       "editRace": {
         "title": "Edit race"
       }
+    },
+    "bibNumbers": {
+      "delete": {
+        "confirmation": {
+          "title": "Delete bibNumber",
+          "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?"
+        }
+      },
+      "grid": {
+        "columns": {
+          "bibNumber": "Bib Number",
+          "actions": "Actions"
+        }
+      },
+      "create": {
+        "title": "Create new BibNumber",
+        "button": "Add Bib Number"
+      },
+      "deleteAll": {
+        "confirmation": {
+          "title": "Delete bibNumber",
+          "text": "You are trying to delete all Bib Numbers. Do you want to proceed?"
+        },
+        "button": "Remove all"
+      },
+      "createMany": {
+        "title": "Create many bib numbers",
+        "button": "Add many"
+      },
+      "edit": {
+        "title": "Edit BibNumber"
+      },
+      "header": {
+        "title": "Bib Numbers",
+        "description": "Configure the bib numbers to easily assign them to players"
+      }
     }
   },
   "registration": {
