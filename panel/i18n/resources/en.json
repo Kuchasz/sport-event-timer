@@ -175,6 +175,68 @@
       "export": {
         "button": "export"
       }
+    },
+    "playerRegistrations": {
+      "togglePlayerPayment": {
+        "confirmation": {
+          "title": "Confirm payment change",
+          "text": "You are trying to change {name} {lastName} payment status to: {hasPaid. Do you want to proceed?"
+        }
+      },
+      "payment": {
+        "status": {
+          "notPaid": "not paid",
+          "paid": "paid"
+        }
+      },
+      "promoteToPlayer": {
+        "title": "Promote to Player",
+        "description": "Promoted player will be available in stopwatch",
+        "confirmation": {
+          "title": "Promote player registration to player"
+        }
+      },
+      "delete": {
+        "title": "Delete registered Player",
+        "description": "It is permanent action",
+        "confirmation": {
+          "title": "Delete player registration",
+          "text": "You are trying to delete the Player Registration {name} {lastName}. Do you want to proceed?"
+        }
+      },
+      "grid": {
+        "columns": {
+          "index": "Index",
+          "name": "Name",
+          "lastName": "Last Name",
+          "gender": "Gender",
+          "birthDate": "Birth Date",
+          "country": "Country",
+          "city": "City",
+          "team": "Team",
+          "phone": "Phone",
+          "email": "E-mail",
+          "icePhoneNumber": "ICE Number",
+          "registrationDate": "Registered",
+          "payment": "Payment",
+          "promotedToPlayer": "Promoted",
+          "actions": "Actions"
+        }
+      },
+      "create": {
+        "title": "Create new player registration",
+        "button": "Register Player"
+      },
+      "edit": {
+        "title": "Edit player registration"
+      },
+      "header": {
+        "title": "Registered players",
+        "description": "Players registered for the race, may be promoted to players"
+      },
+      "export": {
+        "button": "Export"
+      }
     }
   },
   "registration": {

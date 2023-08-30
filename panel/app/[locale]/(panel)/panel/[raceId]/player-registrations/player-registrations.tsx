@@ -23,6 +23,7 @@ import { GenderIcon } from "components/gender-icon";
 import { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
+import { useTranslations } from "next-intl";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
@@ -47,15 +48,20 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
 
 const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
+    const t = useTranslations();
 
     const togglePlayerPayment = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Confirm payment change`,
+            title: t("pages.playerRegistrations.togglePlayerPayment.confirmation.title"),
             component: Confirmation,
             props: {
-                message: `You are trying to change ${playerRegistration.name} ${playerRegistration.lastName} payment status to: ${
-                    playerRegistration.hasPaid ? "not paid" : "paid"
-                }. Do you want to proceed?`,
+                message: t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
+                    name: playerRegistration.name,
+                    lastName: playerRegistration.lastName,
+                    hasPaid: !playerRegistration.hasPaid
+                        ? t("pages.playerRegistrations.payment.status.notPaid")
+                        : t("pages.playerRegistrations.payment.status.paid"),
+                }),
             },
         });
 
@@ -73,13 +79,16 @@ const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegi
             onClick={togglePlayerPayment}
         >
             {playerRegistration.hasPaid ? <Icon size={1} path={mdiCashCheck} /> : <Icon size={1} path={mdiCashRemove} />}
-            <span className="ml-2">{playerRegistration.paymentDate?.toLocaleDateString() ?? "not paid"}</span>
+            <span className="ml-2">
+                {playerRegistration.paymentDate?.toLocaleDateString() ?? t("pages.playerRegistrations.payment.status.notPaid")}
+            </span>
         </span>
     );
 };
 
 export const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
+    const t = useTranslations();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! }, { initialData: [] });
     const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
     const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
@@ -89,12 +98,12 @@ export const PlayerRegistrations = () => {
     const utils = trpc.useContext();
 
     const promoteToPlayerAction = {
-        name: "Promote to Player",
-        description: "Promoted player will be available in stopwatch",
+        name: t("pages.playerRegistrations.promoteToPlayer.title"),
+        description: t("pages.playerRegistrations.promoteToPlayer.description"),
         iconPath: mdiAccountPlusOutline,
         execute: async (playerRegistration: PlayerRegistration) => {
             const player = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
-                title: "Promote player registration to player",
+                title: t("pages.playerRegistrations.promoteToPlayer.confirmation.title"),
                 component: PlayerRegistrationPromotion,
                 props: {
                     raceId: raceId!,
@@ -113,15 +122,18 @@ export const PlayerRegistrations = () => {
     };
 
     const deleteRegistrationAction = {
-        name: "Delete registered Player",
-        description: "It is permanent action",
+        name: t("pages.playerRegistrations.delete.title"),
+        description: t("pages.playerRegistrations.delete.description"),
         iconPath: mdiTrashCan,
         execute: async (playerRegistration: PlayerRegistration) => {
             const confirmed = await Demodal.open<boolean>(NiceModal, {
-                title: `Delete player registration`,
+                title: t("pages.playerRegistrations.delete.confirmation.title"),
                 component: Confirmation,
                 props: {
-                    message: `You are trying to delete the Player Registration ${playerRegistration.name} ${playerRegistration.lastName}. Do you want to proceed?`,
+                    message: t("pages.playerRegistrations.delete.confirmation.text", {
+                        name: playerRegistration.name,
+                        lastName: playerRegistration.lastName,
+                    }),
                 },
             });
 
@@ -136,17 +148,17 @@ export const PlayerRegistrations = () => {
         {
             field: "index",
             width: 25,
-            headerName: "Index",
+            headerName: t('pages.playerRegistrations.grid.columns.index'),
             headerClass: "hidden",
             valueGetter: "node.rowIndex + 1",
             sortable: false,
             filter: false,
         },
-        { field: "name", headerName: "Name", flex: 1, sortable: true, resizable: true, filter: true },
-        { field: "lastName", headerName: "Last Name", flex: 1, sortable: true, resizable: true, filter: true },
+        { field: "name", headerName: t('pages.playerRegistrations.grid.columns.name'), flex: 1, sortable: true, resizable: true, filter: true },
+        { field: "lastName", headerName: t('pages.playerRegistrations.grid.columns.lastName'), flex: 1, sortable: true, resizable: true, filter: true },
         {
             field: "gender",
-            headerName: "Gender",
+            headerName: t('pages.playerRegistrations.grid.columns.gender'),
             sortable: true,
             filter: true,
             cellStyle: { justifyContent: "center", display: "flex" },
@@ -156,39 +168,39 @@ export const PlayerRegistrations = () => {
         },
         {
             field: "birthDate",
-            headerName: "Birth Date",
+            headerName: t('pages.playerRegistrations.grid.columns.birthDate'),
             resizable: true,
             cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
             sortable: true,
             hide: true,
             maxWidth: 120,
         },
-        { field: "country", headerName: "Country", resizable: true, sortable: true, filter: true, maxWidth: 150, hide: true }, // width: 10 },
-        { field: "city", headerName: "City", resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
+        { field: "country", headerName: t('pages.playerRegistrations.grid.columns.country'), resizable: true, sortable: true, filter: true, maxWidth: 150, hide: true }, // width: 10 },
+        { field: "city", headerName: t('pages.playerRegistrations.grid.columns.city'), resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
         {
             field: "team",
-            headerName: "Team",
+            headerName: t('pages.playerRegistrations.grid.columns.team'),
             flex: 1,
             sortable: true,
             resizable: true,
             filter: true,
             cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
         },
-        { field: "phoneNumber", headerName: "Phone", resizable: true, filter: true, hide: true }, // width: 20 },
-        { field: "email", headerName: "E-mail", resizable: true, filter: true, hide: true }, // width: 20 },
-        { field: "icePhoneNumber", headerName: "ICE Number", resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "phoneNumber", headerName: t('pages.playerRegistrations.grid.columns.phone'), resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "email", headerName: t('pages.playerRegistrations.grid.columns.email'), resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "icePhoneNumber", headerName: t('pages.playerRegistrations.grid.columns.icePhoneNumber'), resizable: true, filter: true, hide: true }, // width: 20 },
         {
             field: "registrationDate",
-            headerName: "Registered",
+            headerName: t('pages.playerRegistrations.grid.columns.registrationDate'),
             maxWidth: 120,
             resizable: true,
             sortable: true,
             cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
         },
-        { field: "paymentDate", headerName: "Payment", sortable: true, resizable: true, maxWidth: 140, cellRenderer: PaymentRenderer },
+        { field: "paymentDate", headerName: t('pages.playerRegistrations.grid.columns.payment'), sortable: true, resizable: true, maxWidth: 140, cellRenderer: PaymentRenderer },
         {
             field: "promotedToPlayer",
-            headerName: "Promoted",
+            headerName: t('pages.playerRegistrations.grid.columns.promotedToPlayer'),
             sortable: true,
             filter: true,
             resizable: true,
@@ -199,7 +211,7 @@ export const PlayerRegistrations = () => {
             field: "actions",
             resizable: true,
             width: 130,
-            headerName: "Actions",
+            headerName: t('pages.playerRegistrations.grid.columns.actions'),
             cellRenderer: (props: { data: PlayerRegistration; context: { refetch: () => void } }) => (
                 <PoorActions
                     item={props.data}
@@ -218,7 +230,7 @@ export const PlayerRegistrations = () => {
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
-            title: "Create new player registration",
+            title: t('pages.playerRegistrations.create.title'),
             component: PlayerRegistrationCreate,
             props: {
                 raceId: raceId!,
@@ -238,7 +250,7 @@ export const PlayerRegistrations = () => {
 
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
         const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
-            title: "Edit player registration",
+            title: t('pages.playerRegistrations.edit.title'),
             component: PlayerRegistrationEdit,
             props: {
                 raceId: raceId!,
@@ -255,14 +267,14 @@ export const PlayerRegistrations = () => {
     return (
         <>
             <Head>
-                <title>Player registrations</title>
+                <title>t('pages.playerRegistrations.header.title')</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Registered players" description="Players registered for the race, may be promoted to players" />
+                <PageHeader title={t('pages.playerRegistrations.header.title')} description={t('pages.playerRegistrations.header.description')} />
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">Register Player</span>
+                        <span className="ml-2">{t('pages.playerRegistrations.create.button')}</span>
                     </Button>
                     <Button
                         className="ml-2"
@@ -273,7 +285,7 @@ export const PlayerRegistrations = () => {
                         }}
                     >
                         <Icon size={1} path={mdiExport} />
-                        <span className="ml-2">Export</span>
+                        <span className="ml-2">{t('pages.playerRegistrations.export.button')}</span>
                     </Button>
                     <PoorColumnChooser
                         items={defaultColumns}
