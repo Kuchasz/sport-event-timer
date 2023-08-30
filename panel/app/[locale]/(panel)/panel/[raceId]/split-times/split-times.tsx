@@ -15,6 +15,7 @@ import { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
+import { useTranslations } from "next-intl";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -99,14 +100,15 @@ export const SplitTimes = () => {
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
     const gridRef = useRef<AgGridReact<SplitTime>>(null);
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
-    const revertSplitTimeMuttaion = trpc.splitTime.revert.useMutation();
+    const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
+    const t = useTranslations();
 
     const defaultColumns: ColDef<SplitTime>[] = [
-        { field: "bibNumber", headerName: "Bib", sortable: true, sort: "asc", width: 100, comparator: (valueA, valueB) => valueA - valueB },
+        { field: "bibNumber", headerName: t('pages.splitTimes.grid.columns.bibNumber'), sortable: true, sort: "asc", width: 100, comparator: (valueA, valueB) => valueA - valueB },
         {
             field: "player.name",
             resizable: true,
-            headerName: "Name",
+            headerName: t('pages.splitTimes.grid.columns.playerName'),
             sortable: true,
             filter: true,
             cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span>,
@@ -114,7 +116,7 @@ export const SplitTimes = () => {
         {
             field: "player.lastName",
             resizable: true,
-            headerName: "Last Name",
+            headerName: t('pages.splitTimes.grid.columns.playerLastName'),
             sortable: true,
             filter: true,
             cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span>,
@@ -142,7 +144,7 @@ export const SplitTimes = () => {
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {
         const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
-            title: "Edit split time",
+            title: t('pages.splitTimes.edit.title'),
             component: SplitTimeEdit,
             props: {
                 editedSplitTime,
@@ -159,15 +161,15 @@ export const SplitTimes = () => {
 
     const openRevertDialog = async (editedSplitTime: RevertedSplitTime) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: `Revert manual split time`,
+            title: t('pages.splitTimes.revert.confirmation.title'),
             component: Confirmation,
             props: {
-                message: `You are trying to revert manual split time changes. Do you want to proceed?`,
+                message: t('pages.splitTimes.revert.confirmation.text'),
             },
         });
 
         if (confirmed) {
-            await revertSplitTimeMuttaion.mutateAsync(editedSplitTime);
+            await revertSplitTimeMutation.mutateAsync(editedSplitTime);
             refetch();
         }
     };
@@ -175,10 +177,10 @@ export const SplitTimes = () => {
     return (
         <>
             <Head>
-                <title>Split times</title>
+                <title>{t('pages.splitTimes.header.title')}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title="Split times" description="Times measured by the stopwatches" />
+                <PageHeader title={t('pages.splitTimes.header.title')} description={t('pages.splitTimes.header.description')} />
                 {splitTimes && (
                     <div className="ag-theme-material h-full">
                         <AgGridReact<SplitTime>
