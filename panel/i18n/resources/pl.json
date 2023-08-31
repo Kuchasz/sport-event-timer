@@ -513,11 +513,15 @@
     },
     "grid": {
       "columns": {
-        "name": "Imię",
+        "yearOfBirth": "YoB",
+        "place": "Msc",
+        "player": "Zawodnik",
         "team": "Drużyna",
-        "bibNumber": "Numer",
+        "bibNumber": "Nr",
         "category": "Kategoria",
         "result": "Wynik",
+        "start": "Start",
+        "finish": "Meta",
         "gap": "Strata"
       }
     }

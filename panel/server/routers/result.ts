@@ -34,6 +34,7 @@ export const resultRouter = router({
                 team: p.team,
                 gender: p.gender,
                 age: calculateAge(p.birthDate),
+                yearOfBirth: p.birthDate.getFullYear(),
                 times: {
                     ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
                     ...Object.fromEntries(
