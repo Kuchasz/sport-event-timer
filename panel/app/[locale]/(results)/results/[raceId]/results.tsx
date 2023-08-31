@@ -79,7 +79,7 @@ export const Results = () => {
                                                     onClick={() => toggleRow(i)}
                                                     key={i}
                                                     className={classNames(
-                                                        "whitespace-nowrap cursor-pointer hover:bg-blue-500 hover:text-white",
+                                                        "whitespace-nowrap cursor-pointer",
                                                         {
                                                             "bg-white": i % 2 === 1,
                                                             "bg-gray-100": i % 2 === 0,
