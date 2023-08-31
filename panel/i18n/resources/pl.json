@@ -511,6 +511,10 @@
       "message": "Wyniki odświeżają się automatycznie co 10 sekund.",
       "lastUpdate": "Ostatnia aktualizacja: {updatedAt}"
     },
+    "abbreviations": {
+      "dns": "Nie wystartował(a)",
+      "dnf": "Nie ukończył(a)"
+    },
     "grid": {
       "columns": {
         "yearOfBirth": "YoB",
