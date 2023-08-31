@@ -109,7 +109,8 @@
       "grid": {
         "columns": {
           "bibNumber": "Bib Number",
-          "actions": "Actions"
+          "actions": "Actions",
+          "index": ""
         }
       },
       "create": {
@@ -138,7 +139,7 @@
     "players": {
       "grid": {
         "columns": {
-          "index": "Index",
+          "index": "",
           "classification": "Classification Id",
           "bibNumber": "Bib Number",
           "name": "Name",
@@ -207,7 +208,7 @@
       },
       "grid": {
         "columns": {
-          "index": "Index",
+          "index": "",
           "name": "Name",
           "lastName": "Last Name",
           "gender": "Gender",
@@ -243,14 +244,15 @@
       "grid": {
         "columns": {
           "name": "Name",
-          "actions": "Actions"
+          "actions": "Actions",
+          "index": ""
         }
       },
       "categories": {
         "button": "categories",
         "grid": {
           "columns": {
-            "index": "Index",
+            "index": "",
             "name": "Name",
             "minAge": "Min Age",
             "maxAge": "Max Age",
