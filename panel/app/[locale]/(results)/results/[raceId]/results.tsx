@@ -71,21 +71,25 @@ export const Results = () => {
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-300">
+                                <tbody className="bg-white divide-y divide-none">
                                     {results &&
                                         results.map((s, i) => (
                                             <>
                                                 <tr
                                                     onClick={() => toggleRow(i)}
                                                     key={i}
-                                                    className={classNames("whitespace-nowrap cursor-pointer hover:bg-gray-100", {
-                                                        "bg-gray-200": rowIds.includes(i),
-                                                    })}
+                                                    className={classNames(
+                                                        "whitespace-nowrap cursor-pointer hover:bg-blue-500 hover:text-white",
+                                                        {
+                                                            "bg-white": i % 2 === 1,
+                                                            "bg-gray-100": i % 2 === 0,
+                                                        }
+                                                    )}
                                                 >
                                                     <td className="px-1 py-2 text-center text-xs">{i + 1}.</td>
                                                     <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
                                                     <td className="px-1 font-semibold py-2 text-xs">
-                                                        {s.name} <div>{s.lastName}</div>
+                                                        {s.name.slice(0, 1)}. {s.lastName}
                                                     </td>
 
                                                     {/* {(openCategoriesExist || ageCategoriesExist) && (
@@ -137,21 +141,33 @@ export const Results = () => {
                                                         {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
                                                     </td>
                                                     <td>
-                                                        <Icon className="text-gray-500" path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={1} />
+                                                        <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={1} />
                                                     </td>
                                                 </tr>
                                                 {rowIds.includes(i) && (
-                                                    <tr key={i} className="bg-gray-100 whitespace-nowrap">
+                                                    <tr
+                                                        key={i}
+                                                        className={classNames("whitespace-nowrap", {
+                                                            "bg-white": i % 2 === 1,
+                                                            "bg-gray-100": i % 2 === 0,
+                                                        })}
+                                                    >
                                                         <td colSpan={10} className="px-2 font-medium py-1 text-xs">
+                                                            <div className="table-row font-semibold">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.player")}:</div>
+                                                                <div className="py-0.5 pl-2 table-cell">
+                                                                    {s.name} {s.lastName}
+                                                                </div>
+                                                            </div>
+                                                            {s.team && <div className="table-row">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.team")}:</div>
+                                                                <div className="py-0.5 pl-2 table-cell">{s.team}</div>
+                                                            </div>}
                                                             <div className="table-row">
                                                                 <div className="py-0.5 table-cell">
                                                                     {t("results.grid.columns.yearOfBirth")}:
                                                                 </div>
-                                                                <div className="py-0.5 pl-2 table-cell">{s.yearOfBirth ?? ""}</div>
-                                                            </div>
-                                                            <div className="table-row">
-                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.team")}:</div>
-                                                                <div className="py-0.5 pl-2 table-cell">{s.team ?? ""}</div>
+                                                                <div className="py-0.5 pl-2 table-cell">{s.yearOfBirth}</div>
                                                             </div>
                                                             <div className="table-row">
                                                                 <div className="py-0.5 table-cell">{t("results.grid.columns.start")}:</div>
