@@ -86,9 +86,9 @@ export const Results = () => {
                                                         }
                                                     )}
                                                 >
-                                                    <td className="px-1 py-2 text-center text-xs">{i + 1}.</td>
-                                                    <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
-                                                    <td className="px-1 font-semibold py-2 text-xs">
+                                                    <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
+                                                    <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
+                                                    <td className="px-1 py-3 font-semibold text-xs uppercase">
                                                         {s.name.slice(0, 1)}. {s.lastName}
                                                     </td>
 
@@ -111,13 +111,20 @@ export const Results = () => {
                                                     )} */}
 
                                                     {openCategoriesExist && (
-                                                        <td className="px-1 py-2 text-center text-xs">
-                                                            {s.openCategory && `${s.openCategoryPlace}`}
+                                                        <td className="px-1 py-3 text-center flex flex-col items-center text-xs">
+                                                            <div
+                                                                className={classNames("text-center", {
+                                                                    ["bg-gray-600 text-white w-5 h-5 flex items-center justify-center font-bold rounded-md"]:
+                                                                        s.openCategoryPlace && s.openCategoryPlace <= 3,
+                                                                })}
+                                                            >
+                                                                {s.openCategory && `${s.openCategoryPlace}`}
+                                                            </div>
                                                         </td>
                                                     )}
 
                                                     {ageCategoriesExist && (
-                                                        <td className="px-1 py-2 text-center text-xs">
+                                                        <td className="px-1 py-3 text-center text-xs">
                                                             {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                         </td>
                                                     )}
@@ -134,7 +141,7 @@ export const Results = () => {
                                                     )} */}
                                                     <td
                                                         className={classNames(
-                                                            "px-1 font-semibold uppercase text-center font-mono py-2 text-xs",
+                                                            "px-1 font-semibold uppercase text-center font-mono py-3 text-xs",
                                                             { "text-right": !s.invalidState }
                                                         )}
                                                     >
@@ -152,17 +159,22 @@ export const Results = () => {
                                                             "bg-gray-100": i % 2 === 0,
                                                         })}
                                                     >
-                                                        <td colSpan={10} className="px-2 font-medium py-1 text-xs">
+                                                        <td></td>
+                                                        <td colSpan={9} className="px-2 font-medium pb-3 text-xs">
                                                             <div className="table-row font-semibold">
                                                                 <div className="py-0.5 table-cell">{t("results.grid.columns.player")}:</div>
                                                                 <div className="py-0.5 pl-2 table-cell">
                                                                     {s.name} {s.lastName}
                                                                 </div>
                                                             </div>
-                                                            {s.team && <div className="table-row">
-                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.team")}:</div>
-                                                                <div className="py-0.5 pl-2 table-cell">{s.team}</div>
-                                                            </div>}
+                                                            {s.team && (
+                                                                <div className="table-row">
+                                                                    <div className="py-0.5 table-cell">
+                                                                        {t("results.grid.columns.team")}:
+                                                                    </div>
+                                                                    <div className="py-0.5 pl-2 table-cell">{s.team}</div>
+                                                                </div>
+                                                            )}
                                                             <div className="table-row">
                                                                 <div className="py-0.5 table-cell">
                                                                     {t("results.grid.columns.yearOfBirth")}:
