@@ -511,6 +511,10 @@
       "message": "Results refresh automatically every 10 seconds.",
       "lastUpdate": "Last update: {updatedAt}"
     },
+    "abbreviations": {
+      "dns": "Did not start",
+      "dnf": "Dit not finished"
+    },
     "grid": {
       "columns": {
         "yearOfBirth": "YoB",

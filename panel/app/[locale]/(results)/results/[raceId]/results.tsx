@@ -20,6 +20,7 @@ export const Results = () => {
     );
     const [rowIds, setRowIds] = useState<number[]>([]);
     const t = useTranslations();
+    const abbreviations = useTranslations('results.abbreviations');
 
     const toggleRow = (rowId: number) => {
         const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
@@ -65,7 +66,7 @@ export const Results = () => {
                                         {ageCategoriesExist && (
                                             <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
                                         )}
-                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.result")}</th>
+                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
@@ -75,7 +76,7 @@ export const Results = () => {
                                                 <tr
                                                     onClick={() => toggleRow(i)}
                                                     key={i}
-                                                    className={classNames("whitespace-nowrap", { "bg-gray-100": rowIds.includes(i) })}
+                                                    className={classNames("whitespace-nowrap", { "bg-gray-200": rowIds.includes(i) })}
                                                 >
                                                     <td className="px-1 py-2 text-center text-xs">{i + 1}</td>
                                                     <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
@@ -92,12 +93,12 @@ export const Results = () => {
                                                             {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                         </td>
                                                     )}
-                                                    <td className="px-1 font-semibold uppercase text-right font-mono py-2 text-xs">
-                                                        {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
+                                                    <td className={classNames("px-1 font-semibold uppercase text-center font-mono py-2 text-xs", {'text-right': !s.invalidState})}>
+                                                        {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
                                                     </td>
                                                 </tr>
                                                 {rowIds.includes(i) && (
-                                                    <tr key={i} className="bg-gray-200 whitespace-nowrap">
+                                                    <tr key={i} className="bg-gray-100 whitespace-nowrap">
                                                         <td colSpan={10} className="px-2 font-medium py-1 text-xs">
                                                             <div className="table-row">
                                                                 <div className="py-0.5 table-cell">
@@ -121,10 +122,10 @@ export const Results = () => {
                                                                     {!s.invalidState && formatTimeWithMilliSec(s.finish)}
                                                                 </div>
                                                             </div>
-                                                            <div className="table-row">
-                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.gap")}:</div>
+                                                            <div className="table-row font-semibold">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.result")}:</div>
                                                                 <div className="py-0.5 pl-2 font-mono table-cell">
-                                                                    {!s.invalidState && formatGap(s.gap)}
+                                                                    {s.invalidState ? abbreviations(s.invalidState as any) : formatTimeWithMilliSecUTC(s.result)}
                                                                 </div>
                                                             </div>
                                                         </td>
