@@ -19,8 +19,9 @@ export const Results = () => {
         { enabled: !!raceId, refetchInterval: 10_000 }
     );
     const [rowIds, setRowIds] = useState<number[]>([]);
-    const t = useTranslations();
+    
     const abbreviations = useTranslations('results.abbreviations');
+    const t = useTranslations();
 
     const toggleRow = (rowId: number) => {
         const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
@@ -76,7 +77,7 @@ export const Results = () => {
                                                 <tr
                                                     onClick={() => toggleRow(i)}
                                                     key={i}
-                                                    className={classNames("whitespace-nowrap", { "bg-gray-200": rowIds.includes(i) })}
+                                                    className={classNames("whitespace-nowrap cursor-pointer hover:bg-gray-100", { "bg-gray-200": rowIds.includes(i) })}
                                                 >
                                                     <td className="px-1 py-2 text-center text-xs">{i + 1}</td>
                                                     <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
