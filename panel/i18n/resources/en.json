@@ -513,11 +513,15 @@
     },
     "grid": {
       "columns": {
-        "name": "Name",
+        "yearOfBirth": "YoB",
+        "place": "Loc",
+        "player": "Player",
         "team": "Team",
         "bibNumber": "Bib",
         "category": "Category",
         "result": "Result",
+        "start": "Start",
+        "finish": "Finish",
         "gap": "Gap"
       }
     }

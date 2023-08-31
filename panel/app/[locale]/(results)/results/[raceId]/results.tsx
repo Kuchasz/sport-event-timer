@@ -1,11 +1,13 @@
 "use client";
 
 import { Gender } from "@set/timer/dist/model";
-import { formatGap, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
+import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { trpc } from "trpc-core";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import classNames from "classnames";
 
 const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</div>;
 
@@ -16,7 +18,14 @@ export const Results = () => {
         { raceId: parseInt(raceId! as string) },
         { enabled: !!raceId, refetchInterval: 10_000 }
     );
+    const [rowIds, setRowIds] = useState<number[]>([]);
     const t = useTranslations();
+
+    const toggleRow = (rowId: number) => {
+        const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
+
+        setRowIds(newRowIds);
+    };
 
     const openCategories = [...new Set<string>(results?.filter(r => r.openCategory).map(r => r.openCategory!.name))];
     const ageCategoriesExist = results?.some(r => !!r.ageCategory);
@@ -38,54 +47,90 @@ export const Results = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center mx-auto">
-                <div className="flex flex-col">
-                    <div className="w-full">
-                        <div className="border-b border-gray-200 shadow">
-                            <table className="divide-y divide-gray-300 ">
-                                <thead className="top-0 sticky bg-gray-50">
+            <div className="w-full flex justify-center">
+                <div className="flex w-full flex-col items-center">
+                    <div className="w-full max-w-xl">
+                        <div className="border-b w-full border-gray-200 shadow">
+                            <table className="divide-y w-full divide-gray-300 ">
+                                <thead className="top-0 sticky bg-gray-100">
                                     <tr>
-                                        <th className="px-4 py-2 text-xs text-gray-500">#</th>
-                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.bibNumber')}</th>
-                                        <th className="px-4 py-2 text-xs text-left text-gray-500">{t('results.grid.columns.name')}</th>
-                                        <th className="px-4 py-2 text-xs text-left text-gray-500">{t('results.grid.columns.team')}</th>
+                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
+                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.bibNumber")}</th>
+                                        <th className="px-1 py-4 text-xs text-left text-gray-800">{t("results.grid.columns.player")}</th>
                                         {openCategories.map(c => (
-                                            <th key={c} className="px-4 py-2 text-xs text-gray-500">
+                                            <th key={c} className="px-1 py-4 text-xs text-gray-800">
                                                 {c}
                                             </th>
                                         ))}
-                                        {ageCategoriesExist && <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.category')}</th>}
-                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.result')}</th>
-                                        <th className="px-4 py-2 text-xs text-gray-500">{t('results.grid.columns.gap')}</th>
+                                        {ageCategoriesExist && (
+                                            <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
+                                        )}
+                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.result")}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
                                     {results &&
                                         results.map((s, i) => (
-                                            <tr key={i} className="whitespace-nowrap">
-                                                <td className="px-4 py-2 text-center text-xs">{i + 1}</td>
-                                                <td className="px-4 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
-                                                <td className="px-4 font-semibold py-2 text-xs">
-                                                    {s.name} {s.lastName}
-                                                </td>
-                                                <td className="px-4 py-2 text-xs text-ellipsis">{s.team ?? ""}</td>
-                                                {openCategories.map(c => (
-                                                    <td key={c} className="px-4 text-center py-2 text-xs">
-                                                        {s.openCategory?.name === c && s.openCategoryPlace}
+                                            <>
+                                                <tr
+                                                    onClick={() => toggleRow(i)}
+                                                    key={i}
+                                                    className={classNames("whitespace-nowrap", { "bg-gray-100": rowIds.includes(i) })}
+                                                >
+                                                    <td className="px-1 py-2 text-center text-xs">{i + 1}</td>
+                                                    <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
+                                                    <td className="px-1 font-semibold py-2 text-xs">
+                                                        {s.name} <div>{s.lastName}</div>
                                                     </td>
-                                                ))}
-                                                {ageCategoriesExist && (
-                                                    <td className="px-4 py-2 text-center text-xs">
-                                                        {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                    {openCategories.map(c => (
+                                                        <td key={c} className="px-1 text-center py-2 text-xs">
+                                                            {s.openCategory?.name === c && s.openCategoryPlace}
+                                                        </td>
+                                                    ))}
+                                                    {ageCategoriesExist && (
+                                                        <td className="px-1 py-2 text-center text-xs">
+                                                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                        </td>
+                                                    )}
+                                                    <td className="px-1 font-semibold uppercase text-right font-mono py-2 text-xs">
+                                                        {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
                                                     </td>
+                                                </tr>
+                                                {rowIds.includes(i) && (
+                                                    <tr key={i} className="bg-gray-200 whitespace-nowrap">
+                                                        <td colSpan={10} className="px-2 font-medium py-1 text-xs">
+                                                            <div className="table-row">
+                                                                <div className="py-0.5 table-cell">
+                                                                    {t("results.grid.columns.yearOfBirth")}:
+                                                                </div>
+                                                                <div className="py-0.5 pl-2 table-cell">{s.yearOfBirth ?? ""}</div>
+                                                            </div>
+                                                            <div className="table-row">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.team")}:</div>
+                                                                <div className="py-0.5 pl-2 table-cell">{s.team ?? ""}</div>
+                                                            </div>
+                                                            <div className="table-row">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.start")}:</div>
+                                                                <div className="py-0.5 pl-2 font-mono table-cell">
+                                                                    {!s.invalidState && formatTimeWithMilliSec(s.start)}
+                                                                </div>
+                                                            </div>
+                                                            <div className="table-row">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.finish")}:</div>
+                                                                <div className="py-0.5 pl-2 font-mono table-cell">
+                                                                    {!s.invalidState && formatTimeWithMilliSec(s.finish)}
+                                                                </div>
+                                                            </div>
+                                                            <div className="table-row">
+                                                                <div className="py-0.5 table-cell">{t("results.grid.columns.gap")}:</div>
+                                                                <div className="py-0.5 pl-2 font-mono table-cell">
+                                                                    {!s.invalidState && formatGap(s.gap)}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 )}
-                                                <td className="px-4 font-semibold uppercase text-right font-mono py-2 text-xs">
-                                                    {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
-                                                </td>
-                                                <td className="px-4 text-right font-mono py-2 text-xs">
-                                                    {!s.invalidState && formatGap(s.gap)}
-                                                </td>
-                                            </tr>
+                                            </>
                                         ))}
                                 </tbody>
                             </table>
@@ -96,3 +141,68 @@ export const Results = () => {
         </>
     );
 };
+
+{
+    /* <table className="divide-y divide-gray-300 ">
+<thead className="top-0 sticky bg-gray-50">
+    <tr>
+        <th className="px-4 py-2 text-xs text-gray-500">#</th>
+        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.bibNumber")}</th>
+        <th className="px-4 py-2 text-xs text-left text-gray-500">{t("results.grid.columns.name")}</th>
+        <th className="px-4 py-2 text-xs text-left text-gray-500">{t("results.grid.columns.team")}</th>
+        {openCategories.map(c => (
+            <th key={c} className="px-4 py-2 text-xs text-gray-500">
+                {c}
+            </th>
+        ))}
+        {ageCategoriesExist && (
+            <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.category")}</th>
+        )}
+        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.start")}</th>
+        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.finish")}</th>
+        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.result")}</th>
+        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.gap")}</th>
+    </tr>
+</thead>
+<tbody className="bg-white divide-y divide-gray-300">
+    {results &&
+        results.map((s, i) => (
+            <>
+                <tr key={i} className="whitespace-nowrap">
+                    <td className="px-4 py-2 text-center text-xs">{i + 1}</td>
+                    <td className="px-4 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
+                    <td className="px-4 font-semibold py-2 text-xs">
+                        {s.name} {s.lastName}
+                    </td>
+                    <td className="px-4 py-2 text-xs text-ellipsis">{s.team ?? ""}</td>
+                    {openCategories.map(c => (
+                        <td key={c} className="px-4 text-center py-2 text-xs">
+                            {s.openCategory?.name === c && s.openCategoryPlace}
+                        </td>
+                    ))}
+                    {ageCategoriesExist && (
+                        <td className="px-4 py-2 text-center text-xs">
+                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                        </td>
+                    )}
+                    <td className="px-4 font-mono text-center py-2 text-xs">
+                        {!s.invalidState && formatTimeWithMilliSec(s.start)}
+                    </td>
+                    <td className="px-4 font-mono text-center py-2 text-xs">
+                        {!s.invalidState && formatTimeWithMilliSec(s.finish)}
+                    </td>
+                    <td className="px-4 font-semibold uppercase text-right font-mono py-2 text-xs">
+                        {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
+                    </td>
+                    <td className="px-4 text-right font-mono py-2 text-xs">
+                        {!s.invalidState && formatGap(s.gap)}
+                    </td>
+                </tr>
+                <tr key={i} className="whitespace-nowrap">
+                    <td colSpan={10} className="px-4 py-2 text-center text-xs"></td>
+                </tr>
+            </>
+        ))}
+</tbody>
+</table> */
+}
