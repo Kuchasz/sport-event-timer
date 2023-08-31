@@ -109,7 +109,8 @@
       "grid": {
         "columns": {
           "bibNumber": "Numer Startowy",
-          "actions": "Akcje"
+          "actions": "Akcje",
+          "index": ""
         }
       },
       "create": {
@@ -138,7 +139,7 @@
     "players": {
       "grid": {
         "columns": {
-          "index": "Indeks",
+          "index": "",
           "classification": "Id Klasyfikacji",
           "bibNumber": "Numer Startowy",
           "name": "Imię",
@@ -207,7 +208,7 @@
       },
       "grid": {
         "columns": {
-          "index": "Indeks",
+          "index": "",
           "name": "Imię",
           "lastName": "Nazwisko",
           "gender": "Płeć",
@@ -243,14 +244,15 @@
       "grid": {
         "columns": {
           "name": "Nazwa",
-          "actions": "Akcje"
+          "actions": "Akcje",
+          "index": ""
         }
       },
       "categories": {
         "button": "kategorie",
         "grid": {
           "columns": {
-            "index": "Indeks",
+            "index": "",
             "name": "Nazwa",
             "minAge": "Minimalny Wiek",
             "maxAge": "Maksymalny Wiek",

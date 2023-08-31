@@ -56,7 +56,7 @@ export const Classifications = () => {
     };
 
     const defaultColumns: ColDef<Classification>[] = [
-        { field: "index", headerName: "", sortable: true },
+        { field: "index", headerName: t('pages.classifications.grid.columns.index'), sortable: true },
         { field: "name", headerName: t("pages.classifications.grid.columns.name"), sortable: true, filter: true },
         {
             field: "actions",

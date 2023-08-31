@@ -61,6 +61,7 @@ export const BibNumbers = () => {
     const t = useTranslations();
 
     const defaultColumns: ColDef<BibNumber>[] = [
+        { field: "index", headerName: t('pages.bibNumbers.grid.columns.index'), sortable: true, maxWidth: 80 },
         {
             field: "number",
             sortable: true,
