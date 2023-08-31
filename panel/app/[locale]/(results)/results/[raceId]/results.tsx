@@ -43,11 +43,11 @@ export const Results = () => {
                 <div className="max-w-[800px] flex my-8 px-4 flex-col">
                     <h2 className="font-semibold uppercase text-3xl">{race?.name}</h2>
                     <h3>{race?.date?.toLocaleDateString()}</h3>
-                    <div className="mt-2">
+                    <div className="text-sm mt-2">
                         <span>{t("results.refresh.message")}</span>
-                        <span className="ml-2">
+                        <div className="mt-2">
                             {t("results.refresh.lastUpdate", { updatedAt: new Date(dataUpdatedAt).toLocaleTimeString("pl") })}
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
