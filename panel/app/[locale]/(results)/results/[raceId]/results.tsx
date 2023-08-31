@@ -8,6 +8,8 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import classNames from "classnames";
+import Icon from "@mdi/react";
+import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 
 const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</div>;
 
@@ -19,8 +21,8 @@ export const Results = () => {
         { enabled: !!raceId, refetchInterval: 10_000 }
     );
     const [rowIds, setRowIds] = useState<number[]>([]);
-    
-    const abbreviations = useTranslations('results.abbreviations');
+
+    const abbreviations = useTranslations("results.abbreviations");
     const t = useTranslations();
 
     const toggleRow = (rowId: number) => {
@@ -29,7 +31,7 @@ export const Results = () => {
         setRowIds(newRowIds);
     };
 
-    const openCategories = [...new Set<string>(results?.filter(r => r.openCategory).map(r => r.openCategory!.name))];
+    const openCategoriesExist = results?.some(r => !!r.openCategory);
     const ageCategoriesExist = results?.some(r => !!r.ageCategory);
 
     return (
@@ -59,15 +61,14 @@ export const Results = () => {
                                         <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
                                         <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.bibNumber")}</th>
                                         <th className="px-1 py-4 text-xs text-left text-gray-800">{t("results.grid.columns.player")}</th>
-                                        {openCategories.map(c => (
-                                            <th key={c} className="px-1 py-4 text-xs text-gray-800">
-                                                {c}
-                                            </th>
-                                        ))}
+                                        {openCategoriesExist && (
+                                            <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.open")}</th>
+                                        )}
                                         {ageCategoriesExist && (
                                             <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
                                         )}
-                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
+                                        <th className="px-1 py-4 text-right text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-300">
@@ -77,14 +78,47 @@ export const Results = () => {
                                                 <tr
                                                     onClick={() => toggleRow(i)}
                                                     key={i}
-                                                    className={classNames("whitespace-nowrap cursor-pointer hover:bg-gray-100", { "bg-gray-200": rowIds.includes(i) })}
+                                                    className={classNames("whitespace-nowrap cursor-pointer hover:bg-gray-100", {
+                                                        "bg-gray-200": rowIds.includes(i),
+                                                    })}
                                                 >
-                                                    <td className="px-1 py-2 text-center text-xs">{i + 1}</td>
+                                                    <td className="px-1 py-2 text-center text-xs">{i + 1}.</td>
                                                     <td className="px-1 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
                                                     <td className="px-1 font-semibold py-2 text-xs">
                                                         {s.name} <div>{s.lastName}</div>
                                                     </td>
-                                                    {openCategories.map(c => (
+
+                                                    {/* {(openCategoriesExist || ageCategoriesExist) && (
+                                                        <td className="px-1 py-2 text-xs">
+                                                            {openCategories.map(
+                                                                c =>
+                                                                    s.openCategory?.name === c && (
+                                                                        <div key={c}>
+                                                                            {s.openCategory.name} ({s.openCategoryPlace})
+                                                                        </div>
+                                                                    )
+                                                            )}
+                                                            {ageCategoriesExist && s.ageCategory && (
+                                                                <div>
+                                                                    {s.ageCategory.name} ({s.ageCategoryPlace})
+                                                                </div>
+                                                            )}
+                                                        </td>
+                                                    )} */}
+
+                                                    {openCategoriesExist && (
+                                                        <td className="px-1 py-2 text-center text-xs">
+                                                            {s.openCategory && `${s.openCategoryPlace}`}
+                                                        </td>
+                                                    )}
+
+                                                    {ageCategoriesExist && (
+                                                        <td className="px-1 py-2 text-center text-xs">
+                                                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                        </td>
+                                                    )}
+
+                                                    {/* {openCategories.map(c => (
                                                         <td key={c} className="px-1 text-center py-2 text-xs">
                                                             {s.openCategory?.name === c && s.openCategoryPlace}
                                                         </td>
@@ -93,9 +127,17 @@ export const Results = () => {
                                                         <td className="px-1 py-2 text-center text-xs">
                                                             {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                         </td>
-                                                    )}
-                                                    <td className={classNames("px-1 font-semibold uppercase text-center font-mono py-2 text-xs", {'text-right': !s.invalidState})}>
+                                                    )} */}
+                                                    <td
+                                                        className={classNames(
+                                                            "px-1 font-semibold uppercase text-center font-mono py-2 text-xs",
+                                                            { "text-right": !s.invalidState }
+                                                        )}
+                                                    >
                                                         {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
+                                                    </td>
+                                                    <td>
+                                                        <Icon className="text-gray-500" path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={1} />
                                                     </td>
                                                 </tr>
                                                 {rowIds.includes(i) && (
@@ -126,7 +168,9 @@ export const Results = () => {
                                                             <div className="table-row font-semibold">
                                                                 <div className="py-0.5 table-cell">{t("results.grid.columns.result")}:</div>
                                                                 <div className="py-0.5 pl-2 font-mono table-cell">
-                                                                    {s.invalidState ? abbreviations(s.invalidState as any) : formatTimeWithMilliSecUTC(s.result)}
+                                                                    {s.invalidState
+                                                                        ? abbreviations(s.invalidState as any)
+                                                                        : formatTimeWithMilliSecUTC(s.result)}
                                                                 </div>
                                                             </div>
                                                         </td>
