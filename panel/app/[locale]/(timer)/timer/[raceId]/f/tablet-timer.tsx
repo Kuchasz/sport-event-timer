@@ -62,6 +62,8 @@ export const TabletTimer = () => {
     useEffect(() => {
         if (systemTime === undefined || players === undefined) return;
 
+        let secondsToPlayerInterval: number;
+
         const tickSecondsToPlayer = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
             // const globalDateTime = new Date(globalTime);
@@ -70,13 +72,14 @@ export const TabletTimer = () => {
             // if (miliseconds <= clockTimeout) {
             setGlobalTime(globalTime);
             // }
+
+            secondsToPlayerInterval = requestAnimationFrame(tickSecondsToPlayer);
         };
 
         tickSecondsToPlayer();
-        const secondsToPlayerInterval = setInterval(tickSecondsToPlayer, clockTimeout);
 
         return () => {
-            clearInterval(secondsToPlayerInterval);
+            cancelAnimationFrame(secondsToPlayerInterval);
         };
     }, [systemTime, players]);
 
