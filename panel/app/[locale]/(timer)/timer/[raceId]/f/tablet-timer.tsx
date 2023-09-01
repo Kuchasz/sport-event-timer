@@ -20,7 +20,7 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 16.7;
+// const clockTimeout = 16.7;
 
 const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     const splits = splitTime(new Date(time), true);
