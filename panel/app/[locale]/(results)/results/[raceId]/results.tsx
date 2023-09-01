@@ -6,7 +6,7 @@ import { trpc } from "trpc-core";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import Icon from "@mdi/react";
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
@@ -74,17 +74,13 @@ export const Results = () => {
                                 <tbody className="bg-white divide-y divide-none">
                                     {results &&
                                         results.map((s, i) => (
-                                            <>
+                                            <React.Fragment key={i}>
                                                 <tr
                                                     onClick={() => toggleRow(i)}
-                                                    key={i}
-                                                    className={classNames(
-                                                        "whitespace-nowrap cursor-pointer",
-                                                        {
-                                                            "bg-white": i % 2 === 1,
-                                                            "bg-gray-100": i % 2 === 0,
-                                                        }
-                                                    )}
+                                                    className={classNames("whitespace-nowrap cursor-pointer", {
+                                                        "bg-white": i % 2 === 1,
+                                                        "bg-gray-100": i % 2 === 0,
+                                                    })}
                                                 >
                                                     <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
                                                     <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
@@ -153,7 +149,6 @@ export const Results = () => {
                                                 </tr>
                                                 {rowIds.includes(i) && (
                                                     <tr
-                                                        key={i}
                                                         className={classNames("whitespace-nowrap", {
                                                             "bg-white": i % 2 === 1,
                                                             "bg-gray-100": i % 2 === 0,
@@ -204,7 +199,7 @@ export const Results = () => {
                                                         </td>
                                                     </tr>
                                                 )}
-                                            </>
+                                            </React.Fragment>
                                         ))}
                                 </tbody>
                             </table>
