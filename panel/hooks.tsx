@@ -47,8 +47,10 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
 
     useEffect(() => {
         let timeout: NodeJS.Timeout;
+        let syncTries = 0;
 
         const requestTimeSync = async () => {
+            syncTries++;
             const loadStartTime = Date.now();
             const serverTime: number = await getServerTime(loadStartTime);
             const loadEndTime = Date.now();
@@ -62,7 +64,7 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
                     latency,
                 });
 
-            if (latency > allowedLatency) timeout = setTimeout(requestTimeSync, 250);
+            if (latency > allowedLatency || syncTries < 5) timeout = setTimeout(requestTimeSync, 250);
         };
 
         requestTimeSync();
@@ -73,4 +75,4 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
     }, [systemTime]);
 
     return systemTime;
-}
+};

@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { sort } from "@set/utils/dist/array";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { trpc } from "trpc-core";
 import { splitTime } from "@set/utils/dist/datetime";
 import classNames from "classnames";
@@ -20,8 +18,6 @@ export type TextActions = {
     minifyFont: () => void;
     toggle: () => void;
 };
-
-const clockTimeout = 100;
 
 const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     const splits = splitTime(new Date(time));
@@ -54,39 +50,30 @@ export const TabletTimer = () => {
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
-    const { raceId } = useParams() as { raceId: string };
-
-    const { data: players } = trpc.player.startList.useQuery(
-        { raceId: Number.parseInt(raceId! as string) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
-    );
-    
-
     useEffect(() => {
-        if (systemTime === undefined || players === undefined) return;
+        if (systemTime === undefined) return;
 
-        const tickSecondsToPlayer = () => {
+        let tickInterval: number;
+
+        const tickTime = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
-            // const globalDateTime = new Date(globalTime);
-            // const miliseconds = globalDateTime.getMilliseconds();
 
-            // if (miliseconds <= clockTimeout) {
             setGlobalTime(globalTime);
-            // }
+
+            tickInterval = requestAnimationFrame(tickTime);
         };
 
-        tickSecondsToPlayer();
-        const secondsToPlayerInterval = setInterval(tickSecondsToPlayer, clockTimeout);
+        tickTime();
 
         return () => {
-            clearInterval(secondsToPlayerInterval);
+            cancelAnimationFrame(tickInterval);
         };
-    }, [systemTime, players]);
+    }, [systemTime]);
 
     return (
         <>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
-                {globalTime === undefined || players === undefined ? (
+                {globalTime === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
                 ) : (
                     <div className="w-full h-full flex flex-col justify-center items-center">

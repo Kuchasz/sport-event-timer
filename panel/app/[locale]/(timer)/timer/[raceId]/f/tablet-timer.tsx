@@ -53,20 +53,20 @@ export const TabletTimer = () => {
     useEffect(() => {
         if (systemTime === undefined) return;
 
-        let secondsToPlayerInterval: number;
+        let tickInterval: number;
 
-        const tickSecondsToPlayer = () => {
+        const tickTime = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
             
             setGlobalTime(globalTime);
             
-            secondsToPlayerInterval = requestAnimationFrame(tickSecondsToPlayer);
+            tickInterval = requestAnimationFrame(tickTime);
         };
 
-        tickSecondsToPlayer();
+        tickTime();
 
         return () => {
-            cancelAnimationFrame(secondsToPlayerInterval);
+            cancelAnimationFrame(tickInterval);
         };
     }, [systemTime]);
 
