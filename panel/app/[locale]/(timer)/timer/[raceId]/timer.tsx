@@ -17,6 +17,7 @@ import { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 import classNames from "classnames";
 import { allowedLatency } from "connection";
+import { useSystemTime } from "hooks";
 
 type StartListPlayer = AppRouterOutputs["player"]["startList"][0];
 
@@ -135,17 +136,18 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
 };
 
 export const Timer = () => {
-    const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
     const [globalTime, setGlobalTime] = useState<number>();
     const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
     const { raceId } = useParams() as { raceId: string };
+    const ntpMutation = trpc.ntp.sync.useMutation();
+
+    const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId! as string) },
         { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
     );
-    const ntpMutation = trpc.ntp.sync.useMutation();
 
     const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
@@ -198,33 +200,6 @@ export const Timer = () => {
             clearInterval(secondsToPlayerInterval);
         };
     }, [systemTime, players]);
-
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-
-        const requestTimeSync = async () => {
-            const loadStartTime = Date.now();
-            const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
-            const loadEndTime = Date.now();
-            const latency = loadEndTime - loadStartTime;
-
-            const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
-
-            if (systemTime === undefined || latency < systemTime.latency)
-                setSystemTime({
-                    timeOffset,
-                    latency,
-                });
-
-            if (latency > allowedLatency) timeout = setTimeout(requestTimeSync, 1000);
-        };
-
-        requestTimeSync();
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [systemTime]);
 
     return (
         <>

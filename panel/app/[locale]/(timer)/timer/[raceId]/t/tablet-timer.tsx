@@ -8,6 +8,7 @@ import { trpc } from "trpc-core";
 import { splitTime } from "@set/utils/dist/datetime";
 import classNames from "classnames";
 import { allowedLatency } from "connection";
+import { useSystemTime } from "hooks";
 
 export type TextSettings = {
     enabled: boolean;
@@ -48,8 +49,10 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
 };
 
 export const TabletTimer = () => {
-    const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
     const [globalTime, setGlobalTime] = useState<number>();
+    const ntpMutation = trpc.ntp.sync.useMutation();
+
+    const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     const { raceId } = useParams() as { raceId: string };
 
@@ -57,7 +60,7 @@ export const TabletTimer = () => {
         { raceId: Number.parseInt(raceId! as string) },
         { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
     );
-    const ntpMutation = trpc.ntp.sync.useMutation();
+    
 
     useEffect(() => {
         if (systemTime === undefined || players === undefined) return;
@@ -80,33 +83,6 @@ export const TabletTimer = () => {
         };
     }, [systemTime, players]);
 
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-
-        const requestTimeSync = async () => {
-            const loadStartTime = Date.now();
-            const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
-            const loadEndTime = Date.now();
-            const latency = loadEndTime - loadStartTime;
-
-            const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
-
-            if (systemTime === undefined || latency < systemTime.latency)
-                setSystemTime({
-                    timeOffset,
-                    latency,
-                });
-
-            if (latency > allowedLatency) timeout = setTimeout(requestTimeSync, 1000);
-        };
-
-        requestTimeSync();
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [systemTime]);
-    
     return (
         <>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
