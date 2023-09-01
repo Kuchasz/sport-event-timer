@@ -26,7 +26,7 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     const splits = splitTime(new Date(time));
 
     return (
-        <div className={classNames("scale-150 translate-x-[50%] text-6xl flex items-end", { ["animate-pulse"]: stopped })}>
+        <div className={classNames("scale-150 text-6xl flex items-end", { ["animate-pulse"]: stopped })}>
             <div className="flex flex-col items-center">
                 <div className="text-xs text-zinc-600">HRS</div>
                 <div className="font-mono text-center font-normal w-20">{splits.hours}</div>
@@ -106,17 +106,15 @@ export const TabletTimer = () => {
             clearTimeout(timeout);
         };
     }, [systemTime]);
-
+    
     return (
         <>
             <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
                 {globalTime === undefined || players === undefined ? (
                     <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
                 ) : (
-                    <div className="w-full h-full flex flex-col items-center">
-                        <div className="flex flex-col w-full flex-grow overflow-y-hidden">
-                            <Time stopped={false} time={globalTime!} />
-                        </div>
+                    <div className="w-full h-full flex flex-col justify-center items-center">
+                        <Time stopped={false} time={globalTime!} />
                     </div>
                 )}
             </div>
