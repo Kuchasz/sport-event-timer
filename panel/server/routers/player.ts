@@ -2,6 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { GenderEnum } from "../../models";
+import { sort } from "@set/utils/dist/array";
 
 const playerSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }),
@@ -73,7 +74,9 @@ export const playerRouter = router({
 
             const usedBibNumbers = new Set(playersBibNumbers.filter(p => !!p.bibNumber).map(p => p.bibNumber));
 
-            return bibNumbers.find(b => !usedBibNumbers.has(b.number))?.number ?? "";
+            const sortedBibNumbers = sort(bibNumbers, b => Number(b.number));
+
+            return sortedBibNumbers.find(b => !usedBibNumbers.has(b.number))?.number ?? "";
         }),
     stopwatchPlayers: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
