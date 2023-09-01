@@ -20,10 +20,10 @@ export const formatTime = (time: Date) =>
         time.getSeconds()
     )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
 
-export const splitTime = (time: Date) => ({
+export const splitTime = (time: Date, fullMiliseconds = false) => ({
     hours: formatNumber(time.getHours()), minutes: formatNumber(time.getMinutes()), seconds: formatNumber(
         time.getSeconds()
-    ), miliseconds: formatNumber(time.getMilliseconds(), 3).slice(0, 1)
+    ), miliseconds: fullMiliseconds ? formatNumber(time.getMilliseconds(), 3) : formatNumber(time.getMilliseconds(), 3).slice(0, 1)
 });
 
 export const zeroSplits = { hours: '00', minutes: '00', seconds: '00', miliseconds: '0' };
