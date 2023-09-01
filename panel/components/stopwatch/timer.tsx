@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -9,17 +9,25 @@ export const Timer = ({ offset }: { offset: number }) => {
     const [time, setTime] = useState<number>(0);
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
-    // const pathname = usePathname();
 
-    const shouldBeStopped = connectionState !== "connected" || !timingPointId || typeof window === 'undefined';
+    const shouldBeStopped = connectionState !== "connected" || !timingPointId || typeof window === "undefined";
 
     useEffect(() => {
-        if (!shouldBeStopped) {
-            const interval = setInterval(() => setTime(Date.now() + offset), 100);
-            return () => clearInterval(interval);
-        }
+        let tickInterval: number;
 
-        return () => {};
+        const tickTime = () => {
+            const globalTime = Date.now() + offset;
+
+            setTime(globalTime);
+
+            tickInterval = requestAnimationFrame(tickTime);
+        };
+
+        tickTime();
+
+        return () => {
+            cancelAnimationFrame(tickInterval);
+        };
     }, [offset, connectionState]);
 
     return <Time time={time} stopped={shouldBeStopped} />;

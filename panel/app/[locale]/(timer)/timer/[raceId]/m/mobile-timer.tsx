@@ -27,8 +27,6 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 100;
-
 const NextPlayer = ({
     padBib,
     isNext,
@@ -105,21 +103,20 @@ export const MobileTimer = () => {
     useEffect(() => {
         if (systemTime === undefined || players === undefined) return;
 
-        const tickSecondsToPlayer = () => {
-            const globalTime = Date.now() + systemTime.timeOffset;
-            const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds();
+        let tickInterval: number;
 
-            if (miliseconds <= clockTimeout) {
-                setGlobalTime(globalTime);
-            }
+        const tickTime = () => {
+            const globalTime = Date.now() + systemTime.timeOffset;
+            
+            setGlobalTime(globalTime);
+            
+            tickInterval = requestAnimationFrame(tickTime);
         };
 
-        tickSecondsToPlayer();
-        const secondsToPlayerInterval = setInterval(tickSecondsToPlayer, clockTimeout);
+        tickTime();
 
         return () => {
-            clearInterval(secondsToPlayerInterval);
+            cancelAnimationFrame(tickInterval);
         };
     }, [systemTime, players]);
 

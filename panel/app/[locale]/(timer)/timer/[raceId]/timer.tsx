@@ -32,8 +32,6 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const clockTimeout = 100;
-
 const NextPlayer = ({
     padBib,
     isNext,
@@ -166,38 +164,30 @@ export const Timer = () => {
     useEffect(() => {
         if (systemTime === undefined || players === undefined) return;
 
-        const tickSecondsToPlayer = () => {
+        let tickInterval: number;
+
+        const tickTime = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
-            const globalDateTime = new Date(globalTime);
-            const miliseconds = globalDateTime.getMilliseconds();// - clockStartTimeMiliseconds + 1_000;
 
-            if (miliseconds <= clockTimeout) {
-                // console.log(offset * 60_000);
-                const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
-                
+            const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
 
-                const nextPlayer = nextPlayers[0];
+            const nextPlayer = nextPlayers[0];
 
-                // console.log(new Date(globalTime), new Date(nextPlayer.absoluteStartTime));
+            const nextPlayerTimeToStart = nextPlayer?.absoluteStartTime - globalTime;
 
-                //it will re-render that react tree each second, too often
-                // setNextPlayers(nextPlayers.slice(0, clockState.players.count).map(p => p.player));
+            const secondsToNextStart = Math.floor((nextPlayerTimeToStart || getCountdownTime(globalTime)) / 1_000);
 
-                const nextPlayerTimeToStart = nextPlayer?.absoluteStartTime - globalTime;
+            setNextPlayers(nextPlayers.slice(0, clockState.nextPlayers.count));
+            setSecondsToNextPlayer(secondsToNextStart);
+            setGlobalTime(globalTime);
 
-                const secondsToNextStart = Math.floor((nextPlayerTimeToStart || getCountdownTime(globalTime)) / 1_000);
-
-                setNextPlayers(nextPlayers.slice(0, clockState.nextPlayers.count));
-                setSecondsToNextPlayer(secondsToNextStart);
-                setGlobalTime(globalTime);
-            }
+            tickInterval = requestAnimationFrame(tickTime);
         };
 
-        tickSecondsToPlayer();
-        const secondsToPlayerInterval = setInterval(tickSecondsToPlayer, clockTimeout);
+        tickTime();
 
         return () => {
-            clearInterval(secondsToPlayerInterval);
+            cancelAnimationFrame(tickInterval);
         };
     }, [systemTime, players]);
 
