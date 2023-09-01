@@ -69,7 +69,7 @@ export const playerRouter = router({
             const { raceId } = input;
 
             const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId } });
-            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId } });
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, orderBy: { number: 'asc' } });
 
             const usedBibNumbers = new Set(playersBibNumbers.filter(p => !!p.bibNumber).map(p => p.bibNumber));
 
@@ -89,7 +89,7 @@ export const playerRouter = router({
                     startTime: true,
                 },
             });
-            return players.map(p => ({...p, bibNumber: Number(p.bibNumber)})) as z.TypeOf<typeof stopwatchPlayersSchema>;
+            return players.map(p => ({ ...p, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
         }),
     startList: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))

@@ -34,7 +34,7 @@ export const bibNumberRouter =
             raceId: z.number({ required_error: "raceId is required" })
         })).query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, select: { number: true } });
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, select: { number: true }, orderBy: { number: 'asc' } });
             const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId, NOT: { bibNumber: null } }, select: { bibNumber: true } });
 
             const allBibNumbers = bibNumbers.map(x => x.number);
