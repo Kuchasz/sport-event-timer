@@ -1,11 +1,9 @@
 import classNames from "classnames";
-// import { useEffect, useRef } from "react";
-
 import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import useResizeObserver from "@react-hook/resize-observer";
 import { formatSecondsToTimeSpan } from "utils";
 
-const secondsToPlay = [0, 1, 2, 3, 4, 5];
+const secondsToPlay = [0, 1, 2, 3];
 
 const useSize = <T extends HTMLElement>(target: RefObject<T>) => {
     const [size, setSize] = useState<DOMRect>();
@@ -52,14 +50,16 @@ export const Countdown = ({
         }
     }, [seconds, beep]);
 
+    const tickSecond = secondsToPlay.at(-1)!;
+
     return (
         <div ref={containerRef} className="flex-grow w-full flex flex-col items-center justify-center">
             <div
                 ref={textRef}
                 style={{ fontSize: `${fontSize}vh` }}
                 className={classNames(["font-mono font-black leading-none transition-all text-center"], {
-                    ["text-white"]: seconds > 4,
-                    ["text-orange-500"]: seconds <= 4,
+                    ["text-white"]: seconds > tickSecond,
+                    ["text-orange-500"]: seconds <= tickSecond,
                 })}
             >
                 {/* {seconds} */}
