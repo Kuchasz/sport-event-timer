@@ -58,7 +58,7 @@ const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegi
                 message: t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
                     name: playerRegistration.name,
                     lastName: playerRegistration.lastName,
-                    hasPaid: !playerRegistration.hasPaid
+                    hasPaid: playerRegistration.hasPaid
                         ? t("pages.playerRegistrations.payment.status.notPaid")
                         : t("pages.playerRegistrations.payment.status.paid"),
                 }),
