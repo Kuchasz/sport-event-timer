@@ -4,6 +4,7 @@ import { trpc } from "./trpc-core";
 import { useSetAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { logger } from "utils";
+import { useSystemTime } from "hooks";
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -26,6 +27,10 @@ export const ServerConnectionHandler = ({
             onError: console.error,
         }
     );
+    
+    const ntpMutation = trpc.ntp.sync.useMutation();
+
+    const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     const { refetch: refetchState } = trpc.action.state.useQuery(
         { raceId },
@@ -38,42 +43,19 @@ export const ServerConnectionHandler = ({
     const setTimeOffset = useSetAtom(timeOffsetAtom);
     const setConnectionState = useSetAtom(connectionStateAtom);
 
-    const ntpMutation = trpc.ntp.sync.useMutation();
+    useEffect(() => {
+        systemTime && setTimeOffset(systemTime?.timeOffset);
+    }, [systemTime]);
 
     useEffect(() => {
         refetchState();
 
-        let timeout: NodeJS.Timeout;
-        const requestTimeSync = async () => {
-            const loadStartTime = Date.now();
-            const serverTime: number = await ntpMutation.mutateAsync(loadStartTime);
-            const loadEndTime = Date.now();
-            const latency = loadEndTime - loadStartTime;
-
-            const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
-
-            setTimeOffset(timeOffset);
-
-            if (latency > allowedLatency) {
-                requestTimeSync();
-                timeout = setTimeout(requestTimeSync, 250);
-            }
-        };
-
         const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
-            //dispatch connectionState !== "connected"
-            // console.log("dispatch connectionState ", connectionState);
             setConnectionState(connectionState);
         });
 
-        requestTimeSync();
-
         return () => {
-            clearTimeout(timeout);
-            // clearInterval(timeSyncInterval);
             connectionStateChangedUnsub();
-            // socket.removeAllListeners();
-            // socket.disconnect();
         };
     }, [dispatch]);
 

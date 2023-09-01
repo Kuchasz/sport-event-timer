@@ -41,3 +41,36 @@ export const usePreviousValue = <T,>(value: T) => {
 
     return ref.current;
 };
+
+export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartTime: number) => Promise<number>) => {
+    const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+
+        const requestTimeSync = async () => {
+            const loadStartTime = Date.now();
+            const serverTime: number = await getServerTime(loadStartTime);
+            const loadEndTime = Date.now();
+            const latency = loadEndTime - loadStartTime;
+
+            const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
+
+            if (systemTime === undefined || latency < systemTime.latency)
+                setSystemTime({
+                    timeOffset,
+                    latency,
+                });
+
+            if (latency > allowedLatency) timeout = setTimeout(requestTimeSync, 250);
+        };
+
+        requestTimeSync();
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [systemTime]);
+
+    return systemTime;
+}
