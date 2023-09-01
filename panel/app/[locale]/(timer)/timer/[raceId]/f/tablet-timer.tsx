@@ -28,17 +28,17 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     return (
         <div className={classNames("scale-150 text-6xl flex items-end", { ["animate-pulse"]: stopped })}>
             <div className="flex flex-col items-center">
-                <div className="text-xs text-zinc-600">HRS</div>
+                <div className="text-base text-zinc-600">HRS</div>
                 <div className="font-mono text-center font-normal w-20">{splits.hours}</div>
             </div>
             <div className="px-1 text-zinc-600">:</div>
             <div className="flex flex-col items-center">
-                <div className="text-xs text-zinc-600">MINS</div>
+                <div className="text-base text-zinc-600">MINS</div>
                 <div className="font-mono text-center font-normal w-20">{splits.minutes}</div>
             </div>
             <div className="px-1 text-zinc-600">:</div>
             <div className="flex flex-col items-center">
-                <div className="text-xs text-zinc-600">SECS</div>
+                <div className="text-base text-zinc-600">SECS</div>
                 <div className="font-mono text-center font-normal w-20">{splits.seconds}</div>
             </div>
             <div className="-ml-0.5 text-zinc-500">.</div>
