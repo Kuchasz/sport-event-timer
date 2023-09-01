@@ -7,8 +7,8 @@ export default function handler(
     const { raceId } = req.query;
 
     const manifest = {
-        "name": "Stopwatch",
-        "short_name": "Stopwatch",
+        "name": "Timer",
+        "short_name": "Timer",
         "icons": [
             {
                 "src": "/favicon/icon-192x192.png",
