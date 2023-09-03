@@ -18,13 +18,7 @@ type SplitTimeFormProps = {
     timingPoints: AppRouterOutputs["timingPoint"]["timingPoints"];
 };
 
-export const SplitTimeForm = ({
-    onReject,
-    onResolve,
-    initialSplitTime,
-    raceDate,
-    timingPoints
-}: SplitTimeFormProps) => {
+export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, raceDate, timingPoints }: SplitTimeFormProps) => {
     const [splitTime, changeHandler] = useFormState(initialSplitTime, [initialSplitTime]);
     return (
         <div className="flex flex-col">
@@ -54,14 +48,14 @@ export const SplitTimeForm = ({
                     <PoorFullTimepicker date={raceDate} value={splitTime.time} onChange={changeHandler("time")} />
                 </div>
             </div>
-            <div className="mt-4 flex">
+            <div className="mt-4 justify-between flex">
+                <Button onClick={onReject} outline>
+                    <Icon size={1} path={mdiClose} />
+                    <span className="ml-2">Cancel</span>
+                </Button>
                 <Button onClick={() => onResolve({ ...splitTime })}>
                     <Icon size={1} path={mdiContentSaveCheck} />
                     <span className="ml-2">Save</span>
-                </Button>
-                <Button onClick={onReject} className="ml-2">
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
                 </Button>
             </div>
         </div>

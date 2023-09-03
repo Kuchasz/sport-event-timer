@@ -24,14 +24,14 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey }: ApiKeyFormPro
                     <PoorInput value={apiKey.name} onChange={changeHandler("name")} />
                 </div>
             </div>
-            <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...apiKey })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+            <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} className="ml-2">
                     <Icon size={1} path={mdiClose} />
                     <span className="ml-2">Cancel</span>
+                </Button>
+                <Button onClick={() => onResolve({ ...apiKey })}>
+                    <Icon size={1} path={mdiContentSaveCheck} />
+                    <span className="ml-2">Save</span>
                 </Button>
             </div>
         </div>
