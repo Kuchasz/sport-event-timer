@@ -14,14 +14,14 @@ export const Confirmation = ({ message, onReject, onResolve }: ConfirmationProps
             <div className="flex">
                 <span>{message}</span>
             </div>
-            <div className="mt-4 flex">
+            <div className="mt-4 flex justify-between">
+                <Button onClick={onReject} outline>
+                    <Icon size={1} path={mdiClose} />
+                    <span className="ml-2">Cancel</span>
+                </Button>
                 <Button onClick={() => onResolve(true)}>
                     <Icon size={1} path={mdiCheck} />
                     <span className="ml-2">OK</span>
-                </Button>
-                <Button onClick={onReject} className="ml-2">
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
                 </Button>
             </div>
         </div>

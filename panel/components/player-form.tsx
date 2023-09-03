@@ -118,14 +118,14 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     <PoorTimepicker value={player.startTime} onChange={changeHandler("startTime")} />
                 </div>
             </div>
-            <div className="mt-4 flex">
-                <Button onClick={() => onResolve({ ...player })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+            <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} className="ml-2">
                     <Icon size={1} path={mdiClose} />
                     <span className="ml-2">Cancel</span>
+                </Button>
+                <Button onClick={() => onResolve({ ...player })}>
+                    <Icon size={1} path={mdiContentSaveCheck} />
+                    <span className="ml-2">Save</span>
                 </Button>
             </div>
         </div>
