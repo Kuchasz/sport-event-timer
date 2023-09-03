@@ -167,8 +167,11 @@ export const playerRouter = router({
             ? await ctx.db.player.findFirst({
                 where: {
                     raceId: input.raceId,
-                    startTime: player.startTime,
-                },
+                    OR: [
+                        { startTime: player.startTime },
+                        { bibNumber: player.bibNumber }
+                    ]
+                }
             })
             : null;
 
