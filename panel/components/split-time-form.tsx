@@ -1,7 +1,5 @@
-import Icon from "@mdi/react";
 import { Button } from "./button";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorFullTimepicker } from "./poor-timepicker";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
@@ -50,13 +48,9 @@ export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, raceDate,
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
+                    Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...splitTime })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+                <Button onClick={() => onResolve({ ...splitTime })}>Save</Button>
             </div>
         </div>
     );

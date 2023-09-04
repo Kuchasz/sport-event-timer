@@ -1,7 +1,5 @@
-import Icon from "@mdi/react";
 import { Button } from "./button";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
@@ -26,13 +24,9 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey }: ApiKeyFormPro
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} className="ml-2">
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
+                    Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...apiKey })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+                <Button onClick={() => onResolve({ ...apiKey })}>Save</Button>
             </div>
         </div>
     );
