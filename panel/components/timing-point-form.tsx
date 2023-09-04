@@ -1,7 +1,5 @@
-import Icon from "@mdi/react";
 import { Button } from "./button";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 import { PoorInput } from "./poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
@@ -33,13 +31,9 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
+                    Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...timingPoint })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+                <Button onClick={() => onResolve({ ...timingPoint })}>Save</Button>
             </div>
         </div>
     );

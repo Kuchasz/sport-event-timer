@@ -1,8 +1,6 @@
-import Icon from "@mdi/react";
 import { Button } from "./button";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Label } from "./label";
-import { mdiClose, mdiContentSaveCheck } from "@mdi/js";
 // import { PoorDatepicker } from "./poor-datepicker";
 // import { PoorInput } from "./poor-input";
 import { PoorSelect } from "./poor-select";
@@ -119,13 +117,9 @@ const PlayerRegistrationPromotionForm = ({ onReject, onResolve, initialPlayerPro
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
+                    Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...player })}>
-                    <Icon size={1} path={mdiContentSaveCheck} />
-                    <span className="ml-2">Save</span>
-                </Button>
+                <Button onClick={() => onResolve({ ...player })}>Save</Button>
             </div>
         </div>
     );

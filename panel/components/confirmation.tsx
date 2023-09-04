@@ -1,6 +1,4 @@
-import Icon from "@mdi/react";
 import { Button } from "./button";
-import { mdiCheck, mdiClose } from "@mdi/js";
 
 type ConfirmationProps = {
     onReject: () => void;
@@ -16,13 +14,9 @@ export const Confirmation = ({ message, onReject, onResolve }: ConfirmationProps
             </div>
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
-                    <Icon size={1} path={mdiClose} />
-                    <span className="ml-2">Cancel</span>
+                    Cancel
                 </Button>
-                <Button onClick={() => onResolve(true)}>
-                    <Icon size={1} path={mdiCheck} />
-                    <span className="ml-2">OK</span>
-                </Button>
+                <Button onClick={() => onResolve(true)}>OK</Button>
             </div>
         </div>
     );

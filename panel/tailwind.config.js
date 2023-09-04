@@ -30,7 +30,8 @@ module.exports = {
             purple: colors.pink,
             green: colors.green,
             lime: colors.lime,
-            slate: colors.slate
+            slate: colors.slate,
+            sky: colors.sky
         },
         screens: {
             sm: "640px",
