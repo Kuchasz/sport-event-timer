@@ -21,3 +21,5 @@ export const racePlayerRegistrationSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }).min(1),
     player: playerRegistrationSchema
 });
+
+export type PlayerRegistration = z.infer<typeof playerRegistrationSchema>;

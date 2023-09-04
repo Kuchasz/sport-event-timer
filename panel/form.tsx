@@ -2,28 +2,28 @@ import { Label } from "components/label";
 import React, { ReactNode, createContext } from "react";
 import { ZodObject, ZodType } from "zod";
 
-type FormValues = { [k: string]: string | number | Date };
+// type FormValues = { [k: string]: any };
 type FormErrors = { [k: string]: string[] | undefined };
 
-type FormStateProps<TItem extends FormValues> = {
+type FormStateProps<TItem> = {
     initialValues: TItem;
     onSubmit: (values: TItem) => void;
     validationSchema: ZodObject<Record<string, ZodType<any, any>>>;
 };
 
-type FormContextType = {
-    formValues: FormValues;
+type FormContextType<TItem, TKey extends keyof TItem> = {
+    formValues: TItem;
     formErrors: FormErrors;
-    handleChange: (name: string, value: string | number | Date) => void;
+    handleChange: (name: TKey, value: TItem[TKey]) => void;
 };
 
-const FormContext = createContext<FormContextType>({
+const FormContext = createContext<FormContextType<any, any>>({
     formValues: {},
     formErrors: {},
     handleChange: () => {},
 });
 
-const useForm = <TItem extends FormValues>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
+const useForm = <TItem extends {}>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
     const [formValues, setFormValues] = React.useState<TItem>(initialValues);
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
 
@@ -49,19 +49,19 @@ const useForm = <TItem extends FormValues>({ initialValues, onSubmit, validation
     };
 };
 
-type InputProps = {
-    name: string;
-    onChange: (e: { target: { value: string | number | Date } }) => void;
+type InputProps<TItem, TKey extends keyof TItem> = {
+    name: TKey;
+    onChange: (e: { target: { value: TItem[TKey] } }) => void;
     value: string | number | Date;
 };
 
-type FormInputProps = {
-    label: string;
-    name: string;
-    render: ({ ...agrs }: InputProps) => React.ReactNode;
-};
+// type FormInputProps<TItem, TKey extends keyof TItem> = {
+//     label: string;
+//     name: TKey;
+//     render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
+// };
 
-export const FormInput = ({ label, name, render }: FormInputProps) => {
+export const FormInput = <TItem,>({ label, name, render }: {label: string, name: keyof TItem, render: ({ ...agrs }: InputProps<TItem, keyof TItem>) => React.ReactNode}) => {
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
@@ -75,7 +75,7 @@ export const FormInput = ({ label, name, render }: FormInputProps) => {
     );
 };
 
-export function Form<TItem extends FormValues>({
+export function Form<TItem extends {}>({
     children,
     initialValues,
     onSubmit,
