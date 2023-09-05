@@ -1,9 +1,10 @@
 import { Label } from "components/label";
+import { useTranslations } from "next-intl";
 import React, { ReactNode, createContext } from "react";
 import { ZodObject, ZodType } from "zod";
 
 // type FormValues = { [k: string]: any };
-type FormErrors = { [k: string]: string[] | undefined };
+type FormErrors<TItem> = { [k in keyof TItem]: string[] | undefined };
 
 type FormStateProps<TItem> = {
     initialValues: TItem;
@@ -13,7 +14,7 @@ type FormStateProps<TItem> = {
 
 type FormContextType<TItem, TKey extends keyof TItem> = {
     formValues: TItem;
-    formErrors: FormErrors;
+    formErrors: FormErrors<TItem>;
     handleChange: (name: TKey, value: TItem[TKey]) => void;
 };
 
@@ -23,15 +24,15 @@ const FormContext = createContext<FormContextType<any, any>>({
     handleChange: () => {},
 });
 
-const useForm = <TItem extends {}>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
+const useForm = <TItem,>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
     const [formValues, setFormValues] = React.useState<TItem>(initialValues);
-    const [formErrors, setFormErrors] = React.useState<FormErrors>({});
+    const [formErrors, setFormErrors] = React.useState<FormErrors<TItem>>({} as any);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const validationResult = validationSchema.safeParse(formValues);
         if (!validationResult.success) {
-            setFormErrors(validationResult.error.flatten().fieldErrors);
+            setFormErrors(validationResult.error.flatten().fieldErrors as any);
         } else {
             onSubmit(formValues);
         }
@@ -72,13 +73,16 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
     className?: string;
     render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
 }) => {
+    const t = useTranslations();
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
-                <div className={`flex flex-col ${className ?? ''}`}>
+                <div className={`flex flex-col ${className ?? ""}`}>
                     <Label>{label}</Label>
                     {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
-                    <div className="text-xs text-right font-medium opacity-75 text-red-600">{formErrors[name]}&nbsp;</div>
+                    <div className="text-xs text-right font-medium opacity-75 text-red-600">
+                        {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
+                    </div>
                 </div>
             )}
         </FormContext.Consumer>

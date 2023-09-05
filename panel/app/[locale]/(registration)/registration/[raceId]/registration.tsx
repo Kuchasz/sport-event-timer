@@ -10,12 +10,12 @@ import { PoorSelect } from "components/poor-select";
 import { trpc } from "trpc-core";
 import { countryCodes } from "contry-codes";
 import { Form, FormInput } from "form";
-import { PlayerRegistration, playerRegistrationSchema } from "../../../../../models";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
+import { PlayerRegistration, playerRegistrationSchema } from "modules/player-registration/models";
 
 const initialRegistration = () =>
     ({
