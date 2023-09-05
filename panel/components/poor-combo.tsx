@@ -14,7 +14,7 @@ export const PoorCombo = ({
     onChange,
     placeholder,
 }: {
-    initialValue?: string;
+    initialValue: string | undefined | null;
     items: string[];
     onChange: (event: { target: { value: string } }) => void;
     placeholder?: string;
