@@ -7,9 +7,9 @@ import { PoorSelect } from "./poor-select";
 import { useCurrentRaceId } from "hooks";
 import { genders } from "@set/utils/dist/gender";
 import { Form, FormInput } from "form";
-import { playerRegistrationSchema } from "models";
 import { PoorCombo } from "./poor-combo";
 import { trpc } from "trpc-core";
+import { playerRegistrationSchema } from "modules/player-registration/models";
 
 type PlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 

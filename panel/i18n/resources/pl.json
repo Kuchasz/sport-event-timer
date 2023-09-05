@@ -530,5 +530,12 @@
         "gap": "Strata"
       }
     }
+  },
+  "errorCodes": {
+    "shared": {
+      "required": "Wymagane",
+      "minLength": "Zbyt krótkie",
+      "email": "Nieprawidłowy adres email"
+    }
   }
 }

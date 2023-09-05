@@ -530,5 +530,12 @@
         "gap": "Gap"
       }
     }
+  },
+  "errorCodes": {
+    "shared": {
+      "required": "Required",
+      "minLength": "Too short",
+      "email": "Invalid email address"
+    }
   }
 }

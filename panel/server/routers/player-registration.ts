@@ -1,9 +1,9 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { racePlayerRegistrationSchema } from "../../models";
 import nodemailer from "nodemailer";
 import { env } from "../../env/server";
+import { racePlayerRegistrationSchema } from "modules/player-registration/models";
 
 // import { sendRegistrationConfirmation } from "../../messages";
 
