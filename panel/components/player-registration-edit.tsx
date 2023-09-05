@@ -1,5 +1,5 @@
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { PlayerRegistrationForm } from "./player-registration-form";
+import { PlayerRegistrationFormNew } from "./player-registration-form-new";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type EditPlayerRegistration = AppRouterInputs["playerRegistration"]["edit"]["player"];
@@ -26,7 +26,7 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         hasPaid: editedPlayerRegistration.hasPaid
     };
     return (
-        <PlayerRegistrationForm
+        <PlayerRegistrationFormNew
             onReject={onReject}
             onResolve={onResolve}
             initialPlayerRegistration={playerRegistration}

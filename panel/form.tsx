@@ -52,7 +52,7 @@ const useForm = <TItem extends {}>({ initialValues, onSubmit, validationSchema }
 type InputProps<TItem, TKey extends keyof TItem> = {
     name: TKey;
     onChange: (e: { target: { value: TItem[TKey] } }) => void;
-    value: string | number | Date;
+    value: TItem[TKey];
 };
 
 // type FormInputProps<TItem, TKey extends keyof TItem> = {
@@ -61,11 +61,21 @@ type InputProps<TItem, TKey extends keyof TItem> = {
 //     render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
 // };
 
-export const FormInput = <TItem,>({ label, name, render }: {label: string, name: keyof TItem, render: ({ ...agrs }: InputProps<TItem, keyof TItem>) => React.ReactNode}) => {
+export const FormInput = <TItem, TKey extends keyof TItem>({
+    label,
+    name,
+    render,
+    className,
+}: {
+    label: string;
+    name: TKey;
+    className?: string;
+    render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
+}) => {
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
-                <div className="flex flex-col">
+                <div className={`flex flex-col ${className ?? ''}`}>
                     <Label>{label}</Label>
                     {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
                     <div className="text-xs text-right font-medium opacity-75 text-red-600">{formErrors[name]}&nbsp;</div>

@@ -10,24 +10,25 @@ import { PoorSelect } from "components/poor-select";
 import { trpc } from "trpc-core";
 import { countryCodes } from "contry-codes";
 import { Form, FormInput } from "form";
-import { playerRegistrationSchema } from "../../../../../models";
+import { PlayerRegistration, playerRegistrationSchema } from "../../../../../models";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
 
-const initialRegistration = () => ({
-    name: "",
-    lastName: "",
-    birthDate: dateFromYearsAgo(18),
-    gender: "male" as Gender,
-    team: "",
-    country: "PL",
-    city: "",
-    email: "",
-    phoneNumber: "",
-});
+const initialRegistration = () =>
+    ({
+        name: "",
+        lastName: "",
+        birthDate: dateFromYearsAgo(18),
+        gender: "male" as Gender,
+        team: "",
+        country: "PL",
+        city: "",
+        email: "",
+        phoneNumber: "",
+    } as PlayerRegistration);
 
 const RegistrationFormComponent = ({
     disabled,
@@ -45,46 +46,50 @@ const RegistrationFormComponent = ({
     const t = useTranslations();
     return (
         <div className="space-y-4 md:space-y-6">
-            <Form onSubmit={r => onResolve(r)} initialValues={initialRegistration()} validationSchema={playerRegistrationSchema}>
-                <FormInput
+            <Form<PlayerRegistration>
+                onSubmit={r => onResolve(r)}
+                initialValues={initialRegistration()}
+                validationSchema={playerRegistrationSchema}
+            >
+                <FormInput<PlayerRegistration, "name">
                     label={t("registration.fields.name.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.name.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="name"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "lastName">
                     label={t("registration.fields.lastName.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.lastName.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="lastName"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "birthDate">
                     label={t("registration.fields.birthDate.label")}
                     render={({ value, onChange }) => (
                         <PoorDatepicker
                             placeholder={t("registration.fields.birthDate.placeholder")}
-                            value={value as Date}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="birthDate"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "gender">
                     label={t("registration.fields.gender.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
-                            initialValue={value as any}
-                            items={getGenders({male: t('registration.gender.male'), female: t('registration.gender.female')})}
+                            initialValue={value}
+                            items={getGenders({ male: t("registration.gender.male"), female: t("registration.gender.female") })}
                             placeholder={t("registration.fields.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
@@ -93,34 +98,34 @@ const RegistrationFormComponent = ({
                     )}
                     name="gender"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "team">
                     label={t("registration.fields.team.label")}
                     render={({ value, onChange }) => (
                         <PoorCombo
                             placeholder={t("registration.fields.team.placeholder")}
-                            initialValue={value as string}
+                            initialValue={value}
                             items={teams}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="team"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "city">
                     label={t("registration.fields.city.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.city.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="city"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "country">
                     label={t("registration.fields.country.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
-                            initialValue={value as any}
+                            initialValue={value}
                             items={countryCodes}
                             nameKey="name_en"
                             placeholder={t("registration.fields.country.placeholder")}
@@ -130,34 +135,34 @@ const RegistrationFormComponent = ({
                     )}
                     name="country"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "email">
                     label={t("registration.fields.email.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.email.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="email"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "phoneNumber">
                     label={t("registration.fields.phoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.phoneNumber.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="phoneNumber"
                 />
-                <FormInput
+                <FormInput<PlayerRegistration, "icePhoneNumber">
                     label={t("registration.fields.icePhoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput
                             placeholder={t("registration.fields.icePhoneNumber.placeholder")}
-                            value={value as string}
+                            value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
@@ -262,7 +267,7 @@ export const Registration = () => {
     return (
         <>
             <Head>
-                <title>{t('registration.header.title')}</title>
+                <title>{t("registration.header.title")}</title>
             </Head>
             {registrationSystemStatus && (
                 <div className="flex f-full w-full overflow-y-scroll flex-col items-center px-6 py-8 mx-auto lg:py-2">
@@ -272,7 +277,7 @@ export const Registration = () => {
                                 {registrationSystemStatus.raceName}
                             </h1>
                             <div className="text-base mb-4 leading-tight tracking-tight text-gray-900 md:text-md">
-                                {t('registration.header.description')}
+                                {t("registration.header.description")}
                             </div>
 
                             {registrationSystemStatus.limit && (
@@ -297,9 +302,9 @@ export const Registration = () => {
                                     <RegistrationSuccessful />
                                 )
                             ) : registrationSystemStatus.status === "disabled" ? (
-                                <span>{t('registration.status.closed')}</span>
+                                <span>{t("registration.status.closed")}</span>
                             ) : (
-                                <span>{t('registration.status.noSpotsLeft')}</span>
+                                <span>{t("registration.status.noSpotsLeft")}</span>
                             )}
                         </div>
                     </div>
