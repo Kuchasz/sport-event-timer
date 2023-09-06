@@ -20,8 +20,6 @@ export default async function PanelLayout(props: { children: ReactNode; breadcru
         const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
 
         messages = deepmerge(defaultMessages, localeMessages) as any;
-
-        console.log(props.params.locale);
     } catch (error) {
         notFound();
     }

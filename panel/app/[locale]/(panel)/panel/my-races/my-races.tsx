@@ -237,7 +237,6 @@ export const MyRaces = () => {
                         suppressRowClickSelection={true}
                         suppressCellFocus={true}
                         suppressChangeDetection={true}
-                        onRowClicked={console.log}
                         columnDefs={defaultColumns}
                         rowData={races}
                         onFirstDataRendered={onFirstDataRendered}
