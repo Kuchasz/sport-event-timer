@@ -36,7 +36,6 @@ const toDateUTC = (dateString: string) => {
     
     const finalDate = new Date(date.getTime() + dateOffset * 60_000);
 
-    console.log("dateOffset: ", dateOffset, "date: ", date, "finalDate: ", finalDate);
     return finalDate;
 };
 
