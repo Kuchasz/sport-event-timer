@@ -10,6 +10,7 @@ import { Form, FormInput } from "form";
 import { PoorCombo } from "./poor-combo";
 import { trpc } from "trpc-core";
 import { playerRegistrationSchema } from "modules/player-registration/models";
+import { useTranslations } from "next-intl";
 
 type PlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
@@ -22,6 +23,7 @@ type PlayerRegistrationFormProps = {
 export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRegistration }: PlayerRegistrationFormProps) => {
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
+    const t = useTranslations();
 
     return (
         <Form<PlayerRegistration>
@@ -31,32 +33,40 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
         >
             <div className="flex">
                 <FormInput<PlayerRegistration, "name">
-                    label="Name"
+                    label={t("pages.playerRegistrations.form.name.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder="First name" value={value} onChange={e => onChange({ target: { value: e.target.value } })} />
+                        <PoorInput
+                            placeholder={t("pages.playerRegistrations.form.name.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
                     )}
                     name="name"
                 />
                 <div className="p-2"></div>
                 <FormInput<PlayerRegistration, "lastName">
-                    label="Last Name"
+                    label={t("pages.playerRegistrations.form.lastName.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder="Last name" value={value} onChange={e => onChange({ target: { value: e.target.value } })} />
+                        <PoorInput
+                            placeholder={t("pages.playerRegistrations.form.lastName.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
                     )}
                     name="lastName"
                 />
             </div>
             <div className="flex">
                 <FormInput<PlayerRegistration, "gender">
-                    label="Gender"
+                    label={t("pages.playerRegistrations.form.gender.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
                             items={genders}
-                            placeholder="Gender"
+                            placeholder={t("pages.playerRegistrations.form.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
                             onChange={e => onChange({ target: { value: e.target.value } })}
@@ -66,11 +76,11 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
                 />
                 <div className="p-2"></div>
                 <FormInput<PlayerRegistration, "birthDate">
-                    label="Birth Date"
+                    label={t("pages.playerRegistrations.form.birthDate.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorDatepicker
-                            placeholder="Birth Date"
+                            placeholder={t("pages.playerRegistrations.form.birthDate.placeholder")}
                             value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -80,10 +90,10 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
             </div>
             <div>
                 <FormInput<PlayerRegistration, "team">
-                    label="Team"
+                    label={t("pages.playerRegistrations.form.team.label")}
                     render={({ value, onChange }) => (
                         <PoorCombo
-                            placeholder="Team"
+                            placeholder={t("pages.playerRegistrations.form.team.placeholder")}
                             initialValue={value}
                             items={teams}
                             onChange={e => onChange({ target: { value: e.target.value } })}
@@ -94,14 +104,14 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
             </div>
             <div className="flex">
                 <FormInput<PlayerRegistration, "country">
-                    label="Country"
+                    label={t("pages.playerRegistrations.form.country.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
                             items={countryCodes}
                             nameKey="name_en"
-                            placeholder="Country"
+                            placeholder={t("pages.playerRegistrations.form.country.placeholder")}
                             valueKey="code"
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -110,30 +120,38 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
                 />
                 <div className="p-2"></div>
                 <FormInput<PlayerRegistration, "city">
-                    label="City"
+                    label={t("pages.playerRegistrations.form.city.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder="City" value={value} onChange={e => onChange({ target: { value: e.target.value } })} />
+                        <PoorInput
+                            placeholder={t("pages.playerRegistrations.form.city.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
                     )}
                     name="city"
                 />
             </div>
             <div className="flex">
                 <FormInput<PlayerRegistration, "email">
-                    label="Email"
+                    label={t("pages.playerRegistrations.form.email.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder="Email" value={value} onChange={e => onChange({ target: { value: e.target.value } })} />
+                        <PoorInput
+                            placeholder={t("pages.playerRegistrations.form.email.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value } })}
+                        />
                     )}
                     name="email"
                 />
                 <div className="p-2"></div>
                 <FormInput<PlayerRegistration, "phoneNumber">
-                    label="Phone Number"
+                    label={t("pages.playerRegistrations.form.phoneNumber.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="Phone Number"
+                            placeholder={t("pages.playerRegistrations.form.phoneNumber.placeholder")}
                             value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -142,11 +160,11 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
                 />
                 <div className="p-2"></div>
                 <FormInput<PlayerRegistration, "icePhoneNumber">
-                    label="ICE Phone Number"
+                    label={t("pages.playerRegistrations.form.icePhoneNumber.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput
-                            placeholder="ICE Phone Number"
+                            placeholder={t("pages.playerRegistrations.form.icePhoneNumber.placeholder")}
                             value={value}
                             onChange={e => onChange({ target: { value: e.target.value } })}
                         />
@@ -156,9 +174,9 @@ export const PlayerRegistrationFormNew = ({ onReject, onResolve, initialPlayerRe
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    Cancel
+                    {t("shared.cancel")}
                 </Button>
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );
