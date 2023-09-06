@@ -270,7 +270,7 @@
         },
         "email": {
           "label": "Email",
-          "placeholder": "Email"
+          "placeholder": "xyz@domain.com"
         },
         "phoneNumber": {
           "label": "Numer telefonu",

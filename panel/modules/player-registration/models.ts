@@ -5,25 +5,25 @@ import sharedErrorCodes from "../shared/error-codes";
 export const playerRegistrationSchema = z.object({
     id: z.number().nullish(),
     name: z
-        .string()
-        .min(3, sharedErrorCodes.required),
+        .string({ required_error: sharedErrorCodes.required })
+        .nonempty(sharedErrorCodes.required),
     lastName: z
-        .string()
-        .min(3, sharedErrorCodes.required),
+        .string({ required_error: sharedErrorCodes.required })
+        .nonempty(sharedErrorCodes.required),
     gender: GenderEnum,
     birthDate: z.date({ required_error: sharedErrorCodes.required }),
     country: z
         .string({ required_error: sharedErrorCodes.required })
         .nonempty(sharedErrorCodes.required),
     city: z
-        .string()
+        .string({ required_error: sharedErrorCodes.required })
         .nonempty(sharedErrorCodes.required),
     team: z.string().nullish(),
     email: z
         .string({ required_error: sharedErrorCodes.required })
         .email(sharedErrorCodes.email),
     phoneNumber: z
-        .string()
+        .string({ required_error: sharedErrorCodes.required })
         .min(8, sharedErrorCodes.required),
     icePhoneNumber: z.string().nullish(),
     hasPaid: z.boolean().nullish()
