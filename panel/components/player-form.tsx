@@ -40,7 +40,12 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Bib Number</Label>
-                    <PoorCombo placeholder="bib number" items={bibNumbers} onChange={changeHandler("bibNumber")} />
+                    <PoorCombo
+                        initialValue={player.bibNumber}
+                        placeholder="bib number"
+                        items={bibNumbers}
+                        onChange={changeHandler("bibNumber")}
+                    />
                 </div>
             </div>
             <div className="p-2"></div>
