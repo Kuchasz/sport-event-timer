@@ -5,8 +5,6 @@ import nodemailer from "nodemailer";
 import { env } from "../../env/server";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 
-// import { sendRegistrationConfirmation } from "../../messages";
-
 type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
 
 export const playerRegistrationRouter =
