@@ -11,7 +11,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     onChange,
     placeholder,
 }: {
-    initialValue?: T[TValueKey];
+    initialValue?: T[TValueKey] | null;
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
