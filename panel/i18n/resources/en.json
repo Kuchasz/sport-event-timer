@@ -238,6 +238,48 @@
       },
       "export": {
         "button": "Export"
+      },
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "First name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Last name"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Gender"
+        },
+        "birthDate": {
+          "label": "Birth Date",
+          "placeholder": "Birth Date"
+        },
+        "team": {
+          "label": "Team",
+          "placeholder": "Team"
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Country"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "City"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Email"
+        },
+        "phoneNumber": {
+          "label": "Phone Number",
+          "placeholder": "Phone Number"
+        },
+        "icePhoneNumber": {
+          "label": "ICE Phone Number",
+          "placeholder": "ICE Phone Number"
+        }
       }
     },
     "classifications": {
@@ -537,5 +579,9 @@
       "minLength": "Too short",
       "email": "Invalid email address"
     }
+  },
+  "shared": {
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }

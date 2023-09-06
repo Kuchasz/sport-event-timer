@@ -238,6 +238,48 @@
       },
       "export": {
         "button": "Eksportuj"
+      },
+      "form": {
+        "name": {
+          "label": "Imię",
+          "placeholder": "Imię"
+        },
+        "lastName": {
+          "label": "Nazwisko",
+          "placeholder": "Nazwisko"
+        },
+        "gender": {
+          "label": "Płeć",
+          "placeholder": "Płeć"
+        },
+        "birthDate": {
+          "label": "Data urodzenia",
+          "placeholder": "Data urodzenia"
+        },
+        "team": {
+          "label": "Drużyna",
+          "placeholder": "Drużyna"
+        },
+        "country": {
+          "label": "Kraj",
+          "placeholder": "Kraj"
+        },
+        "city": {
+          "label": "Miasto",
+          "placeholder": "Miasto"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Email"
+        },
+        "phoneNumber": {
+          "label": "Numer telefonu",
+          "placeholder": "Numer telefonu"
+        },
+        "icePhoneNumber": {
+          "label": "Numer telefonu ICE",
+          "placeholder": "Numer telefonu do kontaktu awaryjnego"
+        }
       }
     },
     "classifications": {
