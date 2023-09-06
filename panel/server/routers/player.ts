@@ -2,7 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { sort } from "@set/utils/dist/array";
-import { racePlayerSchema } from "modules/player/models";
+import { racePlayerSchema } from "../../modules/player/models";
 
 const stopwatchPlayersSchema = z.array(
     z.object({
