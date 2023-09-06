@@ -579,5 +579,9 @@
       "minLength": "Zbyt krótkie",
       "email": "Nieprawidłowy adres email"
     }
+  },
+  "shared": {
+    "cancel": "Anuluj",
+    "save": "Zapisz"
   }
 }
