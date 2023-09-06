@@ -1,28 +1,8 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { GenderEnum } from "../../models";
 import { sort } from "@set/utils/dist/array";
-
-const playerSchema = z.object({
-    raceId: z.number({ required_error: "raceId is required" }),
-    player: z.object({
-        id: z.number().nullish(),
-        classificationId: z.number({ required_error: "classification is required" }),
-        name: z.string({ required_error: "name is required" }).min(3),
-        lastName: z.string({ required_error: "lastName is required" }).min(3),
-        bibNumber: z.string().nullish(),
-        startTime: z.number().optional(),
-        gender: GenderEnum,
-        birthDate: z.date({ required_error: "birthDate is required" }),
-        country: z.string().nullish(),
-        city: z.string().nullish(),
-        team: z.string().nullish(),
-        email: z.string().email("email is not valid").nullish(),
-        phoneNumber: z.string().nullish(),
-        icePhoneNumber: z.string().nullish(),
-    }),
-});
+import { racePlayerSchema } from "modules/player/models";
 
 const stopwatchPlayersSchema = z.array(
     z.object({
@@ -131,7 +111,7 @@ export const playerRouter = router({
 
         return await ctx.db.player.delete({ where: { id: input.playerId } });
     }),
-    add: protectedProcedure.input(playerSchema).mutation(async ({ input, ctx }) => {
+    add: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
         const classification = await ctx.db.classification.findFirstOrThrow({
             where: { id: input.player.classificationId, race: { id: input.raceId } },
             include: { race: true },
@@ -217,7 +197,7 @@ export const playerRouter = router({
             },
         });
     }),
-    edit: protectedProcedure.input(playerSchema).mutation(async ({ input, ctx }) => {
+    edit: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
         const classification = await ctx.db.classification.findFirstOrThrow({
             where: { id: input.player.classificationId, race: { id: input.raceId } },
             include: { race: true },

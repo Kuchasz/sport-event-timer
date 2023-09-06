@@ -1,15 +1,17 @@
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "utils";
-import { milisecondsToTimeString } from "@set/utils/dist/datetime"
+import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { Input } from "./input";
 import { useState } from "react";
 
 export const PoorTimepicker = ({
     value: initialValue,
-    onChange
+    onChange,
+    placeholder,
 }: {
     value?: number;
     date?: number;
+    placeholder?: string;
     onChange: (event: { target: { value: number } }) => void;
 }) => {
     const [value, setValue] = useState<string>(milisecondsToTimeString(initialValue));
@@ -19,8 +21,9 @@ export const PoorTimepicker = ({
             onChange={e => {
                 setValue(e.currentTarget.value);
             }}
+            placeholder={placeholder}
             onBlur={e => {
-                onChange({ target: { value: (timeStringToMiliseconds(e.target.value) ?? 0) } });
+                onChange({ target: { value: timeStringToMiliseconds(e.target.value) ?? 0 } });
             }}
         />
     );
@@ -29,7 +32,7 @@ export const PoorTimepicker = ({
 export const PoorFullTimepicker = ({
     value: initialValue,
     onChange,
-    date
+    date,
 }: {
     value?: number;
     date: number;
@@ -43,7 +46,7 @@ export const PoorFullTimepicker = ({
                 setValue(e.currentTarget.value);
             }}
             onBlur={e => {
-                onChange({ target: { value: (fullTimeStringToEpochMiliseconds(e.target.value, date) ?? 0) } });
+                onChange({ target: { value: fullTimeStringToEpochMiliseconds(e.target.value, date) ?? 0 } });
             }}
         />
     );

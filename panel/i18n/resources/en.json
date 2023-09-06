@@ -176,6 +176,59 @@
       },
       "export": {
         "button": "export"
+      },
+      "form": {
+        "classification": {
+          "label": "Classification",
+          "placeholder": "Choose classification"
+        },
+        "bibNumber": {
+          "label": "Bib Number",
+          "placeholder": "bib number"
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "Name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Last Name"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Gender"
+        },
+        "birthDate": {
+          "placeholder": "Birth Date"
+        },
+        "team": {
+          "label": "Team",
+          "placeholder": "Team"
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Country"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "City"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Email"
+        },
+        "phoneNumber": {
+          "label": "Phone Number",
+          "placeholder": "Phone Number"
+        },
+        "icePhoneNumber": {
+          "label": "ICE Phone Number",
+          "placeholder": "ICE Phone Number"
+        },
+        "startTime": {
+          "label": "Start Time",
+          "placeholder": "eg. 11:11"
+        }
       }
     },
     "playerRegistrations": {
