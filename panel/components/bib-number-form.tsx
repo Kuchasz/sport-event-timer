@@ -20,8 +20,9 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber }: BibNumb
             <div className="flex">
                 <FormInput<BibNumber, "number">
                     label={t("pages.bibNumbers.form.number.label")}
+                    className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder={t("pages.bibNumbers.form.number.placeholder")} value={value} onChange={e => onChange(e)} />
+                        <PoorInput placeholder={t("pages.bibNumbers.form.number.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="number"
                 />

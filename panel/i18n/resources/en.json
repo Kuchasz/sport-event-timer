@@ -440,6 +440,16 @@
       "header": {
         "title": "Timing points",
         "description": "Configure points where time will be measured, used in stopwatch"
+      },
+      "form": {
+        "name": {
+          "label": "Timing Point Name",
+          "placeholder": "Type Timing Point Name"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Describe the timing point"
+        }
       }
     },
     "splitTimes": {
@@ -637,6 +647,11 @@
       "required": "Required",
       "minLength": "Too short",
       "email": "Invalid email address"
+    },
+    "timingPoint": {
+      "description": {
+        "length": "Description should not be longer than 100 characters"
+      }
     }
   },
   "shared": {

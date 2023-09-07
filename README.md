@@ -7,7 +7,7 @@ Added Date | Idea | Status
 --- | --- | ---
 07/09/2023 | Race must have at least 2 Timing Points | todo :date:
 07/09/2023 | Tenant must have at least one Race | todo :date:
-07/09/2023 | Prevent start time and Bib Number duplication | todo :date:
+07/09/2023 | Prevent Start Time and Bib Number duplication | todo :date:
 
 ## TODO
 

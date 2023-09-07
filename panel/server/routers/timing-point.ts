@@ -1,13 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { daysFromNow } from "@set/utils/dist/datetime";
-
-const timingPointSchema = z.object({
-    id: z.number().min(1).nullish(),
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
-    name: z.string({ required_error: "name is required" }),
-    description: z.string().max(100).nullish()
-});
+import { timingPointSchema } from "../../modules/timing-point/models";
 
 export const timingPointRouter =
     router({

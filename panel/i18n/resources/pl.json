@@ -440,6 +440,16 @@
       "header": {
         "title": "Punkty Pomiarowe",
         "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze"
+      },
+      "form": {
+        "name": {
+          "label": "Nazwa Punktu Pomiarowego",
+          "placeholder": "Wpisz nazwę Punktu Pomiarowego"
+        },
+        "description": {
+          "label": "Opis",
+          "placeholder": "Opisz punkt pomiarowy"
+        }
       }
     },
     "splitTimes": {
@@ -637,6 +647,11 @@
       "required": "Wymagane",
       "minLength": "Zbyt krótkie",
       "email": "Nieprawidłowy adres email"
+    },
+    "timingPoint": {
+      "description": {
+        "length": "Opis nie może zawierać więcej niż 100 znaków"
+      }
     }
   },
   "shared": {
