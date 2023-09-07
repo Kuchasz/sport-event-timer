@@ -1,8 +1,9 @@
 import { Button } from "./button";
-import { Label } from "./label";
 import { PoorInput } from "./poor-input";
-import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
+import { Form, FormInput } from "form";
+import { timingPointSchema } from "modules/timing-point/models";
+import { useTranslations } from "next-intl";
 
 type TimingPoint = AppRouterInputs["timingPoint"]["update"];
 
@@ -13,28 +14,35 @@ type TimingPointFormProps = {
 };
 
 export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: TimingPointFormProps) => {
-    const [timingPoint, changeHandler] = useFormState(initialTimingPoint, [initialTimingPoint]);
+    const t = useTranslations();
     return (
-        <div className="flex flex-col">
+        <Form<TimingPoint> initialValues={initialTimingPoint} onSubmit={onResolve} validationSchema={timingPointSchema}>
             <div className="flex">
-                <div className="grow">
-                    <Label>Name</Label>
-                    <PoorInput value={timingPoint.name} onChange={changeHandler("name")} />
-                </div>
+                <FormInput<TimingPoint, "name">
+                    label={t("pages.timingPoints.form.name.label")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorInput placeholder={t("pages.timingPoints.form.name.placeholder")} value={value} onChange={onChange} />
+                    )}
+                    name="name"
+                />
             </div>
-            <div className="p-2"></div>
             <div className="flex">
-                <div className="grow">
-                    <Label>Description</Label>
-                    <PoorInput value={timingPoint.description} onChange={changeHandler("description")} />
-                </div>
+                <FormInput<TimingPoint, "description">
+                    label={t("pages.timingPoints.form.description.label")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorInput placeholder={t("pages.timingPoints.form.description.placeholder")} value={value} onChange={onChange} />
+                    )}
+                    name="description"
+                />
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    Cancel
+                    {t("shared.cancel")}
                 </Button>
-                <Button onClick={() => onResolve({ ...timingPoint })}>Save</Button>
+                <Button type="submit">{t("shared.save")}</Button>
             </div>
-        </div>
+        </Form>
     );
 };
