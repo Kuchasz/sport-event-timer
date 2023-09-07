@@ -57,7 +57,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.name.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="name"
@@ -68,7 +68,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.lastName.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="lastName"
@@ -79,7 +79,7 @@ const RegistrationFormComponent = ({
                         <PoorDatepicker
                             placeholder={t("registration.fields.birthDate.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="birthDate"
@@ -93,7 +93,7 @@ const RegistrationFormComponent = ({
                             placeholder={t("registration.fields.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="gender"
@@ -105,7 +105,7 @@ const RegistrationFormComponent = ({
                             placeholder={t("registration.fields.team.placeholder")}
                             initialValue={value}
                             items={teams}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="team"
@@ -116,7 +116,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.city.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="city"
@@ -130,7 +130,7 @@ const RegistrationFormComponent = ({
                             nameKey="name_en"
                             placeholder={t("registration.fields.country.placeholder")}
                             valueKey="code"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="country"
@@ -141,7 +141,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.email.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="email"
@@ -152,7 +152,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.phoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="phoneNumber"
@@ -163,7 +163,7 @@ const RegistrationFormComponent = ({
                         <PoorInput
                             placeholder={t("registration.fields.icePhoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="icePhoneNumber"

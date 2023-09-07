@@ -1,12 +1,7 @@
 import { createRange, excludeItems } from "@set/utils/dist/array";
+import { bibNumberSchema } from "../../modules/bib-number/models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
-
-const bibNumberSchema = z.object({
-    id: z.number().nullish(),
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
-    number: z.string({ required_error: "number is required" }).min(1)
-});
 
 const addRangeBibNumberSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }).min(1),

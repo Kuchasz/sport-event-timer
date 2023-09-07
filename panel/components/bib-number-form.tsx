@@ -1,8 +1,9 @@
 import { Button } from "./button";
-import { Label } from "./label";
-import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
 import { PoorInput } from "./poor-input";
+import { Form, FormInput } from "form";
+import { bibNumberSchema } from "modules/bib-number/models";
+import { useTranslations } from "next-intl";
 
 type BibNumber = AppRouterInputs["bibNumber"]["add"];
 
@@ -13,22 +14,24 @@ type BibNumberFormProps = {
 };
 
 export const BibNumberForm = ({ onReject, onResolve, initialBibNumber }: BibNumberFormProps) => {
-    const [BibNumber, changeHandler] = useFormState(initialBibNumber, [initialBibNumber]);
-
+    const t = useTranslations();
     return (
-        <div className="flex flex-col">
+        <Form<BibNumber> validationSchema={bibNumberSchema} initialValues={initialBibNumber} onSubmit={onResolve}>
             <div className="flex">
-                <div className="grow">
-                    <Label>Bib Number</Label>
-                    <PoorInput value={BibNumber.number} onChange={changeHandler("number")} />
-                </div>
+                <FormInput<BibNumber, "number">
+                    label={t("pages.bibNumbers.form.number.label")}
+                    render={({ value, onChange }) => (
+                        <PoorInput placeholder={t("pages.bibNumbers.form.number.placeholder")} value={value} onChange={e => onChange(e)} />
+                    )}
+                    name="number"
+                />
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} outline>
-                    Cancel
+                    {t("shared.cancel")}
                 </Button>
-                <Button onClick={() => onResolve({ ...BibNumber })}>Save</Button>
+                <Button type="submit">{t("shared.save")}</Button>
             </div>
-        </div>
+        </Form>
     );
 };
