@@ -1,7 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { uuidv4 } from "@set/utils/dist/uuid";
-import { apiKeySchema } from "../../modules/api-key/models";
+import { raceApiKeySchema } from "../../modules/api-key/models";
 
 export const apiKeyRouter =
     router({
@@ -14,7 +14,7 @@ export const apiKeyRouter =
                 });
             }),
         addApiKey: protectedProcedure
-            .input(apiKeySchema)
+            .input(raceApiKeySchema)
             .mutation(async ({ input, ctx }) => {
                 const key = `${uuidv4()}${uuidv4()}`.replaceAll("-", "");
 
@@ -27,7 +27,7 @@ export const apiKeyRouter =
                 });
             }),
         editApiKey: protectedProcedure
-            .input(apiKeySchema)
+            .input(raceApiKeySchema)
             .mutation(async ({ input, ctx }) => {
                 return await ctx.db.apiKey.update({
                     data: {

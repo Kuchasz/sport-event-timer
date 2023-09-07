@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
-type EditedPlayer = AppRouterInputs["player"]["add"]["player"];
+type EditedPlayer = AppRouterInputs["player"]["edit"]["player"];
 
 const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () => void }) => {
     const deletePlayerMutation = trpc.player.delete.useMutation();
