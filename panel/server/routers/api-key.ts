@@ -1,6 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { uuidv4 } from "@set/utils/dist/uuid";
+import { apiKeySchema } from "../../modules/api-key/models";
 
 export const apiKeyRouter =
     router({
@@ -13,11 +14,7 @@ export const apiKeyRouter =
                 });
             }),
         addApiKey: protectedProcedure
-            .input(
-                z.object({
-                    raceId: z.number({ required_error: "raceId is required" }),
-                    key: z.object({ name: z.string({ required_error: "name for key is required" }) })
-                }))
+            .input(apiKeySchema)
             .mutation(async ({ input, ctx }) => {
                 const key = `${uuidv4()}${uuidv4()}`.replaceAll("-", "");
 
@@ -30,21 +27,14 @@ export const apiKeyRouter =
                 });
             }),
         editApiKey: protectedProcedure
-            .input(
-                z.object({
-                    raceId: z.number({ required_error: "raceId is required" }),
-                    key: z.object({
-                        name: z.string({ required_error: "name for key is required" }),
-                        id: z.number({ required_error: "keyId is required" })
-                    })
-                }))
+            .input(apiKeySchema)
             .mutation(async ({ input, ctx }) => {
                 return await ctx.db.apiKey.update({
                     data: {
                         name: input.key.name
                     },
                     where: {
-                        id: input.key.id
+                        id: input.key.id!
                     }
                 });
             }),

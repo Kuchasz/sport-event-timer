@@ -1,8 +1,9 @@
 import { Button } from "./button";
-import { Label } from "./label";
 import { PoorInput } from "./poor-input";
-import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
+import { Form, FormInput } from "form";
+import { apiKeySchema } from "modules/api-key/models";
+import { useTranslations } from "next-intl";
 
 type ApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 
@@ -13,21 +14,29 @@ type ApiKeyFormProps = {
 };
 
 export const ApiKeyForm = ({ onReject, onResolve, initialApiKey }: ApiKeyFormProps) => {
-    const [apiKey, changeHandler] = useFormState(initialApiKey, [initialApiKey]);
+    const t = useTranslations();
     return (
-        <div className="flex flex-col">
+        <Form<ApiKey> onSubmit={onResolve} initialValues={initialApiKey} validationSchema={apiKeySchema}>
             <div className="flex">
-                <div className="grow">
-                    <Label>Name</Label>
-                    <PoorInput value={apiKey.name} onChange={changeHandler("name")} />
-                </div>
+                <FormInput<ApiKey, "name">
+                    label={t("pages.settings.apiKeys.form.name.label")}
+                    className="grow"
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder={t("pages.settings.apiKeys.form.name.placeholder")}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    )}
+                    name="name"
+                />
             </div>
             <div className="mt-4 justify-between flex">
                 <Button onClick={onReject} className="ml-2">
-                    Cancel
+                    {t("shared.cancel")}
                 </Button>
-                <Button onClick={() => onResolve({ ...apiKey })}>Save</Button>
+                <Button type="submit">{t("shared.save")}</Button>
             </div>
-        </div>
+        </Form>
     );
 };

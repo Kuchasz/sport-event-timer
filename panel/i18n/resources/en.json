@@ -422,6 +422,19 @@
         "header": {
           "title": "Access URLs",
           "description": "Copy access URLs and send them to your timekeepers"
+        },
+        "form": {
+          "name": {
+            "label": "Access Url name",
+            "placeholder": "Type Access Url name"
+          },
+          "code": {
+            "name": "Code (optional)",
+            "placeholder": "Type Passcode"
+          },
+          "canAccessOthers": {
+            "label": "Can access others"
+          }
         }
       },
       "create": {
@@ -504,6 +517,12 @@
         },
         "edit": {
           "title": "Edit Api Key"
+        },
+        "form": {
+          "name": {
+            "label": "API Key Name",
+            "placeholder": "Type API Key Name"
+          }
         }
       },
       "header": {

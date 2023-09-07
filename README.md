@@ -2,12 +2,13 @@
 
 Application for making time measurements
 
-## Todos
+## Ideas
 Added Date | Idea | Status
 --- | --- | ---
 07/09/2023 | Race must have at least 2 Timing Points | todo :date:
 07/09/2023 | Tenant must have at least one Race | todo :date:
 07/09/2023 | Prevent Start Time and Bib Number duplication | todo :date:
+07/09/2023 | Unify AccessUrl and ApiKey naming conventions | :heavy_check_mark: (07/09/2023)
 
 ## TODO
 

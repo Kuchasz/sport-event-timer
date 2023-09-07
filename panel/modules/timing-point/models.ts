@@ -8,3 +8,11 @@ export const timingPointSchema = z.object({
     name: z.string({ required_error: sharedErrorCodes.required }),
     description: z.string().max(100, errorCodes.description.length).nullish()
 });
+
+export const timingPointAccessUrlSchema = z.object({
+    raceId: z.number({ required_error: sharedErrorCodes.required }),
+    timingPointId: z.number({ required_error: sharedErrorCodes.required }),
+    code: z.string().nullable(),
+    name: z.string({ required_error: sharedErrorCodes.required }),
+    canAccessOthers: z.boolean()
+})
