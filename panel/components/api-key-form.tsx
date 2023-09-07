@@ -16,7 +16,7 @@ type ApiKeyFormProps = {
 export const ApiKeyForm = ({ onReject, onResolve, initialApiKey }: ApiKeyFormProps) => {
     const t = useTranslations();
     return (
-        <Form<ApiKey> onSubmit={onResolve} initialValues={initialApiKey} validationSchema={apiKeySchema}>
+        <Form<ApiKey> initialValues={initialApiKey} validationSchema={apiKeySchema} onSubmit={onResolve}>
             <div className="flex">
                 <FormInput<ApiKey, "name">
                     label={t("pages.settings.apiKeys.form.name.label")}
@@ -32,7 +32,7 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey }: ApiKeyFormPro
                 />
             </div>
             <div className="mt-4 justify-between flex">
-                <Button onClick={onReject} className="ml-2">
+                <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
                 <Button type="submit">{t("shared.save")}</Button>
