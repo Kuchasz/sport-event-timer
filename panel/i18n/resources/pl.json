@@ -134,6 +134,12 @@
       "header": {
         "title": "Numery Startowe",
         "description": "Skonfiguruj numery startowe, aby łatwo przypisywać je zawodnikom"
+      },
+      "form": {
+        "number": {
+          "label": "Numer startowy",
+          "placeholder": "Numer Startowy"
+        }
       }
     },
     "players": {

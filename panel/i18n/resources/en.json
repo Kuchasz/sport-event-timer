@@ -134,6 +134,12 @@
       "header": {
         "title": "Bib Numbers",
         "description": "Configure the bib numbers to easily assign them to players"
+      },
+      "form": {
+        "number": {
+          "label": "Bib Number",
+          "placeholder": "Bib number"
+        }
       }
     },
     "players": {

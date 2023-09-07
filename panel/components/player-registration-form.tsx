@@ -39,7 +39,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.name.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="name"
@@ -52,7 +52,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.lastName.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="lastName"
@@ -69,7 +69,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                             placeholder={t("pages.playerRegistrations.form.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="gender"
@@ -82,7 +82,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorDatepicker
                             placeholder={t("pages.playerRegistrations.form.birthDate.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="birthDate"
@@ -96,7 +96,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                             placeholder={t("pages.playerRegistrations.form.team.placeholder")}
                             initialValue={value}
                             items={teams}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="team"
@@ -113,7 +113,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                             nameKey="name_en"
                             placeholder={t("pages.playerRegistrations.form.country.placeholder")}
                             valueKey="code"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="country"
@@ -126,7 +126,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.city.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="city"
@@ -140,7 +140,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.email.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="email"
@@ -153,7 +153,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.phoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="phoneNumber"
@@ -166,7 +166,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                         <PoorInput
                             placeholder={t("pages.playerRegistrations.form.icePhoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="icePhoneNumber"

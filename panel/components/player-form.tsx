@@ -41,7 +41,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             placeholder={t("pages.players.form.classification.placeholder")}
                             nameKey="name"
                             valueKey="id"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         ></PoorSelect>
                     )}
                     name="classificationId"
@@ -55,7 +55,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             initialValue={value}
                             placeholder={t("pages.players.form.bibNumber.placeholder")}
                             items={bibNumbers}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="bibNumber"
@@ -69,7 +69,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.name.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="name"
@@ -82,7 +82,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.lastName.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="lastName"
@@ -99,7 +99,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             placeholder={t("pages.players.form.gender.placeholder")}
                             nameKey="name"
                             valueKey="value"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="gender"
@@ -112,7 +112,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorDatepicker
                             placeholder={t("pages.players.form.birthDate.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="birthDate"
@@ -126,7 +126,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             placeholder={t("pages.players.form.team.placeholder")}
                             initialValue={value}
                             items={teams}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="team"
@@ -143,7 +143,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             nameKey="name_en"
                             placeholder={t("pages.players.form.country.placeholder")}
                             valueKey="code"
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="country"
@@ -156,7 +156,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.city.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="city"
@@ -170,7 +170,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.email.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="email"
@@ -183,7 +183,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.phoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="phoneNumber"
@@ -196,7 +196,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorInput
                             placeholder={t("pages.players.form.icePhoneNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="icePhoneNumber"
@@ -210,7 +210,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         <PoorTimepicker
                             placeholder={t("pages.players.form.startTime.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value } })}
+                            onChange={onChange}
                         />
                     )}
                     name="startTime"
