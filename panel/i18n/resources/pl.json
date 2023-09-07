@@ -422,6 +422,19 @@
         "header": {
           "title": "URL Dostępu",
           "description": "Skopiuj adresy URL dostępu i wyślij je do twoich osiemnastkowców"
+        },
+        "form": {
+          "name": {
+            "placeholder": "Wpisz nazwę dostępowego Url",
+            "label": "Nazwa Dostępowego Url"
+          },
+          "canAccessOthers": {
+            "label": "Może edytować inne"
+          },
+          "code": {
+            "name": "Kod (opcjonalny)",
+            "placeholder": "Wpisz Kod"
+          }
         }
       },
       "create": {
@@ -504,6 +517,12 @@
         },
         "edit": {
           "title": "Edytuj Klucz API"
+        },
+        "form": {
+          "name": {
+            "label": "Nazwa klucza API",
+            "placeholder": "Wpisz nazwę klucza API"
+          }
         }
       },
       "header": {

@@ -1,7 +1,7 @@
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { daysFromNow } from "@set/utils/dist/datetime";
-import { timingPointSchema } from "../../modules/timing-point/models";
+import { timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
 
 export const timingPointRouter =
     router({
@@ -18,15 +18,9 @@ export const timingPointRouter =
                 const { order } = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
                 return JSON.parse(order) as number[];
             }),
-        addTimingPointAccessKey: protectedProcedure
-            .input(z.object({
-                raceId: z.number({ required_error: "raceId is required" }),
-                timingPointId: z.number({ required_error: "timingPointId is required" }),
-                code: z.string().nullable(),
-                name: z.string({ required_error: "name is required" }),
-                canAccessOthers: z.boolean()
-            })).mutation(async ({ input, ctx }) => {
-                const timingPointAccessKey = await ctx.db.timingPointAccessKey.create({
+        addTimingPointAccessUrl: protectedProcedure
+            .input(timingPointAccessUrlSchema).mutation(async ({ input, ctx }) => {
+                const timingPointAccessUrl = await ctx.db.timingPointAccessUrl.create({
                     data: {
                         name: input.name,
                         token: 'blah',
@@ -39,21 +33,21 @@ export const timingPointRouter =
                     }
                 });
 
-                return timingPointAccessKey;
+                return timingPointAccessUrl;
             }),
-        timingPointAccessKeys: protectedProcedure
+        timingPointAccessUrls: protectedProcedure
             .input(z.object({
                 timingPointId: z.number({ required_error: "timingPointId is required" }),
                 raceId: z.number({ required_error: "raceId is required" })
             })).query(async ({ input, ctx }) => {
-                return await ctx.db.timingPointAccessKey.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
+                return await ctx.db.timingPointAccessUrl.findMany({ where: { raceId: input.raceId, timingPointId: input.timingPointId } });
             }),
-        deleteTimingPointAccessKey: protectedProcedure
+        deleteTimingPointAccessUrl: protectedProcedure
             .input(z.object({
-                timingPointAccessKeyId: z.number()
+                timingPointAccessUrlId: z.number()
             }))
             .mutation(async ({ input, ctx }) => {
-                return await ctx.db.timingPointAccessKey.delete({ where: { id: input.timingPointAccessKeyId } });
+                return await ctx.db.timingPointAccessUrl.delete({ where: { id: input.timingPointAccessUrlId } });
             }),
         update: protectedProcedure
             .input(timingPointSchema)

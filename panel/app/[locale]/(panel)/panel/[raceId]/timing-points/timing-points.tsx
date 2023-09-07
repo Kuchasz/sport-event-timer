@@ -14,15 +14,15 @@ import { useCurrentRaceId } from "../../../../../../hooks";
 import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
-import { TimingPointAccessKeyCreate } from "components/timing-point-access-key-create-form";
+import { TimingPointAccessUrlCreate } from "components/timing-point-access-url-create-form";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
 type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
-type CreatedTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessKey"];
-type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessKeys"];
+type CreatedTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessUrl"];
+type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 
 const SortTick = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
@@ -205,7 +205,7 @@ export const TimingPoints = () => {
     const raceId = useCurrentRaceId();
     const [activeTimingPointId, setActiveTimingPointId] = useState<number>(38);
     const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
-    const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessKeys.useQuery(
+    const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessUrls.useQuery(
         { raceId: raceId!, timingPointId: activeTimingPointId },
         { initialData: [] }
     );
@@ -213,8 +213,8 @@ export const TimingPoints = () => {
 
     const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
-    const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessKey.useMutation();
-    const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessKey.useMutation();
+    const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessUrl.useMutation();
+    const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: raceId! },
@@ -244,7 +244,7 @@ export const TimingPoints = () => {
     const openCreateAccessKeyDialog = async (timingPoint: TimingPoint) => {
         const timingPointAccessKey = await Demodal.open<CreatedTimingPointAccessKey>(NiceModal, {
             title: t('pages.timingPoints.accessUrls.create.title'),
-            component: TimingPointAccessKeyCreate,
+            component: TimingPointAccessUrlCreate,
             props: {
                 timingPointId: timingPoint.id,
                 raceId: timingPoint.raceId,
@@ -284,7 +284,7 @@ export const TimingPoints = () => {
         });
 
         if (confirmed) {
-            await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessKeyId: timingPointAccessKey.id });
+            await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessUrlId: timingPointAccessKey.id });
 
             refetchAccessKeys();
         }

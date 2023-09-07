@@ -72,7 +72,7 @@ model Race {
     playerRegistration   PlayerRegistration[]
     apiKey               ApiKey[]
     timingPointOrder     TimingPointOrder[]
-    timingPointAccessKey TimingPointAccessKey[]
+    timingPointAccessUrl TimingPointAccessUrl[]
     bibNumber            BibNumber[]
     absence              Absence[]
 }
@@ -154,7 +154,7 @@ model TimingPoint {
     raceId               Int
     splitTime            SplitTime[]
     manualSplitTime      ManualSplitTime[]
-    timingPointAccessKey TimingPointAccessKey[]
+    timingPointAccessUrl TimingPointAccessUrl[]
     absence              Absence[]
 
     @@unique([raceId, name])
@@ -177,7 +177,7 @@ model BibNumber {
     @@unique([raceId, number])
 }
 
-model TimingPointAccessKey {
+model TimingPointAccessUrl {
     id              Int      @id @default(autoincrement())
     name            String
     code            String?
