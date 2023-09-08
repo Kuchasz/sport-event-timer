@@ -117,30 +117,22 @@ model Category {
 }
 
 model Player {
-    id                   Int                 @id @default(autoincrement())
-    name                 String
-    lastName             String
-    birthDate            DateTime
-    gender               String
+    id                   Int                @id @default(autoincrement())
     bibNumber            String?
     startTime            Int?
-    team                 String?
-    city                 String?
-    country              String?
-    email                String?
-    phoneNumber          String?
-    icePhoneNumber       String?
-    race                 Race                @relation(fields: [raceId], references: [id])
+    profile              PlayerProfile      @relation(fields: [playerProfileId], references: [id])
+    race                 Race               @relation(fields: [raceId], references: [id])
     raceId               Int
-    classification       Classification      @relation(fields: [classificationId], references: [id])
+    classification       Classification     @relation(fields: [classificationId], references: [id])
     classificationId     Int
-    registeredBy         User                @relation(fields: [registeredByUserId], references: [id])
+    registeredBy         User               @relation(fields: [registeredByUserId], references: [id])
     registeredByUserId   String
     splitTime            SplitTime[]
     manualSplitTime      ManualSplitTime[]
-    fromRegistration     PlayerRegistration? @relation(fields: [playerRegistrationId], references: [id])
-    playerRegistrationId Int?
+    fromRegistration     PlayerRegistration @relation(fields: [playerRegistrationId], references: [id])
+    playerRegistrationId Int
     absence              Absence[]
+    playerProfileId      Int
 
     @@unique([raceId, bibNumber])
     @@unique([classificationId, startTime])
@@ -232,21 +224,29 @@ model ManualSplitTime {
 }
 
 model PlayerRegistration {
-    id               Int       @id @default(autoincrement())
+    id               Int           @id @default(autoincrement())
     registrationDate DateTime
-    name             String
-    lastName         String
-    birthDate        DateTime
-    gender           String
-    team             String?
-    city             String?
-    country          String?
-    email            String?
-    phoneNumber      String?
-    icePhoneNumber   String?
     hasPaid          Boolean
     paymentDate      DateTime?
-    race             Race      @relation(fields: [raceId], references: [id])
+    profile          PlayerProfile @relation(fields: [playerProfileId], references: [id])
+    race             Race          @relation(fields: [raceId], references: [id])
     raceId           Int
     player           Player[]
+    playerProfileId  Int
+}
+
+model PlayerProfile {
+    id                 Int                  @id @default(autoincrement())
+    name               String
+    lastName           String
+    birthDate          DateTime
+    gender             String
+    team               String?
+    city               String?
+    country            String?
+    email              String?
+    phoneNumber        String?
+    icePhoneNumber     String?
+    PlayerRegistration PlayerRegistration[]
+    Player             Player[]
 }
