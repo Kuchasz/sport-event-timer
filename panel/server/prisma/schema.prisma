@@ -75,6 +75,7 @@ model Race {
     timingPointAccessUrl TimingPointAccessUrl[]
     bibNumber            BibNumber[]
     absence              Absence[]
+    playerProfile        PlayerProfile[]
 }
 
 model ApiKey {
@@ -249,4 +250,6 @@ model PlayerProfile {
     icePhoneNumber     String?
     PlayerRegistration PlayerRegistration[]
     Player             Player[]
+    Race               Race?                @relation(fields: [raceId], references: [id])
+    raceId             Int?
 }

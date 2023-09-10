@@ -41,6 +41,8 @@ CREATE TABLE "PlayerProfile" (
     "icePhoneNumber" TEXT
 );
 
+INSERT INTO "PlayerProfile" ("name", "lastName", "birthDate", "gender", "team", "city", "country", "email", "phoneNumber", "icePhoneNumber") SELECT "name", "lastName", "birthDate", "gender", "team", "city", "country", "email", "phoneNumber", "icePhoneNumber" FROM "PlayerRegistration";
+
 -- RedefineTables
 PRAGMA foreign_keys=OFF;
 CREATE TABLE "new_PlayerRegistration" (
