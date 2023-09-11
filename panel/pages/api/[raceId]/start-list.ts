@@ -16,7 +16,7 @@ const getStartListForRace = async (req: NextApiRequest, res: NextApiResponse) =>
 
     // race.date
 
-    res.json(results.map(r => ({ ...r, ...r.profile })));
+    res.json(results.map(r => ({ ...r.profile, ...r })));
 }
 
 export default withRaceApiKey(withExceptionHandling(getStartListForRace));

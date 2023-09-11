@@ -33,7 +33,7 @@ export const playerRouter = router({
                 include: { classification: true, profile: true },
             });
 
-            return players.map((p, index) => ({ ...p, ...p.profile, index: index + 1 }));
+            return players.map((p, index) => ({ ...p.profile, ...p, index: index + 1 }));
         }),
     lastAvailableStartTime: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -76,7 +76,7 @@ export const playerRouter = router({
                     startTime: true,
                 },
             });
-            return players.map(p => ({ ...p, ...p.profile, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
+            return players.map(p => ({ ...p.profile, ...p, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
         }),
     startList: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))

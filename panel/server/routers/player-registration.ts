@@ -17,7 +17,7 @@ export const playerRegistrationRouter =
           where: { raceId: raceId }, include: { player: true, profile: true }
         });
 
-        return registrations.map((r, index) => ({ ...r, ...r.profile, index: index + 1, promotedToPlayer: r.player.length > 0 }));
+        return registrations.map((r, index) => ({ ...r.profile, ...r, index: index + 1, promotedToPlayer: r.player.length > 0 }));
       }),
     teams: publicProcedure
       .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -152,8 +152,9 @@ export const playerRegistrationRouter =
     edit: protectedProcedure
       .input(racePlayerRegistrationSchema)
       .mutation(async ({ input, ctx }) => {
+        const playerRegistration = await ctx.db.playerRegistration.findFirstOrThrow({ where: { id: input.player.id! } });
         return await ctx.db.playerProfile.update({
-          where: { id: input.player.id! },
+          where: { id: playerRegistration.playerProfileId },
           data: {
             name: input.player.name.trim(),
             lastName: input.player.lastName.trim(),
