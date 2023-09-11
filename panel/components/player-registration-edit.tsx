@@ -18,13 +18,16 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         lastName: editedPlayerRegistration.lastName,
         name: editedPlayerRegistration.name,
         city: editedPlayerRegistration.city ?? "",
-        country: editedPlayerRegistration.country ?? "POL",
+        country: editedPlayerRegistration.country ?? "PL",
         email: editedPlayerRegistration.email ?? "",
         icePhoneNumber: editedPlayerRegistration.icePhoneNumber,
         phoneNumber: editedPlayerRegistration.phoneNumber ?? "",
         team: editedPlayerRegistration.team,
         hasPaid: editedPlayerRegistration.hasPaid
     };
+
+    console.log(editedPlayerRegistration);
+
     return (
         <PlayerRegistrationForm
             onReject={onReject}

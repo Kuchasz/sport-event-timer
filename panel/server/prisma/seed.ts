@@ -67,7 +67,7 @@ const createPlayerProfiles = (races: number[], genders: ('male' | 'female')[]): 
                     birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
                     city: faker.address.cityName(),
                     raceId: raceId,
-                    country: faker.address.country(),
+                    country: faker.address.countryCode(),
                     email: faker.internet.email(),
                     icePhoneNumber: faker.phone.number("###-###-###"),
                     phoneNumber: faker.phone.number("###-###-###"),
@@ -76,13 +76,6 @@ const createPlayerProfiles = (races: number[], genders: ('male' | 'female')[]): 
             })
     }
     );
-
-// id: number
-// registrationDate: Date
-// hasPaid: boolean
-// paymentDate: Date | null
-// raceId: number
-// playerProfileId: number
 
 const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<PlayerRegistration, "id">[] =>
     playerProfiles.map((pp) => {
