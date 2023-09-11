@@ -86,12 +86,23 @@ export const raceRouter =
             }))
             .mutation(async ({ input, ctx }) => {
 
-                await ctx.db.timingPoint.deleteMany({
-                    where: {
-                        raceId: input.raceId
-                    }
-                });
-                await ctx.db.timingPointOrder.delete({ where: { raceId: input.raceId } });
+                await ctx.db.absence.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.splitTime.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.manualSplitTime.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.apiKey.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.bibNumber.deleteMany({ where: { raceId: input.raceId } });;
+
+                await ctx.db.player.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.playerRegistration.deleteMany({ where: { raceId: input.raceId } });;
+                await ctx.db.playerProfile.deleteMany({ where: { raceId: input.raceId } });;
+
+                await ctx.db.classification.deleteMany({ where: { raceId: input.raceId } });
+
+                await ctx.db.stopwatch.delete({ where: { raceId: input.raceId } });
+
+                await ctx.db.timingPointAccessUrl.deleteMany({ where: { raceId: input.raceId } });
+                await ctx.db.timingPointOrder.deleteMany({ where: { raceId: input.raceId } });
+                await ctx.db.timingPoint.deleteMany({ where: { raceId: input.raceId } });
 
                 return await ctx.db.race.delete({ where: { id: input.raceId } });
             }),
