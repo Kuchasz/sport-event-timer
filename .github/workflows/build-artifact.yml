@@ -1,0 +1,60 @@
+name: Prod.Build-Deploy-Artifact
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Node.js version
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "16"
+                  cache: 'yarn'
+
+            - uses: actions/cache@v3
+              with:
+                  path: |
+                      ~./npm
+                      ${{ github.workspace }}/panel/.next/cache
+                      **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
+
+            - name: Install dependencies
+              run: yarn install
+
+            - name: Build utils
+              run: |
+                  cd ./utils
+                  yarn build
+
+            - name: Build timer
+              run: |
+                  cd ./timer
+                  yarn build
+
+            - name: Generate prisma
+              run: |
+                  cd ./panel
+                  yarn generate-prisma
+
+            - name: Build panel
+              run: |
+                  cd ./panel
+                  yarn next telemetry disable
+                  yarn build
+
+            - uses: actions/upload-artifact@v3
+              with:
+                name: application-artifact
+                path: /
