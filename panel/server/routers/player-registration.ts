@@ -152,23 +152,19 @@ export const playerRegistrationRouter =
     edit: protectedProcedure
       .input(racePlayerRegistrationSchema)
       .mutation(async ({ input, ctx }) => {
-        return await ctx.db.playerRegistration.update({
+        return await ctx.db.playerProfile.update({
           where: { id: input.player.id! },
           data: {
-            profile: {
-              update: {
-                name: input.player.name.trim(),
-                lastName: input.player.lastName.trim(),
-                gender: input.player.gender,
-                birthDate: input.player.birthDate,
-                country: input.player.country,
-                city: input.player.city.trim(),
-                team: input.player.team?.trim(),
-                email: input.player.email,
-                phoneNumber: input.player.phoneNumber,
-                icePhoneNumber: input.player.icePhoneNumber
-              }
-            }
+            name: input.player.name.trim(),
+            lastName: input.player.lastName.trim(),
+            gender: input.player.gender,
+            birthDate: input.player.birthDate,
+            country: input.player.country,
+            city: input.player.city.trim(),
+            team: input.player.team?.trim(),
+            email: input.player.email,
+            phoneNumber: input.player.phoneNumber,
+            icePhoneNumber: input.player.icePhoneNumber
           }
         });
       })
