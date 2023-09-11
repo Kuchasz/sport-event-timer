@@ -54,15 +54,12 @@ jobs:
                   yarn next telemetry disable
                   yarn build
 
+            - name: Bundle ZIP package
+              uses: montudor/action-zip@v1
+              with:
+                  args: zip -qq --symlinks -r set-package.zip package.json .yarn yarn.lock .yarnrc.yml panel utils timer node_modules
+
             - uses: actions/upload-artifact@v3
               with:
                 name: application-artifact
-                path: |
-                  package.json 
-                  .yarn 
-                  yarn.lock 
-                  .yarnrc.yml 
-                  panel 
-                  utils 
-                  timer 
-                  node_modules
+                path: set-package.zip
