@@ -12,7 +12,7 @@ const getRegisteredPlayersForRace = async (req: NextApiRequest, res: NextApiResp
         select: { profile: { select: { name: true, lastName: true, team: true, city: true } }, hasPaid: true }
     });
 
-    res.json(results.map(r => ({ ...r, ...r.profile })));
+    res.json(results.map(r => ({ ...r.profile, ...r })));
 }
 
 export default withRaceApiKey(withExceptionHandling(getRegisteredPlayersForRace));
