@@ -30,10 +30,10 @@ export const playerRouter = router({
             const { raceId } = input;
             const players = await ctx.db.player.findMany({
                 where: { raceId: raceId },
-                include: { classification: true },
+                include: { classification: true, profile: true },
             });
 
-            return players.map((p, index) => ({ ...p, index: index + 1 }));
+            return players.map((p, index) => ({ ...p, ...p.profile, index: index + 1 }));
         }),
     lastAvailableStartTime: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -66,13 +66,17 @@ export const playerRouter = router({
             const players = await ctx.db.player.findMany({
                 where: { raceId: raceId, bibNumber: { not: null } },
                 select: {
-                    name: true,
-                    lastName: true,
+                    profile: {
+                        select: {
+                            name: true,
+                            lastName: true,
+                        }
+                    },
                     bibNumber: true,
                     startTime: true,
                 },
             });
-            return players.map(p => ({ ...p, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
+            return players.map(p => ({ ...p, ...p.profile, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
         }),
     startList: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -82,8 +86,12 @@ export const playerRouter = router({
             const playersWithTimes = await ctx.db.player.findMany({
                 where: { raceId: raceId },
                 select: {
-                    name: true,
-                    lastName: true,
+                    profile: {
+                        select: {
+                            name: true,
+                            lastName: true,
+                        }
+                    },
                     bibNumber: true,
                     startTime: true,
                 },
@@ -96,8 +104,8 @@ export const playerRouter = router({
                 });
 
             return playersWithTimes.map(p => ({
-                name: p.name,
-                lastName: p.lastName,
+                name: p.profile.name,
+                lastName: p.profile.lastName,
                 bibNumber: p.bibNumber,
                 absoluteStartTime: race.date.getTime() + p.startTime!,
             }));
@@ -111,35 +119,35 @@ export const playerRouter = router({
 
         return await ctx.db.player.delete({ where: { id: input.playerId } });
     }),
-    add: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
-        const classification = await ctx.db.classification.findFirstOrThrow({
-            where: { id: input.player.classificationId, race: { id: input.raceId } },
-            include: { race: true },
-        });
-        if (!classification) return;
+    // add: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
+    //     const classification = await ctx.db.classification.findFirstOrThrow({
+    //         where: { id: input.player.classificationId, race: { id: input.raceId } },
+    //         include: { race: true },
+    //     });
+    //     if (!classification) return;
 
-        const user = await ctx.db.user.findFirstOrThrow();
+    //     const user = await ctx.db.user.findFirstOrThrow();
 
-        return await ctx.db.player.create({
-            data: {
-                raceId: input.raceId,
-                name: input.player.name,
-                lastName: input.player.lastName,
-                gender: input.player.gender,
-                bibNumber: input.player.bibNumber,
-                startTime: input.player.startTime,
-                birthDate: input.player.birthDate,
-                country: input.player.country,
-                city: input.player.city,
-                team: input.player.team,
-                email: input.player.email,
-                phoneNumber: input.player.phoneNumber,
-                icePhoneNumber: input.player.icePhoneNumber,
-                classificationId: classification.id,
-                registeredByUserId: user.id,
-            },
-        });
-    }),
+    //     return await ctx.db.player.create({
+    //         data: {
+    //             raceId: input.raceId,
+    //             name: input.player.name,
+    //             lastName: input.player.lastName,
+    //             gender: input.player.gender,
+    //             bibNumber: input.player.bibNumber,
+    //             startTime: input.player.startTime,
+    //             birthDate: input.player.birthDate,
+    //             country: input.player.country,
+    //             city: input.player.city,
+    //             team: input.player.team,
+    //             email: input.player.email,
+    //             phoneNumber: input.player.phoneNumber,
+    //             icePhoneNumber: input.player.icePhoneNumber,
+    //             classificationId: classification.id,
+    //             registeredByUserId: user.id,
+    //         },
+    //     });
+    // }),
     promoteRegistration: protectedProcedure.input(promoteRegistrationSchema).mutation(async ({ input, ctx }) => {
         const { player } = input;
 
@@ -179,18 +187,7 @@ export const playerRouter = router({
         return await ctx.db.player.create({
             data: {
                 raceId: registration.raceId,
-                name: registration.name,
-                lastName: registration.lastName,
-                gender: registration.gender,
-                bibNumber: player.bibNumber,
-                startTime: player.startTime,
-                birthDate: registration.birthDate,
-                country: registration.country,
-                city: registration.city,
-                team: registration.team,
-                email: registration.email,
-                phoneNumber: registration.phoneNumber,
-                icePhoneNumber: registration.icePhoneNumber,
+                playerProfileId: registration.playerProfileId,
                 classificationId: classification.id,
                 registeredByUserId: user.id,
                 playerRegistrationId: registration.id
@@ -210,18 +207,18 @@ export const playerRouter = router({
         return await ctx.db.player.update({
             where: { id: input.player.id! },
             data: {
-                name: input.player.name,
-                lastName: input.player.lastName,
-                gender: input.player.gender,
-                bibNumber: input.player.bibNumber,
+                // name: input.player.name,
+                // lastName: input.player.lastName,
+                // gender: input.player.gender,
+                // bibNumber: input.player.bibNumber,
                 startTime: input.player.startTime,
-                birthDate: input.player.birthDate,
-                country: input.player.country,
-                city: input.player.city,
-                team: input.player.team,
-                email: input.player.email,
-                phoneNumber: input.player.phoneNumber,
-                icePhoneNumber: input.player.icePhoneNumber,
+                // birthDate: input.player.birthDate,
+                // country: input.player.country,
+                // city: input.player.city,
+                // team: input.player.team,
+                // email: input.player.email,
+                // phoneNumber: input.player.phoneNumber,
+                // icePhoneNumber: input.player.icePhoneNumber,
                 classificationId: classification.id,
             },
         });

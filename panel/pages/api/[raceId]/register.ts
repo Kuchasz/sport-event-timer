@@ -47,12 +47,11 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // const race = await db.race.findFirstOrThrow({ where: { id: parseInt(raceId as string) } });
 
-    const id = await db.playerRegistration.create({
+    const profile = await db.playerProfile.create({
         data: {
             raceId: parseInt(raceId as string),
             name: name.trim(),
             lastName: lastName.trim(),
-            registrationDate: new Date(),
             birthDate: new Date(birthDate),
             gender: registrationEntry.gender,
             team: team?.trim(),
@@ -61,6 +60,14 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
             email: registrationEntry.email,
             phoneNumber: registrationEntry.phoneNumber,
             icePhoneNumber: registrationEntry.icePhoneNumber,
+        }
+    });
+
+    const id = await db.playerRegistration.create({
+        data: {
+            raceId: parseInt(raceId as string),
+            playerProfileId: profile.id,
+            registrationDate: new Date(),
             hasPaid: false
         }
     });

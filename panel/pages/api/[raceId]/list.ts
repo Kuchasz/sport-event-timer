@@ -7,11 +7,12 @@ const getRegisteredPlayersForRace = async (req: NextApiRequest, res: NextApiResp
 
     const { raceId } = req.query;
 
-    const results = await db.playerRegistration.findMany({ 
-        where: { raceId: Number(raceId) }, 
-        select: { name: true, lastName: true, team: true, city: true, hasPaid: true } });
+    const results = await db.playerRegistration.findMany({
+        where: { raceId: Number(raceId) },
+        select: { profile: { select: { name: true, lastName: true, team: true, city: true } }, hasPaid: true }
+    });
 
-    res.json(results);
+    res.json(results.map(r => ({ ...r, ...r.profile })));
 }
 
 export default withRaceApiKey(withExceptionHandling(getRegisteredPlayersForRace));

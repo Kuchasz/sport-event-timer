@@ -9,14 +9,14 @@ const getStartListForRace = async (req: NextApiRequest, res: NextApiResponse) =>
 
     const results = await db.player.findMany({
         where: { raceId: Number(raceId) },
-        select: { bibNumber: true, name: true, lastName: true, team: true, city: true, startTime: true }
+        select: { bibNumber: true, profile: { select: { name: true, lastName: true, team: true, city: true } }, startTime: true }
     });
 
     // const race = await db.race.findUniqueOrThrow({ where: { id: Number(raceId) } });
 
     // race.date
 
-    res.json(results);
+    res.json(results.map(r => ({ ...r, ...r.profile })));
 }
 
 export default withRaceApiKey(withExceptionHandling(getStartListForRace));
