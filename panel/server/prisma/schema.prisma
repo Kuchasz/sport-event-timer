@@ -113,7 +113,7 @@ model Category {
     maxAge           Int?
     gender           String?
     isSpecial        Boolean
-    classification   Classification @relation(fields: [classificationId], references: [id])
+    classification   Classification @relation(fields: [classificationId], references: [id], onDelete: Cascade)
     classificationId Int
 }
 
