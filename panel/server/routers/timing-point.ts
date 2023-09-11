@@ -2,6 +2,7 @@ import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { daysFromNow } from "@set/utils/dist/datetime";
 import { timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
+import { TRPCError } from "@trpc/server";
 
 export const timingPointRouter =
     router({
@@ -61,13 +62,19 @@ export const timingPointRouter =
             .mutation(async ({ input, ctx }) => {
                 const { id } = input;
 
+                const numberOfTimingPoints = await ctx.db.timingPoint.count({ where: { raceId: input.raceId } });
+                if (numberOfTimingPoints <= 2)
+                    throw new TRPCError({
+                        code: 'BAD_REQUEST',
+                        message: 'Race must have at least 2 timing points'
+                    });
+
                 const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } })
 
                 const order = JSON.parse(timingPointOrder.order) as number[];
                 const newOrder = order.filter(i => i !== id);
 
                 await ctx.db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } })
-
                 return await ctx.db.timingPoint.delete({ where: { id: id! } });
             }),
         add: protectedProcedure
