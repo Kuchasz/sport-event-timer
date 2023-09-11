@@ -57,4 +57,12 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                 name: application-artifact
-                path: /
+                path: |
+                  package.json 
+                  .yarn 
+                  yarn.lock 
+                  .yarnrc.yml 
+                  panel 
+                  utils 
+                  timer 
+                  node_modules
