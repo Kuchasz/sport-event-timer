@@ -11,7 +11,7 @@ export const resultRouter = router({
 
             const allPlayers = await ctx.db.player.findMany({
                 where: { raceId },
-                include: { splitTime: true, manualSplitTime: true, absence: true }
+                include: { splitTime: true, manualSplitTime: true, absence: true, profile: true }
             });
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
@@ -28,13 +28,13 @@ export const resultRouter = router({
 
             const times = allPlayers.map(p => ({
                 bibNumber: p.bibNumber,
-                name: p.name,
-                lastName: p.lastName,
+                name: p.profile.name,
+                lastName: p.profile.lastName,
                 classificationId: p.classificationId,
-                team: p.team,
-                gender: p.gender,
-                age: calculateAge(p.birthDate),
-                yearOfBirth: p.birthDate.getFullYear(),
+                team: p.profile.team,
+                gender: p.profile.gender,
+                age: calculateAge(p.profile.birthDate),
+                yearOfBirth: p.profile.birthDate.getFullYear(),
                 times: {
                     ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
                     ...Object.fromEntries(

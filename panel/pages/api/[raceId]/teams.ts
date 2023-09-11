@@ -7,7 +7,7 @@ const getTeamNames = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { raceId } = req.query;
 
-    const results = await db.playerRegistration.groupBy({ by: ['team'], where: { raceId: Number(raceId) }, orderBy: { team: 'asc' } });
+    const results = await db.playerProfile.groupBy({ by: ['team'], where: { raceId: Number(raceId) }, orderBy: { team: 'asc' } });
 
     res.json(results.map(r => r.team));
 }

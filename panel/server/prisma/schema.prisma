@@ -248,8 +248,8 @@ model PlayerProfile {
     email              String?
     phoneNumber        String?
     icePhoneNumber     String?
-    PlayerRegistration PlayerRegistration[]
-    Player             Player[]
-    Race               Race?                @relation(fields: [raceId], references: [id])
-    raceId             Int?
+    playerRegistration PlayerRegistration[]
+    player             Player[]
+    race               Race                 @relation(fields: [raceId], references: [id])
+    raceId             Int
 }

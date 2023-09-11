@@ -1,4 +1,4 @@
-INSERT INTO PlayerRegistration (registrationDate, name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber, hasPaid, paymentDate, raceId) SELECT date('now'), name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber, 1, date('now'), raceId FROM Player WHERE playerRegistrationId IS NULL;
+INSERT INTO PlayerRegistration (registrationDate, name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber, hasPaid, paymentDate, raceId) SELECT strftime('%s', 'now') * 1000, name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber, 1, strftime('%s', 'now') * 1000, raceId FROM Player WHERE playerRegistrationId IS NULL;
 UPDATE Player SET playerRegistrationId = (SELECT pr.id FROM PlayerRegistration pr WHERE pr.name = Player.name AND pr.lastName = Player.lastName AND pr.raceId = Player.raceId AND pr.birthDate = Player.birthDate) WHERE playerRegistrationId IS NULL;
 
 CREATE TABLE "PlayerProfile" (

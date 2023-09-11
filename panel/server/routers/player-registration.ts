@@ -14,17 +14,17 @@ export const playerRegistrationRouter =
       .query(async ({ input, ctx }) => {
         const { raceId } = input;
         const registrations = await ctx.db.playerRegistration.findMany({
-          where: { raceId: raceId }, include: { player: true }
+          where: { raceId: raceId }, include: { player: true, profile: true }
         });
 
-        return registrations.map((r, index) => ({ ...r, index: index + 1, promotedToPlayer: r.player.length > 0 }));
+        return registrations.map((r, index) => ({ ...r, ...r.profile, index: index + 1, promotedToPlayer: r.player.length > 0 }));
       }),
     teams: publicProcedure
       .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
       .query(async ({ input, ctx }) => {
         const { raceId } = input;
 
-        const results = await ctx.db.playerRegistration.groupBy({ by: ['team'], where: { raceId: Number(raceId), team: { not: null } } });
+        const results = await ctx.db.playerProfile.groupBy({ by: ['team'], where: { raceId: Number(raceId), team: { not: null } } });
 
         return results.map(r => r.team!);
       }),
@@ -68,10 +68,9 @@ export const playerRegistrationRouter =
           return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
         }
 
-        await ctx.db.playerRegistration.create({
+        const profile = await ctx.db.playerProfile.create({
           data: {
             raceId: input.raceId,
-            registrationDate: new Date(),
             name: input.player.name.trim(),
             lastName: input.player.lastName.trim(),
             gender: input.player.gender,
@@ -82,8 +81,16 @@ export const playerRegistrationRouter =
             email: input.player.email,
             phoneNumber: input.player.phoneNumber,
             icePhoneNumber: input.player.icePhoneNumber,
-            hasPaid: false
           }
+        });
+
+        await ctx.db.playerRegistration.create({
+          data: {
+            raceId: input.raceId,
+            registrationDate: new Date(),
+            hasPaid: false,
+            playerProfileId: profile.id
+          },
         });
 
         await sendRegistrationConfirmation({
@@ -117,10 +124,9 @@ export const playerRegistrationRouter =
           return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
         }
 
-        return await ctx.db.playerRegistration.create({
+        const profile = await ctx.db.playerProfile.create({
           data: {
             raceId: input.raceId,
-            registrationDate: new Date(),
             name: input.player.name.trim(),
             lastName: input.player.lastName.trim(),
             gender: input.player.gender,
@@ -131,7 +137,15 @@ export const playerRegistrationRouter =
             email: input.player.email,
             phoneNumber: input.player.phoneNumber,
             icePhoneNumber: input.player.icePhoneNumber,
-            hasPaid: false
+          }
+        });
+
+        return await ctx.db.playerRegistration.create({
+          data: {
+            raceId: input.raceId,
+            registrationDate: new Date(),
+            hasPaid: false,
+            playerProfileId: profile.id
           }
         });
       }),
@@ -141,16 +155,20 @@ export const playerRegistrationRouter =
         return await ctx.db.playerRegistration.update({
           where: { id: input.player.id! },
           data: {
-            name: input.player.name.trim(),
-            lastName: input.player.lastName.trim(),
-            gender: input.player.gender,
-            birthDate: input.player.birthDate,
-            country: input.player.country,
-            city: input.player.city.trim(),
-            team: input.player.team?.trim(),
-            email: input.player.email,
-            phoneNumber: input.player.phoneNumber,
-            icePhoneNumber: input.player.icePhoneNumber
+            profile: {
+              update: {
+                name: input.player.name.trim(),
+                lastName: input.player.lastName.trim(),
+                gender: input.player.gender,
+                birthDate: input.player.birthDate,
+                country: input.player.country,
+                city: input.player.city.trim(),
+                team: input.player.team?.trim(),
+                email: input.player.email,
+                phoneNumber: input.player.phoneNumber,
+                icePhoneNumber: input.player.icePhoneNumber
+              }
+            }
           }
         });
       })

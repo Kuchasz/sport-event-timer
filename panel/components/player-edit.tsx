@@ -19,19 +19,9 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
 
     const player: EditPlayer = {
         id: editedPlayer.id,
-        birthDate: editedPlayer.birthDate,
         bibNumber: editedPlayer.bibNumber,
         startTime: editedPlayer.startTime as number,
         classificationId: editedPlayer.classificationId,
-        gender: editedPlayer.gender as "male" | "female",
-        lastName: editedPlayer.lastName,
-        name: editedPlayer.name,
-        city: editedPlayer.city,
-        country: editedPlayer.country,
-        email: editedPlayer.email,
-        icePhoneNumber: editedPlayer.icePhoneNumber,
-        phoneNumber: editedPlayer.phoneNumber,
-        team: editedPlayer.team
     };
     return (
         <PlayerForm

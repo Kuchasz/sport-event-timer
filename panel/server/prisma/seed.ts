@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker/locale/pl";
 import { db } from "../db";
-import { createRange } from "@set/utils/dist/array";
+import { createRange, groupBy } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string"
-import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber } from "@prisma/client";
+import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber, PlayerProfile, PlayerRegistration } from "@prisma/client";
 
 async function main() {
     const userId = 'cla34zyas000852dulvt5oua7';
@@ -14,7 +14,15 @@ async function main() {
     const _classifications = createClassifications(races.map(r => r.id));
     const classifications = await db.$transaction(_classifications.map(data => db.classification.create({ data })));
 
-    const _players = createPlayers(Object.fromEntries(races.map(r => [r.id, {}])), ['male', 'female'], adminUser.id, classifications);
+    const _playerProfiles = createPlayerProfiles(races.map(r => r.id), ['male', 'female']);
+    const playerProfiles = await db.$transaction(_playerProfiles.map(data => db.playerProfile.create({ data })));
+
+    const _playerRegistrations = createPlayerRegistrations(playerProfiles);
+    const playerRegistrations = await db.$transaction(_playerRegistrations.map(data => db.playerRegistration.create({ data })));
+
+    const classificationsByRace = groupBy(classifications, c => c.raceId);
+
+    const _players = createPlayers(playerRegistrations, Object.fromEntries(races.map(r => [r.id, {}])), adminUser.id, classificationsByRace);
     const players = await db.$transaction(_players.map(data => db.player.create({ data })));
 
     const _timingPoints = createTimingPoints(races.map(r => r.id));
@@ -47,8 +55,8 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
                 name: faker.commerce.productName()
             })))
 
-const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female')[], userId: string, classifications: Classification[]): Omit<Player, "id">[] =>
-    classifications.flatMap(c => {
+const createPlayerProfiles = (races: number[], genders: ('male' | 'female')[]): Omit<PlayerProfile, "id">[] =>
+    races.flatMap(raceId => {
         return createRange({ from: 0, to: faker.mersenne.rand(200, 20) })
             .map(() => {
                 const gender = faker.helpers.arrayElement(genders);
@@ -57,22 +65,56 @@ const createPlayers = (stores: { [key: number]: {} }, genders: ('male' | 'female
                     lastName: faker.name.lastName(gender),
                     gender,
                     birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
-                    registeredByUserId: userId,
-                    bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[c.raceId] }).toString(),
                     city: faker.address.cityName(),
-                    classificationId: c.id,
-                    raceId: c.raceId,
+                    raceId: raceId,
                     country: faker.address.country(),
                     email: faker.internet.email(),
                     icePhoneNumber: faker.phone.number("###-###-###"),
                     phoneNumber: faker.phone.number("###-###-###"),
-                    startTime: Math.floor(faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
                     team: faker.company.name(),
-                    playerRegistrationId: null
                 })
             })
     }
     );
+
+// id: number
+// registrationDate: Date
+// hasPaid: boolean
+// paymentDate: Date | null
+// raceId: number
+// playerProfileId: number
+
+const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<PlayerRegistration, "id">[] =>
+    playerProfiles.map((pp) => {
+        const hasPaid = faker.datatype.boolean();
+        return ({
+            raceId: pp.raceId,
+            registrationDate: faker.date.past(1),
+            hasPaid,
+            paymentDate: hasPaid ? faker.date.past(1) : null,
+            playerProfileId: pp.id
+        })
+    });
+
+const createPlayers = (
+    playerRegistrations: PlayerRegistration[],
+    stores: { [key: number]: {} },
+    userId: string,
+    classifications: { [raceId: number]: Classification[] }): Omit<Player, "id">[] =>
+    playerRegistrations
+        .filter(pr => pr.hasPaid)
+        .map((pr) => {
+            return ({
+                registeredByUserId: userId,
+                bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[pr.raceId] }).toString(),
+                classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
+                raceId: pr.raceId,
+                startTime: Math.floor(faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
+                playerRegistrationId: pr.id,
+                playerProfileId: pr.playerProfileId
+            })
+        }
+        );
 
 const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [

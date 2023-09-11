@@ -18,7 +18,7 @@ export const splitTimeRouter =
 
                 const allPlayers = await ctx.db.player.findMany({
                     where: { raceId },
-                    include: { splitTime: true, manualSplitTime: true }
+                    include: { splitTime: true, manualSplitTime: true, profile: true }
                 });
                 const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
                 const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
@@ -31,8 +31,8 @@ export const splitTimeRouter =
 
                 return allPlayers.map(p => ({
                     bibNumber: p.bibNumber,
-                    name: p.name,
-                    lastName: p.lastName,
+                    name: p.profile.name,
+                    lastName: p.profile.lastName,
                     times: {
                         ...Object.fromEntries([
                             [startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]

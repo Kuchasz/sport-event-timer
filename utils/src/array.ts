@@ -26,7 +26,7 @@ export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
 export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
-export const groupBy = <TItem>(xs: TItem[], key: (item: TItem) => string): { [key: string]: TItem[] } => {
+export const groupBy = <TItem, TKey extends string | number>(xs: TItem[], key: (item: TItem) => TKey): { [key in TKey]: TItem[] } => {
     return xs.reduce((rv: any, x: any) => {
         (rv[key(x)] = rv[key(x)] || []).push(x);
         return rv;
