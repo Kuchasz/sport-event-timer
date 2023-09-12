@@ -5,8 +5,8 @@ import { capitalizeFirstLetter } from "@set/utils/dist/string"
 import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber, PlayerProfile, PlayerRegistration } from "@prisma/client";
 
 async function main() {
-    const userId = 'cla34zyas000852dulvt5oua7';
-    const adminUser = await db.user.create({ data: { id: userId, name: 'Admin', email: 'admin', emailVerified: new Date() } });
+    const userId = faker.datatype.uuid();
+    const adminUser = await db.user.create({ data: { id: userId, name: 'Admin', email: faker.internet.email(), emailVerified: new Date() } });
 
     const _races = createRaces();
     const races = await db.$transaction(_races.map(data => db.race.create({ data })));
@@ -22,7 +22,7 @@ async function main() {
 
     const classificationsByRace = groupBy(classifications, c => c.raceId);
 
-    const _players = createPlayers(playerRegistrations, Object.fromEntries(races.map(r => [r.id, {}])), adminUser.id, classificationsByRace);
+    const _players = createPlayers(playerRegistrations, adminUser.id, classificationsByRace);
     const players = await db.$transaction(_players.map(data => db.player.create({ data })));
 
     const _timingPoints = createTimingPoints(races.map(r => r.id));
@@ -38,18 +38,18 @@ async function main() {
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
-const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.mersenne.rand(20, 10) }).map(() => ({
+const createRaces = (): Omit<Race, "id">[] => createRange({ from: 0, to: faker.number.int({ min: 10, max: 20 }) }).map(() => ({
     date: faker.date.future(1),
     name: faker.company.name(),
     registrationEnabled: false,
     termsUrl: '',
     emailTemplate: '',
-    playersLimit: faker.datatype.number({ min: 100, max: 1000, precision: 0 })
+    playersLimit: faker.number.int({ min: 100, max: 1000 })
 }));
 
 const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] =>
     raceIds.flatMap(r =>
-        createRange({ from: 0, to: faker.mersenne.rand(3, 2) })
+        createRange({ from: 0, to: faker.number.int({ min: 2, max: 3 }) })
             .map(() => ({
                 raceId: r,
                 name: faker.commerce.productName()
@@ -57,17 +57,17 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
 
 const createPlayerProfiles = (races: number[], genders: ('male' | 'female')[]): Omit<PlayerProfile, "id">[] =>
     races.flatMap(raceId => {
-        return createRange({ from: 0, to: faker.mersenne.rand(200, 20) })
+        return createRange({ from: 0, to: faker.number.int({ min: 20, max: 200 }) })
             .map(() => {
                 const gender = faker.helpers.arrayElement(genders);
                 return ({
-                    name: faker.name.firstName(gender),
-                    lastName: faker.name.lastName(gender),
+                    name: faker.person.firstName(gender),
+                    lastName: faker.person.lastName(gender),
                     gender,
                     birthDate: faker.date.birthdate({ min: 18, max: 99, mode: 'age' }),
-                    city: faker.address.cityName(),
+                    city: faker.location.city(),
                     raceId: raceId,
-                    country: faker.address.countryCode(),
+                    country: faker.location.countryCode(),
                     email: faker.internet.email(),
                     icePhoneNumber: faker.phone.number("###-###-###"),
                     phoneNumber: faker.phone.number("###-###-###"),
@@ -91,28 +91,29 @@ const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<Player
 
 const createPlayers = (
     playerRegistrations: PlayerRegistration[],
-    stores: { [key: number]: {} },
     userId: string,
-    classifications: { [raceId: number]: Classification[] }): Omit<Player, "id">[] =>
-    playerRegistrations
+    classifications: { [raceId: number]: Classification[] }): Omit<Player, "id">[] => {
+    const bibNumbers = createRange({ from: 1, to: 999 });
+    return playerRegistrations
         .filter(pr => pr.hasPaid)
         .map((pr) => {
             return ({
                 registeredByUserId: userId,
-                bibNumber: faker.helpers.unique(faker.mersenne.rand, [999, 1], { store: stores[pr.raceId] }).toString(),
+                bibNumber: bibNumbers.splice(faker.number.int({ min: 1, max: bibNumbers.length }), 1)[0].toString(),
                 classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
                 raceId: pr.raceId,
-                startTime: Math.floor(faker.datatype.datetime({ min: 0, max: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
+                startTime: Math.floor(faker.date.between({ from: 0, to: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
                 playerRegistrationId: pr.id,
                 playerProfileId: pr.playerProfileId
             })
         }
         );
+}
 
 const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
         { name: 'Start', description: 'Where the players start', raceId: r },
-        ...createRange({ from: 0, to: faker.mersenne.rand(2, 0) })
+        ...createRange({ from: 0, to: faker.number.int({ min: 0, max: 2 }) })
             .map(() => ({ name: capitalizeFirstLetter(faker.word.noun()), description: faker.lorem.sentence(), raceId: r })),
         { name: 'Finish', description: 'Where the players ends', raceId: r }]);
 
@@ -131,24 +132,28 @@ const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
     ));
 
 const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[], timingPointsOrders: TimingPointOrder[]) => {
-    const store = {};
     return races.map(r => {
         const playersForRace = players.filter(p => p.raceId === r.id);
         const timingPointsOrder = JSON.parse(timingPointsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];
 
         const timingPointsForRace = timingPointsOrder.map(timingPointId => timingPoints.find(tp => tp.raceId === r.id && tp.id === timingPointId)!);
 
-        const chosenPlayersNumber = faker.mersenne.rand(playersForRace.length, 0);
+        const chosenPlayersNumber = faker.number.int({ min: 0, max: playersForRace.length });
 
-        const startTimeDate = faker.date.between(r.date, new Date(r.date.getTime() + 3_600_000));
+        const startTimeDate = faker.date.between({ from: r.date, to: new Date(r.date.getTime() + 3_600_000) });
+
+        const ids = createRange({ from: 1, to: 9999 });
 
         const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
             .flatMap(p => timingPointsForRace.map((tp, i) => ({
-                id: faker.helpers.unique(faker.mersenne.rand, [1, 9999], store),
+                id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
                 bibNumber: p.bibNumber!,
                 timingPointId: tp.id,
-                time: faker.date.between(new Date(startTimeDate.getTime() + i * 3_600_000), new Date(startTimeDate.getTime() + i * 3_600_600 + 3_600_600)).getTime()
+                time: faker.date.between({
+                    from: new Date(startTimeDate.getTime() + i * 3_600_000),
+                    to: new Date(startTimeDate.getTime() + i * 3_600_600 + 3_600_600)
+                }).getTime()
             })));
 
         return { raceId: r.id, state: JSON.stringify({ timeStamps, actionsHistory: [] }) };
