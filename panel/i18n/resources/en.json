@@ -96,6 +96,13 @@
       },
       "editRace": {
         "title": "Edit race"
+      },
+      "createExample": {
+        "confirmation": {
+          "title": "Adding example race",
+          "text": "Are you sure to create example race?"
+        },
+        "button": "Add example race"
       }
     },
     "bibNumbers": {
