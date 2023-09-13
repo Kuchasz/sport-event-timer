@@ -13,6 +13,7 @@ Added Date | Idea | Status
 10/09/2023 | Indeterminate state on save buttons | todo :date:
 11/09/2023 | Fallback for public routes triggered with invalid raceId | todo :date:
 13/09/2023 | Turn seed into 'example race generation' button | :heavy_check_mark: (13/09/2023)
+14/09/2023 | Allow example race customization | todo :date:
 
 ## TODO
 
