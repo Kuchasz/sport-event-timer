@@ -26,8 +26,6 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         hasPaid: editedPlayerRegistration.hasPaid
     };
 
-    console.log(editedPlayerRegistration);
-
     return (
         <PlayerRegistrationForm
             onReject={onReject}

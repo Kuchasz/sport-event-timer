@@ -1,6 +1,7 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc"
 import { z } from "zod";
 import { createExampleRaces } from "server/example-races";
+import { TRPCError } from "@trpc/server";
 
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
@@ -86,6 +87,12 @@ export const raceRouter =
                 raceId: z.number()
             }))
             .mutation(async ({ input, ctx }) => {
+                const numberOfRaces = await ctx.db.race.count();
+                if (numberOfRaces <= 1)
+                    throw new TRPCError({
+                        code: 'BAD_REQUEST',
+                        message: 'At least one race must exist'
+                    });
 
                 await ctx.db.absence.deleteMany({ where: { raceId: input.raceId } });;
                 await ctx.db.splitTime.deleteMany({ where: { raceId: input.raceId } });;
