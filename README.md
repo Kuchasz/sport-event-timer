@@ -12,6 +12,7 @@ Added Date | Idea | Status
 08/09/2023 | Solve issue of sync between Player and Player Registration | :heavy_check_mark: (11/09/2023)
 10/09/2023 | Indeterminate state on save buttons | todo :date:
 11/09/2023 | Fallback for public routes triggered with invalid raceId | todo :date:
+13/09/2023 | Turn seed into 'example race generation' button | todo :date:
 
 ## TODO
 
