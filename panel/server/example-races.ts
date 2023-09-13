@@ -35,9 +35,8 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number) 
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
-
 const createRaces = (numberOfRaces: number): Omit<Race, "id">[] => createRange({ from: 0, to: numberOfRaces }).map(() => ({
-    date: faker.date.future(1),
+    date: faker.date.future({ years: 1 }),
     name: faker.company.name(),
     registrationEnabled: false,
     termsUrl: '',
@@ -80,9 +79,9 @@ const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<Player
         const hasPaid = faker.datatype.boolean();
         return ({
             raceId: pp.raceId,
-            registrationDate: faker.date.past(1),
+            registrationDate: faker.date.past({ years: 1 }),
             hasPaid,
-            paymentDate: hasPaid ? faker.date.past(1) : null,
+            paymentDate: hasPaid ? faker.date.past({ years: 1 }) : null,
             playerProfileId: pp.id
         })
     });

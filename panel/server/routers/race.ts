@@ -1,5 +1,6 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc"
 import { z } from "zod";
+import { createExampleRaces } from "server/example-races";
 
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
@@ -120,6 +121,10 @@ export const raceRouter =
             .mutation(async ({ input, ctx }) => {
                 const { id, ...data } = input;
                 return await ctx.db.race.update({ where: { id: id! }, data: { registrationEnabled: data.registrationEnabled } });
+            }),
+        createExample: protectedProcedure
+            .mutation(async ({ ctx }) => {
+                await createExampleRaces(ctx.session.user.name!, 1)
             }),
         add: protectedProcedure
             .input(raceSchema)
