@@ -35,7 +35,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number) 
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
-const createRaces = (numberOfRaces: number): Omit<Race, "id">[] => createRange({ from: 0, to: numberOfRaces }).map(() => ({
+const createRaces = (numberOfRaces: number): Omit<Race, "id">[] => createRange({ from: 0, to: numberOfRaces - 1 }).map(() => ({
     date: faker.date.future({ years: 1 }),
     name: faker.company.name(),
     registrationEnabled: false,
@@ -91,20 +91,18 @@ const createPlayers = (
     userId: string,
     classifications: { [raceId: number]: Classification[] }): Omit<Player, "id">[] => {
     const bibNumbers = createRange({ from: 1, to: 999 });
+
     return playerRegistrations
         .filter(pr => pr.hasPaid)
-        .map((pr) => {
-            return ({
-                registeredByUserId: userId,
-                bibNumber: bibNumbers.splice(faker.number.int({ min: 1, max: bibNumbers.length }), 1)[0].toString(),
-                classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
-                raceId: pr.raceId,
-                startTime: Math.floor(faker.date.between({ from: 0, to: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
-                playerRegistrationId: pr.id,
-                playerProfileId: pr.playerProfileId
-            })
-        }
-        );
+        .map((pr) => ({
+            registeredByUserId: userId,
+            bibNumber: bibNumbers.splice(faker.number.int({ min: 0, max: bibNumbers.length }), 1)[0].toString(),
+            classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
+            raceId: pr.raceId,
+            startTime: Math.floor(faker.date.between({ from: 0, to: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
+            playerRegistrationId: pr.id,
+            playerProfileId: pr.playerProfileId
+        }));
 }
 
 const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>

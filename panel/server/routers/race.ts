@@ -124,7 +124,8 @@ export const raceRouter =
             }),
         createExample: protectedProcedure
             .mutation(async ({ ctx }) => {
-                await createExampleRaces(ctx.session.user.name!, 1)
+                const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
+                await createExampleRaces(user.id, 1)
             }),
         add: protectedProcedure
             .input(raceSchema)
