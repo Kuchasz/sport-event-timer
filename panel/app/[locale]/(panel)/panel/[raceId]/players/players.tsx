@@ -219,6 +219,7 @@ export const Players = () => {
                             suppressCellFocus={true}
                             suppressAnimationFrame={true}
                             columnDefs={defaultColumns}
+                            getRowId={item => item.data.id.toString()}
                             rowData={players}
                             onFirstDataRendered={onFirstDataRendered}
                             onGridSizeChanged={onFirstDataRendered}

@@ -258,6 +258,7 @@ export const MyRaces = () => {
                         suppressCellFocus={true}
                         suppressChangeDetection={true}
                         columnDefs={defaultColumns}
+                        getRowId={item => item.data.id.toString()}
                         rowData={races}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}

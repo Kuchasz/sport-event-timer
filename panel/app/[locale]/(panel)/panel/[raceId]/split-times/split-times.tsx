@@ -189,6 +189,7 @@ export const SplitTimes = () => {
                             suppressCellFocus={true}
                             suppressAnimationFrame={true}
                             columnDefs={defaultColumns}
+                            getRowId={item => item.data.bibNumber!}
                             rowData={splitTimes}
                             onFirstDataRendered={onFirstDataRendered}
                             onGridSizeChanged={onFirstDataRendered}
