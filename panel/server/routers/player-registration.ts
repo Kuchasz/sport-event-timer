@@ -3,7 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import nodemailer from "nodemailer";
 import { env } from "../../env/server";
-import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
+import { CountryCode, racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 
 type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
 
@@ -17,7 +17,7 @@ export const playerRegistrationRouter =
           where: { raceId: raceId }, include: { player: true, profile: true }
         });
 
-        return registrations.map((r, index) => ({ ...r.profile, ...r, index: index + 1, promotedToPlayer: r.player.length > 0 }));
+        return registrations.map((r, index) => ({ ...r.profile, ...r, country: r.profile.country as CountryCode, index: index + 1, promotedToPlayer: r.player.length > 0 }));
       }),
     teams: publicProcedure
       .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))

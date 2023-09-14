@@ -23,14 +23,8 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         icePhoneNumber: editedPlayerRegistration.icePhoneNumber,
         phoneNumber: editedPlayerRegistration.phoneNumber ?? "",
         team: editedPlayerRegistration.team,
-        hasPaid: editedPlayerRegistration.hasPaid
+        hasPaid: editedPlayerRegistration.hasPaid,
     };
 
-    return (
-        <PlayerRegistrationForm
-            onReject={onReject}
-            onResolve={onResolve}
-            initialPlayerRegistration={playerRegistration}
-        />
-    );
+    return <PlayerRegistrationForm onReject={onReject} onResolve={onResolve} initialPlayerRegistration={playerRegistration} />;
 };
