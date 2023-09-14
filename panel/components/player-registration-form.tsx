@@ -24,6 +24,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
+    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`)}));
 
     return (
         <Form<PlayerRegistration>
@@ -109,8 +110,8 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
-                            items={countryCodes}
-                            nameKey="name_en"
+                            items={countries}
+                            nameKey="name"
                             placeholder={t("pages.playerRegistrations.form.country.placeholder")}
                             valueKey="code"
                             onChange={onChange}

@@ -44,6 +44,8 @@ const RegistrationFormComponent = ({
     termsUrl: string | null;
 }) => {
     const t = useTranslations();
+    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`)}));
+
     return (
         <div className="space-y-4 md:space-y-6">
             <Form<PlayerRegistration>
@@ -54,33 +56,21 @@ const RegistrationFormComponent = ({
                 <FormInput<PlayerRegistration, "name">
                     label={t("registration.fields.name.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.name.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.name.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="name"
                 />
                 <FormInput<PlayerRegistration, "lastName">
                     label={t("registration.fields.lastName.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.lastName.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.lastName.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="lastName"
                 />
                 <FormInput<PlayerRegistration, "birthDate">
                     label={t("registration.fields.birthDate.label")}
                     render={({ value, onChange }) => (
-                        <PoorDatepicker
-                            placeholder={t("registration.fields.birthDate.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorDatepicker placeholder={t("registration.fields.birthDate.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="birthDate"
                 />
@@ -113,11 +103,7 @@ const RegistrationFormComponent = ({
                 <FormInput<PlayerRegistration, "city">
                     label={t("registration.fields.city.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.city.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.city.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="city"
                 />
@@ -126,8 +112,8 @@ const RegistrationFormComponent = ({
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
-                            items={countryCodes}
-                            nameKey="name_en"
+                            items={countries}
+                            nameKey="name"
                             placeholder={t("registration.fields.country.placeholder")}
                             valueKey="code"
                             onChange={onChange}
@@ -138,33 +124,21 @@ const RegistrationFormComponent = ({
                 <FormInput<PlayerRegistration, "email">
                     label={t("registration.fields.email.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.email.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.email.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="email"
                 />
                 <FormInput<PlayerRegistration, "phoneNumber">
                     label={t("registration.fields.phoneNumber.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.phoneNumber.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.phoneNumber.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="phoneNumber"
                 />
                 <FormInput<PlayerRegistration, "icePhoneNumber">
                     label={t("registration.fields.icePhoneNumber.label")}
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("registration.fields.icePhoneNumber.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("registration.fields.icePhoneNumber.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="icePhoneNumber"
                 />

@@ -3,18 +3,20 @@
 Application for making time measurements
 
 ## Ideas
-Added Date | Idea | Status
---- | --- | ---
-07/09/2023 | Race must have at least 2 Timing Points | :heavy_check_mark: (12/09/2023)
-07/09/2023 | Tenant must have at least one Race | todo :date:
-07/09/2023 | Prevent Start Time and Bib Number duplication | todo :date:
-07/09/2023 | Unify AccessUrl and ApiKey naming conventions | :heavy_check_mark: (07/09/2023)
-08/09/2023 | Solve issue of sync between Player and Player Registration | :heavy_check_mark: (11/09/2023)
-10/09/2023 | Indeterminate state on save buttons | todo :date:
-11/09/2023 | Fallback for public routes triggered with invalid raceId | todo :date:
-13/09/2023 | Turn prisma seed into 'example race generation' button | :heavy_check_mark: (13/09/2023)
-14/09/2023 | Allow example race customization | todo :date:
-14/09/2023 | Fix grid reload on data changes | :heavy_check_mark: (14/09/2023)
+
+| Added Date | Idea                                                       | Status                          |
+| ---------- | ---------------------------------------------------------- | ------------------------------- |
+| 07/09/2023 | Race must have at least 2 Timing Points                    | :heavy_check_mark: (12/09/2023) |
+| 07/09/2023 | Tenant must have at least one Race                         | todo :date:                     |
+| 07/09/2023 | Prevent Start Time and Bib Number duplication              | todo :date:                     |
+| 07/09/2023 | Unify AccessUrl and ApiKey naming conventions              | :heavy_check_mark: (07/09/2023) |
+| 08/09/2023 | Solve issue of sync between Player and Player Registration | :heavy_check_mark: (11/09/2023) |
+| 10/09/2023 | Indeterminate state on save buttons                        | todo :date:                     |
+| 11/09/2023 | Fallback for public routes triggered with invalid raceId   | todo :date:                     |
+| 13/09/2023 | Turn prisma seed into 'example race generation' button     | :heavy_check_mark: (13/09/2023) |
+| 14/09/2023 | Allow example race customization                           | todo :date:                     |
+| 14/09/2023 | Fix grid reload on data changes                            | :heavy_check_mark: (14/09/2023) |
+| 14/09/2023 | Country names localization                                 | :heavy_check_mark: (14/09/2023) |
 
 ## TODO
 
