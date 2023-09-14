@@ -13,7 +13,8 @@ export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
     const race: CreateRace = {
         name: "",
         date: new Date(),
-        registrationEnabled: false
+        registrationEnabled: false,
+        useSampleData: false
     };
 
     return <RaceForm onReject={onReject} onResolve={onResolve} initialRace={race} />;
