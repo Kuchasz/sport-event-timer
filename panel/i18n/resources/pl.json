@@ -96,13 +96,6 @@
       },
       "editRace": {
         "title": "Edytuj wyścig"
-      },
-      "createExample": {
-        "confirmation": {
-          "title": "Dodawanie przykładowego wyścigu",
-          "text": "Na pewno chcesz utworzyć przykładowy wyścig?"
-        },
-        "button": "Dodaj przykładowy wyścig"
       }
     },
     "bibNumbers": {

@@ -59,7 +59,6 @@ export const MyRaces = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
     const updateRaceMutation = trpc.race.update.useMutation();
     const wipeRaceMutation = trpc.action.wipe.useMutation();
-    const createExampleRaceMutation = trpc.race.createExample.useMutation();
     const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
@@ -190,21 +189,6 @@ export const MyRaces = () => {
         }
     };
 
-    const openCreateExampleDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: t("pages.races.createExample.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.races.createExample.confirmation.text"),
-            },
-        });
-
-        if (confirmed) {
-            await createExampleRaceMutation.mutateAsync();
-            refetch();
-        }
-    };
-
     const onFirstDataRendered = useCallback(() => {
         gridRef.current?.api.sizeColumnsToFit();
     }, []);
@@ -235,10 +219,6 @@ export const MyRaces = () => {
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">{t("pages.races.addRace")}</span>
-                    </Button>
-                    <Button className="ml-2" onClick={openCreateExampleDialog}>
-                        <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.races.createExample.button")}</span>
                     </Button>
                 </div>
                 <div className="ag-theme-material h-full">

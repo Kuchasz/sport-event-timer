@@ -10,7 +10,8 @@ const raceSchema = z.object({
     termsUrl: z.string().nullish(),
     emailTemplate: z.string().nullish(),
     playersLimit: z.number().int().positive().nullish(),
-    registrationEnabled: z.boolean()
+    registrationEnabled: z.boolean(),
+    useSampleData: z.boolean()
 });
 
 export const raceRouter =
@@ -129,30 +130,31 @@ export const raceRouter =
                 const { id, ...data } = input;
                 return await ctx.db.race.update({ where: { id: id! }, data: { registrationEnabled: data.registrationEnabled } });
             }),
-        createExample: protectedProcedure
-            .mutation(async ({ ctx }) => {
-                const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
-                await createExampleRaces(user.id, 1)
-            }),
         add: protectedProcedure
             .input(raceSchema)
             .mutation(async ({ input, ctx }) => {
-                const { id, ...data } = input;
-                const race = await ctx.db.race.create({ data });
+                const { id, useSampleData, ...data } = input;
 
-                const timingPointsToCreate = [{
-                    name: "Start",
-                    description: "Where the players start",
-                    raceId: race.id
-                }, {
-                    name: "Finish",
-                    description: "Where the players finish",
-                    raceId: race.id
-                }].map(tp => ctx.db.timingPoint.create({ data: tp }));
+                if (useSampleData) {
+                    const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
+                    createExampleRaces(user.id, 1, data);
+                } else {
+                    const race = await ctx.db.race.create({ data });
 
-                const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
+                    const timingPointsToCreate = [{
+                        name: "Start",
+                        description: "Where the players start",
+                        raceId: race.id
+                    }, {
+                        name: "Finish",
+                        description: "Where the players finish",
+                        raceId: race.id
+                    }].map(tp => ctx.db.timingPoint.create({ data: tp }));
 
-                await ctx.db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
+                    const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
+
+                    await ctx.db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
+                }
             })
     });
 

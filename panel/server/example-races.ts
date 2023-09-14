@@ -1,15 +1,29 @@
 import { createRange, groupBy } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string"
-import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber, PlayerProfile, PlayerRegistration } from "@prisma/client";
+import { Classification, Player, Race, TimingPoint, TimingPointOrder, BibNumber, PlayerProfile, PlayerRegistration, Category } from "@prisma/client";
 import { db } from "./db";
 import { faker } from "@faker-js/faker/locale/pl";
 
-export const createExampleRaces = async (userId: string, numberOfRaces: number) => {
-    const _races = createRaces(numberOfRaces);
+
+
+type Options = {
+    name?: string,
+    date?: Date,
+    registrationEnabled?: boolean,
+    termsUrl?: string | null,
+    emailTemplate?: string | null,
+    playersLimit?: number | null
+};
+
+export const createExampleRaces = async (userId: string, numberOfRaces: number, options?: Options) => {
+    const _races = createRaces(numberOfRaces, options);
     const races = await db.$transaction(_races.map(data => db.race.create({ data })));
 
     const _classifications = createClassifications(races.map(r => r.id));
     const classifications = await db.$transaction(_classifications.map(data => db.classification.create({ data })));
+
+    const _categories = createCategories(classifications, ['male', 'female']);
+    await db.$transaction(_categories.map(data => db.category.create({ data })));
 
     const _playerProfiles = createPlayerProfiles(races.map(r => r.id), ['male', 'female']);
     const playerProfiles = await db.$transaction(_playerProfiles.map(data => db.playerProfile.create({ data })));
@@ -35,13 +49,14 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number) 
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 }
 
-const createRaces = (numberOfRaces: number): Omit<Race, "id">[] => createRange({ from: 0, to: numberOfRaces - 1 }).map(() => ({
+const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">[] => createRange({ from: 0, to: numberOfRaces - 1 }).map(() => ({
     date: faker.date.future({ years: 1 }),
     name: faker.company.name(),
     registrationEnabled: false,
     termsUrl: '',
     emailTemplate: '',
-    playersLimit: faker.number.int({ min: 100, max: 1000 })
+    playersLimit: faker.number.int({ min: 100, max: 1000 }),
+    ...options
 }));
 
 const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] =>
@@ -51,6 +66,25 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
                 raceId: r,
                 name: faker.commerce.productName()
             })))
+
+const createCategories = (classifications: Classification[], genders: ('male' | 'female')[]): Omit<Category, "id">[] =>
+    classifications.flatMap(c =>
+        createRange({ from: 0, to: faker.number.int({ min: 2, max: 3 }) })
+            .map(() => {
+                const isSpecial = faker.datatype.boolean();
+
+                const gender = faker.helpers.arrayElement(genders);
+                const minAge = faker.number.int({ min: 18, max: 99 });
+
+                return ({
+                    name: faker.commerce.productName(),
+                    classificationId: c.id,
+                    isSpecial,
+                    minAge,
+                    maxAge: minAge + 10,
+                    gender
+                })
+            }));
 
 const createPlayerProfiles = (races: number[], genders: ('male' | 'female')[]): Omit<PlayerProfile, "id">[] =>
     races.flatMap(raceId => {

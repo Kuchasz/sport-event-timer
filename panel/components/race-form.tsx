@@ -42,6 +42,15 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                     <Label>Registration enabled</Label>
                     <PoorCheckbox value={race.registrationEnabled} onChange={changeHandler("registrationEnabled")} />
                 </div>
+                {!race.id && (
+                    <>
+                        <div className="p-2"></div>
+                        <div className="grow">
+                            <Label>Use sample data</Label>
+                            <PoorCheckbox value={race.useSampleData} onChange={changeHandler("useSampleData")} />
+                        </div>
+                    </>
+                )}
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Players limit</Label>

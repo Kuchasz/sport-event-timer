@@ -46,8 +46,6 @@ import { selectedRaceIdAtom } from "states/panel-states";
 import { sortDesc } from "@set/utils/dist/array";
 import { useTranslations } from "next-intl";
 
-// type CreatedRace = AppRouterInputs["race"]["add"];
-
 type Props = {
     breadcrumbs: React.ReactNode;
     children: React.ReactNode;
@@ -58,7 +56,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData: [] });
     const router = useRouter();
     const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
-    const raceId = useCurrentRaceId() || selectedRaceId; // || items[0]?.id;
+    const raceId = useCurrentRaceId() || selectedRaceId;
 
     useEffect(() => {
         !selectedRaceId && items && items.length && selectRaceId(items[0]?.id);
@@ -75,7 +73,6 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
                         initialValue={raceId}
                         onChange={e => {
                             if (!e.target.value) return;
-                            // selectRace(e.target.value);
                             selectRaceId(e.target.value);
                             router.push(`/panel/${e.target.value}`);
                         }}
