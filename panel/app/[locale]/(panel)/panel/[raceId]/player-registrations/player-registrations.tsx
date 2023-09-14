@@ -315,6 +315,7 @@ export const PlayerRegistrations = () => {
                         suppressAnimationFrame={true}
                         suppressColumnVirtualisation={true}
                         columnDefs={defaultColumns}
+                        getRowId={item => item.data.id.toString()}
                         rowData={registrations}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}

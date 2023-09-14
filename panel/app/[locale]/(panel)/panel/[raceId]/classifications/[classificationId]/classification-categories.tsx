@@ -198,6 +198,7 @@ export const ClassificationCategories = () => {
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}
                         columnDefs={defaultColumns}
+                        getRowId={item => item.data.id.toString()}
                         rowData={categories}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}

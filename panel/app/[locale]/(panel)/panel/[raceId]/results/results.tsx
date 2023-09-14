@@ -84,6 +84,7 @@ export const Results = () => {
                             suppressCellFocus={true}
                             suppressAnimationFrame={true}
                             columnDefs={defaultColumns}
+                            getRowId={item => item.data.bibNumber!}
                             rowData={results}
                             onFirstDataRendered={onFirstDataRendered}
                             onGridSizeChanged={onFirstDataRendered}

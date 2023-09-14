@@ -169,6 +169,7 @@ export const BibNumbers = () => {
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}
                         columnDefs={defaultColumns}
+                        getRowId={item => item.data.id.toString()}
                         rowData={bibNubers}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}

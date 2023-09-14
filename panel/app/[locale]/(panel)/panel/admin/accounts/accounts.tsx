@@ -27,6 +27,7 @@ export const Accounts = () => {
                     suppressCellFocus={true}
                     suppressAnimationFrame={true}
                     columnDefs={defaultColumns}
+                    getRowId={item => item.data.email!}
                     rowData={accounts}
                     onFirstDataRendered={onFirstDataRendered}
                     onGridSizeChanged={onFirstDataRendered}

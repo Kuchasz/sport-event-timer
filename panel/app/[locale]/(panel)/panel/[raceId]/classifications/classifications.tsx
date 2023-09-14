@@ -110,6 +110,7 @@ export const Classifications = () => {
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}
                         columnDefs={defaultColumns}
+                        getRowId={item => item.data.id.toString()}
                         rowData={classifications}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}
