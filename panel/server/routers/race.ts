@@ -11,7 +11,7 @@ const raceSchema = z.object({
     emailTemplate: z.string().nullish(),
     playersLimit: z.number().int().positive().nullish(),
     registrationEnabled: z.boolean(),
-    useSampleData: z.boolean()
+    useSampleData: z.boolean().nullish()
 });
 
 export const raceRouter =
