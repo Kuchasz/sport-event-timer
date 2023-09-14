@@ -3,6 +3,9 @@ import { z } from "zod";
 import sharedErrorCodes from "../shared/error-codes";
 import { countryCodes } from "../../contry-codes";
 
+const countryEnum = z
+    .enum(countryCodes, { required_error: sharedErrorCodes.required });
+
 export const playerRegistrationSchema = z.object({
     id: z.number().nullish(),
     name: z
@@ -13,8 +16,7 @@ export const playerRegistrationSchema = z.object({
         .nonempty(sharedErrorCodes.required),
     gender: GenderEnum,
     birthDate: z.date({ required_error: sharedErrorCodes.required }),
-    country: z
-        .enum(countryCodes, { required_error: sharedErrorCodes.required }),
+    country: countryEnum,
     city: z
         .string({ required_error: sharedErrorCodes.required })
         .nonempty(sharedErrorCodes.required),
@@ -34,4 +36,5 @@ export const racePlayerRegistrationSchema = z.object({
     player: playerRegistrationSchema
 });
 
+export type CountryCode = z.infer<typeof countryEnum>;
 export type PlayerRegistration = z.infer<typeof playerRegistrationSchema>;

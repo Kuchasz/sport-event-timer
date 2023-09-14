@@ -17,7 +17,7 @@ export const PlayerRegistrationCreate = ({ onReject, onResolve }: PlayerRegistra
         city: "",
         email: "",
         phoneNumber: "",
-        country: "POL",
+        country: "PL",
         hasPaid: false
     };
 
