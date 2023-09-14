@@ -65,7 +65,7 @@ const Status = ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     }, [items]);
 
     return (
-        <div className="flex items-center bg-gray-50 cursor-default py-6 px-8">
+        <div className="flex items-center bg-gray-50 cursor-default h-20 py-6 min px-8">
             {breadcrumbs}
             <div className="grow"></div>
             {sessionData && (
