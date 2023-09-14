@@ -1,6 +1,7 @@
 import { GenderEnum } from "../../models";
 import { z } from "zod";
 import sharedErrorCodes from "../shared/error-codes";
+import { countryCodes } from "../../contry-codes";
 
 export const playerRegistrationSchema = z.object({
     id: z.number().nullish(),
@@ -13,8 +14,7 @@ export const playerRegistrationSchema = z.object({
     gender: GenderEnum,
     birthDate: z.date({ required_error: sharedErrorCodes.required }),
     country: z
-        .string({ required_error: sharedErrorCodes.required })
-        .nonempty(sharedErrorCodes.required),
+        .enum(countryCodes, { required_error: sharedErrorCodes.required }),
     city: z
         .string({ required_error: sharedErrorCodes.required })
         .nonempty(sharedErrorCodes.required),
