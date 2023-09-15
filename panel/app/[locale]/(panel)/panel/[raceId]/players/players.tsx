@@ -63,13 +63,12 @@ export const Players = () => {
 
     const defaultColumns: ColDef<Player>[] = [
         {
-            field: "index",
             width: 25,
             headerName: t("pages.players.grid.columns.index"),
             headerClass: "hidden",
-            valueGetter: "node.rowIndex + 1",
             sortable: false,
             filter: false,
+            valueGetter: r => r.node?.rowIndex
         },
         {
             field: "classificationId",
@@ -115,8 +114,6 @@ export const Players = () => {
         { field: "phoneNumber", headerName: t("pages.players.grid.columns.phoneNumber"), sortable: true, filter: true, hide: true },
         { field: "icePhoneNumber", headerName: t("pages.players.grid.columns.icePhoneNumber"), sortable: true, filter: true, hide: true },
         {
-            field: "actions",
-            // width: 15,
             headerName: t("pages.players.grid.columns.actions"),
             cellRenderer: (props: { context: any; data: Player }) => (
                 <PlayerDeleteButton refetch={props.context.refetch} player={props.data} />
@@ -198,7 +195,7 @@ export const Players = () => {
                         nameKey="headerName"
                         onChange={e => {
                             const visibleColumns = e.target.value as string[];
-                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !e.target.value.includes(c));
+                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
 
                             gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);

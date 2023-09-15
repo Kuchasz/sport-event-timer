@@ -118,13 +118,12 @@ export const ClassificationCategories = () => {
 
     const defaultColumns: ColDef<Category>[] = [
         {
-            field: "index",
             width: 25,
             headerName: t("pages.classifications.categories.grid.columns.index"),
             headerClass: "hidden",
-            valueGetter: "node.rowIndex + 1",
             sortable: false,
             filter: false,
+            valueGetter: r => r.node?.rowIndex
         },
         {
             field: "name",
@@ -166,8 +165,6 @@ export const ClassificationCategories = () => {
             cellRenderer: CategoryIsSpecialRenderer,
         },
         {
-            field: "actions",
-            // width: 50,
             headerName: t("pages.classifications.categories.grid.columns.actions"),
             cellRenderer: ActionsRenderer,
         },

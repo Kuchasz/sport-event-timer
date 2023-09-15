@@ -61,7 +61,7 @@ export const BibNumbers = () => {
     const t = useTranslations();
 
     const defaultColumns: ColDef<BibNumber>[] = [
-        { field: "index", headerName: t('pages.bibNumbers.grid.columns.index'), sortable: true, maxWidth: 80 },
+        { headerName: t('pages.bibNumbers.grid.columns.index'), sortable: true, maxWidth: 80, valueGetter: r => r.node?.rowIndex },
         {
             field: "number",
             sortable: true,
@@ -71,7 +71,6 @@ export const BibNumbers = () => {
             comparator: (valueA, valueB) => valueA - valueB,
         },
         {
-            field: "actions",
             width: 15,
             headerName: t("pages.bibNumbers.grid.columns.actions"),
             cellRenderer: (props: { context: any; data: BibNumber }) => (

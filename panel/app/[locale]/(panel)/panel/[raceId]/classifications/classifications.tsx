@@ -56,10 +56,9 @@ export const Classifications = () => {
     };
 
     const defaultColumns: ColDef<Classification>[] = [
-        { field: "index", headerName: t('pages.classifications.grid.columns.index'), sortable: true },
+        { headerName: t("pages.classifications.grid.columns.index"), sortable: true, valueGetter: r => r.node?.rowIndex },
         { field: "name", headerName: t("pages.classifications.grid.columns.name"), sortable: true, filter: true },
         {
-            field: "actions",
             headerName: t("pages.classifications.grid.columns.actions"),
             cellRenderer: (props: { data: Classification }) => <OpenCategoriesButton classification={props.data} />,
         },

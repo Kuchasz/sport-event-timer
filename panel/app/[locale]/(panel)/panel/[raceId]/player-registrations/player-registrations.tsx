@@ -146,13 +146,12 @@ export const PlayerRegistrations = () => {
 
     const defaultColumns: ColDef<PlayerRegistration>[] = [
         {
-            field: "index",
             width: 25,
             headerName: t('pages.playerRegistrations.grid.columns.index'),
             headerClass: "hidden",
-            valueGetter: "node.rowIndex + 1",
             sortable: false,
             filter: false,
+            valueGetter: r => r.node?.rowIndex
         },
         { field: "name", headerName: t('pages.playerRegistrations.grid.columns.name'), flex: 1, sortable: true, resizable: true, filter: true },
         { field: "lastName", headerName: t('pages.playerRegistrations.grid.columns.lastName'), flex: 1, sortable: true, resizable: true, filter: true },
@@ -208,7 +207,6 @@ export const PlayerRegistrations = () => {
             cellRenderer: PromotedToPlayerRenderer,
         },
         {
-            field: "actions",
             resizable: true,
             width: 130,
             headerName: t('pages.playerRegistrations.grid.columns.actions'),
@@ -294,7 +292,7 @@ export const PlayerRegistrations = () => {
                         nameKey="headerName"
                         onChange={e => {
                             const visibleColumns = e.target.value as string[];
-                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !e.target.value.includes(c));
+                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
 
                             gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
