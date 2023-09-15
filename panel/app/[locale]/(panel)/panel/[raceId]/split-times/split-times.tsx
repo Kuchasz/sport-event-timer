@@ -106,7 +106,7 @@ export const SplitTimes = () => {
     const defaultColumns: ColDef<SplitTime>[] = [
         { field: "bibNumber", headerName: t('pages.splitTimes.grid.columns.bibNumber'), sortable: true, sort: "asc", width: 100, comparator: (valueA, valueB) => valueA - valueB },
         {
-            field: "player.name",
+            field: "name",
             resizable: true,
             headerName: t('pages.splitTimes.grid.columns.playerName'),
             sortable: true,
@@ -114,7 +114,7 @@ export const SplitTimes = () => {
             cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span>,
         },
         {
-            field: "player.lastName",
+            field: "lastName",
             resizable: true,
             headerName: t('pages.splitTimes.grid.columns.playerLastName'),
             sortable: true,
@@ -124,7 +124,7 @@ export const SplitTimes = () => {
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .map(tp => ({
-                field: tp.name,
+                field: tp.name as any,
                 headerName: tp.name,
                 resizable: true,
                 cellRenderer: (p: { data: SplitTime }) => (

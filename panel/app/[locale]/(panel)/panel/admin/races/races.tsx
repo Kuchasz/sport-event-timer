@@ -129,13 +129,12 @@ export const Races = () => {
 
     const defaultColumns: ColDef<Race>[] = [
         {
-            field: "index",
             width: 25,
             headerName: "",
             headerClass: "hidden",
-            valueGetter: "node.rowIndex + 1",
             sortable: false,
             filter: false,
+            valueGetter: r => r.node?.rowIndex
         },
         { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
         {
@@ -159,7 +158,6 @@ export const Races = () => {
             cellRenderer: RegistrationsRenderer,
         },
         {
-            field: "actions",
             width: 200,
             headerName: t("pages.races.grid.columns.actions"),
             cellStyle: { overflow: "visible" },

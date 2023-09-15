@@ -26,14 +26,14 @@ export const Results = () => {
     const defaultColumns: ColDef<Result>[] = [
         { field: "bibNumber", sortable: true, filter: true, headerName: t("pages.results.grid.columns.bibNumber") },
         {
-            field: "player.name",
+            field: "name",
             sortable: true,
             filter: true,
             headerName: t("pages.results.grid.columns.playerName"),
             cellRenderer: (p: { data: Result }) => <span>{p.data.name}</span>,
         },
         {
-            field: "player.lastName",
+            field: "lastName",
             sortable: true,
             filter: true,
             headerName: t("pages.results.grid.columns.playerLastName"),

@@ -16,8 +16,8 @@
         "@types/eslint": "8.4.3"
     },
     "dependencies": {
-        "@types/ws": "^8.5.4",
-        "node-fetch": "^3.2.10",
-        "ws": "^8.13.0"
+        "@types/ws": "^8.5.5",
+        "node-fetch": "^3.3.2",
+        "ws": "^8.14.1"
     }
 }

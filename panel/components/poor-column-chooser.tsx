@@ -10,7 +10,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
     valueKey,
     onChange,
 }: {
-    initialValue?: T[TValueKey][];
+    initialValue?: string[];
     items: T[];
     nameKey: TNameKey;
     valueKey: TValueKey;
@@ -22,7 +22,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
         <Listbox
             value={selected}
             multiple={true}
-            onChange={(e: T[TValueKey][]) => {
+            onChange={(e: string[]) => {
                 setSelected(e);
                 const selectedItemsValueKeys = e.map(ee => String(ee));
                 const desiredItems = items.filter(i => selectedItemsValueKeys.includes(String(i[valueKey]))).map(i => i[valueKey]);
@@ -52,11 +52,11 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                                         </span>
                                         {selected ? (
                                             <span className="absolute inset-y-0 left-0 flex items-center px-3">
-                                                <Icon path={mdiEye} size={.7} />
+                                                <Icon path={mdiEye} size={0.7} />
                                             </span>
                                         ) : (
                                             <span className="absolute inset-y-0 left-0 flex text-gray-300 items-center px-3">
-                                                <Icon path={mdiEyeOff} size={.7} />
+                                                <Icon path={mdiEyeOff} size={0.7} />
                                             </span>
                                         )}
                                     </>
