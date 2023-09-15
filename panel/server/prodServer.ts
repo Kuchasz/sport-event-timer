@@ -8,6 +8,7 @@ import { appRouter } from './routers/app';
 import { logger } from '../utils';
 import * as dotenv from 'dotenv';
 import * as path from "path";
+
 dotenv.config({ path: path.resolve(".env") })
 
 const port = parseInt(process.env.PORT || '3000', 10);

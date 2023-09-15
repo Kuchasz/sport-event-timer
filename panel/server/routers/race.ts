@@ -1,6 +1,6 @@
 import { protectedProcedure, publicProcedure, router } from "../trpc"
 import { z } from "zod";
-import { createExampleRaces } from "server/example-races";
+import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
 
 const raceSchema = z.object({
