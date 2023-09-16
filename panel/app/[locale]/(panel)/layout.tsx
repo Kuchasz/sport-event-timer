@@ -9,7 +9,7 @@ import deepmerge from "deepmerge";
 export default async function PanelLayout(props: { children: ReactNode; breadcrumbs: ReactNode; params: { locale: string } }) {
     const locale = useLocale();
 
-    if (props.params.locale !== locale) {
+    if (props?.params?.locale !== locale) {
         notFound();
     }
 
