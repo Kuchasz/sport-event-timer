@@ -104,11 +104,18 @@ export const SplitTimes = () => {
     const t = useTranslations();
 
     const defaultColumns: ColDef<SplitTime>[] = [
-        { field: "bibNumber", headerName: t('pages.splitTimes.grid.columns.bibNumber'), sortable: true, sort: "asc", width: 100, comparator: (valueA, valueB) => valueA - valueB },
+        {
+            field: "bibNumber",
+            headerName: t("pages.splitTimes.grid.columns.bibNumber"),
+            sortable: true,
+            sort: "asc",
+            width: 100,
+            comparator: (valueA, valueB) => valueA - valueB,
+        },
         {
             field: "name",
             resizable: true,
-            headerName: t('pages.splitTimes.grid.columns.playerName'),
+            headerName: t("pages.splitTimes.grid.columns.playerName"),
             sortable: true,
             filter: true,
             cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span>,
@@ -116,7 +123,7 @@ export const SplitTimes = () => {
         {
             field: "lastName",
             resizable: true,
-            headerName: t('pages.splitTimes.grid.columns.playerLastName'),
+            headerName: t("pages.splitTimes.grid.columns.playerLastName"),
             sortable: true,
             filter: true,
             cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span>,
@@ -144,7 +151,7 @@ export const SplitTimes = () => {
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {
         const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
-            title: t('pages.splitTimes.edit.title'),
+            title: t("pages.splitTimes.edit.title"),
             component: SplitTimeEdit,
             props: {
                 editedSplitTime,
@@ -155,32 +162,42 @@ export const SplitTimes = () => {
 
         if (splitTime) {
             await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId! });
-            refetch();
+            await refetch();
+            const rowNode = gridRef.current?.api.getRowNode(editedSplitTime.bibNumber!)!;
+
+            gridRef.current?.api.redrawRows({
+                rowNodes: [rowNode],
+            });
         }
     };
 
     const openRevertDialog = async (editedSplitTime: RevertedSplitTime) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: t('pages.splitTimes.revert.confirmation.title'),
+            title: t("pages.splitTimes.revert.confirmation.title"),
             component: Confirmation,
             props: {
-                message: t('pages.splitTimes.revert.confirmation.text'),
+                message: t("pages.splitTimes.revert.confirmation.text"),
             },
         });
 
         if (confirmed) {
             await revertSplitTimeMutation.mutateAsync(editedSplitTime);
-            refetch();
+            await refetch();
+            const rowNode = gridRef.current?.api.getRowNode(editedSplitTime.bibNumber)!;
+
+            gridRef.current?.api.redrawRows({
+                rowNodes: [rowNode],
+            });
         }
     };
 
     return (
         <>
             <Head>
-                <title>{t('pages.splitTimes.header.title')}</title>
+                <title>{t("pages.splitTimes.header.title")}</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t('pages.splitTimes.header.title')} description={t('pages.splitTimes.header.description')} />
+                <PageHeader title={t("pages.splitTimes.header.title")} description={t("pages.splitTimes.header.description")} />
                 {splitTimes && (
                     <div className="ag-theme-material h-full">
                         <AgGridReact<SplitTime>
