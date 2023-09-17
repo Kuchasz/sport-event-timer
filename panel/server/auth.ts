@@ -5,7 +5,6 @@ import { env } from "./../env/server";
 import type { GetServerSidePropsContext } from "next";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import Auth0 from "next-auth/providers/auth0";
-// import Email from "next-auth/providers/email";
 import { db } from "./db";
 
 // Next API route example - /pages/api/restricted.ts
