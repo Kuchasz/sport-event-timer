@@ -173,12 +173,7 @@ export const Players = () => {
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
                 <div className="mb-4 flex">
-                    {/* <Button onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.players.create.button")}</span>
-                    </Button> */}
                     <Button
-                        className="ml-2"
                         onClick={() => {
                             gridRef.current?.api.exportDataAsCsv({
                                 fileName: `players-${new Date().toLocaleDateString()}.csv`,

@@ -119,35 +119,6 @@ export const playerRouter = router({
 
         return await ctx.db.player.delete({ where: { id: input.playerId } });
     }),
-    // add: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
-    //     const classification = await ctx.db.classification.findFirstOrThrow({
-    //         where: { id: input.player.classificationId, race: { id: input.raceId } },
-    //         include: { race: true },
-    //     });
-    //     if (!classification) return;
-
-    //     const user = await ctx.db.user.findFirstOrThrow();
-
-    //     return await ctx.db.player.create({
-    //         data: {
-    //             raceId: input.raceId,
-    //             name: input.player.name,
-    //             lastName: input.player.lastName,
-    //             gender: input.player.gender,
-    //             bibNumber: input.player.bibNumber,
-    //             startTime: input.player.startTime,
-    //             birthDate: input.player.birthDate,
-    //             country: input.player.country,
-    //             city: input.player.city,
-    //             team: input.player.team,
-    //             email: input.player.email,
-    //             phoneNumber: input.player.phoneNumber,
-    //             icePhoneNumber: input.player.icePhoneNumber,
-    //             classificationId: classification.id,
-    //             registeredByUserId: user.id,
-    //         },
-    //     });
-    // }),
     promoteRegistration: protectedProcedure.input(promoteRegistrationSchema).mutation(async ({ input, ctx }) => {
         const { player } = input;
 
