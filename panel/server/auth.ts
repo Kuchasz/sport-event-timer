@@ -17,22 +17,21 @@ export const getServerAuthSession = async (ctx: {
 };
 
 export const authOptions = () => ({
-  // session: {
-  //   strategy: "jwt",
-  // },
+  callbacks: {
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id,
+      },
+    }),
+  },
   providers: [
     Auth0({
       clientId: env.AUTH0_CLIENT_ID,
       clientSecret: env.AUTH0_CLIENT_SECRET,
       issuer: env.AUTH0_ISSUER
-    }),
-    // Email({
-    //   server: "",
-    //   from: "",
-    //   async sendVerificationRequest(params) {
-    //     console.log(params);
-    //   }
-    // })
+    })
   ],
   adapter: PrismaAdapter(db),
   secret: env.NEXTAUTH_SECRET,
