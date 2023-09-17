@@ -35,6 +35,11 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                     <Label>Date</Label>
                     <PoorUTCDatepicker value={race.date} onChange={changeHandler("date")} />
                 </div>
+                <div className="p-2"></div>
+                <div className="grow">
+                    <Label>Players limit</Label>
+                    <PoorNumberInput value={race.playersLimit} onChange={changeHandler("playersLimit")} />
+                </div>
             </div>
             <div className="p-2"></div>
             <div className="flex">
@@ -51,11 +56,6 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                         </div>
                     </>
                 )}
-                <div className="p-2"></div>
-                <div className="grow basis-full">
-                    <Label>Players limit</Label>
-                    <PoorNumberInput value={race.playersLimit} onChange={changeHandler("playersLimit")} />
-                </div>
             </div>
             <div className="p-2"></div>
             <div className="flex">
