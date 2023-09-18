@@ -1,10 +1,10 @@
 import "../../../globals.scss";
-import PageLayout from "../../../components/page-layout";
 import { ReactNode } from "react";
 import { NextAuthProvider, TrpcProvider } from "providers";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
+import { PageLayout } from "components/page-layout";
 
 export default async function PanelLayout(props: { children: ReactNode; breadcrumbs: ReactNode; params: { locale: string } }) {
     const locale = useLocale();
