@@ -13,7 +13,6 @@ import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
