@@ -15,7 +15,7 @@ Application for making time measurements
 | 11/09/2023 | Fallback for public routes triggered with invalid raceId   | todo :date:                     |
 | 13/09/2023 | Turn prisma seed into 'example race generation' button     | :heavy_check_mark: (13/09/2023) |
 | 14/09/2023 | Allow example race customization                           | :heavy_check_mark: (14/09/2023) |
-| 17/09/2023 | Fix grid reload on data changes (updated)                  | todo :date:                     |
+| 17/09/2023 | Fix grid reload on data changes (updated)                  | :heavy_check_mark: (18/09/2023) |
 | 14/09/2023 | Country names localization                                 | :heavy_check_mark: (14/09/2023) |
 
 ## TODO

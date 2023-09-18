@@ -24,13 +24,14 @@ import { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
-const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refetch={props.context.refetch} playerRegistration={props.data} />;
+const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refreshRegistrationRow={props.context.refreshRegistrationRow} refetch={props.context.refetch} playerRegistration={props.data} />;
 const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
 
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
@@ -46,7 +47,15 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
     );
 };
 
-const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => {} }) => {
+const PlayerRegistrationPayment = ({
+    playerRegistration,
+    refetch,
+    refreshRegistrationRow,
+}: {
+    playerRegistration: PlayerRegistration;
+    refetch: () => {};
+    refreshRegistrationRow: (itemId: string) => void;
+}) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
     const t = useTranslations();
 
@@ -67,7 +76,8 @@ const PlayerRegistrationPayment = ({ playerRegistration, refetch }: { playerRegi
 
         if (confirmed) {
             await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
-            refetch();
+            await refetch();
+            refreshRegistrationRow(playerRegistration.id.toString());
         }
     };
     return (
@@ -116,9 +126,14 @@ export const PlayerRegistrations = () => {
                 utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
                 utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
 
-                refetch();
+                await refetch();
+                refreshRegistrationRow(playerRegistration.id.toString());
             }
         },
+    };
+
+    const refreshRegistrationRow = (itemId: string) => {
+        refreshRow(gridRef, itemId);
     };
 
     const deleteRegistrationAction = {
@@ -147,17 +162,31 @@ export const PlayerRegistrations = () => {
     const defaultColumns: ColDef<PlayerRegistration>[] = [
         {
             width: 25,
-            headerName: t('pages.playerRegistrations.grid.columns.index'),
+            headerName: t("pages.playerRegistrations.grid.columns.index"),
             headerClass: "hidden",
             sortable: false,
             filter: false,
-            valueGetter: r => r.node?.rowIndex
+            valueGetter: r => r.node?.rowIndex,
         },
-        { field: "name", headerName: t('pages.playerRegistrations.grid.columns.name'), flex: 1, sortable: true, resizable: true, filter: true },
-        { field: "lastName", headerName: t('pages.playerRegistrations.grid.columns.lastName'), flex: 1, sortable: true, resizable: true, filter: true },
+        {
+            field: "name",
+            headerName: t("pages.playerRegistrations.grid.columns.name"),
+            flex: 1,
+            sortable: true,
+            resizable: true,
+            filter: true,
+        },
+        {
+            field: "lastName",
+            headerName: t("pages.playerRegistrations.grid.columns.lastName"),
+            flex: 1,
+            sortable: true,
+            resizable: true,
+            filter: true,
+        },
         {
             field: "gender",
-            headerName: t('pages.playerRegistrations.grid.columns.gender'),
+            headerName: t("pages.playerRegistrations.grid.columns.gender"),
             sortable: true,
             filter: true,
             cellStyle: { justifyContent: "center", display: "flex" },
@@ -167,39 +196,67 @@ export const PlayerRegistrations = () => {
         },
         {
             field: "birthDate",
-            headerName: t('pages.playerRegistrations.grid.columns.birthDate'),
+            headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
             resizable: true,
             cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
             sortable: true,
             hide: true,
             maxWidth: 120,
         },
-        { field: "country", headerName: t('pages.playerRegistrations.grid.columns.country'), resizable: true, sortable: true, filter: true, maxWidth: 150, hide: true }, // width: 10 },
-        { field: "city", headerName: t('pages.playerRegistrations.grid.columns.city'), resizable: true, sortable: true, filter: true, hide: true }, // width: 20 },
+        {
+            field: "country",
+            headerName: t("pages.playerRegistrations.grid.columns.country"),
+            resizable: true,
+            sortable: true,
+            filter: true,
+            maxWidth: 150,
+            hide: true,
+        }, // width: 10 },
+        {
+            field: "city",
+            headerName: t("pages.playerRegistrations.grid.columns.city"),
+            resizable: true,
+            sortable: true,
+            filter: true,
+            hide: true,
+        }, // width: 20 },
         {
             field: "team",
-            headerName: t('pages.playerRegistrations.grid.columns.team'),
+            headerName: t("pages.playerRegistrations.grid.columns.team"),
             flex: 1,
             sortable: true,
             resizable: true,
             filter: true,
             cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
         },
-        { field: "phoneNumber", headerName: t('pages.playerRegistrations.grid.columns.phone'), resizable: true, filter: true, hide: true }, // width: 20 },
-        { field: "email", headerName: t('pages.playerRegistrations.grid.columns.email'), resizable: true, filter: true, hide: true }, // width: 20 },
-        { field: "icePhoneNumber", headerName: t('pages.playerRegistrations.grid.columns.icePhoneNumber'), resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "phoneNumber", headerName: t("pages.playerRegistrations.grid.columns.phone"), resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "email", headerName: t("pages.playerRegistrations.grid.columns.email"), resizable: true, filter: true, hide: true }, // width: 20 },
+        {
+            field: "icePhoneNumber",
+            headerName: t("pages.playerRegistrations.grid.columns.icePhoneNumber"),
+            resizable: true,
+            filter: true,
+            hide: true,
+        }, // width: 20 },
         {
             field: "registrationDate",
-            headerName: t('pages.playerRegistrations.grid.columns.registrationDate'),
+            headerName: t("pages.playerRegistrations.grid.columns.registrationDate"),
             maxWidth: 120,
             resizable: true,
             sortable: true,
             cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
         },
-        { field: "paymentDate", headerName: t('pages.playerRegistrations.grid.columns.payment'), sortable: true, resizable: true, maxWidth: 140, cellRenderer: PaymentRenderer },
+        {
+            field: "paymentDate",
+            headerName: t("pages.playerRegistrations.grid.columns.payment"),
+            sortable: true,
+            resizable: true,
+            maxWidth: 140,
+            cellRenderer: PaymentRenderer,
+        },
         {
             field: "promotedToPlayer",
-            headerName: t('pages.playerRegistrations.grid.columns.promotedToPlayer'),
+            headerName: t("pages.playerRegistrations.grid.columns.promotedToPlayer"),
             sortable: true,
             filter: true,
             resizable: true,
@@ -209,7 +266,7 @@ export const PlayerRegistrations = () => {
         {
             resizable: true,
             width: 130,
-            headerName: t('pages.playerRegistrations.grid.columns.actions'),
+            headerName: t("pages.playerRegistrations.grid.columns.actions"),
             cellRenderer: (props: { data: PlayerRegistration; context: { refetch: () => void } }) => (
                 <PoorActions
                     item={props.data}
@@ -228,7 +285,7 @@ export const PlayerRegistrations = () => {
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
-            title: t('pages.playerRegistrations.create.title'),
+            title: t("pages.playerRegistrations.create.title"),
             component: PlayerRegistrationCreate,
             props: {
                 raceId: raceId!,
@@ -248,7 +305,7 @@ export const PlayerRegistrations = () => {
 
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
         const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
-            title: t('pages.playerRegistrations.edit.title'),
+            title: t("pages.playerRegistrations.edit.title"),
             component: PlayerRegistrationEdit,
             props: {
                 raceId: raceId!,
@@ -258,7 +315,8 @@ export const PlayerRegistrations = () => {
 
         if (playerRegistration) {
             await editPlayerRegistrationMutation.mutateAsync({ raceId: raceId!, player: playerRegistration });
-            refetch();
+            await refetch();
+            refreshRegistrationRow(playerRegistration!.id!.toString());
         }
     };
 
@@ -268,11 +326,14 @@ export const PlayerRegistrations = () => {
                 <title>t('pages.playerRegistrations.header.title')</title>
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t('pages.playerRegistrations.header.title')} description={t('pages.playerRegistrations.header.description')} />
+                <PageHeader
+                    title={t("pages.playerRegistrations.header.title")}
+                    description={t("pages.playerRegistrations.header.description")}
+                />
                 <div className="mb-4 flex">
                     <Button onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">{t('pages.playerRegistrations.create.button')}</span>
+                        <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
                     </Button>
                     <Button
                         className="ml-2"
@@ -283,7 +344,7 @@ export const PlayerRegistrations = () => {
                         }}
                     >
                         <Icon size={1} path={mdiExport} />
-                        <span className="ml-2">{t('pages.playerRegistrations.export.button')}</span>
+                        <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>
                     <PoorColumnChooser
                         items={defaultColumns}
@@ -307,7 +368,7 @@ export const PlayerRegistrations = () => {
                 <div className="ag-theme-material h-full">
                     <AgGridReact<PlayerRegistration>
                         ref={gridRef}
-                        context={{ refetch }}
+                        context={{ refetch, refreshRegistrationRow }}
                         onRowDoubleClicked={e => openEditDialog(e.data)}
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}

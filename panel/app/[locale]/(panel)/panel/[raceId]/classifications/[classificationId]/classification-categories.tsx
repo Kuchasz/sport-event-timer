@@ -19,6 +19,7 @@ import { CategoryEdit } from "components/category-edit";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams() as { classificationId: string };
@@ -102,7 +103,7 @@ export const ClassificationCategories = () => {
         }
     };
 
-    const openEditDialog = async (editedCategory: Category) => {
+    const openEditDialog = async (editedCategory?: Category) => {
         const category = await Demodal.open<Category>(NiceModal, {
             title: t("pages.classifications.categories.edit.title"),
             component: CategoryEdit,
@@ -112,7 +113,8 @@ export const ClassificationCategories = () => {
         });
         if (category) {
             await editCategoryMutation.mutateAsync({ ...category });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedCategory!.id.toString());
         }
     };
 
@@ -191,7 +193,7 @@ export const ClassificationCategories = () => {
                     <AgGridReact<Category>
                         ref={gridRef}
                         context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data!)}
+                        onRowDoubleClicked={e => openEditDialog(e.data)}
                         suppressCellFocus={true}
                         suppressAnimationFrame={true}
                         columnDefs={defaultColumns}

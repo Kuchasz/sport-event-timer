@@ -23,6 +23,7 @@ import { Gender } from "@set/timer/dist/model";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 // type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
@@ -160,7 +161,8 @@ export const Players = () => {
 
         if (player) {
             await editPlayerMutation.mutateAsync({ raceId: raceId!, player });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedPlayer!.id.toString());
         }
     };
 

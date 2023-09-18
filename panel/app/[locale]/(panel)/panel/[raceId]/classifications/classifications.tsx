@@ -17,6 +17,7 @@ import { ColDef } from "@ag-grid-community/core";
 import { Route } from "next";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
@@ -79,7 +80,8 @@ export const Classifications = () => {
 
         if (classification) {
             await updateClassificationMutation.mutateAsync(classification);
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedClassification!.id.toString());
         }
     };
 
