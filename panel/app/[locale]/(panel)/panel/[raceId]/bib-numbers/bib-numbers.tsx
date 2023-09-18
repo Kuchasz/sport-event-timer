@@ -18,6 +18,7 @@ import { ColDef } from "@ag-grid-community/core";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
@@ -135,7 +136,8 @@ export const BibNumbers = () => {
 
         if (bibNumber) {
             await updatebibNumberMutation.mutateAsync(bibNumber);
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedBibNumber!.id.toString());
         }
     };
 

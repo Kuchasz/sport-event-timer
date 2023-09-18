@@ -18,6 +18,7 @@ import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -72,7 +73,8 @@ export const MyRaces = () => {
         iconPath: mdiLockOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -82,7 +84,8 @@ export const MyRaces = () => {
         iconPath: mdiLockOpenVariantOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -102,7 +105,8 @@ export const MyRaces = () => {
 
                 if (confirmed) {
                     await wipeRaceMutation.mutateAsync({ raceId: race.id });
-                    refetch();
+                    await refetch();
+                    refreshRow(gridRef, race.id.toString());
                 }
             },
         },
@@ -136,7 +140,12 @@ export const MyRaces = () => {
             filter: false,
             valueGetter: r => r.node?.rowIndex,
         },
-        { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
+        { 
+            valueGetter: r => r.data?.name, 
+            headerName: t("pages.races.grid.columns.name"), 
+            sortable: true, 
+            filter: true 
+        },
         {
             field: "date",
             headerName: t("pages.races.grid.columns.date"),
@@ -202,7 +211,8 @@ export const MyRaces = () => {
 
         if (race) {
             await updateRaceMutation.mutateAsync(race);
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedRace!.id.toString());
         }
     };
 

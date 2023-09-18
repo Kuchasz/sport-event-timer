@@ -18,6 +18,7 @@ import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -72,7 +73,8 @@ export const Races = () => {
         iconPath: mdiLockOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -82,7 +84,8 @@ export const Races = () => {
         iconPath: mdiLockOpenVariantOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-            refetch();
+            await refetch();
+            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -102,7 +105,8 @@ export const Races = () => {
 
                 if (confirmed) {
                     await wipeRaceMutation.mutateAsync({ raceId: race.id });
-                    refetch();
+                    await refetch();
+                    refreshRow(gridRef, race.id.toString());
                 }
             },
         },
@@ -202,7 +206,8 @@ export const Races = () => {
 
         if (race) {
             await updateRaceMutation.mutateAsync(race);
-            refetch();
+            await refetch();
+            refreshRow(gridRef, editedRace!.id.toString());
         }
     };
 

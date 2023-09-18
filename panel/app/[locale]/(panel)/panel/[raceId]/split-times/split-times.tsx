@@ -16,6 +16,7 @@ import { useCallback, useRef } from "react";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
 import { useTranslations } from "next-intl";
+import { refreshRow } from "ag-grid";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -163,11 +164,7 @@ export const SplitTimes = () => {
         if (splitTime) {
             await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId! });
             await refetch();
-            const rowNode = gridRef.current?.api.getRowNode(editedSplitTime.bibNumber!)!;
-
-            gridRef.current?.api.redrawRows({
-                rowNodes: [rowNode],
-            });
+            refreshRow(gridRef, editedSplitTime.bibNumber!);
         }
     };
 
@@ -183,11 +180,7 @@ export const SplitTimes = () => {
         if (confirmed) {
             await revertSplitTimeMutation.mutateAsync(editedSplitTime);
             await refetch();
-            const rowNode = gridRef.current?.api.getRowNode(editedSplitTime.bibNumber)!;
-
-            gridRef.current?.api.redrawRows({
-                rowNodes: [rowNode],
-            });
+            refreshRow(gridRef, editedSplitTime.bibNumber!);
         }
     };
 
