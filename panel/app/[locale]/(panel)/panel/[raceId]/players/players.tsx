@@ -6,11 +6,9 @@ import { Confirmation } from "../../../../../../components/confirmation";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-// import { mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { mdiExport, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../../../../../components/modal";
-// import { PlayerCreate } from "../../../../../../components/player-create";
 import { PlayerEdit } from "components/player-edit";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { ColDef } from "@ag-grid-community/core";
@@ -26,7 +24,6 @@ import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
 
 type Player = AppRouterOutputs["player"]["players"][0];
-// type CreatedPlayer = AppRouterInputs["player"]["add"]["player"];
 type EditedPlayer = AppRouterInputs["player"]["edit"]["player"];
 
 const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () => void }) => {
@@ -58,7 +55,6 @@ export const Players = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId! });
-    // const addPlayerMutation = trpc.player.add.useMutation();
     const editPlayerMutation = trpc.player.edit.useMutation();
     const gridRef = useRef<AgGridReact<Player>>(null);
 
@@ -69,7 +65,7 @@ export const Players = () => {
             headerClass: "hidden",
             sortable: false,
             filter: false,
-            valueGetter: r => r.node?.rowIndex
+            valueGetter: r => r.node?.rowIndex,
         },
         {
             field: "classificationId",
@@ -134,21 +130,6 @@ export const Players = () => {
         gridRef.current?.api.sizeColumnsToFit();
     }, [gridColumnState]);
 
-    // const openCreateDialog = async () => {
-    //     const player = await Demodal.open<CreatedPlayer>(NiceModal, {
-    //         title: t("pages.players.create.title"),
-    //         component: PlayerCreate,
-    //         props: {
-    //             raceId: raceId!,
-    //         },
-    //     });
-
-    //     if (player) {
-    //         await addPlayerMutation.mutateAsync({ raceId: raceId!, player });
-    //         refetch();
-    //     }
-    // };
-
     const openEditDialog = async (editedPlayer?: Player) => {
         const player = await Demodal.open<EditedPlayer>(NiceModal, {
             title: t("pages.players.edit.title"),
@@ -176,6 +157,7 @@ export const Players = () => {
                 <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
                 <div className="mb-4 flex">
                     <Button
+                        outline
                         onClick={() => {
                             gridRef.current?.api.exportDataAsCsv({
                                 fileName: `players-${new Date().toLocaleDateString()}.csv`,

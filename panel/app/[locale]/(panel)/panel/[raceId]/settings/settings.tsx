@@ -80,7 +80,7 @@ export const Settings = () => {
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title={t('pages.settings.header.title')} description={t('pages.settings.header.description')} />
                 <div className="mb-4 flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button outline onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">{t('pages.settings.apiKeys.create.button')}</span>
                     </Button>
