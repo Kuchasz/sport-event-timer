@@ -9,7 +9,7 @@ export const Button = ({ outline, children, className, ...props }: ButtonProps) 
             type="button"
             {...props}
             className={
-                `flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${className}`}>
+                `flex items-center justify-center rounded-full border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${className}`}>
             {children}
         </button>
     );

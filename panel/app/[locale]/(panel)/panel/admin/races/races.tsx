@@ -219,7 +219,7 @@ export const Races = () => {
             <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button outline onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>

@@ -149,15 +149,15 @@ export const BibNumbers = () => {
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button outline onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">{t('pages.bibNumbers.create.button')}</span>
                     </Button>
-                    <Button className="ml-2" onClick={openCreateManyDialog}>
+                    <Button outline className="ml-2" onClick={openCreateManyDialog}>
                         {/* <Icon size={1} path={mdiPlusM} /> */}
                         {t('pages.bibNumbers.createMany.button')}
                     </Button>{" "}
-                    <Button className="ml-2" onClick={openDeleteAllDialog}>
+                    <Button outline className="ml-2" onClick={openDeleteAllDialog}>
                         <Icon size={1} path={mdiRestore} className="mr-2" />
                         {t('pages.bibNumbers.deleteAll.button')}
                     </Button>

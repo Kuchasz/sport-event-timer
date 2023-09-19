@@ -331,11 +331,12 @@ export const PlayerRegistrations = () => {
                     description={t("pages.playerRegistrations.header.description")}
                 />
                 <div className="mb-4 flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button outline onClick={openCreateDialog}>
                         <Icon size={1} path={mdiPlus} />
                         <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
                     </Button>
                     <Button
+                        outline
                         className="ml-2"
                         onClick={() => {
                             gridRef.current?.api.exportDataAsCsv({

@@ -71,11 +71,6 @@ export const Results = () => {
             </Head>
             <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
                 <PageHeader title={t('pages.results.header.title')} description={t('pages.results.header.description')} />
-                {/* <div className="mb-4 inline-flex">
-                    <Button onClick={() => {}}>
-                        <Icon size={1} path={mdiPlus} />
-                    </Button>
-                </div> */}
                 {results && (
                     <div className="ag-theme-material h-full">
                         <AgGridReact<Result>
