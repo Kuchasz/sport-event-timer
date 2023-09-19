@@ -18,6 +18,7 @@ Application for making time measurements
 | 14/09/2023 | Country names localization                                 | :heavy_check_mark: (14/09/2023) |
 | 17/09/2023 | Fix grid reload on data changes (updated)                  | :heavy_check_mark: (18/09/2023) |
 | 19/09/2023 | Support for multiple split times on the same timing point  | todo :date:                     |
+| 19/09/2023 | Add notifications to successful/failed actions             | todo :date:                     |
 
 ## TODO
 
