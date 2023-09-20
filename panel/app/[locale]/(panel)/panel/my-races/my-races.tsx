@@ -58,9 +58,9 @@ const Registrations = ({ race }: { race: Race }) => {
 
 export const MyRaces = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
-    const updateRaceMutation = trpc.race.update.useMutation();
+    // const updateRaceMutation = trpc.race.update.useMutation();
     const wipeRaceMutation = trpc.action.wipe.useMutation();
-    const addRaceMutation = trpc.race.add.useMutation();
+    // const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const gridRef = useRef<AgGridReact<Race>>(null);
@@ -191,7 +191,7 @@ export const MyRaces = () => {
         });
 
         if (race) {
-            await addRaceMutation.mutateAsync(race);
+            // await addRaceMutation.mutateAsync(race);
             refetch();
         }
     };
@@ -210,7 +210,7 @@ export const MyRaces = () => {
         });
 
         if (race) {
-            await updateRaceMutation.mutateAsync(race);
+            // await updateRaceMutation.mutateAsync(race);
             await refetch();
             refreshRow(gridRef, editedRace!.id.toString());
         }

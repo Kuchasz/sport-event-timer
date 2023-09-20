@@ -14,6 +14,7 @@ type RaceFormProps = {
     onReject: () => void;
     onResolve: (race: Race) => void;
     initialRace: Race;
+    isLoading: boolean;
 };
 
 export const registrationEnabledValues = [
@@ -21,7 +22,7 @@ export const registrationEnabledValues = [
     { name: "Disabled", value: false },
 ];
 
-export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) => {
+export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFormProps) => {
     const [race, changeHandler] = useFormState(initialRace, [initialRace]);
     return (
         <div className="flex flex-col">
@@ -75,7 +76,9 @@ export const RaceForm = ({ onReject, onResolve, initialRace }: RaceFormProps) =>
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...race })}>Save</Button>
+                <Button loading={isLoading} onClick={() => onResolve({ ...race })}>
+                    Save
+                </Button>
             </div>
         </div>
     );
