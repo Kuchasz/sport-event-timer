@@ -1,24 +1,28 @@
+import { useDeferedState } from "hooks";
 import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { loading?: boolean; outline?: boolean };
 
 export const Button = ({ outline, children, loading, className, ...props }: ButtonProps) => {
+    const isLoading = useDeferedState(loading);
+
     const visuals = outline
         ? "bg-blue-100 text-blue-900 hover:bg-blue-200"
         : "bg-blue-500 text-white focus-visible:ring-blue-500 hover:bg-blue-600";
 
-    const pointerEvents = loading ? "pointer-events-none" : "";
+    const pointerEvents = isLoading ? "pointer-events-none" : "";
 
-    const loadingVisuals = loading ? "opacity-0 pointer-events-none" : "";
+    const loadingVisuals = isLoading ? "opacity-0 pointer-events-none" : "";
 
     return (
         <button
             disabled={loading}
+            onClick={loading ? () => null : props.onClick}
             type="button"
             {...props}
             className={`flex relative transition-all items-center justify-center rounded-full border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${className}`}
         >
-            {loading && <LoadingSpin fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
+            {isLoading && <LoadingSpin fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
             <div className={`flex transition-all items-center ${loadingVisuals}`}>{children}</div>
         </button>
     );

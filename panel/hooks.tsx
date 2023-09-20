@@ -76,3 +76,13 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
 
     return systemTime;
 };
+
+export const useDeferedState = <T,>(deferedValue: T, timeout = 150) => {
+    const [deferedState, setDeferedState] = useState<T>(deferedValue);
+
+    setTimeout(() => {
+        setDeferedState(deferedValue);
+    }, timeout);
+
+    return deferedState;
+};
