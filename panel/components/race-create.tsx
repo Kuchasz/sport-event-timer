@@ -1,5 +1,6 @@
 import { AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
+import { trpc } from "trpc-core";
 
 type CreateRace = AppRouterInputs["race"]["add"];
 
@@ -9,13 +10,19 @@ type RaceCreateProps = {
 };
 
 export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
+    const addRaceMutation = trpc.race.add.useMutation();
+
+    const processRaceCreate = async (race: CreateRace) => {
+        await addRaceMutation.mutateAsync(race);
+        onResolve(race);
+    };
 
     const race: CreateRace = {
         name: "",
         date: new Date(),
         registrationEnabled: false,
-        useSampleData: false
+        useSampleData: false,
     };
 
-    return <RaceForm onReject={onReject} onResolve={onResolve} initialRace={race} />;
+    return <RaceForm isLoading={addRaceMutation.isLoading} onReject={onReject} onResolve={processRaceCreate} initialRace={race} />;
 };
