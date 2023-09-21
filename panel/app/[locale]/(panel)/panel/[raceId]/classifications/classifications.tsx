@@ -2,8 +2,8 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { ClassificationCreate } from "components/classification-create";
-import { ClassificationEdit } from "components/classification-edit";
+import { ClassificationCreate } from "components/panel/classification/classification-create";
+import { ClassificationEdit } from "components/panel/classification/classification-edit";
 import { Demodal } from "demodal";
 import { trpc } from "../../../../../../trpc-core";
 import { mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
@@ -38,8 +38,6 @@ const OpenCategoriesButton = ({ classification }: { classification: Classificati
 export const Classifications = () => {
     const raceId = useCurrentRaceId();
     const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId! }, { initialData: [] });
-    const updateClassificationMutation = trpc.classification.update.useMutation();
-    const addClassifiationMutation = trpc.classification.add.useMutation();
     const gridRef = useRef<AgGridReact<Classification>>(null);
     const t = useTranslations();
 
@@ -51,7 +49,6 @@ export const Classifications = () => {
         });
 
         if (classification) {
-            await addClassifiationMutation.mutateAsync(classification);
             refetch();
         }
     };
@@ -79,7 +76,6 @@ export const Classifications = () => {
         });
 
         if (classification) {
-            await updateClassificationMutation.mutateAsync(classification);
             await refetch();
             refreshRow(gridRef, editedClassification!.id.toString());
         }
