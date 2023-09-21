@@ -9,7 +9,7 @@ import { trpc } from "../../../../../../trpc-core";
 import { mdiExport, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../../../../../components/modal";
-import { PlayerEdit } from "components/player-edit";
+import { PlayerEdit } from "components/panel/player/player-edit";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -55,7 +55,6 @@ export const Players = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId! });
-    const editPlayerMutation = trpc.player.edit.useMutation();
     const gridRef = useRef<AgGridReact<Player>>(null);
 
     const defaultColumns: ColDef<Player>[] = [
@@ -141,7 +140,6 @@ export const Players = () => {
         });
 
         if (player) {
-            await editPlayerMutation.mutateAsync({ raceId: raceId!, player });
             await refetch();
             refreshRow(gridRef, editedPlayer!.id.toString());
         }

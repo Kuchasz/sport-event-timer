@@ -1,8 +1,8 @@
-import { Button } from "./button";
+import { Button } from "../../button";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { PoorSelect } from "./poor-select";
-import { PoorTimepicker } from "./poor-timepicker";
-import { PoorCombo } from "./poor-combo";
+import { PoorSelect } from "../../poor-select";
+import { PoorTimepicker } from "../../poor-timepicker";
+import { PoorCombo } from "../../poor-combo";
 import { Form, FormInput } from "form";
 import { playerSchema } from "modules/player/models";
 import { useTranslations } from "next-intl";
@@ -15,9 +15,10 @@ type PlayerFormProps = {
     initialPlayer: Player;
     classifications: AppRouterOutputs["classification"]["classifications"];
     bibNumbers: string[];
+    isLoading: boolean;
 };
 
-export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications, bibNumbers }: PlayerFormProps) => {
+export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications, bibNumbers, isLoading }: PlayerFormProps) => {
     const t = useTranslations();
 
     return (
@@ -71,7 +72,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );

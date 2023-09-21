@@ -15,6 +15,7 @@ type PlayerEditProps = {
 export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: PlayerEditProps) => {
     const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId! });
     const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId! });
+    const editPlayerMutation = trpc.player.edit.useMutation();
     if (!classifications || !availableNumbers) return;
 
     const player: EditPlayer = {
@@ -23,10 +24,17 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
         startTime: editedPlayer.startTime as number,
         classificationId: editedPlayer.classificationId,
     };
+
+    const editPlayer = async (editedPlayer: EditPlayer) => {
+        await editPlayerMutation.mutateAsync({ raceId: raceId!, player });
+        onResolve(editedPlayer);
+    };
+
     return (
         <PlayerForm
+            isLoading={editPlayerMutation.isLoading}
             onReject={onReject}
-            onResolve={onResolve}
+            onResolve={editPlayer}
             classifications={classifications}
             initialPlayer={player}
             bibNumbers={availableNumbers}
