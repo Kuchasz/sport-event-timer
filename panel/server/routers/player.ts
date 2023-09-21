@@ -157,6 +157,7 @@ export const playerRouter = router({
 
         return await ctx.db.player.create({
             data: {
+                ...player,
                 raceId: registration.raceId,
                 playerProfileId: registration.playerProfileId,
                 classificationId: classification.id,
