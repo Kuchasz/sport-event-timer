@@ -1,9 +1,9 @@
-import { Button } from "./button";
-import { Label } from "./label";
-import { PoorInput } from "./poor-input";
+import { Button } from "../../button";
+import { Label } from "../../label";
+import { PoorInput } from "../../poor-input";
 import { useFormState } from "hooks";
 import { AppRouterInputs } from "trpc";
-import { PoorNumberInput } from "./poor-number-input";
+import { PoorNumberInput } from "../../poor-number-input";
 import { RadioGroup } from "@headlessui/react";
 import classNames from "classnames";
 
@@ -13,9 +13,10 @@ type CategoryFormProps = {
     onReject: () => void;
     onResolve: (category: Category) => void;
     initialCategory: Category;
+    isLoading: boolean;
 };
 
-export const CategoryForm = ({ onReject, onResolve, initialCategory }: CategoryFormProps) => {
+export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }: CategoryFormProps) => {
     const [category, changeHandler] = useFormState(initialCategory, [initialCategory]);
 
     return (
@@ -67,7 +68,9 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory }: CategoryF
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>
-                <Button onClick={() => onResolve({ ...category })}>Save</Button>
+                <Button loading={isLoading} onClick={() => onResolve({ ...category })}>
+                    Save
+                </Button>
             </div>
         </div>
     );
