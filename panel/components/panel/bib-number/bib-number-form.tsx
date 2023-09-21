@@ -1,6 +1,6 @@
-import { Button } from "./button";
+import { Button } from "../../button";
 import { AppRouterInputs } from "trpc";
-import { PoorInput } from "./poor-input";
+import { PoorInput } from "../../poor-input";
 import { Form, FormInput } from "form";
 import { bibNumberSchema } from "modules/bib-number/models";
 import { useTranslations } from "next-intl";
@@ -11,9 +11,10 @@ type BibNumberFormProps = {
     onReject: () => void;
     onResolve: (BibNumber: BibNumber) => void;
     initialBibNumber: BibNumber;
+    isLoading: boolean;
 };
 
-export const BibNumberForm = ({ onReject, onResolve, initialBibNumber }: BibNumberFormProps) => {
+export const BibNumberForm = ({ onReject, onResolve, initialBibNumber, isLoading }: BibNumberFormProps) => {
     const t = useTranslations();
     return (
         <Form<BibNumber> validationSchema={bibNumberSchema} initialValues={initialBibNumber} onSubmit={onResolve}>
@@ -31,7 +32,7 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber }: BibNumb
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );

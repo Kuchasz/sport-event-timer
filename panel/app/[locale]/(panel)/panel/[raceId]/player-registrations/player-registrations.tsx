@@ -10,8 +10,8 @@ import { trpc } from "../../../../../../trpc-core";
 import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../../hooks";
-import { PlayerRegistrationCreate } from "components/player-registration-create";
-import { PlayerRegistrationEdit } from "components/player-registration-edit";
+import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
+import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import classNames from "classnames";
 import { ColDef } from "@ag-grid-community/core";
@@ -31,7 +31,13 @@ type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["p
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
-const PaymentRenderer = (props: any) => <PlayerRegistrationPayment refreshRegistrationRow={props.context.refreshRegistrationRow} refetch={props.context.refetch} playerRegistration={props.data} />;
+const PaymentRenderer = (props: any) => (
+    <PlayerRegistrationPayment
+        refreshRegistrationRow={props.context.refreshRegistrationRow}
+        refetch={props.context.refetch}
+        playerRegistration={props.data}
+    />
+);
 const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
 
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
@@ -100,8 +106,6 @@ export const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! }, { initialData: [] });
-    const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
-    const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
     const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
@@ -293,8 +297,7 @@ export const PlayerRegistrations = () => {
         });
 
         if (player) {
-            await addPlayerRegistrationMutation.mutateAsync({ raceId: raceId!, player });
-            refetch();
+            await refetch();
         }
     };
 
@@ -314,7 +317,6 @@ export const PlayerRegistrations = () => {
         });
 
         if (playerRegistration) {
-            await editPlayerRegistrationMutation.mutateAsync({ raceId: raceId!, player: playerRegistration });
             await refetch();
             refreshRegistrationRow(playerRegistration!.id!.toString());
         }

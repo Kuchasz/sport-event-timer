@@ -3,8 +3,8 @@
 import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { BibNumberCreate } from "components/bib-number-create";
-import { BibNumberEdit } from "components/bib-number-edit";
+import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
+import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
 import { Demodal } from "demodal";
 import { trpc } from "../../../../../../trpc-core";
 import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
@@ -54,8 +54,6 @@ export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId! });
     const gridRef = useRef<AgGridReact<BibNumber>>(null);
-    const updatebibNumberMutation = trpc.bibNumber.update.useMutation();
-    const addBibNumberMutation = trpc.bibNumber.add.useMutation();
     const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
     const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
@@ -88,7 +86,6 @@ export const BibNumbers = () => {
         });
 
         if (bibNumber) {
-            await addBibNumberMutation.mutateAsync(bibNumber);
             refetch();
         }
     };
@@ -135,7 +132,6 @@ export const BibNumbers = () => {
         });
 
         if (bibNumber) {
-            await updatebibNumberMutation.mutateAsync(bibNumber);
             await refetch();
             refreshRow(gridRef, editedBibNumber!.id.toString());
         }

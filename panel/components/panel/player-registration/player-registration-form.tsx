@@ -1,13 +1,13 @@
-import { Button } from "./button";
+import { Button } from "../../button";
 import { AppRouterInputs } from "trpc";
-import { PoorDatepicker } from "./poor-datepicker";
-import { PoorInput } from "./poor-input";
+import { PoorDatepicker } from "../../poor-datepicker";
+import { PoorInput } from "../../poor-input";
 import { countryCodes } from "contry-codes";
-import { PoorSelect } from "./poor-select";
+import { PoorSelect } from "../../poor-select";
 import { useCurrentRaceId } from "hooks";
 import { genders } from "@set/utils/dist/gender";
 import { Form, FormInput } from "form";
-import { PoorCombo } from "./poor-combo";
+import { PoorCombo } from "../../poor-combo";
 import { trpc } from "trpc-core";
 import { playerRegistrationSchema } from "modules/player-registration/models";
 import { useTranslations } from "next-intl";
@@ -18,9 +18,10 @@ type PlayerRegistrationFormProps = {
     onReject: () => void;
     onResolve: (player: PlayerRegistration) => void;
     initialPlayerRegistration: PlayerRegistration;
+    isLoading: boolean;
 };
 
-export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegistration }: PlayerRegistrationFormProps) => {
+export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegistration, isLoading }: PlayerRegistrationFormProps) => {
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
@@ -177,7 +178,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );

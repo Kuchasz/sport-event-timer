@@ -1,5 +1,7 @@
 import { AppRouterInputs } from "trpc";
 import { PlayerRegistrationForm } from "./player-registration-form";
+import { trpc } from "trpc-core";
+import { useCurrentRaceId } from "hooks";
 
 type CreatePlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
@@ -9,6 +11,9 @@ type PlayerRegistrationCreateProps = {
 };
 
 export const PlayerRegistrationCreate = ({ onReject, onResolve }: PlayerRegistrationCreateProps) => {
+    const addPlayerRegistrationMutation = trpc.playerRegistration.add.useMutation();
+    const raceId = useCurrentRaceId();
+
     const playerRegistration: CreatePlayerRegistration = {
         name: undefined as unknown as string,
         lastName: undefined as unknown as string,
@@ -18,13 +23,19 @@ export const PlayerRegistrationCreate = ({ onReject, onResolve }: PlayerRegistra
         email: "",
         phoneNumber: "",
         country: "PL",
-        hasPaid: false
+        hasPaid: false,
+    };
+
+    const processPlayerRegistrationCreate = async (player: CreatePlayerRegistration) => {
+        await addPlayerRegistrationMutation.mutateAsync({ raceId: raceId, player });
+        onResolve(player);
     };
 
     return (
         <PlayerRegistrationForm
+            isLoading={addPlayerRegistrationMutation.isLoading}
             onReject={onReject}
-            onResolve={onResolve}
+            onResolve={processPlayerRegistrationCreate}
             initialPlayerRegistration={playerRegistration}
         />
     );

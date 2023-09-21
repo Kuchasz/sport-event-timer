@@ -1,5 +1,7 @@
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PlayerRegistrationForm } from "./player-registration-form";
+import { trpc } from "trpc-core";
+import { useCurrentRaceId } from "hooks";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type EditPlayerRegistration = AppRouterInputs["playerRegistration"]["edit"]["player"];
@@ -11,6 +13,9 @@ type PlayerRegistrationEditProps = {
 };
 
 export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onResolve }: PlayerRegistrationEditProps) => {
+    const editPlayerRegistrationMutation = trpc.playerRegistration.edit.useMutation();
+    const raceId = useCurrentRaceId();
+
     const playerRegistration: EditPlayerRegistration = {
         id: editedPlayerRegistration.id,
         birthDate: editedPlayerRegistration.birthDate,
@@ -26,5 +31,17 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
         hasPaid: editedPlayerRegistration.hasPaid,
     };
 
-    return <PlayerRegistrationForm onReject={onReject} onResolve={onResolve} initialPlayerRegistration={playerRegistration} />;
+    const processPlayerRegistrationEdit = async (editedPlayerRegistration: EditPlayerRegistration) => {
+        await editPlayerRegistrationMutation.mutateAsync({ raceId, player: editedPlayerRegistration });
+        onResolve(editedPlayerRegistration);
+    };
+
+    return (
+        <PlayerRegistrationForm
+            isLoading={editPlayerRegistrationMutation.isLoading}
+            onReject={onReject}
+            onResolve={processPlayerRegistrationEdit}
+            initialPlayerRegistration={playerRegistration}
+        />
+    );
 };
