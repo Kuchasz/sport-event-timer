@@ -1,10 +1,10 @@
-import { useDeferedState } from "hooks";
+import { useDeferredValue } from "hooks";
 import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { loading?: boolean; outline?: boolean };
 
 export const Button = ({ outline, children, loading, className, ...props }: ButtonProps) => {
-    const isLoading = useDeferedState(loading);
+    const isLoading = useDeferredValue(loading);
 
     const visuals = outline
         ? "bg-blue-100 text-blue-900 hover:bg-blue-200"
