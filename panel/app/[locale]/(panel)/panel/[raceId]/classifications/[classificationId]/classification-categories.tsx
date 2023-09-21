@@ -14,8 +14,8 @@ import { GenderIcon } from "components/gender-icon";
 import { Demodal } from "demodal";
 import { NiceModal } from "components/modal";
 import { Confirmation } from "components/confirmation";
-import { CategoryCreate } from "components/category-create";
-import { CategoryEdit } from "components/category-edit";
+import { CategoryCreate } from "components/panel/classification/category-create";
+import { CategoryEdit } from "components/panel/classification/category-edit";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
 import { useTranslations } from "next-intl";
@@ -82,8 +82,6 @@ export const ClassificationCategories = () => {
         { classificationId: classificationId! },
         { initialData: [], enabled: !!classificationId }
     );
-    const addCategoryMutation = trpc.classification.addCategory.useMutation();
-    const editCategoryMutation = trpc.classification.updateCategory.useMutation();
     const t = useTranslations();
 
     const onFirstDataRendered = useCallback(() => {
@@ -98,7 +96,6 @@ export const ClassificationCategories = () => {
         });
 
         if (category) {
-            await addCategoryMutation.mutateAsync(category);
             refetch();
         }
     };
@@ -112,7 +109,6 @@ export const ClassificationCategories = () => {
             },
         });
         if (category) {
-            await editCategoryMutation.mutateAsync({ ...category });
             await refetch();
             refreshRow(gridRef, editedCategory!.id.toString());
         }
