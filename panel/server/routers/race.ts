@@ -154,6 +154,8 @@ export const raceRouter =
 
                     const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
 
+                    await ctx.db.classification.create({ data: { raceId: race.id, name: "Base" } });
+
                     await ctx.db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } })
                 }
             })
