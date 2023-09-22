@@ -1,8 +1,8 @@
 "use client";
 import { mdiPen, mdiPlus, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
-import { ApiKeyCreate } from "components/api-key-create";
-import { ApiKeyEdit } from "components/api-key-edit";
+import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
+import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
 import { Button } from "components/button";
 import { Confirmation } from "components/confirmation";
 import { NiceModal } from "components/modal";
@@ -21,9 +21,8 @@ export const Settings = () => {
     const raceId = useCurrentRaceId();
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId! });
-    const addKeyMutation = trpc.apiKey.addApiKey.useMutation();
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
-    const editApiKeyMutation = trpc.apiKey.editApiKey.useMutation();
+    
     const t = useTranslations();
 
     const openCreateDialog = async () => {
@@ -36,7 +35,6 @@ export const Settings = () => {
         });
 
         if (apiKey) {
-            await addKeyMutation.mutateAsync({ raceId: raceId!, key: apiKey });
             refetch();
         }
     };
@@ -67,7 +65,6 @@ export const Settings = () => {
         });
 
         if (key) {
-            await editApiKeyMutation.mutateAsync({ raceId: raceId!, key });
             refetch();
         }
     };
