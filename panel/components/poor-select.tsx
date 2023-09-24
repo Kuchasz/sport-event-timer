@@ -94,16 +94,12 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
 }) => {
     const [selected, setSelected] = useState(initialValue);
 
-    // useEffect(() => {
-    //     !selected && setSelected(initialValue);
-    // }, [initialValue]);
-
     const desiredItem =
         selected && items?.length > 0
             ? items.find(i => String(i[valueKey]) === String(selected))!
             : initialValue && items?.length > 0
-                ? items.find(i => String(i[valueKey]) === String(initialValue))!
-                : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
+            ? items.find(i => String(i[valueKey]) === String(initialValue))!
+            : ({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
 
     return (
         <div className="min-w-[14rem]">
