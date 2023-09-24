@@ -8,8 +8,8 @@ import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { TimingPointCreate } from "components/timing-point-create";
-import { TimingPointEdit } from "components/timing-point-edit";
+import { TimingPointCreate } from "components/panel/timing-point/timing-point-create";
+import { TimingPointEdit } from "components/panel/timing-point/timing-point-edit";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
@@ -151,16 +151,14 @@ const TimingPointCard = ({
     timingPoint: TimingPoint;
 }) => {
     const t = useTranslations();
-    const addTimingPointMuttaion = trpc.timingPoint.add.useMutation();
     const openCreateDialog = async () => {
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
             title: t('pages.timingPoints.create.title'),
             component: TimingPointCreate,
-            props: { raceId: raceId! },
+            props: { raceId: raceId!, index },
         });
 
         if (TimingPoint) {
-            await addTimingPointMuttaion.mutateAsync({ desiredIndex: index, timingPoint: TimingPoint });
             onCreate();
         }
     };
@@ -211,7 +209,6 @@ export const TimingPoints = () => {
     );
     const t = useTranslations();
 
-    const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
     const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessUrl.useMutation();
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
@@ -236,7 +233,6 @@ export const TimingPoints = () => {
         });
 
         if (TimingPoint) {
-            await updateTimingPointMutation.mutateAsync(TimingPoint);
             refetchTimingPoints();
         }
     };

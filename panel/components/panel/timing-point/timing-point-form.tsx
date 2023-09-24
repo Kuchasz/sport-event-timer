@@ -1,5 +1,5 @@
-import { Button } from "./button";
-import { PoorInput } from "./poor-input";
+import { Button } from "../../button";
+import { PoorInput } from "../../poor-input";
 import { AppRouterInputs } from "trpc";
 import { Form, FormInput } from "form";
 import { timingPointSchema } from "modules/timing-point/models";
@@ -11,9 +11,10 @@ type TimingPointFormProps = {
     onReject: () => void;
     onResolve: (timingPoint: TimingPoint) => void;
     initialTimingPoint: TimingPoint;
+    isLoading: boolean;
 };
 
-export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: TimingPointFormProps) => {
+export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoading }: TimingPointFormProps) => {
     const t = useTranslations();
     return (
         <Form<TimingPoint> initialValues={initialTimingPoint} onSubmit={onResolve} validationSchema={timingPointSchema}>
@@ -41,7 +42,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint }: Tim
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );
