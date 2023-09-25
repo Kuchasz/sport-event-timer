@@ -462,6 +462,10 @@
         "description": {
           "label": "Description",
           "placeholder": "Describe the timing point"
+        },
+        "shortName": {
+          "label": "Short name",
+          "placeholder": "Enter short name"
         }
       }
     },
@@ -670,6 +674,9 @@
     "timingPoint": {
       "description": {
         "length": "Description should not be longer than 100 characters"
+      },
+      "shortName": {
+        "length": "Short name should not be longer than 3 characters"
       }
     }
   },

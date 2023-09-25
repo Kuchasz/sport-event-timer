@@ -87,6 +87,7 @@ export const timingPointRouter =
                 const newTimingPoint = await ctx.db.timingPoint.create({
                     data: {
                         name: input.timingPoint.name,
+                        shortName: input.timingPoint.shortName,
                         description: input.timingPoint.description,
                         raceId: input.timingPoint.raceId
                     }

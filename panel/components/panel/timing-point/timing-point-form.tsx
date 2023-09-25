@@ -29,6 +29,16 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
                 />
             </div>
             <div className="flex">
+                <FormInput<TimingPoint, "shortName">
+                    label={t("pages.timingPoints.form.shortName.label")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorInput placeholder={t("pages.timingPoints.form.shortName.placeholder")} value={value} onChange={onChange} />
+                    )}
+                    name="shortName"
+                />
+            </div>
+            <div className="flex">
                 <FormInput<TimingPoint, "description">
                     label={t("pages.timingPoints.form.description.label")}
                     className="flex-1"

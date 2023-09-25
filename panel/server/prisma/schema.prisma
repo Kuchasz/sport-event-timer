@@ -142,6 +142,7 @@ model Player {
 model TimingPoint {
     id                   Int                    @id @default(autoincrement())
     name                 String
+    shortName            String
     description          String?
     race                 Race                   @relation(fields: [raceId], references: [id])
     raceId               Int
@@ -151,6 +152,7 @@ model TimingPoint {
     absence              Absence[]
 
     @@unique([raceId, name])
+    @@unique([raceId, shortName])
 }
 
 model TimingPointOrder {

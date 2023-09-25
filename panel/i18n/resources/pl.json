@@ -462,6 +462,10 @@
         "description": {
           "label": "Opis",
           "placeholder": "Opisz punkt pomiarowy"
+        },
+        "shortName": {
+          "label": "Nazwa skrócona",
+          "placeholder": "Wpisz nazwę skróconą"
         }
       }
     },
@@ -670,6 +674,9 @@
     "timingPoint": {
       "description": {
         "length": "Opis nie może zawierać więcej niż 100 znaków"
+      },
+      "shortName": {
+        "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
       }
     }
   },
