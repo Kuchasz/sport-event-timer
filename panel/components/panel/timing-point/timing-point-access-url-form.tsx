@@ -1,7 +1,7 @@
-import { Button } from "./button";
-import { PoorInput } from "./poor-input";
+import { Button } from "../../button";
+import { PoorInput } from "../../poor-input";
 import { AppRouterInputs } from "trpc";
-import { PoorCheckbox } from "./poor-checkbox";
+import { PoorCheckbox } from "../../poor-checkbox";
 import { Form, FormInput } from "form";
 import { timingPointAccessUrlSchema } from "modules/timing-point/models";
 import { useTranslations } from "next-intl";
@@ -12,9 +12,10 @@ type TimingPointAccessKeyProps = {
     onReject: () => void;
     onResolve: (timingPoint: TimingPointAccessUrl) => void;
     initialTimingPointAccessUrl: TimingPointAccessUrl;
+    isLoading: boolean;
 };
 
-export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPointAccessUrl }: TimingPointAccessKeyProps) => {
+export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPointAccessUrl, isLoading }: TimingPointAccessKeyProps) => {
     const t = useTranslations();
     return (
         <Form<TimingPointAccessUrl>
@@ -49,7 +50,7 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
             </div>
         </Form>
     );
