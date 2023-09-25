@@ -14,7 +14,7 @@ import { useCurrentRaceId } from "../../../../../../hooks";
 import { getTimingPointIcon } from "utils";
 import classNames from "classnames";
 import { useState } from "react";
-import { TimingPointAccessUrlCreate } from "components/timing-point-access-url-create-form";
+import { TimingPointAccessUrlCreate } from "components/panel/timing-point/timing-point-access-url-create-form";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 
@@ -210,7 +210,6 @@ export const TimingPoints = () => {
     const t = useTranslations();
 
     const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
-    const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessUrl.useMutation();
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
@@ -248,7 +247,6 @@ export const TimingPoints = () => {
         });
 
         if (timingPointAccessKey) {
-            await createTimingPointAccessKeyMutation.mutateAsync(timingPointAccessKey);
             refetchAccessKeys();
         }
     };

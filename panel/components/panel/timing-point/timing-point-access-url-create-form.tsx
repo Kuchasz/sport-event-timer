@@ -1,5 +1,6 @@
 import { AppRouterInputs } from "trpc";
 import { TimingPointAccessUrlForm } from "./timing-point-access-url-form";
+import { trpc } from "trpc-core";
 
 type CreateTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessUrl"];
 
@@ -11,6 +12,8 @@ type TimingPointCreateProps = {
 };
 
 export const TimingPointAccessUrlCreate = ({ raceId, timingPointId, onReject, onResolve }: TimingPointCreateProps) => {
+    const createTimingPointAccessKeyMutation = trpc.timingPoint.addTimingPointAccessUrl.useMutation();
+
     const timingPointAccessKey: CreateTimingPointAccessKey = {
         raceId,
         name: "",
@@ -19,5 +22,17 @@ export const TimingPointAccessUrlCreate = ({ raceId, timingPointId, onReject, on
         timingPointId,
     };
 
-    return <TimingPointAccessUrlForm onReject={onReject} onResolve={onResolve} initialTimingPointAccessUrl={timingPointAccessKey} />;
+    const createAccessKey = async (timingPointAccessKey: CreateTimingPointAccessKey) => {
+        await createTimingPointAccessKeyMutation.mutateAsync(timingPointAccessKey);
+        onResolve(timingPointAccessKey);
+    };
+
+    return (
+        <TimingPointAccessUrlForm
+            isLoading={createTimingPointAccessKeyMutation.isLoading}
+            onReject={onReject}
+            onResolve={createAccessKey}
+            initialTimingPointAccessUrl={timingPointAccessKey}
+        />
+    );
 };
