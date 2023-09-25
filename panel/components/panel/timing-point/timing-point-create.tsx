@@ -17,6 +17,7 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
     const timingPoint: CreateTimingPoint = {
         raceId,
         name: "",
+        shortName: "",
     };
 
     const timingPointCreated = async (timingPoint: CreateTimingPoint) => {

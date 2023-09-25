@@ -19,6 +19,7 @@ Application for making time measurements
 | 17/09/2023 | Fix grid reload on data changes (updated)                  | :heavy_check_mark: (18/09/2023) |
 | 19/09/2023 | Support for multiple split times on the same timing point  | todo :date:                     |
 | 19/09/2023 | Add notifications to successful/failed actions             | todo :date:                     |
+| 25/09/2023 | Short name for Timing Points                               | :heavy_check_mark: (25/09/2023) |
 
 ## TODO
 
