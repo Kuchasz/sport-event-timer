@@ -9,6 +9,7 @@
     "panel"
   ],
   "dependencies": {
+    "@types/node-fetch": "2.6.6",
     "@types/ws": "^8.5.6"
   }
 }
