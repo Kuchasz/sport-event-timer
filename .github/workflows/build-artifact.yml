@@ -30,23 +30,23 @@ jobs:
             - name: Build utils
               run: |
                   cd ./utils
-                  bun build
+                  bun run build
 
             - name: Build timer
               run: |
                   cd ./timer
-                  bun build
+                  bun run build
 
             - name: Generate prisma
               run: |
                   cd ./panel
-                  bun generate-prisma
+                  bun run generate-prisma
 
             - name: Build panel
               run: |
                   cd ./panel
                   bun next telemetry disable
-                  bun build
+                  bun run build
 
             - name: Bundle ZIP package
               uses: montudor/action-zip@v1
