@@ -1,11 +1,14 @@
 {
-    "private": true,
-    "scripts": {
-        "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'"
-    },
-    "workspaces": [
-        "timer",
-        "utils",
-        "panel"
-    ]
+  "private": true,
+  "scripts": {
+    "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'"
+  },
+  "workspaces": [
+    "timer",
+    "utils",
+    "panel"
+  ],
+  "dependencies": {
+    "@types/ws": "^8.5.6"
+  }
 }
