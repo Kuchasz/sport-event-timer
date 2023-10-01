@@ -11,7 +11,7 @@
         "dev:ws": "ts-node server/wsDevServer.ts --tsconfig tsconfig.server.json",
         "start": "ts-node server/prodServer.ts --tsconfig tsconfig.server.json",
         "dev:next": "next dev",
-        "start:dev": "yarn dev:ws & yarn dev:next"
+        "start:dev": "bun dev:ws & bun dev:next"
     },
     "prisma": {
         "seed": "ts-node server/prisma/seed.ts",
@@ -31,8 +31,8 @@
         "@popperjs/core": "2.11.8",
         "@prisma/client": "5.3.1",
         "@react-hook/resize-observer": "1.2.6",
-        "@set/timer": "1.0.0",
-        "@set/utils": "1.0.0",
+        "@set/timer": "workspace:*",
+        "@set/utils": "workspace:*",
         "@swc/core": "1.3.44",
         "@tailwindcss/forms": "0.5.6",
         "@tanstack/react-query": "4.35.3",

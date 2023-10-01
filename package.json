@@ -1,23 +1,11 @@
 {
     "private": true,
     "scripts": {
-        "build": "yarn workspaces run build",
         "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'"
     },
-    "workspaces": {
-        "packages": [
-            "timer",
-            "results",
-            "utils",
-            "panel"
-        ]
-    },
-    "resolutions": {
-        "@types/eslint": "8.4.3"
-    },
-    "dependencies": {
-        "@types/ws": "^8.5.5",
-        "node-fetch": "^3.3.2",
-        "ws": "^8.14.1"
-    }
+    "workspaces": [
+        "timer",
+        "utils",
+        "panel"
+    ]
 }
