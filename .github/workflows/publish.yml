@@ -35,7 +35,7 @@ jobs:
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       mv application-artifact/set-package.zip set-package.zip
                       cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
-                      rm -rf node_modules/ application-artifact/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
+                      rm -rf node_modules/ application-artifact/ package/ package.json panel/ timer/ utils/ bun.lockb yarn.lock .yarnrc.yml
                       unzip -q set-package.zip
                       rm set-package.zip
                       cp ../app.rura.cc.env panel/.env
