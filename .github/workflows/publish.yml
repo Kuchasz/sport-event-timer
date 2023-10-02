@@ -31,8 +31,6 @@ jobs:
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   script: |
                       bun -v
-                      curl -fsSL https://bun.sh/install | bash 
-                      bun -v
                     #   export NVM_DIR=~/.nvm
                     #   source ~/.nvm/nvm.sh
                     #   cd ${{ secrets.OVH_REMOTE_TARGET }}
