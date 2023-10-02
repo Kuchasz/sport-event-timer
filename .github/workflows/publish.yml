@@ -14,15 +14,10 @@ jobs:
                   workflow: build-artifact.yml
                   workflow_conclusion: success
 
-            - run: |
-                  mkdir package
-                  ls -la
-                  mv set-package.zip package/set-package.zip
-
             - name: Upload artifact
               uses: appleboy/scp-action@master
               with:
-                  SOURCE: "package/"
+                  SOURCE: "application-artifact/"
                   HOST: ${{ secrets.OVH_REMOTE_HOST }}
                   USERNAME: ${{ secrets.OVH_REMOTE_USER }}
                   PASSWORD: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
