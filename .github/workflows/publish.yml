@@ -23,26 +23,26 @@ jobs:
                   PASSWORD: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
 
-            # - name: Publish
-            #   uses: appleboy/ssh-action@master
-            #   with:
-            #       host: ${{ secrets.OVH_REMOTE_HOST }}
-            #       username: ${{ secrets.OVH_REMOTE_USER }}
-            #       password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
-            #       script: |
-            #           export NVM_DIR=~/.nvm
-            #           source ~/.nvm/nvm.sh
-            #           cd ${{ secrets.OVH_REMOTE_TARGET }}
-            #           mv package/set-hub-package.zip set-hub-package.zip
-            #           cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
-            #           rm -rf node_modules/ package/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
-            #           unzip -q set-hub-package.zip
-            #           rm set-hub-package.zip
-            #           cp ../app.rura.cc.env panel/.env
-            #           yarn install
-            #           cd panel
-            #           cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
-            #           npx prisma generate
-            #           npx prisma migrate deploy
-            #           chmod -R 777 server/prisma
-            #           pm2 restart app.rura.cc
+            - name: Publish
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.OVH_REMOTE_HOST }}
+                  username: ${{ secrets.OVH_REMOTE_USER }}
+                  password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      cd ${{ secrets.OVH_REMOTE_TARGET }}
+                      mv application-artifact/set-package.zip set-package.zip
+                      cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
+                      rm -rf node_modules/ application-artifact/ package.json panel/ timer/ utils/ yarn.lock .yarnrc.yml
+                      unzip -q set-package.zip
+                      rm set-package.zip
+                      cp ../app.rura.cc.env panel/.env
+                      bun install --frozen-lockfile
+                      cd panel
+                      cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
+                      bun prisma generate
+                      bun prisma migrate deploy
+                      chmod -R 777 server/prisma
+                      pm2 restart app.rura.cc
