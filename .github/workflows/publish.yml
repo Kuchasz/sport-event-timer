@@ -30,6 +30,7 @@ jobs:
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   script: |
+                      bun --v
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
