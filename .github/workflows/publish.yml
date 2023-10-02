@@ -45,7 +45,7 @@ jobs:
                       bun install
                       cd panel
                       cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
-                      bun start prisma generate
+                      bun prisma generate
                       bun prisma migrate deploy
                       chmod -R 777 server/prisma
                       pm2 restart app.rura.cc
