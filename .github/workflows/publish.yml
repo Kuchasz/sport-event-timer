@@ -32,7 +32,8 @@ jobs:
                   script: |
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
-                      source ~/.bashrc
+                      export BUN_INSTALL="$HOME/.bun"
+                      export PATH=$BUN_INSTALL/bin:$PATH
                       echo $PATH
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       mv application-artifact/set-package.zip set-package.zip
