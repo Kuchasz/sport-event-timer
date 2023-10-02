@@ -16,7 +16,7 @@ jobs:
 
             - run: |
                   mkdir package
-                  mv set-hub-package.zip package/set-hub-package.zip
+                  mv set-package.zip package/set-package.zip
 
             - name: Upload artifact
               uses: appleboy/scp-action@master
