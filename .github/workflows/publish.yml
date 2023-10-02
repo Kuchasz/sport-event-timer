@@ -30,10 +30,12 @@ jobs:
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   script: |
-                      export NVM_DIR=~/.nvm
-                      source ~/.nvm/nvm.sh
-                      source ~/.bashrc
-                      bun -v
+                        exec bash \-l
+                        bun -v
+                    #   export NVM_DIR=~/.nvm
+                    #   source ~/.nvm/nvm.sh
+                    #   source ~/.bashrc
+                    #   bun -v
                     #   cd ${{ secrets.OVH_REMOTE_TARGET }}
                     #   mv application-artifact/set-package.zip set-package.zip
                     #   cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
