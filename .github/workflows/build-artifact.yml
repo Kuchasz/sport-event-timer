@@ -27,12 +27,12 @@ jobs:
             - name: Install dependencies
               run: bun install --frozen-lockfile
 
-            - name: Build utils
+            - name: Build library - utils
               run: |
                   cd ./utils
                   bun run build
 
-            - name: Build timer
+            - name: Build library - timer
               run: |
                   cd ./timer
                   bun run build
@@ -42,19 +42,20 @@ jobs:
                   cd ./panel
                   bun run generate-prisma
 
-            - name: Build panel
+            - name: Build Application
               run: |
                   cd ./panel
                   bun next telemetry disable
                   bun run build
                   rm -rf .next/cache
 
-            - name: Bundle ZIP package
+            - name: Bundle Application Package
               uses: montudor/action-zip@v1
               with:
                   args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer
 
             - uses: actions/upload-artifact@v3
+              name: Store Application Package
               with:
                 name: application-artifact
                 path: set-package.zip
