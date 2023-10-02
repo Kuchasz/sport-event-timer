@@ -32,7 +32,7 @@ jobs:
                   script: |
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
-                      source /home/${{ secrets.OVH_REMOTE_USER }}/.bashrc
+                      source ~/.bashrc
                       bun -v
                     #   cd ${{ secrets.OVH_REMOTE_TARGET }}
                     #   mv application-artifact/set-package.zip set-package.zip
