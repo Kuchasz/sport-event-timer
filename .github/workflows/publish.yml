@@ -14,7 +14,7 @@ jobs:
                   workflow: build-artifact.yml
                   workflow_conclusion: success
 
-            - name: Upload artifact
+            - name: Upload Artifact
               uses: appleboy/scp-action@master
               with:
                   SOURCE: "application-artifact/"
@@ -23,13 +23,15 @@ jobs:
                   PASSWORD: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   TARGET: ${{ secrets.OVH_REMOTE_TARGET }}
 
-            - name: Publish
+            - name: Publish Artifact
               uses: appleboy/ssh-action@master
               with:
                   host: ${{ secrets.OVH_REMOTE_HOST }}
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                   script: |
+                      curl -fsSL https://bun.sh/install | bash 
+                      source /home/ubuntu/.bashrc
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
