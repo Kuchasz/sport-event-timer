@@ -29,8 +29,8 @@ jobs:
                   host: ${{ secrets.OVH_REMOTE_HOST }}
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
+                  allenvs: true
                   script: |
-                      exec bash \-l
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       mv application-artifact/set-package.zip set-package.zip
                       cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
@@ -41,7 +41,7 @@ jobs:
                       bun install
                       cd panel
                       cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
-                      yarn prisma generate
-                      yarn prisma migrate deploy
+                      bun prisma generate
+                      bun prisma migrate deploy
                       chmod -R 777 server/prisma
                       pm2 restart app.rura.cc
