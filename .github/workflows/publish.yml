@@ -16,7 +16,7 @@ jobs:
 
             - run: |
                   mkdir package
-                  ls
+                  ls -la
                   mv set-package.zip package/set-package.zip
 
             - name: Upload artifact
