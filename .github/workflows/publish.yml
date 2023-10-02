@@ -29,8 +29,8 @@ jobs:
                   host: ${{ secrets.OVH_REMOTE_HOST }}
                   username: ${{ secrets.OVH_REMOTE_USER }}
                   password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
-                  allenvs: true
                   script: |
+                      exec bash \-l
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       mv application-artifact/set-package.zip set-package.zip
                       cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
