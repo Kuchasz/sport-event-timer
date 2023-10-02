@@ -39,7 +39,7 @@ jobs:
                       unzip -q set-package.zip
                       rm set-package.zip
                       cp ../app.rura.cc.env panel/.env
-                      bun install --frozen-lockfile
+                      bun install
                       cd panel
                       cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
                       bun prisma generate
