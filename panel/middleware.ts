@@ -13,6 +13,6 @@ export const config = {
     // Skip all paths that should not be internationalized. This example skips the
     // folders "api", "_next" and all files with an extension (e.g. favicon.ico)
     // matcher: ['/((?!api|auth|registration|results|stopwatch|timer|_next|.*\\..*).*)']
-    matcher: ['/panel/:path*', '/registration/:path*', '/results/:path*', '/stopwatch/:path*', '/timer/:path*']
+    matcher: ['/((?!api|_next/static|assets|favicon|fonts|sw.js|_next/image|favicon.ico).*)']
     // matcher: ['/((?!api|_next|.*\\..*).*)']
 };
