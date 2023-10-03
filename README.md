@@ -20,7 +20,7 @@ Application for making time measurements
 | 19/09/2023 | Support for multiple split times on the same timing point  | todo :date:                     |
 | 19/09/2023 | Add notifications to successful/failed actions             | todo :date:                     |
 | 25/09/2023 | Short name for Timing Points                               | :heavy_check_mark: (25/09/2023) |
-| 25/09/2023 | Speed up application build and release times               | todo :date:                     |
+| 25/09/2023 | Speed up application build and release times               | :heavy_check_mark: (03/10/2023) |
 
 ## TODO
 
