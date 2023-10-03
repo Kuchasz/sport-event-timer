@@ -29,41 +29,39 @@ declare namespace __next_route_internal_types__ {
     S extends `${string}${SearchOrHash}` ? never : S
 
   type StaticRoutes = 
-    | `/panel`
-    | `/panel/admin`
-    | `/panel/admin/accounts`
-    | `/panel/admin/hello`
-    | `/panel/admin/races`
-    | `/panel/my-races`
-    | `/panel`
-    | `/panel/admin`
-    | `/panel/admin/accounts`
-    | `/panel/admin/hello`
-    | `/panel/admin/races`
-    | `/panel/my-races`
+    | ``
+    | `/admin`
+    | `/admin/accounts`
+    | `/admin/hello`
+    | `/admin/races`
+    | `/my-races`
+    | `/admin`
+    | `/admin/accounts`
+    | `/admin/hello`
+    | `/admin/races`
+    | `/my-races`
     | `/api/session`
     | `/api/restricted`
   type DynamicRoutes<T extends string = string> = 
-    | `/panel/${SafeSlug<T>}`
-    | `/panel/${SafeSlug<T>}/bib-numbers`
-    | `/panel/${SafeSlug<T>}/classifications`
-    | `/panel/${SafeSlug<T>}/classifications/${SafeSlug<T>}`
-    | `/panel/${SafeSlug<T>}/results`
-    | `/panel/${SafeSlug<T>}/player-registrations`
-    | `/panel/${SafeSlug<T>}/players`
-    | `/panel/${SafeSlug<T>}/settings`
-    | `/panel/${SafeSlug<T>}/timing-points`
-    | `/panel/${SafeSlug<T>}/split-times`
-    | `/panel/${SafeSlug<T>}`
-    | `/panel/${SafeSlug<T>}/bib-numbers`
-    | `/panel/${SafeSlug<T>}/classifications`
-    | `/panel/${SafeSlug<T>}/classifications/${SafeSlug<T>}`
-    | `/panel/${SafeSlug<T>}/player-registrations`
-    | `/panel/${SafeSlug<T>}/players`
-    | `/panel/${SafeSlug<T>}/results`
-    | `/panel/${SafeSlug<T>}/settings`
-    | `/panel/${SafeSlug<T>}/split-times`
-    | `/panel/${SafeSlug<T>}/timing-points`
+    | `/${SafeSlug<T>}`
+    | `/${SafeSlug<T>}/bib-numbers`
+    | `/${SafeSlug<T>}/classifications`
+    | `/${SafeSlug<T>}/classifications/${SafeSlug<T>}`
+    | `/${SafeSlug<T>}/results`
+    | `/${SafeSlug<T>}/player-registrations`
+    | `/${SafeSlug<T>}/players`
+    | `/${SafeSlug<T>}/settings`
+    | `/${SafeSlug<T>}/timing-points`
+    | `/${SafeSlug<T>}/split-times`
+    | `/${SafeSlug<T>}/bib-numbers`
+    | `/${SafeSlug<T>}/classifications`
+    | `/${SafeSlug<T>}/classifications/${SafeSlug<T>}`
+    | `/${SafeSlug<T>}/player-registrations`
+    | `/${SafeSlug<T>}/players`
+    | `/${SafeSlug<T>}/results`
+    | `/${SafeSlug<T>}/settings`
+    | `/${SafeSlug<T>}/split-times`
+    | `/${SafeSlug<T>}/timing-points`
     | `/registration/${SafeSlug<T>}`
     | `/results/${SafeSlug<T>}`
     | `/timer/${SafeSlug<T>}`

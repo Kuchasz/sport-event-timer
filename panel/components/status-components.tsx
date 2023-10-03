@@ -33,7 +33,7 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
             onChange={e => {
                 if (!e.target.value) return;
                 selectRaceId(e.target.value);
-                router.push(`/panel/${e.target.value}`);
+                router.push(`/${e.target.value}`);
             }}
             valueKey="id"
             nameKey="name"

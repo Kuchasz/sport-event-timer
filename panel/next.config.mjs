@@ -34,9 +34,9 @@ export default withNextIntl(defineNextConfig({
     //     defaultLocale: "en",
     // },
     poweredByHeader: false,
-    redirects: async () => {
-        return [{ source: '/', destination: '/panel', permanent: true }]
-    }
+    // redirects: async () => {
+    //     return [{ source: '/', destination: '/panel', permanent: true }]
+    // }
 
     // experimental: {
     //     // runtime: 'nodejs',
