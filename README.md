@@ -11,7 +11,7 @@ Application for making time measurements
 | 07/09/2023 | Prevent Start Time and Bib Number duplication              | todo :date:                     |
 | 07/09/2023 | Unify AccessUrl and ApiKey naming conventions              | :heavy_check_mark: (07/09/2023) |
 | 08/09/2023 | Solve issue of sync between Player and Player Registration | :heavy_check_mark: (11/09/2023) |
-| 10/09/2023 | Indeterminate state on save buttons                        | todo :date:                     |
+| 10/09/2023 | Indeterminate state on save buttons                        | :heavy_check_mark: (20/09/2023) |
 | 11/09/2023 | Fallback for public routes triggered with invalid raceId   | todo :date:                     |
 | 13/09/2023 | Turn prisma seed into 'example race generation' button     | :heavy_check_mark: (13/09/2023) |
 | 14/09/2023 | Allow example race customization                           | :heavy_check_mark: (14/09/2023) |
