@@ -2,10 +2,10 @@ import classNames from "classnames";
 import { ReactNode } from "react";
 
 const Card = ({ title, value, children }: { title: string; value: string; children: ReactNode }) => (
-    <div className="self-start w-48 h-32 shadow-sm m-3 p-4 rounded-md flex border border-gray-100 flex-col items-center">
+    <div className="self-start overflow-clip w-48 h-32 shadow-sm m-3 p-4 rounded-md flex border border-gray-100 flex-col items-center">
         <div className="text-xs uppercase self-start font-medium text-gray-500">{title}</div>
-        <div className="text-lg my-2 uppercase self-start font-medium">{value}</div>
-        <div className="w-full h-full flex flex-col justify-center items-center">{children}</div>
+        <div className="text-lg my-2 shrink uppercase self-start font-medium">{value}</div>
+        <div className="w-full h-full grow flex flex-col justify-center items-center">{children}</div>
     </div>
 );
 
