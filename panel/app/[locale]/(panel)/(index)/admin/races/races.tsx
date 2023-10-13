@@ -226,13 +226,16 @@ export const Races = () => {
                         <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>
                 </div>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-6">
                     {races.map(r => (
-                        <div className="w-44 overflow-hidden shadow-lg rounded-lg">
-                            <div className="h-44 text-6xl w-full flex flex-col justify-center items-center bg-gray-800 text-white">{getShortcut(r.name)}</div>
+                        <div className="w-44 transition-transform ease-in-out duration-300 will-change-transform cursor-pointer hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg">
+                            <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
+                                <div className="text-6xl">{getShortcut(r.name)}</div>
+                                <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
+                            </div>
                             <div className="p-4">
-                                <div className="text-xs">{r.date.toLocaleDateString()}</div>
                                 <div className="text-sm font-semibold">{r.name}</div>
+                                <div className="text-xs text-gray-500 text-ellipsis">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
                             </div>
                         </div>
                     ))}
