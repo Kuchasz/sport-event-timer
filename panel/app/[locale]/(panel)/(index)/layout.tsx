@@ -30,7 +30,7 @@ export default async function PanelLayout(props: { children: ReactNode; breadcru
                 <TrpcProvider>
                     <NextAuthProvider>
                         <NextIntlClientProvider locale={locale} messages={messages}>
-                            <IndexPageLayout breadcrumbs={props.breadcrumbs}>{props.children}</IndexPageLayout>
+                            <IndexPageLayout>{props.children}</IndexPageLayout>
                         </NextIntlClientProvider>
                     </NextAuthProvider>
                 </TrpcProvider>
