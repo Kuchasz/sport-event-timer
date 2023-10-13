@@ -225,7 +225,7 @@ export const Races = () => {
                     </Button>
                 </div>
                 <div className="ag-theme-material h-full">
-                    <AgGridReact<Race>
+                    {/* <AgGridReact<Race>
                         ref={gridRef}
                         context={{ refetch }}
                         onRowDoubleClicked={e => openEditDialog(e.data)}
@@ -245,7 +245,7 @@ export const Races = () => {
                         rowData={races}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                    ></AgGridReact> */}
                 </div>
             </div>
         </>
