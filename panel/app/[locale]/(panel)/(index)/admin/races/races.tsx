@@ -138,7 +138,7 @@ export const Races = () => {
             headerClass: "hidden",
             sortable: false,
             filter: false,
-            valueGetter: r => r.node?.rowIndex
+            valueGetter: r => r.node?.rowIndex,
         },
         { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
         {
@@ -177,6 +177,8 @@ export const Races = () => {
             ),
         },
     ];
+
+    const getShortcut = (name: string) => name.slice(0, 2).toUpperCase();
 
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
@@ -224,8 +226,19 @@ export const Races = () => {
                         <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>
                 </div>
-                <div className="ag-theme-material h-full">
-                    {/* <AgGridReact<Race>
+                <div className="flex flex-wrap gap-4">
+                    {races.map(r => (
+                        <div className="w-44 overflow-hidden shadow-lg rounded-lg">
+                            <div className="h-44 text-6xl w-full flex flex-col justify-center items-center bg-gray-800 text-white">{getShortcut(r.name)}</div>
+                            <div className="p-4">
+                                <div className="text-xs">{r.date.toLocaleDateString()}</div>
+                                <div className="text-sm font-semibold">{r.name}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* <div className="ag-theme-material h-full">
+                    <AgGridReact<Race>
                         ref={gridRef}
                         context={{ refetch }}
                         onRowDoubleClicked={e => openEditDialog(e.data)}
@@ -245,8 +258,8 @@ export const Races = () => {
                         rowData={races}
                         onFirstDataRendered={onFirstDataRendered}
                         onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact> */}
-                </div>
+                    ></AgGridReact>
+                </div> */}
             </div>
         </>
     );

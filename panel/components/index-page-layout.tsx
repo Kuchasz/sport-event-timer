@@ -15,7 +15,7 @@ export const IndexPageLayout = ({ children }: Props) => {
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <main className="flex flex-col items-center grow h-full overflow-y-auto">
                             <IndexStatus />
-                            <div className="min-w-[768px] px-8 py-4 flex flex-col flex-grow">
+                            <div className="w-[768px] px-8 py-4 flex flex-col flex-grow">
                                 <AgGridProvider>{children}</AgGridProvider>
                             </div>
                         </main>
