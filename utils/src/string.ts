@@ -17,6 +17,7 @@ export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): 
 export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]): number[] =>
     typedNumbers !== "" ? pipe(allNumbers, Arr.filter(flow(String, S.startsWith(typedNumbers)))) : [];
 
-    export const capitalizeFirstLetter = (string: string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+export const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
