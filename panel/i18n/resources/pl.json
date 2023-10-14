@@ -62,9 +62,17 @@
     },
     "races": {
       "addRace": "Dodaj Wyścig",
-      "header": {
-        "title": "Moje Wyścigi",
-        "description": "Zarządzaj przeszłymi i przyszłymi wyścigami"
+      "upcomingRaces": {
+        "header": {
+          "title": "Nadchodzące Wyścigi",
+          "description": "Wyścigi które niedługo się odbędą"
+        }
+      },
+      "list": {
+        "header": {
+          "title": "Wszystkie Wyścigi ({number})",
+          "description": "Zarządzaj przeszłymi i przyszłymi wyścigami"
+        }
       },
       "wipeStopwatchPopup": {
         "title": "Wyczyść stoper",

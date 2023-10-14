@@ -1,12 +1,19 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "server/auth";
 import { LogoutButton } from "./status-components";
+import Link from "next/link";
+import { Route } from "next";
 
 export const IndexStatus = async () => {
     const session = await getServerSession(authOptions());
 
     return (
         <div className="w-full flex items-center bg-gray-50 cursor-default h-20 py-6 min px-8">
+            <Link href={"/" as Route}>
+                <div className="transition-opacity flex flex-col items-center cursor-pointer text-center px-4 py-4">
+                    <img src="/assets/logo_ravelo_black.png"></img>
+                </div>
+            </Link>
             <div className="grow"></div>
             {session && (
                 <div className="flex items-center mr-4">

@@ -62,9 +62,17 @@
     },
     "races": {
       "addRace": "Add Race",
-      "header": {
-        "title": "My Races",
-        "description": "Manage all past and future races"
+      "upcomingRaces": {
+        "header": {
+          "title": "Upcoming Races",
+          "description": "Races that will happen soon"
+        }
+      },
+      "list": {
+        "header": {
+          "title": "All Races ({number})",
+          "description": "Manage all past and future races"
+        }
       },
       "wipeStopwatchPopup": {
         "title": "Wipe stopwatch",
