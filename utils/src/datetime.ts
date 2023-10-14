@@ -111,3 +111,21 @@ export const dateFromYearsAgo = (years: number) => {
     const newDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth(), currentDate.getDate());
     return newDate;
 }
+
+const todayDateObject = new Date();
+todayDateObject.setHours(0, 0, 0, 0);
+
+export const isTodayOrLater = (date: Date) => {
+    const dateCopyDateObject = new Date(date);
+    dateCopyDateObject.setHours(0, 0, 0, 0);
+
+    return dateCopyDateObject >= todayDateObject;
+}
+
+type MonthFormat = 'long' | 'numeric' | '2-digit' | 'short' | 'narrow' | undefined;
+
+export const monthForLocale = (month: number, monthFormat: MonthFormat = 'long', localeName = 'es-MX') => {
+    const format = new Intl
+        .DateTimeFormat(localeName, { month: monthFormat }).format;
+    return format(new Date(Date.UTC(2021, (month + 1) % 12)));
+}
