@@ -20,7 +20,7 @@ import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
 import { isTodayOrLater, monthForLocale } from "@set/utils/dist/datetime";
-import { sort } from "@set/utils/dist/array";
+import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
 
@@ -218,54 +218,74 @@ export const Races = () => {
     };
 
     const sortedRaces = sort(races, r => r.date.getTime());
+    const descSortedRaces = sortDesc(races, r => r.date.getTime());
     const futureRaces = sortedRaces.filter(r => isTodayOrLater(r.date));
     const nextRaces = sort(futureRaces, r => r.date.getTime()).slice(0, 3);
 
     return (
         <>
-            <Head>
+            {/* <Head>
                 <title>{t("pages.races.header.title")}</title>
-            </Head>
+            </Head> */}
             <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
-                <div className="mb-4 inline-flex">
-                    <Button outline onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.races.addRace")}</span>
-                    </Button>
-                </div>
-                <div className="flex flex-wrap gap-6">
-                    {nextRaces.map(r => (
-                        <Link href={`/${r.id}`} className="w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg">
-                            <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
-                                <div className="text-6xl">{getShortcut(r.name)}</div>
-                                <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
-                            </div>
-                            <div className="p-4">
-                                <div className="text-sm font-semibold">{r.name}</div>
-                                <div className="text-xs text-gray-500 text-ellipsis">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-                <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
-                <div className="flex flex-col gap-2">
-                    {sortedRaces.map(r => (
-                        <div className="flex items-center rounded-lg shadow-lg px-8 py-4">
-                            <div className="w-10 font-semibold flex flex-col items-center">
-                                <div className="text-2xl">{r.date.getDate()}</div>
-                                <div className="text-sm">{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "short", "pl-PL"))}</div>
-                            </div>
-                            <div className="ml-8 flex flex-col">
-                                <div className="font-semibold">{r.name}</div>
-                                <div className="text-xs text-gray-500 text-ellipsis">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                </div>
-                            </div>
+                <div className="py-8 flex flex-col items-center">
+                    <div className="w-[768px]">
+                        <PageHeader
+                            title={t("pages.races.upcomingRaces.header.title")}
+                            description={t("pages.races.upcomingRaces.header.description")}
+                        />
+                        <div className="mb-4 inline-flex">
+                            <Button outline onClick={openCreateDialog}>
+                                <Icon size={1} path={mdiPlus} />
+                                <span className="ml-2">{t("pages.races.addRace")}</span>
+                            </Button>
                         </div>
-                    ))}
+                        <div className="flex flex-wrap gap-6">
+                            {nextRaces.map(r => (
+                                <Link
+                                    href={`/${r.id}`}
+                                    className="w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
+                                >
+                                    <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
+                                        <div className="text-6xl">{getShortcut(r.name)}</div>
+                                        <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="text-sm font-semibold">{r.name}</div>
+                                        <div className="text-xs text-gray-500 text-ellipsis">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-gray-50 py-8 flex flex-col items-center">
+                    <div className="w-[768px]">
+                        <PageHeader
+                            title={t("pages.races.list.header.title", { number: descSortedRaces.length })}
+                            description={t("pages.races.list.header.description")}
+                        />
+                        <div className="flex flex-col gap-2">
+                            {descSortedRaces.map(r => (
+                                <div className="flex bg-white items-center rounded-md shadow-lg px-8 py-4">
+                                    <div className="w-10 font-semibold flex flex-col items-center">
+                                        <div className="text-2xl">{r.date.getDate()}</div>
+                                        <div className="text-sm">
+                                            {capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "short", "pl-PL"))}
+                                        </div>
+                                    </div>
+                                    <div className="ml-8 flex flex-col">
+                                        <div className="font-semibold">{r.name}</div>
+                                        <div className="text-xs text-gray-500 text-ellipsis">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
                 {/* <div className="ag-theme-material h-full">
                     <AgGridReact<Race>
