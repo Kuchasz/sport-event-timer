@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
@@ -270,10 +269,11 @@ export const Races = () => {
                         <div className="flex flex-col gap-2">
                             {descSortedRaces.map(r => (
                                 <div className="flex bg-white items-center rounded-md shadow-lg px-8 py-4">
-                                    <div className="w-10 font-semibold flex flex-col items-center">
+                                    <div className="font-semibold flex flex-col items-center">
                                         <div className="text-2xl">{r.date.getDate()}</div>
-                                        <div className="text-sm">
-                                            {capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "short", "pl-PL"))}
+                                        <div className="text-xs text-gray-500 font-semibold flex">
+                                            {capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "short", "pl-PL"))} /{" "}
+                                            {r.date.getFullYear().toString().slice(2, 4)}
                                         </div>
                                     </div>
                                     <div className="ml-8 flex flex-col">
