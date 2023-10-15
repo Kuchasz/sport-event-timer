@@ -105,7 +105,9 @@
       },
       "editRace": {
         "title": "Edit race"
-      }
+      },
+      "registrationStatus": "Registration status:",
+      "registrations": "Registrations:"
     },
     "bibNumbers": {
       "delete": {

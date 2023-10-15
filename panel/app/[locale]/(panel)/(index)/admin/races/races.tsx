@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-import { mdiCog, mdiCogOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
@@ -18,7 +18,7 @@ import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
-import { dayForLocale, formatTime, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
+import { dayForLocale, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
@@ -59,6 +59,20 @@ const Registrations = ({ race }: { race: Race }) => {
         </span>
     );
 };
+
+const MiniChooserItem = ({ isActive, name }: { isActive: boolean; name: string }) => (
+    <div className={classNames("mx-0.5 rounded-lg px-4", { ["bg-white"]: isActive, ["cursor-pointer hover:bg-gray-50"]: !isActive })}>
+        {name}
+    </div>
+);
+
+const MiniChooser = () => (
+    <div className="flex text-sm rounded-lg px-0.5 py-1 bg-gray-100 items-center">
+        <MiniChooserItem isActive={false} name="All" />
+        <MiniChooserItem isActive={true} name="Upcoming" />
+        <MiniChooserItem isActive={false} name="Past" />
+    </div>
+);
 
 export const Races = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
@@ -256,6 +270,7 @@ export const Races = () => {
                         <div className="flex flex-wrap gap-6">
                             {upcomingRaces.map(r => (
                                 <Link
+                                    key={r.id}
                                     href={`/${r.id}`}
                                     className="w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
                                 >
@@ -276,13 +291,16 @@ export const Races = () => {
                 </div>
                 <div className="bg-gray-50 py-8 flex flex-col items-center">
                     <div className="w-[768px]">
-                        <PageHeader
-                            title={t("pages.races.list.header.title", { number: allRaces.length })}
-                            description={t("pages.races.list.header.description")}
-                        />
+                        <div className="flex items-center justify-between">
+                            <PageHeader
+                                title={t("pages.races.list.header.title", { number: allRaces.length })}
+                                description={t("pages.races.list.header.description")}
+                            />
+                            <MiniChooser />
+                        </div>
                         <div className="flex flex-col gap-2">
                             {allRaces.map(r => (
-                                <div className="flex bg-white items-center rounded-md shadow-lg px-8 py-4">
+                                <div key={r.id} className="flex bg-white items-center rounded-md shadow-lg px-8 py-6">
                                     <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
                                         <div className="text-2xs font-semibold text-gray-400">
                                             {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
@@ -300,11 +318,11 @@ export const Races = () => {
                                         </div>
                                         <div className="flex text-xs">
                                             <div className="flex items-center">
-                                                <div className="mr-1">Registration status:</div>
+                                                <div className="mr-1">{t("pages.races.registrationStatus")}</div>
                                                 <RegistrationEnabled race={r} />
                                             </div>
                                             <div className="flex items-center">
-                                                <div className="ml-2 mr-1">Registrations:</div>
+                                                <div className="ml-2 mr-1">{t("pages.races.registrations")}</div>
                                                 <Registrations race={r} />
                                             </div>
                                         </div>
@@ -315,12 +333,12 @@ export const Races = () => {
                                         </div>
                                     </div>
                                     <div className="grow"></div>
-                                    <div className="">
-                                        <Button outline onClick={() => manageRace(r.id)}>
+                                    <Link href={`/${r.id}`} className="">
+                                        <Button outline>
                                             <Icon size={0.8} path={mdiCog} />
                                             <span className="ml-2">{t("pages.races.manage")}</span>
                                         </Button>
-                                    </div>
+                                    </Link>
                                 </div>
                             ))}
                         </div>
