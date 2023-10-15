@@ -63,7 +63,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
                                         {selected ? (
                                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                                 {/* <CheckIcon className="h-5 w-5" aria-hidden="true" /> */}
-                                                <Icon path={mdiCheck} size={1} />
+                                                <Icon path={mdiCheck} size={0.8} />
                                             </span>
                                         ) : null}
                                     </>
@@ -116,7 +116,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                         <span className="block truncate">{String(desiredItem[nameKey])}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
-                            <Icon className="text-gray-400" path={mdiChevronDown} size={1} />
+                            <Icon className="text-gray-400" path={mdiChevronDown} size={0.8} />
                         </span>
                     </Listbox.Button>
                     <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -139,7 +139,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                                             {selected ? (
                                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                                     {/* <CheckIcon className="h-5 w-5" aria-hidden="true" /> */}
-                                                    <Icon path={mdiCheck} size={1} />
+                                                    <Icon path={mdiCheck} size={0.8} />
                                                 </span>
                                             ) : null}
                                         </>

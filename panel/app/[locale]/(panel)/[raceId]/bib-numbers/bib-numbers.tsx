@@ -44,7 +44,7 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
     };
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletebibNumber}>
-            <Icon size={1} path={mdiTrashCan} />
+            <Icon size={0.8} path={mdiTrashCan} />
             {t('pages.bibNumbers.delete.button')}
         </span>
     );
@@ -146,15 +146,15 @@ export const BibNumbers = () => {
                 <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button outline onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t('pages.bibNumbers.create.button')}</span>
                     </Button>
                     <Button outline className="ml-2" onClick={openCreateManyDialog}>
-                        {/* <Icon size={1} path={mdiPlusM} /> */}
+                        {/* <Icon size={0.8} path={mdiPlusM} /> */}
                         {t('pages.bibNumbers.createMany.button')}
                     </Button>{" "}
                     <Button outline className="ml-2" onClick={openDeleteAllDialog}>
-                        <Icon size={1} path={mdiRestore} className="mr-2" />
+                        <Icon size={0.8} path={mdiRestore} className="mr-2" />
                         {t('pages.bibNumbers.deleteAll.button')}
                     </Button>
                 </div>

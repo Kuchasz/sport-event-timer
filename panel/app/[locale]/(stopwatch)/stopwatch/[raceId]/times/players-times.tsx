@@ -95,7 +95,7 @@ const Item = <T extends string>({
                 onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
             >
                 <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
-                    <Icon size={1} path={mdiDeleteOutline} />
+                    <Icon size={0.8} path={mdiDeleteOutline} />
                 </div>
                 <PlayerWithTimeStampDisplay
                     playerWithTimeStamp={{

@@ -78,7 +78,7 @@ export const Settings = () => {
                 <PageHeader title={t('pages.settings.header.title')} description={t('pages.settings.header.description')} />
                 <div className="mb-4 flex">
                     <Button outline onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t('pages.settings.apiKeys.create.button')}</span>
                     </Button>
                 </div>
@@ -89,10 +89,10 @@ export const Settings = () => {
                             <div className="flex items-center">
                                 <div className="my-2 mr-2 bg-[#c2e59c] rounded-md px-4 py-2">{key.key}</div>
                                 <Button className="mr-2" onClick={() => openEditDialog(key)}>
-                                    <Icon size={1} path={mdiPen} />
+                                    <Icon size={0.8} path={mdiPen} />
                                 </Button>
                                 <Button onClick={() => openDeleteDialog(key)}>
-                                    <Icon size={1} path={mdiTrashCan} />
+                                    <Icon size={0.8} path={mdiTrashCan} />
                                 </Button>
                             </div>
                         </div>

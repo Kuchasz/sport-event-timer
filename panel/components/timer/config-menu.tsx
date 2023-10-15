@@ -12,7 +12,7 @@ import { TimerSettings } from "states/timer-states";
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (
     <span className="flex items-center py-2 cursor-pointer" onClick={click}>
         <div className="bg-orange-500 p-2 rounded-full text-white">
-            <Icon size={1} path={path} />
+            <Icon size={0.8} path={path} />
         </div>
         <span className="ml-2">{text}</span>
     </span>
@@ -74,7 +74,7 @@ export const ConfigMenu = ({
                 <div className="flex p-2 items-center justify-between bg-orange-500 text-white text-2xl font-medium">
                     Ustawienia
                     <div onClick={toggleMenu}>
-                        <Icon className="cursor-pointer m-2" size={1} path={mdiWindowClose} />
+                        <Icon className="cursor-pointer m-2" size={0.8} path={mdiWindowClose} />
                     </div>
                 </div>
                 <div className="flex-grow overflow-y-auto">

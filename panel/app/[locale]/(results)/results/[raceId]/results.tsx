@@ -144,7 +144,7 @@ export const Results = () => {
                                                         {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
                                                     </td>
                                                     <td>
-                                                        <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={1} />
+                                                        <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={0.8} />
                                                     </td>
                                                 </tr>
                                                 {rowIds.includes(i) && (

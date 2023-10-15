@@ -62,6 +62,7 @@
     },
     "races": {
       "addRace": "Add Race",
+      "manage": "Manage",
       "upcomingRaces": {
         "header": {
           "title": "Upcoming Races",

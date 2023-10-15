@@ -45,7 +45,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
     };
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayer}>
-            <Icon size={1} path={mdiTrashCan} />
+            <Icon size={0.8} path={mdiTrashCan} />
             {t("pages.players.delete.button")}
         </span>
     );
@@ -162,7 +162,7 @@ export const Players = () => {
                             });
                         }}
                     >
-                        <Icon size={1} path={mdiExport} />
+                        <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.players.export.button")}</span>
                     </Button>
                     <PoorColumnChooser

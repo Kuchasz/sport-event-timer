@@ -48,7 +48,7 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
                 ["text-red-600"]: !playerRegistration.promotedToPlayer,
             })}
         >
-            {playerRegistration.promotedToPlayer ? <Icon size={1} path={mdiCheck} /> : <Icon size={1} path={mdiClose} />}
+            {playerRegistration.promotedToPlayer ? <Icon size={0.8} path={mdiCheck} /> : <Icon size={0.8} path={mdiClose} />}
         </span>
     );
 };
@@ -94,7 +94,7 @@ const PlayerRegistrationPayment = ({
             })}
             onClick={togglePlayerPayment}
         >
-            {playerRegistration.hasPaid ? <Icon size={1} path={mdiCashCheck} /> : <Icon size={1} path={mdiCashRemove} />}
+            {playerRegistration.hasPaid ? <Icon size={0.8} path={mdiCashCheck} /> : <Icon size={0.8} path={mdiCashRemove} />}
             <span className="ml-2">
                 {playerRegistration.paymentDate?.toLocaleDateString() ?? t("pages.playerRegistrations.payment.status.notPaid")}
             </span>
@@ -334,7 +334,7 @@ export const PlayerRegistrations = () => {
                 />
                 <div className="mb-4 flex">
                     <Button outline onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
                     </Button>
                     <Button
@@ -346,7 +346,7 @@ export const PlayerRegistrations = () => {
                             });
                         }}
                     >
-                        <Icon size={1} path={mdiExport} />
+                        <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>
                     <PoorColumnChooser
