@@ -105,7 +105,9 @@
       },
       "editRace": {
         "title": "Edytuj wyścig"
-      }
+      },
+      "registrationStatus": "Status rejestracji:",
+      "registrations": "Zarejestrowani zawodnicy:"
     },
     "bibNumbers": {
       "delete": {
