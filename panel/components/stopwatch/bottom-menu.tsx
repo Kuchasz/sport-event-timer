@@ -25,7 +25,7 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     return (
         <Link href={`/stopwatch/${path}`}>
             <span className={`${classes} rounded-full transition-all duration-500 flex items-center px-4 py-1.5`}>
-                <Icon size={1} path={icon} />
+                <Icon size={0.8} path={icon} />
                 <span className={`${classesText} overflow-hidden transition-all duration-500 text-sm font-semibold`}>{text}</span>
             </span>
         </Link>

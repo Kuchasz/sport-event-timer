@@ -27,7 +27,7 @@ const OpenCategoriesButton = ({ classification }: { classification: Classificati
     const t = useTranslations();
     return (
         <span className="flex items-center hover:text-red-600 cursor-pointer">
-            <Icon size={1} path={mdiAccountMultiple} />
+            <Icon size={0.8} path={mdiAccountMultiple} />
             <Link href={`/${classification.raceId}/classifications/${classification.id}` as Route}>
                 <span>{t("pages.classifications.categories.button")}</span>
             </Link>
@@ -90,12 +90,12 @@ export const Classifications = () => {
                 <PageHeader title={t("pages.classifications.header.title")} description={t("pages.classifications.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.classifications.create.button")}</span>
                     </Button>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false">
-                        <Icon size={1} path={mdiAccountMultiplePlusOutline} />
+                        <Icon size={0.8} path={mdiAccountMultiplePlusOutline} />
                         <span className="ml-2">{t("pages.classifications.load.button")}</span>
                     </Button>
                 </div>

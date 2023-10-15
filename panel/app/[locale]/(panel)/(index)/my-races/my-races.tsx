@@ -35,7 +35,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
-            {race.registrationEnabled ? <Icon size={1} path={mdiLockOpenVariantOutline} /> : <Icon size={1} path={mdiLockOutline} />}
+            {race.registrationEnabled ? <Icon size={0.8} path={mdiLockOpenVariantOutline} /> : <Icon size={0.8} path={mdiLockOutline} />}
         </span>
     );
 };
@@ -225,7 +225,7 @@ export const MyRaces = () => {
                 <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button outline onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>
                 </div>

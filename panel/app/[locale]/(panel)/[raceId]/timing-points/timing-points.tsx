@@ -185,7 +185,7 @@ const TimingPointCard = ({
             >
                 <div className={classNames("py-4 px-6 rounded-lg flex", { ["bg-white"]: !isActive })}>
                     <div className={classNames(`bg-gray-100 text-gray-500 self-center p-2 rounded-full mr-4`, { ["rotate-90"]: !isLast })}>
-                        <Icon path={getTimingPointIcon(isFirst, isLast)} size={1} />
+                        <Icon path={getTimingPointIcon(isFirst, isLast)} size={0.8} />
                     </div>
                     <div className="flex flex-col">
                         <h4 className={classNames("text-md font-bold", { ["text-white"]: isActive })}>{timingPoint.name}</h4>

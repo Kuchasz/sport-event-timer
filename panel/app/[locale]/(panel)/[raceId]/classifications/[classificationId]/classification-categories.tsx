@@ -42,7 +42,7 @@ const CategoryIsSpecial = ({ category }: { category: Category }) => {
                 ["text-red-600"]: !category.isSpecial,
             })}
         >
-            {category.isSpecial ? <Icon size={1} path={mdiCheck} /> : <Icon size={1} path={mdiClose} />}
+            {category.isSpecial ? <Icon size={0.8} path={mdiCheck} /> : <Icon size={0.8} path={mdiClose} />}
         </span>
     );
 };
@@ -69,7 +69,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
     return (
         <div className="flex h-full">
             <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
-                <Icon size={1} path={mdiTrashCan} />
+                <Icon size={0.8} path={mdiTrashCan} />
             </span>
         </div>
     );
@@ -180,7 +180,7 @@ export const ClassificationCategories = () => {
                 />
                 <div className="flex">
                     <Button onClick={openCreateDialog}>
-                        <Icon size={1} path={mdiPlus} />
+                        <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
                     </Button>
                 </div>

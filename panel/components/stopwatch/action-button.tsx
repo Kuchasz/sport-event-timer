@@ -17,7 +17,7 @@ export const PrimaryActionButton = ({
         onClick={onClick}
         className="active:animate-pushIn mx-0.5 text-orange-600 bg-orange-100 disabled:text-zinc-600 disabled:bg-zinc-100 flex items-center rounded-xl px-3 py-2 "
     >
-        {icon && <Icon path={icon} size={1} />}
+        {icon && <Icon path={icon} size={0.8} />}
         {contents}
     </button>
 );
@@ -40,7 +40,7 @@ export const ActionButton = ({
             ["bg-zinc-100"]: !alert
         })}
     >
-        {icon && <Icon path={icon} size={1} />}
+        {icon && <Icon path={icon} size={0.8} />}
         {contents}
     </button>
 );

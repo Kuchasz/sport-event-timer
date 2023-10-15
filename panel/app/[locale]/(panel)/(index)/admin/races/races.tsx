@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-import { mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import { mdiCog, mdiCogOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
@@ -18,10 +18,11 @@ import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
-import { isTodayOrLater, monthForLocale } from "@set/utils/dist/datetime";
+import { dayForLocale, formatTime, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -38,7 +39,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
-            {race.registrationEnabled ? <Icon size={1} path={mdiLockOpenVariantOutline} /> : <Icon size={1} path={mdiLockOutline} />}
+            {race.registrationEnabled ? <Icon size={0.6} path={mdiLockOpenVariantOutline} /> : <Icon size={0.6} path={mdiLockOutline} />}
         </span>
     );
 };
@@ -67,6 +68,7 @@ export const Races = () => {
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const gridRef = useRef<AgGridReact<Race>>(null);
+    const router = useRouter();
 
     const t = useTranslations();
 
@@ -196,6 +198,10 @@ export const Races = () => {
         }
     };
 
+    const manageRace = (raceId: number) => {
+        router.push(`/${raceId}`);
+    };
+
     const onFirstDataRendered = useCallback(() => {
         gridRef.current?.api.sizeColumnsToFit();
     }, []);
@@ -216,10 +222,18 @@ export const Races = () => {
         }
     };
 
-    const sortedRaces = sort(races, r => r.date.getTime());
-    const descSortedRaces = sortDesc(races, r => r.date.getTime());
-    const futureRaces = sortedRaces.filter(r => isTodayOrLater(r.date));
-    const nextRaces = sort(futureRaces, r => r.date.getTime()).slice(0, 3);
+    // const sortedRaces = sort(races, r => r.date.getTime());
+
+    const futureRaces = races.filter(r => isTodayOrLater(r.date));
+    const ascSortedFutureRaces = sort(futureRaces, f => f.date.getTime());
+
+    const pastRaces = races.filter(r => isPast(r.date));
+    const descSortedPastRaces = sortDesc(pastRaces, r => r.date.getTime());
+
+    // const nextRaces = sort(futureRaces, r => r.date.getTime()).slice(0, 3);
+
+    const upcomingRaces = ascSortedFutureRaces.slice(0, 3);
+    const allRaces = [...ascSortedFutureRaces, ...descSortedPastRaces];
 
     return (
         <>
@@ -235,12 +249,12 @@ export const Races = () => {
                         />
                         <div className="mb-4 inline-flex">
                             <Button outline onClick={openCreateDialog}>
-                                <Icon size={1} path={mdiPlus} />
+                                <Icon size={0.8} path={mdiPlus} />
                                 <span className="ml-2">{t("pages.races.addRace")}</span>
                             </Button>
                         </div>
                         <div className="flex flex-wrap gap-6">
-                            {nextRaces.map(r => (
+                            {upcomingRaces.map(r => (
                                 <Link
                                     href={`/${r.id}`}
                                     className="w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
@@ -263,24 +277,49 @@ export const Races = () => {
                 <div className="bg-gray-50 py-8 flex flex-col items-center">
                     <div className="w-[768px]">
                         <PageHeader
-                            title={t("pages.races.list.header.title", { number: descSortedRaces.length })}
+                            title={t("pages.races.list.header.title", { number: allRaces.length })}
                             description={t("pages.races.list.header.description")}
                         />
                         <div className="flex flex-col gap-2">
-                            {descSortedRaces.map(r => (
+                            {allRaces.map(r => (
                                 <div className="flex bg-white items-center rounded-md shadow-lg px-8 py-4">
-                                    <div className="font-semibold flex flex-col items-center">
-                                        <div className="text-2xl">{r.date.getDate()}</div>
-                                        <div className="text-xs text-gray-500 font-semibold flex">
-                                            {capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "short", "pl-PL"))} /{" "}
-                                            {r.date.getFullYear().toString().slice(2, 4)}
+                                    <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
+                                        <div className="text-2xs font-semibold text-gray-400">
+                                            {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
                                         </div>
+                                        <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div>
                                     <div className="ml-8 flex flex-col">
-                                        <div className="font-semibold">{r.name}</div>
+                                        <div className="text-xs text-gray-400">
+                                            <span>{capitalizeFirstLetter(dayForLocale(r.date, "long", "pl-PL"))}, </span>
+                                            <span>{r.date.getDate().toString().padStart(2, "0")} </span>
+                                            <span>{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "long", "pl-PL"))} </span>
+                                            <span>{r.date.getFullYear().toString()} </span>
+                                            <span className="mx-1">•</span>
+                                            <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
+                                        </div>
+                                        <div className="flex text-xs">
+                                            <div className="flex items-center">
+                                                <div className="mr-1">Registration status:</div>
+                                                <RegistrationEnabled race={r} />
+                                            </div>
+                                            <div className="flex items-center">
+                                                <div className="ml-2 mr-1">Registrations:</div>
+                                                <Registrations race={r} />
+                                            </div>
+                                        </div>
+                                        {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
+                                        <div className="font-semibold py-2">{r.name}</div>
                                         <div className="text-xs text-gray-500 text-ellipsis">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
+                                    </div>
+                                    <div className="grow"></div>
+                                    <div className="">
+                                        <Button outline onClick={() => manageRace(r.id)}>
+                                            <Icon size={0.8} path={mdiCog} />
+                                            <span className="ml-2">{t("pages.races.manage")}</span>
+                                        </Button>
                                     </div>
                                 </div>
                             ))}
