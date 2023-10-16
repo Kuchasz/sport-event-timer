@@ -4,15 +4,8 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../../trpc-core";
-import {
-    mdiLockOpenVariantOutline,
-    mdiLockOutline,
-    mdiOpenInNew,
-    mdiPlus,
-    mdiRestore,
-    mdiTrashCan
-} from "@mdi/js";
+import { trpc } from "../../../../trpc-core";
+import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
@@ -24,10 +17,11 @@ import { sort, sortDesc } from "@set/utils/dist/array";
 import Link from "next/link";
 import { PoorActions } from "components/poor-actions";
 import { Confirmation } from "components/confirmation";
+import { RaceEdit } from "components/panel/race/race-edit";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
-// type EditedRace = AppRouterInputs["race"]["update"];
+type EditedRace = AppRouterInputs["race"]["update"];
 
 // const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
 // const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
@@ -92,7 +86,7 @@ const RaceFilter = ({ filter, setFilter }: { filter: RaceFilterType; setFilter: 
 
 export const Races = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
-    // const updateRaceMutation = trpc.race.update.useMutation();
+    const updateRaceMutation = trpc.race.update.useMutation();
     const wipeRaceMutation = trpc.action.wipe.useMutation();
     const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
@@ -122,6 +116,25 @@ export const Races = () => {
     };
 
     const myRacesActions = [
+        {
+            name: t("pages.races.editRacePopup.title"),
+            description: t("pages.races.editRacePopup.description"),
+            iconPath: mdiCalendarEditOutline,
+            execute: async (editedRace: Race) => {
+                const race = await Demodal.open<EditedRace>(NiceModal, {
+                    title: t("pages.races.editRacePopup.title"),
+                    component: RaceEdit,
+                    props: {
+                        editedRace,
+                    },
+                });
+
+                if (race) {
+                    await updateRaceMutation.mutateAsync(race);
+                    await refetch();
+                }
+            },
+        },
         {
             name: t("pages.races.wipeStopwatchPopup.title"),
             description: t("pages.races.wipeStopwatchPopup.description"),

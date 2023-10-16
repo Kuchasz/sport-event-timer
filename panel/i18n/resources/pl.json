@@ -103,8 +103,9 @@
       "createRace": {
         "title": "Stwórz nowy wyścig"
       },
-      "editRace": {
-        "title": "Edytuj wyścig"
+      "editRacePopup": {
+        "title": "Edytuj wyścig",
+        "description": "Uruchom okno edycji wyścigu"
       },
       "registration": "Rejestracja",
       "filter": {

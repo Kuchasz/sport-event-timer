@@ -103,8 +103,9 @@
       "createRace": {
         "title": "Create new race"
       },
-      "editRace": {
-        "title": "Edit race"
+      "editRacePopup": {
+        "title": "Edit race",
+        "description": "Open edit race popup"
       },
       "registration": "Registration",
       "filter": {
