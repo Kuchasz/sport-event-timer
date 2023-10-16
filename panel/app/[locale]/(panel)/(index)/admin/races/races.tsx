@@ -5,7 +5,16 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import {
+    mdiChevronRight,
+    mdiCog,
+    mdiLockOpenVariantOutline,
+    mdiLockOutline,
+    mdiOpenInNew,
+    mdiPlus,
+    mdiRestore,
+    mdiTrashCan,
+} from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
@@ -313,17 +322,27 @@ export const Races = () => {
                                         </div>
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div> */}
+
+                                    <div className="w-20 h-20 mr-8 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
+                                        <div className="flex text-lg gap-0.5">
+                                            <div>{r.date.getDate().toString().padStart(2, "0")}</div>
+                                            <span></span>
+                                            <div>{monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}</div>
+                                        </div>
+                                        <div className="flex text-xs gap-0.5">
+                                            <div className="flex">{r.date.getFullYear()}</div>
+                                        </div>
+                                    </div>
                                     <div className="w-72 flex flex-col">
-                                        <div className="">
-                                            {/* <span>{capitalizeFirstLetter(dayForLocale(r.date, "long", "pl-PL"))}, </span> */}
+                                        {/* <div>
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>
                                             <span>{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "long", "pl-PL"))} </span>
                                             <span>{r.date.getFullYear().toString()} </span>
                                             <span className="mx-1">•</span>
                                             <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
-                                        </div>
+                                        </div> */}
                                         {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
-                                        <div className="font-semibold text-xs py-2">{r.name}</div>
+                                        <div className="font-semibold text-sm py-2">{r.name}</div>
                                         <div className="text-xs text-gray-500 text-ellipsis">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
@@ -351,11 +370,14 @@ export const Races = () => {
                                         />
                                     </div>
 
-                                    <Link href={`/${r.id}`} className="">
-                                        <Button outline>
-                                            <Icon size={0.8} path={mdiOpenInNew} />
-                                            <span className="ml-2">{t("pages.races.manage")}</span>
-                                        </Button>
+                                    <Link
+                                        className="group inline-flex items-center rounded-full hover:bg-gray-100 px-3 py-2 text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                                        href={`/${r.id}`}
+                                    >
+                                        {/* <Button outline> */}
+                                        <Icon size={0.8} path={mdiOpenInNew} />
+                                        {/* <span className="ml-2">{t("pages.races.manage")}</span> */}
+                                        {/* </Button> */}
                                     </Link>
                                 </div>
                             ))}
