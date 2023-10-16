@@ -1,17 +1,7 @@
-import Head from "next/head";
-import { authenticate } from "../../../../auth";
-import { Dashboard } from "./dashboard";
+import { authenticate } from "auth";
+import { Races } from "./races";
 
 export default async function () {
     await authenticate();
-    return (
-        <>
-            <Head>
-                <title>Home</title>
-            </Head>
-            <div className="border-1 flex flex-wrap h-full border-gray-600 border-solid">
-                <Dashboard />
-            </div>
-        </>
-    );
+    return <Races />;
 }
