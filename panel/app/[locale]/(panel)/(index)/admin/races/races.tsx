@@ -22,7 +22,6 @@ import { dayForLocale, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTim
 import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -66,13 +65,16 @@ const MiniChooserItem = ({ isActive, name }: { isActive: boolean; name: string }
     </div>
 );
 
-const MiniChooser = () => (
-    <div className="flex text-sm rounded-lg px-0.5 py-1 bg-gray-100 items-center">
-        <MiniChooserItem isActive={false} name="All" />
-        <MiniChooserItem isActive={true} name="Upcoming" />
-        <MiniChooserItem isActive={false} name="Past" />
-    </div>
-);
+const MiniChooser = () => {
+    const t = useTranslations();
+    return (
+        <div className="flex text-sm rounded-lg px-0.5 py-1 bg-gray-100 items-center">
+            <MiniChooserItem isActive={false} name={t("pages.races.filter.all")} />
+            <MiniChooserItem isActive={true} name={t('pages.races.filter.upcoming')} />
+            <MiniChooserItem isActive={false} name={t('pages.races.filter.past')} />
+        </div>
+    );
+};
 
 export const Races = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
@@ -82,7 +84,6 @@ export const Races = () => {
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const gridRef = useRef<AgGridReact<Race>>(null);
-    const router = useRouter();
 
     const t = useTranslations();
 
@@ -210,10 +211,6 @@ export const Races = () => {
             await addRaceMutation.mutateAsync(race);
             refetch();
         }
-    };
-
-    const manageRace = (raceId: number) => {
-        router.push(`/${raceId}`);
     };
 
     const onFirstDataRendered = useCallback(() => {
