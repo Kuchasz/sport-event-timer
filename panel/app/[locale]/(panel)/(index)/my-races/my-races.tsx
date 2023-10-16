@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
@@ -16,7 +15,6 @@ import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
-import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
 
@@ -218,11 +216,11 @@ export const MyRaces = () => {
 
     return (
         <>
-            <Head>
+            {/* <Head>
                 <title>{t("pages.races.header.title")}</title>
-            </Head>
+            </Head> */}
             <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} />
+                {/* <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} /> */}
                 <div className="mb-4 inline-flex">
                     <Button outline onClick={openCreateDialog}>
                         <Icon size={0.8} path={mdiPlus} />
