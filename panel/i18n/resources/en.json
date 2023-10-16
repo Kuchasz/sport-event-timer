@@ -106,8 +106,7 @@
       "editRace": {
         "title": "Edit race"
       },
-      "registrationStatus": "Registration status:",
-      "registrations": "Registrations:",
+      "registration": "Registration",
       "filter": {
         "all": "All",
         "upcoming": "Upcoming",

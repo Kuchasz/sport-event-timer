@@ -106,8 +106,7 @@
       "editRace": {
         "title": "Edytuj wyścig"
       },
-      "registrationStatus": "Status rejestracji:",
-      "registrations": "Zarejestrowani zawodnicy:",
+      "registration": "Rejestracja",
       "filter": {
         "all": "Wszystkie",
         "past": "Przeszłe",
