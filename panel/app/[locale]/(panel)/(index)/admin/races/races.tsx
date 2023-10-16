@@ -10,7 +10,7 @@ import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { Confirmation } from "components/confirmation";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
@@ -38,7 +38,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
-            {race.registrationEnabled ? <Icon size={0.6} path={mdiLockOpenVariantOutline} /> : <Icon size={0.6} path={mdiLockOutline} />}
+            {race.registrationEnabled ? <Icon size={0.8} path={mdiLockOpenVariantOutline} /> : <Icon size={0.8} path={mdiLockOutline} />}
         </span>
     );
 };
@@ -47,7 +47,7 @@ const Registrations = ({ race }: { race: Race }) => {
     return (
         <span className={classNames("flex h-full items-center")}>
             <span className="font-semibold">{race.registeredPlayers}</span>{" "}
-            <span>
+            <span className="text-gray-500 text-sm">
                 {race.playersLimit && (
                     <span>
                         <span className="mx-1">/</span>
@@ -59,19 +59,28 @@ const Registrations = ({ race }: { race: Race }) => {
     );
 };
 
-const MiniChooserItem = ({ isActive, name }: { isActive: boolean; name: string }) => (
-    <div className={classNames("mx-0.5 rounded-lg px-4", { ["bg-white"]: isActive, ["cursor-pointer hover:bg-gray-50"]: !isActive })}>
+const RaceFilterKind = ({ onSelect, isActive, name }: { onSelect: () => void; isActive: boolean; name: string }) => (
+    <div
+        onClick={onSelect}
+        className={classNames("mx-0.5 rounded-lg px-4 cursor-default", { ["bg-white"]: isActive, ["cursor-pointer hover:bg-gray-50"]: !isActive })}
+    >
         {name}
     </div>
 );
 
-const MiniChooser = () => {
+type RaceFilterType = "all" | "upcoming" | "past";
+
+const RaceFilter = ({ filter, setFilter }: { filter: RaceFilterType; setFilter: (filter: RaceFilterType) => void }) => {
     const t = useTranslations();
     return (
         <div className="flex text-sm rounded-lg px-0.5 py-1 bg-gray-100 items-center">
-            <MiniChooserItem isActive={false} name={t("pages.races.filter.all")} />
-            <MiniChooserItem isActive={true} name={t('pages.races.filter.upcoming')} />
-            <MiniChooserItem isActive={false} name={t('pages.races.filter.past')} />
+            <RaceFilterKind onSelect={() => setFilter("all")} isActive={filter === "all"} name={t("pages.races.filter.all")} />
+            <RaceFilterKind
+                onSelect={() => setFilter("upcoming")}
+                isActive={filter === "upcoming"}
+                name={t("pages.races.filter.upcoming")}
+            />
+            <RaceFilterKind onSelect={() => setFilter("past")} isActive={filter === "past"} name={t("pages.races.filter.past")} />
         </div>
     );
 };
@@ -200,6 +209,8 @@ export const Races = () => {
 
     const getShortcut = (name: string) => name.slice(0, 2).toUpperCase();
 
+    const [filter, setFilter] = useState<RaceFilterType>("all");
+
     const openCreateDialog = async () => {
         const race = await Demodal.open<CreatedRace>(NiceModal, {
             title: t("pages.races.createRace.title"),
@@ -293,7 +304,7 @@ export const Races = () => {
                                 title={t("pages.races.list.header.title", { number: allRaces.length })}
                                 description={t("pages.races.list.header.description")}
                             />
-                            <MiniChooser />
+                            <RaceFilter filter={filter} setFilter={setFilter} />
                         </div>
                         <div className="flex flex-col gap-2">
                             {allRaces.map(r => (
@@ -304,7 +315,7 @@ export const Races = () => {
                                         </div>
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div>
-                                    <div className="ml-8 flex flex-col">
+                                    <div className="w-72 ml-8 flex flex-col">
                                         <div className="text-xs text-gray-400">
                                             <span>{capitalizeFirstLetter(dayForLocale(r.date, "long", "pl-PL"))}, </span>
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>
@@ -313,23 +324,25 @@ export const Races = () => {
                                             <span className="mx-1">•</span>
                                             <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
                                         </div>
-                                        <div className="flex text-xs">
-                                            <div className="flex items-center">
-                                                <div className="mr-1">{t("pages.races.registrationStatus")}</div>
-                                                <RegistrationEnabled race={r} />
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="ml-2 mr-1">{t("pages.races.registrations")}</div>
-                                                <Registrations race={r} />
-                                            </div>
-                                        </div>
                                         {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
                                         <div className="font-semibold py-2">{r.name}</div>
                                         <div className="text-xs text-gray-500 text-ellipsis">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
                                     </div>
-                                    <div className="grow"></div>
+                                    <div className="grow flex flex-col items-center">
+                                        <div className="flex flex-col">
+                                            <div className="flex flex-col">
+                                                <div className="text-xs uppercase text-gray-400 font-semibold">
+                                                    {t("pages.races.registration")}
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <Registrations race={r} /> <RegistrationEnabled race={r} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* <div className="grow"></div> */}
                                     <Link href={`/${r.id}`} className="">
                                         <Button outline>
                                             <Icon size={0.8} path={mdiCog} />
