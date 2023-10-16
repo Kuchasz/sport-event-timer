@@ -200,7 +200,7 @@ export const MyRaces = () => {
 
     const openEditDialog = async (editedRace?: Race) => {
         const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: t("pages.races.editRace.title"),
+            title: t("pages.races.editRacePopup.title"),
             component: RaceEdit,
             props: {
                 editedRace,
