@@ -5,7 +5,7 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus } from "@mdi/js";
+import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
@@ -16,6 +16,8 @@ import { dayForLocale, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTim
 import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
+import { PoorActions } from "components/poor-actions";
+import { Confirmation } from "components/confirmation";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -32,7 +34,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
-            {race.registrationEnabled ? <Icon size={0.8} path={mdiLockOpenVariantOutline} /> : <Icon size={0.8} path={mdiLockOutline} />}
+            {race.registrationEnabled ? <Icon size={1} path={mdiLockOpenVariantOutline} /> : <Icon size={1} path={mdiLockOutline} />}
         </span>
     );
 };
@@ -40,7 +42,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
 const Registrations = ({ race }: { race: Race }) => {
     return (
         <span className={classNames("flex h-full items-center")}>
-            <span className="font-semibold">{race.registeredPlayers}</span>{" "}
+            <span className="font-semibold text-lg">{race.registeredPlayers}</span>{" "}
             <span className="text-gray-500 text-sm">
                 {race.playersLimit && (
                     <span>
@@ -85,77 +87,74 @@ const RaceFilter = ({ filter, setFilter }: { filter: RaceFilterType; setFilter: 
 export const Races = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
     // const updateRaceMutation = trpc.race.update.useMutation();
-    // const wipeRaceMutation = trpc.action.wipe.useMutation();
+    const wipeRaceMutation = trpc.action.wipe.useMutation();
     const addRaceMutation = trpc.race.add.useMutation();
-    // const deleteRaceMutation = trpc.race.delete.useMutation();
-    // const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
+    const deleteRaceMutation = trpc.race.delete.useMutation();
+    const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     // const gridRef = useRef<AgGridReact<Race>>(null);
 
     const t = useTranslations();
 
-    // const turnOffRegistrationAction = {
-    //     name: t("pages.registration.turnOffPopup.title"),
-    //     description: t("pages.registration.turnOffPopup.description"),
-    //     iconPath: mdiLockOutline,
-    //     execute: async (race: Race) => {
-    //         await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-    //         await refetch();
-    //         refreshRow(gridRef, race.id.toString());
-    //     },
-    // };
+    const turnOffRegistrationAction = {
+        name: t("pages.registration.turnOffPopup.title"),
+        description: t("pages.registration.turnOffPopup.description"),
+        iconPath: mdiLockOutline,
+        execute: async (race: Race) => {
+            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
+            await refetch();
+        },
+    };
 
-    // const turnOnRegistrationAction = {
-    //     name: t("pages.registration.turnOnPopup.title"),
-    //     description: t("pages.registration.turnOnPopup.description"),
-    //     iconPath: mdiLockOpenVariantOutline,
-    //     execute: async (race: Race) => {
-    //         await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-    //         await refetch();
-    //         refreshRow(gridRef, race.id.toString());
-    //     },
-    // };
+    const turnOnRegistrationAction = {
+        name: t("pages.registration.turnOnPopup.title"),
+        description: t("pages.registration.turnOnPopup.description"),
+        iconPath: mdiLockOpenVariantOutline,
+        execute: async (race: Race) => {
+            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
+            await refetch();
+        },
+    };
 
-    // const myRacesActions = [
-    //     {
-    //         name: t("pages.races.wipeStopwatchPopup.title"),
-    //         description: t("pages.races.wipeStopwatchPopup.description"),
-    //         iconPath: mdiRestore,
-    //         execute: async (race: Race) => {
-    //             const confirmed = await Demodal.open<boolean>(NiceModal, {
-    //                 title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
-    //                 component: Confirmation,
-    //                 props: {
-    //                     message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
-    //                 },
-    //             });
+    const myRacesActions = [
+        {
+            name: t("pages.races.wipeStopwatchPopup.title"),
+            description: t("pages.races.wipeStopwatchPopup.description"),
+            iconPath: mdiRestore,
+            execute: async (race: Race) => {
+                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                    title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
+                    component: Confirmation,
+                    props: {
+                        message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
+                    },
+                });
 
-    //             if (confirmed) {
-    //                 await wipeRaceMutation.mutateAsync({ raceId: race.id });
-    //                 await refetch();
-    //                 refreshRow(gridRef, race.id.toString());
-    //             }
-    //         },
-    //     },
-    //     {
-    //         name: t("pages.races.deleteRacePopup.title"),
-    //         description: t("pages.races.deleteRacePopup.description"),
-    //         iconPath: mdiTrashCan,
-    //         execute: async (race: Race) => {
-    //             const confirmed = await Demodal.open<boolean>(NiceModal, {
-    //                 title: t("pages.races.deleteRacePopup.confirmation.title"),
-    //                 component: Confirmation,
-    //                 props: {
-    //                     message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
-    //                 },
-    //             });
+                if (confirmed) {
+                    await wipeRaceMutation.mutateAsync({ raceId: race.id });
+                    await refetch();
+                }
+            },
+        },
+        {
+            name: t("pages.races.deleteRacePopup.title"),
+            description: t("pages.races.deleteRacePopup.description"),
+            iconPath: mdiTrashCan,
+            execute: async (race: Race) => {
+                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                    title: t("pages.races.deleteRacePopup.confirmation.title"),
+                    component: Confirmation,
+                    props: {
+                        message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
+                    },
+                });
 
-    //             if (confirmed) {
-    //                 await deleteRaceMutation.mutateAsync({ raceId: race.id });
-    //                 refetch();
-    //             }
-    //         },
-    //     },
-    // ];
+                if (confirmed) {
+                    await deleteRaceMutation.mutateAsync({ raceId: race.id });
+                    refetch();
+                }
+            },
+        },
+    ];
 
     // const defaultColumns: ColDef<Race>[] = [
     //     {
@@ -308,15 +307,15 @@ export const Races = () => {
                         <div className="flex flex-col gap-2">
                             {allRaces.map(r => (
                                 <div key={r.id} className="flex bg-white items-center rounded-md shadow-lg px-8 py-6">
-                                    <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
+                                    {/* <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
                                         <div className="text-2xs font-semibold text-gray-400">
                                             {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
                                         </div>
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
-                                    </div>
-                                    <div className="w-72 ml-8 flex flex-col">
-                                        <div className="text-xs text-gray-400">
-                                            <span>{capitalizeFirstLetter(dayForLocale(r.date, "long", "pl-PL"))}, </span>
+                                    </div> */}
+                                    <div className="w-72 flex flex-col">
+                                        <div className="">
+                                            {/* <span>{capitalizeFirstLetter(dayForLocale(r.date, "long", "pl-PL"))}, </span> */}
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>
                                             <span>{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "long", "pl-PL"))} </span>
                                             <span>{r.date.getFullYear().toString()} </span>
@@ -324,7 +323,7 @@ export const Races = () => {
                                             <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
                                         </div>
                                         {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
-                                        <div className="font-semibold py-2">{r.name}</div>
+                                        <div className="font-semibold text-xs py-2">{r.name}</div>
                                         <div className="text-xs text-gray-500 text-ellipsis">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
@@ -341,10 +340,20 @@ export const Races = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className="grow"></div> */}
+                                    <div>
+                                        <PoorActions
+                                            item={r}
+                                            actions={
+                                                r.registrationEnabled
+                                                    ? [turnOffRegistrationAction, ...myRacesActions]
+                                                    : [turnOnRegistrationAction, ...myRacesActions]
+                                            }
+                                        />
+                                    </div>
+
                                     <Link href={`/${r.id}`} className="">
                                         <Button outline>
-                                            <Icon size={0.8} path={mdiCog} />
+                                            <Icon size={0.8} path={mdiOpenInNew} />
                                             <span className="ml-2">{t("pages.races.manage")}</span>
                                         </Button>
                                     </Link>
