@@ -107,7 +107,12 @@
         "title": "Edit race"
       },
       "registrationStatus": "Registration status:",
-      "registrations": "Registrations:"
+      "registrations": "Registrations:",
+      "filter": {
+        "all": "All",
+        "upcoming": "Upcoming",
+        "past": "Past"
+      }
     },
     "bibNumbers": {
       "delete": {

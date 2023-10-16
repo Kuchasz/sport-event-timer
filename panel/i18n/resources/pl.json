@@ -107,7 +107,12 @@
         "title": "Edytuj wyścig"
       },
       "registrationStatus": "Status rejestracji:",
-      "registrations": "Zarejestrowani zawodnicy:"
+      "registrations": "Zarejestrowani zawodnicy:",
+      "filter": {
+        "all": "Wszystkie",
+        "past": "Przeszłe",
+        "upcoming": "Nadchodzące"
+      }
     },
     "bibNumbers": {
       "delete": {
