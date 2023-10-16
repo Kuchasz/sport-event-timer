@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
 import { IndexPageLayout } from "components/index-page-layout";
 
-export default async function PanelLayout(props: { children: ReactNode; breadcrumbs: ReactNode; params: { locale: string } }) {
+export default async function PanelLayout(props: { children: ReactNode; params: { locale: string } }) {
     const locale = useLocale();
 
     if (props?.params?.locale !== locale) {
