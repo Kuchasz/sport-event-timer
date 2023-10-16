@@ -62,7 +62,10 @@ const Registrations = ({ race }: { race: Race }) => {
 const RaceFilterKind = ({ onSelect, isActive, name }: { onSelect: () => void; isActive: boolean; name: string }) => (
     <div
         onClick={onSelect}
-        className={classNames("mx-0.5 rounded-lg px-4 cursor-default", { ["bg-white"]: isActive, ["cursor-pointer hover:bg-gray-50"]: !isActive })}
+        className={classNames("mx-0.5 rounded-lg px-4 cursor-default", {
+            ["bg-white"]: isActive,
+            ["cursor-pointer hover:bg-gray-50"]: !isActive,
+        })}
     >
         {name}
     </div>
@@ -255,7 +258,9 @@ export const Races = () => {
     // const nextRaces = sort(futureRaces, r => r.date.getTime()).slice(0, 3);
 
     const upcomingRaces = ascSortedFutureRaces.slice(0, 3);
-    const allRaces = [...ascSortedFutureRaces, ...descSortedPastRaces];
+    const allRaces = [...ascSortedFutureRaces, ...descSortedPastRaces].filter(r =>
+        filter === "all" ? true : filter === "past" ? isPast(r.date) : filter === "upcoming" ? isTodayOrLater(r.date) : false
+    );
 
     return (
         <>
