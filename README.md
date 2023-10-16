@@ -21,7 +21,7 @@ Application for making time measurements
 | 19/09/2023 | Add notifications to successful/failed actions             | todo :date:                     |
 | 25/09/2023 | Short name for Timing Points                               | :heavy_check_mark: (25/09/2023) |
 | 01/10/2023 | Speed up application build and release times               | :heavy_check_mark: (03/10/2023) |
-| 03/09/2023 | New race selection dashboard                               | todo :date:                     |
+| 03/09/2023 | Start new race selection dashboard                         | :heavy_check_mark: (17/10/2023) |
 
 ## TODO
 
