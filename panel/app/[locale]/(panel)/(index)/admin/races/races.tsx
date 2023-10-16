@@ -6,14 +6,12 @@ import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
 import {
-    mdiChevronRight,
-    mdiCog,
     mdiLockOpenVariantOutline,
     mdiLockOutline,
     mdiOpenInNew,
     mdiPlus,
     mdiRestore,
-    mdiTrashCan,
+    mdiTrashCan
 } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
@@ -21,9 +19,8 @@ import { useState } from "react";
 import classNames from "classnames";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import { dayForLocale, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
+import { isPast, isTodayOrLater, monthForLocale } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
-import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import Link from "next/link";
 import { PoorActions } from "components/poor-actions";
 import { Confirmation } from "components/confirmation";
