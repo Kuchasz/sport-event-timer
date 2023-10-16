@@ -5,19 +5,13 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
-import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import { mdiCog, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
-import { RaceEdit } from "components/panel/race/race-edit";
-import { Confirmation } from "components/confirmation";
-import { useCallback, useRef, useState } from "react";
-import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
+import { useState } from "react";
 import classNames from "classnames";
-import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
 import { dayForLocale, isPast, isTodayOrLater, monthForLocale, timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
@@ -25,10 +19,10 @@ import Link from "next/link";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
-type EditedRace = AppRouterInputs["race"]["update"];
+// type EditedRace = AppRouterInputs["race"]["update"];
 
-const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
-const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
+// const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
+// const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
 
 const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
@@ -90,125 +84,125 @@ const RaceFilter = ({ filter, setFilter }: { filter: RaceFilterType; setFilter: 
 
 export const Races = () => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData: [] });
-    const updateRaceMutation = trpc.race.update.useMutation();
-    const wipeRaceMutation = trpc.action.wipe.useMutation();
+    // const updateRaceMutation = trpc.race.update.useMutation();
+    // const wipeRaceMutation = trpc.action.wipe.useMutation();
     const addRaceMutation = trpc.race.add.useMutation();
-    const deleteRaceMutation = trpc.race.delete.useMutation();
-    const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
-    const gridRef = useRef<AgGridReact<Race>>(null);
+    // const deleteRaceMutation = trpc.race.delete.useMutation();
+    // const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
+    // const gridRef = useRef<AgGridReact<Race>>(null);
 
     const t = useTranslations();
 
-    const turnOffRegistrationAction = {
-        name: t("pages.registration.turnOffPopup.title"),
-        description: t("pages.registration.turnOffPopup.description"),
-        iconPath: mdiLockOutline,
-        execute: async (race: Race) => {
-            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-            await refetch();
-            refreshRow(gridRef, race.id.toString());
-        },
-    };
+    // const turnOffRegistrationAction = {
+    //     name: t("pages.registration.turnOffPopup.title"),
+    //     description: t("pages.registration.turnOffPopup.description"),
+    //     iconPath: mdiLockOutline,
+    //     execute: async (race: Race) => {
+    //         await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
+    //         await refetch();
+    //         refreshRow(gridRef, race.id.toString());
+    //     },
+    // };
 
-    const turnOnRegistrationAction = {
-        name: t("pages.registration.turnOnPopup.title"),
-        description: t("pages.registration.turnOnPopup.description"),
-        iconPath: mdiLockOpenVariantOutline,
-        execute: async (race: Race) => {
-            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-            await refetch();
-            refreshRow(gridRef, race.id.toString());
-        },
-    };
+    // const turnOnRegistrationAction = {
+    //     name: t("pages.registration.turnOnPopup.title"),
+    //     description: t("pages.registration.turnOnPopup.description"),
+    //     iconPath: mdiLockOpenVariantOutline,
+    //     execute: async (race: Race) => {
+    //         await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
+    //         await refetch();
+    //         refreshRow(gridRef, race.id.toString());
+    //     },
+    // };
 
-    const myRacesActions = [
-        {
-            name: t("pages.races.wipeStopwatchPopup.title"),
-            description: t("pages.races.wipeStopwatchPopup.description"),
-            iconPath: mdiRestore,
-            execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
-                    title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
-                    component: Confirmation,
-                    props: {
-                        message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
-                    },
-                });
+    // const myRacesActions = [
+    //     {
+    //         name: t("pages.races.wipeStopwatchPopup.title"),
+    //         description: t("pages.races.wipeStopwatchPopup.description"),
+    //         iconPath: mdiRestore,
+    //         execute: async (race: Race) => {
+    //             const confirmed = await Demodal.open<boolean>(NiceModal, {
+    //                 title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
+    //                 component: Confirmation,
+    //                 props: {
+    //                     message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
+    //                 },
+    //             });
 
-                if (confirmed) {
-                    await wipeRaceMutation.mutateAsync({ raceId: race.id });
-                    await refetch();
-                    refreshRow(gridRef, race.id.toString());
-                }
-            },
-        },
-        {
-            name: t("pages.races.deleteRacePopup.title"),
-            description: t("pages.races.deleteRacePopup.description"),
-            iconPath: mdiTrashCan,
-            execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
-                    title: t("pages.races.deleteRacePopup.confirmation.title"),
-                    component: Confirmation,
-                    props: {
-                        message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
-                    },
-                });
+    //             if (confirmed) {
+    //                 await wipeRaceMutation.mutateAsync({ raceId: race.id });
+    //                 await refetch();
+    //                 refreshRow(gridRef, race.id.toString());
+    //             }
+    //         },
+    //     },
+    //     {
+    //         name: t("pages.races.deleteRacePopup.title"),
+    //         description: t("pages.races.deleteRacePopup.description"),
+    //         iconPath: mdiTrashCan,
+    //         execute: async (race: Race) => {
+    //             const confirmed = await Demodal.open<boolean>(NiceModal, {
+    //                 title: t("pages.races.deleteRacePopup.confirmation.title"),
+    //                 component: Confirmation,
+    //                 props: {
+    //                     message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
+    //                 },
+    //             });
 
-                if (confirmed) {
-                    await deleteRaceMutation.mutateAsync({ raceId: race.id });
-                    refetch();
-                }
-            },
-        },
-    ];
+    //             if (confirmed) {
+    //                 await deleteRaceMutation.mutateAsync({ raceId: race.id });
+    //                 refetch();
+    //             }
+    //         },
+    //     },
+    // ];
 
-    const defaultColumns: ColDef<Race>[] = [
-        {
-            width: 25,
-            headerName: "",
-            headerClass: "hidden",
-            sortable: false,
-            filter: false,
-            valueGetter: r => r.node?.rowIndex,
-        },
-        { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
-        {
-            field: "date",
-            headerName: t("pages.races.grid.columns.date"),
-            sort: "asc",
-            sortable: true,
-            filter: true,
-            cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString()}</div>,
-        },
-        {
-            field: "registrationEnabled",
-            headerName: t("pages.races.grid.columns.registrationEnabled"),
-            sortable: true,
-            cellRenderer: RegistrationEnabledRenderer,
-        },
-        {
-            field: "registeredPlayers",
-            headerName: t("pages.races.grid.columns.registeredPlayers"),
-            sortable: true,
-            cellRenderer: RegistrationsRenderer,
-        },
-        {
-            width: 200,
-            headerName: t("pages.races.grid.columns.actions"),
-            cellStyle: { overflow: "visible" },
-            cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
-                <PoorActions
-                    item={props.data}
-                    actions={
-                        props.data.registrationEnabled
-                            ? [turnOffRegistrationAction, ...myRacesActions]
-                            : [turnOnRegistrationAction, ...myRacesActions]
-                    }
-                />
-            ),
-        },
-    ];
+    // const defaultColumns: ColDef<Race>[] = [
+    //     {
+    //         width: 25,
+    //         headerName: "",
+    //         headerClass: "hidden",
+    //         sortable: false,
+    //         filter: false,
+    //         valueGetter: r => r.node?.rowIndex,
+    //     },
+    //     { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
+    //     {
+    //         field: "date",
+    //         headerName: t("pages.races.grid.columns.date"),
+    //         sort: "asc",
+    //         sortable: true,
+    //         filter: true,
+    //         cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString()}</div>,
+    //     },
+    //     {
+    //         field: "registrationEnabled",
+    //         headerName: t("pages.races.grid.columns.registrationEnabled"),
+    //         sortable: true,
+    //         cellRenderer: RegistrationEnabledRenderer,
+    //     },
+    //     {
+    //         field: "registeredPlayers",
+    //         headerName: t("pages.races.grid.columns.registeredPlayers"),
+    //         sortable: true,
+    //         cellRenderer: RegistrationsRenderer,
+    //     },
+    //     {
+    //         width: 200,
+    //         headerName: t("pages.races.grid.columns.actions"),
+    //         cellStyle: { overflow: "visible" },
+    //         cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
+    //             <PoorActions
+    //                 item={props.data}
+    //                 actions={
+    //                     props.data.registrationEnabled
+    //                         ? [turnOffRegistrationAction, ...myRacesActions]
+    //                         : [turnOnRegistrationAction, ...myRacesActions]
+    //                 }
+    //             />
+    //         ),
+    //     },
+    // ];
 
     const getShortcut = (name: string) => name.slice(0, 2).toUpperCase();
 
@@ -227,25 +221,25 @@ export const Races = () => {
         }
     };
 
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
+    // const onFirstDataRendered = useCallback(() => {
+    //     gridRef.current?.api.sizeColumnsToFit();
+    // }, []);
 
-    const openEditDialog = async (editedRace?: Race) => {
-        const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: t("pages.races.editRace.title"),
-            component: RaceEdit,
-            props: {
-                editedRace,
-            },
-        });
+    // const openEditDialog = async (editedRace?: Race) => {
+    //     const race = await Demodal.open<EditedRace>(NiceModal, {
+    //         title: t("pages.races.editRace.title"),
+    //         component: RaceEdit,
+    //         props: {
+    //             editedRace,
+    //         },
+    //     });
 
-        if (race) {
-            await updateRaceMutation.mutateAsync(race);
-            await refetch();
-            refreshRow(gridRef, editedRace!.id.toString());
-        }
-    };
+    //     if (race) {
+    //         await updateRaceMutation.mutateAsync(race);
+    //         await refetch();
+    //         refreshRow(gridRef, editedRace!.id.toString());
+    //     }
+    // };
 
     // const sortedRaces = sort(races, r => r.date.getTime());
 
