@@ -28,7 +28,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
             >
-                <Popover.Button className="group inline-flex items-center rounded-md hover:bg-gray-100 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                <Popover.Button className="group inline-flex items-center rounded-full hover:bg-gray-100 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <Icon className="text-black" size={0.8} path={mdiDotsVertical} />
                 </Popover.Button>
 
