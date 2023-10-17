@@ -4,14 +4,7 @@ import Icon from "@mdi/react";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
-import {
-    mdiCalendarEditOutline, mdiLockOpenVariantOutline,
-    mdiLockOutline,
-    mdiOpenInNew,
-    mdiPlus,
-    mdiRestore,
-    mdiTrashCan
-} from "@mdi/js";
+import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
@@ -245,7 +238,9 @@ export const Races = () => {
                                         <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
                                     </div>
                                     <div className="p-4 ">
-                                        <div className="text-sm overflow-hidden whitespace-nowrap text-ellipsis font-semibold">{r.name}</div>
+                                        <div className="text-sm overflow-hidden whitespace-nowrap text-ellipsis font-semibold">
+                                            {r.name}
+                                        </div>
                                         <div className="text-xs overflow-hidden line-clamp-2 text-ellipsis text-gray-500">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
