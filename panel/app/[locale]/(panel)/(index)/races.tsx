@@ -5,7 +5,16 @@ import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
-import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import {
+    mdiCalendarEditOutline,
+    mdiDotsVertical,
+    mdiLockOpenVariantOutline,
+    mdiLockOutline,
+    mdiOpenInNew,
+    mdiPlus,
+    mdiRestore,
+    mdiTrashCan,
+} from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
@@ -22,9 +31,6 @@ import { RaceEdit } from "components/panel/race/race-edit";
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
 type EditedRace = AppRouterInputs["race"]["update"];
-
-// const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
-// const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
 
 const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
@@ -175,53 +181,6 @@ export const Races = () => {
         },
     ];
 
-    // const defaultColumns: ColDef<Race>[] = [
-    //     {
-    //         width: 25,
-    //         headerName: "",
-    //         headerClass: "hidden",
-    //         sortable: false,
-    //         filter: false,
-    //         valueGetter: r => r.node?.rowIndex,
-    //     },
-    //     { field: "name", headerName: t("pages.races.grid.columns.name"), sortable: true, filter: true },
-    //     {
-    //         field: "date",
-    //         headerName: t("pages.races.grid.columns.date"),
-    //         sort: "asc",
-    //         sortable: true,
-    //         filter: true,
-    //         cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString()}</div>,
-    //     },
-    //     {
-    //         field: "registrationEnabled",
-    //         headerName: t("pages.races.grid.columns.registrationEnabled"),
-    //         sortable: true,
-    //         cellRenderer: RegistrationEnabledRenderer,
-    //     },
-    //     {
-    //         field: "registeredPlayers",
-    //         headerName: t("pages.races.grid.columns.registeredPlayers"),
-    //         sortable: true,
-    //         cellRenderer: RegistrationsRenderer,
-    //     },
-    //     {
-    //         width: 200,
-    //         headerName: t("pages.races.grid.columns.actions"),
-    //         cellStyle: { overflow: "visible" },
-    //         cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
-    //             <PoorActions
-    //                 item={props.data}
-    //                 actions={
-    //                     props.data.registrationEnabled
-    //                         ? [turnOffRegistrationAction, ...myRacesActions]
-    //                         : [turnOnRegistrationAction, ...myRacesActions]
-    //                 }
-    //             />
-    //         ),
-    //     },
-    // ];
-
     const getShortcut = (name: string) => name.slice(0, 2).toUpperCase();
 
     const [filter, setFilter] = useState<RaceFilterType>("all");
@@ -239,35 +198,11 @@ export const Races = () => {
         }
     };
 
-    // const onFirstDataRendered = useCallback(() => {
-    //     gridRef.current?.api.sizeColumnsToFit();
-    // }, []);
-
-    // const openEditDialog = async (editedRace?: Race) => {
-    //     const race = await Demodal.open<EditedRace>(NiceModal, {
-    //         title: t("pages.races.editRace.title"),
-    //         component: RaceEdit,
-    //         props: {
-    //             editedRace,
-    //         },
-    //     });
-
-    //     if (race) {
-    //         await updateRaceMutation.mutateAsync(race);
-    //         await refetch();
-    //         refreshRow(gridRef, editedRace!.id.toString());
-    //     }
-    // };
-
-    // const sortedRaces = sort(races, r => r.date.getTime());
-
     const futureRaces = races.filter(r => isTodayOrLater(r.date));
     const ascSortedFutureRaces = sort(futureRaces, f => f.date.getTime());
 
     const pastRaces = races.filter(r => isPast(r.date));
     const descSortedPastRaces = sortDesc(pastRaces, r => r.date.getTime());
-
-    // const nextRaces = sort(futureRaces, r => r.date.getTime()).slice(0, 3);
 
     const upcomingRaces = ascSortedFutureRaces.slice(0, 3);
     const allRaces = [...ascSortedFutureRaces, ...descSortedPastRaces].filter(r =>
@@ -286,18 +221,27 @@ export const Races = () => {
                             title={t("pages.races.upcomingRaces.header.title")}
                             description={t("pages.races.upcomingRaces.header.description")}
                         />
-                        <div className="mb-4 inline-flex">
+                        {/* <div className="mb-4 inline-flex">
                             <Button outline onClick={openCreateDialog}>
                                 <Icon size={0.8} path={mdiPlus} />
                                 <span className="ml-2">{t("pages.races.addRace")}</span>
                             </Button>
-                        </div>
-                        <div className="flex flex-wrap gap-6">
+                        </div> */}
+                        <div className={classNames("flex mt-6 flex-wrap gap-6", { ["justify-between"]: upcomingRaces.length === 3 })}>
+                            <div
+                                onClick={openCreateDialog}
+                                className="cursor-pointer text-gray-900 flex flex-col items-center justify-center w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
+                            >
+                                <button className="w-14 h-14 flex justify-center items-center bg-gray-100 rounded-md font-medium">
+                                    <Icon size={1.2} path={mdiPlus} />
+                                </button>
+                                <span className="mt-4 text-sm font-semibold">{t("pages.races.addRace")}</span>
+                            </div>
                             {upcomingRaces.map(r => (
                                 <Link
                                     key={r.id}
                                     href={`/${r.id}`}
-                                    className="w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
+                                    className="w-40 h-64 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
                                 >
                                     <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
                                         <div className="text-6xl">{getShortcut(r.name)}</div>
