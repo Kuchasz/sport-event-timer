@@ -247,9 +247,9 @@ export const Races = () => {
                                         <div className="text-6xl">{getShortcut(r.name)}</div>
                                         <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
                                     </div>
-                                    <div className="p-4">
-                                        <div className="text-sm font-semibold">{r.name}</div>
-                                        <div className="text-xs text-gray-500 text-ellipsis">
+                                    <div className="p-4 ">
+                                        <div className="text-sm overflow-hidden whitespace-nowrap text-ellipsis font-semibold">{r.name}</div>
+                                        <div className="text-xs overflow-hidden line-clamp-2 text-ellipsis text-gray-500">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                         </div>
                                     </div>
