@@ -1,19 +1,16 @@
 "use client";
 
 import Icon from "@mdi/react";
-import { Button } from "components/button";
 import { Demodal } from "demodal";
 import { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
 import {
-    mdiCalendarEditOutline,
-    mdiDotsVertical,
-    mdiLockOpenVariantOutline,
+    mdiCalendarEditOutline, mdiLockOpenVariantOutline,
     mdiLockOutline,
     mdiOpenInNew,
     mdiPlus,
     mdiRestore,
-    mdiTrashCan,
+    mdiTrashCan
 } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
