@@ -185,19 +185,21 @@ export const Players = () => {
                     />
                 </div>
                 {players && (
-                    <div className="ag-theme-material h-full">
-                        <AgGridReact<Player>
-                            ref={gridRef}
-                            context={{ refetch }}
-                            onRowDoubleClicked={e => openEditDialog(e.data)}
-                            suppressCellFocus={true}
-                            suppressAnimationFrame={true}
-                            columnDefs={defaultColumns}
-                            getRowId={item => item.data.id.toString()}
-                            rowData={players}
-                            onFirstDataRendered={onFirstDataRendered}
-                            onGridSizeChanged={onFirstDataRendered}
-                        ></AgGridReact>
+                    <div className="p-8 rounded-lg h-full shadow-md bg-white">
+                        <div className="ag-theme-material h-full">
+                            <AgGridReact<Player>
+                                ref={gridRef}
+                                context={{ refetch }}
+                                onRowDoubleClicked={e => openEditDialog(e.data)}
+                                suppressCellFocus={true}
+                                suppressAnimationFrame={true}
+                                columnDefs={defaultColumns}
+                                getRowId={item => item.data.id.toString()}
+                                rowData={players}
+                                onFirstDataRendered={onFirstDataRendered}
+                                onGridSizeChanged={onFirstDataRendered}
+                            ></AgGridReact>
+                        </div>
                     </div>
                 )}
             </div>
