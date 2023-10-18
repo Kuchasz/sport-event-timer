@@ -17,9 +17,9 @@ export const RacePageLayout = ({ breadcrumbs, children }: Props) => {
             <div className="h-full relative">
                 <div className="will-change-transform h-full w-full flex">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <nav className="w-64 shrink-0 overflow-clip flex-col shadow-lg bg-white z-10">
+                        <nav className="w-64 shrink-0 overflow-clip flex-col shadow-lg  z-10">
                             <Link href={"/" as Route}>
-                                <div className="transition-opacity flex flex-col items-center cursor-pointer text-center px-4 py-4">
+                                <div className="transition-opacity flex flex-col ml-3 my-6 items-start cursor-pointer text-center px-4 py-4">
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>

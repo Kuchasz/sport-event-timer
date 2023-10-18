@@ -5,7 +5,6 @@ import { useCurrentRaceId } from "hooks";
 import { Route } from "next";
 import { usePathname } from "next/navigation";
 import { MenuButton } from "./menu-button";
-import { MenuHeader } from "./menu-header";
 
 type MenuGroup = {
     name: string;
@@ -34,7 +33,7 @@ export const Menu = ({ groups }: { groups: MenuGroup[] }) => {
         <>
             {menuGroups.map(g => (
                 <div key={g.name}>
-                    <MenuHeader text={g.name} />
+                    {/* <MenuHeader text={g.name} /> */}
                     <div>
                         {g.items.map(n => (
                             <MenuButton
