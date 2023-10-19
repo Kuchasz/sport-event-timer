@@ -20,7 +20,7 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
     const raceId = useCurrentRaceId() || selectedRaceId;
     const router = useRouter();    
 
-    console.log(selectedRaceId);
+    // console.log(selectedRaceId);
 
     useEffect(() => {
         !selectedRaceId && items && items.length && selectRaceId(items[0]?.id);

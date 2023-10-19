@@ -1,15 +1,17 @@
 import {
-    mdiViewDashboardEditOutline, mdiTimetable, mdiAlarm,
+    mdiViewDashboardEditOutline,
+    mdiTimetable,
+    mdiAlarm,
     mdiNumeric,
     mdiAccountGroup,
     mdiAccountCogOutline,
     mdiTimerCogOutline,
-    mdiCog
+    mdiCog,
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
 
-export const RaceMenu = () => {
+export const RaceMenu = ({ raceId }: { raceId: string }) => {
     const t = useTranslations();
 
     const raceMenuGroup = {
@@ -84,5 +86,5 @@ export const RaceMenu = () => {
         ],
     };
 
-    return <Menu groups={[raceMenuGroup]} />;
+    return <Menu raceId={raceId} groups={[raceMenuGroup]} />;
 };

@@ -30,7 +30,7 @@ export default withNextIntl(defineNextConfig({
     // reactStrictMode: true,
     // swcMinify: true,
     // i18n: {
-    //     locales: ["en"],
+    //     locales: ["en", "pl"],
     //     defaultLocale: "en",
     // },
     poweredByHeader: false,
