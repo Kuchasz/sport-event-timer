@@ -1,10 +1,9 @@
 "use client";
 
 import { sortDesc } from "@set/utils/dist/array";
-import { useCurrentRaceId } from "hooks";
 import { Route } from "next";
-import { usePathname } from "next/navigation";
 import { MenuButton } from "./menu-button";
+import { usePathname } from "next/navigation";
 
 type MenuGroup = {
     name: string;
@@ -14,9 +13,10 @@ type MenuGroup = {
     items: { text: string; icon: string; to: string; color: string; bg: string }[];
 };
 
-export const Menu = ({ groups }: { groups: MenuGroup[] }) => {
+export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }) => {
     const pathname = usePathname();
-    const raceId = useCurrentRaceId();
+
+    // const pathname = headers().get('next-url')//;?.replace('/pl', '').replace('/en', '');
 
     const routeMatched = (route: string, currentPath: string) => {
         const reg = new RegExp(`^${route.replaceAll(/:\w+/g, "\\d+")}(\/?\\w*)*$`);

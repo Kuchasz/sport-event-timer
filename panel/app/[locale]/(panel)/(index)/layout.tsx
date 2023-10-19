@@ -29,7 +29,7 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
             <body className="w-full h-full flex flex-col text-zinc-900">
                 <TrpcProvider>
                     <NextAuthProvider>
-                        <NextIntlClientProvider locale={locale} messages={messages}>
+                        <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                             <IndexPageLayout>{props.children}</IndexPageLayout>
                         </NextIntlClientProvider>
                     </NextAuthProvider>

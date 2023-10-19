@@ -7,7 +7,7 @@ export const MenuButton = (n: { color: string; bg: string; text: string; icon: s
     <Link href={n.to}>
         <div
             className={classNames(
-                "my-1.5 py-3 pl-6 mr-4 transition-all rounded-r-full cursor-pointer font-medium flex items-center text-sm",
+                "my-1.5 py-3 pl-6 mr-3 transition-all rounded-r-md cursor-pointer font-medium flex items-center text-sm",
                 {
                     [n.bg]: n.isActive,
                     ["text-gray-600 hover:bg-gray-100"]: !n.isActive,
