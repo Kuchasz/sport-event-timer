@@ -13,7 +13,7 @@
     "moduleResolution": "node",
     "strict": true,
     "allowJs": true,
-    "noEmit": false,
+    "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
