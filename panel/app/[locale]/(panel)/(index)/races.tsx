@@ -239,7 +239,7 @@ export const Races = ({ initialData }: RacesProps) => {
                             >
                                 <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
                                     <div className="text-6xl">{getShortcut(r.name)}</div>
-                                    <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString()}</div>
+                                    <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString('pl-PL')}</div>
                                 </div>
                                 <div className="p-4 ">
                                     <div className="text-sm overflow-hidden whitespace-nowrap text-ellipsis font-semibold">{r.name}</div>
