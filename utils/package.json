@@ -5,7 +5,7 @@
         "build": "tsc --project tsconfig.json"
     },
     "dependencies": {
-        "fp-ts": "^2.16.1",
-        "typescript": "^5.2.2"
+        "fp-ts": "2.16.1",
+        "typescript": "5.2.2"
     }
 }
