@@ -25,6 +25,7 @@ Application for making time measurements
 | 17/10/2023 | Sport discipline specification                             | todo :date:                     |
 | 19/10/2023 | Fix many jumping stuff on home page                        | todo :date:                     |
 | 20/10/2023 | Remove hard-coded applicatio urls and ports                | todo :date:                     |
+| 20/10/2023 | Dates should use locale formats                            | todo :date:                     |
 
 ## TODO
 
