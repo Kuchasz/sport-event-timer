@@ -52,6 +52,7 @@ if (getConnection)
 
 export const connectionConfig = (queryClient: QueryClient) => ({
     transformer: superjson,
+    ssr: true,
     queryClient,
     links: [
         loggerLink({

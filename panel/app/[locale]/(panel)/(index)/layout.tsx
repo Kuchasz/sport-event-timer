@@ -4,7 +4,30 @@ import { NextAuthProvider, TrpcProvider } from "providers";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
-import { IndexPageLayout } from "components/index-page-layout";
+import { Meta } from "components/meta";
+import { IndexStatus } from "components/index-status";
+// import { AgGridProvider } from "components/ag-grid-provider";
+
+const IndexPageLayout = ({ children }: { children: ReactNode }) => {
+    return (
+        <>
+            <Meta />
+            <div className="h-full relative">
+                <div className="will-change-transform h-full w-full flex">
+                    <div className="flex flex-grow overflow-y-hidden shadow-md">
+                        <main className="flex flex-col items-center grow h-full overflow-y-auto">
+                            <IndexStatus />
+                            <div className="w-full flex flex-col flex-grow">
+                                {/* <AgGridProvider>{children}</AgGridProvider> */}
+                                {children}
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 
 export default async function PanelLayout(props: { children: ReactNode; params: { locale: string } }) {
     const locale = useLocale();
