@@ -71,5 +71,5 @@ export const IndexMenu = () => {
         ],
     };
 
-    return <Menu groups={[generalMenuGroup, adminMenuGroup]} />;
+    return <Menu raceId="" groups={[generalMenuGroup, adminMenuGroup]} />;
 };
