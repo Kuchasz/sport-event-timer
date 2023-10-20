@@ -23,6 +23,8 @@ Application for making time measurements
 | 01/10/2023 | Speed up application build and release times               | :heavy_check_mark: (03/10/2023) |
 | 03/10/2023 | Start new race selection dashboard                         | :heavy_check_mark: (17/10/2023) |
 | 17/10/2023 | Sport discipline specification                             | todo :date:                     |
+| 19/10/2023 | Fix many jumping stuff on home page                        | todo :date:                     |
+| 20/10/2023 | Remove hard-coded applicatio urls and ports                | todo :date:                     |
 
 ## TODO
 
