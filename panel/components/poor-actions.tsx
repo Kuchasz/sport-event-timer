@@ -1,7 +1,7 @@
 "use client";
 
 import { Popover } from "@headlessui/react";
-import { Fragment } from "react";
+import { ReactNode } from "react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
 import { mdiDotsVertical } from "@mdi/js";
@@ -13,6 +13,8 @@ type Action<TItem> = {
     execute: (param: TItem) => void;
 };
 
+const DIV = ({children}: {children: ReactNode}) => <div>{children}</div>;
+
 export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: Action<TItem>[] }) => {
     return (
         <Popover className="h-full flex items-center">
@@ -20,7 +22,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                 transform={false}
                 portal
                 placement="bottom-end"
-                floatingAs={Fragment}
+                floatingAs={DIV}
                 enter="transition ease-out duration-200"
                 enterFrom="opacity-0 translate-y-1"
                 enterTo="opacity-100 translate-y-0"
