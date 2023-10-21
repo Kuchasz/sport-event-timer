@@ -59,7 +59,7 @@ const PlayerRegistrationPayment = ({
     refreshRegistrationRow,
 }: {
     playerRegistration: PlayerRegistration;
-    refetch: () => {};
+    refetch: () => void;
     refreshRegistrationRow: (itemId: string) => void;
 }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
@@ -82,7 +82,7 @@ const PlayerRegistrationPayment = ({
 
         if (confirmed) {
             await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
-            await refetch();
+            refetch();
             refreshRegistrationRow(playerRegistration.id.toString());
         }
     };
@@ -127,8 +127,8 @@ export const PlayerRegistrations = () => {
             if (player) {
                 await promotePlayerRegistration.mutateAsync({ raceId: raceId, registrationId: playerRegistration.id, player });
 
-                utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId });
-                utils.player.lastAvailableStartTime.invalidate({ raceId: raceId });
+                void utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId });
+                void utils.player.lastAvailableStartTime.invalidate({ raceId: raceId });
 
                 await refetch();
                 refreshRegistrationRow(playerRegistration.id.toString());
@@ -158,7 +158,7 @@ export const PlayerRegistrations = () => {
 
             if (confirmed) {
                 await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
-                refetch();
+                void refetch();
             }
         },
     };
@@ -202,6 +202,7 @@ export const PlayerRegistrations = () => {
             field: "birthDate",
             headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
             resizable: true,
+            //eslint-disable-next-line @typescript-eslint/no-unsafe-call
             cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
             sortable: true,
             hide: true,
@@ -248,6 +249,7 @@ export const PlayerRegistrations = () => {
             maxWidth: 120,
             resizable: true,
             sortable: true,
+            //eslint-disable-next-line @typescript-eslint/no-unsafe-call
             cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
         },
         {
@@ -362,6 +364,7 @@ export const PlayerRegistrations = () => {
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
                             gridRef.current?.api.sizeColumnsToFit();
 
+                            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                             const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
 
                             setGridColumnState(saveState);

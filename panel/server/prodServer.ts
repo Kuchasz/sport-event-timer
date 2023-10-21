@@ -22,6 +22,7 @@ void app.prepare().then(() => {
         if (proto && proto === "http") {
             // redirect to ssl
             res.writeHead(303, {
+                //eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                 location: `https://` + req.headers.host! + (req.headers.url ?? ""),
             });
             res.end();

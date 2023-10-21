@@ -37,6 +37,7 @@ export function Dashboard() {
                             <div className="flex">
                                 <DashboardCard.Info
                                     title={t("pages.general.dashboard.raceStatistics.widgets.date")}
+                                    //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                                     text={dashboardData.nextRace.date?.toLocaleDateString()!}
                                 />
                                 <DashboardCard.Info

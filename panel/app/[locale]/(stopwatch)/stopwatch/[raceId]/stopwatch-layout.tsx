@@ -35,12 +35,13 @@ const postActionsMiddleware: Middleware<object, TimerState, TimerDispatch> = _ =
 
     const socket = getConnection();
 
+    //eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (!action.__remote && socket?.OPEN) externals.trpc?.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
 
     next(action);
 };
 
-const addIssuerMiddleware: Middleware<{}, TimerState, TimerDispatch> = _ => next => action => {
+const addIssuerMiddleware: Middleware<object, TimerState, TimerDispatch> = _ => next => action => {
     if (!action.__remote) {
         action.__issuer = externals.user;
         action.__issuedAt = Date.now() + (externals.timeOffset || 0);
@@ -59,6 +60,7 @@ const ExternalsExposer = () => {
 
     const trpcHack = trpc.useContext().client;
 
+    //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     externals = { timeOffset, user: sessionData?.user?.name!, raceId: parseInt(raceId), trpc: trpcHack };
 
     return <></>;

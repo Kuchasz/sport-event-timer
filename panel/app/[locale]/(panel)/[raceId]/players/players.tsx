@@ -178,6 +178,7 @@ export const Players = () => {
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
                             gridRef.current?.api.sizeColumnsToFit();
 
+                            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                             const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
 
                             setGridColumnState(saveState);
