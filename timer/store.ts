@@ -1,7 +1,8 @@
 import actionsHistory from "./slices/actions-history";
 import timeStamps from "./slices/time-stamps";
 import absences from "./slices/absences";
-import { AnyAction, combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
+import type { AnyAction, Middleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
     timeStamps,

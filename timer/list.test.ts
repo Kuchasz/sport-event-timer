@@ -1,6 +1,8 @@
-import { assignNumbersToPlayers, ClassificationConfig, transform } from "./list";
+import type { ClassificationConfig } from "./list";
+import { assignNumbersToPlayers, transform } from "./list";
 import { Gender } from "./model";
-import { ToStartPlayer, toStartPlayerTransform } from "./to-start";
+import type { ToStartPlayer } from "./to-start";
+import { toStartPlayerTransform } from "./to-start";
 
 const pro = (name: string, lastName: string) => ({ classificationId: "race_pro", name, lastName });
 const fun = (name: string, lastName: string) => ({ classificationId: "race_fun", name, lastName });
