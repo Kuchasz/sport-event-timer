@@ -1,5 +1,5 @@
 import { withRaceApiKey } from "auth";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
