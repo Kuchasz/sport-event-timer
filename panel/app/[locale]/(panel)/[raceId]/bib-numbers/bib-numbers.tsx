@@ -11,10 +11,10 @@ import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { useCallback, useRef } from "react";
-import { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
 import { Confirmation } from "components/confirmation";
 import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
@@ -52,7 +52,7 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
 
 export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
-    const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId! });
+    const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<BibNumber>>(null);
     const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
     const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
@@ -82,7 +82,7 @@ export const BibNumbers = () => {
         const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
             title: t("pages.bibNumbers.create.title"),
             component: BibNumberCreate,
-            props: { raceId: raceId! },
+            props: { raceId: raceId },
         });
 
         if (bibNumber) {
@@ -100,7 +100,7 @@ export const BibNumbers = () => {
         });
 
         if (confirmed) {
-            await deleteAllMutation.mutateAsync({ raceId: raceId! });
+            await deleteAllMutation.mutateAsync({ raceId: raceId });
             refetch();
         }
     };
@@ -109,7 +109,7 @@ export const BibNumbers = () => {
         const createManyBibNumbers = await Demodal.open<CreateManyBibNumbers>(NiceModal, {
             title: t("pages.bibNumbers.createMany.title"),
             component: BibNumberCreateManyForm,
-            props: { initialConfig: { raceId: raceId!, omitDuplicates: true } },
+            props: { initialConfig: { raceId: raceId, omitDuplicates: true } },
         });
 
         if (createManyBibNumbers) {

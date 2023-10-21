@@ -4,20 +4,20 @@ import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../../../../components/confirmation";
 import { Demodal } from "demodal";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiExport, mdiTrashCan } from "@mdi/js";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { NiceModal } from "../../../../../components/modal";
 import { PlayerEdit } from "components/panel/player/player-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import { getGridColumnStateAtom } from "states/grid-states";
 import { useAtom } from "jotai";
 import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
-import { Gender } from "@set/timer/dist/model";
+import type { Gender } from "@set/timer/dist/model";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
@@ -54,7 +54,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
 export const Players = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
-    const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId! });
+    const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<Player>>(null);
 
     const defaultColumns: ColDef<Player>[] = [
@@ -134,7 +134,7 @@ export const Players = () => {
             title: t("pages.players.edit.title"),
             component: PlayerEdit,
             props: {
-                raceId: raceId!,
+                raceId: raceId,
                 editedPlayer,
             },
         });
@@ -174,7 +174,7 @@ export const Players = () => {
                             const visibleColumns = e.target.value as string[];
                             const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
 
-                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
+                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns, false);
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
                             gridRef.current?.api.sizeColumnsToFit();
 

@@ -4,7 +4,7 @@ import { ActionButton, PrimaryActionButton } from "../../../../../../../componen
 import { formatNumber } from "@set/utils/dist/number";
 import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
 import { PlayerWithTimeStampDisplay } from "../../../../../../../components/stopwatch/player-with-timestamp-display";
-import { TimeStamp } from "@set/timer/dist/model";
+import type { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
@@ -46,17 +46,17 @@ export const TweakTimeStamp = () => {
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const { raceId, timeStampId } = useParams() as { raceId: string; timeStampId: string };
 
-    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const dispatch = useTimerDispatch();
     const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));
 
-    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId! as string));
-    const player = allPlayers!.find(x => x.bibNumber === timeStamp?.bibNumber);
+    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId));
+    const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
     const [currentTime, setCurrentTime] = useState<number>(timeStamp!.time);
 
-    const time = new Date(currentTime!);
+    const time = new Date(currentTime);
 
     const p = player ? { ...player, timeStamp } : { timeStamp };
 
@@ -71,27 +71,27 @@ export const TweakTimeStamp = () => {
                 </div>
                 <div className="mt-10 flex items-center">
                     <div className="flex flex-col items-center">
-                        <Plus changeTime={() => setCurrentTime(currentTime! + 1000 * 60 * 60)} />
+                        <Plus changeTime={() => setCurrentTime(currentTime + 1000 * 60 * 60)} />
                         <Digit number={formatNumber(time.getHours())} />
-                        <Minus changeTime={() => setCurrentTime(currentTime! - 1000 * 60 * 60)} />
+                        <Minus changeTime={() => setCurrentTime(currentTime - 1000 * 60 * 60)} />
                     </div>
                     <div className="mb-2 text-6xl">:</div>
                     <div className="flex flex-col items-center">
-                        <Plus changeTime={() => setCurrentTime(currentTime! + 1000 * 60)} />
+                        <Plus changeTime={() => setCurrentTime(currentTime + 1000 * 60)} />
                         <Digit number={formatNumber(time.getMinutes())} />
-                        <Minus changeTime={() => setCurrentTime(currentTime! - 1000 * 60)} />
+                        <Minus changeTime={() => setCurrentTime(currentTime - 1000 * 60)} />
                     </div>
                     <div className="mb-2 text-6xl">:</div>
                     <div className="flex flex-col items-center">
-                        <Plus changeTime={() => setCurrentTime(currentTime! + 1000)} />
+                        <Plus changeTime={() => setCurrentTime(currentTime + 1000)} />
                         <Digit number={formatNumber(time.getSeconds())} />
-                        <Minus changeTime={() => setCurrentTime(currentTime! - 1000)} />
+                        <Minus changeTime={() => setCurrentTime(currentTime - 1000)} />
                     </div>
                     <div className="mb-2 text-6xl">.</div>
                     <div className="flex flex-col items-center">
-                        <Plus changeTime={() => setCurrentTime(currentTime! + 100)} />
+                        <Plus changeTime={() => setCurrentTime(currentTime + 100)} />
                         <Digit number={formatNumber(Math.floor(time.getMilliseconds() / 100), 1)} />
-                        <Minus changeTime={() => setCurrentTime(currentTime! - 100)} />
+                        <Minus changeTime={() => setCurrentTime(currentTime - 100)} />
                     </div>
                 </div>
                 <div className="mt-6 flex">

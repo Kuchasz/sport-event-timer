@@ -46,7 +46,7 @@ export function Dashboard() {
                                 <DashboardCard.Range
                                     title={t("pages.general.dashboard.raceStatistics.widgets.registeredPlayers")}
                                     min={dashboardData.nextRace.registeredPlayers!}
-                                    max={dashboardData.nextRace.playersLimit!}
+                                    max={dashboardData.nextRace.playersLimit}
                                 />
                                 <DashboardCard.Discrete
                                     title={t("pages.general.dashboard.raceStatistics.widgets.registrationStatus")}

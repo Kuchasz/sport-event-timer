@@ -1,15 +1,15 @@
 "use client";
 import Icon from "@mdi/react";
 import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
-import { AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { useCallback, useRef } from "react";
-import { Gender } from "@set/utils/dist/gender";
+import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { trpc } from "trpc-core";
 import { useParams } from "next/navigation";
 import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { GenderIcon } from "components/gender-icon";
 import { Demodal } from "demodal";
 import { NiceModal } from "components/modal";
@@ -24,7 +24,7 @@ import { refreshRow } from "ag-grid";
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams() as { classificationId: string };
 
-    return classificationId ? parseInt(classificationId as string) : undefined;
+    return classificationId ? parseInt(classificationId) : undefined;
 };
 
 type Category = AppRouterOutputs["classification"]["categories"][0];

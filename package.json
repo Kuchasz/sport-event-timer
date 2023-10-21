@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'",
-    "lint": "eslint panel/**"
+    "lint": "eslint panel/**",
+    "lint-fix": "eslint --fix panel/**"
   },
   "workspaces": [
     "timer",

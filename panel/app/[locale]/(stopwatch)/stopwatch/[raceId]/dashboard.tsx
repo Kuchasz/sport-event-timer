@@ -12,7 +12,7 @@ export const Dashboard = ({}: Props) => {
 
     const [_, chooseTimingPoint] = useAtom(timingPointIdAtom);
 
-    if (timingPointId) chooseTimingPoint(parseInt(timingPointId as string));
+    if (timingPointId) chooseTimingPoint(parseInt(timingPointId));
 
     return (
         <>

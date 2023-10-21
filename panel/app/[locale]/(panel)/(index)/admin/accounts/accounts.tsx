@@ -1,9 +1,9 @@
 "use client";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import { PageHeader } from "components/page-header";
 import { useCallback, useRef } from "react";
-import { AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
 
 type Account = AppRouterOutputs["account"]["accounts"][0];

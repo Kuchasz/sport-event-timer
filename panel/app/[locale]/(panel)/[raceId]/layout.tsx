@@ -1,5 +1,5 @@
 import "../../../../globals.scss";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { NextAuthProvider, TrpcProvider } from "providers";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";

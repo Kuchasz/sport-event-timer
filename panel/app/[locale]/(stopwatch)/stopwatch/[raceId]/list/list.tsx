@@ -18,14 +18,14 @@ export const PlayersList = () => {
 
     const { raceId } = useParams() as { raceId: string };
 
-    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const onResetAbsence = (id: number) => dispatch(resetAbsence({ id }));
     const onRecordAbsence = (bibNumber: number) =>
         dispatch(
             addAbsence({
                 bibNumber,
-                timingPointId: timingPointId!,
+                timingPointId: timingPointId,
             }),
         );
     const { push } = useRouter();
@@ -34,7 +34,7 @@ export const PlayersList = () => {
     const allAbsences = useTimerSelector(x => x.absences);
 
     const players = sort(
-        allPlayers!.map(x => ({
+        allPlayers.map(x => ({
             ...x,
             timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),

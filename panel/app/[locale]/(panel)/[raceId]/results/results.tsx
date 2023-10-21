@@ -1,10 +1,10 @@
 "use client";
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 
 import { useCurrentRaceId } from "../../../../../hooks";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import { useCallback, useRef } from "react";
 import Head from "next/head";
@@ -15,7 +15,7 @@ type Result = AppRouterOutputs["result"]["results"][0];
 
 export const Results = () => {
     const raceId = useCurrentRaceId();
-    const { data: results, refetch } = trpc.result.results.useQuery({ raceId: raceId! });
+    const { data: results, refetch } = trpc.result.results.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<Result>>(null);
     const onFirstDataRendered = useCallback(() => {
         gridRef.current?.api.sizeColumnsToFit();

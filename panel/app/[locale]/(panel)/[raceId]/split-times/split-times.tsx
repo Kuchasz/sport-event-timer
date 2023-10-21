@@ -4,14 +4,14 @@ import Icon from "@mdi/react";
 import { Confirmation } from "../../../../../components/confirmation";
 import { Demodal } from "demodal";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { SplitTimeEdit } from "../../../../../components/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
 import { PageHeader } from "components/page-header";
 import Head from "next/head";
@@ -26,7 +26,7 @@ type SplitTimeResultTypes = {
     openEditDialog: (params: SplitTime) => Promise<void>;
     openResetDialog: (params: RevertedSplitTime) => Promise<void>;
     splitTimeResult: {
-        times: { [timingPointId: number]: { time: number; manual: boolean } };
+        times: Record<number, { time: number; manual: boolean }>;
         bibNumber: string | null;
     };
     timingPointId: number;
@@ -90,15 +90,15 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
 
 export const SplitTimes = () => {
     const raceId = useCurrentRaceId();
-    const { data: splitTimes, refetch } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId! });
+    const { data: splitTimes, refetch } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId });
     const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery(
-        { raceId: raceId! },
+        { raceId: raceId },
         {
             initialData: [],
         },
     );
-    const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId! }, { initialData: [] });
-    const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
+    const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId }, { initialData: [] });
+    const { data: race } = trpc.race.race.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<SplitTime>>(null);
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
     const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
@@ -162,7 +162,7 @@ export const SplitTimes = () => {
         });
 
         if (splitTime) {
-            await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId! });
+            await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId });
             await refetch();
             refreshRow(gridRef, editedSplitTime.bibNumber!);
         }
@@ -180,7 +180,7 @@ export const SplitTimes = () => {
         if (confirmed) {
             await revertSplitTimeMutation.mutateAsync(editedSplitTime);
             await refetch();
-            refreshRow(gridRef, editedSplitTime.bibNumber!);
+            refreshRow(gridRef, editedSplitTime.bibNumber);
         }
     };
 

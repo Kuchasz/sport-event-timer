@@ -1,6 +1,7 @@
 "use client";
 
-import { Gender, getGenders } from "@set/utils/dist/gender";
+import type { Gender } from "@set/utils/dist/gender";
+import { getGenders } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { PoorCombo } from "components/poor-combo";
@@ -15,7 +16,8 @@ import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
-import { PlayerRegistration, playerRegistrationSchema } from "modules/player-registration/models";
+import type { PlayerRegistration } from "modules/player-registration/models";
+import { playerRegistrationSchema } from "modules/player-registration/models";
 
 const initialRegistration = () =>
     ({

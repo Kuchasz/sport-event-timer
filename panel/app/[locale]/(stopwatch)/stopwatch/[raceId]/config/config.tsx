@@ -14,14 +14,14 @@ export const Config = () => {
     const { raceId } = useParams() as { raceId: string };
 
     const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
-        { raceId: parseInt(raceId as string) },
+        { raceId: parseInt(raceId) },
         {
             initialData: [],
         },
     );
 
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
-        { raceId: parseInt(raceId as string) },
+        { raceId: parseInt(raceId) },
         {
             initialData: [],
         },

@@ -1,7 +1,8 @@
 import { Label } from "components/label";
 import { useTranslations } from "next-intl";
-import React, { ReactNode, createContext } from "react";
-import { ZodObject, ZodType } from "zod";
+import type { ReactNode } from "react";
+import React, { createContext } from "react";
+import type { ZodObject, ZodType } from "zod";
 
 // type FormValues = { [k: string]: any };
 type FormErrors<TItem> = { [k in keyof TItem]: string[] | undefined };

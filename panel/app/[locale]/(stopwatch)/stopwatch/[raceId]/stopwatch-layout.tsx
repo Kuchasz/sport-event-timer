@@ -1,11 +1,13 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 import "../../../../../globals.scss";
 import { BottomMenu } from "../../../../../components/stopwatch/bottom-menu";
-import { createStore, TimerDispatch, TimerState } from "@set/timer/dist/store";
+import type { TimerDispatch, TimerState } from "@set/timer/dist/store";
+import { createStore } from "@set/timer/dist/store";
 import { trpc } from "../../../../../trpc-core";
-import { Middleware } from "redux";
+import type { Middleware } from "redux";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { ServerConnectionHandler } from "../../../../../server-connection-handler";
 import { Status } from "../../../../../components/stopwatch/status";
@@ -57,7 +59,7 @@ const ExternalsExposer = () => {
 
     const trpcHack = trpc.useContext().client;
 
-    externals = { timeOffset, user: sessionData?.user?.name!, raceId: parseInt(raceId as string), trpc: trpcHack };
+    externals = { timeOffset, user: sessionData?.user?.name!, raceId: parseInt(raceId), trpc: trpcHack };
 
     return <></>;
 };
@@ -76,7 +78,7 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
             <TrpcProvider>
                 <ReduxStoreProvider store={store}>
                     <ExternalsExposer />
-                    <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
+                    <ServerConnectionHandler dispatch={store.dispatch} raceId={parseInt(raceId)} clientId={clientId}>
                         <div id="app-holder" className="flex h-full w-screen flex-col overflow-hidden bg-zinc-200 text-zinc-700">
                             <Status raceId={raceId} />
                             <div id="module-holder" className="relative h-full flex-1 flex-col overflow-y-auto">

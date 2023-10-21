@@ -2,7 +2,7 @@
 
 import { formatTime } from "@set/utils/dist/datetime";
 import { sortDesc } from "@set/utils/dist/array";
-import { HistoricAction } from "@set/timer/dist/model";
+import type { HistoricAction } from "@set/timer/dist/model";
 import { useTimerSelector } from "../../../../../../hooks";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {

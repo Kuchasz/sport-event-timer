@@ -9,7 +9,7 @@ import { NiceModal } from "components/modal";
 import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
 import { useCurrentRaceId } from "hooks";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
@@ -20,7 +20,7 @@ type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
 export const Settings = () => {
     const raceId = useCurrentRaceId();
 
-    const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId! });
+    const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId });
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
 
     const t = useTranslations();
@@ -30,7 +30,7 @@ export const Settings = () => {
             title: t("pages.settings.apiKeys.create.title"),
             component: ApiKeyCreate,
             props: {
-                raceId: raceId!,
+                raceId: raceId,
             },
         });
 
@@ -59,7 +59,7 @@ export const Settings = () => {
             title: t("pages.settings.apiKeys.edit.title"),
             component: ApiKeyEdit,
             props: {
-                raceId: raceId!,
+                raceId: raceId,
                 editedApiKey,
             },
         });
@@ -82,21 +82,20 @@ export const Settings = () => {
                         <span className="ml-2">{t("pages.settings.apiKeys.create.button")}</span>
                     </Button>
                 </div>
-                {apiKeys &&
-                    apiKeys.map(key => (
-                        <div key={key.key} className="flex flex-col">
-                            <div>{key.name}</div>
-                            <div className="flex items-center">
-                                <div className="my-2 mr-2 rounded-md bg-[#c2e59c] px-4 py-2">{key.key}</div>
-                                <Button className="mr-2" onClick={() => openEditDialog(key)}>
-                                    <Icon size={0.8} path={mdiPen} />
-                                </Button>
-                                <Button onClick={() => openDeleteDialog(key)}>
-                                    <Icon size={0.8} path={mdiTrashCan} />
-                                </Button>
-                            </div>
+                {apiKeys?.map(key => (
+                    <div key={key.key} className="flex flex-col">
+                        <div>{key.name}</div>
+                        <div className="flex items-center">
+                            <div className="my-2 mr-2 rounded-md bg-[#c2e59c] px-4 py-2">{key.key}</div>
+                            <Button className="mr-2" onClick={() => openEditDialog(key)}>
+                                <Icon size={0.8} path={mdiPen} />
+                            </Button>
+                            <Button onClick={() => openDeleteDialog(key)}>
+                                <Icon size={0.8} path={mdiTrashCan} />
+                            </Button>
                         </div>
-                    ))}
+                    </div>
+                ))}
             </div>
         </>
     );

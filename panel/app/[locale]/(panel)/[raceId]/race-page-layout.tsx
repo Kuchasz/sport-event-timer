@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Route } from "next";
+import type { Route } from "next";
 import { Meta } from "components/meta";
 import { RaceMenu } from "components/race-menu";
 import { Status } from "components/status";
