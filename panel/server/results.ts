@@ -1,5 +1,5 @@
 import { parse } from "node-html-parser";
-import { PlayerResult } from "@set/utils/dist";
+import type { PlayerResult } from "@set/utils/dist";
 
 const timeStringToMiliseconds = (timeString: string): { time?: number; status: string } => {
     if (!timeString.includes(".")) return { time: undefined, status: timeString };

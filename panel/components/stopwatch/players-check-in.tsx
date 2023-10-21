@@ -1,6 +1,6 @@
 import { DialPad } from "./dial-pad";
 import { getAvailableDigits, getAvailableNumbers } from "@set/utils/dist/string";
-import { Player, TimeStamp } from "@set/timer/dist/model";
+import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerSelector } from "../../hooks";
 import { useParams } from "next/navigation";
@@ -45,12 +45,12 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: Player
 
     const { raceId } = useParams() as { raceId: string };
 
-    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const allAbsences = useTimerSelector(x => x.absences);
 
-    const playersWithTimeStamps = allPlayers!.map(x => ({
+    const playersWithTimeStamps = allPlayers.map(x => ({
         ...x,
         timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
         absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),

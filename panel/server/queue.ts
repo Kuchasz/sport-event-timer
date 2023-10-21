@@ -52,7 +52,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
         .map(id => ({ id, data: actualAbsencesMap.get(id) }))
         .map(({ id, data }) => ({
             id,
-            bibNumber: data!.bibNumber!.toString(),
+            bibNumber: data!.bibNumber.toString(),
             raceId,
             timingPointId: data?.timingPointId!,
         }));

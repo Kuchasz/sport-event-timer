@@ -1,4 +1,4 @@
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
 import { trpc } from "trpc-core";
 

@@ -3,7 +3,7 @@ import { Label } from "../../label";
 import { PoorUTCDatepicker } from "../../poor-datepicker";
 import { PoorInput } from "../../poor-input";
 import { useFormState } from "hooks";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "../../poor-number-input";
 import { PoorCheckbox } from "../../poor-checkbox";
 import { PoorTextArea } from "../../poor-text-area";

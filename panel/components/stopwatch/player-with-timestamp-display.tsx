@@ -1,6 +1,6 @@
 import { formatTime } from "@set/utils/dist/datetime";
 import { formatNumber } from "@set/utils/dist/number";
-import { Absence, Player, TimeStamp } from "@set/timer/dist/model";
+import type { Absence, Player, TimeStamp } from "@set/timer/dist/model";
 import classNames from "classnames";
 import { usePreviousValue } from "hooks";
 

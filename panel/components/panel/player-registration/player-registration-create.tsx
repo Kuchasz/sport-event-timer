@@ -1,4 +1,4 @@
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PlayerRegistrationForm } from "./player-registration-form";
 import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";

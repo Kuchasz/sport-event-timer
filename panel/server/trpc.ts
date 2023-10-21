@@ -12,11 +12,11 @@ import { getServerSession } from "next-auth";
 // import { PrismaClient } from "@prisma/client";
 import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
-import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { authOptions } from "./auth";
-import { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
-import { IncomingMessage } from "http";
-import ws from "ws";
+import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
+import type { IncomingMessage } from "http";
+import type ws from "ws";
 import { getSession } from "next-auth/react";
 
 export const createContext =

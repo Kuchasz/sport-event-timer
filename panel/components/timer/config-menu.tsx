@@ -1,7 +1,7 @@
 import Icon from "@mdi/react";
 import { mdiEyeOffOutline, mdiEyeOutline, mdiFormatFontSizeDecrease, mdiFormatFontSizeIncrease, mdiWindowClose } from "@mdi/js";
-import { TextActions, TextSettings } from "../../app/[locale]/(timer)/timer/[raceId]/timer";
-import { TimerSettings } from "states/timer-states";
+import type { TextActions, TextSettings } from "../../app/[locale]/(timer)/timer/[raceId]/timer";
+import type { TimerSettings } from "states/timer-states";
 
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (
     <span className="flex cursor-pointer items-center py-2" onClick={click}>
@@ -51,7 +51,7 @@ export const ConfigMenu = ({
     setClockState: (state: TimerSettings) => void;
     toggleMenu: () => void;
 }) => {
-    const textActions = (prop: keyof Omit<TimerSettings, "showSettings">, step: number = 1): TextActions => ({
+    const textActions = (prop: keyof Omit<TimerSettings, "showSettings">, step = 1): TextActions => ({
         enlargeFont: () => {
             const textState = clockState[prop];
             setClockState({ ...clockState, [prop]: { ...textState, size: textState.size + step } });
@@ -76,27 +76,27 @@ export const ConfigMenu = ({
                     </div>
                 </div>
                 <div className="flex-grow overflow-y-auto">
-                    <ConfigMenuOption settings={clockState["clock"]} actions={textActions("clock")} showDivider={false} name="Zegar" />
+                    <ConfigMenuOption settings={clockState.clock} actions={textActions("clock")} showDivider={false} name="Zegar" />
                     <ConfigMenuOption
-                        settings={clockState["countdown"]}
+                        settings={clockState.countdown}
                         actions={textActions("countdown", 6)}
                         showDivider={true}
                         name="Stoper"
                     />
                     <ConfigMenuOption
-                        settings={clockState["currentPlayer"]}
+                        settings={clockState.currentPlayer}
                         actions={textActions("currentPlayer", 6)}
                         showDivider={true}
                         name="Aktualny zawodnik"
                     />
                     <ConfigMenuOption
-                        settings={clockState["nextPlayers"]}
+                        settings={clockState.nextPlayers}
                         actions={textActions("nextPlayers")}
                         showDivider={true}
                         name="Następni zawodnicy"
                     />
                     <ConfigMenuOption
-                        settings={clockState["players"]}
+                        settings={clockState.players}
                         actions={textActions("players")}
                         showDivider={true}
                         name="Lista zawodników"

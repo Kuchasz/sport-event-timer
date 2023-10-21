@@ -1,6 +1,6 @@
 import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PoorCheckbox } from "../../poor-checkbox";
 import { Form, FormInput } from "form";
 import { timingPointAccessUrlSchema } from "modules/timing-point/models";

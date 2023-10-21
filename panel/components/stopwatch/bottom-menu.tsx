@@ -2,7 +2,7 @@ import { Icon } from "@mdi/react";
 import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
 // import { connectionStateAtom, StopWatchMode } from "../../states/stopwatch-states";
-import { StopWatchMode } from "../../states/stopwatch-states";
+import type { StopWatchMode } from "../../states/stopwatch-states";
 // import { ConnectionState } from "@set/timer/dist/model";
 import classNames from "classnames";
 // import { useAtom } from "jotai";

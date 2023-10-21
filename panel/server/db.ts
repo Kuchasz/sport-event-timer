@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { createStore, TimerState } from "@set/timer/dist/store";
+import type { TimerState } from "@set/timer/dist/store";
+import { createStore } from "@set/timer/dist/store";
 
 export const db = new PrismaClient();
 
