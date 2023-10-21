@@ -1,5 +1,6 @@
 import * as m from "../model";
-import { Action, AnyAction, createSlice } from "@reduxjs/toolkit";
+import type { Action, AnyAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type ActionsHistoryState = m.HistoricAction[];
 

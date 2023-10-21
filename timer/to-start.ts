@@ -1,4 +1,4 @@
-import { Classification, Gender, Player } from "./model";
+import type { Classification, Gender, Player } from "./model";
 export type ToStartPlayer = {
     ["Nr zawodnika"]?: string;
     ["Nr chip"]: string;
@@ -77,7 +77,7 @@ const getGender = (genderText: string) => (genderText === "M" ? "male" : "female
 export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player => ({
     // id: i,
     name: player["Imię"],
-    lastName: player["Nazwisko"],
+    lastName: player.Nazwisko,
     // gender: getGender(player["Płeć"]),
     // birthYear: Number(player["Data urodzenia"].split(".")[2]),
     bibNumber: Number(player["Nr zawodnika"]),

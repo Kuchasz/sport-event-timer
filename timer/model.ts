@@ -98,7 +98,7 @@ export type State = {
 
 export type RaceResult = {
     player: Omit<Player, "id">;
-    timeStamps: { [timingPointId: number]: number };
+    timeStamps: Record<number, number>;
 };
 
 export type RaceResults = RaceResult[];

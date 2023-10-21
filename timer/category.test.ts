@@ -1,5 +1,6 @@
-import { AgeCategory, getAgeAtEventDate, getCategoryMatchers, matchPlayersToCategories } from "./category";
-import { Gender } from "./model";
+import type { AgeCategory } from "./category";
+import { getAgeAtEventDate, getCategoryMatchers, matchPlayersToCategories } from "./category";
+import type { Gender } from "./model";
 
 test("empty", () => {
     const result = getCategoryMatchers([]);

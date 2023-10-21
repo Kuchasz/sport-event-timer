@@ -1,5 +1,5 @@
 import { areOverlapping } from "@set/utils/dist/array";
-import { Gender } from "./model";
+import type { Gender } from "./model";
 
 // const ageCategories = [
 //     {
