@@ -1,5 +1,5 @@
 import { CategoryForm } from "./category-form";
-import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { trpc } from "trpc-core";
 
 type Category = AppRouterOutputs["classification"]["categories"][0];

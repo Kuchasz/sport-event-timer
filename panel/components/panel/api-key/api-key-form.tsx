@@ -1,6 +1,6 @@
 import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { Form, FormInput } from "form";
 import { apiKeySchema } from "modules/api-key/models";
 import { useTranslations } from "next-intl";

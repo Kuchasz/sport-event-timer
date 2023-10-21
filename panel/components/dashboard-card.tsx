@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const Card = ({ title, value, children }: { title: string; value: string; children: ReactNode }) => (
     <div className="m-3 flex h-32 w-48 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm">

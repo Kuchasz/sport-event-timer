@@ -2,7 +2,7 @@ import { Button } from "../../button";
 import { Label } from "../../label";
 import { PoorInput } from "../../poor-input";
 import { useFormState } from "hooks";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "../../poor-number-input";
 import { RadioGroup } from "@headlessui/react";
 import classNames from "classnames";

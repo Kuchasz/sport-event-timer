@@ -77,7 +77,7 @@ export const TabletTimer = () => {
                     <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
                 ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center">
-                        <Time stopped={false} time={globalTime!} />
+                        <Time stopped={false} time={globalTime} />
                     </div>
                 )}
             </div>

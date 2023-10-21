@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { authOptions } from "server/auth";
 import { LogoutButton } from "./status-components";
 // import { db } from "server/db";

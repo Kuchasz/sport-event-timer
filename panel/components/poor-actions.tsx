@@ -1,7 +1,7 @@
 "use client";
 
 import { Popover } from "@headlessui/react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
 import { mdiDotsVertical } from "@mdi/js";

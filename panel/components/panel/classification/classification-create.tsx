@@ -1,6 +1,6 @@
 import { trpc } from "trpc-core";
 import { ClassificationForm } from "./classification-form";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 
 type CreateClassification = AppRouterInputs["classification"]["add"];
 

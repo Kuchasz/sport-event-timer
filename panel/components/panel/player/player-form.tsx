@@ -1,5 +1,5 @@
 import { Button } from "../../button";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PoorSelect } from "../../poor-select";
 import { PoorTimepicker } from "../../poor-timepicker";
 import { PoorCombo } from "../../poor-combo";

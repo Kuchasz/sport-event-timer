@@ -1,6 +1,7 @@
 "use client";
 
-import { ComponentType, Fragment } from "react";
+import type { ComponentType } from "react";
+import { Fragment } from "react";
 import { Demodal, useModal } from "demodal";
 import { Dialog, Transition } from "@headlessui/react";
 

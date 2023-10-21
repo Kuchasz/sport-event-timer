@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "server/auth";
 import { LogoutButton } from "./status-components";
 import Link from "next/link";
-import { Route } from "next";
+import type { Route } from "next";
 
 export const IndexStatus = async () => {
     const session = await getServerSession(authOptions());

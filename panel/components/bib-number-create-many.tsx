@@ -1,7 +1,7 @@
 import { Button } from "./button";
 import { Label } from "./label";
 import { useFormState } from "hooks";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorCheckbox } from "./poor-checkbox";
 
@@ -37,7 +37,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                     <Label>Omit duplicates</Label>
                     <PoorCheckbox
                         value={addManyBibNumberConfig.omitDuplicates}
-                        onChange={e => changeHandler("omitDuplicates")({ target: { value: e.target.value! } })}
+                        onChange={e => changeHandler("omitDuplicates")({ target: { value: e.target.value } })}
                     />
                 </div>
             </div>

@@ -7,7 +7,7 @@ import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
 import { mdiChevronDoubleRight } from "@mdi/js";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 import classNames from "classnames";
 import { Clock } from "components/timer/clock";
@@ -94,7 +94,7 @@ export const MobileTimer = () => {
     const { raceId } = useParams() as { raceId: string };
 
     const { data: players } = trpc.player.startList.useQuery(
-        { raceId: Number.parseInt(raceId! as string) },
+        { raceId: Number.parseInt(raceId) },
         { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
     );
 
@@ -128,7 +128,7 @@ export const MobileTimer = () => {
                 ) : (
                     <div className="flex h-full w-full flex-col items-center">
                         <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                            <Clock fontSize={4} time={globalTime!} />
+                            <Clock fontSize={4} time={globalTime} />
                             {/* <div className="flex flex-grow items-center flex-col">
                                 <Countdown beep={() => {}} fontSize={48} seconds={secondsToNextPlayer} />
                             </div> */}

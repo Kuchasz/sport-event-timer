@@ -1,5 +1,5 @@
 import { Button } from "./button";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Label } from "./label";
 // import { PoorDatepicker } from "./poor-datepicker";
 // import { PoorInput } from "./poor-input";

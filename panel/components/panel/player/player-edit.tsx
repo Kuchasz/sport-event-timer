@@ -1,5 +1,5 @@
 import { trpc } from "trpc-core";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PlayerForm } from "./player-form";
 
 type Player = AppRouterOutputs["player"]["players"][0];
@@ -13,20 +13,20 @@ type PlayerEditProps = {
 };
 
 export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: PlayerEditProps) => {
-    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId! });
-    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId! });
+    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId });
+    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId });
     const editPlayerMutation = trpc.player.edit.useMutation();
     if (!classifications || !availableNumbers) return;
 
     const player: EditPlayer = {
         id: editedPlayer.id,
         bibNumber: editedPlayer.bibNumber,
-        startTime: editedPlayer.startTime as number,
+        startTime: editedPlayer.startTime!,
         classificationId: editedPlayer.classificationId,
     };
 
     const editPlayer = async (editedPlayer: EditPlayer) => {
-        await editPlayerMutation.mutateAsync({ raceId: raceId!, player });
+        await editPlayerMutation.mutateAsync({ raceId: raceId, player });
         onResolve(editedPlayer);
     };
 

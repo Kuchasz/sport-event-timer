@@ -9,7 +9,7 @@ import { PoorSelect2 } from "./poor-select";
 import { mdiPowerStandby } from "@mdi/js";
 import Icon from "@mdi/react";
 import { signOut } from "next-auth/react";
-import { AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { useRouter } from "next/navigation";
 
 type Races = AppRouterOutputs["race"]["myRaces"];

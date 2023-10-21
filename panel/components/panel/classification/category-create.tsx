@@ -1,6 +1,6 @@
 import { trpc } from "trpc-core";
 import { CategoryForm } from "./category-form";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 
 type CreateCategory = AppRouterInputs["classification"]["addCategory"];
 
