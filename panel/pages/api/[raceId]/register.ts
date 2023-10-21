@@ -4,14 +4,26 @@ import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
 import { GenderEnum } from "../../../models";
-// import { sendRegistrationConfirmation } from "../../../messages";
 
 const stripNonNumbers = (string: string) => string.replace(/\D/g, "");
+
+type RequestBody = {
+    name: string;
+    lastName: string;
+    birthDate: string;
+    gender: string;
+    team: string;
+    city: string;
+    country: string;
+    email: string;
+    phoneNumber: string;
+    icePhoneNumber: string;
+};
 
 const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
     const { raceId } = req.query;
 
-    const { name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber } = req.body;
+    const { name, lastName, birthDate, gender, team, city, country, email, phoneNumber, icePhoneNumber } = req.body as RequestBody;
 
     const registrationEntryModel = z.object({
         email: z.string().email(),

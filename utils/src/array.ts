@@ -26,10 +26,10 @@ export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
 export const groupBy = <TItem, TKey extends string | number>(xs: TItem[], key: (item: TItem) => TKey): { [key in TKey]: TItem[] } => {
-    return xs.reduce((rv: any, x: any) => {
+    return xs.reduce((rv: { [k: string | number]: TItem[] }, x: TItem) => {
         (rv[key(x)] = rv[key(x)] || []).push(x);
         return rv;
-    }, {});
+    }, {}) as { [key in TKey]: TItem[] };
 };
 
 export const excludeItems = <T>(array: T[], itemsToExclude: T[]): T[] => {

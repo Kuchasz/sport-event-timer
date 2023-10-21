@@ -23,7 +23,7 @@ export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, raceDate,
             <div className="flex">
                 <div className="grow">
                     <Label>Timing Point</Label>{" "}
-                    {timingPoints && timingPoints.length ? (
+                    {timingPoints?.length ? (
                         <PoorSelect
                             initialValue={splitTime.timingPointId}
                             items={timingPoints}

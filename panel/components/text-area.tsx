@@ -1,6 +1,6 @@
 import type { HTMLProps } from "react";
 
-type TextareaProps = HTMLProps<HTMLTextAreaElement> & {};
+type TextareaProps = HTMLProps<HTMLTextAreaElement> & unknown;
 
 export const TextArea = ({ className, ...props }: TextareaProps) => {
     return (

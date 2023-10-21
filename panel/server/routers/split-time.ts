@@ -40,7 +40,7 @@ export const splitTimeRouter = router({
             }));
         }),
     update: protectedProcedure.input(manualSplitTimeSchema).mutation(async ({ input, ctx }) => {
-        const { id, ...splitTime } = input;
+        const { id: _id, ...splitTime } = input;
 
         const existingManualSplitTime = await ctx.db.manualSplitTime.findFirst({
             where: {

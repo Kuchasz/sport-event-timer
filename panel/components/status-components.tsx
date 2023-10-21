@@ -23,7 +23,7 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
     // console.log(selectedRaceId);
 
     useEffect(() => {
-        !selectedRaceId && items && items.length && selectRaceId(items[0]?.id);
+        !selectedRaceId && items?.length && selectRaceId(items[0]?.id);
     }, [items]);
 
     return (

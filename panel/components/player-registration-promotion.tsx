@@ -26,7 +26,7 @@ const PlayerRegistrationPromotionForm = ({ onReject, onResolve, initialPlayerPro
             <div className="flex">
                 <div className="grow basis-full">
                     <Label>Classification</Label>
-                    {classifications && classifications.length ? (
+                    {classifications?.length ? (
                         <PoorSelect
                             initialValue={player.classificationId}
                             items={classifications}

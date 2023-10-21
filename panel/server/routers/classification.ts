@@ -52,7 +52,7 @@ export const classificationRouter = router({
             return categories.map(c => ({ ...c, gender: c.gender as Gender }));
         }),
     addCategory: protectedProcedure.input(categorySchema).mutation(async ({ input, ctx }) => {
-        const { id, ...classification } = input;
+        const { id: _id, ...classification } = input;
 
         return await ctx.db.category.create({ data: classification });
     }),
@@ -93,7 +93,7 @@ export const classificationRouter = router({
     // }),
     update: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
         const { id, ...data } = input;
-        const { raceId, ...classification } = data;
+        const { raceId: _raceId, ...classification } = data;
 
         // const categories = subCategories.map(c => ({ where: { id: c.id ?? 0 }, create: c, update: c }));
 
@@ -105,7 +105,7 @@ export const classificationRouter = router({
         });
     }),
     add: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
-        const { id, ...data } = input;
+        const { id: _id, ...data } = input;
         return await ctx.db.classification.create({
             data: {
                 ...data,
