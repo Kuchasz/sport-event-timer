@@ -90,7 +90,7 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
     );
 };
 
-export function Form<TItem extends {}>({
+export function Form<TItem extends object>({
     children,
     initialValues,
     onSubmit,

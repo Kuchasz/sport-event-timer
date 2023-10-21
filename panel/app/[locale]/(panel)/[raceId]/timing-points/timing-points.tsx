@@ -295,23 +295,22 @@ export const TimingPoints = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
                 <div className="w-full max-w-md ">
-                    {sortedTimingPoints &&
-                        sortedTimingPoints.map((e, index) => (
-                            <TimingPointCard
-                                key={e.id}
-                                index={index}
-                                raceId={raceId}
-                                onCreate={() => {
-                                    void refetchTimingPoints();
-                                    void refetchOrder();
-                                }}
-                                onSelect={setActiveTimingPointId}
-                                isActive={e.id === activeTimingPointId}
-                                timingPoint={e}
-                                isFirst={index === 0}
-                                isLast={index === sortedTimingPoints.length - 1}
-                            />
-                        ))}
+                    {sortedTimingPoints?.map((e, index) => (
+                        <TimingPointCard
+                            key={e.id}
+                            index={index}
+                            raceId={raceId}
+                            onCreate={() => {
+                                void refetchTimingPoints();
+                                void refetchOrder();
+                            }}
+                            onSelect={setActiveTimingPointId}
+                            isActive={e.id === activeTimingPointId}
+                            timingPoint={e}
+                            isFirst={index === 0}
+                            isLast={index === sortedTimingPoints.length - 1}
+                        />
+                    ))}
                 </div>
                 {activeTimingPoint && (
                     <div className="ml-8 mt-1 w-full flex-grow">

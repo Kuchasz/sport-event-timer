@@ -1,5 +1,6 @@
 export const uuidv4 = () => {
     let d = new Date().getTime();
+    //eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     let d2 = (typeof performance !== "undefined" && performance.now && performance.now() * 1000) || 0;
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
         let r = Math.random() * 16;
