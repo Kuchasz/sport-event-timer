@@ -3,7 +3,7 @@
 import superjson from "superjson";
 import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
 import type { QueryClient } from "@tanstack/react-query";
-import { env } from "./env.mjs";
+import { env } from "./env";
 
 const url = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
 
