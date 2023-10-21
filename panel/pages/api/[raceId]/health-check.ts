@@ -1,5 +1,5 @@
 import { withRaceApiKey } from "auth";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { withExceptionHandling } from "exceptions";
 
 const getHealthCheck = async (_: NextApiRequest, res: NextApiResponse) => {
