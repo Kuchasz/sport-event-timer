@@ -96,7 +96,7 @@ export const ClassificationCategories = () => {
         });
 
         if (category) {
-            refetch();
+            void refetch();
         }
     };
 

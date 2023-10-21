@@ -72,9 +72,9 @@ export const emptyToStartPlayer = {
     ["Pliki"]: undefined,
 };
 
-const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
+const _getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
 
-export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player => ({
+export const toStartPlayerToPlayer = (player: ToStartPlayer, _i: number): Player => ({
     // id: i,
     name: player["Imię"],
     lastName: player.Nazwisko,

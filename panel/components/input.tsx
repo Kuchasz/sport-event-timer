@@ -1,6 +1,6 @@
 import type { HTMLProps } from "react";
 
-type InputProps = HTMLProps<HTMLInputElement> & unknown;
+type InputProps = HTMLProps<HTMLInputElement>;
 
 export const Input = ({ className, ...props }: InputProps) => {
     return (

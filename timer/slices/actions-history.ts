@@ -9,11 +9,12 @@ const initialState: ActionsHistoryState = [];
 interface IssuedAction extends Action {
     __issuer: string;
     __issuedAt: number;
+    __remote: boolean;
     payload: any;
 }
 
 function isIssuedAction(action: AnyAction): action is IssuedAction {
-    return !action.__remote && action.__issuer && action.__issuedAt;
+    return !action.__remote && typeof action?.__issuer === "string" && typeof action?.__issuedAt === "number";
 }
 
 export const actionsHistorySlice = createSlice({

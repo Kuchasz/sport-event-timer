@@ -35,7 +35,7 @@ export const Settings = () => {
         });
 
         if (apiKey) {
-            refetch();
+            void refetch();
         }
     };
 
@@ -50,7 +50,7 @@ export const Settings = () => {
 
         if (confirmed) {
             await deleteApiKeyMutation.mutateAsync({ raceId: apiKey.raceId, keyId: apiKey.id });
-            refetch();
+            void refetch();
         }
     };
 
@@ -65,7 +65,7 @@ export const Settings = () => {
         });
 
         if (key) {
-            refetch();
+            void refetch();
         }
     };
 

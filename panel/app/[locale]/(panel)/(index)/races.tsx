@@ -170,7 +170,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
                 if (confirmed) {
                     await deleteRaceMutation.mutateAsync({ raceId: race.id });
-                    refetch();
+                    void refetch();
                 }
             },
         },
@@ -189,7 +189,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
         if (race) {
             await addRaceMutation.mutateAsync(race);
-            refetch();
+            void refetch();
         }
     };
 

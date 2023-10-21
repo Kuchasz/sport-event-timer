@@ -11,6 +11,7 @@ export const PlayerReassignTime = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
     const dispatch = useTimerDispatch();
 
+    //eslint-disable-next-line @typescript-eslint/unbound-method
     const { back } = useRouter();
 
     const { timeStampId } = useParams() as { timeStampId: string };

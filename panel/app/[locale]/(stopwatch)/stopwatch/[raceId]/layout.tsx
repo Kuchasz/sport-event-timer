@@ -13,7 +13,7 @@ export default function ({ children }: { children: ReactNode }) {
     );
 }
 
-export async function generateMetadata({ params }: { params: { locale: string; raceId: number } }): Promise<Metadata> {
+export function generateMetadata({ params }: { params: { locale: string; raceId: number } }): Metadata {
     return {
         title: "Stopwatch",
         manifest: `/api/manifest/${params.raceId}/stopwatch`,

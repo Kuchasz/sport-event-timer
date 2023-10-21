@@ -16,6 +16,7 @@ const wsClient =
               url: wsUrl,
           });
 
+//eslint-disable-next-line @typescript-eslint/unbound-method
 export const getConnection = wsClient?.getConnection;
 
 const runStateChangedHandlers = (s: ConnectionState) => {

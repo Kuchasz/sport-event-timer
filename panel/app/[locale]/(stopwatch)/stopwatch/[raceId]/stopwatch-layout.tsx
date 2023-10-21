@@ -30,7 +30,7 @@ let externals = {
     trpc: undefined,
 } as { raceId?: number; user?: string; timeOffset?: number; trpc?: ReturnType<typeof trpc.useContext>["client"] };
 
-const postActionsMiddleware: Middleware<{}, TimerState, TimerDispatch> = _ => next => action => {
+const postActionsMiddleware: Middleware<object, TimerState, TimerDispatch> = _ => next => action => {
     if (!getConnection) return;
 
     const socket = getConnection();
