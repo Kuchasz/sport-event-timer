@@ -7,7 +7,7 @@ import { useTimerSelector } from "../../../../../../hooks";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
     return (
-        <div className="my-1 flex py-2 px-3 items-center justify-between relative rounded-xl shadow bg-white">
+        <div className="relative my-1 flex items-center justify-between rounded-xl bg-white px-3 py-2 shadow">
             <div className="flex flex-col text-sm">
                 <div>{formatTime(new Date(historicAction.issuedAt))}</div>
                 <div>{historicAction.issuer}</div>
@@ -18,11 +18,11 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
 };
 
 export const History = () => {
-    const actionsHistory = useTimerSelector((x) => x.actionsHistory || []);
+    const actionsHistory = useTimerSelector(x => x.actionsHistory || []);
 
     return (
         <div className="px-2 py-1">
-            {sortDesc(actionsHistory, (a) => a.issuedAt).map((a, i) => (
+            {sortDesc(actionsHistory, a => a.issuedAt).map((a, i) => (
                 <ActionDisplay key={i} historicAction={a} />
             ))}
         </div>

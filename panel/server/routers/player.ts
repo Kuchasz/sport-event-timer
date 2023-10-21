@@ -10,7 +10,7 @@ const stopwatchPlayersSchema = z.array(
         lastName: z.string(),
         bibNumber: z.number(),
         startTime: z.number().optional(),
-    })
+    }),
 );
 
 const promoteRegistrationSchema = z.object({
@@ -50,7 +50,7 @@ export const playerRouter = router({
             const { raceId } = input;
 
             const playersBibNumbers = await ctx.db.player.findMany({ where: { raceId } });
-            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, orderBy: { number: 'asc' } });
+            const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, orderBy: { number: "asc" } });
 
             const usedBibNumbers = new Set(playersBibNumbers.filter(p => !!p.bibNumber).map(p => p.bibNumber));
 
@@ -70,7 +70,7 @@ export const playerRouter = router({
                         select: {
                             name: true,
                             lastName: true,
-                        }
+                        },
                     },
                     bibNumber: true,
                     startTime: true,
@@ -90,7 +90,7 @@ export const playerRouter = router({
                         select: {
                             name: true,
                             lastName: true,
-                        }
+                        },
                     },
                     bibNumber: true,
                     startTime: true,
@@ -124,23 +124,20 @@ export const playerRouter = router({
 
         const playerWithTheSameTime = player.startTime
             ? await ctx.db.player.findFirst({
-                where: {
-                    raceId: input.raceId,
-                    OR: [
-                        { startTime: player.startTime },
-                        { bibNumber: player.bibNumber }
-                    ]
-                }
-            })
+                  where: {
+                      raceId: input.raceId,
+                      OR: [{ startTime: player.startTime }, { bibNumber: player.bibNumber }],
+                  },
+              })
             : null;
 
         const playerWithTheSameBibNumber = player.bibNumber
             ? await ctx.db.player.findFirst({
-                where: {
-                    raceId: input.raceId,
-                    bibNumber: player.bibNumber,
-                },
-            })
+                  where: {
+                      raceId: input.raceId,
+                      bibNumber: player.bibNumber,
+                  },
+              })
             : null;
 
         if (playerWithTheSameTime || playerWithTheSameBibNumber)
@@ -162,7 +159,7 @@ export const playerRouter = router({
                 playerProfileId: registration.playerProfileId,
                 classificationId: classification.id,
                 registeredByUserId: user.id,
-                playerRegistrationId: registration.id
+                playerRegistrationId: registration.id,
             },
         });
     }),

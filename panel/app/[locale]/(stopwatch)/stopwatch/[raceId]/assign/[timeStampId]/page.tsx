@@ -3,5 +3,5 @@ import { PlayerAssignTime } from "./player-assign-time";
 
 export default async function () {
     await authenticate();
-    return <PlayerAssignTime/>
-};
+    return <PlayerAssignTime />;
+}

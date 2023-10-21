@@ -115,7 +115,7 @@ const PlayerRegistrationPromotionForm = ({ onReject, onResolve, initialPlayerPro
                     <PoorTimepicker value={player.startTime} onChange={changeHandler("startTime")} />
                 </div>
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>

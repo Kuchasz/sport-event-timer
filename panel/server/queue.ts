@@ -5,7 +5,9 @@ type ActualSplitTime = { id: number; bibNumber: number; time: number; timingPoin
 type ExistingSplitTime = { id: number; bibNumber: string; time: bigint; timingPointId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
-    actual.bibNumber.toString() === existing.bibNumber && actual.time === Number(existing.time) && actual.timingPointId === existing.timingPointId;
+    actual.bibNumber.toString() === existing.bibNumber &&
+    actual.time === Number(existing.time) &&
+    actual.timingPointId === existing.timingPointId;
 
 type UpdateSplitTimesTask = {
     raceId: number;
@@ -68,7 +70,14 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     await db.$transaction(newSplitTimes.map(data => db.splitTime.create({ data })));
     await db.$transaction(newAbsences.map(data => db.absence.create({ data })));
 
-    await db.$transaction(splitTimesToUpdate.map(data => db.splitTime.update({ where: { id_raceId: { id: data.actual.id, raceId } }, data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() } })));
+    await db.$transaction(
+        splitTimesToUpdate.map(data =>
+            db.splitTime.update({
+                where: { id_raceId: { id: data.actual.id, raceId } },
+                data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() },
+            }),
+        ),
+    );
 };
 
 export const updateSplitTimesQueue: fastq.queueAsPromised<UpdateSplitTimesTask> = fastq.promise(updateSplitTimes, 1);

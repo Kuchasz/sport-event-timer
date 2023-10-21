@@ -17,7 +17,7 @@ export const Race = () => {
                 <div>
                     <div>
                         <PageHeader title={race.name} description={race.date.toLocaleDateString()} />
-                        <div className="mt-8 mb-4">
+                        <div className="mb-4 mt-8">
                             <div className="mx-3 text-xl font-semibold">{t("pages.race.statistics.header.title")}</div>
                             <div className="flex">
                                 <DashboardCard.Range

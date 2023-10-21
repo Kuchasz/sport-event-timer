@@ -13,6 +13,12 @@
     "@types/ws": "^8.5.6"
   },
   "devDependencies": {
+    "@types/eslint": "^8.44.6",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "0.5.6"
   }

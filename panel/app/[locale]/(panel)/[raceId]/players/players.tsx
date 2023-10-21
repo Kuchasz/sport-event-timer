@@ -44,7 +44,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
         }
     };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletePlayer}>
+        <span className="flex cursor-pointer items-center hover:text-red-600" onClick={deletePlayer}>
             <Icon size={0.8} path={mdiTrashCan} />
             {t("pages.players.delete.button")}
         </span>
@@ -120,8 +120,8 @@ export const Players = () => {
     const [gridColumnState, setGridColumnState] = useAtom(
         getGridColumnStateAtom(
             "players",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
-        )
+            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! })),
+        ),
     );
 
     const onFirstDataRendered = useCallback(() => {
@@ -151,7 +151,7 @@ export const Players = () => {
                 <title>{t("pages.players.header.title")}</title>
             </Head>
 
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
                 <div className="mb-4 flex">
                     <Button
@@ -185,7 +185,7 @@ export const Players = () => {
                     />
                 </div>
                 {players && (
-                    <div className="p-8 rounded-lg h-full shadow-md bg-white">
+                    <div className="h-full rounded-lg bg-white p-8 shadow-md">
                         <div className="ag-theme-material h-full">
                             <AgGridReact<Player>
                                 ref={gridRef}

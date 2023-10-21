@@ -25,7 +25,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
-    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`)}));
+    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
 
     return (
         <Form<PlayerRegistration>
@@ -38,11 +38,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     label={t("pages.playerRegistrations.form.name.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("pages.playerRegistrations.form.name.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("pages.playerRegistrations.form.name.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="name"
                 />
@@ -125,11 +121,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     label={t("pages.playerRegistrations.form.city.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("pages.playerRegistrations.form.city.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("pages.playerRegistrations.form.city.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="city"
                 />
@@ -139,11 +131,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     label={t("pages.playerRegistrations.form.email.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput
-                            placeholder={t("pages.playerRegistrations.form.email.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorInput placeholder={t("pages.playerRegistrations.form.email.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="email"
                 />
@@ -174,11 +162,13 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="icePhoneNumber"
                 />
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

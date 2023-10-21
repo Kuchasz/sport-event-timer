@@ -24,7 +24,7 @@ export const appRouter = router({
     apiKey: apiKeyRouter,
     playerRegistration: playerRegistrationRouter,
     account: accountRouter,
-    bibNumber: bibNumberRouter
+    bibNumber: bibNumberRouter,
 });
 
 // export type definition of API

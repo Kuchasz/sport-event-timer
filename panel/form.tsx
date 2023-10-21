@@ -80,7 +80,7 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
                 <div className={`flex flex-col ${className ?? ""}`}>
                     <Label>{label}</Label>
                     {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
-                    <div className="text-xs text-right font-medium opacity-75 text-red-600">
+                    <div className="text-right text-xs font-medium text-red-600 opacity-75">
                         {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
                     </div>
                 </div>

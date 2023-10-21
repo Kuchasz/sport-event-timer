@@ -9,10 +9,10 @@ export default function SignIn() {
     return (
         <>
             <section className="bg-gradient-to-r from-[#c2e59c] to-[#64b3f4]">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
                     <img className="mb-4" src="/assets/logo_ravelo.png" />
-                    <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+                        <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                 Create account or login
                             </h1>
@@ -28,7 +28,7 @@ export default function SignIn() {
                                                 }`,
                                             })
                                         }
-                                        className="flex items-center justify-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 w-full p-2.5"
+                                        className="flex w-full items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
                                     >
                                         Sign in with Auth0{" "}
                                         <img className="ml-2" width={20} height={20} src="/auth-providers/auth0.svg"></img>

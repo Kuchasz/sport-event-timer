@@ -19,16 +19,16 @@ export const actionsHistorySlice = createSlice({
     name: "actionsHistory",
     initialState,
     reducers: {},
-    extraReducers: (builder) =>
+    extraReducers: builder =>
         builder
             .addMatcher(isIssuedAction, (state, action) => {
                 return m.addHistoricAction(state, {
                     action: { type: action.type, payload: action.payload },
                     issuer: action.__issuer,
-                    issuedAt: action.__issuedAt
+                    issuedAt: action.__issuedAt,
                 });
             })
-            .addDefaultCase((state, _) => state)
+            .addDefaultCase((state, _) => state),
 });
 
 export default actionsHistorySlice.reducer;

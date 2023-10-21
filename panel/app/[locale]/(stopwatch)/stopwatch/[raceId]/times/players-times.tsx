@@ -82,9 +82,9 @@ const Item = <T extends string>({
     };
 
     return (
-        <div style={style} className="absolute w-full t-0 left-0 py-0.5">
+        <div style={style} className="t-0 absolute left-0 w-full py-0.5">
             <div
-                className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white"
+                className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow"
                 ref={targetElement}
                 onTouchStart={e => {
                     startMoveElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
@@ -94,7 +94,7 @@ const Item = <T extends string>({
                 }}
                 onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
             >
-                <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-red-500 text-white absolute -ml-[78px]">
+                <div className="absolute -ml-[78px] flex h-[50px] w-[50px] items-center justify-center rounded-full bg-red-500 text-white">
                     <Icon size={0.8} path={mdiDeleteOutline} />
                 </div>
                 <PlayerWithTimeStampDisplay
@@ -158,7 +158,7 @@ export const PlayersTimes = () => {
                 ...s,
                 player: allPlayers!.find(p => s.bibNumber === p.bibNumber),
             })),
-        t => t.id
+        t => t.id,
     );
 
     const onAddTime = () =>
@@ -166,7 +166,7 @@ export const PlayersTimes = () => {
             add({
                 timingPointId: timingPointId!,
                 time: getCurrentTime(offset!, race!.date),
-            })
+            }),
         );
 
     const parentRef = useRef<HTMLDivElement>(null);
@@ -180,16 +180,16 @@ export const PlayersTimes = () => {
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 
     return (
-        <div className="h-full flex flex-col">
-            <div className="flex my-2 flex-col px-2">
+        <div className="flex h-full flex-col">
+            <div className="my-2 flex flex-col px-2">
                 <button
                     onClick={onAddTime}
-                    className="active:animate-pushInLittle self-end rounded-md text-center border-0 outline-none bg-gradient-to-r w-full flex justify-center from-orange-500 to-red-500 py-8"
+                    className="active:animate-pushInLittle flex w-full justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center outline-none"
                 >
                     <Icon color="white" size={5} path={mdiPlus} />
                 </button>
             </div>
-            <div ref={parentRef} className="px-2 flex-grow h-full overflow-x-hidden">
+            <div ref={parentRef} className="h-full flex-grow overflow-x-hidden px-2">
                 <div
                     style={{
                         height: rowVirtualizer.getTotalSize(),
@@ -202,7 +202,7 @@ export const PlayersTimes = () => {
                             style={{ transform: `translateY(${virtualRow.start}px)` }}
                             key={times[virtualRow.index].id}
                             dispatch={dispatch}
-                            navigate={(s) => push(s as Route)}
+                            navigate={s => push(s as Route)}
                             t={times[virtualRow.index]}
                             raceId={parseInt(raceId as string)}
                             padBibNumber={highestBibNumber.toString().length}

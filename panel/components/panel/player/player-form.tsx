@@ -59,20 +59,18 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                     label={t("pages.players.form.startTime.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorTimepicker
-                            placeholder={t("pages.players.form.startTime.placeholder")}
-                            value={value}
-                            onChange={onChange}
-                        />
+                        <PoorTimepicker placeholder={t("pages.players.form.startTime.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="startTime"
                 />
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

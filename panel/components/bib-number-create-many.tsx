@@ -41,7 +41,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                     />
                 </div>
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>

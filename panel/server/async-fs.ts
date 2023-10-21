@@ -1,9 +1,4 @@
-import {
-    access,
-    constants,
-    readFile,
-    writeFile
-    } from "fs";
+import { access, constants, readFile, writeFile } from "fs";
 import { parse } from "csv-parse";
 import { promisify } from "util";
 import { resolve } from "path";
@@ -16,7 +11,7 @@ export const parseCsvAsync = (data: Buffer | string, options: any) =>
     new Promise<any>((res, _) =>
         parse(data, options, (_, results) => {
             res(results);
-        })
+        }),
     );
 
 export const stringifyCsvAsync = (data: any) =>

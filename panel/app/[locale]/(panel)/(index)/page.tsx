@@ -6,5 +6,5 @@ export default async function () {
     const races = await trpcRSC.race.races.query();
 
     await authenticate();
-    return <Races initialData={races}/>;
+    return <Races initialData={races} />;
 }

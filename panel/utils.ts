@@ -10,7 +10,6 @@ const minuteSeconds = 60;
 const hourSeconds = minuteSeconds * 60;
 const daySeconds = hourSeconds * 24;
 
-
 export const timeStringToMiliseconds = (timeString: string) => {
     if (!/\d\d:\d\d/gm.test(timeString)) {
         alert("Passed value does not match pattern HH:MM");
@@ -40,17 +39,22 @@ export const fullTimeStringToEpochMiliseconds = (timeString: string, date: numbe
 };
 
 export const formatSecondsToTimeSpan = (seconds: number) => {
-
     const day = Math.floor(seconds / daySeconds);
-    const hour = Math.floor((seconds - (day * daySeconds)) / hourSeconds);
-    const minute = Math.floor((seconds - (day * daySeconds) - (hour * hourSeconds)) / minuteSeconds);
-    const second = (seconds - (day * daySeconds) - (hour * hourSeconds) - (minute * minuteSeconds));
+    const hour = Math.floor((seconds - day * daySeconds) / hourSeconds);
+    const minute = Math.floor((seconds - day * daySeconds - hour * hourSeconds) / minuteSeconds);
+    const second = seconds - day * daySeconds - hour * hourSeconds - minute * minuteSeconds;
 
-    return day ? `${formatNumber(day)}d ${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}` : hour ? `${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}` : minute ? `${formatNumber(minute)}:${formatNumber(second)}` : second;
+    return day
+        ? `${formatNumber(day)}d ${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}`
+        : hour
+        ? `${formatNumber(hour)}:${formatNumber(minute)}:${formatNumber(second)}`
+        : minute
+        ? `${formatNumber(minute)}:${formatNumber(second)}`
+        : second;
 };
 
-export const readLocalStorage = (key: string) => typeof window !== 'undefined' ? window.localStorage.getItem(key) : "";
-export const parseJSON = (jsonString: string) => typeof window !== 'undefined' ? JSON.parse(jsonString || "{}") : {};
+export const readLocalStorage = (key: string) => (typeof window !== "undefined" ? window.localStorage.getItem(key) : "");
+export const parseJSON = (jsonString: string) => (typeof window !== "undefined" ? JSON.parse(jsonString || "{}") : {});
 export const logger = createLogPrinter("@set");
 
 export const getTimingPointIcon = (isFirst: boolean, isLast: boolean) => {

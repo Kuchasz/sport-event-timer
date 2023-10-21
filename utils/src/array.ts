@@ -8,8 +8,7 @@ export const areOverlapping = (A: { from: number; to: number }, B: { from: numbe
     }
 };
 
-export const createRange = (range: { from: number; to: number }) =>
-    Array.from({ length: rangeLength(range) }, (_, i) => range.from + i);
+export const createRange = (range: { from: number; to: number }) => Array.from({ length: rangeLength(range) }, (_, i) => range.from + i);
 
 export const sort = <T>(items: T[], func: (item: T) => number): T[] => {
     const i = [...items];
@@ -35,4 +34,4 @@ export const groupBy = <TItem, TKey extends string | number>(xs: TItem[], key: (
 
 export const excludeItems = <T>(array: T[], itemsToExclude: T[]): T[] => {
     return array.filter(item => !itemsToExclude.includes(item));
-}
+};

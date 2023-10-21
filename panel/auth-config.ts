@@ -9,7 +9,7 @@ export default {
         Auth0({
             clientId: env.AUTH0_CLIENT_ID,
             clientSecret: env.AUTH0_CLIENT_SECRET,
-            issuer: env.AUTH0_ISSUER
+            issuer: env.AUTH0_ISSUER,
         }),
         // Email({
         //     server: "",
@@ -22,6 +22,6 @@ export default {
     adapter: PrismaAdapter(db),
     secret: env.NEXTAUTH_SECRET,
     pages: {
-        signIn: "/auth/signin"
-    }
+        signIn: "/auth/signin",
+    },
 };

@@ -15,20 +15,20 @@ export const RacePageLayout = ({ raceId, breadcrumbs, children }: Props) => {
     return (
         <>
             <Meta />
-            <div className="h-full relative">
-                <div className="will-change-transform h-full w-full flex">
+            <div className="relative h-full">
+                <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <nav className="w-60 shrink-0 overflow-clip flex-col shadow-lg  z-10">
+                        <nav className="z-10 w-60 shrink-0 flex-col overflow-clip  shadow-lg">
                             <Link href={"/" as Route}>
-                                <div className="transition-opacity flex flex-col ml-3 my-6 items-start cursor-pointer text-center px-4 py-4">
+                                <div className="my-6 ml-3 flex cursor-pointer flex-col items-start px-4 py-4 text-center transition-opacity">
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
                             <RaceMenu raceId={raceId} />
                         </nav>
-                        <main className="flex flex-col grow h-full overflow-y-auto">
+                        <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
-                            <div className="px-8 py-4 flex-grow overflow-y-scroll">
+                            <div className="flex-grow overflow-y-scroll px-8 py-4">
                                 <AgGridProvider>{children}</AgGridProvider>
                             </div>
                         </main>

@@ -1,9 +1,4 @@
-import {
-    AgeCategory,
-    getAgeAtEventDate,
-    getCategoryMatchers,
-    matchPlayersToCategories
-    } from "./category";
+import { AgeCategory, getAgeAtEventDate, getCategoryMatchers, matchPlayersToCategories } from "./category";
 import { Gender } from "./model";
 
 test("empty", () => {
@@ -15,7 +10,7 @@ test("empty", () => {
 test("error | the same gender ranges overlap", () => {
     const categories: AgeCategory[] = [
         { name: "M20", gender: "male", range: { from: 18, to: 30 } },
-        { name: "M30", gender: "male", range: { from: 30, to: 40 } }
+        { name: "M30", gender: "male", range: { from: 30, to: 40 } },
     ];
 
     const result = getCategoryMatchers(categories);
@@ -26,7 +21,7 @@ test("error | the same gender ranges overlap", () => {
 test("category matchers | the same gender without ranges overlap", () => {
     const categories: AgeCategory[] = [
         { name: "M20", gender: "male", range: { from: 18, to: 29 } },
-        { name: "M30", gender: "male", range: { from: 30, to: 39 } }
+        { name: "M30", gender: "male", range: { from: 30, to: 39 } },
     ];
 
     const result = getCategoryMatchers(categories);
@@ -35,15 +30,15 @@ test("category matchers | the same gender without ranges overlap", () => {
         type: "Success",
         categoryMatchers: [
             { name: "M20", fitsCategory: expect.any(Function) },
-            { name: "M30", fitsCategory: expect.any(Function) }
-        ]
+            { name: "M30", fitsCategory: expect.any(Function) },
+        ],
     });
 });
 
 test("category matchers | different gender ranges overlap", () => {
     const categories: AgeCategory[] = [
         { name: "M20", gender: "male", range: { from: 18, to: 30 } },
-        { name: "K30", gender: "female", range: { from: 30, to: 40 } }
+        { name: "K30", gender: "female", range: { from: 30, to: 40 } },
     ];
 
     const result = getCategoryMatchers(categories);
@@ -52,8 +47,8 @@ test("category matchers | different gender ranges overlap", () => {
         type: "Success",
         categoryMatchers: [
             { name: "M20", fitsCategory: expect.any(Function) },
-            { name: "K30", fitsCategory: expect.any(Function) }
-        ]
+            { name: "K30", fitsCategory: expect.any(Function) },
+        ],
     });
 });
 
@@ -62,17 +57,17 @@ test("calculated categories | all players with categories", () => {
         {
             name: "M18-29",
             gender: "male",
-            range: { from: 18, to: 29 }
+            range: { from: 18, to: 29 },
         },
         {
             name: "M30-39",
             gender: "male",
-            range: { from: 30, to: 39 }
-        }
+            range: { from: 30, to: 39 },
+        },
     ];
     const players = [
         { id: 1, birthDate: new Date(1992, 10, 10), gender: "male" as Gender },
-        { id: 2, birthDate: new Date(1993, 8, 8), gender: "male" as Gender }
+        { id: 2, birthDate: new Date(1993, 8, 8), gender: "male" as Gender },
     ];
     const eventDate = new Date(2022, 4, 4);
     const categoryMatchers = getCategoryMatchers(categories).categoryMatchers;
@@ -81,7 +76,7 @@ test("calculated categories | all players with categories", () => {
 
     expect(result).toEqual([
         [1, "M30-39"],
-        [2, "M18-29"]
+        [2, "M18-29"],
     ]);
 });
 
@@ -90,12 +85,12 @@ test("calculated categories | players without category", () => {
         {
             name: "M50-59",
             gender: "male",
-            range: { from: 50, to: 59 }
-        }
+            range: { from: 50, to: 59 },
+        },
     ];
     const players = [
         { id: 1, birthDate: new Date(1992, 10, 10), gender: "male" as Gender },
-        { id: 2, birthDate: new Date(1993, 8, 8), gender: "male" as Gender }
+        { id: 2, birthDate: new Date(1993, 8, 8), gender: "male" as Gender },
     ];
     const eventDate = new Date(2022, 4, 4);
     const categoryMatchers = getCategoryMatchers(categories).categoryMatchers;
@@ -104,7 +99,7 @@ test("calculated categories | players without category", () => {
 
     expect(result).toEqual([
         [1, undefined],
-        [2, undefined]
+        [2, undefined],
     ]);
 });
 

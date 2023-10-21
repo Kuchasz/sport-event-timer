@@ -8,7 +8,7 @@ const PlayersBreadcrumbs = ({ raceId, name }: { raceId: string; name: string }) 
     return (
         <Breadcrumbs>
             <Breadcrumbs.Item href={`/${raceId}`} text={name}></Breadcrumbs.Item>
-            <Breadcrumbs.Item text={t('pages.players.header.title')}></Breadcrumbs.Item>
+            <Breadcrumbs.Item text={t("pages.players.header.title")}></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };

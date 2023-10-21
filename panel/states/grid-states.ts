@@ -1,7 +1,7 @@
 import { ColumnState } from "@ag-grid-community/core";
 import { atomWithWebStorage } from "jotai-utils";
 
-type HiddenColumnState = Pick<ColumnState, 'colId' | 'hide'>;
+type HiddenColumnState = Pick<ColumnState, "colId" | "hide">;
 const gridColumnStateAtoms = new Map<string, ReturnType<typeof atomWithWebStorage<HiddenColumnState[]>>>();
 
 export const getGridColumnStateAtom = (gridName: string, defaultGridSettings: HiddenColumnState[]) => {
@@ -9,9 +9,13 @@ export const getGridColumnStateAtom = (gridName: string, defaultGridSettings: Hi
         return gridColumnStateAtoms.get(gridName)!;
     }
 
-    const newAtom = atomWithWebStorage<HiddenColumnState[]>(`set.panel.grid-column-state.${gridName}`, defaultGridSettings, typeof window !== 'undefined' ? localStorage : undefined);
+    const newAtom = atomWithWebStorage<HiddenColumnState[]>(
+        `set.panel.grid-column-state.${gridName}`,
+        defaultGridSettings,
+        typeof window !== "undefined" ? localStorage : undefined,
+    );
 
     gridColumnStateAtoms.set(gridName, newAtom);
 
     return newAtom;
-}
+};

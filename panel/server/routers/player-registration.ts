@@ -5,216 +5,216 @@ import nodemailer from "nodemailer";
 import { env } from "../../env/server";
 import { CountryCode, racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 
-type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
+type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
 
-export const playerRegistrationRouter =
-  router({
+export const playerRegistrationRouter = router({
     registrations: protectedProcedure
-      .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-      .query(async ({ input, ctx }) => {
-        const { raceId } = input;
-        const registrations = await ctx.db.playerRegistration.findMany({
-          where: { raceId: raceId }, include: { player: true, profile: true }
-        });
+        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .query(async ({ input, ctx }) => {
+            const { raceId } = input;
+            const registrations = await ctx.db.playerRegistration.findMany({
+                where: { raceId: raceId },
+                include: { player: true, profile: true },
+            });
 
-        return registrations.map((r, index) => ({ ...r.profile, ...r, country: r.profile.country as CountryCode, index: index + 1, promotedToPlayer: r.player.length > 0 }));
-      }),
-    teams: publicProcedure
-      .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-      .query(async ({ input, ctx }) => {
+            return registrations.map((r, index) => ({
+                ...r.profile,
+                ...r,
+                country: r.profile.country as CountryCode,
+                index: index + 1,
+                promotedToPlayer: r.player.length > 0,
+            }));
+        }),
+    teams: publicProcedure.input(z.object({ raceId: z.number({ required_error: "raceId is required" }) })).query(async ({ input, ctx }) => {
         const { raceId } = input;
 
-        const results = await ctx.db.playerProfile.groupBy({ by: ['team'], where: { raceId: Number(raceId), team: { not: null } } });
+        const results = await ctx.db.playerProfile.groupBy({ by: ["team"], where: { raceId: Number(raceId), team: { not: null } } });
 
         return results.map(r => r.team!);
-      }),
+    }),
     registrationStatus: publicProcedure
-      .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-      .query(async ({ input, ctx }) => {
-        const { raceId } = input;
+        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .query(async ({ input, ctx }) => {
+            const { raceId } = input;
 
-        const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId } });
+            const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId } });
 
-        const registeredPlayers = await ctx.db.playerRegistration.count({ where: { raceId } });
+            const registeredPlayers = await ctx.db.playerRegistration.count({ where: { raceId } });
 
-        return {
-          limit: race.playersLimit,
-          registered: registeredPlayers,
-          raceName: race.name,
-          raceDate: race.date,
-          termsUrl: race.termsUrl,
-          status: (!race.registrationEnabled
-            ? 'disabled'
-            : race.playersLimit
-              ? registeredPlayers >= race.playersLimit
-                ? 'limit-reached'
-                : 'enabled'
-              : 'enabled') as RegistrationStatus
-        }
-      }),
-    register: publicProcedure
-      .input(racePlayerRegistrationSchema)
-      .mutation(async ({ input, ctx }) => {
-
+            return {
+                limit: race.playersLimit,
+                registered: registeredPlayers,
+                raceName: race.name,
+                raceDate: race.date,
+                termsUrl: race.termsUrl,
+                status: (!race.registrationEnabled
+                    ? "disabled"
+                    : race.playersLimit
+                    ? registeredPlayers >= race.playersLimit
+                        ? "limit-reached"
+                        : "enabled"
+                    : "enabled") as RegistrationStatus,
+            };
+        }),
+    register: publicProcedure.input(racePlayerRegistrationSchema).mutation(async ({ input, ctx }) => {
         const race = await ctx.db.race.findFirstOrThrow({ where: { id: input.raceId }, include: { playerRegistration: true } });
 
         const raceRegistrationsCount = race.playerRegistration.length;
 
         if (!race.registrationEnabled) {
-          return new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
+            return new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
         }
 
-        if (race.playersLimit && (race.playersLimit <= raceRegistrationsCount)) {
-          return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
+        if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
+            return new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
         }
 
         const profile = await ctx.db.playerProfile.create({
-          data: {
-            raceId: input.raceId,
-            name: input.player.name.trim(),
-            lastName: input.player.lastName.trim(),
-            gender: input.player.gender,
-            birthDate: input.player.birthDate,
-            country: input.player.country,
-            city: input.player.city.trim(),
-            team: input.player.team?.trim(),
-            email: input.player.email,
-            phoneNumber: input.player.phoneNumber,
-            icePhoneNumber: input.player.icePhoneNumber,
-          }
+            data: {
+                raceId: input.raceId,
+                name: input.player.name.trim(),
+                lastName: input.player.lastName.trim(),
+                gender: input.player.gender,
+                birthDate: input.player.birthDate,
+                country: input.player.country,
+                city: input.player.city.trim(),
+                team: input.player.team?.trim(),
+                email: input.player.email,
+                phoneNumber: input.player.phoneNumber,
+                icePhoneNumber: input.player.icePhoneNumber,
+            },
         });
 
         await ctx.db.playerRegistration.create({
-          data: {
-            raceId: input.raceId,
-            registrationDate: new Date(),
-            hasPaid: false,
-            playerProfileId: profile.id
-          },
+            data: {
+                raceId: input.raceId,
+                registrationDate: new Date(),
+                hasPaid: false,
+                playerProfileId: profile.id,
+            },
         });
 
         await sendRegistrationConfirmation({
-          email: input.player.email, raceName: race.name, template: race.emailTemplate, placeholderValues: [
-            ['name', input.player.name.trim()],
-            ['lastName', input.player.lastName.trim()],
-            ['raceName', race.name],
-            ['raceDate', race.date.toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" })]
-          ]
-        })
-      }),
-    delete: protectedProcedure
-      .input(z.object({ playerId: z.number() }))
-      .mutation(async ({ input, ctx }) => {
+            email: input.player.email,
+            raceName: race.name,
+            template: race.emailTemplate,
+            placeholderValues: [
+                ["name", input.player.name.trim()],
+                ["lastName", input.player.lastName.trim()],
+                ["raceName", race.name],
+                ["raceDate", race.date.toLocaleDateString("pl-PL", { timeZone: "Europe/Warsaw" })],
+            ],
+        });
+    }),
+    delete: protectedProcedure.input(z.object({ playerId: z.number() })).mutation(async ({ input, ctx }) => {
         return await ctx.db.playerRegistration.delete({ where: { id: input.playerId } });
-      }),
+    }),
     setPaymentStatus: protectedProcedure
-      .input(z.object({ playerId: z.number(), hasPaid: z.boolean() }))
-      .mutation(async ({ input, ctx }) => {
-        return await ctx.db.playerRegistration.update({ where: { id: input.playerId }, data: { hasPaid: input.hasPaid, paymentDate: input.hasPaid ? new Date() : null } });
-      }),
-    add: protectedProcedure
-      .input(racePlayerRegistrationSchema)
-      .mutation(async ({ input, ctx }) => {
-
+        .input(z.object({ playerId: z.number(), hasPaid: z.boolean() }))
+        .mutation(async ({ input, ctx }) => {
+            return await ctx.db.playerRegistration.update({
+                where: { id: input.playerId },
+                data: { hasPaid: input.hasPaid, paymentDate: input.hasPaid ? new Date() : null },
+            });
+        }),
+    add: protectedProcedure.input(racePlayerRegistrationSchema).mutation(async ({ input, ctx }) => {
         const race = await ctx.db.race.findFirstOrThrow({ where: { id: input.raceId }, include: { playerRegistration: true } });
 
         const raceRegistrationsCount = race.playerRegistration.length;
 
-        if (race.playersLimit && (race.playersLimit <= raceRegistrationsCount)) {
-          return new TRPCError({ code: 'FORBIDDEN', message: 'Registrations exceeded' });
+        if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
+            return new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
         }
 
         const profile = await ctx.db.playerProfile.create({
-          data: {
-            raceId: input.raceId,
-            name: input.player.name.trim(),
-            lastName: input.player.lastName.trim(),
-            gender: input.player.gender,
-            birthDate: input.player.birthDate,
-            country: input.player.country,
-            city: input.player.city.trim(),
-            team: input.player.team?.trim(),
-            email: input.player.email,
-            phoneNumber: input.player.phoneNumber,
-            icePhoneNumber: input.player.icePhoneNumber,
-          }
+            data: {
+                raceId: input.raceId,
+                name: input.player.name.trim(),
+                lastName: input.player.lastName.trim(),
+                gender: input.player.gender,
+                birthDate: input.player.birthDate,
+                country: input.player.country,
+                city: input.player.city.trim(),
+                team: input.player.team?.trim(),
+                email: input.player.email,
+                phoneNumber: input.player.phoneNumber,
+                icePhoneNumber: input.player.icePhoneNumber,
+            },
         });
 
         return await ctx.db.playerRegistration.create({
-          data: {
-            raceId: input.raceId,
-            registrationDate: new Date(),
-            hasPaid: false,
-            playerProfileId: profile.id
-          }
+            data: {
+                raceId: input.raceId,
+                registrationDate: new Date(),
+                hasPaid: false,
+                playerProfileId: profile.id,
+            },
         });
-      }),
-    edit: protectedProcedure
-      .input(racePlayerRegistrationSchema)
-      .mutation(async ({ input, ctx }) => {
+    }),
+    edit: protectedProcedure.input(racePlayerRegistrationSchema).mutation(async ({ input, ctx }) => {
         const playerRegistration = await ctx.db.playerRegistration.findFirstOrThrow({ where: { id: input.player.id! } });
         return await ctx.db.playerProfile.update({
-          where: { id: playerRegistration.playerProfileId },
-          data: {
-            name: input.player.name.trim(),
-            lastName: input.player.lastName.trim(),
-            gender: input.player.gender,
-            birthDate: input.player.birthDate,
-            country: input.player.country,
-            city: input.player.city.trim(),
-            team: input.player.team?.trim(),
-            email: input.player.email,
-            phoneNumber: input.player.phoneNumber,
-            icePhoneNumber: input.player.icePhoneNumber
-          }
+            where: { id: playerRegistration.playerProfileId },
+            data: {
+                name: input.player.name.trim(),
+                lastName: input.player.lastName.trim(),
+                gender: input.player.gender,
+                birthDate: input.player.birthDate,
+                country: input.player.country,
+                city: input.player.city.trim(),
+                team: input.player.team?.trim(),
+                email: input.player.email,
+                phoneNumber: input.player.phoneNumber,
+                icePhoneNumber: input.player.icePhoneNumber,
+            },
         });
-      })
-  });
+    }),
+});
 
 export type PlayerRouter = typeof playerRegistrationRouter;
 
 const transporter = nodemailer.createTransport({
-  host: env.NOTIFICATIONS_SERVER_HOST,
-  port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
-  secure: env.NOTIFICATIONS_SERVER_SECURE,
-  auth: {
-    user: env.NOTIFICATIONS_SERVER_AUTH_USER,
-    pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
-  },
+    host: env.NOTIFICATIONS_SERVER_HOST,
+    port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
+    secure: env.NOTIFICATIONS_SERVER_SECURE,
+    auth: {
+        user: env.NOTIFICATIONS_SERVER_AUTH_USER,
+        pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
+    },
 } as any);
 
 type ConfirmationTarget = {
-  email: string;
-  raceName: string;
-  template: string | null;
-  placeholderValues: [string, string][]
-}
+    email: string;
+    raceName: string;
+    template: string | null;
+    placeholderValues: [string, string][];
+};
 
 export const sendRegistrationConfirmation = async ({ email, raceName, template, placeholderValues }: ConfirmationTarget) =>
-  new Promise<void>((res, rej) => {
+    new Promise<void>((res, rej) => {
+        const finalTemplate = defaultTemplate.replace("%template%", template ?? "");
 
-    const finalTemplate = defaultTemplate.replace('%template%', template ?? '');
+        const [_, __, messageContent] = placeholderValues.reduce(
+            ([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)],
+            ["", "", finalTemplate],
+        );
 
-    const [_, __, messageContent] =
-      placeholderValues
-        .reduce(([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)], ["", "", finalTemplate]);
+        const message = {
+            from: env.NOTIFICATIONS_MESSAGE_FROM,
+            bcc: email,
+            subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
+            html: messageContent,
+            replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
+        };
 
-    const message = {
-      from: env.NOTIFICATIONS_MESSAGE_FROM,
-      bcc: email,
-      subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
-      html: messageContent,
-      replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
-    };
-
-    transporter.sendMail(message, (err) => {
-      if (err) {
-        rej(err);
-      } else {
-        res();
-      }
+        transporter.sendMail(message, err => {
+            if (err) {
+                rej(err);
+            } else {
+                res();
+            }
+        });
     });
-  });
 
 export const defaultTemplate = `<!DOCTYPE html>
 <html>

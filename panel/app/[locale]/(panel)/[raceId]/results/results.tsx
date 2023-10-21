@@ -57,7 +57,7 @@ export const Results = () => {
             sort: "asc",
             sortable: true,
             cellRenderer: (p: { data: Result }) => (
-                <span className="flex uppercase flex-col items-end font-mono">
+                <span className="flex flex-col items-end font-mono uppercase">
                     {p.data.invalidState ? p.data.invalidState : formatTimeWithMilliSecUTC(p.data.result)}
                 </span>
             ),
@@ -67,10 +67,10 @@ export const Results = () => {
     return (
         <>
             <Head>
-                <title>{t('pages.results.header.title')}</title>
+                <title>{t("pages.results.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t('pages.results.header.title')} description={t('pages.results.header.description')} />
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
+                <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
                 {results && (
                     <div className="ag-theme-material h-full">
                         <AgGridReact<Result>

@@ -11,7 +11,7 @@ export const getAvailableDigits = (typedNumbers: string, allNumbers: number[]): 
         Arr.filter(S.startsWith(typedNumbers)),
         Arr.map(sliceFrom(typedNumbers.length)),
         Arr.map(S.slice(0, 1)),
-        Arr.filter(s => !!s)
+        Arr.filter(s => !!s),
     );
 
 export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]): number[] =>
@@ -19,5 +19,4 @@ export const getAvailableNumbers = (typedNumbers: string, allNumbers: number[]):
 
 export const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
+};

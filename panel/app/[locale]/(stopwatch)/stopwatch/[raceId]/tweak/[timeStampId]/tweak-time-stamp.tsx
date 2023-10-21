@@ -16,7 +16,7 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">{playerNumber}</div>
+    <div className="font-regular flex h-16 justify-center py-2 text-center text-4xl text-orange-500">{playerNumber}</div>
 );
 
 type BtnProps = {
@@ -39,7 +39,7 @@ const Minus = ({ changeTime }: BtnProps) => (
         icon={mdiMinus}
     />
 );
-const Digit = ({ number }: { number: string }) => <div className="font-mono text-6xl my-4 text-center">{number}</div>;
+const Digit = ({ number }: { number: string }) => <div className="my-4 text-center font-mono text-6xl">{number}</div>;
 
 export const TweakTimeStamp = () => {
     const { back } = useRouter();
@@ -64,37 +64,37 @@ export const TweakTimeStamp = () => {
 
     return (
         <div className="flex h-full flex-col items-center">
-            <h1 className="text-2xl py-4">Tweak time stamp</h1>
-            <div className="flex flex-col grow items-center justify-center">
+            <h1 className="py-4 text-2xl">Tweak time stamp</h1>
+            <div className="flex grow flex-col items-center justify-center">
                 <div>
                     <PlayerWithTimeStampDisplay padBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
                 </div>
-                <div className="flex items-center mt-10">
-                    <div className="flex-col flex items-center">
+                <div className="mt-10 flex items-center">
+                    <div className="flex flex-col items-center">
                         <Plus changeTime={() => setCurrentTime(currentTime! + 1000 * 60 * 60)} />
                         <Digit number={formatNumber(time.getHours())} />
                         <Minus changeTime={() => setCurrentTime(currentTime! - 1000 * 60 * 60)} />
                     </div>
-                    <div className="text-6xl mb-2">:</div>
-                    <div className="flex-col flex items-center">
+                    <div className="mb-2 text-6xl">:</div>
+                    <div className="flex flex-col items-center">
                         <Plus changeTime={() => setCurrentTime(currentTime! + 1000 * 60)} />
                         <Digit number={formatNumber(time.getMinutes())} />
                         <Minus changeTime={() => setCurrentTime(currentTime! - 1000 * 60)} />
                     </div>
-                    <div className="text-6xl mb-2">:</div>
-                    <div className="flex-col flex items-center">
+                    <div className="mb-2 text-6xl">:</div>
+                    <div className="flex flex-col items-center">
                         <Plus changeTime={() => setCurrentTime(currentTime! + 1000)} />
                         <Digit number={formatNumber(time.getSeconds())} />
                         <Minus changeTime={() => setCurrentTime(currentTime! - 1000)} />
                     </div>
-                    <div className="text-6xl mb-2">.</div>
-                    <div className="flex-col flex items-center">
+                    <div className="mb-2 text-6xl">.</div>
+                    <div className="flex flex-col items-center">
                         <Plus changeTime={() => setCurrentTime(currentTime! + 100)} />
                         <Digit number={formatNumber(Math.floor(time.getMilliseconds() / 100), 1)} />
                         <Minus changeTime={() => setCurrentTime(currentTime! - 100)} />
                     </div>
                 </div>
-                <div className="flex mt-6">
+                <div className="mt-6 flex">
                     <PrimaryActionButton
                         onClick={() => {
                             onSave({ ...timeStamp!, time: currentTime });

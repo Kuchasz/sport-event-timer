@@ -35,7 +35,7 @@ export const toStartPlayerTransform = (classifications: Classification[]) => ({
     city: { name: "Miasto", transformation: String },
     classificationId: {
         name: "Klasyfikacja",
-        transformation: (s: string) => classifications.find(c => c.name === s)!.id
+        transformation: (s: string) => classifications.find(c => c.name === s)!.id,
     },
     country: { name: "Państwo", transformation: String },
     email: { name: "Adres email", transformation: String },
@@ -44,7 +44,7 @@ export const toStartPlayerTransform = (classifications: Classification[]) => ({
     lastName: { name: "Nazwisko", transformation: String },
     name: { name: "Imię", transformation: String },
     phoneNumber: { name: "Telefon", transformation: String },
-    team: { name: "Nazwa klubu", transformation: String }
+    team: { name: "Nazwa klubu", transformation: String },
 });
 
 export const emptyToStartPlayer = {
@@ -69,7 +69,7 @@ export const emptyToStartPlayer = {
     ["Nr GPS"]: undefined,
     ["Status zawodnika"]: undefined,
     ["Notatka"]: undefined,
-    ["Pliki"]: undefined
+    ["Pliki"]: undefined,
 };
 
 const getGender = (genderText: string) => (genderText === "M" ? "male" : "female");
@@ -80,7 +80,7 @@ export const toStartPlayerToPlayer = (player: ToStartPlayer, i: number): Player 
     lastName: player["Nazwisko"],
     // gender: getGender(player["Płeć"]),
     // birthYear: Number(player["Data urodzenia"].split(".")[2]),
-    bibNumber: Number(player["Nr zawodnika"])
+    bibNumber: Number(player["Nr zawodnika"]),
     // raceCategory: player["Kategoria"],
     // team: player["Nazwa klubu"],
     // city: player["Miasto"],

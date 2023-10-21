@@ -25,32 +25,46 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
         >
             <div className="flex">
                 <FormInput<TimingPointAccessUrl, "name">
-                    label={t('pages.timingPoints.accessUrls.form.name.label')}
+                    label={t("pages.timingPoints.accessUrls.form.name.label")}
                     className="grow"
-                    render={({ value, onChange }) => <PoorInput placeholder={t('pages.timingPoints.accessUrls.form.name.placeholder')} value={value} onChange={onChange} />}
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder={t("pages.timingPoints.accessUrls.form.name.placeholder")}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    )}
                     name="name"
                 />
             </div>
             <div className="flex">
                 <FormInput<TimingPointAccessUrl, "code">
-                    label={t('pages.timingPoints.accessUrls.form.code.name')}
+                    label={t("pages.timingPoints.accessUrls.form.code.name")}
                     className="grow"
-                    render={({ value, onChange }) => <PoorInput placeholder={t('pages.timingPoints.accessUrls.form.code.placeholder')} value={value} onChange={onChange} />}
+                    render={({ value, onChange }) => (
+                        <PoorInput
+                            placeholder={t("pages.timingPoints.accessUrls.form.code.placeholder")}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    )}
                     name="code"
                 />
             </div>
             <div className="flex">
                 <FormInput<TimingPointAccessUrl, "canAccessOthers">
-                    label={t('pages.timingPoints.accessUrls.form.canAccessOthers.label')}
+                    label={t("pages.timingPoints.accessUrls.form.canAccessOthers.label")}
                     render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
                     name="canAccessOthers"
                 />
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

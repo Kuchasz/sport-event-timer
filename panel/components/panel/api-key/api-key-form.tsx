@@ -28,7 +28,7 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey, isLoading }: Ap
                     name="name"
                 />
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>

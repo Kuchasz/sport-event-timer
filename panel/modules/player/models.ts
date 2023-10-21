@@ -18,7 +18,7 @@ export const playerProfileSchema = z.object({
 
 export const playerRegistrationSchema = z.object({
     raceId: z.number({ required_error: sharedErrorCodes.required }),
-    player: playerProfileSchema
+    player: playerProfileSchema,
 });
 
 export const playerSchema = z.object({
@@ -30,10 +30,10 @@ export const playerSchema = z.object({
 
 export const racePlayerSchema = z.object({
     raceId: z.number({ required_error: sharedErrorCodes.required }),
-    player: playerSchema
+    player: playerSchema,
 });
 
 export const racePlayerRegistrationSchema = z.object({
     raceId: z.number({ required_error: sharedErrorCodes.required }),
-    player: playerSchema
+    player: playerSchema,
 });

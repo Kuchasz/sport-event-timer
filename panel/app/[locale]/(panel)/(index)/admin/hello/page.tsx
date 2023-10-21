@@ -3,5 +3,5 @@ import { Hello } from "./hello";
 
 export default async function () {
     await authenticate();
-    return <Hello/>
-};
+    return <Hello />;
+}

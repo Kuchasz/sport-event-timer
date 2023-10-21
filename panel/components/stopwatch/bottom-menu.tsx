@@ -24,21 +24,31 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     const classesText = `/stopwatch/${path}` === chosenPath ? "ml-2 max-w-xs text-orange-600" : "ml-0 max-w-0 text-transparent";
     return (
         <Link href={`/stopwatch/${path}`}>
-            <span className={`${classes} rounded-full transition-all duration-500 flex items-center px-4 py-1.5`}>
+            <span className={`${classes} flex items-center rounded-full px-4 py-1.5 transition-all duration-500`}>
                 <Icon size={0.8} path={icon} />
-                <span className={`${classesText} overflow-hidden transition-all duration-500 text-sm font-semibold`}>{text}</span>
+                <span className={`${classesText} overflow-hidden text-sm font-semibold transition-all duration-500`}>{text}</span>
             </span>
         </Link>
     );
 };
 
-export const BottomMenu = ({ pathname, raceId, isOffline, timingPointMissing }: { pathname: string, raceId: string, isOffline: boolean, timingPointMissing: boolean }) => {
+export const BottomMenu = ({
+    pathname,
+    raceId,
+    isOffline,
+    timingPointMissing,
+}: {
+    pathname: string;
+    raceId: string;
+    isOffline: boolean;
+    timingPointMissing: boolean;
+}) => {
     const mode = pathname as Paths;
     // const [connectionState, setConnectionState] = useAtom(connectionStateAtom);
 
     return (
         <div
-            className={classNames("flex transition-transform ease-out rounded-t-lg justify-around select-none bg-white py-3", {
+            className={classNames("flex select-none justify-around rounded-t-lg bg-white py-3 transition-transform ease-out", {
                 ["translate-y-full"]: isOffline || timingPointMissing,
             })}
         >
