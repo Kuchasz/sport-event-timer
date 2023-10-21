@@ -38,8 +38,8 @@ export default withNextIntl(defineNextConfig({
     //     return [{ source: '/', destination: '/panel', permanent: true }]
     // }
 
-    // experimental: {
-    //     // runtime: 'nodejs',
-    //     appDir: true
-    // }
+    experimental: {
+        // runtime: 'nodejs',
+        appDir: true
+    }
 }));

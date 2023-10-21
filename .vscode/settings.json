@@ -1,9 +1,21 @@
 {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "typescript.tsdk": "node_modules/typescript/lib",
     "i18n-ally.localesPaths": ["panel/i18n/resources"], // E.g. "messages"
     "i18n-ally.keystyle": "nested",
-    "i18n-ally.enabledFrameworks": [
-        "next-intl"
-    ],
-    "i18n-ally.sourceLanguage": "en"
+    "i18n-ally.enabledFrameworks": ["next-intl"],
+    "i18n-ally.sourceLanguage": "en",
+    "prettier.configPath": "prettier.config.mjs",
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

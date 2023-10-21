@@ -10,7 +10,7 @@ import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
 import classNames from "classnames";
 import { PageHeader } from "components/page-header";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { isPast, isTodayOrLater, monthForLocale } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
 import Link from "next/link";
@@ -26,7 +26,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
         <span
             className={classNames("flex h-full items-center", {
-                ["text-green-600 font-semibold"]: race.registrationEnabled,
+                ["font-semibold text-green-600"]: race.registrationEnabled,
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
@@ -38,8 +38,8 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
 const Registrations = ({ race }: { race: Race }) => {
     return (
         <span className={classNames("flex h-full items-center")}>
-            <span className="font-semibold text-lg">{race.registeredPlayers}</span>{" "}
-            <span className="text-gray-500 text-sm">
+            <span className="text-lg font-semibold">{race.registeredPlayers}</span>{" "}
+            <span className="text-sm text-gray-500">
                 {race.playersLimit && (
                     <span>
                         <span className="mx-1">/</span>
@@ -54,7 +54,7 @@ const Registrations = ({ race }: { race: Race }) => {
 const RaceFilterKind = ({ onSelect, isActive, name }: { onSelect: () => void; isActive: boolean; name: string }) => (
     <div
         onClick={onSelect}
-        className={classNames("mx-0.5 rounded-lg px-4 cursor-default", {
+        className={classNames("mx-0.5 cursor-default rounded-lg px-4", {
             ["bg-white"]: isActive,
             ["cursor-pointer hover:bg-gray-50"]: !isActive,
         })}
@@ -68,7 +68,7 @@ type RaceFilterType = "all" | "upcoming" | "past";
 const RaceFilter = ({ filter, setFilter }: { filter: RaceFilterType; setFilter: (filter: RaceFilterType) => void }) => {
     const t = useTranslations();
     return (
-        <div className="flex text-sm rounded-lg px-0.5 py-1 bg-gray-100 items-center">
+        <div className="flex items-center rounded-lg bg-gray-100 px-0.5 py-1 text-sm">
             <RaceFilterKind onSelect={() => setFilter("all")} isActive={filter === "all"} name={t("pages.races.filter.all")} />
             <RaceFilterKind
                 onSelect={() => setFilter("upcoming")}
@@ -91,6 +91,7 @@ export const Races = ({ initialData }: RacesProps) => {
     const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
+    const locale = useLocale();
     // const gridRef = useRef<AgGridReact<Race>>(null);
 
     const t = useTranslations();
@@ -200,7 +201,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
     const upcomingRaces = ascSortedFutureRaces.slice(0, 3);
     const allRaces = [...ascSortedFutureRaces, ...descSortedPastRaces].filter(r =>
-        filter === "all" ? true : filter === "past" ? isPast(r.date) : filter === "upcoming" ? isTodayOrLater(r.date) : false
+        filter === "all" ? true : filter === "past" ? isPast(r.date) : filter === "upcoming" ? isTodayOrLater(r.date) : false,
     );
 
     /* <Head>
@@ -208,9 +209,23 @@ export const Races = ({ initialData }: RacesProps) => {
             </Head> */
 
     return (
-        <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
-            <div className="py-8 flex flex-col items-center">
+        <div className="border-1 relative flex h-full flex-col border-solid border-gray-600">
+            <div className="flex flex-col items-center py-8">
                 <div className="w-[768px]">
+                    {locale}
+                    <br />
+                    {new Date().toLocaleDateString(locale)}
+                    <br />
+                    {new Date().toLocaleDateString("en-US")}
+                    <br />
+                    {new Date().toLocaleDateString("tr")}
+                    <br />
+                    {new Date().toLocaleDateString("en-GB")}
+                    <br />
+                    {new Date().toLocaleDateString("de")}
+                    <br />
+                    {new Date().toLocaleDateString()}
+                    <br />
                     <PageHeader
                         title={t("pages.races.upcomingRaces.header.title")}
                         description={t("pages.races.upcomingRaces.header.description")}
@@ -221,12 +236,12 @@ export const Races = ({ initialData }: RacesProps) => {
                                 <span className="ml-2">{t("pages.races.addRace")}</span>
                             </Button>
                         </div> */}
-                    <div className={classNames("flex mt-6 flex-wrap gap-6", { ["justify-between"]: upcomingRaces.length === 3 })}>
+                    <div className={classNames("mt-6 flex flex-wrap gap-6", { ["justify-between"]: upcomingRaces.length === 3 })}>
                         <div
                             onClick={openCreateDialog}
-                            className="cursor-pointer text-gray-900 flex flex-col items-center justify-center w-44 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
+                            className="flex w-44 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
                         >
-                            <button className="w-14 h-14 flex justify-center items-center bg-gray-100 rounded-md font-medium">
+                            <button className="flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 font-medium">
                                 <Icon size={1.2} path={mdiPlus} />
                             </button>
                             <span className="mt-4 text-sm font-semibold">{t("pages.races.addRace")}</span>
@@ -235,15 +250,15 @@ export const Races = ({ initialData }: RacesProps) => {
                             <Link
                                 key={r.id}
                                 href={`/${r.id}`}
-                                className="w-40 h-64 transition-transform ease-in-out duration-300 will-change-transform hover:-translate-y-1 overflow-hidden shadow-lg rounded-lg"
+                                className="h-64 w-40 overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
                             >
-                                <div className="h-44 w-full flex flex-col gap-2 justify-center items-center bg-gray-800 text-white">
+                                <div className="flex h-44 w-full flex-col items-center justify-center gap-2 bg-gray-800 text-white">
                                     <div className="text-6xl">{getShortcut(r.name)}</div>
-                                    <div className="text-gray-400 font-semibold text-xs">{r.date.toLocaleDateString('pl-PL')}</div>
+                                    <div className="text-xs font-semibold text-gray-400">{r.date.toLocaleDateString("pl-PL")}</div>
                                 </div>
                                 <div className="p-4 ">
-                                    <div className="text-sm overflow-hidden whitespace-nowrap text-ellipsis font-semibold">{r.name}</div>
-                                    <div className="text-xs overflow-hidden line-clamp-2 text-ellipsis text-gray-500">
+                                    <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">{r.name}</div>
+                                    <div className="line-clamp-2 overflow-hidden text-ellipsis text-xs text-gray-500">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                     </div>
                                 </div>
@@ -252,7 +267,7 @@ export const Races = ({ initialData }: RacesProps) => {
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-50 py-8 flex flex-col items-center">
+            <div className="flex flex-col items-center bg-gray-50 py-8">
                 <div className="w-[768px]">
                     <div className="flex items-center justify-between">
                         <PageHeader
@@ -263,7 +278,7 @@ export const Races = ({ initialData }: RacesProps) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         {allRaces.map(r => (
-                            <div key={r.id} className="flex bg-white items-center rounded-md shadow-lg px-8 py-6">
+                            <div key={r.id} className="flex items-center rounded-md bg-white px-8 py-6 shadow-lg">
                                 {/* <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
                                         <div className="text-2xs font-semibold text-gray-400">
                                             {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
@@ -271,17 +286,17 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div> */}
 
-                                <div className="w-20 h-20 mr-8 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
-                                    <div className="flex text-lg gap-0.5">
+                                <div className="mr-8 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gray-100 font-semibold">
+                                    <div className="flex gap-0.5 text-lg">
                                         <div>{r.date.getDate().toString().padStart(2, "0")}</div>
                                         <span></span>
                                         <div>{monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}</div>
                                     </div>
-                                    <div className="flex text-xs gap-0.5">
+                                    <div className="flex gap-0.5 text-xs">
                                         <div className="flex">{r.date.getFullYear()}</div>
                                     </div>
                                 </div>
-                                <div className="w-72 flex flex-col">
+                                <div className="flex w-72 flex-col">
                                     {/* <div>
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>
                                             <span>{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "long", "pl-PL"))} </span>
@@ -290,15 +305,15 @@ export const Races = ({ initialData }: RacesProps) => {
                                             <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
                                         </div> */}
                                     {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
-                                    <div className="font-semibold text-sm py-2">{r.name}</div>
-                                    <div className="text-xs text-gray-500 text-ellipsis">
+                                    <div className="py-2 text-sm font-semibold">{r.name}</div>
+                                    <div className="text-ellipsis text-xs text-gray-500">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                     </div>
                                 </div>
-                                <div className="grow flex flex-col items-center">
+                                <div className="flex grow flex-col items-center">
                                     <div className="flex flex-col">
                                         <div className="flex flex-col">
-                                            <div className="text-xs uppercase text-gray-400 font-semibold">
+                                            <div className="text-xs font-semibold uppercase text-gray-400">
                                                 {t("pages.races.registration")}
                                             </div>
                                             <div className="flex items-center gap-1">
@@ -319,7 +334,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                 </div>
 
                                 <Link
-                                    className="group inline-flex items-center rounded-full hover:bg-gray-100 px-3 py-2 text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                                    className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                                     href={`/${r.id}`}
                                 >
                                     {/* <Button outline> */}
