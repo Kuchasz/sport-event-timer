@@ -28,6 +28,8 @@ export const PlayersList = () => {
                 timingPointId: timingPointId,
             }),
         );
+
+    //eslint-disable-next-line @typescript-eslint/unbound-method
     const { push } = useRouter();
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);

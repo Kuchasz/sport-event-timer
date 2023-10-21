@@ -5,9 +5,7 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import { timingPointIdAtom } from "states/stopwatch-states";
 
-type Props = {};
-
-export const Dashboard = ({}: Props) => {
+export const Dashboard = () => {
     const { timingPointId } = useParams() as { timingPointId?: string };
 
     const [_, chooseTimingPoint] = useAtom(timingPointIdAtom);

@@ -46,6 +46,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             bibNumber: data!.bibNumber!.toString(),
             time: data!.time,
             raceId,
+            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             timingPointId: data?.timingPointId!,
         }));
     const newAbsences = [...absences_toCreate]
@@ -54,6 +55,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             id,
             bibNumber: data!.bibNumber.toString(),
             raceId,
+            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             timingPointId: data?.timingPointId!,
         }));
 

@@ -70,7 +70,7 @@ export const bibNumberRouter = router({
         });
     }),
     add: protectedProcedure.input(bibNumberSchema).mutation(async ({ input, ctx }) => {
-        const { id, ...data } = input;
+        const { id: _id, ...data } = input;
         return await ctx.db.bibNumber.create({
             data,
         });

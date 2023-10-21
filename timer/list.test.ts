@@ -1,6 +1,5 @@
 import type { ClassificationConfig } from "./list";
 import { assignNumbersToPlayers, transform } from "./list";
-import { Gender } from "./model";
 import type { ToStartPlayer } from "./to-start";
 import { toStartPlayerTransform } from "./to-start";
 

@@ -86,7 +86,7 @@ export const BibNumbers = () => {
         });
 
         if (bibNumber) {
-            refetch();
+            void refetch();
         }
     };
 
@@ -101,7 +101,7 @@ export const BibNumbers = () => {
 
         if (confirmed) {
             await deleteAllMutation.mutateAsync({ raceId: raceId });
-            refetch();
+            void refetch();
         }
     };
 
@@ -114,7 +114,7 @@ export const BibNumbers = () => {
 
         if (createManyBibNumbers) {
             await addRangeBibNumberMutation.mutateAsync(createManyBibNumbers);
-            refetch();
+            void refetch();
         }
     };
 

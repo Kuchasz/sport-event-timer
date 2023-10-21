@@ -68,7 +68,7 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
             if (latency > allowedLatency || syncTries < 5) timeout = setTimeout(requestTimeSync, 250);
         };
 
-        requestTimeSync();
+        void requestTimeSync();
 
         return () => {
             clearTimeout(timeout);

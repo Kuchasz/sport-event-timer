@@ -42,6 +42,7 @@ const Minus = ({ changeTime }: BtnProps) => (
 const Digit = ({ number }: { number: string }) => <div className="my-4 text-center font-mono text-6xl">{number}</div>;
 
 export const TweakTimeStamp = () => {
+    //eslint-disable-next-line @typescript-eslint/unbound-method
     const { back } = useRouter();
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const { raceId, timeStampId } = useParams() as { raceId: string; timeStampId: string };

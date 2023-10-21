@@ -33,7 +33,7 @@ const SortTick = () => (
 const generateAccessUrl = async () => {
     const { csrfToken } = await fetch("/api/auth/csrf").then(r => r.json());
 
-    fetch("/api/auth/signin/email", {
+    await fetch("/api/auth/signin/email", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({
@@ -202,7 +202,10 @@ const TimingPointCard = ({
 export const TimingPoints = () => {
     const raceId = useCurrentRaceId();
     const [activeTimingPointId, setActiveTimingPointId] = useState<number>(38);
-    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId });
+    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
+        { raceId: raceId },
+        { initialData: [] },
+    );
     const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessUrls.useQuery(
         { raceId: raceId, timingPointId: activeTimingPointId },
         { initialData: [] },
@@ -219,7 +222,7 @@ export const TimingPoints = () => {
         },
     );
 
-    const sortedTimingPoints = timingPointsOrder.map(point => timingPoints?.find(tp => point === tp.id)!);
+    const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
     const activeTimingPoint = sortedTimingPoints.find(tp => tp.id === activeTimingPointId);
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {

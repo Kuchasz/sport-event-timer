@@ -37,7 +37,7 @@ export const dispatchAction = async (raceId: number, clientId: string, action: a
     store.dispatch(action);
 
     await stopwatchStateProvider.save(raceId, store.getState());
-    updateSplitTimesQueue.push({ raceId });
+    await updateSplitTimesQueue.push({ raceId });
 };
 
 export const actionRouter = router({

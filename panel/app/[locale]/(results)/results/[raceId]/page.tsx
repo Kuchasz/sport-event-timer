@@ -1,5 +1,5 @@
 import { Results } from "./results";
 
-export default async function () {
+export default function () {
     return <Results />;
 }

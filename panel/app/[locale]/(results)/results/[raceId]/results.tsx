@@ -1,6 +1,5 @@
 "use client";
 
-import { Gender } from "@set/timer/dist/model";
 import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { trpc } from "trpc-core";
 import Head from "next/head";
@@ -10,8 +9,6 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import Icon from "@mdi/react";
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
-
-const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</div>;
 
 export const Results = () => {
     const { raceId } = useParams() as { raceId: string };

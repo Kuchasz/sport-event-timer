@@ -1,5 +1,5 @@
 import { MobileTimer } from "./mobile-timer";
 
-export default async function () {
+export default function () {
     return <MobileTimer />;
 }

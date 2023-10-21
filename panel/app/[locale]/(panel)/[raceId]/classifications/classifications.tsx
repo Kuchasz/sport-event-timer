@@ -49,7 +49,7 @@ export const Classifications = () => {
         });
 
         if (classification) {
-            refetch();
+            void refetch();
         }
     };
 

@@ -133,11 +133,11 @@ export const raceRouter = router({
             return await ctx.db.race.update({ where: { id: id }, data: { registrationEnabled: data.registrationEnabled } });
         }),
     add: protectedProcedure.input(raceSchema).mutation(async ({ input, ctx }) => {
-        const { id, useSampleData, ...data } = input;
+        const { id: _id, useSampleData, ...data } = input;
 
         if (useSampleData) {
             const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
-            createExampleRaces(user.id, 1, data);
+            await createExampleRaces(user.id, 1, data);
         } else {
             const race = await ctx.db.race.create({ data });
 

@@ -19,7 +19,7 @@ const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     return reducer(state, action) as TimerState;
 };
 
-export const createStore = (middlewares: Middleware<{}, TimerState, TimerDispatch>[], preloadedState?: Partial<TimerState>) =>
+export const createStore = (middlewares: Middleware<object, TimerState, TimerDispatch>[], preloadedState?: Partial<TimerState>) =>
     configureStore({
         reducer: resettableRootReducer as any,
         middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares),

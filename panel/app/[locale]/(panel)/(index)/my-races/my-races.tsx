@@ -123,7 +123,7 @@ export const MyRaces = () => {
 
                 if (confirmed) {
                     await deleteRaceMutation.mutateAsync({ raceId: race.id });
-                    refetch();
+                    void refetch();
                 }
             },
         },
@@ -190,7 +190,7 @@ export const MyRaces = () => {
 
         if (race) {
             // await addRaceMutation.mutateAsync(race);
-            refetch();
+            void refetch();
         }
     };
 

@@ -130,11 +130,13 @@ type MonthFormat = "long" | "numeric" | "2-digit" | "short" | "narrow" | undefin
 type WeekdayFormat = "long" | "short" | "narrow" | undefined;
 
 export const monthForLocale = (month: number, monthFormat: MonthFormat = "long", localeName = "es-MX") => {
+    //eslint-disable-next-line @typescript-eslint/unbound-method
     const format = new Intl.DateTimeFormat(localeName, { month: monthFormat }).format;
     return format(new Date(Date.UTC(2021, month)));
 };
 
 export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = "short", localeName = "es-MX") => {
+    //eslint-disable-next-line @typescript-eslint/unbound-method
     const format = new Intl.DateTimeFormat(localeName, { weekday: weekdayFormat }).format;
     return format(new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())));
 };

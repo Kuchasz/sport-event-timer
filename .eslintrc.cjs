@@ -34,7 +34,10 @@ const config = {
         //     "error",
         //     { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
         //   ],
-        "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports", fixStyle: "separate-type-imports" }],
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            { prefer: "type-imports", fixStyle: "separate-type-imports", disallowTypeAnnotations: false },
+        ],
         //   "import/consistent-type-specifier-style": ["error", "prefer-inline"],
 
         // For educational purposes we format our comments/jsdoc nicely

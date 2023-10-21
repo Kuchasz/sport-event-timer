@@ -5,7 +5,7 @@ const handler = (req: Request, res: Response) =>
     req
         ? NextAuth({
               ...authOptions(),
-          })(req, res)
+          })(req, res) as unknown
         : null;
 
 export { handler as GET, handler as POST };

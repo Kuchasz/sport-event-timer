@@ -1,5 +1,5 @@
 import { Timer } from "./timer";
 
-export default async function () {
+export default function () {
     return <Timer />;
 }

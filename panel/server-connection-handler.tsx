@@ -49,7 +49,7 @@ export const ServerConnectionHandler = ({
     }, [systemTime]);
 
     useEffect(() => {
-        refetchState();
+        void refetchState();
 
         const connectionStateChangedUnsub = onConnectionStateChanged(connectionState => {
             setConnectionState(connectionState);
