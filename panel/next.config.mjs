@@ -18,7 +18,7 @@ function defineNextConfig(config) {
     return config;
 }
 
-await import("./panel/env.mjs");
+// await import("./env.js");
 
 import NextIntlPlugin from "next-intl/plugin";
 

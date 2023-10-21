@@ -1,11 +1,10 @@
-import * as dotenv from "dotenv";
 import { createContext } from "./trpc";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import fetch from "node-fetch";
 import ws from "ws";
 import { appRouter } from "./routers/app";
 
-dotenv.config();
+import("../env");
 
 if (!global.fetch) {
     console.log('path.resolve(".env")');
