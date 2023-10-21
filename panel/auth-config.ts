@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "./env/server";
+import { env } from "./env.mjs";
 import Auth0 from "next-auth/providers/auth0";
 // import Email from "next-auth/providers/email";
 import { db } from "server/db";

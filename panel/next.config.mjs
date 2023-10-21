@@ -18,6 +18,8 @@ function defineNextConfig(config) {
     return config;
 }
 
+await import("./panel/env.mjs");
+
 import NextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = NextIntlPlugin(

@@ -8,17 +8,18 @@ const config = {
         "plugin:@typescript-eslint/stylistic-type-checked",
         "plugin:prettier/recommended",
     ],
-    // parserOptions: {
-    //   ecmaVersion: "latest",
-    //   sourceType: "module",
-    //   tsconfigRootDir: __dirname,
-    //   project: [
-    //     "./tsconfig.json",
-    //     "./cli/tsconfig.eslint.json", // separate eslint config for the CLI since we want to lint and typecheck differently due to template files
-    //     "./upgrade/tsconfig.json",
-    //     "./www/tsconfig.json",
-    //   ],
-    // },
+    parserOptions: {
+        //   ecmaVersion: "latest",
+        //   sourceType: "module",
+        tsconfigRootDir: __dirname,
+        project: [
+            // "./tsconfig.json",
+            // "./cli/tsconfig.eslint.json", // separate eslint config for the CLI since we want to lint and typecheck differently due to template files
+            "./panel/tsconfig.json",
+            "./utils/tsconfig.json",
+            "./timer/tsconfig.json",
+        ],
+    },
     // overrides: [
     //   // Template files don't have reliable type information
     //   {

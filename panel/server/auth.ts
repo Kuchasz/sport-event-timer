@@ -1,7 +1,7 @@
 // Wrapper for unstable_getServerSession https://next-auth.js.org/configuration/nextjs
 
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "./../env/server";
+import { env } from "./../env.mjs";
 import type { GetServerSidePropsContext } from "next";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import Auth0 from "next-auth/providers/auth0";
