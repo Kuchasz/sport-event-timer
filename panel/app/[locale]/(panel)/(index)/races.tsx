@@ -2,7 +2,7 @@
 
 import Icon from "@mdi/react";
 import { Demodal } from "demodal";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
 import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";

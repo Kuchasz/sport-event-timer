@@ -34,12 +34,14 @@ const config = {
         //     "error",
         //     { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
         //   ],
-        "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports", fixStyle: "inline-type-imports" }],
+        "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports", fixStyle: "separate-type-imports" }],
         //   "import/consistent-type-specifier-style": ["error", "prefer-inline"],
 
         // For educational purposes we format our comments/jsdoc nicely
         //   "isaacscript/complete-sentences-jsdoc": "warn",
         //   "isaacscript/format-jsdoc-comments": "warn",
+
+        "@typescript-eslint/consistent-type-definitions": 0,
 
         // These lint rules don't make sense for us but are enabled in the preset configs
         "@typescript-eslint/no-confusing-void-expression": "off",

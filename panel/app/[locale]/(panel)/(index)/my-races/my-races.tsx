@@ -3,7 +3,7 @@
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { Demodal } from "demodal";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "components/modal";
@@ -12,7 +12,7 @@ import { RaceEdit } from "components/panel/race/race-edit";
 import { Confirmation } from "components/confirmation";
 import { useCallback, useRef } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
 import { useTranslations } from "next-intl";

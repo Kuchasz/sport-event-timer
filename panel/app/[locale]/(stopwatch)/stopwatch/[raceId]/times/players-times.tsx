@@ -3,10 +3,11 @@
 import { ActionButton, PrimaryActionButton } from "../../../../../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
 import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlus, mdiWrenchOutline } from "@mdi/js";
-import { Player, TimeStamp } from "@set/timer/dist/model";
+import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
-import { CSSProperties, useRef } from "react";
+import type { CSSProperties } from "react";
+import { useRef } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
 import { sortDesc } from "@set/utils/dist/array";
@@ -15,7 +16,7 @@ import { useAtom } from "jotai";
 import { timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { trpc } from "trpc-core";
-import { Route } from "next";
+import type { Route } from "next";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -148,15 +149,15 @@ export const PlayersTimes = () => {
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const { raceId } = useParams() as { raceId: string };
 
-    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId as string) });
+    const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) });
 
     const times = sortDesc(
         allTimeStamps
             .filter(s => s.timingPointId === timingPointId)
             .map(s => ({
                 ...s,
-                player: allPlayers!.find(p => s.bibNumber === p.bibNumber),
+                player: allPlayers.find(p => s.bibNumber === p.bibNumber),
             })),
         t => t.id,
     );
@@ -164,8 +165,8 @@ export const PlayersTimes = () => {
     const onAddTime = () =>
         dispatch(
             add({
-                timingPointId: timingPointId!,
-                time: getCurrentTime(offset!, race!.date),
+                timingPointId: timingPointId,
+                time: getCurrentTime(offset, race!.date),
             }),
         );
 
@@ -204,7 +205,7 @@ export const PlayersTimes = () => {
                             dispatch={dispatch}
                             navigate={s => push(s as Route)}
                             t={times[virtualRow.index]}
-                            raceId={parseInt(raceId as string)}
+                            raceId={parseInt(raceId)}
                             padBibNumber={highestBibNumber.toString().length}
                         />
                     ))}

@@ -5,7 +5,7 @@ import { AgGridReact } from "@ag-grid-community/react";
 import { Button } from "components/button";
 import { Confirmation } from "../../../../../components/confirmation";
 import { Demodal } from "demodal";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
 import { NiceModal } from "../../../../../components/modal";
@@ -14,13 +14,13 @@ import { PlayerRegistrationCreate } from "components/panel/player-registration/p
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import classNames from "classnames";
-import { ColDef } from "@ag-grid-community/core";
+import type { ColDef } from "@ag-grid-community/core";
 import { useCallback, useRef } from "react";
 import { PoorColumnChooser } from "components/poor-column-chooser";
 import { useAtom } from "jotai";
 import { getGridColumnStateAtom } from "states/grid-states";
 import { GenderIcon } from "components/gender-icon";
-import { Gender } from "@set/timer/dist/model";
+import type { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
@@ -105,7 +105,7 @@ const PlayerRegistrationPayment = ({
 export const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
-    const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId! }, { initialData: [] });
+    const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
     const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
@@ -120,15 +120,15 @@ export const PlayerRegistrations = () => {
                 title: t("pages.playerRegistrations.promoteToPlayer.confirmation.title"),
                 component: PlayerRegistrationPromotion,
                 props: {
-                    raceId: raceId!,
+                    raceId: raceId,
                 },
             });
 
             if (player) {
-                await promotePlayerRegistration.mutateAsync({ raceId: raceId!, registrationId: playerRegistration.id, player });
+                await promotePlayerRegistration.mutateAsync({ raceId: raceId, registrationId: playerRegistration.id, player });
 
-                utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId! });
-                utils.player.lastAvailableStartTime.invalidate({ raceId: raceId! });
+                utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId });
+                utils.player.lastAvailableStartTime.invalidate({ raceId: raceId });
 
                 await refetch();
                 refreshRegistrationRow(playerRegistration.id.toString());
@@ -292,7 +292,7 @@ export const PlayerRegistrations = () => {
             title: t("pages.playerRegistrations.create.title"),
             component: PlayerRegistrationCreate,
             props: {
-                raceId: raceId!,
+                raceId: raceId,
             },
         });
 
@@ -311,14 +311,14 @@ export const PlayerRegistrations = () => {
             title: t("pages.playerRegistrations.edit.title"),
             component: PlayerRegistrationEdit,
             props: {
-                raceId: raceId!,
+                raceId: raceId,
                 editedPlayerRegistration,
             },
         });
 
         if (playerRegistration) {
             await refetch();
-            refreshRegistrationRow(playerRegistration!.id!.toString());
+            refreshRegistrationRow(playerRegistration.id!.toString());
         }
     };
 
@@ -358,7 +358,7 @@ export const PlayerRegistrations = () => {
                             const visibleColumns = e.target.value as string[];
                             const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
 
-                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns as string[], false);
+                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns, false);
                             gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
                             gridRef.current?.api.sizeColumnsToFit();
 

@@ -20,28 +20,30 @@ function defineNextConfig(config) {
 
 await import("./panel/env.mjs");
 
-import NextIntlPlugin from 'next-intl/plugin';
+import NextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = NextIntlPlugin(
     // This is the default (also the `src` folder is supported out of the box)
-    './i18n/index.ts'
+    "./i18n/index.ts",
 );
 
 // export default withPWA(defineNextConfig({
-export default withNextIntl(defineNextConfig({
-    // reactStrictMode: true,
-    // swcMinify: true,
-    // i18n: {
-    //     locales: ["en", "pl"],
-    //     defaultLocale: "en",
-    // },
-    poweredByHeader: false,
-    // redirects: async () => {
-    //     return [{ source: '/', destination: '/panel', permanent: true }]
-    // }
+export default withNextIntl(
+    defineNextConfig({
+        // reactStrictMode: true,
+        // swcMinify: true,
+        // i18n: {
+        //     locales: ["en", "pl"],
+        //     defaultLocale: "en",
+        // },
+        poweredByHeader: false,
+        // redirects: async () => {
+        //     return [{ source: '/', destination: '/panel', permanent: true }]
+        // }
 
-    experimental: {
-        // runtime: 'nodejs',
-        appDir: true
-    }
-}));
+        experimental: {
+            // runtime: 'nodejs',
+            appDir: true,
+        },
+    }),
+);

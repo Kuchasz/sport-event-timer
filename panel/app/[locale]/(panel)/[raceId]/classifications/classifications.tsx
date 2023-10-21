@@ -10,11 +10,11 @@ import { mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi
 import { NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { useCallback, useRef } from "react";
-import { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
 import Link from "next/link";
 import { AgGridReact } from "@ag-grid-community/react";
-import { ColDef } from "@ag-grid-community/core";
-import { Route } from "next";
+import type { ColDef } from "@ag-grid-community/core";
+import type { Route } from "next";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
@@ -37,7 +37,7 @@ const OpenCategoriesButton = ({ classification }: { classification: Classificati
 
 export const Classifications = () => {
     const raceId = useCurrentRaceId();
-    const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId! }, { initialData: [] });
+    const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId }, { initialData: [] });
     const gridRef = useRef<AgGridReact<Classification>>(null);
     const t = useTranslations();
 
@@ -45,7 +45,7 @@ export const Classifications = () => {
         const classification = await Demodal.open<CreatedClassification>(NiceModal, {
             title: t("pages.classifications.create.title"),
             component: ClassificationCreate,
-            props: { raceId: raceId! },
+            props: { raceId: raceId },
         });
 
         if (classification) {

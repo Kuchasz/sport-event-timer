@@ -8,7 +8,7 @@ import { PageHeader } from "components/page-header";
 
 export const Race = () => {
     const raceId = useCurrentRaceId();
-    const { data: race } = trpc.race.raceRaport.useQuery({ raceId: raceId! }, { enabled: !!raceId });
+    const { data: race } = trpc.race.raceRaport.useQuery({ raceId: raceId }, { enabled: !!raceId });
     const t = useTranslations();
 
     return (

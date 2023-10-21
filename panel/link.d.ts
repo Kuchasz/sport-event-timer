@@ -30,11 +30,6 @@ declare namespace __next_route_internal_types__ {
         | `/admin/hello`
         | `/admin/races`
         | `/my-races`
-        | `/admin`
-        | `/admin/accounts`
-        | `/admin/hello`
-        | `/admin/races`
-        | `/my-races`
         | `/api/session`
         | `/api/restricted`;
     type DynamicRoutes<T extends string = string> =
@@ -48,15 +43,6 @@ declare namespace __next_route_internal_types__ {
         | `/${SafeSlug<T>}/settings`
         | `/${SafeSlug<T>}/timing-points`
         | `/${SafeSlug<T>}/split-times`
-        | `/${SafeSlug<T>}/bib-numbers`
-        | `/${SafeSlug<T>}/classifications`
-        | `/${SafeSlug<T>}/classifications/${SafeSlug<T>}`
-        | `/${SafeSlug<T>}/player-registrations`
-        | `/${SafeSlug<T>}/players`
-        | `/${SafeSlug<T>}/results`
-        | `/${SafeSlug<T>}/settings`
-        | `/${SafeSlug<T>}/split-times`
-        | `/${SafeSlug<T>}/timing-points`
         | `/registration/${SafeSlug<T>}`
         | `/results/${SafeSlug<T>}`
         | `/timer/${SafeSlug<T>}`

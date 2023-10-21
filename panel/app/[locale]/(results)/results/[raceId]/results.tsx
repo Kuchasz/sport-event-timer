@@ -15,9 +15,9 @@ const Gender = ({ gender }: { gender: Gender }) => <div>{gender.slice(0, 1)}</di
 
 export const Results = () => {
     const { raceId } = useParams() as { raceId: string };
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId! as string) }, { enabled: !!raceId });
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) }, { enabled: !!raceId });
     const { data: results, dataUpdatedAt } = trpc.result.results.useQuery(
-        { raceId: parseInt(raceId! as string) },
+        { raceId: parseInt(raceId) },
         { enabled: !!raceId, refetchInterval: 10_000 },
     );
     const [rowIds, setRowIds] = useState<number[]>([]);
@@ -72,23 +72,22 @@ export const Results = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-none bg-white">
-                                    {results &&
-                                        results.map((s, i) => (
-                                            <React.Fragment key={i}>
-                                                <tr
-                                                    onClick={() => toggleRow(i)}
-                                                    className={classNames("cursor-pointer whitespace-nowrap", {
-                                                        "bg-white": i % 2 === 1,
-                                                        "bg-gray-100": i % 2 === 0,
-                                                    })}
-                                                >
-                                                    <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
-                                                    <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
-                                                    <td className="px-1 py-3 text-xs font-semibold uppercase">
-                                                        {s.name.slice(0, 1)}. {s.lastName}
-                                                    </td>
+                                    {results?.map((s, i) => (
+                                        <React.Fragment key={i}>
+                                            <tr
+                                                onClick={() => toggleRow(i)}
+                                                className={classNames("cursor-pointer whitespace-nowrap", {
+                                                    "bg-white": i % 2 === 1,
+                                                    "bg-gray-100": i % 2 === 0,
+                                                })}
+                                            >
+                                                <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
+                                                <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
+                                                <td className="px-1 py-3 text-xs font-semibold uppercase">
+                                                    {s.name.slice(0, 1)}. {s.lastName}
+                                                </td>
 
-                                                    {/* {(openCategoriesExist || ageCategoriesExist) && (
+                                                {/* {(openCategoriesExist || ageCategoriesExist) && (
                                                         <td className="px-1 py-2 text-xs">
                                                             {openCategories.map(
                                                                 c =>
@@ -106,26 +105,26 @@ export const Results = () => {
                                                         </td>
                                                     )} */}
 
-                                                    {openCategoriesExist && (
-                                                        <td className="flex flex-col items-center px-1 py-3 text-center text-xs">
-                                                            <div
-                                                                className={classNames("text-center", {
-                                                                    ["flex h-5 w-5 items-center justify-center rounded-md bg-gray-600 font-bold text-white"]:
-                                                                        s.openCategoryPlace && s.openCategoryPlace <= 3,
-                                                                })}
-                                                            >
-                                                                {s.openCategory && `${s.openCategoryPlace}`}
-                                                            </div>
-                                                        </td>
-                                                    )}
+                                                {openCategoriesExist && (
+                                                    <td className="flex flex-col items-center px-1 py-3 text-center text-xs">
+                                                        <div
+                                                            className={classNames("text-center", {
+                                                                ["flex h-5 w-5 items-center justify-center rounded-md bg-gray-600 font-bold text-white"]:
+                                                                    s.openCategoryPlace && s.openCategoryPlace <= 3,
+                                                            })}
+                                                        >
+                                                            {s.openCategory && `${s.openCategoryPlace}`}
+                                                        </div>
+                                                    </td>
+                                                )}
 
-                                                    {ageCategoriesExist && (
-                                                        <td className="px-1 py-3 text-center text-xs">
-                                                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
-                                                        </td>
-                                                    )}
+                                                {ageCategoriesExist && (
+                                                    <td className="px-1 py-3 text-center text-xs">
+                                                        {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                    </td>
+                                                )}
 
-                                                    {/* {openCategories.map(c => (
+                                                {/* {openCategories.map(c => (
                                                         <td key={c} className="px-1 text-center py-2 text-xs">
                                                             {s.openCategory?.name === c && s.openCategoryPlace}
                                                         </td>
@@ -135,72 +134,70 @@ export const Results = () => {
                                                             {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
                                                         </td>
                                                     )} */}
-                                                    <td
-                                                        className={classNames(
-                                                            "px-1 py-3 text-center font-mono text-xs font-semibold uppercase",
-                                                            { "text-right": !s.invalidState },
+                                                <td
+                                                    className={classNames(
+                                                        "px-1 py-3 text-center font-mono text-xs font-semibold uppercase",
+                                                        { "text-right": !s.invalidState },
+                                                    )}
+                                                >
+                                                    {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
+                                                </td>
+                                                <td>
+                                                    <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={0.8} />
+                                                </td>
+                                            </tr>
+                                            {rowIds.includes(i) && (
+                                                <tr
+                                                    className={classNames("whitespace-nowrap", {
+                                                        "bg-white": i % 2 === 1,
+                                                        "bg-gray-100": i % 2 === 0,
+                                                    })}
+                                                >
+                                                    <td></td>
+                                                    <td colSpan={9} className="px-2 pb-3 text-xs font-medium">
+                                                        <div className="table-row font-semibold">
+                                                            <div className="table-cell py-0.5">{t("results.grid.columns.player")}:</div>
+                                                            <div className="table-cell py-0.5 pl-2">
+                                                                {s.name} {s.lastName}
+                                                            </div>
+                                                        </div>
+                                                        {s.team && (
+                                                            <div className="table-row">
+                                                                <div className="table-cell py-0.5">{t("results.grid.columns.team")}:</div>
+                                                                <div className="table-cell py-0.5 pl-2">{s.team}</div>
+                                                            </div>
                                                         )}
-                                                    >
-                                                        {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
-                                                    </td>
-                                                    <td>
-                                                        <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={0.8} />
+                                                        <div className="table-row">
+                                                            <div className="table-cell py-0.5">
+                                                                {t("results.grid.columns.yearOfBirth")}:
+                                                            </div>
+                                                            <div className="table-cell py-0.5 pl-2">{s.yearOfBirth}</div>
+                                                        </div>
+                                                        <div className="table-row">
+                                                            <div className="table-cell py-0.5">{t("results.grid.columns.start")}:</div>
+                                                            <div className="table-cell py-0.5 pl-2 font-mono">
+                                                                {!s.invalidState && formatTimeWithMilliSec(s.start)}
+                                                            </div>
+                                                        </div>
+                                                        <div className="table-row">
+                                                            <div className="table-cell py-0.5">{t("results.grid.columns.finish")}:</div>
+                                                            <div className="table-cell py-0.5 pl-2 font-mono">
+                                                                {!s.invalidState && formatTimeWithMilliSec(s.finish)}
+                                                            </div>
+                                                        </div>
+                                                        <div className="table-row font-semibold">
+                                                            <div className="table-cell py-0.5">{t("results.grid.columns.result")}:</div>
+                                                            <div className="table-cell py-0.5 pl-2 font-mono">
+                                                                {s.invalidState
+                                                                    ? abbreviations(s.invalidState as any)
+                                                                    : formatTimeWithMilliSecUTC(s.result)}
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
-                                                {rowIds.includes(i) && (
-                                                    <tr
-                                                        className={classNames("whitespace-nowrap", {
-                                                            "bg-white": i % 2 === 1,
-                                                            "bg-gray-100": i % 2 === 0,
-                                                        })}
-                                                    >
-                                                        <td></td>
-                                                        <td colSpan={9} className="px-2 pb-3 text-xs font-medium">
-                                                            <div className="table-row font-semibold">
-                                                                <div className="table-cell py-0.5">{t("results.grid.columns.player")}:</div>
-                                                                <div className="table-cell py-0.5 pl-2">
-                                                                    {s.name} {s.lastName}
-                                                                </div>
-                                                            </div>
-                                                            {s.team && (
-                                                                <div className="table-row">
-                                                                    <div className="table-cell py-0.5">
-                                                                        {t("results.grid.columns.team")}:
-                                                                    </div>
-                                                                    <div className="table-cell py-0.5 pl-2">{s.team}</div>
-                                                                </div>
-                                                            )}
-                                                            <div className="table-row">
-                                                                <div className="table-cell py-0.5">
-                                                                    {t("results.grid.columns.yearOfBirth")}:
-                                                                </div>
-                                                                <div className="table-cell py-0.5 pl-2">{s.yearOfBirth}</div>
-                                                            </div>
-                                                            <div className="table-row">
-                                                                <div className="table-cell py-0.5">{t("results.grid.columns.start")}:</div>
-                                                                <div className="table-cell py-0.5 pl-2 font-mono">
-                                                                    {!s.invalidState && formatTimeWithMilliSec(s.start)}
-                                                                </div>
-                                                            </div>
-                                                            <div className="table-row">
-                                                                <div className="table-cell py-0.5">{t("results.grid.columns.finish")}:</div>
-                                                                <div className="table-cell py-0.5 pl-2 font-mono">
-                                                                    {!s.invalidState && formatTimeWithMilliSec(s.finish)}
-                                                                </div>
-                                                            </div>
-                                                            <div className="table-row font-semibold">
-                                                                <div className="table-cell py-0.5">{t("results.grid.columns.result")}:</div>
-                                                                <div className="table-cell py-0.5 pl-2 font-mono">
-                                                                    {s.invalidState
-                                                                        ? abbreviations(s.invalidState as any)
-                                                                        : formatTimeWithMilliSecUTC(s.result)}
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )}
-                                            </React.Fragment>
-                                        ))}
+                                            )}
+                                        </React.Fragment>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

@@ -1,5 +1,6 @@
-import { Metadata } from "next";
-import React, { ReactNode } from "react";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import React from "react";
 import { StopwatchLayout } from "./stopwatch-layout";
 
 export default function ({ children }: { children: ReactNode }) {

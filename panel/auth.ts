@@ -1,5 +1,5 @@
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse, PreviewData } from "next";
-import { ParsedUrlQuery } from "querystring";
+import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse, PreviewData } from "next";
+import type { ParsedUrlQuery } from "querystring";
 import { db } from "server/db";
 import { z } from "zod";
 

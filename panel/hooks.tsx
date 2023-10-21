@@ -1,6 +1,7 @@
 "use client";
 
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import type { TypedUseSelectorHook } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import type { TimerState, TimerDispatch } from "@set/timer/dist/store";
 import { useParams } from "next/navigation";
@@ -28,7 +29,7 @@ export const useCurrentRaceId = () => {
     const [selectedRaceId] = useAtom(selectedRaceIdAtom);
     const { raceId } = useParams() as { raceId: string };
 
-    return raceId ? parseInt(raceId as string) : selectedRaceId;
+    return raceId ? parseInt(raceId) : selectedRaceId;
 };
 
 export const usePreviousValue = <T,>(value: T) => {

@@ -4,7 +4,7 @@ import Head from "next/head";
 import Icon from "@mdi/react";
 import { Confirmation } from "../../../../../components/confirmation";
 import { Demodal } from "demodal";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import { NiceModal } from "components/modal";
@@ -155,7 +155,7 @@ const TimingPointCard = ({
         const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
             title: t("pages.timingPoints.create.title"),
             component: TimingPointCreate,
-            props: { raceId: raceId!, index },
+            props: { raceId: raceId, index },
         });
 
         if (TimingPoint) {
@@ -202,9 +202,9 @@ const TimingPointCard = ({
 export const TimingPoints = () => {
     const raceId = useCurrentRaceId();
     const [activeTimingPointId, setActiveTimingPointId] = useState<number>(38);
-    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId });
     const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessUrls.useQuery(
-        { raceId: raceId!, timingPointId: activeTimingPointId },
+        { raceId: raceId, timingPointId: activeTimingPointId },
         { initialData: [] },
     );
     const t = useTranslations();
@@ -213,7 +213,7 @@ export const TimingPoints = () => {
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
-        { raceId: raceId! },
+        { raceId: raceId },
         {
             initialData: [],
         },
@@ -297,7 +297,7 @@ export const TimingPoints = () => {
                             <TimingPointCard
                                 key={e.id}
                                 index={index}
-                                raceId={raceId!}
+                                raceId={raceId}
                                 onCreate={() => {
                                     refetchTimingPoints();
                                     refetchOrder();
