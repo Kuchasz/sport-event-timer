@@ -1,5 +1,5 @@
 import { useDeferredValue } from "hooks";
-import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { loading?: boolean; outline?: boolean };
 

@@ -1,4 +1,4 @@
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { ApiKeyForm } from "./api-key-form";
 import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
@@ -19,7 +19,7 @@ export const ApiKeyCreate = ({ onReject, onResolve }: ApiKeyCreateProps) => {
     };
 
     const createApiKey = async (apiKey: CreateApiKey) => {
-        await addKeyMutation.mutateAsync({ raceId: raceId!, key: apiKey });
+        await addKeyMutation.mutateAsync({ raceId: raceId, key: apiKey });
         onResolve(apiKey);
     };
 

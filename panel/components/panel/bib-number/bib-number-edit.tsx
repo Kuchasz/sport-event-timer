@@ -1,5 +1,5 @@
 import { BibNumberForm } from "./bib-number-form";
-import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { trpc } from "trpc-core";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];

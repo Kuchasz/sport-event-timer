@@ -1,7 +1,7 @@
 "use client";
 
 import { sortDesc } from "@set/utils/dist/array";
-import { Route } from "next";
+import type { Route } from "next";
 import { MenuButton } from "./menu-button";
 import { usePathname } from "next/navigation";
 

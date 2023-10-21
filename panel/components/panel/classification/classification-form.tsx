@@ -3,7 +3,7 @@ import { Label } from "../../label";
 import { PoorInput } from "../../poor-input";
 import { useFormState } from "hooks";
 
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 type Classification = AppRouterInputs["classification"]["add"];
 
 type ClassificationFormProps = {

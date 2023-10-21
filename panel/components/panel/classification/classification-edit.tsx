@@ -1,5 +1,5 @@
 import { ClassificationForm } from "./classification-form";
-import { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../trpc";
 import { trpc } from "trpc-core";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];

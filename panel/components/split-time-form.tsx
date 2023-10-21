@@ -3,7 +3,7 @@ import { Label } from "./label";
 import { PoorFullTimepicker } from "./poor-timepicker";
 import { PoorSelect } from "./poor-select";
 import { useFormState } from "hooks";
-import { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PoorInput } from "./poor-input";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];

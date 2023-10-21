@@ -1,5 +1,5 @@
 import { trpc } from "trpc-core";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { SplitTimeForm } from "./split-time-form";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
@@ -13,7 +13,7 @@ type SplitTimeEditProps = {
 };
 
 export const SplitTimeEdit = ({ raceId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
-    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId! });
+    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId });
     if (!timingPoints) return;
 
     return (

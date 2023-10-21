@@ -1,5 +1,5 @@
 import { Button } from "../../button";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { PoorInput } from "../../poor-input";
 import { Form, FormInput } from "form";
 import { bibNumberSchema } from "modules/bib-number/models";

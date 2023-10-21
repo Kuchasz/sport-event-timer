@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import type { Route } from "next";
 import Link from "next/link";
 import React from "react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type BreadcrumbItemProps<T extends string> = { text: string; href?: Route<T> | URL };
 

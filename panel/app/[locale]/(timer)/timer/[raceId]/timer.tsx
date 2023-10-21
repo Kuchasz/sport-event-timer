@@ -2,7 +2,8 @@
 
 import Icon from "@mdi/react";
 import React from "react";
-import { BeepFunction, createBeep } from "@set/utils/dist/beep";
+import type { BeepFunction } from "@set/utils/dist/beep";
+import { createBeep } from "@set/utils/dist/beep";
 import { Clock } from "../../../../../components/timer/clock";
 import { ConfigMenu } from "../../../../../components/timer/config-menu";
 import { Countdown } from "components/timer/countdown";
@@ -12,8 +13,9 @@ import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, md
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAtom } from "jotai";
-import { TimerSettings, timerSettingsAtom } from "states/timer-states";
-import { AppRouterOutputs } from "trpc";
+import type { TimerSettings } from "states/timer-states";
+import { timerSettingsAtom } from "states/timer-states";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 import classNames from "classnames";
 import { allowedLatency } from "connection";
@@ -143,7 +145,7 @@ export const Timer = () => {
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     const { data: players } = trpc.player.startList.useQuery(
-        { raceId: Number.parseInt(raceId! as string) },
+        { raceId: Number.parseInt(raceId) },
         { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
     );
 
@@ -208,7 +210,7 @@ export const Timer = () => {
                                 </div>
                                 {systemTime && <Latency latency={systemTime.latency} />}
                             </div>
-                            {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime!} />}
+                            {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime} />}
                         </div>
 
                         <div className="flex w-full flex-grow overflow-y-hidden">

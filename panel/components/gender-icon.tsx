@@ -1,4 +1,4 @@
-import { Gender } from "@set/timer/dist/model";
+import type { Gender } from "@set/timer/dist/model";
 
 export const GenderIcon = ({ gender }: { gender: Gender }) =>
     gender === "male" ? (

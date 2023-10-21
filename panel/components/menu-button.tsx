@@ -1,6 +1,6 @@
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { Route } from "next";
+import type { Route } from "next";
 import Link from "next/link";
 
 export const MenuButton = (n: { color: string; bg: string; text: string; icon: string; to: Route; isActive: boolean }) => (
