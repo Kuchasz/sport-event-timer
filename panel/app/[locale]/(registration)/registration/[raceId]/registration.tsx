@@ -235,7 +235,7 @@ export const Registration = () => {
 
         await registerMutation.mutateAsync({ raceId: Number(raceId), player: formData });
 
-        refetchSystemStatus();
+        await refetchSystemStatus();
 
         setRegistrationStatus(!registerMutation.error ? "successful" : "error");
     };

@@ -1,6 +1,6 @@
 import type { HTMLProps } from "react";
 
-type LabelProps = HTMLProps<HTMLLabelElement> & {};
+type LabelProps = HTMLProps<HTMLLabelElement> & unknown;
 
 export const Label = ({ children, className, ...props }: LabelProps) => {
     return (

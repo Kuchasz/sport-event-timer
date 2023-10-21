@@ -5,7 +5,7 @@ export const createBeep = () => {
     const ContextConstructor = window.AudioContext || (window as any).webkitAudioContext;
 
     const context = new ContextConstructor();
-    if (context.state !== "running") context.resume();
+    if (context.state !== "running") void context.resume();
 
     const runBeep = (freq: number, duration: number, vol: number) => {
         const oscillator = context.createOscillator();
@@ -20,7 +20,7 @@ export const createBeep = () => {
     };
 
     return ((freq = 520, duration = 500, vol = 100) => {
-        if (context.state !== "running") context.resume();
+        if (context.state !== "running") void context.resume();
 
         runBeep(freq, duration, vol);
     }) as BeepFunction;

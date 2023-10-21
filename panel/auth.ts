@@ -9,7 +9,7 @@ const ApiKeyAuthModel = z.object({
 });
 
 export const withRaceApiKey =
-    (next: (req: NextApiRequest, res: NextApiResponse) => void) => async (req: NextApiRequest, res: NextApiResponse) => {
+    (next: (req: NextApiRequest, res: NextApiResponse) => Promise<void>) => async (req: NextApiRequest, res: NextApiResponse) => {
         if (req.method !== "POST") {
             res.status(403).send("Invalid Method");
             return;

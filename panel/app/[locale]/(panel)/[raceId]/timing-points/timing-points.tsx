@@ -232,7 +232,7 @@ export const TimingPoints = () => {
         });
 
         if (TimingPoint) {
-            refetchTimingPoints();
+            void refetchTimingPoints();
         }
     };
 
@@ -247,7 +247,7 @@ export const TimingPoints = () => {
         });
 
         if (timingPointAccessKey) {
-            refetchAccessKeys();
+            void refetchAccessKeys();
         }
     };
 
@@ -263,8 +263,8 @@ export const TimingPoints = () => {
         if (confirmed) {
             await deleteTimingPointMutation.mutateAsync(timingPoint);
 
-            refetchOrder();
-            refetchTimingPoints();
+            void refetchOrder();
+            void refetchTimingPoints();
         }
     };
 
@@ -280,7 +280,7 @@ export const TimingPoints = () => {
         if (confirmed) {
             await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessUrlId: timingPointAccessKey.id });
 
-            refetchAccessKeys();
+            void refetchAccessKeys();
         }
     };
 
@@ -299,8 +299,8 @@ export const TimingPoints = () => {
                                 index={index}
                                 raceId={raceId}
                                 onCreate={() => {
-                                    refetchTimingPoints();
-                                    refetchOrder();
+                                    void refetchTimingPoints();
+                                    void refetchOrder();
                                 }}
                                 onSelect={setActiveTimingPointId}
                                 isActive={e.id === activeTimingPointId}

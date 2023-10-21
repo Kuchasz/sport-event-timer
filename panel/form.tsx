@@ -27,13 +27,13 @@ const FormContext = createContext<FormContextType<any, any>>({
 
 const useForm = <TItem,>({ initialValues, onSubmit, validationSchema }: FormStateProps<TItem>) => {
     const [formValues, setFormValues] = React.useState<TItem>(initialValues);
-    const [formErrors, setFormErrors] = React.useState<FormErrors<TItem>>({} as any);
+    const [formErrors, setFormErrors] = React.useState<FormErrors<TItem>>({} as FormErrors<TItem>);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const validationResult = validationSchema.safeParse(formValues);
         if (!validationResult.success) {
-            setFormErrors(validationResult.error.flatten().fieldErrors as any);
+            setFormErrors(validationResult.error.flatten().fieldErrors as FormErrors<TItem>);
         } else {
             onSubmit(formValues);
         }

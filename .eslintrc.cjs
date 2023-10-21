@@ -40,8 +40,22 @@ const config = {
         // For educational purposes we format our comments/jsdoc nicely
         //   "isaacscript/complete-sentences-jsdoc": "warn",
         //   "isaacscript/format-jsdoc-comments": "warn",
-
-        "@typescript-eslint/consistent-type-definitions": 0,
+        "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                checksVoidReturn: {
+                    arguments: false,
+                    attributes: false,
+                },
+            },
+        ],
 
         // These lint rules don't make sense for us but are enabled in the preset configs
         "@typescript-eslint/no-confusing-void-expression": "off",
