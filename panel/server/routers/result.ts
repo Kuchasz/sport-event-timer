@@ -85,7 +85,7 @@ export const resultRouter = router({
                 Object.entries(
                     groupBy(
                         resultsWithCategories.filter(r => !!r.ageCategory),
-                        r => r.ageCategory!.id!.toString(),
+                        r => r.ageCategory!.id.toString(),
                     ),
                 ).map(([catId, results]) => [catId, sort(results, r => r.result)]),
             );
@@ -93,7 +93,7 @@ export const resultRouter = router({
                 Object.entries(
                     groupBy(
                         resultsWithCategories.filter(r => !!r.openCategory),
-                        r => r.openCategory!.id!.toString(),
+                        r => r.openCategory!.id.toString(),
                     ),
                 ).map(([catId, results]) => [catId, sort(results, r => r.result)]),
             );

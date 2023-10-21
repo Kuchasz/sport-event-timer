@@ -1,7 +1,8 @@
 import { createStore } from "@set/timer/dist/store";
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
-import { observable, Observer } from "@trpc/server/observable";
+import type { Observer } from "@trpc/server/observable";
+import { observable } from "@trpc/server/observable";
 import { stopwatchStateProvider } from "../db";
 import { updateSplitTimesQueue } from "../queue";
 import { logger } from "../../utils";

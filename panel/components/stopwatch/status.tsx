@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import Link from "next/link";
 import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import classNames from "classnames";
-import { ConnectionState } from "connection";
+import type { ConnectionState } from "connection";
 import { Timer } from "./timer";
 
 const SelectedTimingPoint = ({
@@ -83,18 +83,15 @@ export const Status = ({ raceId }: { raceId: string }) => {
     const [connectionState] = useAtom(connectionStateAtom);
 
     const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
-        { raceId: parseInt(raceId as string) },
+        { raceId: parseInt(raceId) },
         {
             initialData: [],
         },
     );
-    const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
-        { raceId: parseInt(raceId as string) },
-        { initialData: [] },
-    );
+    const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
-    const timingPointName = allTimingPoints!.find(tk => tk.id === timingPointId)?.name;
+    const timingPointName = allTimingPoints.find(tk => tk.id === timingPointId)?.name;
     const sortedTimingPoints = timingPointOrder;
 
     return (
@@ -122,7 +119,7 @@ export const Status = ({ raceId }: { raceId: string }) => {
                 connectionState={connectionState}
             />
             <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between rounded-b-lg bg-black px-4 py-2 font-semibold text-white">
-                <Timer offset={offset!} />
+                <Timer offset={offset} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>
                         {sortedTimingPoints.length === 0 ? (

@@ -3,7 +3,8 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import nodemailer from "nodemailer";
 import { env } from "../../env.mjs";
-import { CountryCode, racePlayerRegistrationSchema } from "../../modules/player-registration/models";
+import type { CountryCode } from "../../modules/player-registration/models";
+import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 
 type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
 

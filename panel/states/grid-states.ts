@@ -1,4 +1,4 @@
-import { ColumnState } from "@ag-grid-community/core";
+import type { ColumnState } from "@ag-grid-community/core";
 import { atomWithWebStorage } from "jotai-utils";
 
 type HiddenColumnState = Pick<ColumnState, "colId" | "hide">;

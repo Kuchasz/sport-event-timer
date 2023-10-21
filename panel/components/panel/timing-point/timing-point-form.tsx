@@ -1,6 +1,6 @@
 import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { Form, FormInput } from "form";
 import { timingPointSchema } from "modules/timing-point/models";
 import { useTranslations } from "next-intl";

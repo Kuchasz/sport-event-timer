@@ -130,7 +130,7 @@ export const raceRouter = router({
         )
         .mutation(async ({ input, ctx }) => {
             const { id, ...data } = input;
-            return await ctx.db.race.update({ where: { id: id! }, data: { registrationEnabled: data.registrationEnabled } });
+            return await ctx.db.race.update({ where: { id: id }, data: { registrationEnabled: data.registrationEnabled } });
         }),
     add: protectedProcedure.input(raceSchema).mutation(async ({ input, ctx }) => {
         const { id, useSampleData, ...data } = input;

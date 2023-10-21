@@ -1,6 +1,6 @@
 import { createRange, groupBy } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
-import {
+import type {
     Classification,
     Player,
     Race,
@@ -139,7 +139,7 @@ const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<Player
 const createPlayers = (
     playerRegistrations: PlayerRegistration[],
     userId: string,
-    classifications: { [raceId: number]: Classification[] },
+    classifications: Record<number, Classification[]>,
 ): Omit<Player, "id">[] => {
     const bibNumbers = createRange({ from: 1, to: 999 });
 

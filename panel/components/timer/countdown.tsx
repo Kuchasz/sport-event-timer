@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import useResizeObserver from "@react-hook/resize-observer";
 import { formatSecondsToTimeSpan } from "utils";
 

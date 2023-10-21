@@ -1,4 +1,4 @@
-import { AppRouterInputs } from "trpc";
+import type { AppRouterInputs } from "trpc";
 import { TimingPointAccessUrlForm } from "./timing-point-access-url-form";
 import { trpc } from "trpc-core";
 
