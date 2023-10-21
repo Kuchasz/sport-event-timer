@@ -47,8 +47,7 @@ export type AgeCategoryMatcher = {
     fitsCategory: (age: number, gender: Gender) => boolean;
 };
 
-export const getAgeAtEventDate = (eventDate: Date, birthDate: Date) =>
-    eventDate.getFullYear() - birthDate.getFullYear();
+export const getAgeAtEventDate = (eventDate: Date, birthDate: Date) => eventDate.getFullYear() - birthDate.getFullYear();
 
 type MatchersResult = {
     type: "Success" | "Error";
@@ -58,34 +57,33 @@ type MatchersResult = {
 
 export const getCategoryMatchers = (categories: AgeCategory[]): MatchersResult => {
     const rangesOverlapping = categories.some(c =>
-        categories.some(cc => c.name !== cc.name && c.gender === cc.gender && areOverlapping(c.range, cc.range))
+        categories.some(cc => c.name !== cc.name && c.gender === cc.gender && areOverlapping(c.range, cc.range)),
     );
 
     if (rangesOverlapping)
         return {
             type: "Error",
             categoryMatchers: [],
-            errorType: "RangesOverlap"
+            errorType: "RangesOverlap",
         };
 
     return {
         type: "Success",
         categoryMatchers: categories.map(({ name, gender, range }) => ({
             name,
-            fitsCategory: (age: number, playerGender: Gender) =>
-                gender === playerGender && age >= range.from && age <= range.to
-        }))
+            fitsCategory: (age: number, playerGender: Gender) => gender === playerGender && age >= range.from && age <= range.to,
+        })),
     };
 };
 
 export const matchPlayersToCategories = (
     eventDate: Date,
     players: { id: number; birthDate: Date; gender: Gender }[],
-    matchers: AgeCategoryMatcher[]
+    matchers: AgeCategoryMatcher[],
 ) => {
     const playersWithAges = players.map(p => ({
         player: p,
-        age: getAgeAtEventDate(eventDate, p.birthDate)
+        age: getAgeAtEventDate(eventDate, p.birthDate),
     }));
 
     return playersWithAges.map(p => [p.player.id, matchers.find(m => m.fitsCategory(p.age, p.player.gender))?.name]);

@@ -3,5 +3,5 @@ import { TimingPoints } from "./timing-points";
 
 export default async function () {
     await authenticate();
-    return <TimingPoints/>
-};
+    return <TimingPoints />;
+}

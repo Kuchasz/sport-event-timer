@@ -49,7 +49,7 @@ const NextPlayer = ({
         ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
     return (
-        <span className={classNames("flex items-center mx-1", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
+        <span className={classNames("mx-1 flex items-center", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
             <Icon className={classNames("visible", { ["invisible"]: !isNext })} size="2em" path={mdiChevronDoubleRight} />
             {showTime && <span className="font-mono font-bold">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
             <div className="p-1 font-mono" dangerouslySetInnerHTML={{ __html: bibText }}></div>
@@ -78,9 +78,9 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
             style={{
                 fontSize: `${clockState.nextPlayers.size}px`,
             }}
-            className="leading-none transition-all w-full overflow-y-auto"
+            className="w-full overflow-y-auto leading-none transition-all"
         >
-            <div style={{ padding: "0.1em" }} className="flex overflow-y-auto justify-between">
+            <div style={{ padding: "0.1em" }} className="flex justify-between overflow-y-auto">
                 {players.length > 0 ? (
                     players.map((p, index) => <NextPlayer isNext={index === 0} key={p.bibNumber} player={p} />)
                 ) : (
@@ -94,14 +94,14 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
 const Latency = ({ latency }: { latency: number }) => {
     const [showLatency, setShowLatency] = useState<boolean>(false);
     return (
-        <div className="p-2 flex items-center" onClick={() => setShowLatency(!showLatency)}>
+        <div className="flex items-center p-2" onClick={() => setShowLatency(!showLatency)}>
             <span
-                className={classNames("block rounded-full w-4 h-4", {
+                className={classNames("block h-4 w-4 rounded-full", {
                     ["bg-orange-500"]: latency > allowedLatency,
                     ["bg-lime-500"]: latency <= allowedLatency,
                 })}
             ></span>
-            <span className={classNames("ml-2 transition-opacity font-semibold", { ["opacity-0"]: !showLatency })}>{latency}ms</span>
+            <span className={classNames("ml-2 font-semibold transition-opacity", { ["opacity-0"]: !showLatency })}>{latency}ms</span>
         </div>
     );
 };
@@ -115,9 +115,9 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="leading-none max-w-[30%] transition-all w-full overflow-y-auto"
+            className="w-full max-w-[30%] overflow-y-auto leading-none transition-all"
         >
-            <div style={{ padding: "0.1em" }} className="flex flex-col overflow-y-auto justify-between">
+            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between overflow-y-auto">
                 {players.map((p, index) => (
                     <NextPlayer
                         padBib={maxBibNumber}
@@ -144,7 +144,7 @@ export const Timer = () => {
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId! as string) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
     );
 
     const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);
@@ -193,13 +193,13 @@ export const Timer = () => {
 
     return (
         <>
-            <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
+            <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
                 {globalTime === undefined || players === undefined ? (
-                    <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
+                    <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
                 ) : (
-                    <div className="w-full h-full flex flex-col items-center">
+                    <div className="flex h-full w-full flex-col items-center">
                         <div className="flex w-full justify-between">
-                            <div className="flex self-start items-center">
+                            <div className="flex items-center self-start">
                                 <div onClick={toggleMenu} className="cursor-pointer p-4">
                                     <Icon size={1.5} path={mdiCog} />
                                 </div>
@@ -212,7 +212,7 @@ export const Timer = () => {
                         </div>
 
                         <div className="flex w-full flex-grow overflow-y-hidden">
-                            <div className="flex flex-grow items-center flex-col">
+                            <div className="flex flex-grow flex-col items-center">
                                 {clockState.countdown.enabled && (
                                     <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
                                 )}

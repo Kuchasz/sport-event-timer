@@ -31,7 +31,7 @@ module.exports = {
             green: colors.green,
             lime: colors.lime,
             slate: colors.slate,
-            sky: colors.sky
+            sky: colors.sky,
         },
         screens: {
             sm: "640px",
@@ -40,42 +40,42 @@ module.exports = {
             xl: "1280px",
             "2xl": "1536px",
             tall: [{ raw: "(aspect-ratio: 1/1)" }, { raw: "(max-aspect-ratio: 1/1)" }],
-            wide: { raw: "(min-aspect-ratio: 1/1)" }
+            wide: { raw: "(min-aspect-ratio: 1/1)" },
         },
         extend: {
             zIndex: {
-                "-1": "-1"
+                "-1": "-1",
             },
             dropShadow: {
                 "3xl": "0 3px 5px black",
-                "w-2xl": "0 2px 10px rgba(255, 255, 255, 0.2)"
+                "w-2xl": "0 2px 10px rgba(255, 255, 255, 0.2)",
             },
             height: {
-                128: "32rem"
+                128: "32rem",
             },
             fontSize: {
                 "2xs": [".65rem", { lineHeight: "0.75rem" }],
                 "full-w": ["100vw"],
-                "full-h": ["100vh"]
+                "full-h": ["100vh"],
             },
             fontFamily: {
-                sans: ["Inter var", ...defaultTheme.fontFamily.sans]
+                sans: ["Inter var", ...defaultTheme.fontFamily.sans],
             },
             keyframes: {
                 pushIn: {
-                    '0%': { transform: 'scale(1)' },
-                    '30%': { transform: 'scale(0.8)' },
-                    '100%': { transfrm: 'scale(0.9)' }
+                    "0%": { transform: "scale(1)" },
+                    "30%": { transform: "scale(0.8)" },
+                    "100%": { transfrm: "scale(0.9)" },
                 },
                 pushInLittle: {
-                    '0%': { transform: 'scale(0.95)' },
-                    '100%': { transfrm: 'scale(1)' }
-                }
+                    "0%": { transform: "scale(0.95)" },
+                    "100%": { transfrm: "scale(1)" },
+                },
             },
             animation: {
-                pushIn: 'pushIn 0.2s ease-out',
-                pushInLittle: 'pushInLittle 0.2s ease-out'
-            }
-        }
-    }
+                pushIn: "pushIn 0.2s ease-out",
+                pushInLittle: "pushInLittle 0.2s ease-out",
+            },
+        },
+    },
 };

@@ -7,7 +7,7 @@ type Button = {
 const padActions = {
     addDigit: (digit: string) => (player: string) => player.concat(digit),
     back: (player: string) => player.slice(0, -1),
-    reset: (_player: string) => ""
+    reset: (_player: string) => "",
 };
 
 const buttons: Button[] = [
@@ -22,7 +22,7 @@ const buttons: Button[] = [
     { char: "9", changeNumber: padActions.addDigit("9") },
     { char: "↺", changeNumber: padActions.reset, alwaysEnabled: true },
     { char: "0", changeNumber: padActions.addDigit("0") },
-    { char: "←", changeNumber: padActions.back, alwaysEnabled: true }
+    { char: "←", changeNumber: padActions.back, alwaysEnabled: true },
 ];
 
 type PadButtonProps = {
@@ -35,7 +35,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="select-none active:animate-pushIn cursor-pointer disabled:opacity-20 text-2xl transition-opacity rounded-md m-1.5 "
+        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl transition-opacity disabled:opacity-20 "
     >
         {char}
     </button>
@@ -53,7 +53,7 @@ export const DialPad = (props: DialPadProps) => {
     };
 
     return (
-        <div className="grid h-2/5 self-center w-5/6 sm:w-1/3 xl:w-1/5 grid-cols-3 py-2 grid-rows-4">
+        <div className="grid h-2/5 w-5/6 grid-cols-3 grid-rows-4 self-center py-2 sm:w-1/3 xl:w-1/5">
             {buttons.map(b => (
                 <PadButton
                     alwaysEnabled={b.alwaysEnabled}

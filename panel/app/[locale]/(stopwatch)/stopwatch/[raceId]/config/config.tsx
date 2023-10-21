@@ -17,14 +17,14 @@ export const Config = () => {
         { raceId: parseInt(raceId as string) },
         {
             initialData: [],
-        }
+        },
     );
 
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: parseInt(raceId as string) },
         {
             initialData: [],
-        }
+        },
     );
 
     const sortedTimingPoints = timingPointsOrder.map(point => allTimingPoints.find(tp => point === tp.id)!);
@@ -34,12 +34,12 @@ export const Config = () => {
     };
 
     return (
-        <div className="flex h-full w-full items-center flex-col">
-            <div className="flex flex-grow h-full w-full justify-center items-center flex-col">
+        <div className="flex h-full w-full flex-col items-center">
+            <div className="flex h-full w-full flex-grow flex-col items-center justify-center">
                 {sortedTimingPoints.map((tk, id) => (
                     <button
                         onClick={() => setTimingPointId(tk.id)}
-                        className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white transition-opacity my-2"
+                        className="relative my-2 flex items-center rounded-xl bg-white px-3 py-2 shadow transition-opacity"
                         key={tk.id}
                     >
                         <TimingPointIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />

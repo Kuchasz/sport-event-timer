@@ -21,7 +21,7 @@ export const Accounts = () => {
     return (
         <>
             <PageHeader title="Accounts" description="Manage accounts having access to the races" />
-            <div className="ag-theme-material border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="ag-theme-material border-1 flex h-full flex-col border-solid border-gray-600">
                 <AgGridReact<Account>
                     ref={gridRef}
                     suppressCellFocus={true}

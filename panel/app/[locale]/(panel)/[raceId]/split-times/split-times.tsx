@@ -34,7 +34,7 @@ type SplitTimeResultTypes = {
 const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, timingPointId }: SplitTimeResultTypes) => {
     const result = splitTimeResult.times[timingPointId];
     return (
-        <div className="font-mono flex">
+        <div className="flex font-mono">
             <span className={result?.manual ? "text-yellow-600" : ""}>
                 {formatTimeWithMilliSec(splitTimeResult.times[timingPointId]?.time)}
             </span>
@@ -48,7 +48,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="flex items-center hover:text-red-600 cursor-pointer"
+                    className="flex cursor-pointer items-center hover:text-red-600"
                 >
                     <Icon size={0.75} path={mdiClockEditOutline} />
                     {/* <span className="ml-1">change</span> */}
@@ -63,7 +63,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="flex items-center hover:text-red-600 cursor-pointer"
+                    className="flex cursor-pointer items-center hover:text-red-600"
                 >
                     <Icon size={0.75} path={mdiClockPlusOutline} />
                     {/* <span className="ml-1">change</span> */}
@@ -78,7 +78,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="flex items-center ml-2 hover:text-red-600 cursor-pointer"
+                    className="ml-2 flex cursor-pointer items-center hover:text-red-600"
                 >
                     <Icon size={0.75} path={mdiReload} />
                     {/* <span className="ml-1">revert</span> */}
@@ -95,7 +95,7 @@ export const SplitTimes = () => {
         { raceId: raceId! },
         {
             initialData: [],
-        }
+        },
     );
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId! }, { initialData: [] });
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId! });
@@ -189,7 +189,7 @@ export const SplitTimes = () => {
             <Head>
                 <title>{t("pages.splitTimes.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.splitTimes.header.title")} description={t("pages.splitTimes.header.description")} />
                 {splitTimes && (
                     <div className="ag-theme-material h-full">

@@ -72,7 +72,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                     <PoorTextArea value={race.emailTemplate} onChange={changeHandler("emailTemplate")} />
                 </div>
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>

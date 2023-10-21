@@ -28,11 +28,13 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber, isLoading
                     name="number"
                 />
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}
                 </Button>
-                <Button loading={isLoading} type="submit">{t("shared.save")}</Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

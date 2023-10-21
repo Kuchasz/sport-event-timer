@@ -1,41 +1,33 @@
 import actionsHistory from "./slices/actions-history";
 import timeStamps from "./slices/time-stamps";
 import absences from "./slices/absences";
-import {
-    AnyAction,
-    combineReducers,
-    configureStore,
-    Middleware
-} from "@reduxjs/toolkit";
+import { AnyAction, combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
     timeStamps,
     actionsHistory,
-    absences
+    absences,
 });
 
 const resettableRootReducer = (state: TimerState, action: AnyAction) => {
     if (action.type === "REPLACE_STATE") {
         return {
-            ...action.state
+            ...action.state,
         } as TimerState;
     }
     return reducer(state, action) as TimerState;
 };
 
-export const createStore = (
-    middlewares: Middleware<{}, TimerState, TimerDispatch>[],
-    preloadedState?: Partial<TimerState>
-) =>
+export const createStore = (middlewares: Middleware<{}, TimerState, TimerDispatch>[], preloadedState?: Partial<TimerState>) =>
     configureStore({
         reducer: resettableRootReducer as any,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares),
-        preloadedState
+        middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middlewares),
+        preloadedState,
     });
 
 //store created only for typechecking
 const store = configureStore({
-    reducer
+    reducer,
 });
 
 // Infer the `TimerState` and `TimerDispatch` types from the store itself

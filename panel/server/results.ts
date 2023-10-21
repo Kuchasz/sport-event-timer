@@ -22,7 +22,7 @@ export const fetchTimeGoNewResults = (resultsUrl: string): Promise<PlayerResult[
         .then(contents => {
             const colTypes = {
                 name: "col-name",
-                time: "col-time"
+                time: "col-time",
             };
 
             const tableDom = parse(contents).querySelector("table")!;

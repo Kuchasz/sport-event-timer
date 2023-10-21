@@ -44,10 +44,10 @@ const NextPlayer = ({
         ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
     return (
-        <span className={classNames("flex items-center mx-1", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
+        <span className={classNames("mx-1 flex items-center", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
             <Icon className={classNames("visible", { ["invisible"]: !isNext })} size="2em" path={mdiChevronDoubleRight} />
             {showTime && <span className="font-mono font-bold">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
-            <div className="px-4 font-bold font-mono" dangerouslySetInnerHTML={{ __html: bibText }}></div>
+            <div className="px-4 font-mono font-bold" dangerouslySetInnerHTML={{ __html: bibText }}></div>
             {player.name} {player.lastName}
         </span>
     );
@@ -70,9 +70,9 @@ const Players = ({
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="leading-none transition-all w-full overflow-y-auto"
+            className="w-full overflow-y-auto leading-none transition-all"
         >
-            <div style={{ padding: "0.1em" }} className="flex flex-col overflow-y-auto justify-between">
+            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between overflow-y-auto">
                 {players.map((p, index) => (
                     <NextPlayer
                         padBib={maxBibNumber}
@@ -95,9 +95,9 @@ export const MobileTimer = () => {
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId! as string) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) }
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
     );
-    
+
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     useEffect(() => {
@@ -107,9 +107,9 @@ export const MobileTimer = () => {
 
         const tickTime = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
-            
+
             setGlobalTime(globalTime);
-            
+
             tickInterval = requestAnimationFrame(tickTime);
         };
 
@@ -122,12 +122,12 @@ export const MobileTimer = () => {
 
     return (
         <>
-            <div className="select-none bg-black h-full w-full text-white relative overflow-hidden">
+            <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
                 {globalTime === undefined || players === undefined ? (
-                    <div className="min-w-screen min-h-screen flex font-semibold justify-center items-center">Smarujemy łańcuch...</div>
+                    <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
                 ) : (
-                    <div className="w-full h-full flex flex-col items-center">
-                        <div className="flex flex-col w-full flex-grow overflow-y-hidden">
+                    <div className="flex h-full w-full flex-col items-center">
+                        <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                             <Clock fontSize={4} time={globalTime!} />
                             {/* <div className="flex flex-grow items-center flex-col">
                                 <Countdown beep={() => {}} fontSize={48} seconds={secondsToNextPlayer} />

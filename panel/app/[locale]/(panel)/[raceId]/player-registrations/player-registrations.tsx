@@ -44,7 +44,7 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
     return (
         <span
             className={classNames("flex h-full items-center hover:text-black", {
-                ["text-green-600 font-semibold"]: playerRegistration.promotedToPlayer,
+                ["font-semibold text-green-600"]: playerRegistration.promotedToPlayer,
                 ["text-red-600"]: !playerRegistration.promotedToPlayer,
             })}
         >
@@ -88,8 +88,8 @@ const PlayerRegistrationPayment = ({
     };
     return (
         <span
-            className={classNames("flex h-full items-center hover:text-black cursor-pointer", {
-                ["text-green-600 font-semibold"]: playerRegistration.paymentDate !== null,
+            className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
+                ["font-semibold text-green-600"]: playerRegistration.paymentDate !== null,
                 ["text-red-600"]: playerRegistration.paymentDate === null,
             })}
             onClick={togglePlayerPayment}
@@ -283,8 +283,8 @@ export const PlayerRegistrations = () => {
     const [gridColumnState, setGridColumnState] = useAtom(
         getGridColumnStateAtom(
             "player-registrations",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! }))
-        )
+            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! })),
+        ),
     );
 
     const openCreateDialog = async () => {
@@ -327,7 +327,7 @@ export const PlayerRegistrations = () => {
             <Head>
                 <title>t('pages.playerRegistrations.header.title')</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader
                     title={t("pages.playerRegistrations.header.title")}
                     description={t("pages.playerRegistrations.header.description")}

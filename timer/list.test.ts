@@ -12,7 +12,7 @@ test("empty", () => {
         [],
         [],
         () => "",
-        () => ""
+        () => "",
     );
 
     expect(result).toEqual({ type: "Success", playersNumbers: [] });
@@ -21,7 +21,7 @@ test("empty", () => {
 test("error | ranges overlap", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: ["race_fun"], range: { from: 1, to: 10 } },
-        { id: "race_fun", excludes: ["race_pro"], range: { from: 10, to: 20 } }
+        { id: "race_fun", excludes: ["race_pro"], range: { from: 10, to: 20 } },
     ];
 
     const result = assignNumbersToPlayers(
@@ -29,7 +29,7 @@ test("error | ranges overlap", () => {
         [],
         classifications,
         () => "",
-        () => ""
+        () => "",
     );
 
     expect(result).toEqual({ type: "Error", errorType: "RangesOverlap", playersNumbers: [] });
@@ -44,14 +44,14 @@ test("error | duplicated players", () => {
     expect(result).toEqual({
         type: "Error",
         errorType: "DuplicatedPlayers",
-        playersNumbers: []
+        playersNumbers: [],
     });
 });
 
 test("error | range exceeded", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: [], range: { from: 1, to: 2 } },
-        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), pro("Alice", "Doe"), pro("Danny", "Doe"), pro("Barry", "Doe")];
 
@@ -60,14 +60,14 @@ test("error | range exceeded", () => {
     expect(result).toEqual({
         type: "Error",
         errorType: "RangesExceeded",
-        playersNumbers: []
+        playersNumbers: [],
     });
 });
 
 test("error | range exceeded with excluded numbers", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: [], range: { from: 1, to: 5 } },
-        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), pro("Alice", "Doe"), pro("Danny", "Doe"), pro("Barry", "Doe")];
 
@@ -76,14 +76,14 @@ test("error | range exceeded with excluded numbers", () => {
     expect(result).toEqual({
         type: "Error",
         errorType: "RangesExceeded",
-        playersNumbers: []
+        playersNumbers: [],
     });
 });
 
 test("error | exclutions violated", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: ["race_fun"], range: { from: 1, to: 10 } },
-        { id: "race_fun", excludes: ["race_pro"], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: ["race_pro"], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), fun("John", "Doe")];
 
@@ -92,14 +92,14 @@ test("error | exclutions violated", () => {
     expect(result).toEqual({
         type: "Error",
         errorType: "ExcludesViolated",
-        playersNumbers: []
+        playersNumbers: [],
     });
 });
 
 test("no exclutions duplicate player | unique numbers", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: [], range: { from: 1, to: 10 } },
-        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), fun("John", "Doe")];
 
@@ -107,14 +107,14 @@ test("no exclutions duplicate player | unique numbers", () => {
 
     expect(result).toEqual({
         type: "Success",
-        playersNumbers: [["DoeJohn", 1]]
+        playersNumbers: [["DoeJohn", 1]],
     });
 });
 
 test("no exclutions no duplicate player | unique numbers", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: [], range: { from: 1, to: 10 } },
-        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), fun("Josh", "Doe")];
 
@@ -124,29 +124,23 @@ test("no exclutions no duplicate player | unique numbers", () => {
         type: "Success",
         playersNumbers: [
             ["DoeJohn", 1],
-            ["DoeJosh", 11]
-        ]
+            ["DoeJosh", 11],
+        ],
     });
 });
 
 test("forbidden numbers | unique numbers", () => {
     const classifications: ClassificationConfig[] = [
         { id: "race_pro", excludes: [], range: { from: 1, to: 10 } },
-        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } }
+        { id: "race_fun", excludes: [], range: { from: 11, to: 20 } },
     ];
     const players = [pro("John", "Doe"), fun("John", "Doe")];
 
-    const result = assignNumbersToPlayers(
-        players,
-        [1, 2, 3, 11, 13],
-        classifications,
-        getPlayerId,
-        c => c.classificationId
-    );
+    const result = assignNumbersToPlayers(players, [1, 2, 3, 11, 13], classifications, getPlayerId, c => c.classificationId);
 
     expect(result).toEqual({
         type: "Success",
-        playersNumbers: [["DoeJohn", 4]]
+        playersNumbers: [["DoeJohn", 4]],
     });
 });
 
@@ -158,7 +152,7 @@ test("no classifications | empty", () => {
 
     expect(result).toEqual({
         type: "Success",
-        playersNumbers: []
+        playersNumbers: [],
     });
 });
 
@@ -175,7 +169,7 @@ test("transformed properly | to start", () => {
         Nazwisko: "Brzozka",
         Państwo: "POL",
         Płeć: "M",
-        Telefon: "536225567"
+        Telefon: "536225567",
     };
 
     const result = transform([tsPlayer], toStartPlayerTransform(classifications));
@@ -192,7 +186,7 @@ test("transformed properly | to start", () => {
             lastName: "Brzozka",
             name: "Adrian",
             phoneNumber: "536225567",
-            team: "JBG2"
-        }
+            team: "JBG2",
+        },
     ]);
 });

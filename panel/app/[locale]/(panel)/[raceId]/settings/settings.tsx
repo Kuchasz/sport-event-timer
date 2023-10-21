@@ -22,12 +22,12 @@ export const Settings = () => {
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId! });
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
-    
+
     const t = useTranslations();
 
     const openCreateDialog = async () => {
         const apiKey = await Demodal.open<EditedApiKey>(NiceModal, {
-            title: t('pages.settings.apiKeys.create.title'),
+            title: t("pages.settings.apiKeys.create.title"),
             component: ApiKeyCreate,
             props: {
                 raceId: raceId!,
@@ -41,10 +41,10 @@ export const Settings = () => {
 
     const openDeleteDialog = async (apiKey: ApiKey) => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
-            title: t('pages.settings.apiKeys.delete.confirmation.title'),
+            title: t("pages.settings.apiKeys.delete.confirmation.title"),
             component: Confirmation,
             props: {
-                message: t('pages.settings.apiKeys.delete.confirmation.text', {name: apiKey.name}),
+                message: t("pages.settings.apiKeys.delete.confirmation.text", { name: apiKey.name }),
             },
         });
 
@@ -56,7 +56,7 @@ export const Settings = () => {
 
     const openEditDialog = async (editedApiKey?: ApiKey) => {
         const key = await Demodal.open<ApiKey>(NiceModal, {
-            title: t('pages.settings.apiKeys.edit.title'),
+            title: t("pages.settings.apiKeys.edit.title"),
             component: ApiKeyEdit,
             props: {
                 raceId: raceId!,
@@ -72,14 +72,14 @@ export const Settings = () => {
     return (
         <>
             <Head>
-                <title>{t('pages.settings.header.title')}</title>
+                <title>{t("pages.settings.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
-                <PageHeader title={t('pages.settings.header.title')} description={t('pages.settings.header.description')} />
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
+                <PageHeader title={t("pages.settings.header.title")} description={t("pages.settings.header.description")} />
                 <div className="mb-4 flex">
                     <Button outline onClick={openCreateDialog}>
                         <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t('pages.settings.apiKeys.create.button')}</span>
+                        <span className="ml-2">{t("pages.settings.apiKeys.create.button")}</span>
                     </Button>
                 </div>
                 {apiKeys &&
@@ -87,7 +87,7 @@ export const Settings = () => {
                         <div key={key.key} className="flex flex-col">
                             <div>{key.name}</div>
                             <div className="flex items-center">
-                                <div className="my-2 mr-2 bg-[#c2e59c] rounded-md px-4 py-2">{key.key}</div>
+                                <div className="my-2 mr-2 rounded-md bg-[#c2e59c] px-4 py-2">{key.key}</div>
                                 <Button className="mr-2" onClick={() => openEditDialog(key)}>
                                     <Icon size={0.8} path={mdiPen} />
                                 </Button>

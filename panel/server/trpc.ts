@@ -19,55 +19,55 @@ import { IncomingMessage } from "http";
 import ws from "ws";
 import { getSession } from "next-auth/react";
 
-export const createContext = (forWS: boolean) => async (
-    opts: FetchCreateContextFnOptions | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
-    // export const createContext = async (opts: CreateNextContextOptions) => {
-    // const { req, res } = opts;
+export const createContext =
+    (forWS: boolean) => async (opts: FetchCreateContextFnOptions | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
+        // export const createContext = async (opts: CreateNextContextOptions) => {
+        // const { req, res } = opts;
 
-    // req.headers.cookie
+        // req.headers.cookie
 
-    // console.log(a, b);
+        // console.log(a, b);
 
-    // console.log(opts);
-    // opts.req.
-    // Get the session from the server using the unstable_getServerSession wrapper function
-    // const session = await getServerAuthSession({ req: opts.req, res: opts.res });
-    // const session = await getSession(opts as any);
+        // console.log(opts);
+        // opts.req.
+        // Get the session from the server using the unstable_getServerSession wrapper function
+        // const session = await getServerAuthSession({ req: opts.req, res: opts.res });
+        // const session = await getSession(opts as any);
 
-    // const req = {
-    //     headers: Object.fromEntries(headers()),
-    //     cookies: Object.fromEntries(
-    //       cookies()
-    //         .getAll()
-    //         .map(c => [c.name, c.value]),
-    //     ),
-    //   } as any;
-    //   const res = {
-    //     getHeader() {
-    //       /* empty */
-    //     },
-    //     setCookie() {
-    //       /* empty */
-    //     },
-    //     setHeader() {
-    //       /* empty */
-    //     },
-    //   } as any;
-    //| NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+        // const req = {
+        //     headers: Object.fromEntries(headers()),
+        //     cookies: Object.fromEntries(
+        //       cookies()
+        //         .getAll()
+        //         .map(c => [c.name, c.value]),
+        //     ),
+        //   } as any;
+        //   const res = {
+        //     getHeader() {
+        //       /* empty */
+        //     },
+        //     setCookie() {
+        //       /* empty */
+        //     },
+        //     setHeader() {
+        //       /* empty */
+        //     },
+        //   } as any;
+        //| NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
 
-    // console.log(opts.res);
+        // console.log(opts.res);
 
         // console.log('forWS', forWS);
 
-    const sessionPromise = forWS 
-        ? getSession(opts as NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) 
-        : getServerSession(authOptions());
+        const sessionPromise = forWS
+            ? getSession(opts as NodeHTTPCreateContextFnOptions<IncomingMessage, ws>)
+            : getServerSession(authOptions());
 
-    return ({
-        session: await sessionPromise,
-        db
-    });
-};
+        return {
+            session: await sessionPromise,
+            db,
+        };
+    };
 
 export type Context = inferAsyncReturnType<ReturnType<typeof createContext>>;
 
@@ -94,4 +94,3 @@ const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthenticated);
-

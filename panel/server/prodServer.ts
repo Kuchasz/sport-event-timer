@@ -1,28 +1,28 @@
-import { createContext } from './trpc';
-import { applyWSSHandler } from '@trpc/server/adapters/ws';
-import http from 'http';
-import next from 'next';
-import { parse } from 'url';
-import ws from 'ws';
-import { appRouter } from './routers/app';
-import { logger } from '../utils';
-import * as dotenv from 'dotenv';
+import { createContext } from "./trpc";
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
+import http from "http";
+import next from "next";
+import { parse } from "url";
+import ws from "ws";
+import { appRouter } from "./routers/app";
+import { logger } from "../utils";
+import * as dotenv from "dotenv";
 import * as path from "path";
 
-dotenv.config({ path: path.resolve(".env") })
+dotenv.config({ path: path.resolve(".env") });
 
-const port = parseInt(process.env.PORT || '3000', 10);
-const dev = process.env.NODE_ENV !== 'production';
+const port = parseInt(process.env.PORT || "3000", 10);
+const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
     const server = http.createServer((req, res) => {
-        const proto = req.headers['x-forwarded-proto'];
-        if (proto && proto === 'http') {
+        const proto = req.headers["x-forwarded-proto"];
+        if (proto && proto === "http") {
             // redirect to ssl
             res.writeHead(303, {
-                location: `https://` + req.headers.host + (req.headers.url ?? ''),
+                location: `https://` + req.headers.host + (req.headers.url ?? ""),
             });
             res.end();
             return;
@@ -34,15 +34,12 @@ app.prepare().then(() => {
     const wss = new ws.Server({ server });
     const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContext(true) });
 
-    process.on('SIGTERM', () => {
-        logger.log('SIGTERM');
+    process.on("SIGTERM", () => {
+        logger.log("SIGTERM");
         handler.broadcastReconnectNotification();
     });
     server.listen(port);
 
     // tslint:disable-next-line:no-console
-    logger.log(
-        `> Server listening at http://localhost:${port} as ${dev ? 'development' : process.env.NODE_ENV
-        }`,
-    );
+    logger.log(`> Server listening at http://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
 });

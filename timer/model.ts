@@ -90,7 +90,7 @@ export type Absence = {
     id: number;
     bibNumber: number;
     timingPointId: number;
-}
+};
 
 export type State = {
     timeStamps: TimeStamp[];
@@ -107,12 +107,12 @@ export const getNextId = flow(
     Arr.sortBy([
         pipe(
             N.Ord,
-            Ord.contramap((e: { id: number }) => e.id)
-        )
+            Ord.contramap((e: { id: number }) => e.id),
+        ),
     ]),
     Arr.last,
     Option.map(e => e.id),
-    Option.fold(() => 1, increment)
+    Option.fold(() => 1, increment),
 );
 
 export const filterBy = <T>(items: T[], func: (item: T) => boolean) => pipe(items, Arr.filter(func));
@@ -126,17 +126,16 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
         Option.chain(index =>
             pipe(
                 items,
-                Arr.modifyAt(index, e => ({ ...e, ...item }))
-            )
+                Arr.modifyAt(index, e => ({ ...e, ...item })),
+            ),
         ),
         Option.fold(
             () => items,
-            e => e
-        )
+            e => e,
+        ),
     );
 
-export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) =>
-    updateBy(items, item, i => i.id === item.id);
+export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) => updateBy(items, item, i => i.id === item.id);
 
 // export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
 //     pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
@@ -164,7 +163,6 @@ export const addAbsence = (absences: Absence[], absence: Omit<Absence, "id">): A
     pipe(absences, Arr.append({ ...absence, id: getNextId(absences) }));
 
 export const resetAbsence = (absences: Absence[], id: number): Absence[] => removeById(absences, id);
-
 
 // export const addRaceCategory = (
 //     raceCategories: RaceCategory[],

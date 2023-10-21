@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { PageHeader } from "components/page-header";
 import { trpc } from "../../../../../../trpc-core";
 
@@ -12,4 +12,4 @@ export const Hello = () => {
             <PageHeader title="Hi Page!" description="That is just a page for testing purposes" />
         </div>
     );
-}
+};

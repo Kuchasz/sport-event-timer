@@ -42,21 +42,21 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     <RadioGroup value={category.gender} onChange={e => changeHandler("gender")({ target: { value: e } })}>
                         <RadioGroup.Option value={null}>
                             {({ checked }) => (
-                                <span className={classNames("cursor-pointer text-xs p-1 rounded-md", { ["bg-blue-200"]: checked })}>
+                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
                                     Any
                                 </span>
                             )}
                         </RadioGroup.Option>
                         <RadioGroup.Option value="male">
                             {({ checked }) => (
-                                <span className={classNames("cursor-pointer text-xs p-1 rounded-md", { ["bg-blue-200"]: checked })}>
+                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
                                     Male
                                 </span>
                             )}
                         </RadioGroup.Option>
                         <RadioGroup.Option value="female">
                             {({ checked }) => (
-                                <span className={classNames("cursor-pointer text-xs p-1 rounded-md", { ["bg-blue-200"]: checked })}>
+                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
                                     Female
                                 </span>
                             )}
@@ -64,7 +64,7 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     </RadioGroup>
                 </div>
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>

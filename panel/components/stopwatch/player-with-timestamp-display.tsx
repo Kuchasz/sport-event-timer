@@ -20,14 +20,14 @@ export const PlayerWithTimeStampDisplay = ({
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
 
     return (
-        <span className="flex items-center grow h-12">
+        <span className="flex h-12 grow items-center">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="font-mono text-3xl mr-4">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
+                <span className="mr-4 font-mono text-3xl">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
             ) : null}
 
             <span className="grow">
                 <div
-                    className={classNames("font-semibold transition-all overflow-hidden duration-300", {
+                    className={classNames("overflow-hidden font-semibold transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.timeStamp == null,
                         ["max-h-8 opacity-100"]: playerWithTimeStamp.timeStamp,
                     })}
@@ -41,20 +41,14 @@ export const PlayerWithTimeStampDisplay = ({
                     </span>
                 </div>
                 <div
-                    className={classNames("font-semibold transition-all overflow-hidden duration-300", {
+                    className={classNames("overflow-hidden font-semibold transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.absent == null,
                         ["max-h-8 opacity-100"]: playerWithTimeStamp.absent,
                     })}
                 >
-                    <span>
-                        {playerWithTimeStamp.absent
-                            ? 'ABSENT'
-                            : previousAbsentState
-                            ? 'ABSENT'
-                            : null}
-                    </span>
+                    <span>{playerWithTimeStamp.absent ? "ABSENT" : previousAbsentState ? "ABSENT" : null}</span>
                 </div>
-                <div className="opacity-50 text-sm">
+                <div className="text-sm opacity-50">
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>
             </span>

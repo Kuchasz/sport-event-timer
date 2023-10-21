@@ -3,5 +3,5 @@ import { PlayerRegistrations } from "./player-registrations";
 
 export default async function () {
     await authenticate();
-    return <PlayerRegistrations/>
-};
+    return <PlayerRegistrations />;
+}

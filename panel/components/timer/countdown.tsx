@@ -53,11 +53,11 @@ export const Countdown = ({
     const tickSecond = secondsToPlay.at(-1)!;
 
     return (
-        <div ref={containerRef} className="flex-grow w-full flex flex-col items-center justify-center">
+        <div ref={containerRef} className="flex w-full flex-grow flex-col items-center justify-center">
             <div
                 ref={textRef}
                 style={{ fontSize: `${fontSize}vh` }}
-                className={classNames(["font-mono font-black leading-none transition-all text-center"], {
+                className={classNames(["text-center font-mono font-black leading-none transition-all"], {
                     ["text-white"]: seconds > tickSecond,
                     ["text-orange-500"]: seconds <= tickSecond,
                 })}

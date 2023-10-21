@@ -46,7 +46,7 @@ export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, raceDate,
                     <PoorFullTimepicker date={raceDate} value={splitTime.time} onChange={changeHandler("time")} />
                 </div>
             </div>
-            <div className="mt-4 justify-between flex">
+            <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     Cancel
                 </Button>

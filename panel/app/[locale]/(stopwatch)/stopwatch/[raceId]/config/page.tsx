@@ -3,5 +3,5 @@ import { Config } from "./config";
 
 export default async function () {
     await authenticate();
-    return <Config/>
-};
+    return <Config />;
+}

@@ -29,7 +29,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
         <span
             className={classNames("flex h-full items-center", {
-                ["text-green-600 font-semibold"]: race.registrationEnabled,
+                ["font-semibold text-green-600"]: race.registrationEnabled,
                 ["text-red-600"]: !race.registrationEnabled,
             })}
         >
@@ -138,11 +138,11 @@ export const MyRaces = () => {
             filter: false,
             valueGetter: r => r.node?.rowIndex,
         },
-        { 
-            valueGetter: r => r.data?.name, 
-            headerName: t("pages.races.grid.columns.name"), 
-            sortable: true, 
-            filter: true 
+        {
+            valueGetter: r => r.data?.name,
+            headerName: t("pages.races.grid.columns.name"),
+            sortable: true,
+            filter: true,
         },
         {
             field: "date",
@@ -219,7 +219,7 @@ export const MyRaces = () => {
             {/* <Head>
                 <title>{t("pages.races.header.title")}</title>
             </Head> */}
-            <div className="relative border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 relative flex h-full flex-col border-solid border-gray-600">
                 {/* <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} /> */}
                 <div className="mb-4 inline-flex">
                     <Button outline onClick={openCreateDialog}>

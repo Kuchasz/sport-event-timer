@@ -18,35 +18,33 @@ export const assignNumbersToPlayers = <T, Id>(
     forbiddenNumbers: number[],
     classifications: ClassificationConfig[],
     getPlayerId: (player: T) => Id,
-    getClassificationId: (player: T) => string
+    getClassificationId: (player: T) => string,
 ): AssignmentResult<Id> => {
     const uniqueNumbers = true;
-    const rangesOverlapping = classifications.some(c =>
-        classifications.some(cc => c.id !== cc.id && areOverlapping(c.range, cc.range))
-    );
+    const rangesOverlapping = classifications.some(c => classifications.some(cc => c.id !== cc.id && areOverlapping(c.range, cc.range)));
 
     if (rangesOverlapping)
         return {
             type: "Error",
             playersNumbers: [],
-            errorType: "RangesOverlap"
+            errorType: "RangesOverlap",
         };
 
     const classificationsWithPlayers = classifications.map(c => ({
         ...c,
         numbers: createRange(c.range).filter(n => !forbiddenNumbers.includes(n)),
-        players: players.filter(p => getClassificationId(p) === c.id).map(p => ({ ...p, playerId: getPlayerId(p) }))
+        players: players.filter(p => getClassificationId(p) === c.id).map(p => ({ ...p, playerId: getPlayerId(p) })),
     }));
 
     const playerDuplicatedInClassification = classificationsWithPlayers.some(
-        c => c.players.length !== new Set(c.players.map(p => p.playerId)).size
+        c => c.players.length !== new Set(c.players.map(p => p.playerId)).size,
     );
 
     if (playerDuplicatedInClassification) {
         return {
             type: "Error",
             playersNumbers: [],
-            errorType: "DuplicatedPlayers"
+            errorType: "DuplicatedPlayers",
         };
     }
 
@@ -56,7 +54,7 @@ export const assignNumbersToPlayers = <T, Id>(
         return {
             type: "Error",
             playersNumbers: [],
-            errorType: "RangesExceeded"
+            errorType: "RangesExceeded",
         };
 
     const exclusionsToCheck = classificationsWithPlayers.flatMap(c =>
@@ -64,11 +62,9 @@ export const assignNumbersToPlayers = <T, Id>(
             setA: { name: c.id, players: c.players.map(p => p.playerId) },
             setB: {
                 name: exclusionCandidate,
-                players: classificationsWithPlayers
-                    .find(cc => cc.id === exclusionCandidate)!
-                    .players.map(p => p.playerId)
-            }
-        }))
+                players: classificationsWithPlayers.find(cc => cc.id === exclusionCandidate)!.players.map(p => p.playerId),
+            },
+        })),
     );
 
     const anyExclusionsViolated = exclusionsToCheck.some(e => e.setA.players.some(pa => e.setB.players.includes(pa)));
@@ -77,20 +73,20 @@ export const assignNumbersToPlayers = <T, Id>(
         return {
             type: "Error",
             playersNumbers: [],
-            errorType: "ExcludesViolated"
+            errorType: "ExcludesViolated",
         };
 
     const playerUniqueInClassification = Object.fromEntries(
-        classificationsWithPlayers.flatMap(c => c.players.map(p => [p.playerId, c.id] as [Id, string])).reverse()
+        classificationsWithPlayers.flatMap(c => c.players.map(p => [p.playerId, c.id] as [Id, string])).reverse(),
     );
 
     const classificationsWithDesiredPlayers = classificationsWithPlayers.map(c => ({
         ...c,
-        players: uniqueNumbers ? c.players.filter(p => playerUniqueInClassification[p.playerId] === c.id) : c.players
+        players: uniqueNumbers ? c.players.filter(p => playerUniqueInClassification[p.playerId] === c.id) : c.players,
     }));
 
     const playersNumbers = classificationsWithDesiredPlayers.flatMap(c =>
-        c.players.map((p, i) => [p.playerId, c.numbers[i]] as [Id, number])
+        c.players.map((p, i) => [p.playerId, c.numbers[i]] as [Id, number]),
     );
 
     return { type: "Success", playersNumbers };
@@ -105,7 +101,7 @@ export const transform = <T extends { [key: string]: string }>(
             name: string;
             transformation: (value: string) => UploadPlayer[key];
         };
-    }
+    },
 ): UploadPlayer[] => {
     const transformationKeys = Object.keys(transformations) as Array<keyof typeof transformations>;
 
@@ -113,8 +109,8 @@ export const transform = <T extends { [key: string]: string }>(
         Object.fromEntries(
             transformationKeys.map(desiredKey => [
                 desiredKey,
-                transformations[desiredKey].transformation(player[transformations[desiredKey].name])
-            ])
-        )
+                transformations[desiredKey].transformation(player[transformations[desiredKey].name]),
+            ]),
+        ),
     ) as UploadPlayer[];
 };

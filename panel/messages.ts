@@ -1,49 +1,48 @@
-
 import { env } from "./env/server.js";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: env.NOTIFICATIONS_SERVER_HOST,
-  port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
-  secure: env.NOTIFICATIONS_SERVER_SECURE,
-  auth: {
-    user: env.NOTIFICATIONS_SERVER_AUTH_USER,
-    pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
-  },
+    host: env.NOTIFICATIONS_SERVER_HOST,
+    port: parseInt(env.NOTIFICATIONS_SERVER_PORT),
+    secure: env.NOTIFICATIONS_SERVER_SECURE,
+    auth: {
+        user: env.NOTIFICATIONS_SERVER_AUTH_USER,
+        pass: env.NOTIFICATIONS_SERVER_AUTH_PASS,
+    },
 } as any);
 
 type ConfirmationTarget = {
-  email: string;
-  raceName: string;
-  template: string | null;
-  placeholderValues: [string, string][]
-}
+    email: string;
+    raceName: string;
+    template: string | null;
+    placeholderValues: [string, string][];
+};
 
 export const sendRegistrationConfirmation = async ({ email, raceName, template, placeholderValues }: ConfirmationTarget) =>
-  new Promise<void>((res, rej) => {
+    new Promise<void>((res, rej) => {
+        const finalTemplate = defaultTemplate.replace("%template%", template ?? "");
 
-    const finalTemplate = defaultTemplate.replace('%template%', template ?? '');
+        const [_, __, messageContent] = placeholderValues.reduce(
+            ([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)],
+            ["", "", finalTemplate],
+        );
 
-    const [_, __, messageContent] =
-      placeholderValues
-        .reduce(([_, __, template], [placeholder, value]) => ["", "", template.replaceAll(`%${placeholder}%`, value)], ["", "", finalTemplate]);
+        const message = {
+            from: env.NOTIFICATIONS_MESSAGE_FROM,
+            bcc: email,
+            subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
+            html: messageContent,
+            replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
+        };
 
-    const message = {
-      from: env.NOTIFICATIONS_MESSAGE_FROM,
-      bcc: email,
-      subject: `${raceName} - potwierdzenie rejestracji w zawodach`,
-      html: messageContent,
-      replyTo: `${env.NOTIFICATIONS_MESSAGE_FROM} <${env.NOTIFICATIONS_MESSAGE_TARGET}>`,
-    };
-
-    transporter.sendMail(message, (err) => {
-      if (err) {
-        rej(err);
-      } else {
-        res();
-      }
+        transporter.sendMail(message, err => {
+            if (err) {
+                rej(err);
+            } else {
+                res();
+            }
+        });
     });
-  });
 
 export const defaultTemplate = `<!DOCTYPE html>
 <html>

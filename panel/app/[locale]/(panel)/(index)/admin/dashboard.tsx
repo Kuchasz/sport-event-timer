@@ -1,6 +1,6 @@
 "use client";
 import { DashboardCard } from "components/dashboard-card";
-import { PageHeader } from "components/page-header";    
+import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
 
 import { trpc } from "trpc-core";
@@ -15,7 +15,7 @@ export function Dashboard() {
             <PageHeader title={t("pages.general.dashboard.header.title")} description={t("pages.general.dashboard.header.description")} />
             {dashboardData && (
                 <>
-                    <div className="mt-8 mb-4">
+                    <div className="mb-4 mt-8">
                         <div className="mx-3 text-xl font-semibold">{t("pages.general.dashboard.statistics.title")}</div>
                         <div className="flex">
                             <DashboardCard.Range
@@ -32,7 +32,7 @@ export function Dashboard() {
                     </div>
 
                     {dashboardData.nextRace && (
-                        <div className="mt-8 mb-4">
+                        <div className="mb-4 mt-8">
                             <div className="mx-3 text-xl font-semibold">{t("pages.general.dashboard.raceStatistics.title")}</div>
                             <div className="flex">
                                 <DashboardCard.Info

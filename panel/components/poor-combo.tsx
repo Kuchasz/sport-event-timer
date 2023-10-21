@@ -26,7 +26,7 @@ export const PoorCombo = ({
     return (
         <Combobox value={query}>
             <div className="relative mt-1">
-                <div className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full">
+                <div className="block w-full rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:border-orange-600 focus:ring-orange-600 sm:text-sm">
                     <Combobox.Input
                         placeholder={placeholder}
                         className="w-full rounded-lg bg-transparent py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"

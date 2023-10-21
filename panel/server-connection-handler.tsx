@@ -25,9 +25,9 @@ export const ServerConnectionHandler = ({
                 dispatch({ ...action, __remote: true });
             },
             onError: console.error,
-        }
+        },
     );
-    
+
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
@@ -37,7 +37,7 @@ export const ServerConnectionHandler = ({
         {
             enabled: false,
             onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true }),
-        }
+        },
     );
 
     const setTimeOffset = useSetAtom(timeOffsetAtom);

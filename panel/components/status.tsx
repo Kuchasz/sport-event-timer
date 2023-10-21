@@ -9,18 +9,18 @@ export const Status = async ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     // const races = await db.race.findMany({ orderBy: { id: "desc" } })
 
     return (
-        <div className="flex items-center bg-gray-50 cursor-default h-20 py-6 min px-8">
+        <div className="min flex h-20 cursor-default items-center bg-gray-50 px-8 py-6">
             {breadcrumbs}
             <div className="grow"></div>
             {session && (
-                <div className="flex items-center mr-4">
+                <div className="mr-4 flex items-center">
                     {/* <RaceSelector races={races}/> */}
-                    <img className="ml-4 rounded-full h-8 w-8" src={session.user?.image ?? ""} />
+                    <img className="ml-4 h-8 w-8 rounded-full" src={session.user?.image ?? ""} />
                     <div className="ml-4 flex flex-col">
                         <div className="text-sm">{session.user?.name}</div>
                         <div className="text-2xs font-light">Organizer</div>
                     </div>
-                    <div className="mx-8 w-[1px] h-8 flex bg-gray-100"></div>
+                    <div className="mx-8 flex h-8 w-[1px] bg-gray-100"></div>
                     <LogoutButton />
                 </div>
             )}

@@ -4,8 +4,8 @@ import TimerLayout from "./timer-layout";
 
 export default function ({ children }: { children: ReactNode }) {
     return (
-        <html className="w-full h-full" lang="en">
-            <body className="w-full h-full flex flex-col text-zinc-900">
+        <html className="h-full w-full" lang="en">
+            <body className="flex h-full w-full flex-col text-zinc-900">
                 <TimerLayout>{children}</TimerLayout>
             </body>
         </html>

@@ -18,7 +18,7 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData });
     const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
     const raceId = useCurrentRaceId() || selectedRaceId;
-    const router = useRouter();    
+    const router = useRouter();
 
     // console.log(selectedRaceId);
 
@@ -43,7 +43,7 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
 };
 
 export const LogoutButton = () => (
-    <div className="flex opacity-50 hover:opacity-100 transition-opacity items-center cursor-pointer text-sm" onClick={() => signOut()}>
+    <div className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100" onClick={() => signOut()}>
         <Icon path={mdiPowerStandby} size={0.5}></Icon>
         <span className="ml-1">Logout</span>
     </div>

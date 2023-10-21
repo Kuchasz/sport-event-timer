@@ -3,5 +3,5 @@ import { SplitTimes } from "./split-times";
 
 export default async function () {
     await authenticate();
-    return <SplitTimes/>
-};
+    return <SplitTimes />;
+}

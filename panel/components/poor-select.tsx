@@ -32,13 +32,13 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
             }}
         >
             <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border-gray-300 border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                     {desiredItem ? (
                         <span className="block truncate">{String(desiredItem[nameKey])}</span>
                     ) : (
-                        <span className="text-gray-400 block truncate">{placeholder}</span>
+                        <span className="block truncate text-gray-400">{placeholder}</span>
                     )}
-                    <span className="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-4">
+                    <span className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-4">
                         {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
                         <Icon path={mdiArrowUpDown} size={0.7} />
                     </span>
@@ -112,7 +112,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                 }}
             >
                 <div className="relative w-full flex-shrink px-2">
-                    <Listbox.Button className="relative w-full rounded-lg bg-gray-100 cursor-pointer hover:bg-gray-200 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left hover:bg-gray-200 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">{String(desiredItem[nameKey])}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}

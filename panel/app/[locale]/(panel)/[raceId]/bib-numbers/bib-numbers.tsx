@@ -43,9 +43,9 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
         }
     };
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer" onClick={deletebibNumber}>
+        <span className="flex cursor-pointer items-center hover:text-red-600" onClick={deletebibNumber}>
             <Icon size={0.8} path={mdiTrashCan} />
-            {t('pages.bibNumbers.delete.button')}
+            {t("pages.bibNumbers.delete.button")}
         </span>
     );
 };
@@ -60,7 +60,7 @@ export const BibNumbers = () => {
     const t = useTranslations();
 
     const defaultColumns: ColDef<BibNumber>[] = [
-        { headerName: t('pages.bibNumbers.grid.columns.index'), sortable: true, maxWidth: 80, valueGetter: r => r.node?.rowIndex },
+        { headerName: t("pages.bibNumbers.grid.columns.index"), sortable: true, maxWidth: 80, valueGetter: r => r.node?.rowIndex },
         {
             field: "number",
             sortable: true,
@@ -142,20 +142,20 @@ export const BibNumbers = () => {
             <Head>
                 <title>{t("pages.bibNumbers.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button outline onClick={openCreateDialog}>
                         <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t('pages.bibNumbers.create.button')}</span>
+                        <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
                     </Button>
                     <Button outline className="ml-2" onClick={openCreateManyDialog}>
                         {/* <Icon size={0.8} path={mdiPlusM} /> */}
-                        {t('pages.bibNumbers.createMany.button')}
+                        {t("pages.bibNumbers.createMany.button")}
                     </Button>{" "}
                     <Button outline className="ml-2" onClick={openDeleteAllDialog}>
                         <Icon size={0.8} path={mdiRestore} className="mr-2" />
-                        {t('pages.bibNumbers.deleteAll.button')}
+                        {t("pages.bibNumbers.deleteAll.button")}
                     </Button>
                 </div>
                 <div className="ag-theme-material h-full">

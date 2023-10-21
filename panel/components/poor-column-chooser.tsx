@@ -30,16 +30,16 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
             }}
         >
             <div className="flex">
-                <Listbox.Button className="relative cursor-pointer rounded-lg text-gray-500 hover:text-black self-center px-5 text-left">
+                <Listbox.Button className="relative cursor-pointer self-center rounded-lg px-5 text-left text-gray-500 hover:text-black">
                     <Icon path={mdiTableCog} size={0.8} />
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                    <Listbox.Options className="absolute z-10 w-auto mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {items.map((item, personIdx) => (
                             <Listbox.Option
                                 key={personIdx}
                                 className={({ active }) =>
-                                    `relative cursor-default select-none w-auto py-2 pl-10 pr-4 ${
+                                    `relative w-auto cursor-default select-none py-2 pl-10 pr-4 ${
                                         active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                                     }`
                                 }
@@ -55,7 +55,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                                                 <Icon path={mdiEye} size={0.7} />
                                             </span>
                                         ) : (
-                                            <span className="absolute inset-y-0 left-0 flex text-gray-300 items-center px-3">
+                                            <span className="absolute inset-y-0 left-0 flex items-center px-3 text-gray-300">
                                                 <Icon path={mdiEyeOff} size={0.7} />
                                             </span>
                                         )}

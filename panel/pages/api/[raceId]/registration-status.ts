@@ -1,13 +1,11 @@
-
 import { withRaceApiKey } from "auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { withExceptionHandling } from "exceptions";
 import { db } from "server/db";
 
-type RegistrationStatus = 'enabled' | 'disabled' | 'limit-reached';
+type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
 
 const getRegistrationStatus = async (req: NextApiRequest, res: NextApiResponse) => {
-
     const { raceId } = req.query;
 
     const race = await db.race.findFirstOrThrow({ where: { id: Number(raceId) } });
@@ -20,13 +18,13 @@ const getRegistrationStatus = async (req: NextApiRequest, res: NextApiResponse) 
         raceName: race.name,
         raceDate: race.date,
         status: (!race.registrationEnabled
-            ? 'disabled'
+            ? "disabled"
             : race.playersLimit
-                ? registeredPlayers >= race.playersLimit
-                    ? 'limit-reached'
-                    : 'enabled'
-                : 'enabled') as RegistrationStatus
+            ? registeredPlayers >= race.playersLimit
+                ? "limit-reached"
+                : "enabled"
+            : "enabled") as RegistrationStatus,
     });
-}
+};
 
 export default withRaceApiKey(withExceptionHandling(getRegistrationStatus));

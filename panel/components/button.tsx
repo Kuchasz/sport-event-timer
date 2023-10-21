@@ -20,10 +20,10 @@ export const Button = ({ outline, children, loading, className, ...props }: Butt
             onClick={loading ? () => null : props.onClick}
             type="button"
             {...props}
-            className={`flex relative transition-all items-center justify-center rounded-full border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${className}`}
+            className={`relative flex items-center justify-center rounded-full border border-transparent px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${className}`}
         >
             {isLoading && <LoadingSpinner fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
-            <div className={`flex transition-all items-center ${loadingVisuals}`}>{children}</div>
+            <div className={`flex items-center transition-all ${loadingVisuals}`}>{children}</div>
         </button>
     );
 };

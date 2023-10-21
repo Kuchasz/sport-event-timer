@@ -20,7 +20,7 @@ const SelectedTimingPoint = ({
     timingPointId: number;
     timingPointName: string | undefined;
 }) => (
-    <span className="cursor-pointer flex transition-colors hover:bg-zinc-700 bg-zinc-800 text-zinc-300 px-4 py-1 rounded-xl">
+    <span className="flex cursor-pointer rounded-xl bg-zinc-800 px-4 py-1 text-zinc-300 transition-colors hover:bg-zinc-700">
         <TimingPointIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
 
         <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
@@ -28,7 +28,7 @@ const SelectedTimingPoint = ({
 );
 
 const WarningMessage = ({ icon, contents }: { icon?: string; contents: string }) => (
-    <span className="cursor-pointer flex items-center text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+    <span className="flex cursor-pointer items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 text-white">
         {icon && <Icon className="mr-1" path={icon} size={0.7} />}
         <span>{contents}</span>
     </span>
@@ -53,16 +53,16 @@ const StatusBar = ({
 }) => (
     <span
         className={classNames(
-            `absolute z-10 text-xs w-full overflow-hidden text-white font-semibold ease-out transition-all flex justify-center items-center ${color}`,
+            `absolute z-10 flex w-full items-center justify-center overflow-hidden text-xs font-semibold text-white transition-all ease-out ${color}`,
             {
                 ["h-0"]: connectionState !== desiredState,
                 ["h-auto py-2"]: connectionState === desiredState,
                 ["animate-pulse"]: pulse,
-            }
+            },
         )}
     >
         <span
-            className={classNames("transition-opacity flex items-center", {
+            className={classNames("flex items-center transition-opacity", {
                 ["opacity-0"]: connectionState !== desiredState,
                 ["opacity-100"]: connectionState === desiredState,
             })}
@@ -86,11 +86,11 @@ export const Status = ({ raceId }: { raceId: string }) => {
         { raceId: parseInt(raceId as string) },
         {
             initialData: [],
-        }
+        },
     );
     const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: parseInt(raceId as string) },
-        { initialData: [] }
+        { initialData: [] },
     );
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
@@ -121,7 +121,7 @@ export const Status = ({ raceId }: { raceId: string }) => {
                 text="OFF-LINE"
                 connectionState={connectionState}
             />
-            <div className="px-4 py-2 rounded-b-lg z-10 bg-black text-white w-screen justify-between flex-shrink-0 flex items-center font-semibold">
+            <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between rounded-b-lg bg-black px-4 py-2 font-semibold text-white">
                 <Timer offset={offset!} />
                 <Link href={`/stopwatch/${raceId}/config`}>
                     <span>

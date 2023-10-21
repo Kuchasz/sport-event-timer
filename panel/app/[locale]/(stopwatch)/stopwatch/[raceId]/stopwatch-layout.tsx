@@ -77,20 +77,20 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
                 <ReduxStoreProvider store={store}>
                     <ExternalsExposer />
                     <ServerConnectionHandler dispatch={store!.dispatch} raceId={parseInt(raceId as string)} clientId={clientId}>
-                        <div id="app-holder" className="flex flex-col overflow-hidden bg-zinc-200 h-full w-screen text-zinc-700">
+                        <div id="app-holder" className="flex h-full w-screen flex-col overflow-hidden bg-zinc-200 text-zinc-700">
                             <Status raceId={raceId} />
-                            <div id="module-holder" className="relative overflow-y-auto h-full flex-col flex-1">
+                            <div id="module-holder" className="relative h-full flex-1 flex-col overflow-y-auto">
                                 {isOffline ? (
-                                    <div className="w-full h-full px-4 flex items-center justify-center">
+                                    <div className="flex h-full w-full items-center justify-center px-4">
                                         <div className="flex flex-col items-center">
                                             <Icon path={mdiCloudOffOutline} size={2}></Icon>
                                             <div className="text-xl font-bold">DISCONNECTED</div>
                                             <div className="font-medium">Stable internet connection required.</div>
-                                            <div className="mt-8 text-sm text-center">Wait for the reconnect or restart the app.</div>
+                                            <div className="mt-8 text-center text-sm">Wait for the reconnect or restart the app.</div>
                                         </div>
                                     </div>
                                 ) : timingPointMissing && !pathname.includes("config") ? (
-                                    <div className="w-full h-full px-4 flex items-center justify-center">
+                                    <div className="flex h-full w-full items-center justify-center px-4">
                                         <div className="flex flex-col items-center">
                                             <Icon path={mdiCogOutline} size={2}></Icon>
                                             <div className="text-xl font-semibold">CONFIG REQUIRED</div>

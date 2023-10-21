@@ -26,7 +26,7 @@ type CreatedClassification = AppRouterInputs["classification"]["add"];
 const OpenCategoriesButton = ({ classification }: { classification: Classification }) => {
     const t = useTranslations();
     return (
-        <span className="flex items-center hover:text-red-600 cursor-pointer">
+        <span className="flex cursor-pointer items-center hover:text-red-600">
             <Icon size={0.8} path={mdiAccountMultiple} />
             <Link href={`/${classification.raceId}/classifications/${classification.id}` as Route}>
                 <span>{t("pages.classifications.categories.button")}</span>
@@ -86,7 +86,7 @@ export const Classifications = () => {
             <Head>
                 <title>{t("pages.classifications.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.classifications.header.title")} description={t("pages.classifications.header.description")} />
                 <div className="mb-4 inline-flex">
                     <Button onClick={openCreateDialog}>

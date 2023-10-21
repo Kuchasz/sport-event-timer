@@ -8,10 +8,10 @@ import { ReactNode } from "react";
 type BreadcrumbItemProps<T extends string> = { text: string; href?: Route<T> | URL };
 
 const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>) => (
-    <div className="last:text-gray-800 text-gray-400 flex items-center">
+    <div className="flex items-center text-gray-400 last:text-gray-800">
         <Icon className="mx-1" size={0.8} path={mdiChevronRight} />
         {href ? (
-            <Link className="hover:bg-gray-200 hover:text-gray-800 transition-colors px-2 py-1 rounded-md" href={href as Route}>
+            <Link className="rounded-md px-2 py-1 transition-colors hover:bg-gray-200 hover:text-gray-800" href={href as Route}>
                 {text}
             </Link>
         ) : (
@@ -30,10 +30,10 @@ export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
     }
 
     return (
-        <div className="uppercase text-xs font-semibold flex">
-            <div className="flex items-center mx-1">
+        <div className="flex text-xs font-semibold uppercase">
+            <div className="mx-1 flex items-center">
                 <Link href="/panel">
-                    <Icon className="text-gray-700 cursor-pointer transition-colors rounded-md" size={0.8} path={mdiHomeOutline} />
+                    <Icon className="cursor-pointer rounded-md text-gray-700 transition-colors" size={0.8} path={mdiHomeOutline} />
                 </Link>
             </div>
             {children}

@@ -11,22 +11,23 @@ export const getCurrentTime = (offset: number, date: Date) => {
     newDate.setDate(date.getDate());
 
     return newDate.getTime();
-}
-export const formatNumber = (n: number, precision = 2) =>
-    n.toLocaleString("en-US", { minimumIntegerDigits: precision });
+};
+export const formatNumber = (n: number, precision = 2) => n.toLocaleString("en-US", { minimumIntegerDigits: precision });
 
 export const formatTime = (time: Date) =>
-    `${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}:${formatNumber(
-        time.getSeconds()
-    )}.${formatNumber(time.getMilliseconds(), 3).slice(0, 1)}`;
+    `${formatNumber(time.getHours())}:${formatNumber(time.getMinutes())}:${formatNumber(time.getSeconds())}.${formatNumber(
+        time.getMilliseconds(),
+        3,
+    ).slice(0, 1)}`;
 
 export const splitTime = (time: Date, fullMiliseconds = false) => ({
-    hours: formatNumber(time.getHours()), minutes: formatNumber(time.getMinutes()), seconds: formatNumber(
-        time.getSeconds()
-    ), miliseconds: fullMiliseconds ? formatNumber(time.getMilliseconds(), 3) : formatNumber(time.getMilliseconds(), 3).slice(0, 1)
+    hours: formatNumber(time.getHours()),
+    minutes: formatNumber(time.getMinutes()),
+    seconds: formatNumber(time.getSeconds()),
+    miliseconds: fullMiliseconds ? formatNumber(time.getMilliseconds(), 3) : formatNumber(time.getMilliseconds(), 3).slice(0, 1),
 });
 
-export const zeroSplits = { hours: '00', minutes: '00', seconds: '00', miliseconds: '0' };
+export const zeroSplits = { hours: "00", minutes: "00", seconds: "00", miliseconds: "0" };
 
 export const getCountdownTime = (time: number) => {
     const currentTime = new Date(time);
@@ -45,16 +46,14 @@ export const timeOnlyFormatTimeNoSec = (time?: number) => {
 export const formatTimeWithSec = (time?: number) => {
     if (!time) return "--:--:--";
     const dateTime = new Date(time);
-    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
-        dateTime.getSeconds()
-    )}`;
+    return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(dateTime.getSeconds())}`;
 };
 
 export const formatTimeWithMilliSec = (time?: number) => {
     if (!time) return "--:--:--.---";
     const dateTime = new Date(time);
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
-        dateTime.getSeconds()
+        dateTime.getSeconds(),
     )}.${formatNumber(dateTime.getMilliseconds()).padStart(3, "0")}`;
 };
 
@@ -67,11 +66,11 @@ export const formatTimeWithMilliSecUTC = (totalMilliseconds?: number) => {
     const milliseconds = totalMilliseconds % 1000;
 
     if (hours > 0)
-        return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-    if (minutes > 0)
-        return `${minutes.toString()}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-    if (seconds >= 0)
-        return `${seconds.toString()}.${milliseconds.toString().padStart(3, '0')}`;
+        return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds
+            .toString()
+            .padStart(3, "0")}`;
+    if (minutes > 0) return `${minutes.toString()}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
+    if (seconds >= 0) return `${seconds.toString()}.${milliseconds.toString().padStart(3, "0")}`;
 };
 
 export const formatGap = (totalMilliseconds?: number) => {
@@ -83,13 +82,12 @@ export const formatGap = (totalMilliseconds?: number) => {
     const milliseconds = totalMilliseconds % 1000;
 
     if (hours > 0)
-        return `+${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-    if (minutes > 0)
-        return `+${minutes.toString()}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
-    if (seconds >= 0)
-        return `+${seconds.toString()}.${milliseconds.toString().padStart(3, '0')}`;
+        return `+${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds
+            .toString()
+            .padStart(3, "0")}`;
+    if (minutes > 0) return `+${minutes.toString()}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
+    if (seconds >= 0) return `+${seconds.toString()}.${milliseconds.toString().padStart(3, "0")}`;
 };
-
 
 export const timeSeconds = (timeMs: number) => new Date(timeMs).getSeconds();
 
@@ -103,14 +101,13 @@ export const milisecondsToTimeString = (miliseconds: number | undefined | null) 
 
 export const daysFromNow = (days: number) => new Date(new Date().getTime() + days * 86_400_000);
 
-export const calculateAge = (birthDate: Date): number =>
-    new Date().getFullYear() - birthDate.getFullYear();
+export const calculateAge = (birthDate: Date): number => new Date().getFullYear() - birthDate.getFullYear();
 
 export const dateFromYearsAgo = (years: number) => {
     const currentDate = new Date();
     const newDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth(), currentDate.getDate());
     return newDate;
-}
+};
 
 const todayDateObject = new Date();
 todayDateObject.setHours(0, 0, 0, 0);
@@ -120,26 +117,24 @@ export const isTodayOrLater = (date: Date) => {
     dateCopyDateObject.setHours(0, 0, 0, 0);
 
     return dateCopyDateObject >= todayDateObject;
-}
+};
 
 export const isPast = (date: Date) => {
     const dateCopyDateObject = new Date(date);
     dateCopyDateObject.setHours(0, 0, 0, 0);
 
     return dateCopyDateObject < todayDateObject;
-}
+};
 
-type MonthFormat = 'long' | 'numeric' | '2-digit' | 'short' | 'narrow' | undefined;
-type WeekdayFormat = 'long' | 'short' | 'narrow' | undefined;
+type MonthFormat = "long" | "numeric" | "2-digit" | "short" | "narrow" | undefined;
+type WeekdayFormat = "long" | "short" | "narrow" | undefined;
 
-export const monthForLocale = (month: number, monthFormat: MonthFormat = 'long', localeName = 'es-MX') => {
-    const format = new Intl
-        .DateTimeFormat(localeName, { month: monthFormat }).format;
+export const monthForLocale = (month: number, monthFormat: MonthFormat = "long", localeName = "es-MX") => {
+    const format = new Intl.DateTimeFormat(localeName, { month: monthFormat }).format;
     return format(new Date(Date.UTC(2021, month)));
-}
+};
 
-export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = 'short', localeName = 'es-MX') => {
-    const format = new Intl
-        .DateTimeFormat(localeName, { weekday: weekdayFormat }).format;
+export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = "short", localeName = "es-MX") => {
+    const format = new Intl.DateTimeFormat(localeName, { weekday: weekdayFormat }).format;
     return format(new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())));
-}
+};

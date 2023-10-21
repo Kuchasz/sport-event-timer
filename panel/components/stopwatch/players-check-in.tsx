@@ -15,7 +15,7 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ playerNumber }: TypedPlayerProps) => (
-    <div className="text-orange-500 h-16 flex text-center justify-center text-4xl font-regular py-2">{playerNumber}</div>
+    <div className="font-regular flex h-16 justify-center py-2 text-center text-4xl text-orange-500">{playerNumber}</div>
 );
 
 type CheckInPlayerProps = {
@@ -25,9 +25,9 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className="bg-gradient-to-r from-orange-500 to-red-500 mt-2 flex w-full px-4 py-2 items-center shadow-md rounded-md"
+        className="mt-2 flex w-full items-center rounded-md bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 shadow-md"
     >
-        <div className="font-bold text-2xl mr-4">{player.bibNumber}</div>
+        <div className="mr-4 text-2xl font-bold">{player.bibNumber}</div>
         <div>
             {player.name} {player.lastName}
         </div>
@@ -47,29 +47,29 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: Player
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId as string) }, { initialData: [] });
 
-    const allTimeStamps = useTimerSelector((x) => x.timeStamps);
-    const allAbsences = useTimerSelector((x) => x.absences);
+    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allAbsences = useTimerSelector(x => x.absences);
 
-    const playersWithTimeStamps = allPlayers!.map((x) => ({
+    const playersWithTimeStamps = allPlayers!.map(x => ({
         ...x,
-        timeStamp: allTimeStamps.find((a) => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+        timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
         absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
     }));
 
-    const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter((x) => x.timeStamp === undefined && x.absent === undefined);
-    const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map((x) => x.bibNumber);
+    const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(x => x.timeStamp === undefined && x.absent === undefined);
+    const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map(x => x.bibNumber);
 
     const availableNumbers = getAvailableNumbers(playerNumber, playersNumbersWithoutTimeStamps);
-    const availablePlayers = nonAbsentPlayersWithoutTimeStamps.filter((p) => availableNumbers.includes(p.bibNumber));
+    const availablePlayers = nonAbsentPlayersWithoutTimeStamps.filter(p => availableNumbers.includes(p.bibNumber));
 
     return (
         <div className="flex h-full flex-col">
-            {title && <h1 className="text-2xl text-center py-4">{title}</h1>}
-            <div className="flex-auto text-white flex flex-col-reverse mx-12 overflow-y-auto mt-2 items-stretch h-3/5">
-                {availablePlayers.map((p) => (
+            {title && <h1 className="py-4 text-center text-2xl">{title}</h1>}
+            <div className="mx-12 mt-2 flex h-3/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
+                {availablePlayers.map(p => (
                     <CheckInPlayer
                         key={p.bibNumber}
-                        onPlayerCheckIn={(bibNumber) => {
+                        onPlayerCheckIn={bibNumber => {
                             onPlayerCheckIn(bibNumber);
                             setPlayerNumber("");
                         }}

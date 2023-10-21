@@ -28,7 +28,7 @@ const initialRegistration = () =>
         city: "",
         email: "",
         phoneNumber: "",
-    } as PlayerRegistration);
+    }) as PlayerRegistration;
 
 const RegistrationFormComponent = ({
     disabled,
@@ -44,7 +44,7 @@ const RegistrationFormComponent = ({
     termsUrl: string | null;
 }) => {
     const t = useTranslations();
-    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`)}));
+    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
 
     return (
         <div className="space-y-4 md:space-y-6">
@@ -144,12 +144,12 @@ const RegistrationFormComponent = ({
                 />
                 <div className={classNames("my-4 md:my-6", { ["opacity-50"]: disabled })}>
                     <div className="flex items-start">
-                        <div className="flex items-center h-5">
+                        <div className="flex h-5 items-center">
                             <input
                                 id="terms"
                                 aria-describedby="terms"
                                 type="checkbox"
-                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-orange-300"
+                                className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-orange-300"
                                 required
                             />
                         </div>
@@ -216,7 +216,7 @@ export const Registration = () => {
 
     const { data: registrationSystemStatus, refetch: refetchSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
         { raceId: Number(raceId) },
-        { enabled: !!raceId }
+        { enabled: !!raceId },
     );
 
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
@@ -244,13 +244,13 @@ export const Registration = () => {
                 <title>{t("registration.header.title")}</title>
             </Head>
             {registrationSystemStatus && (
-                <div className="flex f-full w-full overflow-y-scroll flex-col items-center px-6 py-8 mx-auto lg:py-2">
-                    <div className="w-full rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0">
+                <div className="f-full mx-auto flex w-full flex-col items-center overflow-y-scroll px-6 py-8 lg:py-2">
+                    <div className="w-full rounded-lg shadow-md sm:max-w-md md:mt-0 xl:p-0">
                         <div className="p-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                 {registrationSystemStatus.raceName}
                             </h1>
-                            <div className="text-base mb-4 leading-tight tracking-tight text-gray-900 md:text-md">
+                            <div className="md:text-md mb-4 text-base leading-tight tracking-tight text-gray-900">
                                 {t("registration.header.description")}
                             </div>
 

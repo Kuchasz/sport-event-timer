@@ -3,5 +3,5 @@ import { Race } from "./race";
 
 export default async function () {
     await authenticate();
-    return <Race/>
-};
+    return <Race />;
+}

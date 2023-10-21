@@ -5,18 +5,16 @@ import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@t
 import { QueryClient } from "@tanstack/react-query";
 import { env } from "./env/client";
 
-const url =
-    env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
+const url = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
 
-const wsUrl =
-    env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
+const wsUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
 
 const wsClient =
     typeof window === "undefined"
         ? null
         : createWSClient({
-            url: wsUrl
-        });
+              url: wsUrl,
+          });
 
 export const getConnection = wsClient?.getConnection;
 
@@ -38,17 +36,15 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
             currentState === socket.CONNECTING
                 ? "connecting"
                 : currentState === socket.OPEN
-                    ? "connected"
-                    : currentState === socket.CLOSED
-                        ? "disconnected"
-                        : "error"
+                ? "connected"
+                : currentState === socket.CLOSED
+                ? "disconnected"
+                : "error",
         );
     }, 250);
 };
 
-if (getConnection)
-    registerStateChangeHandlers(getConnection);
-
+if (getConnection) registerStateChangeHandlers(getConnection);
 
 export const connectionConfig = (queryClient: QueryClient) => ({
     transformer: superjson,
@@ -58,20 +54,20 @@ export const connectionConfig = (queryClient: QueryClient) => ({
         loggerLink({
             enabled: opts =>
                 (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
-                (opts.direction === "down" && opts.result instanceof Error)
+                (opts.direction === "down" && opts.result instanceof Error),
         }),
         splitLink({
             condition(op) {
                 return wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
             },
             true: wsLink({
-                client: wsClient!
+                client: wsClient!,
             }),
             false: httpBatchLink({
-                url: `${url}/api/trpc`
-            })
-        })
-    ]
+                url: `${url}/api/trpc`,
+            }),
+        }),
+    ],
 });
 
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";

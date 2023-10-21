@@ -38,7 +38,7 @@ const CategoryIsSpecial = ({ category }: { category: Category }) => {
     return (
         <span
             className={classNames("flex h-full items-center hover:text-black", {
-                ["text-green-600 font-semibold"]: category.isSpecial,
+                ["font-semibold text-green-600"]: category.isSpecial,
                 ["text-red-600"]: !category.isSpecial,
             })}
         >
@@ -68,7 +68,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
 
     return (
         <div className="flex h-full">
-            <span className="flex px-2 items-center hover:text-red-600 cursor-pointer" onClick={openDeleteDialog}>
+            <span className="flex cursor-pointer items-center px-2 hover:text-red-600" onClick={openDeleteDialog}>
                 <Icon size={0.8} path={mdiTrashCan} />
             </span>
         </div>
@@ -80,7 +80,7 @@ export const ClassificationCategories = () => {
     const gridRef = useRef<AgGridReact<Category>>(null);
     const { data: categories, refetch } = trpc.classification.categories.useQuery(
         { classificationId: classificationId! },
-        { initialData: [], enabled: !!classificationId }
+        { initialData: [], enabled: !!classificationId },
     );
     const t = useTranslations();
 
@@ -121,7 +121,7 @@ export const ClassificationCategories = () => {
             headerClass: "hidden",
             sortable: false,
             filter: false,
-            valueGetter: r => r.node?.rowIndex
+            valueGetter: r => r.node?.rowIndex,
         },
         {
             field: "name",
@@ -173,7 +173,7 @@ export const ClassificationCategories = () => {
             <Head>
                 <title>{t("pages.classifications.categories.header.title")}</title>
             </Head>
-            <div className="border-1 flex flex-col h-full border-gray-600 border-solid">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader
                     title={t("pages.classifications.categories.header.title")}
                     description={t("pages.classifications.categories.header.description")}

@@ -10,8 +10,8 @@ export const absencesSlice = createSlice({
     initialState,
     reducers: {
         add: (state, action: PayloadAction<Omit<m.Absence, "id">>) => m.addAbsence(state, action.payload),
-        reset: (state, action: PayloadAction<Pick<m.Absence, "id">>) => m.resetAbsence(state, action.payload.id)
-    }
+        reset: (state, action: PayloadAction<Pick<m.Absence, "id">>) => m.resetAbsence(state, action.payload.id),
+    },
 });
 
 export const { add, reset } = absencesSlice.actions;

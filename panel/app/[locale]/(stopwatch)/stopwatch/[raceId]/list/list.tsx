@@ -26,7 +26,7 @@ export const PlayersList = () => {
             addAbsence({
                 bibNumber,
                 timingPointId: timingPointId!,
-            })
+            }),
         );
     const { push } = useRouter();
 
@@ -42,7 +42,7 @@ export const PlayersList = () => {
             onRecord: onRecordAbsence,
             push,
         })),
-        p => p.startTime || Number.MAX_VALUE
+        p => p.startTime || Number.MAX_VALUE,
     );
 
     const dispatch = useTimerDispatch();
@@ -58,7 +58,7 @@ export const PlayersList = () => {
     const highestBibNumber = Math.max(...players.map(p => p.bibNumber));
 
     return (
-        <div ref={parentRef} className="px-2 py-2 w-full h-full overflow-auto">
+        <div ref={parentRef} className="h-full w-full overflow-auto px-2 py-2">
             <div
                 style={{
                     height: rowVirtualizer.getTotalSize(),
@@ -69,10 +69,10 @@ export const PlayersList = () => {
                 {rowVirtualizer.getVirtualItems().map(virtualRow => (
                     <div
                         key={players[virtualRow.index].bibNumber}
-                        className="absolute w-full t-0 left-0 py-0.5"
+                        className="t-0 absolute left-0 w-full py-0.5"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                     >
-                        <div className="flex py-2 px-3 items-center relative rounded-xl shadow bg-white">
+                        <div className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow">
                             <PlayerWithTimeStampDisplay
                                 padBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}

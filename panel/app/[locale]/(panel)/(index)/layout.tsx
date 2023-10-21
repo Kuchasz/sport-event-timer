@@ -12,12 +12,12 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
         <>
             <Meta />
-            <div className="h-full relative">
-                <div className="will-change-transform h-full w-full flex">
+            <div className="relative h-full">
+                <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <main className="flex flex-col items-center grow h-full overflow-y-auto">
+                        <main className="flex h-full grow flex-col items-center overflow-y-auto">
                             <IndexStatus />
-                            <div className="w-full flex flex-col flex-grow">
+                            <div className="flex w-full flex-grow flex-col">
                                 {/* <AgGridProvider>{children}</AgGridProvider> */}
                                 {children}
                             </div>
@@ -48,8 +48,8 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     }
 
     return (
-        <html className="w-full h-full" lang={locale}>
-            <body className="w-full h-full flex flex-col text-zinc-900">
+        <html className="h-full w-full" lang={locale}>
+            <body className="flex h-full w-full flex-col text-zinc-900">
                 <TrpcProvider>
                     <NextAuthProvider>
                         <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
