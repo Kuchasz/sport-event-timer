@@ -4,7 +4,7 @@
     "private": true,
     "main": "dist/index.js",
     "scripts": {
-        "build": "next build",
+        "build": "SKIP_ENV_VALIDATION=true next build",
         "export": "next build && next export",
         "generate-css-types": "tailwindcss-classnames -i tailwind.config.js -o tailwind-types.ts",
         "generate-prisma": "prisma generate --schema=./server/prisma/schema.prisma",
