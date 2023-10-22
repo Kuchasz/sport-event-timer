@@ -48,7 +48,7 @@ export const env = createEnv({
         NOTIFICATIONS_SERVER_AUTH_PASS: process.env.NOTIFICATIONS_SERVER_AUTH_PASS,
         NOTIFICATIONS_MESSAGE_FROM: process.env.NOTIFICATIONS_MESSAGE_FROM,
         NOTIFICATIONS_MESSAGE_TARGET: process.env.NOTIFICATIONS_MESSAGE_TARGET,
-        NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV
+        NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
     },
     emptyStringAsUndefined: true,
 });
