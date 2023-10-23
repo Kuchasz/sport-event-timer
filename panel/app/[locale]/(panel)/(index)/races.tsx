@@ -333,29 +333,6 @@ export const Races = ({ initialData }: RacesProps) => {
                     </div>
                 </div>
             </div>
-            {/* <div className="ag-theme-material h-full">
-                    <AgGridReact<Race>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        rowClassRules={{
-                            "z-10": () => {
-                                return false;
-                            },
-                        }}
-                        suppressRowVirtualisation={true}
-                        suppressAnimationFrame={true}
-                        suppressContextMenu={true}
-                        suppressRowClickSelection={true}
-                        suppressCellFocus={true}
-                        suppressChangeDetection={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={races}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
-                </div> */}
         </div>
     );
 };
