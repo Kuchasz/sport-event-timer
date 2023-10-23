@@ -1,7 +1,7 @@
 "use client";
 import { DashboardCard } from "components/dashboard-card";
 import { PageHeader } from "components/page-header";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 import { trpc } from "trpc-core";
 
@@ -9,6 +9,7 @@ export function Dashboard() {
     const { data: dashboardData } = trpc.race.raport.useQuery();
 
     const t = useTranslations();
+    const locale = useLocale();
 
     return (
         <div className="flex flex-col">
@@ -38,7 +39,7 @@ export function Dashboard() {
                                 <DashboardCard.Info
                                     title={t("pages.general.dashboard.raceStatistics.widgets.date")}
                                     //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                                    text={dashboardData.nextRace.date?.toLocaleDateString()!}
+                                    text={dashboardData.nextRace.date?.toLocaleDateString(locale)!}
                                 />
                                 <DashboardCard.Info
                                     title={t("pages.general.dashboard.raceStatistics.widgets.name")}

@@ -4,7 +4,7 @@ import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@s
 import { trpc } from "trpc-core";
 import Head from "next/head";
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import React, { useState } from "react";
 import classNames from "classnames";
 import Icon from "@mdi/react";
@@ -21,6 +21,7 @@ export const Results = () => {
 
     const abbreviations = useTranslations("results.abbreviations");
     const t = useTranslations();
+    const locale = useLocale();
 
     const toggleRow = (rowId: number) => {
         const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
@@ -39,7 +40,7 @@ export const Results = () => {
             <div className="flex flex-col items-center">
                 <div className="my-8 flex max-w-[800px] flex-col px-4">
                     <h2 className="text-3xl font-semibold uppercase">{race?.name}</h2>
-                    <h3>{race?.date?.toLocaleDateString()}</h3>
+                    <h3>{race?.date?.toLocaleDateString(locale)}</h3>
                     <div className="mt-2 text-sm">
                         <span>{t("results.refresh.message")}</span>
                         <div className="mt-2">

@@ -23,7 +23,7 @@ import { GenderIcon } from "components/gender-icon";
 import type { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
 import { PageHeader } from "components/page-header";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { refreshRow } from "ag-grid";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
@@ -64,6 +64,7 @@ const PlayerRegistrationPayment = ({
 }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
     const t = useTranslations();
+    const locale = useLocale();
 
     const togglePlayerPayment = async () => {
         const confirmed = await Demodal.open<boolean>(NiceModal, {
@@ -96,7 +97,7 @@ const PlayerRegistrationPayment = ({
         >
             {playerRegistration.hasPaid ? <Icon size={0.8} path={mdiCashCheck} /> : <Icon size={0.8} path={mdiCashRemove} />}
             <span className="ml-2">
-                {playerRegistration.paymentDate?.toLocaleDateString() ?? t("pages.playerRegistrations.payment.status.notPaid")}
+                {playerRegistration.paymentDate?.toLocaleDateString(locale) ?? t("pages.playerRegistrations.payment.status.notPaid")}
             </span>
         </span>
     );
@@ -105,6 +106,7 @@ const PlayerRegistrationPayment = ({
 export const PlayerRegistrations = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
+    const locale = useLocale();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
@@ -203,7 +205,7 @@ export const PlayerRegistrations = () => {
             headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
             resizable: true,
             //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
+            cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
             sortable: true,
             hide: true,
             maxWidth: 120,
@@ -250,7 +252,7 @@ export const PlayerRegistrations = () => {
             resizable: true,
             sortable: true,
             //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString()}</div>,
+            cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString(locale)}</div>,
         },
         {
             field: "paymentDate",
@@ -344,7 +346,7 @@ export const PlayerRegistrations = () => {
                         className="ml-2"
                         onClick={() => {
                             gridRef.current?.api.exportDataAsCsv({
-                                fileName: `player-registrations-${new Date().toLocaleDateString()}.csv`,
+                                fileName: `player-registrations-${new Date().toLocaleDateString(locale)}.csv`,
                             });
                         }}
                     >
