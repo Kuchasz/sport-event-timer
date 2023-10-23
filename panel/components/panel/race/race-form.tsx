@@ -7,6 +7,8 @@ import type { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "../../poor-number-input";
 import { PoorCheckbox } from "../../poor-checkbox";
 import { PoorTextArea } from "../../poor-text-area";
+import { sportKinds } from "@set/utils/dist/sport-kind";
+import { PoorSelect } from "components/poor-select";
 
 type Race = AppRouterInputs["race"]["add"];
 
@@ -24,6 +26,7 @@ export const registrationEnabledValues = [
 
 export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFormProps) => {
     const [race, changeHandler] = useFormState(initialRace, [initialRace]);
+    const sportKindsOptions = sportKinds.map(sk => ({ name: sk, value: sk }));
     return (
         <div className="flex flex-col">
             <div className="flex">
@@ -47,6 +50,18 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                 <div className="grow">
                     <Label>Location</Label>
                     <PoorInput value={race.location} onChange={changeHandler("location")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="grow">
+                    <Label>Sport Kind</Label>
+                    <PoorSelect
+                        initialValue={race.sportKind}
+                        items={sportKindsOptions}
+                        placeholder="Select sport kind"
+                        nameKey="name"
+                        valueKey="value"
+                        onChange={changeHandler("sportKind")}
+                    />
                 </div>
                 <div className="p-2"></div>
                 <div className="grow">

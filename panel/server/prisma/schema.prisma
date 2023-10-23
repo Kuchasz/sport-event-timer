@@ -60,6 +60,7 @@ model Race {
     name                 String
     description          String
     location             String
+    sportKind            String
     date                 DateTime
     termsUrl             String?
     emailTemplate        String?

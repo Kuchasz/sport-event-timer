@@ -21,6 +21,7 @@ export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
         name: "",
         description: "",
         location: "",
+        sportKind: "road-cycling",
         date: new Date(),
         registrationEnabled: false,
         useSampleData: false,
