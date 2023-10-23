@@ -14,7 +14,7 @@ type MenuGroup = {
 };
 
 export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }) => {
-    const pathname = usePathname();
+    const pathname = usePathname()!;
 
     // const pathname = headers().get('next-url')//;?.replace('/pl', '').replace('/en', '');
 
