@@ -27,6 +27,7 @@ const config = {
     //     extends: ["plugin:@typescript-eslint/disable-type-checked"],
     //   },
     // ],
+
     rules: {
         // These off/not-configured-the-way-we-want lint rules we like & opt into
         //   "@typescript-eslint/no-explicit-any": "error",
@@ -34,6 +35,9 @@ const config = {
         //     "error",
         //     { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
         //   ],
+
+        'custom-rules/no-empty-toLocaleDateString': 'error',
+
         "@typescript-eslint/consistent-type-imports": [
             "error",
             { prefer: "type-imports", fixStyle: "separate-type-imports", disallowTypeAnnotations: false },
