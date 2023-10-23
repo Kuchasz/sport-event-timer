@@ -26,7 +26,7 @@ Application for making time measurements
 | 19/10/2023 | Fix many jumping stuff on home page                        | :heavy_check_mark: (21/10/2023) |
 | 20/10/2023 | Remove hard-coded application urls and ports               | todo :date:                     |
 | 20/10/2023 | Dates should use locale formats                            | todo :date:                     |
-| 20/10/2023 | Configure linter + CI/CD pipeline                          | todo :date:                     |
+| 20/10/2023 | Configure linter + CI/CD pipeline                          | :heavy_check_mark: (23/10/2023) |
 
 ## TODO
 
