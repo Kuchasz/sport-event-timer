@@ -25,7 +25,7 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
 
     const menuGroups = groups;
 
-    const matchedRoutes = menuGroups.flatMap(g => g.items).filter(r => routeMatched(r.to, pathname!));
+    const matchedRoutes = menuGroups.flatMap(g => g.items).filter(r => routeMatched(r.to, pathname));
 
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 

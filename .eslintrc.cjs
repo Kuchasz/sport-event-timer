@@ -15,7 +15,7 @@ const config = {
         //   sourceType: "module",
         tsconfigRootDir: __dirname,
         project: [
-            // "./tsconfig.json",
+            "./tsconfig.json",
             // "./cli/tsconfig.eslint.json", // separate eslint config for the CLI since we want to lint and typecheck differently due to template files
             "./panel/tsconfig.json",
             "./utils/tsconfig.json",
@@ -37,7 +37,6 @@ const config = {
         //     "error",
         //     { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
         //   ],
-
         "no-empty-to-locale-date-string": "error",
 
         "@typescript-eslint/consistent-type-imports": [

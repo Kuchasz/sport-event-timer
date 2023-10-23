@@ -17,5 +17,8 @@
     },
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.options": {
+        "rulePaths": ["eslint-rules"]
     }
 }
