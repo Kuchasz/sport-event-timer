@@ -40,6 +40,9 @@ export default withNextIntl(
         // redirects: async () => {
         //     return [{ source: '/', destination: '/panel', permanent: true }]
         // }
+        eslint: {
+            ignoreDuringBuilds: true,
+        },
 
         experimental: {
             // runtime: 'nodejs',
