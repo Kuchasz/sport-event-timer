@@ -28,6 +28,7 @@ Application for making time measurements
 | 20/10/2023 | Dates should use locale formats                            | todo :date:                     |
 | 20/10/2023 | Configure linter + CI/CD pipeline                          | :heavy_check_mark: (23/10/2023) |
 | 23/10/2023 | Simple website with registration, start list and results   | todo :date:                     |
+| 23/10/2023 | Improve login page look                                    | todo :date:                     |
 
 ## TODO
 
