@@ -1,0 +1,30 @@
+name: Prod.Lint
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+            - uses: oven-sh/setup-bun@v1
+            - uses: actions/cache@v3
+              with:
+                  path: |
+                      ~./npm
+                      **/node_modules
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
+
+            - name: Install dependencies
+              run: bun install
+
+            - name: Lint
+              run: |
+                  bun run lint
