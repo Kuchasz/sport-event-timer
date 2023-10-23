@@ -108,7 +108,7 @@ export const raceRouter = router({
 
             await ctx.db.classification.deleteMany({ where: { raceId: input.raceId } });
 
-            await ctx.db.stopwatch.delete({ where: { raceId: input.raceId } });
+            await ctx.db.stopwatch.deleteMany({ where: { raceId: input.raceId } });
 
             await ctx.db.timingPointAccessUrl.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.timingPointOrder.deleteMany({ where: { raceId: input.raceId } });

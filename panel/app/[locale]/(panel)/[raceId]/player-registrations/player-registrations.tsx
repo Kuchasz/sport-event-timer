@@ -59,7 +59,7 @@ const PlayerRegistrationPayment = ({
     refreshRegistrationRow,
 }: {
     playerRegistration: PlayerRegistration;
-    refetch: () => void;
+    refetch: () => Promise<void>;
     refreshRegistrationRow: (itemId: string) => void;
 }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
@@ -83,7 +83,7 @@ const PlayerRegistrationPayment = ({
 
         if (confirmed) {
             await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
-            refetch();
+            await refetch();
             refreshRegistrationRow(playerRegistration.id.toString());
         }
     };
@@ -301,7 +301,7 @@ export const PlayerRegistrations = () => {
         });
 
         if (player) {
-            await refetch();
+            void refetch();
         }
     };
 

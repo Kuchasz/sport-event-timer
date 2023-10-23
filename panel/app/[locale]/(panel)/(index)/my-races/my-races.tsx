@@ -190,7 +190,6 @@ export const MyRaces = () => {
         });
 
         if (race) {
-            // await addRaceMutation.mutateAsync(race);
             void refetch();
         }
     };
@@ -209,7 +208,6 @@ export const MyRaces = () => {
         });
 
         if (race) {
-            // await updateRaceMutation.mutateAsync(race);
             await refetch();
             refreshRow(gridRef, editedRace!.id.toString());
         }

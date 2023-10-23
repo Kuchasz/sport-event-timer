@@ -226,7 +226,7 @@ export const TimingPoints = () => {
     const activeTimingPoint = sortedTimingPoints.find(tp => tp.id === activeTimingPointId);
 
     const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
-        const TimingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
+        const timingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
             title: t("pages.timingPoints.edit.title"),
             component: TimingPointEdit,
             props: {
@@ -234,7 +234,7 @@ export const TimingPoints = () => {
             },
         });
 
-        if (TimingPoint) {
+        if (timingPoint) {
             void refetchTimingPoints();
         }
     };
