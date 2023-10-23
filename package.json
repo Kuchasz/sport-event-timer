@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "prettier": "prettier --write '**/*.{ts,tsx,js,jsx,css,scss,html}'",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint . --ext .ts,.tsx --rulesdir eslint-rules/",
     "lint-fix": "eslint --fix . --ext .ts,.tsx"
   },
   "workspaces": [
@@ -12,7 +12,8 @@
   ],
   "dependencies": {
     "@types/node-fetch": "2.6.6",
-    "@types/ws": "8.5.6"
+    "@types/ws": "8.5.6",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/eslint": "8.44.6",
@@ -23,6 +24,7 @@
     "eslint-plugin-import": "2.28.1",
     "eslint-plugin-isaacscript": "3.5.6",
     "eslint-plugin-prettier": "5.0.1",
+    "@typescript-eslint/utils": "6.8.0",
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "0.5.6"
   }

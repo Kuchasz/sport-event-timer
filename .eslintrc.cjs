@@ -1,3 +1,5 @@
+// const customPlugin = require("./custom-rules/custom-es-lint-rules.cjs");
+
 /** @type {import("eslint").Linter.Config} */
 const config = {
     root: true,
@@ -36,7 +38,7 @@ const config = {
         //     { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
         //   ],
 
-        'custom-rules/no-empty-toLocaleDateString': 'error',
+        "no-empty-to-locale-date-string": "error",
 
         "@typescript-eslint/consistent-type-imports": [
             "error",
