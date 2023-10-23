@@ -35,6 +35,11 @@ jobs:
                   cd ./timer
                   bun run build
 
+            - name: Generate prisma
+              run: |
+                  cd ./panel
+                  bun run generate-prisma
+
             - name: Lint
               run: |
                   bun run lint
