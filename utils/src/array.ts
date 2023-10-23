@@ -9,6 +9,7 @@ export const areOverlapping = (A: { from: number; to: number }, B: { from: numbe
 };
 
 export const createRange = (range: { from: number; to: number }) => Array.from({ length: rangeLength(range) }, (_, i) => range.from + i);
+export const fillArray = (size: number) => Array.from({ length: size }, (_, i) => i);
 
 export const sort = <T>(items: T[], func: (item: T) => number): T[] => {
     const i = [...items];

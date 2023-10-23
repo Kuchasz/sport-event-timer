@@ -1,4 +1,4 @@
-import { createRange, groupBy } from "@set/utils/dist/array";
+import { createRange, fillArray, groupBy } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import type {
     Classification,
@@ -67,7 +67,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
 };
 
 const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
-    createRange({ from: 0, to: numberOfRaces - 1 }).map(() => ({
+    fillArray(numberOfRaces).map(() => ({
         date: faker.date.future({ years: 1 }),
         name: faker.company.name(),
         registrationEnabled: false,

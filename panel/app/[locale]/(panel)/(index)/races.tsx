@@ -86,9 +86,7 @@ type RacesProps = {
 
 export const Races = ({ initialData }: RacesProps) => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData });
-    const updateRaceMutation = trpc.race.update.useMutation();
     const wipeRaceMutation = trpc.action.wipe.useMutation();
-    const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const locale = useLocale();
@@ -102,7 +100,7 @@ export const Races = ({ initialData }: RacesProps) => {
         iconPath: mdiLockOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-            await refetch();
+            void refetch();
         },
     };
 
@@ -112,7 +110,7 @@ export const Races = ({ initialData }: RacesProps) => {
         iconPath: mdiLockOpenVariantOutline,
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-            await refetch();
+            void refetch();
         },
     };
 
@@ -131,8 +129,7 @@ export const Races = ({ initialData }: RacesProps) => {
                 });
 
                 if (race) {
-                    await updateRaceMutation.mutateAsync(race);
-                    await refetch();
+                    void refetch();
                 }
             },
         },
@@ -151,7 +148,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
                 if (confirmed) {
                     await wipeRaceMutation.mutateAsync({ raceId: race.id });
-                    await refetch();
+                    void refetch();
                 }
             },
         },
@@ -188,7 +185,6 @@ export const Races = ({ initialData }: RacesProps) => {
         });
 
         if (race) {
-            await addRaceMutation.mutateAsync(race);
             void refetch();
         }
     };
