@@ -20,7 +20,7 @@ import { PoorColumnChooser } from "components/poor-column-chooser";
 import type { Gender } from "@set/timer/dist/model";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { refreshRow } from "ag-grid";
 
 type Player = AppRouterOutputs["player"]["players"][0];
@@ -54,6 +54,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
 export const Players = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
+    const locale = useLocale();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<Player>>(null);
 
@@ -101,7 +102,7 @@ export const Players = () => {
             headerName: t("pages.players.grid.columns.birthDate"),
             sortable: true,
             hide: true,
-            cellRenderer: (props: { data: Player }) => <div>{props.data.birthDate.toLocaleDateString()}</div>,
+            cellRenderer: (props: { data: Player }) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
         },
         { field: "country", headerName: t("pages.players.grid.columns.country"), width: 10, sortable: true, filter: true, hide: true },
         { field: "city", headerName: t("pages.players.grid.columns.city"), sortable: true, filter: true, hide: true },
@@ -158,7 +159,7 @@ export const Players = () => {
                         outline
                         onClick={() => {
                             gridRef.current?.api.exportDataAsCsv({
-                                fileName: `players-${new Date().toLocaleDateString()}.csv`,
+                                fileName: `players-${new Date().toLocaleDateString(locale)}.csv`,
                             });
                         }}
                     >

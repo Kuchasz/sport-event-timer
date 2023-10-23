@@ -44,9 +44,9 @@ export default withNextIntl(
             ignoreDuringBuilds: true,
         },
 
-        // experimental: {
-        //     // runtime: 'nodejs',
-        //     appDir: true,
-        // },
+        experimental: {
+            // runtime: 'nodejs',
+            appDir: true,
+        },
     }),
 );

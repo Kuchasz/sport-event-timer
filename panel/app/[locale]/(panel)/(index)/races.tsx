@@ -212,20 +212,6 @@ export const Races = ({ initialData }: RacesProps) => {
         <div className="border-1 relative flex h-full flex-col border-solid border-gray-600">
             <div className="flex flex-col items-center py-8">
                 <div className="w-[768px]">
-                    {locale}
-                    <br />
-                    {new Date().toLocaleDateString(locale)}
-                    <br />
-                    {new Date().toLocaleDateString("en-US")}
-                    <br />
-                    {new Date().toLocaleDateString("tr")}
-                    <br />
-                    {new Date().toLocaleDateString("en-GB")}
-                    <br />
-                    {new Date().toLocaleDateString("de")}
-                    <br />
-                    {new Date().toLocaleDateString()}
-                    <br />
                     <PageHeader
                         title={t("pages.races.upcomingRaces.header.title")}
                         description={t("pages.races.upcomingRaces.header.description")}
@@ -254,7 +240,7 @@ export const Races = ({ initialData }: RacesProps) => {
                             >
                                 <div className="flex h-44 w-full flex-col items-center justify-center gap-2 bg-gray-800 text-white">
                                     <div className="text-6xl">{getShortcut(r.name)}</div>
-                                    <div className="text-xs font-semibold text-gray-400">{r.date.toLocaleDateString("pl-PL")}</div>
+                                    <div className="text-xs font-semibold text-gray-400">{r.date.toLocaleDateString(locale)}</div>
                                 </div>
                                 <div className="p-4 ">
                                     <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">{r.name}</div>

@@ -15,7 +15,7 @@ import { AgGridReact } from "@ag-grid-community/react";
 import type { ColDef } from "@ag-grid-community/core";
 import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { refreshRow } from "ag-grid";
 
 type Race = AppRouterOutputs["race"]["races"][0];
@@ -64,6 +64,7 @@ export const MyRaces = () => {
     const gridRef = useRef<AgGridReact<Race>>(null);
 
     const t = useTranslations();
+    const locale = useLocale();
 
     const turnOffRegistrationAction = {
         name: t("pages.registration.turnOffPopup.title"),
@@ -150,7 +151,7 @@ export const MyRaces = () => {
             sort: "asc",
             sortable: true,
             filter: true,
-            cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString()}</div>,
+            cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString(locale)}</div>,
         },
         {
             field: "registrationEnabled",
