@@ -61,6 +61,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
+                    <Label>Description</Label>
+                    <PoorInput value={race.description} onChange={changeHandler("description")} />
+                </div>
+            </div>
+            <div className="p-2"></div>
+            <div className="flex">
+                <div className="grow">
                     <Label>Terms and conditions url</Label>
                     <PoorInput value={race.termsUrl} onChange={changeHandler("termsUrl")} />
                 </div>
