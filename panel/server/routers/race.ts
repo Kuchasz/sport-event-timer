@@ -6,6 +6,7 @@ import { TRPCError } from "@trpc/server";
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
     name: z.string({ required_error: "name is required" }),
+    description: z.string({ required_error: "description is required" }),
     date: z.date({ required_error: "date is required" }),
     termsUrl: z.string().nullish(),
     emailTemplate: z.string().nullish(),
@@ -26,6 +27,7 @@ export const raceRouter = router({
         return racesWithRegistrations.map(r => ({
             id: r.id,
             name: r.name,
+            description: r.description,
             date: r.date,
             emailTemplate: r.emailTemplate,
             termsUrl: r.termsUrl,

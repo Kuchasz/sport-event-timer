@@ -58,6 +58,7 @@ model VerificationToken {
 model Race {
     id                   Int                    @id @default(autoincrement())
     name                 String
+    description          String
     date                 DateTime
     termsUrl             String?
     emailTemplate        String?

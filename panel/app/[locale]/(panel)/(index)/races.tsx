@@ -240,9 +240,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                 </div>
                                 <div className="p-4 ">
                                     <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">{r.name}</div>
-                                    <div className="line-clamp-2 overflow-hidden text-ellipsis text-xs text-gray-500">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    </div>
+                                    <div className="line-clamp-2 overflow-hidden text-ellipsis text-xs text-gray-500">{r.description}</div>
                                 </div>
                             </Link>
                         ))}
@@ -288,9 +286,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                         </div> */}
                                     {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
                                     <div className="py-2 text-sm font-semibold">{r.name}</div>
-                                    <div className="text-ellipsis text-xs text-gray-500">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    </div>
+                                    <div className="text-ellipsis text-xs text-gray-500">{r.description}</div>
                                 </div>
                                 <div className="flex grow flex-col items-center">
                                     <div className="flex flex-col">
