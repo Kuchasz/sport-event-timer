@@ -4,14 +4,24 @@ import Icon from "@mdi/react";
 import { Demodal } from "demodal";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
-import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiOpenInNew, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import {
+    mdiCalendarEditOutline,
+    mdiClockOutline,
+    mdiLockOpenVariantOutline,
+    mdiLockOutline,
+    mdiMapMarkerOutline,
+    mdiOpenInNew,
+    mdiPlus,
+    mdiRestore,
+    mdiTrashCan,
+} from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
 import classNames from "classnames";
 import { PageHeader } from "components/page-header";
 import { useLocale, useTranslations } from "next-intl";
-import { isPast, isTodayOrLater, monthForLocale } from "@set/utils/dist/datetime";
+import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
 import { sort, sortDesc } from "@set/utils/dist/array";
 import Link from "next/link";
 import { PoorActions } from "components/poor-actions";
@@ -266,7 +276,18 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div> */}
 
-                                <div className="mr-8 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gray-100 font-semibold">
+                                <div>
+                                    <div className="flex">
+                                        <Icon path={mdiClockOutline} size={1} />
+                                        <span>{r.date.toLocaleDateString(locale)}</span>
+                                    </div>
+                                    <div className="flex">
+                                        <Icon path={mdiMapMarkerOutline} size={1} />
+                                        <span>{r.location}</span>
+                                    </div>
+                                </div>
+
+                                {/* <div className="mr-8 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gray-100 font-semibold">
                                     <div className="flex gap-0.5 text-lg">
                                         <div>{r.date.getDate().toString().padStart(2, "0")}</div>
                                         <span></span>
@@ -275,7 +296,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                     <div className="flex gap-0.5 text-xs">
                                         <div className="flex">{r.date.getFullYear()}</div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="flex w-72 flex-col">
                                     {/* <div>
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>

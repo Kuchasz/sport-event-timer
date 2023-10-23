@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
-import { GenderEnum } from "../../../models";
+import { genderEnum } from "../../../models";
 
 const stripNonNumbers = (string: string) => string.replace(/\D/g, "");
 
@@ -27,7 +27,7 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const registrationEntryModel = z.object({
         email: z.string().email(),
-        gender: GenderEnum,
+        gender: genderEnum,
         phoneNumber: z.string(),
         icePhoneNumber: z.string(),
     });

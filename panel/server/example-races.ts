@@ -1,5 +1,7 @@
 import { createRange, fillArray, groupBy } from "@set/utils/dist/array";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
+import { sportKinds } from "@set/utils/dist/sport-kind";
+
 import type {
     Classification,
     Player,
@@ -73,6 +75,7 @@ const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">
         date: faker.date.future({ years: 1 }),
         name: faker.company.name(),
         description: faker.lorem.words({ min: 5, max: 15 }),
+        sportKind: faker.helpers.arrayElement(sportKinds),
         location: faker.location.city(),
         registrationEnabled: false,
         termsUrl: "",
