@@ -5,6 +5,7 @@ import { Demodal } from "demodal";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
 import {
+    mdiArrowRightThick,
     mdiCalendarEditOutline,
     mdiClockOutline,
     mdiLockOpenVariantOutline,
@@ -279,11 +280,17 @@ export const Races = ({ initialData }: RacesProps) => {
                                 <div>
                                     <div className="flex">
                                         <Icon path={mdiClockOutline} size={1} />
-                                        <span>{r.date.toLocaleDateString(locale)}</span>
+                                        <span className="ml-1">{r.date.toLocaleDateString(locale)}</span>
                                     </div>
-                                    <div className="flex">
-                                        <Icon path={mdiMapMarkerOutline} size={1} />
-                                        <span>{r.location}</span>
+                                    <div className="flex items-center">
+                                        <div className="flex text-sm">
+                                            <Icon className="text-gray-500" path={mdiMapMarkerOutline} size={0.8} />
+                                            <span className="ml-1 font-semibold">{r.location}</span>
+                                        </div>
+                                        <div className="ml-4 flex text-sm">
+                                            <Icon className="text-gray-500" path={mdiArrowRightThick} size={0.8} />
+                                            <span className="ml-1 font-semibold">{r.sportKind}</span>
+                                        </div>
                                     </div>
                                 </div>
 
