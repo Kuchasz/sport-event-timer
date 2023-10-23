@@ -17,6 +17,7 @@ import { faker } from "@faker-js/faker/locale/pl";
 type Options = {
     name?: string;
     description?: string;
+    location?: string;
     date?: Date;
     registrationEnabled?: boolean;
     termsUrl?: string | null;
@@ -72,6 +73,7 @@ const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">
         date: faker.date.future({ years: 1 }),
         name: faker.company.name(),
         description: faker.lorem.words({ min: 5, max: 15 }),
+        location: faker.location.city(),
         registrationEnabled: false,
         termsUrl: "",
         emailTemplate: "",

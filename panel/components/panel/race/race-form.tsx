@@ -45,6 +45,11 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
             <div className="p-2"></div>
             <div className="flex">
                 <div className="grow">
+                    <Label>Location</Label>
+                    <PoorInput value={race.location} onChange={changeHandler("location")} />
+                </div>
+                <div className="p-2"></div>
+                <div className="grow">
                     <Label>Registration enabled</Label>
                     <PoorCheckbox value={race.registrationEnabled} onChange={changeHandler("registrationEnabled")} />
                 </div>

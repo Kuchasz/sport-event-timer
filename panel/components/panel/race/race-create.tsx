@@ -20,6 +20,7 @@ export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
     const race: CreateRace = {
         name: "",
         description: "",
+        location: "",
         date: new Date(),
         registrationEnabled: false,
         useSampleData: false,
