@@ -273,7 +273,7 @@ export const Races = ({ initialData }: RacesProps) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         {allRaces.map(r => (
-                            <div key={r.id} className="flex items-center rounded-md bg-white px-8 py-6 shadow-lg">
+                            <div key={r.id} className="flex w-full items-center rounded-md bg-white px-8 py-6 shadow-lg">
                                 {/* <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
                                         <div className="text-2xs font-semibold text-gray-400">
                                             {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
@@ -281,12 +281,12 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <div className="text-2xl">{r.date.getDate().toString().padStart(2, "0")}</div>
                                     </div> */}
 
-                                <div>
-                                    {/* <div className="flex">
+                                {/* <div> */}
+                                {/* <div className="flex">
                                         <Icon path={mdiClockOutline} size={1} />
                                         <span className="ml-1">{r.date.toLocaleDateString(locale)}</span>
                                     </div> */}
-                                </div>
+                                {/* </div> */}
 
                                 {/* <div className="mr-8 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gray-100 font-semibold">
                                     <div className="flex gap-0.5 text-lg">
@@ -298,19 +298,19 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <div className="flex">{r.date.getFullYear()}</div>
                                     </div>
                                 </div> */}
-                                <div className="flex w-72 flex-col">
-                                    <div className="flex items-center">
-                                        <div className=" flex items-center text-sm">
+                                <div className="flex shrink grow flex-col overflow-hidden">
+                                    <div className="flex items-center overflow-hidden">
+                                        <div className="flex items-center text-sm">
                                             <Icon path={mdiCalendarOutline} size={0.6} />
                                             <span className="ml-1 font-semibold">{r.date.toLocaleDateString(locale)}</span>
                                         </div>
-                                        <div className="ml-4 flex items-center text-xs text-gray-400">
+                                        <div className="ml-4 flex flex-shrink items-center overflow-hidden text-xs text-gray-400">
                                             <Icon path={mdiMapMarkerOutline} size={0.6} />
-                                            <span className="ml-1 whitespace-nowrap">{r.location}</span>
+                                            <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">{r.location}</span>
                                         </div>
                                         <div className="ml-4 flex items-center text-xs text-gray-400">
                                             <Icon path={mdiArrowRightThick} size={0.6} />
-                                            <span className="ml-1 whitespace-nowrap">{sportKindNames.get(r.sportKind)}</span>
+                                            <span className="ml-1   whitespace-nowrap">{sportKindNames.get(r.sportKind)}</span>
                                         </div>
                                     </div>
                                     {/* <div>
@@ -324,7 +324,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                     <div className="py-2 text-sm font-semibold">{r.name}</div>
                                     <div className="text-ellipsis text-xs text-gray-500">{r.description}</div>
                                 </div>
-                                <div className="flex grow flex-col items-center">
+                                <div className="flex shrink-0 basis-40 flex-col items-center">
                                     <div className="flex flex-col">
                                         <div className="flex flex-col">
                                             <div className="text-xs font-semibold uppercase text-gray-400">
