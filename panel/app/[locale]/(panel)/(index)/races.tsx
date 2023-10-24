@@ -8,7 +8,6 @@ import {
     mdiArrowRightThick,
     mdiCalendarEditOutline,
     mdiCalendarOutline,
-    mdiClockOutline,
     mdiLockOpenVariantOutline,
     mdiLockOutline,
     mdiMapMarkerOutline,
@@ -301,17 +300,17 @@ export const Races = ({ initialData }: RacesProps) => {
                                 </div> */}
                                 <div className="flex w-72 flex-col">
                                     <div className="flex items-center">
-                                        <div className="flex text-xs">
-                                            <Icon className="text-gray-500" path={mdiCalendarOutline} size={0.6} />
+                                        <div className=" flex items-center text-sm">
+                                            <Icon path={mdiCalendarOutline} size={0.6} />
                                             <span className="ml-1 font-semibold">{r.date.toLocaleDateString(locale)}</span>
                                         </div>
-                                        <div className="ml-4 flex text-xs">
-                                            <Icon className="text-gray-500" path={mdiMapMarkerOutline} size={0.6} />
-                                            <span className="ml-1 whitespace-nowrap font-semibold">{r.location}</span>
+                                        <div className="ml-4 flex items-center text-xs text-gray-400">
+                                            <Icon path={mdiMapMarkerOutline} size={0.6} />
+                                            <span className="ml-1 whitespace-nowrap">{r.location}</span>
                                         </div>
-                                        <div className="ml-4 flex text-xs">
-                                            <Icon className="text-gray-500" path={mdiArrowRightThick} size={0.6} />
-                                            <span className="ml-1 whitespace-nowrap font-semibold">{sportKindNames.get(r.sportKind)}</span>
+                                        <div className="ml-4 flex items-center text-xs text-gray-400">
+                                            <Icon path={mdiArrowRightThick} size={0.6} />
+                                            <span className="ml-1 whitespace-nowrap">{sportKindNames.get(r.sportKind)}</span>
                                         </div>
                                     </div>
                                     {/* <div>
