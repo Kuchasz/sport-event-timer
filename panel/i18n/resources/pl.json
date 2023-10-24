@@ -2,19 +2,20 @@
   "menuOptions": {
     "general": {
       "title": "Ogólne",
-      "dashboard": "Panel",
-      "races": "Moje Wyścigi"
-    },
-    "race": {
-      "title": "Wyścig",
       "index": "Podstawowe Informacje",
       "bibNumbers": "Numerki Startowe",
       "players": "Zawodnicy",
       "registrations": "Rejestracje",
-      "classifications": "Klasyfikacje",
+      "classifications": "Klasyfikacje"
+    },
+    "timeMeasurement": {
+      "title": "Pomiar czasu",
       "timingPoints": "Punkty Pomiarowe",
       "splitTimes": "Czasy Pomiaru",
-      "results": "Wyniki",
+      "results": "Wyniki"
+    },
+    "management": {
+      "title": "Zarządzanie",
       "settings": "Ustawienia"
     },
     "admin": {

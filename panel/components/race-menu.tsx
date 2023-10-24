@@ -14,70 +14,87 @@ import { Menu } from "./menu";
 export const RaceMenu = ({ raceId }: { raceId: string }) => {
     const t = useTranslations();
 
-    const raceMenuGroup = {
-        name: t("menuOptions.race.title"),
+    const generalMenuGroup = {
+        name: t("menuOptions.general.title"),
         icon: mdiAlarm,
         color: "bg-[#c2e59c]",
         to: "/:raceId",
         items: [
             {
-                text: t("menuOptions.race.index"),
+                text: t("menuOptions.general.index"),
                 icon: mdiViewDashboardEditOutline,
                 to: "/:raceId",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.bibNumbers"),
+                text: t("menuOptions.general.bibNumbers"),
                 icon: mdiNumeric,
                 to: "/:raceId/bib-numbers",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.players"),
+                text: t("menuOptions.general.players"),
                 icon: mdiAccountGroup,
                 to: "/:raceId/players",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.registrations"),
+                text: t("menuOptions.general.registrations"),
                 icon: mdiAccountGroup,
                 to: "/:raceId/player-registrations",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.classifications"),
+                text: t("menuOptions.general.classifications"),
                 icon: mdiAccountCogOutline,
                 to: "/:raceId/classifications",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
+        ],
+    };
+
+    const timeMeasurementMenuGroup = {
+        name: t("menuOptions.timeMeasurement.title"),
+        icon: mdiAlarm,
+        color: "bg-[#c2e59c]",
+        to: "/:raceId",
+        items: [
             {
-                text: t("menuOptions.race.timingPoints"),
+                text: t("menuOptions.timeMeasurement.timingPoints"),
                 icon: mdiTimerCogOutline,
                 to: "/:raceId/timing-points",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.splitTimes"),
+                text: t("menuOptions.timeMeasurement.splitTimes"),
                 icon: mdiAlarm,
                 to: "/:raceId/split-times",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.race.results"),
+                text: t("menuOptions.timeMeasurement.results"),
                 icon: mdiTimetable,
                 to: "/:raceId/results",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
+        ],
+    };
+    const managementMenuGroup = {
+        name: t("menuOptions.management.title"),
+        icon: mdiAlarm,
+        color: "bg-[#c2e59c]",
+        to: "/:raceId",
+        items: [
             {
-                text: t("menuOptions.race.settings"),
+                text: t("menuOptions.management.settings"),
                 icon: mdiCog,
                 to: "/:raceId/settings",
                 color: "text-blue-700",
@@ -86,5 +103,5 @@ export const RaceMenu = ({ raceId }: { raceId: string }) => {
         ],
     };
 
-    return <Menu raceId={raceId} groups={[raceMenuGroup]} />;
+    return <Menu raceId={raceId} groups={[generalMenuGroup, timeMeasurementMenuGroup, managementMenuGroup]} />;
 };
