@@ -5,16 +5,16 @@ import { Demodal } from "demodal";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
 import {
-    mdiArrowRightThick,
     mdiCalendarEditOutline,
     mdiCalendarOutline,
+    mdiFlagOutline,
     mdiLockOpenVariantOutline,
     mdiLockOutline,
     mdiMapMarkerOutline,
     mdiOpenInNew,
     mdiPlus,
     mdiRestore,
-    mdiTrashCan,
+    mdiTrashCan
 } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
@@ -305,11 +305,11 @@ export const Races = ({ initialData }: RacesProps) => {
                                             <span className="ml-1 font-semibold">{r.date.toLocaleDateString(locale)}</span>
                                         </div>
                                         <div className="ml-4 flex flex-shrink items-center overflow-hidden text-xs text-gray-400">
-                                            <Icon path={mdiMapMarkerOutline} size={0.6} />
+                                            <Icon className="shrink-0" path={mdiMapMarkerOutline} size={0.6} />
                                             <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">{r.location}</span>
                                         </div>
                                         <div className="ml-4 flex items-center text-xs text-gray-400">
-                                            <Icon path={mdiArrowRightThick} size={0.6} />
+                                            <Icon path={mdiFlagOutline} size={0.6} />
                                             <span className="ml-1   whitespace-nowrap">{sportKindNames.get(r.sportKind)}</span>
                                         </div>
                                     </div>
