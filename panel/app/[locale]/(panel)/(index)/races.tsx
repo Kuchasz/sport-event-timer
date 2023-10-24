@@ -14,7 +14,7 @@ import {
     mdiOpenInNew,
     mdiPlus,
     mdiRestore,
-    mdiTrashCan
+    mdiTrashCan,
 } from "@mdi/js";
 import { NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
