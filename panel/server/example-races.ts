@@ -40,6 +40,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     const _playerProfiles = createPlayerProfiles(
         races.map(r => r.id),
         ["male", "female"],
+        options?.playersLimit,
     );
     const playerProfiles = await db.$transaction(_playerProfiles.map(data => db.playerProfile.create({ data })));
 
@@ -111,9 +112,9 @@ const createCategories = (classifications: Classification[], genders: ("male" | 
         }),
     );
 
-const createPlayerProfiles = (races: number[], genders: ("male" | "female")[]): Omit<PlayerProfile, "id">[] =>
+const createPlayerProfiles = (races: number[], genders: ("male" | "female")[], playersLimit?: number | null): Omit<PlayerProfile, "id">[] =>
     races.flatMap(raceId => {
-        return createRange({ from: 0, to: faker.number.int({ min: 20, max: 200 }) }).map(() => {
+        return createRange({ from: 0, to: faker.number.int({ min: 20, max: playersLimit ?? 200 }) }).map(() => {
             const gender = faker.helpers.arrayElement(genders);
             return {
                 name: faker.person.firstName(gender),
