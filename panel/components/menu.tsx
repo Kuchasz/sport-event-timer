@@ -4,6 +4,7 @@ import { sortDesc } from "@set/utils/dist/array";
 import type { Route } from "next";
 import { MenuButton } from "./menu-button";
 import { usePathname } from "next/navigation";
+import { MenuHeader } from "./menu-header";
 
 type MenuGroup = {
     name: string;
@@ -33,7 +34,7 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
         <>
             {menuGroups.map(g => (
                 <div key={g.name}>
-                    {/* <MenuHeader text={g.name} /> */}
+                    <MenuHeader text={g.name} />
                     <div>
                         {g.items.map(n => (
                             <MenuButton

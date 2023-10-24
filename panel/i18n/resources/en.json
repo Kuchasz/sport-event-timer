@@ -2,19 +2,20 @@
   "menuOptions": {
     "general": {
       "title": "General",
-      "dashboard": "Dashboard",
-      "races": "My Races"
-    },
-    "race": {
-      "title": "Race",
       "index": "Base Info",
       "bibNumbers": "Bib Numbers",
       "players": "Players",
       "registrations": "Registrations",
-      "classifications": "Classifications",
+      "classifications": "Classifications"
+    },
+    "timeMeasurement": {
+      "title": "Time measurement",
       "timingPoints": "Timing Points",
       "splitTimes": "Split Times",
-      "results": "Results",
+      "results": "Results"
+    },
+    "management": {
+      "title": "Management",
       "settings": "Settings"
     },
     "admin": {
