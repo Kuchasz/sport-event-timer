@@ -322,7 +322,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                         </div> */}
                                     {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
                                     <div className="py-2 text-sm font-semibold">{r.name}</div>
-                                    <div className="text-ellipsis text-xs text-gray-500">{r.description}</div>
+                                    <div className="line-clamp-2 text-ellipsis text-xs text-gray-500">{r.description}</div>
                                 </div>
                                 <div className="flex shrink-0 basis-40 flex-col items-center">
                                     <div className="flex flex-col">
