@@ -7,6 +7,7 @@ import { trpc } from "../../../../trpc-core";
 import {
     mdiArrowRightThick,
     mdiCalendarEditOutline,
+    mdiCalendarOutline,
     mdiClockOutline,
     mdiLockOpenVariantOutline,
     mdiLockOutline,
@@ -28,6 +29,7 @@ import Link from "next/link";
 import { PoorActions } from "components/poor-actions";
 import { Confirmation } from "components/confirmation";
 import { RaceEdit } from "components/panel/race/race-edit";
+import { sportKinds } from "@set/utils/dist/sport-kind";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -103,6 +105,7 @@ export const Races = ({ initialData }: RacesProps) => {
     const locale = useLocale();
     // const gridRef = useRef<AgGridReact<Race>>(null);
 
+    const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
 
     const turnOffRegistrationAction = {
@@ -211,6 +214,8 @@ export const Races = ({ initialData }: RacesProps) => {
         filter === "all" ? true : filter === "past" ? isPast(r.date) : filter === "upcoming" ? isTodayOrLater(r.date) : false,
     );
 
+    const sportKindNames = new Map(sportKinds.map(sk => [sk, sportKindTranslations(sk)]));
+
     /* <Head>
                 <title>{t("pages.races.header.title")}</title>
             </Head> */
@@ -278,20 +283,10 @@ export const Races = ({ initialData }: RacesProps) => {
                                     </div> */}
 
                                 <div>
-                                    <div className="flex">
+                                    {/* <div className="flex">
                                         <Icon path={mdiClockOutline} size={1} />
                                         <span className="ml-1">{r.date.toLocaleDateString(locale)}</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex text-sm">
-                                            <Icon className="text-gray-500" path={mdiMapMarkerOutline} size={0.8} />
-                                            <span className="ml-1 font-semibold">{r.location}</span>
-                                        </div>
-                                        <div className="ml-4 flex text-sm">
-                                            <Icon className="text-gray-500" path={mdiArrowRightThick} size={0.8} />
-                                            <span className="ml-1 font-semibold">{r.sportKind}</span>
-                                        </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* <div className="mr-8 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gray-100 font-semibold">
@@ -305,6 +300,20 @@ export const Races = ({ initialData }: RacesProps) => {
                                     </div>
                                 </div> */}
                                 <div className="flex w-72 flex-col">
+                                    <div className="flex items-center">
+                                        <div className="flex text-xs">
+                                            <Icon className="text-gray-500" path={mdiCalendarOutline} size={0.6} />
+                                            <span className="ml-1 font-semibold">{r.date.toLocaleDateString(locale)}</span>
+                                        </div>
+                                        <div className="ml-4 flex text-xs">
+                                            <Icon className="text-gray-500" path={mdiMapMarkerOutline} size={0.6} />
+                                            <span className="ml-1 whitespace-nowrap font-semibold">{r.location}</span>
+                                        </div>
+                                        <div className="ml-4 flex text-xs">
+                                            <Icon className="text-gray-500" path={mdiArrowRightThick} size={0.6} />
+                                            <span className="ml-1 whitespace-nowrap font-semibold">{sportKindNames.get(r.sportKind)}</span>
+                                        </div>
+                                    </div>
                                     {/* <div>
                                             <span>{r.date.getDate().toString().padStart(2, "0")} </span>
                                             <span>{capitalizeFirstLetter(monthForLocale(r.date.getMonth(), "long", "pl-PL"))} </span>

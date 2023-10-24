@@ -9,6 +9,7 @@ import { PoorCheckbox } from "../../poor-checkbox";
 import { PoorTextArea } from "../../poor-text-area";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { PoorSelect } from "components/poor-select";
+import { useTranslations } from "next-intl";
 
 type Race = AppRouterInputs["race"]["add"];
 
@@ -26,7 +27,8 @@ export const registrationEnabledValues = [
 
 export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFormProps) => {
     const [race, changeHandler] = useFormState(initialRace, [initialRace]);
-    const sportKindsOptions = sportKinds.map(sk => ({ name: sk, value: sk }));
+    const sportKindTranslations = useTranslations("shared.sportKinds");
+    const sportKindsOptions = sportKinds.map(sk => ({ name: sportKindTranslations(sk), value: sk }));
     return (
         <div className="flex flex-col">
             <div className="flex">
