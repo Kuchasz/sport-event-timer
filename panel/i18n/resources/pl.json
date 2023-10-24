@@ -700,6 +700,10 @@
   "shared": {
     "cancel": "Anuluj",
     "save": "Zapisz",
+    "status": {
+      "disabled": "Wyłączone",
+      "enabled": "Włączone"
+    },
     "countryCodes": {
       "AF": "Afganistan",
       "AL": "Albania",

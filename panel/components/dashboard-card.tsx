@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 
 const Card = ({ title, value, children }: { title: string; value: string; children: ReactNode }) => (
     <div className="m-3 flex h-32 w-48 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm">
@@ -26,13 +27,16 @@ const Range = ({ title, min, max }: { title: string; min: number; max?: number |
     </Card>
 );
 
-const Discrete = ({ title, enabled }: { title: string; enabled: boolean }) => (
-    <Card value={`${enabled ? "enabled" : "disabled"}`} title={title}>
-        <div
-            className={classNames("relative h-2 w-1/2 rounded bg-gray-100", { ["bg-red-500"]: !enabled, ["bg-green-500"]: enabled })}
-        ></div>
-    </Card>
-);
+const Discrete = ({ title, enabled }: { title: string; enabled: boolean }) => {
+    const t = useTranslations("shared.status");
+    return (
+        <Card value={`${enabled ? t("enabled") : t("disabled")}`} title={title}>
+            <div
+                className={classNames("relative h-2 w-1/2 rounded bg-gray-100", { ["bg-red-500"]: !enabled, ["bg-green-500"]: enabled })}
+            ></div>
+        </Card>
+    );
+};
 
 const Info = ({ title, text }: { title: string; text: string }) => (
     <Card value={text} title={title}>
