@@ -949,6 +949,16 @@
       "ZM": "Zambia",
       "ZW": "Zimbabwe",
       "AE": "United Arab Emirates"
+    },
+    "sportKinds": {
+      "road-cycling": "Road Cycling",
+      "mtb-cycling": "Mountain Biking",
+      "gravel-cycling": "Gravel Cycling",
+      "canoeing": "Canoeing",
+      "bobsleigh": "Bobsleigh",
+      "swimming": "Swimming",
+      "running": "Running",
+      "hiking": "Hiking"
     }
   }
 }
