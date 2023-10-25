@@ -1,12 +1,11 @@
 import { Breadcrumbs } from "components/breadcrumbs";
-import { db } from "server/db";
+import { useTranslations } from "next-intl";
 
-export default async ({ params }: { params: { raceId: string } }) => {
-    const race = await db.race.findFirstOrThrow({ where: { id: Number(params.raceId) } });
-
+export default ({ params }: { params: { raceId: string } }) => {
+    const t = useTranslations();
     return (
-        <Breadcrumbs>
-            <Breadcrumbs.Item text={race.name}></Breadcrumbs.Item>
+        <Breadcrumbs homePath={`/${params.raceId}`}>
+            <Breadcrumbs.Item text={t("pages.general.dashboard.header.title")}></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };

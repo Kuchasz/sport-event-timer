@@ -20,7 +20,7 @@ const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>
     </div>
 );
 
-export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
+export const Breadcrumbs = <T extends string>({ children, homePath = "/" }: { children?: ReactNode; homePath?: Route<T> | URL }) => {
     const areValidChildren = (children: ReactNode): children is React.ReactElement<BreadcrumbItemProps<string>>[] => {
         return !!children || React.Children.toArray(children).every(child => React.isValidElement(child) && child.type === BreadcrumbItem);
     };
@@ -32,7 +32,7 @@ export const Breadcrumbs = ({ children }: { children?: ReactNode }) => {
     return (
         <div className="flex text-xs font-semibold uppercase">
             <div className="mx-1 flex items-center">
-                <Link href="/">
+                <Link href={homePath as Route}>
                     <Icon className="cursor-pointer rounded-md text-gray-700 transition-colors" size={0.8} path={mdiHomeOutline} />
                 </Link>
             </div>
