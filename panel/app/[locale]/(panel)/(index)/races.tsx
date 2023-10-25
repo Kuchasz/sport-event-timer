@@ -29,6 +29,7 @@ import { PoorActions } from "components/poor-actions";
 import { Confirmation } from "components/confirmation";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { sportKinds } from "@set/utils/dist/sport-kind";
+import { FullRaceIcon } from "components/race-icon";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -102,7 +103,6 @@ export const Races = ({ initialData }: RacesProps) => {
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
     const locale = useLocale();
-    // const gridRef = useRef<AgGridReact<Race>>(null);
 
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
@@ -186,8 +186,6 @@ export const Races = ({ initialData }: RacesProps) => {
         },
     ];
 
-    const getShortcut = (name: string) => name.slice(0, 2).toUpperCase();
-
     const [filter, setFilter] = useState<RaceFilterType>("all");
 
     const openCreateDialog = async () => {
@@ -249,10 +247,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                 href={`/${r.id}`}
                                 className="h-64 w-40 overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
                             >
-                                <div className="flex h-44 w-full flex-col items-center justify-center gap-2 bg-gray-800 text-white">
-                                    <div className="text-6xl">{getShortcut(r.name)}</div>
-                                    <div className="text-xs font-semibold text-gray-400">{r.date.toLocaleDateString(locale)}</div>
-                                </div>
+                                <FullRaceIcon r={r} />
                                 <div className="p-4 ">
                                     <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">{r.name}</div>
                                     <div className="line-clamp-2 overflow-hidden text-ellipsis text-xs text-gray-500">{r.description}</div>
