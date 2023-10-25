@@ -28,7 +28,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
-                            <ConciseRaceIcon r={race} />
+                            <ConciseRaceIcon r={race!} />
                             <RaceMenu raceId={raceId} />
                         </nav>
                         <main className="flex h-full grow flex-col overflow-y-auto">
