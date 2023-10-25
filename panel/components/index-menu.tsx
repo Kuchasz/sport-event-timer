@@ -10,20 +10,20 @@ export const IndexMenu = () => {
         color: "bg-[#64b3f4]",
         to: "/",
         items: [
-            {
-                text: t("menuOptions.general.dashboard"),
-                icon: mdiViewDashboardEditOutline,
-                to: "/",
-                color: "text-yellow-700",
-                bg: "bg-yellow-100",
-            },
-            {
-                text: t("menuOptions.general.races"),
-                icon: mdiBikeFast,
-                to: "/my-races",
-                color: "text-red-700",
-                bg: "bg-red-50",
-            },
+            // {
+            //     text: t("menuOptions.general.dashboard"),
+            //     icon: mdiViewDashboardEditOutline,
+            //     to: "/",
+            //     color: "text-yellow-700",
+            //     bg: "bg-yellow-100",
+            // },
+            // {
+            //     text: t("menuOptions.general.races"),
+            //     icon: mdiBikeFast,
+            //     to: "/my-races",
+            //     color: "text-red-700",
+            //     bg: "bg-red-50",
+            // },
         ],
     };
 
