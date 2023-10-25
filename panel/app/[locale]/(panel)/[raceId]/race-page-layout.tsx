@@ -4,6 +4,8 @@ import { Meta } from "components/meta";
 import { RaceMenu } from "components/race-menu";
 import { Status } from "components/status";
 import { AgGridProvider } from "components/ag-grid-provider";
+import { trpcRSC } from "trpc-core-rsc";
+import { ConciseRaceIcon } from "components/race-icon";
 
 type Props = {
     raceId: string;
@@ -11,7 +13,9 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const RacePageLayout = ({ raceId, breadcrumbs, children }: Props) => {
+export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
+    const race = await trpcRSC.race.race.query({ raceId: Number(raceId) });
+
     return (
         <>
             <Meta />
@@ -24,6 +28,7 @@ export const RacePageLayout = ({ raceId, breadcrumbs, children }: Props) => {
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
+                            <ConciseRaceIcon r={race} />
                             <RaceMenu raceId={raceId} />
                         </nav>
                         <main className="flex h-full grow flex-col overflow-y-auto">
