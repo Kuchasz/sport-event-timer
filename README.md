@@ -35,6 +35,7 @@ Application for making time measurements
 | 26/10/2023 | Timer with elapsed time (from start)                       | todo :date:                     |
 | 26/10/2023 | Races list quick search                                    | todo :date:                     |
 | 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
+| 26/10/2023 | QR Code to results list                                    | todo :date:                     |
 
 ## TODO
 
