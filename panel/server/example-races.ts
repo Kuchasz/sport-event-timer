@@ -15,7 +15,7 @@ import type {
 } from "@prisma/client";
 import { db } from "./db";
 import { faker } from "@faker-js/faker/locale/pl";
-import { TimerState } from "@set/timer/dist/store";
+import type { TimerState } from "@set/timer/dist/store";
 
 type Options = {
     name?: string;
