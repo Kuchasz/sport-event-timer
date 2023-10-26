@@ -36,6 +36,7 @@ Application for making time measurements
 | 26/10/2023 | Races list quick search                                    | todo :date:                     |
 | 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
 | 26/10/2023 | QR Code to results list                                    | todo :date:                     |
+| 27/10/2023 | Penalties management in panel                              | todo :date:                     |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 | 27/10/2023 | DQS support                                                | todo :date:                     |
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
