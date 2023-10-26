@@ -30,6 +30,8 @@ import { Confirmation } from "components/confirmation";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { FullRaceIcon } from "components/race-icon";
+import { PoorInput } from "components/poor-input";
+import fuzzysort from "fuzzysort";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
@@ -213,6 +215,9 @@ export const Races = ({ initialData }: RacesProps) => {
 
     const sportKindNames = new Map(sportKinds.map(sk => [sk, sportKindTranslations(sk)]));
 
+    const [racesQuery, setRacesQuery] = useState("");
+    const filteredRaces = fuzzysort.go(racesQuery, allRaces, { all: true, keys: ["name", "sportKind", "location"] });
+
     /* <Head>
                 <title>{t("pages.races.header.title")}</title>
             </Head> */
@@ -266,9 +271,18 @@ export const Races = ({ initialData }: RacesProps) => {
                         />
                         <RaceFilter filter={filter} setFilter={setFilter} />
                     </div>
+                    <div className="my-2">
+                        <PoorInput
+                            value={racesQuery}
+                            placeholder="Search race you are interested in ..."
+                            onChange={e => {
+                                setRacesQuery(e.target.value);
+                            }}
+                        />
+                    </div>
                     <div className="flex flex-col gap-2">
-                        {allRaces.map(r => (
-                            <div key={r.id} className="flex w-full items-center rounded-md bg-white px-8 py-6 shadow-lg">
+                        {filteredRaces.map(r => (
+                            <div key={r.obj.id} className="flex w-full items-center rounded-md bg-white px-8 py-6 shadow-lg">
                                 {/* <div className="w-20 h-20 bg-gray-100 rounded-full font-semibold flex flex-col justify-center items-center">
                                         <div className="text-2xs font-semibold text-gray-400">
                                             {monthForLocale(r.date.getMonth(), "short", "pl-PL").toUpperCase()}
@@ -297,15 +311,15 @@ export const Races = ({ initialData }: RacesProps) => {
                                     <div className="flex items-center overflow-hidden">
                                         <div className="flex items-center text-sm">
                                             <Icon path={mdiCalendarOutline} size={0.6} />
-                                            <span className="ml-1 font-semibold">{r.date.toLocaleDateString(locale)}</span>
+                                            <span className="ml-1 font-semibold">{r.obj.date.toLocaleDateString(locale)}</span>
                                         </div>
                                         <div className="ml-4 flex flex-shrink items-center overflow-hidden text-xs text-gray-400">
                                             <Icon className="shrink-0" path={mdiMapMarkerOutline} size={0.6} />
-                                            <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">{r.location}</span>
+                                            <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">{r.obj.location}</span>
                                         </div>
                                         <div className="ml-4 flex items-center text-xs text-gray-400">
                                             <Icon path={mdiFlagOutline} size={0.6} />
-                                            <span className="ml-1   whitespace-nowrap">{sportKindNames.get(r.sportKind)}</span>
+                                            <span className="ml-1   whitespace-nowrap">{sportKindNames.get(r.obj.sportKind)}</span>
                                         </div>
                                     </div>
                                     {/* <div>
@@ -316,8 +330,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                             <span>{timeOnlyFormatTimeNoSec(r.date.getTime())}</span>
                                         </div> */}
                                     {/* <div className="text-xs font-semibold text-gray-500 text-ellipsis">Cycling</div> */}
-                                    <div className="py-2 text-sm font-semibold">{r.name}</div>
-                                    <div className="line-clamp-2 text-ellipsis text-xs text-gray-500">{r.description}</div>
+                                    <div className="py-2 text-sm font-semibold">{r.obj.name}</div>
+                                    <div className="line-clamp-2 text-ellipsis text-xs text-gray-500">{r.obj.description}</div>
                                 </div>
                                 <div className="flex shrink-0 basis-40 flex-col items-center">
                                     <div className="flex flex-col">
@@ -326,16 +340,16 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 {t("pages.races.registration")}
                                             </div>
                                             <div className="flex items-center gap-1">
-                                                <Registrations race={r} /> <RegistrationEnabled race={r} />
+                                                <Registrations race={r.obj} /> <RegistrationEnabled race={r.obj} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
                                     <PoorActions
-                                        item={r}
+                                        item={r.obj}
                                         actions={
-                                            r.registrationEnabled
+                                            r.obj.registrationEnabled
                                                 ? [turnOffRegistrationAction, ...myRacesActions]
                                                 : [turnOnRegistrationAction, ...myRacesActions]
                                         }
@@ -344,7 +358,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
                                 <Link
                                     className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                    href={`/${r.id}`}
+                                    href={`/${r.obj.id}`}
                                 >
                                     {/* <Button outline> */}
                                     <Icon size={0.8} path={mdiOpenInNew} />
