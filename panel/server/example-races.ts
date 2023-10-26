@@ -15,6 +15,7 @@ import type {
 } from "@prisma/client";
 import { db } from "./db";
 import { faker } from "@faker-js/faker/locale/pl";
+import { TimerState } from "@set/timer/dist/store";
 
 type Options = {
     name?: string;
@@ -215,7 +216,7 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
             .flatMap(p =>
                 timingPointsForRace.map((tp, i) => ({
                     id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
-                    bibNumber: p.bibNumber!,
+                    bibNumber: Number(p.bibNumber!),
                     timingPointId: tp.id,
                     time: faker.date
                         .between({
@@ -226,6 +227,8 @@ const createStopwatches = (races: Race[], players: Player[], timingPoints: Timin
                 })),
             );
 
-        return { raceId: r.id, state: JSON.stringify({ timeStamps, actionsHistory: [] }) };
+        const state = { timeStamps, actionsHistory: [], absences: [] } as TimerState;
+
+        return { raceId: r.id, state: JSON.stringify(state) };
     });
 };
