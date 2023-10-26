@@ -33,6 +33,8 @@ Application for making time measurements
 | 26/10/2023 | Start list .CSV import/export                              | todo :date:                     |
 | 26/10/2023 | Add links to stopwatch and timer to the panel              | todo :date:                     |
 | 26/10/2023 | Timer with elapsed time (from start)                       | todo :date:                     |
+| 26/10/2023 | Races list quick search                                    | todo :date:                     |
+| 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
 
 ## TODO
 
