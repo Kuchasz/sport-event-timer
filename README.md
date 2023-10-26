@@ -36,6 +36,7 @@ Application for making time measurements
 | 26/10/2023 | Races list quick search                                    | todo :date:                     |
 | 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
 | 26/10/2023 | QR Code to results list                                    | todo :date:                     |
+| 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 
 ## TODO
 
