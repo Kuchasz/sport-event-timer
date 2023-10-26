@@ -17,7 +17,7 @@ Application for making time measurements
 | 14/09/2023 | Allow example race customization                           | :heavy_check_mark: (14/09/2023) |
 | 14/09/2023 | Country names localization                                 | :heavy_check_mark: (14/09/2023) |
 | 17/09/2023 | Fix grid reload on data changes (updated)                  | :heavy_check_mark: (18/09/2023) |
-| 19/09/2023 | Support for multiple split times on the same timing point  | todo :date:                     |
+| 19/09/2023 | Support for laps on timing point                           | todo :date:                     |
 | 19/09/2023 | Add notifications to successful/failed actions             | todo :date:                     |
 | 25/09/2023 | Short name for Timing Points                               | :heavy_check_mark: (25/09/2023) |
 | 01/10/2023 | Speed up application build and release times               | :heavy_check_mark: (03/10/2023) |
@@ -29,6 +29,7 @@ Application for making time measurements
 | 20/10/2023 | Configure linter + CI/CD pipeline                          | :heavy_check_mark: (23/10/2023) |
 | 23/10/2023 | Simple website with registration, start list and results   | todo :date:                     |
 | 23/10/2023 | Improve login page look                                    | todo :date:                     |
+| 26/10/2023 | Add language selector                                      | todo :date:                     |
 
 ## TODO
 
