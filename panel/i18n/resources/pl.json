@@ -11,8 +11,9 @@
     "timeMeasurement": {
       "title": "Pomiar czasu",
       "timingPoints": "Punkty Pomiarowe",
-      "splitTimes": "Czasy Pomiaru",
-      "results": "Wyniki"
+      "splitTimes": "Zmierzone czasy",
+      "results": "Wyniki",
+      "timers": "Zegary"
     },
     "management": {
       "title": "Zarządzanie",
@@ -576,6 +577,11 @@
         "header": {
           "title": "Statystyki"
         }
+      }
+    },
+    "timers": {
+      "header": {
+        "title": "Zegary"
       }
     }
   },

@@ -12,7 +12,8 @@
       "title": "Time measurement",
       "timingPoints": "Timing Points",
       "splitTimes": "Split Times",
-      "results": "Results"
+      "results": "Results",
+      "timers": "Timers"
     },
     "management": {
       "title": "Management",
@@ -576,6 +577,11 @@
         "header": {
           "title": "Statistics"
         }
+      }
+    },
+    "timers": {
+      "header": {
+        "title": "Timers"
       }
     }
   },
