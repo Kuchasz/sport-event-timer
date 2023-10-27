@@ -581,7 +581,8 @@
     },
     "timers": {
       "header": {
-        "title": "Timers"
+        "title": "Timers",
+        "description": "Timers useful during the race"
       }
     }
   },
