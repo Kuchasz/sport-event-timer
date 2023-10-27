@@ -29,7 +29,6 @@ Application for making time measurements
 | 20/10/2023 | Configure linter + CI/CD pipeline                          | :heavy_check_mark: (23/10/2023) |
 | 23/10/2023 | Simple website with registration, start list and results   | todo :date:                     |
 | 23/10/2023 | Improve login page look                                    | todo :date:                     |
-| 26/10/2023 | Add language selector                                      | todo :date:                     |
 | 26/10/2023 | Start list .CSV import/export                              | todo :date:                     |
 | 26/10/2023 | Add links to stopwatch and timer to the race panel         | todo :date:                     |
 | 26/10/2023 | Timer for finish line                                      | todo :date:                     |
@@ -39,7 +38,7 @@ Application for making time measurements
 | 27/10/2023 | Penalties management in panel                              | todo :date:                     |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 | 27/10/2023 | Panel language selector                                    | todo :date:                     |
-| 27/10/2023 | DQS support                                                | todo :date:                     |
+| 27/10/2023 | DSQ support                                                | todo :date:                     |
 | 27/10/2023 | Steps for race creation                                    | todo :date:                     |
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
 
