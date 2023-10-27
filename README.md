@@ -41,6 +41,7 @@ Application for making time measurements
 | 27/10/2023 | DSQ support                                                | todo :date:                     |
 | 27/10/2023 | Steps for race creation                                    | todo :date:                     |
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
+| 28/10/2023 | Use mousedown instead of onclick in stopwatch              | todo :date:                     |
 
 ## TODO
 
