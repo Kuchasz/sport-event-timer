@@ -38,7 +38,7 @@ Application for making time measurements
 | 27/10/2023 | Penalties management in panel                              | todo :date:                     |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 | 27/10/2023 | Panel language selector                                    | todo :date:                     |
-| 27/10/2023 | DQS support                                                | todo :date:                     |
+| 27/10/2023 | DSQ support                                                | todo :date:                     |
 | 27/10/2023 | Steps for race creation                                    | todo :date:                     |
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
 
