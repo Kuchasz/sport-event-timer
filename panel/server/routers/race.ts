@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
 import { type SportKind, sportKindEnum } from "../../modules/race/models";
+import { daysFromNow } from "@set/utils/dist/datetime";
 
 const raceSchema = z.object({
     id: z.number().min(1).nullish(),
@@ -164,6 +165,22 @@ export const raceRouter = router({
             ].map(tp => ctx.db.timingPoint.create({ data: tp }));
 
             const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
+
+            const timingPointsAccessUrlsToCreate = timingPoints.map(tp =>
+                ctx.db.timingPointAccessUrl.create({
+                    data: {
+                        canAccessOthers: false,
+                        expireDate: daysFromNow(5),
+                        token: "blah",
+                        code: "",
+                        raceId: tp.raceId,
+                        timingPointId: tp.id,
+                        name: "",
+                    },
+                }),
+            );
+
+            await ctx.db.$transaction(timingPointsAccessUrlsToCreate);
 
             await ctx.db.classification.create({ data: { raceId: race.id, name: "Base" } });
 
