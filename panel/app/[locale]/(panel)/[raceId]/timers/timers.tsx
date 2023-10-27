@@ -1,36 +1,24 @@
 "use client";
 
-import { DashboardCard } from "components/dashboard-card";
 import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { PageHeader } from "components/page-header";
 
 export const Timers = () => {
     const raceId = useCurrentRaceId();
     const { data: race } = trpc.race.raceRaport.useQuery({ raceId: raceId }, { enabled: !!raceId });
     const t = useTranslations();
-    const locale = useLocale();
 
     return (
         <>
             {race && (
                 <div>
                     <div>
-                        <PageHeader title={race.name} description={race.date.toLocaleDateString(locale)} />
+                        <PageHeader title={t("pages.timers.header.title")} description={t("pages.timers.header.description")} />
                         <div className="mb-4 mt-8">
                             <div className="mx-3 text-xl font-semibold">{t("pages.race.statistics.header.title")}</div>
-                            <div className="flex">
-                                <DashboardCard.Range
-                                    min={race.registeredPlayers}
-                                    max={race.playersLimit}
-                                    title={t("pages.race.statistics.widgets.registeredPlayers")}
-                                />
-                                <DashboardCard.Discrete
-                                    enabled={race.registrationEnabled}
-                                    title={t("pages.race.statistics.widgets.registrationStatus")}
-                                />
-                            </div>
+                            <div className="flex"></div>
                         </div>
                     </div>
                 </div>

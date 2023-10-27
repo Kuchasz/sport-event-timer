@@ -581,7 +581,8 @@
     },
     "timers": {
       "header": {
-        "title": "Zegary"
+        "title": "Zegary",
+        "description": "Zegary przydatne w trakcie trwania wyścigu"
       }
     }
   },
