@@ -294,64 +294,66 @@ export const TimingPoints = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
-                <div className="w-full max-w-md ">
-                    {sortedTimingPoints?.map((e, index) => (
-                        <TimingPointCard
-                            key={e.id}
-                            index={index}
-                            raceId={raceId}
-                            onCreate={() => {
-                                void refetchTimingPoints();
-                                void refetchOrder();
-                            }}
-                            onSelect={setActiveTimingPointId}
-                            isActive={e.id === activeTimingPointId}
-                            timingPoint={e}
-                            isFirst={index === 0}
-                            isLast={index === sortedTimingPoints.length - 1}
-                        />
-                    ))}
-                </div>
-                {activeTimingPoint && (
-                    <div className="ml-8 mt-1 w-full flex-grow">
-                        <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
-                            <div className="flex-grow">
-                                <h3 className="text-xl font-semibold">{activeTimingPoint.name}</h3>
-                                <div>{activeTimingPoint.description}</div>
-                            </div>
-                            <div className="flex items-center">
-                                <button
-                                    onClick={() => openEditDialog(activeTimingPoint)}
-                                    className="rounded-lg p-3 text-gray-600 hover:bg-gray-100"
-                                >
-                                    <Icon path={mdiPencilOutline} size={0.8}></Icon>
-                                </button>
-                                <button
-                                    onClick={() => openDeleteDialog(activeTimingPoint)}
-                                    className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100"
-                                >
-                                    <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="mt-8">
-                            <div className="flex items-center">
-                                <div>
-                                    <h3 className="text-xl font-semibold">{t("pages.timingPoints.accessUrls.header.title")}</h3>
-                                    <div>{t("pages.timingPoints.accessUrls.header.description")}</div>
-                                </div>
-                                <div className="flex-grow"></div>
-                                <button
-                                    onClick={() => openCreateAccessKeyDialog(activeTimingPoint)}
-                                    className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200"
-                                >
-                                    <Icon path={mdiPlus} size={0.8}></Icon>
-                                </button>
-                            </div>
-                            <PoorTable onDelete={openDeleteAccesKeyDialog} items={accessKeys} />
-                        </div>
+                <div className="flex">
+                    <div className="w-full max-w-md ">
+                        {sortedTimingPoints?.map((e, index) => (
+                            <TimingPointCard
+                                key={e.id}
+                                index={index}
+                                raceId={raceId}
+                                onCreate={() => {
+                                    void refetchTimingPoints();
+                                    void refetchOrder();
+                                }}
+                                onSelect={setActiveTimingPointId}
+                                isActive={e.id === activeTimingPointId}
+                                timingPoint={e}
+                                isFirst={index === 0}
+                                isLast={index === sortedTimingPoints.length - 1}
+                            />
+                        ))}
                     </div>
-                )}
+                    {activeTimingPoint && (
+                        <div className="ml-8 mt-1 w-full flex-grow">
+                            <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
+                                <div className="flex-grow">
+                                    <h3 className="text-xl font-semibold">{activeTimingPoint.name}</h3>
+                                    <div>{activeTimingPoint.description}</div>
+                                </div>
+                                <div className="flex items-center">
+                                    <button
+                                        onClick={() => openEditDialog(activeTimingPoint)}
+                                        className="rounded-lg p-3 text-gray-600 hover:bg-gray-100"
+                                    >
+                                        <Icon path={mdiPencilOutline} size={0.8}></Icon>
+                                    </button>
+                                    <button
+                                        onClick={() => openDeleteDialog(activeTimingPoint)}
+                                        className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100"
+                                    >
+                                        <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mt-8">
+                                <div className="flex items-center">
+                                    <div>
+                                        <h3 className="text-xl font-semibold">{t("pages.timingPoints.accessUrls.header.title")}</h3>
+                                        <div>{t("pages.timingPoints.accessUrls.header.description")}</div>
+                                    </div>
+                                    <div className="flex-grow"></div>
+                                    <button
+                                        onClick={() => openCreateAccessKeyDialog(activeTimingPoint)}
+                                        className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200"
+                                    >
+                                        <Icon path={mdiPlus} size={0.8}></Icon>
+                                    </button>
+                                </div>
+                                <PoorTable onDelete={openDeleteAccesKeyDialog} items={accessKeys} />
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );
