@@ -7,6 +7,7 @@ import {
     mdiAccountCogOutline,
     mdiTimerCogOutline,
     mdiCog,
+    mdiTimerOutline,
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
@@ -64,6 +65,13 @@ export const RaceMenu = ({ raceId }: { raceId: string }) => {
         color: "bg-[#c2e59c]",
         to: "/:raceId",
         items: [
+            {
+                text: t("menuOptions.timeMeasurement.timers"),
+                icon: mdiTimerOutline,
+                to: "/:raceId/timers",
+                color: "text-blue-700",
+                bg: "bg-blue-100",
+            },
             {
                 text: t("menuOptions.timeMeasurement.timingPoints"),
                 icon: mdiTimerCogOutline,
