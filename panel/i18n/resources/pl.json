@@ -583,6 +583,17 @@
       "header": {
         "title": "Zegary",
         "description": "Zegary przydatne w trakcie trwania wyścigu"
+      },
+      "applications": {
+        "countdown": {
+          "description": "Przydatny w miejscu startu. Można przejść na telefon, tablecie lub większy ekran. Wyświetla numer startowy i następny zawodnik zawodnika. Odliczanie sekund do jego startu. Możliwość także na wykorzystanie oprogramowania dźwiękowego."
+        },
+        "startList": {
+          "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa."
+        },
+        "stopwatch": {
+          "description": "Stoper odliczający czas od startu zawodów. W przypadku startów indywidualnych jest to czas od startu pierwszego zawodnika, w przypadku startu masowego jest to czas od startu wszystkich zawodników."
+        }
       }
     }
   },
