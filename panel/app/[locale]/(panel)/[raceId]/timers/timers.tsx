@@ -28,9 +28,9 @@ export const Timers = () => {
                                         className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
                                     >
                                         <Icon path={mdiTimer10} size={3} />
-                                        <span>Odliczanie (do zera)</span>
+                                        <span>{t("pages.timers.applications.countdown.title")}</span>
                                     </Link>
-                                    <span>{t("pages.timers.applications.countdown.description")}</span>
+                                    <span className="max-w-xl">{t("pages.timers.applications.countdown.description")}</span>
                                 </div>
                                 <div className="my-3 flex">
                                     <Link
@@ -39,9 +39,9 @@ export const Timers = () => {
                                         className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
                                     >
                                         <Icon path={mdiPlaylistPlay} size={3} />
-                                        <span>Lista startowa</span>
+                                        <span>{t("pages.timers.applications.startList.title")}</span>
                                     </Link>
-                                    <span>{t("pages.timers.applications.startList.description")}</span>
+                                    <span className="max-w-xl">{t("pages.timers.applications.startList.description")}</span>
                                 </div>
                                 <div className="my-3 flex">
                                     <Link
@@ -50,9 +50,9 @@ export const Timers = () => {
                                         className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
                                     >
                                         <Icon path={mdiTimerOutline} size={3} />
-                                        <span>Stoper (od zera)</span>
+                                        <span>{t("pages.timers.applications.stopwatch.title")}</span>
                                     </Link>
-                                    <span>{t("pages.timers.applications.stopwatch.description")}</span>
+                                    <span className="max-w-xl">{t("pages.timers.applications.stopwatch.description")}</span>
                                 </div>
                             </div>
                         </div>
