@@ -583,6 +583,17 @@
       "header": {
         "title": "Timers",
         "description": "Timers useful during the race"
+      },
+      "applications": {
+        "countdown": {
+          "description": "Useful at the launch site. Can be displayed on a phone, tablet or any larger screen. Displays the start number and the name of the next competitor. Counts down the number of seconds until his start. It also allows you to trigger a sound signal."
+        },
+        "startList": {
+          "description": "The app is useful for all athletes. They can check their starting time. See who has already started, who will start next and how many competitors are left. The entire start list is included."
+        },
+        "stopwatch": {
+          "description": "A countdown timer from the start of the competition. In the case of individual starts it is the time from the start of the first competitor, in the case of a mass start it is the time from the start of all competitors."
+        }
       }
     }
   },
