@@ -8,6 +8,43 @@ import { mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10, mdiTimerOutline }
 import Icon from "@mdi/react";
 import Link from "next/link";
 import { Button } from "components/button";
+import type { Route } from "next";
+
+type ApplicationCardProps = {
+    href: Route;
+    name: string;
+    description: string;
+    icon: string;
+};
+
+const ApplicationCard = ({ href, name, description, icon }: ApplicationCardProps) => {
+    const t = useTranslations();
+    return (
+        <div className="my-5 flex">
+            <Link
+                href={href}
+                target="_blank"
+                className="mx-5 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
+            >
+                <Icon path={icon} size={3} />
+                <span>{name}</span>
+            </Link>
+            <div className="flex max-w-xl flex-col justify-between">
+                <div className="text-sm">{description}</div>
+                <div className="flex justify-end gap-2">
+                    <Button>
+                        <Icon path={mdiQrcode} size={0.8} />
+                        <span className="ml-2">{t("pages.timers.applications.buttons.getQrCode")}</span>
+                    </Button>
+                    <Button outline>
+                        <Icon size={0.8} path={mdiOpenInNew} />
+                        <span className="ml-2">{t("pages.timers.applications.buttons.open")}</span>
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export const Timers = () => {
     const raceId = useCurrentRaceId();
@@ -22,51 +59,24 @@ export const Timers = () => {
                         <PageHeader title={t("pages.timers.header.title")} description={t("pages.timers.header.description")} />
                         <div className="mb-4 mt-8">
                             <div className="flex flex-col">
-                                <div className="my-3 flex">
-                                    <Link
-                                        href={`/timer/${raceId}`}
-                                        target="_blank"
-                                        className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
-                                    >
-                                        <Icon path={mdiTimer10} size={3} />
-                                        <span>{t("pages.timers.applications.countdown.title")}</span>
-                                    </Link>
-                                    <div className="flex max-w-xl flex-col">
-                                        <div>{t("pages.timers.applications.countdown.description")}</div>
-                                        <div className="flex">
-                                            <Button>
-                                                <Icon path={mdiQrcode} size={0.8} />
-                                                <span>Pobierz kod QR</span>
-                                            </Button>
-                                            <Button>
-                                                <Icon size={0.8} path={mdiOpenInNew} />
-                                                <span>Otwórz</span>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="my-3 flex">
-                                    <Link
-                                        href={`/timer/${raceId}/t`}
-                                        target="_blank"
-                                        className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
-                                    >
-                                        <Icon path={mdiPlaylistPlay} size={3} />
-                                        <span>{t("pages.timers.applications.startList.title")}</span>
-                                    </Link>
-                                    <span className="max-w-xl">{t("pages.timers.applications.startList.description")}</span>
-                                </div>
-                                <div className="my-3 flex">
-                                    <Link
-                                        href={`/timer/${raceId}`}
-                                        target="_blank"
-                                        className="mx-3 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
-                                    >
-                                        <Icon path={mdiTimerOutline} size={3} />
-                                        <span>{t("pages.timers.applications.stopwatch.title")}</span>
-                                    </Link>
-                                    <span className="max-w-xl">{t("pages.timers.applications.stopwatch.description")}</span>
-                                </div>
+                                <ApplicationCard
+                                    href={`/timer/${raceId}` as Route}
+                                    name={t("pages.timers.applications.countdown.title")}
+                                    description={t("pages.timers.applications.countdown.description")}
+                                    icon={mdiTimer10}
+                                />
+                                <ApplicationCard
+                                    href={`/timer/${raceId}/t` as Route}
+                                    name={t("pages.timers.applications.startList.title")}
+                                    description={t("pages.timers.applications.startList.description")}
+                                    icon={mdiPlaylistPlay}
+                                />
+                                <ApplicationCard
+                                    href={`/timer/${raceId}/t` as Route}
+                                    name={t("pages.timers.applications.stopwatch.title")}
+                                    description={t("pages.timers.applications.stopwatch.description")}
+                                    icon={mdiTimerOutline}
+                                />
                             </div>
                         </div>
                     </div>

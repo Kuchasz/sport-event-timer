@@ -590,12 +590,16 @@
           "title": "Odliczanie (do zera)"
         },
         "startList": {
-          "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa.",
+          "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa. Zoptymalizowana dla telefonów.",
           "title": "Lista startowa"
         },
         "stopwatch": {
           "description": "Stoper odliczający czas od startu zawodów. W przypadku startów indywidualnych jest to czas od startu pierwszego zawodnika, w przypadku startu masowego jest to czas od startu wszystkich zawodników.",
           "title": "Stoper"
+        },
+        "buttons": {
+          "getQrCode": "Pobierz kod QR",
+          "open": "Otwórz"
         }
       }
     }
