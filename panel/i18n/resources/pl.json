@@ -64,7 +64,7 @@
     },
     "races": {
       "addRace": "Dodaj Wyścig",
-      "manage": "Zarządzaj",
+      "open": "Otwórz",
       "upcomingRaces": {
         "header": {
           "title": "Nadchodzące Wyścigi",
