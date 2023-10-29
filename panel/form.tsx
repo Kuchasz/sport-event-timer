@@ -2,7 +2,7 @@ import { Label } from "components/label";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import React, { createContext } from "react";
-import type { ZodObject, ZodType } from "zod";
+import type { ZodEffects, ZodObject, ZodType } from "zod";
 
 // type FormValues = { [k: string]: any };
 type FormErrors<TItem> = { [k in keyof TItem]: string[] | undefined };
@@ -10,7 +10,7 @@ type FormErrors<TItem> = { [k in keyof TItem]: string[] | undefined };
 type FormStateProps<TItem> = {
     initialValues: TItem;
     onSubmit: (values: TItem) => void;
-    validationSchema: ZodObject<Record<string, ZodType<any, any>>>;
+    validationSchema: ZodObject<Record<string, ZodType<any, any>>> | ZodEffects<ZodObject<Record<string, ZodType<any, any>>>>;
 };
 
 type FormContextType<TItem, TKey extends keyof TItem> = {

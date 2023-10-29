@@ -184,7 +184,20 @@
       },
       "createMany": {
         "title": "Stwórz wiele numerów startowych",
-        "button": "Dodaj wiele"
+        "button": "Dodaj wiele",
+        "form": {
+          "startNumber": {
+            "label": "Początkowy numer",
+            "placeholder": "Wpisz początkowy numer"
+          },
+          "endNumber": {
+            "label": "Końcowy numer",
+            "placeholder": "Wpisz końcowy numer"
+          },
+          "omitDuplicates": {
+            "label": "Pomijaj duplikaty"
+          }
+        }
       },
       "edit": {
         "title": "Edytuj Numer Startowy"
@@ -772,6 +785,11 @@
       },
       "shortName": {
         "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
+      }
+    },
+    "bibNumber": {
+      "endNumber": {
+        "higherThanStartNumber": "Ostatni number musi być wyższy niż pierwszy"
       }
     }
   },

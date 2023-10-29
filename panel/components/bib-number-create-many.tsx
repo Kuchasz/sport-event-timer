@@ -1,9 +1,11 @@
 import { Button } from "./button";
-import { Label } from "./label";
-import { useFormState } from "hooks";
 import type { AppRouterInputs } from "trpc";
 import { PoorNumberInput } from "./poor-number-input";
 import { PoorCheckbox } from "./poor-checkbox";
+import { addRangeBibNumberSchema } from "modules/bib-number/models";
+import { Form, FormInput } from "form";
+import { useTranslations } from "next-intl";
+import { trpc } from "trpc-core";
 
 type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
@@ -14,41 +16,56 @@ type BibNumberFormProps = {
 };
 
 export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: BibNumberFormProps) => {
-    const [addManyBibNumberConfig, changeHandler] = useFormState(initialConfig, [initialConfig]);
+    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
+    const t = useTranslations();
+
+    const saveChanges = async (createManyBibNumbers: CreateManyBibNumbers) => {
+        await addRangeBibNumberMutation.mutateAsync(createManyBibNumbers);
+        onResolve(createManyBibNumbers);
+    };
 
     return (
-        <div className="flex flex-col">
+        <Form<CreateManyBibNumbers> initialValues={initialConfig} validationSchema={addRangeBibNumberSchema} onSubmit={saveChanges}>
             <div className="flex">
-                <div className="grow">
-                    <Label>Range start</Label>
-                    <PoorNumberInput
-                        placeholder="First Bib Number"
-                        value={addManyBibNumberConfig.startNumber}
-                        onChange={e => changeHandler("startNumber")({ target: { value: e.target.value! } })}
-                    />
-                </div>
-                <div className="ml-2 grow">
-                    <Label>Range end</Label>
-                    <PoorNumberInput
-                        placeholder="Last Bib Number"
-                        value={addManyBibNumberConfig.endNumber}
-                        onChange={e => changeHandler("endNumber")({ target: { value: e.target.value! } })}
-                    />
-                </div>
-                <div className="ml-2 grow">
-                    <Label>Omit duplicates</Label>
-                    <PoorCheckbox
-                        value={addManyBibNumberConfig.omitDuplicates}
-                        onChange={e => changeHandler("omitDuplicates")({ target: { value: e.target.value } })}
-                    />
-                </div>
+                <FormInput<CreateManyBibNumbers, "startNumber">
+                    label={t("pages.bibNumbers.createMany.form.startNumber.label")}
+                    render={({ value, onChange }) => (
+                        <PoorNumberInput
+                            placeholder={t("pages.bibNumbers.createMany.form.startNumber.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value! } })}
+                        />
+                    )}
+                    name="startNumber"
+                />
+
+                <div className="p-2"></div>
+                <FormInput<CreateManyBibNumbers, "endNumber">
+                    label={t("pages.bibNumbers.createMany.form.endNumber.label")}
+                    render={({ value, onChange }) => (
+                        <PoorNumberInput
+                            placeholder={t("pages.bibNumbers.createMany.form.endNumber.placeholder")}
+                            value={value}
+                            onChange={e => onChange({ target: { value: e.target.value! } })}
+                        />
+                    )}
+                    name="endNumber"
+                />
+                <div className="p-2"></div>
+                <FormInput<CreateManyBibNumbers, "omitDuplicates">
+                    label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")}
+                    render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
+                    name="omitDuplicates"
+                />
             </div>
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
-                    Cancel
+                    {t("shared.cancel")}
                 </Button>
-                <Button onClick={() => onResolve({ ...addManyBibNumberConfig })}>Save</Button>
+                <Button loading={addRangeBibNumberMutation.isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
-        </div>
+        </Form>
     );
 };

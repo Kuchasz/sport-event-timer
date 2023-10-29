@@ -184,7 +184,20 @@
       },
       "createMany": {
         "title": "Create many bib numbers",
-        "button": "Add many"
+        "button": "Add many",
+        "form": {
+          "startNumber": {
+            "label": "Start number",
+            "placeholder": "Enter range start number"
+          },
+          "endNumber": {
+            "label": "End number",
+            "placeholder": "Enter range end number"
+          },
+          "omitDuplicates": {
+            "label": "Omit duplicates"
+          }
+        }
       },
       "edit": {
         "title": "Edit BibNumber"
@@ -772,6 +785,11 @@
       },
       "shortName": {
         "length": "Short name should not be longer than 3 characters"
+      }
+    },
+    "bibNumber": {
+      "endNumber": {
+        "higherThanStartNumber": "End number must be higher than Start number"
       }
     }
   },
