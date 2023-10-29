@@ -129,14 +129,17 @@ export const isPast = (date: Date) => {
 type MonthFormat = "long" | "numeric" | "2-digit" | "short" | "narrow" | undefined;
 type WeekdayFormat = "long" | "short" | "narrow" | undefined;
 
-export const monthForLocale = (month: number, monthFormat: MonthFormat = "long", localeName = "es-MX") => {
-    //eslint-disable-next-line @typescript-eslint/unbound-method
-    const format = new Intl.DateTimeFormat(localeName, { month: monthFormat }).format;
-    return format(new Date(Date.UTC(2021, month)));
-};
+export const monthForLocale = (month: number, monthFormat: MonthFormat = "long", localeName = "es-MX") =>
+    new Intl.DateTimeFormat(localeName, { month: monthFormat }).format(new Date(Date.UTC(2021, month)));
 
-export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = "short", localeName = "es-MX") => {
-    //eslint-disable-next-line @typescript-eslint/unbound-method
-    const format = new Intl.DateTimeFormat(localeName, { weekday: weekdayFormat }).format;
-    return format(new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())));
+export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = "short", localeName = "es-MX") =>
+    new Intl.DateTimeFormat(localeName, { weekday: weekdayFormat }).format(
+        new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())),
+    );
+
+export const stripSeconds = (date: Date) => {
+    const d = new Date(date);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+    return d;
 };
