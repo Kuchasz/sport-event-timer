@@ -43,6 +43,7 @@ Application for making time measurements
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
 | 28/10/2023 | Replace onclick with mousedown in stopwatch (when needed)  | :heavy_check_mark: (29/10/2023) |
 | 29/10/2023 | Change race and split time forms to use new component      | todo :date:                     |
+| 29/10/2023 | Localized example race data                                | todo :date:                     |
 
 ## TODO
 
