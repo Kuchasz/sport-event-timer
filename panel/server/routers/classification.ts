@@ -68,8 +68,7 @@ export const classificationRouter = router({
             return await ctx.db.category.delete({ where: { id: categoryId } });
         }),
     updateCategory: protectedProcedure.input(categorySchema).mutation(async ({ input, ctx }) => {
-        const { id, ...data } = input;
-        const { ...category } = data;
+        const { id, ...category } = input;
 
         return await ctx.db.category.update({
             where: { id: id! },
