@@ -477,6 +477,12 @@
       },
       "load": {
         "button": "Load"
+      },
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter the name"
+        }
       }
     },
     "timingPoints": {

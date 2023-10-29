@@ -2,6 +2,7 @@ import { genderEnum } from "../../models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 import type { Gender } from "@set/timer/dist/model";
+import { classificationSchema } from "../../modules/classification/models";
 
 const categorySchema = z.object({
     id: z.number().min(1).optional(),
@@ -11,12 +12,6 @@ const categorySchema = z.object({
     minAge: z.number().min(1).nullish(),
     maxAge: z.number().max(199).nullish(),
     isSpecial: z.boolean(),
-});
-
-const classificationSchema = z.object({
-    id: z.number().nullish(),
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
-    name: z.string({ required_error: "name is required" }),
 });
 
 const classificationsSchema = z.object({

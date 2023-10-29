@@ -477,6 +477,12 @@
       },
       "load": {
         "button": "Załaduj"
+      },
+      "form": {
+        "name": {
+          "label": "Nazwa",
+          "placeholder": "Wpisz nazwę"
+        }
       }
     },
     "timingPoints": {
