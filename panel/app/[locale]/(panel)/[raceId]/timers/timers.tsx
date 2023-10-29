@@ -9,16 +9,25 @@ import Icon from "@mdi/react";
 import Link from "next/link";
 import { Button } from "components/button";
 import type { Route } from "next";
+import QR from "qrcode";
+import { sanitizeFileName, triggerBase64Download } from "@set/utils/dist/file";
 
 type ApplicationCardProps = {
     href: Route;
+    qrFileName: string;
     name: string;
     description: string;
     icon: string;
 };
 
-const ApplicationCard = ({ href, name, description, icon }: ApplicationCardProps) => {
+const ApplicationCard = ({ href, qrFileName, name, description, icon }: ApplicationCardProps) => {
     const t = useTranslations();
+
+    const generateQRCode = async () => {
+        const qr = await QR.toDataURL(href, { width: 800, margin: 2 });
+        triggerBase64Download(qr, qrFileName);
+    };
+
     return (
         <div className="my-5 flex">
             <Link
@@ -32,7 +41,7 @@ const ApplicationCard = ({ href, name, description, icon }: ApplicationCardProps
             <div className="flex max-w-xl flex-col justify-between">
                 <div className="text-sm">{description}</div>
                 <div className="flex justify-end gap-2">
-                    <Button>
+                    <Button onClick={generateQRCode}>
                         <Icon path={mdiQrcode} size={0.8} />
                         <span className="ml-2">{t("pages.timers.applications.buttons.getQrCode")}</span>
                     </Button>
@@ -61,18 +70,21 @@ export const Timers = () => {
                             <div className="flex flex-col">
                                 <ApplicationCard
                                     href={`/timer/${raceId}` as Route}
+                                    qrFileName={`qr-countdown-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.countdown.title")}
                                     description={t("pages.timers.applications.countdown.description")}
                                     icon={mdiTimer10}
                                 />
                                 <ApplicationCard
                                     href={`/timer/${raceId}/t` as Route}
+                                    qrFileName={`qr-start-list-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.startList.title")}
                                     description={t("pages.timers.applications.startList.description")}
                                     icon={mdiPlaylistPlay}
                                 />
                                 <ApplicationCard
                                     href={`/timer/${raceId}/t` as Route}
+                                    qrFileName={`qr-stopwatch-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.stopwatch.title")}
                                     description={t("pages.timers.applications.stopwatch.description")}
                                     icon={mdiTimerOutline}
