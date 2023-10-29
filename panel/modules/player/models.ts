@@ -16,6 +16,12 @@ export const playerProfileSchema = z.object({
     icePhoneNumber: z.string().nullish(),
 });
 
+export const playerPromotionSchema = z.object({
+    bibNumber: z.string().nullish(),
+    startTime: z.number().optional(),
+    classificationId: z.number().int(),
+});
+
 export const playerRegistrationSchema = z.object({
     raceId: z.number({ required_error: sharedErrorCodes.required }),
     player: playerProfileSchema,

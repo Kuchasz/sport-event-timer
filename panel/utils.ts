@@ -1,7 +1,7 @@
 import { createLogPrinter } from "@set/utils/dist/logger";
 import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
 import { formatNumber } from "@set/utils/dist/datetime";
-import { env } from "env";
+import { env } from "./env";
 
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;

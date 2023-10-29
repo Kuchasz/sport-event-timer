@@ -2,7 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { sort } from "@set/utils/dist/array";
-import { racePlayerSchema } from "../../modules/player/models";
+import { playerPromotionSchema, racePlayerSchema } from "../../modules/player/models";
 
 const stopwatchPlayersSchema = z.array(
     z.object({
@@ -16,11 +16,7 @@ const stopwatchPlayersSchema = z.array(
 const promoteRegistrationSchema = z.object({
     raceId: z.number({ required_error: "raceId is required" }),
     registrationId: z.number({ required_error: "registrationId is required" }),
-    player: z.object({
-        bibNumber: z.string().nullish(),
-        startTime: z.number().optional(),
-        classificationId: z.number().int(),
-    }),
+    player: playerPromotionSchema,
 });
 
 export const playerRouter = router({

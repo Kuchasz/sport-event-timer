@@ -326,6 +326,19 @@
         "description": "Promoted player will be available in stopwatch",
         "confirmation": {
           "title": "Promote player registration to player"
+        },
+        "form": {
+          "classification": {
+            "label": "Classification",
+            "placeholder": "Select classification"
+          },
+          "bibNumber": {
+            "label": "Bib number",
+            "placeholder": "Enter bib number"
+          },
+          "startTime": {
+            "label": "Start time"
+          }
         }
       },
       "delete": {

@@ -326,6 +326,19 @@
         "description": "Awansowany zawodnik będzie dostępny w stoperze",
         "confirmation": {
           "title": "Awansuj rejestrację na zawodnika"
+        },
+        "form": {
+          "classification": {
+            "label": "Klasyfikacja",
+            "placeholder": "Wybierz klasyfikację"
+          },
+          "bibNumber": {
+            "label": "Numer startowy",
+            "placeholder": "Wpisz numer startowy"
+          },
+          "startTime": {
+            "label": "Czas startu"
+          }
         }
       },
       "delete": {
