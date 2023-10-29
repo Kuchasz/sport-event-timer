@@ -12,6 +12,7 @@ import { env } from "env";
 
 dotenv.config({ path: path.resolve(".env") });
 
+const port = env.NEXT_PUBLIC_APP_HTTP_PORT;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -39,7 +40,7 @@ void app.prepare().then(() => {
         logger.log("SIGTERM");
         handler.broadcastReconnectNotification();
     });
-    server.listen(env.NEXT_PUBLIC_APP_HTTP_PORT);
+    server.listen(port);
 
     logger.log(`> Server listening at http://${env.NEXT_PUBLIC_APP_URL}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
 });
