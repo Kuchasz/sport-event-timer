@@ -16,7 +16,7 @@ import type {
 import { db } from "./db";
 import { faker } from "@faker-js/faker/locale/pl";
 import type { TimerState } from "@set/timer/dist/store";
-import { stripSeconds } from "@set/utils/dist/datetime";
+import { daysFromNow, stripSeconds } from "@set/utils/dist/datetime";
 
 type Options = {
     name?: string;
@@ -56,6 +56,9 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
 
     const _timingPoints = createTimingPoints(races.map(r => r.id));
     const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
+
+    const _timingPointsAccessUrls = createTimingPointsAccessUrls(timingPoints);
+    await db.$transaction(_timingPointsAccessUrls.map(data => db.timingPointAccessUrl.create({ data })));
 
     const _timingPointsOrders = createTimingPointsOrders(
         races.map(r => r.id),
@@ -177,6 +180,17 @@ const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
         })),
         { name: "Finish", shortName: "M", description: "Where the players ends", raceId: r },
     ]);
+
+const createTimingPointsAccessUrls = (timingPoints: TimingPoint[]) =>
+    timingPoints.map(tp => ({
+        canAccessOthers: false,
+        expireDate: daysFromNow(5),
+        token: "blah",
+        code: "",
+        raceId: tp.raceId,
+        timingPointId: tp.id,
+        name: "",
+    }));
 
 const createTimingPointsOrders = (raceIds: number[], timingPoints: TimingPoint[]): TimingPointOrder[] =>
     raceIds.map(raceId => ({
