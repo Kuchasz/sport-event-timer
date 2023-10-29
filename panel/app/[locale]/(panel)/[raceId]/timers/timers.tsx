@@ -11,6 +11,7 @@ import { Button } from "components/button";
 import type { Route } from "next";
 import QR from "qrcode";
 import { sanitizeFileName, triggerBase64Download } from "@set/utils/dist/file";
+import { buildApplicationPath } from "utils";
 
 type ApplicationCardProps = {
     href: Route;
@@ -69,21 +70,21 @@ export const Timers = () => {
                         <div className="mb-4 mt-8">
                             <div className="flex flex-col">
                                 <ApplicationCard
-                                    href={`/timer/${raceId}` as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}`) as Route}
                                     qrFileName={`qr-countdown-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.countdown.title")}
                                     description={t("pages.timers.applications.countdown.description")}
                                     icon={mdiTimer10}
                                 />
                                 <ApplicationCard
-                                    href={`/timer/${raceId}/t` as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}/t`) as Route}
                                     qrFileName={`qr-start-list-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.startList.title")}
                                     description={t("pages.timers.applications.startList.description")}
                                     icon={mdiPlaylistPlay}
                                 />
                                 <ApplicationCard
-                                    href={`/timer/${raceId}/t` as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}/t`) as Route}
                                     qrFileName={`qr-stopwatch-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.timers.applications.stopwatch.title")}
                                     description={t("pages.timers.applications.stopwatch.description")}

@@ -12,7 +12,7 @@ if (!global.fetch) {
 }
 
 const wss = new ws.Server({
-    port: 3001,
+    port: env.NEXT_PUBLIC_APP_WS_PORT,
 });
 
 const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContext(true) });
@@ -24,7 +24,7 @@ wss.on("connection", ws => {
     });
 });
 
-console.log(`✅ WebSocket Server listening on ws://${env.NEXT_PUBLIC_APP_URL}:3001`);
+console.log(`✅ WebSocket Server listening on ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_WS_PORT}`);
 
 process.on("SIGTERM", () => {
     console.log("SIGTERM");

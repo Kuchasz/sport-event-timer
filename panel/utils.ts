@@ -1,6 +1,7 @@
 import { createLogPrinter } from "@set/utils/dist/logger";
 import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
 import { formatNumber } from "@set/utils/dist/datetime";
+import { env } from "env";
 
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;
@@ -61,3 +62,10 @@ export const logger = createLogPrinter("@set");
 export const getTimingPointIcon = (isFirst: boolean, isLast: boolean) => {
     return isFirst ? mdiRayStartArrow : isLast ? mdiFlagCheckered : mdiRayVertex;
 };
+
+export const buildApplicationPath = (
+    path: string,
+    protocol = env.NEXT_PUBLIC_APP_PROTOCOL,
+    appUrl = env.NEXT_PUBLIC_APP_URL,
+    port = env.NEXT_PUBLIC_APP_HTTP_PORT,
+) => (port === 80 ? `${protocol}://${appUrl}${path}` : `${protocol}://${appUrl}:${port}${path}`);
