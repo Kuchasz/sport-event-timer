@@ -2,7 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
-import { type SportKind, sportKindEnum, raceSchema } from "../../modules/race/models";
+import { type SportKind, raceSchema } from "../../modules/race/models";
 import { daysFromNow } from "@set/utils/dist/datetime";
 
 export const raceRouter = router({
