@@ -4,7 +4,10 @@ import { createTRPCProxyClient, loggerLink, unstable_httpBatchStreamLink } from 
 import { env } from "env";
 import { headers } from "next/headers";
 
-const url = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://${env.NEXT_PUBLIC_APP_URL}` : `http://${env.NEXT_PUBLIC_APP_URL}:3000`;
+const url =
+    env.NEXT_PUBLIC_NODE_ENV === "production"
+        ? `https://${env.NEXT_PUBLIC_APP_URL}`
+        : `http://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_HTTP_PORT}`;
 
 export const trpcRSC = createTRPCProxyClient<AppRouter>({
     transformer: superjson,
