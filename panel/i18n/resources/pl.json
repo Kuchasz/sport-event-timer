@@ -586,7 +586,7 @@
       },
       "applications": {
         "countdown": {
-          "description": "Przydatny w miejscu startu. Można przejść na telefon, tablecie lub większy ekran. Wyświetla numer startowy i następny zawodnik zawodnika. Odliczanie sekund do jego startu. Możliwość także na wykorzystanie oprogramowania dźwiękowego.",
+          "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekran. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekund do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
           "title": "Odliczanie (do zera)"
         },
         "startList": {
