@@ -8,6 +8,7 @@ import { appRouter } from "./routers/app";
 import { logger } from "../utils";
 import * as dotenv from "dotenv";
 import * as path from "path";
+import { env } from "env";
 
 dotenv.config({ path: path.resolve(".env") });
 
@@ -41,5 +42,5 @@ void app.prepare().then(() => {
     });
     server.listen(port);
 
-    logger.log(`> Server listening at http://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
+    logger.log(`> Server listening at http://${env.NEXT_PUBLIC_APP_URL}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
 });
