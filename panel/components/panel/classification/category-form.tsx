@@ -29,12 +29,12 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Min Age</Label>
-                    <PoorNumberInput value={category.minAge} onChange={changeHandler("minAge")}></PoorNumberInput>
+                    <PoorNumberInput placeholder="Minimum Age" value={category.minAge} onChange={changeHandler("minAge")}></PoorNumberInput>
                 </div>
                 <div className="p-2"></div>
                 <div className="grow basis-full">
                     <Label>Max Age</Label>
-                    <PoorNumberInput value={category.maxAge} onChange={changeHandler("maxAge")}></PoorNumberInput>
+                    <PoorNumberInput placeholder="Maximum Age" value={category.maxAge} onChange={changeHandler("maxAge")}></PoorNumberInput>
                 </div>
                 <div className="p-2"></div>
                 <div className="grow basis-full">
