@@ -2,22 +2,8 @@ import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
-import { type SportKind, sportKindEnum } from "../../modules/race/models";
+import { type SportKind, sportKindEnum, raceSchema } from "../../modules/race/models";
 import { daysFromNow } from "@set/utils/dist/datetime";
-
-const raceSchema = z.object({
-    id: z.number().min(1).nullish(),
-    name: z.string({ required_error: "name is required" }),
-    description: z.string({ required_error: "description is required" }),
-    location: z.string({ required_error: "location is required" }),
-    sportKind: sportKindEnum,
-    date: z.date({ required_error: "date is required" }),
-    termsUrl: z.string().nullish(),
-    emailTemplate: z.string().nullish(),
-    playersLimit: z.number().int().positive().nullish(),
-    registrationEnabled: z.boolean(),
-    useSampleData: z.boolean().nullish(),
-});
 
 export const raceRouter = router({
     basicInfo: publicProcedure

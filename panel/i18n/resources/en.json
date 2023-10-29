@@ -64,6 +64,46 @@
     },
     "races": {
       "addRace": "Add Race",
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter race name"
+        },
+        "date": {
+          "label": "Date",
+          "placeholder": "Date of the race"
+        },
+        "playersLimit": {
+          "label": "Players limit",
+          "placeholder": "Enter limit of players"
+        },
+        "location": {
+          "label": "Location",
+          "placeholder": "Enter location"
+        },
+        "sportKind": {
+          "label": "Sport kind",
+          "placeholder": "Choose the sport kind"
+        },
+        "registrationEnabled": {
+          "label": "Registration enabled"
+        },
+        "useSampleData": {
+          "label": "Add sample data"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Describe the race"
+        },
+        "terms": {
+          "label": "Terms and conditions",
+          "placeholder": "Url to the terms and conditions"
+        },
+        "emailTemplate": {
+          "label": "Email template",
+          "placeholder": "Enter your appendinx to the registration confirmation email"
+        }
+      },
       "open": "Open",
       "upcomingRaces": {
         "header": {
