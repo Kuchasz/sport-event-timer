@@ -1,9 +1,9 @@
+import { Form, FormInput } from "form";
 import { Button } from "../../button";
-import { Label } from "../../label";
 import { PoorInput } from "../../poor-input";
-import { useFormState } from "hooks";
-
 import type { AppRouterInputs } from "trpc";
+import { classificationSchema } from "modules/classification/models";
+import { useTranslations } from "next-intl";
 type Classification = AppRouterInputs["classification"]["add"];
 
 type ClassificationFormProps = {
@@ -14,24 +14,28 @@ type ClassificationFormProps = {
 };
 
 export const ClassificationForm = ({ onReject, onResolve, initialClassification, isLoading }: ClassificationFormProps) => {
-    const [classification, changeHandler] = useFormState(initialClassification, [initialClassification]);
+    const t = useTranslations();
 
     return (
-        <div className="flex flex-col">
-            <div className="flex">
-                <div className="grow">
-                    <Label>Name</Label>
-                    <PoorInput value={classification.name} onChange={changeHandler("name")} />
+        <Form<Classification> initialValues={initialClassification} validationSchema={classificationSchema} onSubmit={onResolve}>
+            <div className="flex flex-col">
+                <FormInput<Classification, "name">
+                    label={t("pages.classifications.form.name.label")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorInput placeholder={t("pages.classifications.form.name.placeholder")} value={value} onChange={onChange} />
+                    )}
+                    name="name"
+                />
+                <div className="mt-4 flex justify-between">
+                    <Button onClick={onReject} outline>
+                        {t("shared.cancel")}
+                    </Button>
+                    <Button loading={isLoading} type="submit">
+                        {t("shared.save")}
+                    </Button>
                 </div>
             </div>
-            <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
-                    Cancel
-                </Button>
-                <Button loading={isLoading} onClick={() => onResolve({ ...classification })}>
-                    Save
-                </Button>
-            </div>
-        </div>
+        </Form>
     );
 };
