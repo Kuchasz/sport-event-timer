@@ -26,7 +26,7 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
     };
 
     const editPlayer = async (editedPlayer: EditPlayer) => {
-        await editPlayerMutation.mutateAsync({ raceId: raceId, player });
+        await editPlayerMutation.mutateAsync({ raceId: raceId, player: editedPlayer });
         onResolve(editedPlayer);
     };
 
