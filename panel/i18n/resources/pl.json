@@ -462,6 +462,28 @@
         "header": {
           "title": "Kategorie",
           "description": "Skonfiguruj kategorie dla klasyfikacji"
+        },
+        "form": {
+          "name": {
+            "label": "Nazwa",
+            "placeholder": "Wpisz nazwę kategorii"
+          },
+          "minAge": {
+            "label": "Min wiek",
+            "placeholder": "Wpisz minimalny wiek"
+          },
+          "maxAge": {
+            "label": "Max wiek",
+            "placeholder": "Wpisz maksymalny wiek"
+          },
+          "gender": {
+            "label": "Płeć",
+            "kind": {
+              "any": "Dowolna",
+              "male": "Mężczyzna",
+              "female": "Kobieta"
+            }
+          }
         }
       },
       "create": {
