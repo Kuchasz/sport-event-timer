@@ -12,6 +12,7 @@ import type { Route } from "next";
 import QR from "qrcode";
 import { sanitizeFileName, triggerBase64Download } from "@set/utils/dist/file";
 import { buildApplicationPath } from "utils";
+import { useRouter } from "next/navigation";
 
 type ApplicationCardProps = {
     href: Route;
@@ -23,10 +24,15 @@ type ApplicationCardProps = {
 
 const ApplicationCard = ({ href, qrFileName, name, description, icon }: ApplicationCardProps) => {
     const t = useTranslations();
+    const router = useRouter();
 
     const generateQRCode = async () => {
         const qr = await QR.toDataURL(href, { width: 800, margin: 2 });
         triggerBase64Download(qr, qrFileName);
+    };
+
+    const openApplication = () => {
+        router.push(href);
     };
 
     return (
@@ -46,7 +52,7 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
                         <Icon path={mdiQrcode} size={0.8} />
                         <span className="ml-2">{t("pages.timers.applications.buttons.getQrCode")}</span>
                     </Button>
-                    <Button outline>
+                    <Button onClick={openApplication} outline>
                         <Icon size={0.8} path={mdiOpenInNew} />
                         <span className="ml-2">{t("pages.timers.applications.buttons.open")}</span>
                     </Button>
