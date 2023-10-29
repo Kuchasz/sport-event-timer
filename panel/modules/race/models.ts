@@ -6,11 +6,11 @@ export const sportKindEnum = z.enum(sportKinds, { required_error: sharedErrorCod
 
 export const raceSchema = z.object({
     id: z.number().min(1).nullish(),
-    name: z.string({ required_error: "name is required" }),
-    description: z.string({ required_error: "description is required" }),
-    location: z.string({ required_error: "location is required" }),
+    name: z.string({ required_error: sharedErrorCodes.required }),
+    description: z.string({ required_error: sharedErrorCodes.required }),
+    location: z.string({ required_error: sharedErrorCodes.required }),
     sportKind: sportKindEnum,
-    date: z.date({ required_error: "date is required" }),
+    date: z.date({ required_error: sharedErrorCodes.required }),
     termsUrl: z.string().nullish(),
     emailTemplate: z.string().nullish(),
     playersLimit: z.number().int().positive().nullish(),

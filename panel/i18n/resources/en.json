@@ -547,6 +547,19 @@
       "header": {
         "title": "Split times",
         "description": "Times measured by the stopwatches"
+      },
+      "form": {
+        "bibNumber": {
+          "label": "Bib number",
+          "placeholder": "Enter bib number"
+        },
+        "time": {
+          "label": "Time"
+        },
+        "timingPoint": {
+          "label": "Timing Point",
+          "placeholder": "Choose timing point"
+        }
       }
     },
     "results": {

@@ -547,6 +547,19 @@
       "header": {
         "title": "Czasy Pomiaru",
         "description": "Czasy mierzone przez stopery"
+      },
+      "form": {
+        "bibNumber": {
+          "label": "Numer startowy",
+          "placeholder": "Wpisz numer startowy"
+        },
+        "time": {
+          "label": "Czas"
+        },
+        "timingPoint": {
+          "label": "Punkt pomiarowy",
+          "placeholder": "Wybierz punkt pomiarowy"
+        }
       }
     },
     "results": {

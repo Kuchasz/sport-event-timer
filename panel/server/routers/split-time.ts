@@ -1,13 +1,6 @@
+import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
-
-const manualSplitTimeSchema = z.object({
-    id: z.number().min(1).nullish(),
-    bibNumber: z.string({ required_error: "bibNumber is required" }),
-    time: z.number().optional(),
-    raceId: z.number({ required_error: "raceId is required" }),
-    timingPointId: z.number({ required_error: "timingPointId is required" }),
-});
 
 export const splitTimeRouter = router({
     splitTimes: protectedProcedure
