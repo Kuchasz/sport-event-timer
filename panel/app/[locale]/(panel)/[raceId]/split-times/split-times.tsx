@@ -8,7 +8,7 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import { NiceModal } from "components/modal";
-import { SplitTimeEdit } from "../../../../../components/split-time-edit";
+import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { AgGridReact } from "@ag-grid-community/react";
 import type { ColDef } from "@ag-grid-community/core";
@@ -100,7 +100,6 @@ export const SplitTimes = () => {
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId }, { initialData: [] });
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<SplitTime>>(null);
-    const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
     const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
     const t = useTranslations();
 
@@ -162,7 +161,6 @@ export const SplitTimes = () => {
         });
 
         if (splitTime) {
-            await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId });
             await refetch();
             refreshRow(gridRef, editedSplitTime.bibNumber!);
         }

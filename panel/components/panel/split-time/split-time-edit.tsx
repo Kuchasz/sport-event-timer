@@ -14,15 +14,25 @@ type SplitTimeEditProps = {
 
 export const SplitTimeEdit = ({ raceId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
     const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId });
-    if (!timingPoints) return;
+    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId });
+    const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
+
+    if (!timingPoints || !availableNumbers) return;
+
+    const editSplitTime = async (splitTime: SplitTime) => {
+        await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId });
+        onResolve(splitTime);
+    };
 
     return (
         <SplitTimeForm
+            isLoading={updateSplitTimeMutation.isLoading}
             timingPoints={timingPoints}
             raceDate={raceDate}
             onReject={onReject}
-            onResolve={onResolve}
+            onResolve={editSplitTime}
             initialSplitTime={editedSplitTime}
+            bibNumbers={availableNumbers}
         />
     );
 };
