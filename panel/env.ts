@@ -32,6 +32,8 @@ export const env = createEnv({
     client: {
         NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
         NEXT_PUBLIC_APP_URL: z.string(),
+        NEXT_PUBLIC_APP_WS_PORT: z.number(),
+        NEXT_PUBLIC_APP_HTTP_PORT: z.number(),
     },
     runtimeEnv: {
         NODE_ENV: process.env.NODE_ENV,
@@ -51,6 +53,8 @@ export const env = createEnv({
         NOTIFICATIONS_MESSAGE_TARGET: process.env.NOTIFICATIONS_MESSAGE_TARGET,
         NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
         NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+        NEXT_PUBLIC_APP_WS_PORT: process.env.NEXT_PUBLIC_APP_WS_PORT,
+        NEXT_PUBLIC_APP_HTTP_PORT: process.env.NEXT_PUBLIC_APP_HTTP_PORT,
     },
     emptyStringAsUndefined: true,
 });
