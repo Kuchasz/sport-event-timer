@@ -462,6 +462,28 @@
         "header": {
           "title": "Categories",
           "description": "Configure categories for category"
+        },
+        "form": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter category name"
+          },
+          "minAge": {
+            "label": "Min age",
+            "placeholder": "Enter minimum age"
+          },
+          "maxAge": {
+            "label": "Max age",
+            "placeholder": "Enter maximum age"
+          },
+          "gender": {
+            "label": "Gender",
+            "kind": {
+              "any": "Any",
+              "male": "Male",
+              "female": "Female"
+            }
+          }
         }
       },
       "create": {
