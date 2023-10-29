@@ -99,12 +99,12 @@ export const PlayersList = () => {
                             {/* {players[virtualRow.index].timeStamp ? (
                                 <PrimaryActionButton
                                     icon={mdiAlarmOff}
-                                    onClick={() => onResetTimeStamp(players[virtualRow.index].timeStamp!.id)}
+                                    onMouseDown={() => onResetTimeStamp(players[virtualRow.index].timeStamp!.id)}
                                 />
                             ) : (
                                 <PrimaryActionButton
                                     icon={mdiAlarmCheck}
-                                    onClick={() => onRecordTimeStamp(players[virtualRow.index].bibNumber)}
+                                    onMouseDown={() => onRecordTimeStamp(players[virtualRow.index].bibNumber)}
                                 />
                             )} */}
                         </div>
