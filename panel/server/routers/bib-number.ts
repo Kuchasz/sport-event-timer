@@ -1,19 +1,7 @@
 import { createRange, excludeItems } from "@set/utils/dist/array";
-import { bibNumberSchema } from "../../modules/bib-number/models";
+import { addRangeBibNumberSchema, bibNumberSchema } from "../../modules/bib-number/models";
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
-
-const addRangeBibNumberSchema = z
-    .object({
-        raceId: z.number({ required_error: "raceId is required" }).min(1),
-        startNumber: z.number({ required_error: "startNumber is required" }).min(1),
-        endNumber: z.number({ required_error: "endNumber is required" }),
-        omitDuplicates: z.boolean().nullish(),
-    })
-    .refine(data => data.endNumber > data.startNumber, {
-        message: "endNumber must be higher than startNumber",
-        path: ["endNumber"],
-    });
 
 export const bibNumberRouter = router({
     numbers: protectedProcedure

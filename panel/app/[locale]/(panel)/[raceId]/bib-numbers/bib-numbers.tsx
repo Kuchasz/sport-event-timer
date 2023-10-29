@@ -54,7 +54,6 @@ export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<BibNumber>>(null);
-    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
     const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
     const t = useTranslations();
@@ -113,7 +112,6 @@ export const BibNumbers = () => {
         });
 
         if (createManyBibNumbers) {
-            await addRangeBibNumberMutation.mutateAsync(createManyBibNumbers);
             void refetch();
         }
     };
