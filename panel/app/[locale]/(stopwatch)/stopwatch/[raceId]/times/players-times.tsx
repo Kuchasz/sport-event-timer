@@ -185,7 +185,7 @@ export const PlayersTimes = () => {
         <div className="flex h-full flex-col">
             <div className="my-2 flex flex-col px-2">
                 <button
-                    onClick={onAddTime}
+                    onMouseDown={onAddTime}
                     className="active:animate-pushInLittle flex w-full justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center outline-none"
                 >
                     <Icon color="white" size={5} path={mdiPlus} />
