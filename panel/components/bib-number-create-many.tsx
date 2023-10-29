@@ -22,6 +22,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                 <div className="grow">
                     <Label>Range start</Label>
                     <PoorNumberInput
+                        placeholder="First Bib Number"
                         value={addManyBibNumberConfig.startNumber}
                         onChange={e => changeHandler("startNumber")({ target: { value: e.target.value! } })}
                     />
@@ -29,6 +30,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                 <div className="ml-2 grow">
                     <Label>Range end</Label>
                     <PoorNumberInput
+                        placeholder="Last Bib Number"
                         value={addManyBibNumberConfig.endNumber}
                         onChange={e => changeHandler("endNumber")({ target: { value: e.target.value! } })}
                     />
