@@ -64,6 +64,46 @@
     },
     "races": {
       "addRace": "Dodaj Wyścig",
+      "form": {
+        "name": {
+          "label": "Nazwa",
+          "placeholder": "Wpisz nazwę wyścigu"
+        },
+        "date": {
+          "label": "Data",
+          "placeholder": "Data wyścigu"
+        },
+        "playersLimit": {
+          "label": "Limit zawodników",
+          "placeholder": "Wpisz limit zawodników"
+        },
+        "location": {
+          "label": "Lokalizacja",
+          "placeholder": "Podaj lokalizację"
+        },
+        "sportKind": {
+          "label": "Dyscyplina sportowa",
+          "placeholder": "Wybierz dyscyplinę sportową"
+        },
+        "registrationEnabled": {
+          "label": "Rejestracja uruchomiona"
+        },
+        "useSampleData": {
+          "label": "Dodaj przykładowe dane"
+        },
+        "description": {
+          "label": "Opis",
+          "placeholder": "Opis wyścig"
+        },
+        "terms": {
+          "label": "Regulamin",
+          "placeholder": "Link do regulaminu"
+        },
+        "emailTemplate": {
+          "label": "Szablon email",
+          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji"
+        }
+      },
       "open": "Otwórz",
       "upcomingRaces": {
         "header": {
