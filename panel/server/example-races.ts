@@ -16,6 +16,7 @@ import type {
 import { db } from "./db";
 import { faker } from "@faker-js/faker/locale/pl";
 import type { TimerState } from "@set/timer/dist/store";
+import { stripSeconds } from "@set/utils/dist/datetime";
 
 type Options = {
     name?: string;
@@ -74,7 +75,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
 
 const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
     fillArray(numberOfRaces).map(() => ({
-        date: faker.date.future({ years: 1 }),
+        date: stripSeconds(faker.date.future({ years: 1 })),
         name: faker.company.name(),
         description: faker.lorem.words({ min: 5, max: 15 }),
         sportKind: faker.helpers.arrayElement(sportKinds),
