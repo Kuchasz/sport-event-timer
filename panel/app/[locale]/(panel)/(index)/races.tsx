@@ -360,10 +360,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                     className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                                     href={`/${r.obj.id}`}
                                 >
-                                    {/* <Button outline> */}
                                     <Icon size={0.8} path={mdiOpenInNew} />
-                                    {/* <span className="ml-2">{t("pages.races.manage")}</span> */}
-                                    {/* </Button> */}
+                                    <span className="ml-2">{t("pages.races.open")}</span>
                                 </Link>
                             </div>
                         ))}

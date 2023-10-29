@@ -4,9 +4,10 @@ import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "components/page-header";
-import { mdiPlaylistPlay, mdiTimer10, mdiTimerOutline } from "@mdi/js";
+import { mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10, mdiTimerOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
+import { Button } from "components/button";
 
 export const Timers = () => {
     const raceId = useCurrentRaceId();
@@ -30,7 +31,19 @@ export const Timers = () => {
                                         <Icon path={mdiTimer10} size={3} />
                                         <span>{t("pages.timers.applications.countdown.title")}</span>
                                     </Link>
-                                    <span className="max-w-xl">{t("pages.timers.applications.countdown.description")}</span>
+                                    <div className="flex max-w-xl flex-col">
+                                        <div>{t("pages.timers.applications.countdown.description")}</div>
+                                        <div className="flex">
+                                            <Button>
+                                                <Icon path={mdiQrcode} size={0.8} />
+                                                <span>Pobierz kod QR</span>
+                                            </Button>
+                                            <Button>
+                                                <Icon size={0.8} path={mdiOpenInNew} />
+                                                <span>Otwórz</span>
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="my-3 flex">
                                     <Link
