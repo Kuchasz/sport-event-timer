@@ -1,127 +1,86 @@
 import { Button } from "./button";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { Label } from "./label";
-// import { PoorDatepicker } from "./poor-datepicker";
-// import { PoorInput } from "./poor-input";
 import { PoorSelect } from "./poor-select";
 import { PoorTimepicker } from "./poor-timepicker";
-import { useFormState } from "hooks";
 import { trpc } from "trpc-core";
-import { PoorInput } from "./poor-input";
+import { playerPromotionSchema } from "modules/player/models";
+import { useTranslations } from "next-intl";
+import { Form, FormInput } from "form";
+import { PoorCombo } from "./poor-combo";
 
 type PlayerPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
 type PlayerPromotionFormProps = {
+    isLoading: boolean;
+    bibNumbers: string[];
     onReject: () => void;
     onResolve: (player: PlayerPromotion) => void;
     initialPlayerPromotion: PlayerPromotion;
     classifications: AppRouterOutputs["classification"]["classifications"];
 };
 
-const PlayerRegistrationPromotionForm = ({ onReject, onResolve, initialPlayerPromotion, classifications }: PlayerPromotionFormProps) => {
-    const [player, changeHandler] = useFormState(initialPlayerPromotion, [classifications]);
+const PlayerRegistrationPromotionForm = ({
+    isLoading,
+    bibNumbers,
+    onReject,
+    onResolve,
+    initialPlayerPromotion,
+    classifications,
+}: PlayerPromotionFormProps) => {
+    const t = useTranslations();
 
     return (
-        <div className="flex flex-col">
-            <div className="flex">
-                <div className="grow basis-full">
-                    <Label>Classification</Label>
-                    {classifications?.length ? (
-                        <PoorSelect
-                            initialValue={player.classificationId}
-                            items={classifications}
-                            nameKey="name"
-                            valueKey="id"
-                            onChange={changeHandler("classificationId")}
-                        ></PoorSelect>
-                    ) : null}
-                </div>
-                <div className="p-2"></div>
-                <div className="grow basis-full">
-                    <Label>Bib Number</Label>
-                    <PoorInput value={player.bibNumber} onChange={changeHandler("bibNumber")} />
-                </div>
-            </div>
-            {/* <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>Name</Label>
-                    <PoorInput value={player.name} onChange={changeHandler("name")} />
-                </div>
-                <div className="p-2"></div>
-                <div className="grow">
-                    <Label>Last Name</Label>
-                    <PoorInput value={player.lastName} onChange={changeHandler("lastName")} />
-                </div>
-            </div> */}
-            {/* <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow basis-full">
-                    <Label>Gender</Label>
-                    <PoorSelect
-                        initialValue={player.gender}
-                        items={genders}
-                        nameKey="name"
-                        valueKey="value"
-                        onChange={changeHandler("gender")}
+        <Form<PlayerPromotion> initialValues={initialPlayerPromotion} validationSchema={playerPromotionSchema} onSubmit={onResolve}>
+            <div className="flex flex-col">
+                <div className="flex">
+                    <FormInput<PlayerPromotion, "classificationId">
+                        label={t("pages.playerRegistrations.promoteToPlayer.form.classification.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorSelect
+                                initialValue={value}
+                                placeholder={t("pages.playerRegistrations.promoteToPlayer.form.classification.placeholder")}
+                                items={classifications}
+                                nameKey="name"
+                                valueKey="id"
+                                onChange={onChange}
+                            />
+                        )}
+                        name="classificationId"
+                    />
+                    <div className="p-2"></div>
+                    <FormInput<PlayerPromotion, "bibNumber">
+                        label={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorCombo
+                                initialValue={value}
+                                placeholder={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.placeholder")}
+                                items={bibNumbers}
+                                onChange={onChange}
+                            />
+                        )}
+                        name="bibNumber"
                     />
                 </div>
-                <div className="p-2"></div>
-                <div className="grow basis-full">
-                    <Label>Birth Date</Label>
-                    <PoorDatepicker value={player.birthDate} onChange={changeHandler("birthDate")} />
+                <div className="flex">
+                    <FormInput<PlayerPromotion, "startTime">
+                        label={t("pages.playerRegistrations.promoteToPlayer.form.startTime.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => <PoorTimepicker value={value} onChange={onChange} />}
+                        name="startTime"
+                    />
                 </div>
-            </div> */}
-            {/* <div className="p-2"></div>
-            <div>
-                <div>
-                    <Label>Team</Label>
-                    <PoorInput value={player.team} onChange={changeHandler("team")} />
-                </div>
-            </div>
-            <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>Country</Label>
-                    <PoorInput value={player.country} onChange={changeHandler("country")} />
-                </div>
-                <div className="p-2"></div>
-                <div className="grow">
-                    <Label>City</Label>
-                    <PoorInput value={player.city} onChange={changeHandler("city")} />
+                <div className="mt-4 flex justify-between">
+                    <Button onClick={onReject} outline>
+                        {t("shared.cancel")}
+                    </Button>
+                    <Button loading={isLoading} type="submit">
+                        {t("shared.save")}
+                    </Button>
                 </div>
             </div>
-            <div className="p-2"></div>
-            <div className="flex">
-                <div className="grow">
-                    <Label>Email</Label>
-                    <PoorInput value={player.email} onChange={changeHandler("email")} />
-                </div>
-                <div className="p-2"></div>
-                <div className="grow">
-                    <Label>Phone Number</Label>
-                    <PoorInput value={player.phoneNumber} onChange={changeHandler("phoneNumber")} />
-                </div>
-                <div className="p-2"></div>
-                <div className="grow">
-                    <Label>Ice Phone Number</Label>
-                    <PoorInput value={player.icePhoneNumber} onChange={changeHandler("icePhoneNumber")} />
-                </div>
-            </div>
-            <div className="p-2"></div> */}
-            <div className="flex">
-                <div className="grow">
-                    <Label>Start Time</Label>
-                    <PoorTimepicker value={player.startTime} onChange={changeHandler("startTime")} />
-                </div>
-            </div>
-            <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
-                    Cancel
-                </Button>
-                <Button onClick={() => onResolve({ ...player })}>Save</Button>
-            </div>
-        </div>
+        </Form>
     );
 };
 
@@ -129,13 +88,17 @@ type PlayerPromotionProps = {
     onReject: () => void;
     onResolve: (player: PlayerPromotion) => void;
     raceId: number;
+    playerRegistrationId: number;
 };
 
-export const PlayerRegistrationPromotion = ({ raceId, onReject, onResolve }: PlayerPromotionProps) => {
+export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onReject, onResolve }: PlayerPromotionProps) => {
     const { data: classifications } = trpc.classification.classifications.useQuery({ raceId });
     const { data: initialBibNumber } = trpc.player.lastAvailableBibNumber.useQuery({ raceId });
     const { data: initialStartTime } = trpc.player.lastAvailableStartTime.useQuery({ raceId });
-    if (!classifications) return;
+    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+    const { data: bibNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
+    const utils = trpc.useUtils();
+    if (!classifications || !bibNumbers) return;
 
     const initialPlayerPromotion: PlayerPromotion = {
         classificationId: classifications[0]!.id,
@@ -143,12 +106,23 @@ export const PlayerRegistrationPromotion = ({ raceId, onReject, onResolve }: Pla
         startTime: initialStartTime,
     };
 
+    const promoteToPlayer = async (player: PlayerPromotion) => {
+        await promotePlayerRegistration.mutateAsync({ raceId: raceId, registrationId: playerRegistrationId, player });
+
+        onResolve(player);
+
+        void utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId });
+        void utils.player.lastAvailableStartTime.invalidate({ raceId: raceId });
+    };
+
     return (
         <PlayerRegistrationPromotionForm
+            isLoading={promotePlayerRegistration.isLoading}
             onReject={onReject}
-            onResolve={onResolve}
+            onResolve={promoteToPlayer}
             classifications={classifications}
             initialPlayerPromotion={initialPlayerPromotion}
+            bibNumbers={bibNumbers}
         />
     );
 };

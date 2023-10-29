@@ -110,28 +110,22 @@ export const PlayerRegistrations = () => {
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
     const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
-    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
-    const utils = trpc.useContext();
 
     const promoteToPlayerAction = {
         name: t("pages.playerRegistrations.promoteToPlayer.title"),
         description: t("pages.playerRegistrations.promoteToPlayer.description"),
         iconPath: mdiAccountPlusOutline,
         execute: async (playerRegistration: PlayerRegistration) => {
-            const player = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
+            const promotedPlayer = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
                 title: t("pages.playerRegistrations.promoteToPlayer.confirmation.title"),
                 component: PlayerRegistrationPromotion,
                 props: {
                     raceId: raceId,
+                    playerRegistrationId: playerRegistration.id,
                 },
             });
 
-            if (player) {
-                await promotePlayerRegistration.mutateAsync({ raceId: raceId, registrationId: playerRegistration.id, player });
-
-                void utils.player.lastAvailableBibNumber.invalidate({ raceId: raceId });
-                void utils.player.lastAvailableStartTime.invalidate({ raceId: raceId });
-
+            if (promotedPlayer) {
                 await refetch();
                 refreshRegistrationRow(playerRegistration.id.toString());
             }
