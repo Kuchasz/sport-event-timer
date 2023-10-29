@@ -32,7 +32,7 @@ Application for making time measurements
 | 26/10/2023 | Start list .CSV import/export                              | todo :date:                     |
 | 26/10/2023 | Add links to stopwatch and timer to the race panel         | :heavy_check_mark: (29/10/2023) |
 | 26/10/2023 | Timer for finish line                                      | todo :date:                     |
-| 26/10/2023 | Races list quick search                                    | todo :date:                     |
+| 26/10/2023 | Races list quick search                                    | :heavy_check_mark: (25/10/2023) |
 | 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
 | 26/10/2023 | QR Code to results list                                    | todo :date:                     |
 | 27/10/2023 | Penalties management in panel                              | todo :date:                     |
