@@ -5,9 +5,9 @@ import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@t
 import type { QueryClient } from "@tanstack/react-query";
 import { env } from "./env";
 
-const url = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://app.rura.cc` : "http://localhost:3000";
+const url = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://${env.NEXT_PUBLIC_APP_URL}` : `http://${env.NEXT_PUBLIC_APP_URL}:3000`;
 
-const wsUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://app.rura.cc` : "ws://localhost:3001";
+const wsUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://${env.NEXT_PUBLIC_APP_URL}` : `ws://${env.NEXT_PUBLIC_APP_URL}:3001`;
 
 const wsClient =
     typeof window === "undefined"
