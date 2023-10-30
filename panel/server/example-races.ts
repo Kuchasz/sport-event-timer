@@ -15,10 +15,9 @@ import type {
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
 import { daysFromNow, stripSeconds } from "@set/utils/dist/datetime";
-import type { locales } from "i18n";
+import type { Locales } from "i18n";
 import { db } from "./db";
 
-type Locales = (typeof locales)[number];
 type FakerLocales = Record<Locales, Faker>;
 
 const fakerLocales: FakerLocales = {
@@ -194,14 +193,14 @@ const createPlayers = (
 
 const createTimingPoints = (faker: Faker, raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
-        { name: "Start", shortName: "S", description: "Where the players start", raceId: r },
+        { name: "Start", shortName: "S", description: faker.lorem.sentence(), raceId: r },
         ...createRange({ from: 0, to: faker.number.int({ min: 0, max: 2 }) }).map(() => ({
             name: capitalizeFirstLetter(faker.word.noun()),
             shortName: faker.helpers.fromRegExp(/[A-Z][0-9]/),
             description: faker.lorem.sentence(),
             raceId: r,
         })),
-        { name: "Finish", shortName: "M", description: "Where the players ends", raceId: r },
+        { name: "Finish", shortName: "M", description: faker.lorem.sentence(), raceId: r },
     ]);
 
 const createTimingPointsAccessUrls = (timingPoints: TimingPoint[]) =>

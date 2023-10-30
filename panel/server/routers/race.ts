@@ -4,6 +4,12 @@ import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
 import { type SportKind, raceSchema } from "../../modules/race/models";
 import { daysFromNow } from "@set/utils/dist/datetime";
+import { locales } from "i18n";
+
+const createRaceSchema = z.object({
+    locale: z.enum(locales),
+    race: raceSchema,
+});
 
 export const raceRouter = router({
     basicInfo: publicProcedure
@@ -126,12 +132,13 @@ export const raceRouter = router({
             const { id, ...data } = input;
             return await ctx.db.race.update({ where: { id: id }, data: { registrationEnabled: data.registrationEnabled } });
         }),
-    add: protectedProcedure.input(raceSchema).mutation(async ({ input, ctx }) => {
-        const { id: _id, useSampleData, ...data } = input;
+    add: protectedProcedure.input(createRaceSchema).mutation(async ({ input, ctx }) => {
+        const { locale, race } = input;
+        const { id: _id, useSampleData, ...data } = race;
 
         if (useSampleData) {
             const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
-            await createExampleRaces(user.id, 1, data);
+            await createExampleRaces(user.id, 1, locale, data);
         } else {
             const race = await ctx.db.race.create({ data });
 

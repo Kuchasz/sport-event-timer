@@ -313,10 +313,14 @@ export const Races = ({ initialData }: RacesProps) => {
                                             <Icon path={mdiCalendarOutline} size={0.6} />
                                             <span className="ml-1 font-semibold">{r.obj.date.toLocaleDateString(locale)}</span>
                                         </div>
-                                        <div className="ml-4 flex flex-shrink items-center overflow-hidden text-xs text-gray-400">
-                                            <Icon className="shrink-0" path={mdiMapMarkerOutline} size={0.6} />
-                                            <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">{r.obj.location}</span>
-                                        </div>
+                                        {r.obj.location && (
+                                            <div className="ml-4 flex flex-shrink items-center overflow-hidden text-xs text-gray-400">
+                                                <Icon className="shrink-0" path={mdiMapMarkerOutline} size={0.6} />
+                                                <span className="ml-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                                                    {r.obj.location}
+                                                </span>
+                                            </div>
+                                        )}
                                         <div className="ml-4 flex items-center text-xs text-gray-400">
                                             <Icon path={mdiFlagOutline} size={0.6} />
                                             <span className="ml-1   whitespace-nowrap">{sportKindNames.get(r.obj.sportKind)}</span>
