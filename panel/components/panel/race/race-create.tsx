@@ -2,7 +2,7 @@ import type { AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
 import { trpc } from "trpc-core";
 import { useLocale } from "next-intl";
-import type { Locales } from "i18n";
+import type { Locales } from "../../../i18n";
 
 type CreateRace = AppRouterInputs["race"]["add"]["race"];
 

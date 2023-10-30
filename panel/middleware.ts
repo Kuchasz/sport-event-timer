@@ -1,20 +1,23 @@
-import { locales } from "i18n";
+import { locales } from "./i18n";
 import createMiddleware from "next-intl/middleware";
+import type { NextRequest } from "next/server";
 
-export default createMiddleware({
-    // A list of all locales that are supported
+const intlMiddleware = createMiddleware({
     locales,
-    // locales: ['en'],
     localePrefix: "never",
-    // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
     defaultLocale: "en",
 });
+
+export const middleware = (request: NextRequest) => {
+    // console.log(JSON.stringify(request.nextUrl));
+    return intlMiddleware(request as any);
+};
 
 export const config = {
     // Skip all paths that should not be internationalized. This example skips the
     // folders "api", "_next" and all files with an extension (e.g. favicon.ico)
     // matcher: ['/((?!api|auth|registration|results|stopwatch|timer|_next|.*\\..*).*)']
-    matcher: ["/((?!api|auth|_next|_next/webpack-hmr|assets|favicon|fonts|sw.js|favicon.ico).*)"],
+    matcher: ["/((?!api|auth|_next|assets|favicon|fonts|sw.js|favicon.ico).*)"],
     // matcher: ['/((?!api|_next|auth|_vercel|.*\\..*).*)']
     // matcher: ['/((?!api|_next|.*\\..*).*)']
 };
