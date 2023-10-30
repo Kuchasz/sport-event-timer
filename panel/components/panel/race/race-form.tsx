@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 import { Form, FormInput } from "form";
 import { raceSchema } from "modules/race/models";
 
-type Race = AppRouterInputs["race"]["add"];
+type Race = AppRouterInputs["race"]["add"]["race"];
 
 type RaceFormProps = {
     onReject: () => void;

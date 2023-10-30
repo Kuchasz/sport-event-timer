@@ -1,8 +1,10 @@
 import type { AppRouterInputs } from "trpc";
 import { RaceForm } from "./race-form";
 import { trpc } from "trpc-core";
+import { useLocale } from "next-intl";
+import type { Locales } from "i18n";
 
-type CreateRace = AppRouterInputs["race"]["add"];
+type CreateRace = AppRouterInputs["race"]["add"]["race"];
 
 type RaceCreateProps = {
     onReject: () => void;
@@ -11,9 +13,10 @@ type RaceCreateProps = {
 
 export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
     const addRaceMutation = trpc.race.add.useMutation();
+    const locale = useLocale();
 
     const processRaceCreate = async (race: CreateRace) => {
-        await addRaceMutation.mutateAsync(race);
+        await addRaceMutation.mutateAsync({ locale: locale as Locales, race });
         onResolve(race);
     };
 
