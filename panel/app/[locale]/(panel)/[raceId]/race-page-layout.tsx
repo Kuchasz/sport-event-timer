@@ -22,9 +22,9 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
             <div className="relative h-full">
                 <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <nav className="z-10 w-60 shrink-0 flex-col overflow-clip shadow-lg">
+                        <nav className="z-10 flex h-full w-60 shrink-0 flex-col overflow-hidden shadow-lg">
                             <Link href={"/" as Route}>
-                                <div className="my-6 ml-3 flex cursor-pointer flex-col items-start px-4 py-4 text-center transition-opacity">
+                                <div className="mb-6 ml-3 flex cursor-pointer flex-col items-center px-4 py-4 text-center transition-opacity">
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>

@@ -17,8 +17,6 @@ type MenuGroup = {
 export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }) => {
     const pathname = usePathname()!;
 
-    // const pathname = headers().get('next-url')//;?.replace('/pl', '').replace('/en', '');
-
     const routeMatched = (route: string, currentPath: string) => {
         const reg = new RegExp(`^${route.replaceAll(/:\w+/g, "\\d+")}(\/?\\w*)*$`);
         return reg.test(currentPath);
@@ -31,7 +29,7 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 
     return (
-        <>
+        <div className="flex-1 overflow-y-auto">
             {menuGroups.map(g => (
                 <div key={g.name}>
                     <MenuHeader text={g.name} />
@@ -47,6 +45,6 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
