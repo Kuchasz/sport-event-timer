@@ -4,7 +4,7 @@ import { db } from "../db";
 
 function main() {
     const userId = faker.datatype.uuid();
-    return createExampleRaces(userId, faker.number.int({ min: 10, max: 20 }));
+    return createExampleRaces(userId, faker.number.int({ min: 10, max: 20 }), "en");
 }
 
 main()
