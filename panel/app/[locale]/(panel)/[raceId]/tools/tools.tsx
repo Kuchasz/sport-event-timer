@@ -4,7 +4,7 @@ import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "components/page-header";
-import { mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10, mdiTimerOutline } from "@mdi/js";
+import { mdiFlagCheckered, mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10, mdiTimerOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import { Button } from "components/button";
@@ -50,11 +50,11 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
                 <div className="flex justify-end gap-2">
                     <Button onClick={generateQRCode}>
                         <Icon path={mdiQrcode} size={0.8} />
-                        <span className="ml-2">{t("pages.timers.applications.buttons.getQrCode")}</span>
+                        <span className="ml-2">{t("pages.tools.applications.buttons.getQrCode")}</span>
                     </Button>
                     <Button onClick={openApplication} outline>
                         <Icon size={0.8} path={mdiOpenInNew} />
-                        <span className="ml-2">{t("pages.timers.applications.buttons.open")}</span>
+                        <span className="ml-2">{t("pages.tools.applications.buttons.open")}</span>
                     </Button>
                 </div>
             </div>
@@ -62,7 +62,7 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
     );
 };
 
-export const Timers = () => {
+export const Tools = () => {
     const raceId = useCurrentRaceId();
     const { data: race } = trpc.race.raceRaport.useQuery({ raceId: raceId }, { enabled: !!raceId });
     const t = useTranslations();
@@ -72,29 +72,36 @@ export const Timers = () => {
             {race && (
                 <div>
                     <div>
-                        <PageHeader title={t("pages.timers.header.title")} description={t("pages.timers.header.description")} />
+                        <PageHeader title={t("pages.tools.header.title")} description={t("pages.tools.header.description")} />
                         <div className="mb-4 mt-8">
                             <div className="flex flex-col">
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}`) as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}`)}
                                     qrFileName={`qr-countdown-${sanitizeFileName(race.name)}.png`}
-                                    name={t("pages.timers.applications.countdown.title")}
-                                    description={t("pages.timers.applications.countdown.description")}
+                                    name={t("pages.tools.applications.countdown.title")}
+                                    description={t("pages.tools.applications.countdown.description")}
                                     icon={mdiTimer10}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/t`) as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}/t`)}
                                     qrFileName={`qr-start-list-${sanitizeFileName(race.name)}.png`}
-                                    name={t("pages.timers.applications.startList.title")}
-                                    description={t("pages.timers.applications.startList.description")}
+                                    name={t("pages.tools.applications.startList.title")}
+                                    description={t("pages.tools.applications.startList.description")}
                                     icon={mdiPlaylistPlay}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/t`) as Route}
+                                    href={buildApplicationPath(`/timer/${raceId}/t`)}
                                     qrFileName={`qr-stopwatch-${sanitizeFileName(race.name)}.png`}
-                                    name={t("pages.timers.applications.stopwatch.title")}
-                                    description={t("pages.timers.applications.stopwatch.description")}
+                                    name={t("pages.tools.applications.stopwatch.title")}
+                                    description={t("pages.tools.applications.stopwatch.description")}
                                     icon={mdiTimerOutline}
+                                />
+                                <ApplicationCard
+                                    href={buildApplicationPath(`/results/${raceId}`)}
+                                    qrFileName={`qr-results-${sanitizeFileName(race.name)}.png`}
+                                    name={t("pages.tools.applications.results.title")}
+                                    description={t("pages.tools.applications.results.description")}
+                                    icon={mdiFlagCheckered}
                                 />
                             </div>
                         </div>

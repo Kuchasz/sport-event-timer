@@ -6,7 +6,7 @@ export default ({ params }: { params: { raceId: string } }) => {
 
     return (
         <Breadcrumbs homePath={`/${params.raceId}`}>
-            <Breadcrumbs.Item text={t("pages.timers.header.title")}></Breadcrumbs.Item>
+            <Breadcrumbs.Item text={t("pages.tools.header.title")}></Breadcrumbs.Item>
         </Breadcrumbs>
     );
 };
