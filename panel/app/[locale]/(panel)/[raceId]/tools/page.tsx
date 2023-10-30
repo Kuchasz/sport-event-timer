@@ -1,7 +1,7 @@
 import { authenticate } from "auth";
-import { Timers } from "./timers";
+import { Tools } from "./tools";
 
 export default async function () {
     await authenticate();
-    return <Timers />;
+    return <Tools />;
 }

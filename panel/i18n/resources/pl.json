@@ -13,7 +13,7 @@
       "timingPoints": "Punkty Pomiarowe",
       "splitTimes": "Zmierzone czasy",
       "results": "Wyniki",
-      "timers": "Zegary"
+      "tools": "Narzędzia"
     },
     "management": {
       "title": "Zarządzanie",
@@ -686,10 +686,10 @@
         }
       }
     },
-    "timers": {
+    "tools": {
       "header": {
-        "title": "Zegary",
-        "description": "Zegary przydatne w trakcie trwania wyścigu"
+        "title": "Narzędzia",
+        "description": "Narzedzia przydatne w trakcie trwania wyścigu"
       },
       "applications": {
         "countdown": {
@@ -707,6 +707,10 @@
         "buttons": {
           "getQrCode": "Pobierz kod QR",
           "open": "Otwórz"
+        },
+        "results": {
+          "title": "Wyniki Live",
+          "description": "Wyświetla wyniki na żywo. Rezultaty zawodników pojawiają się od razu po odznaczeniu ich w stoperze. Uwzględniany jest podział na kategorie. Strona dostosowana jest do wyświetlania na telefonie, odświeża się automatycznie."
         }
       }
     }

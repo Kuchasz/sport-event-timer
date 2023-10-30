@@ -13,7 +13,7 @@
       "timingPoints": "Timing Points",
       "splitTimes": "Split Times",
       "results": "Results",
-      "timers": "Timers"
+      "tools": "Tools"
     },
     "management": {
       "title": "Management",
@@ -686,10 +686,10 @@
         }
       }
     },
-    "timers": {
+    "tools": {
       "header": {
-        "title": "Timers",
-        "description": "Timers useful during the race"
+        "title": "Tools",
+        "description": "Tools useful during the race"
       },
       "applications": {
         "countdown": {
@@ -707,6 +707,10 @@
         "buttons": {
           "getQrCode": "Get QR code",
           "open": "Open"
+        },
+        "results": {
+          "title": "Live Results",
+          "description": "Displays live results. The results of the athletes appear as soon as you uncheck them in the stopwatch. A breakdown by category is included. The site is adapted for display on a phone, refreshes automatically."
         }
       }
     }
