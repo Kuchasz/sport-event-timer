@@ -1,7 +1,7 @@
 "use client";
 
 import superjson from "superjson";
-import { splitLink, createWSClient, wsLink, loggerLink, httpBatchLink } from "@trpc/client";
+import { splitLink, createWSClient, wsLink, httpBatchLink } from "@trpc/client";
 import type { QueryClient } from "@tanstack/react-query";
 import { env } from "./env";
 
@@ -58,11 +58,11 @@ export const connectionConfig = (queryClient: QueryClient) => ({
     ssr: true,
     queryClient,
     links: [
-        loggerLink({
-            enabled: opts =>
-                (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
-                (opts.direction === "down" && opts.result instanceof Error),
-        }),
+        // loggerLink({
+        //     enabled: opts =>
+        //         (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
+        //         (opts.direction === "down" && opts.result instanceof Error),
+        // }),
         splitLink({
             condition(op) {
                 return wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
