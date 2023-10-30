@@ -1,22 +1,30 @@
 import { createRange, fillArray, groupBy } from "@set/utils/dist/array";
-import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import { sportKinds } from "@set/utils/dist/sport-kind";
-
+import { capitalizeFirstLetter } from "@set/utils/dist/string";
+import { fakerEN, fakerPL, type Faker } from "@faker-js/faker";
 import type {
+    BibNumber,
+    Category,
     Classification,
     Player,
+    PlayerProfile,
+    PlayerRegistration,
     Race,
     TimingPoint,
     TimingPointOrder,
-    BibNumber,
-    PlayerProfile,
-    PlayerRegistration,
-    Category,
 } from "@prisma/client";
-import { db } from "./db";
-import { faker } from "@faker-js/faker/locale/pl";
 import type { TimerState } from "@set/timer/dist/store";
 import { daysFromNow, stripSeconds } from "@set/utils/dist/datetime";
+import type { locales } from "i18n";
+import { db } from "./db";
+
+type Locales = (typeof locales)[number];
+type FakerLocales = Record<Locales, Faker>;
+
+const fakerLocales: FakerLocales = {
+    pl: fakerPL,
+    en: fakerEN,
+};
 
 type Options = {
     name?: string;
@@ -29,32 +37,41 @@ type Options = {
     playersLimit?: number | null;
 };
 
-export const createExampleRaces = async (userId: string, numberOfRaces: number, options?: Options) => {
-    const _races = createRaces(numberOfRaces, options);
+export const createExampleRaces = async (userId: string, numberOfRaces: number, locale: Locales, options?: Options) => {
+    const faker = fakerLocales[locale];
+
+    const _races = createRaces(faker, numberOfRaces, options);
     const races = await db.$transaction(_races.map(data => db.race.create({ data })));
 
-    const _classifications = createClassifications(races.map(r => r.id));
+    const _classifications = createClassifications(
+        faker,
+        races.map(r => r.id),
+    );
     const classifications = await db.$transaction(_classifications.map(data => db.classification.create({ data })));
 
-    const _categories = createCategories(classifications, ["male", "female"]);
+    const _categories = createCategories(faker, classifications, ["male", "female"]);
     await db.$transaction(_categories.map(data => db.category.create({ data })));
 
     const _playerProfiles = createPlayerProfiles(
+        faker,
         races.map(r => r.id),
         ["male", "female"],
         options?.playersLimit,
     );
     const playerProfiles = await db.$transaction(_playerProfiles.map(data => db.playerProfile.create({ data })));
 
-    const _playerRegistrations = createPlayerRegistrations(playerProfiles);
+    const _playerRegistrations = createPlayerRegistrations(faker, playerProfiles);
     const playerRegistrations = await db.$transaction(_playerRegistrations.map(data => db.playerRegistration.create({ data })));
 
     const classificationsByRace = groupBy(classifications, c => c.raceId);
 
-    const _players = createPlayers(playerRegistrations, userId, classificationsByRace);
+    const _players = createPlayers(faker, playerRegistrations, userId, classificationsByRace);
     const players = await db.$transaction(_players.map(data => db.player.create({ data })));
 
-    const _timingPoints = createTimingPoints(races.map(r => r.id));
+    const _timingPoints = createTimingPoints(
+        faker,
+        races.map(r => r.id),
+    );
     const timingPoints = await db.$transaction(_timingPoints.map(data => db.timingPoint.create({ data })));
 
     const _timingPointsAccessUrls = createTimingPointsAccessUrls(timingPoints);
@@ -72,11 +89,11 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     );
     await db.$transaction(_bibNumbers.map(data => db.bibNumber.create({ data })));
 
-    const _stopwatches = createStopwatches(races, players, timingPoints, timingPointsOrders);
+    const _stopwatches = createStopwatches(faker, races, players, timingPoints, timingPointsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 };
 
-const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
+const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
     fillArray(numberOfRaces).map(() => ({
         date: stripSeconds(faker.date.future({ years: 1 })),
         name: faker.company.name(),
@@ -90,7 +107,7 @@ const createRaces = (numberOfRaces: number, options?: Options): Omit<Race, "id">
         ...options,
     }));
 
-const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] =>
+const createClassifications = (faker: Faker, raceIds: number[]): Omit<Classification, "id">[] =>
     raceIds.flatMap(r =>
         createRange({ from: 0, to: faker.number.int({ min: 2, max: 3 }) }).map(() => ({
             raceId: r,
@@ -98,7 +115,7 @@ const createClassifications = (raceIds: number[]): Omit<Classification, "id">[] 
         })),
     );
 
-const createCategories = (classifications: Classification[], genders: ("male" | "female")[]): Omit<Category, "id">[] =>
+const createCategories = (faker: Faker, classifications: Classification[], genders: ("male" | "female")[]): Omit<Category, "id">[] =>
     classifications.flatMap(c =>
         createRange({ from: 0, to: faker.number.int({ min: 2, max: 3 }) }).map(() => {
             const isSpecial = faker.datatype.boolean();
@@ -117,7 +134,12 @@ const createCategories = (classifications: Classification[], genders: ("male" | 
         }),
     );
 
-const createPlayerProfiles = (races: number[], genders: ("male" | "female")[], playersLimit?: number | null): Omit<PlayerProfile, "id">[] =>
+const createPlayerProfiles = (
+    faker: Faker,
+    races: number[],
+    genders: ("male" | "female")[],
+    playersLimit?: number | null,
+): Omit<PlayerProfile, "id">[] =>
     races.flatMap(raceId => {
         return createRange({ from: 0, to: faker.number.int({ min: 20, max: playersLimit ?? 200 }) }).map(() => {
             const gender = faker.helpers.arrayElement(genders);
@@ -137,7 +159,7 @@ const createPlayerProfiles = (races: number[], genders: ("male" | "female")[], p
         });
     });
 
-const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<PlayerRegistration, "id">[] =>
+const createPlayerRegistrations = (faker: Faker, playerProfiles: PlayerProfile[]): Omit<PlayerRegistration, "id">[] =>
     playerProfiles.map(pp => {
         const hasPaid = faker.datatype.boolean();
         return {
@@ -150,6 +172,7 @@ const createPlayerRegistrations = (playerProfiles: PlayerProfile[]): Omit<Player
     });
 
 const createPlayers = (
+    faker: Faker,
     playerRegistrations: PlayerRegistration[],
     userId: string,
     classifications: Record<number, Classification[]>,
@@ -169,7 +192,7 @@ const createPlayers = (
         }));
 };
 
-const createTimingPoints = (raceIds: number[]): Omit<TimingPoint, "id">[] =>
+const createTimingPoints = (faker: Faker, raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
         { name: "Start", shortName: "S", description: "Where the players start", raceId: r },
         ...createRange({ from: 0, to: faker.number.int({ min: 0, max: 2 }) }).map(() => ({
@@ -211,7 +234,13 @@ const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
             ),
     );
 
-const createStopwatches = (races: Race[], players: Player[], timingPoints: TimingPoint[], timingPointsOrders: TimingPointOrder[]) => {
+const createStopwatches = (
+    faker: Faker,
+    races: Race[],
+    players: Player[],
+    timingPoints: TimingPoint[],
+    timingPointsOrders: TimingPointOrder[],
+) => {
     return races.map(r => {
         const playersForRace = players.filter(p => p.raceId === r.id);
         const timingPointsOrder = JSON.parse(timingPointsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];

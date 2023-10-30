@@ -34,7 +34,7 @@ Application for making time measurements
 | 26/10/2023 | Timer for finish line                                      | todo :date:                     |
 | 26/10/2023 | Races list quick search                                    | :heavy_check_mark: (25/10/2023) |
 | 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
-| 26/10/2023 | QR Code to results list                                    | todo :date:                     |
+| 26/10/2023 | QR Code to results list                                    | :heavy_check_mark: (30/10/2023) |
 | 27/10/2023 | Penalties management in panel                              | todo :date:                     |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 | 27/10/2023 | Panel language selector                                    | todo :date:                     |
