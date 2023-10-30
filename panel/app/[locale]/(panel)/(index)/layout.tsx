@@ -4,9 +4,9 @@ import { NextAuthProvider, TrpcProvider } from "providers";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
-import { Meta } from "components/meta";
-import { IndexStatus } from "components/index-status";
-import { AgGridProvider } from "components/ag-grid-provider";
+import { Meta } from "../../../../components/meta";
+import { IndexStatus } from "../../../../components/index-status";
+import { AgGridProvider } from "../../../../components/ag-grid-provider";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (

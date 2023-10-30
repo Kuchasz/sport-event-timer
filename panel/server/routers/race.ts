@@ -4,7 +4,7 @@ import { createExampleRaces } from "../example-races";
 import { TRPCError } from "@trpc/server";
 import { type SportKind, raceSchema } from "../../modules/race/models";
 import { daysFromNow } from "@set/utils/dist/datetime";
-import { locales } from "i18n";
+import { locales } from "../../i18n";
 
 const createRaceSchema = z.object({
     locale: z.enum(locales),
