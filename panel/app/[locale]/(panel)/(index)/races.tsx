@@ -239,7 +239,7 @@ export const Races = ({ initialData }: RacesProps) => {
                     <div className={classNames("mt-6 flex flex-wrap gap-6", { ["justify-between"]: upcomingRaces.length === 3 })}>
                         <div
                             onClick={openCreateDialog}
-                            className="flex w-44 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
+                            className="flex w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
                         >
                             <button className="flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 font-medium">
                                 <Icon size={1.2} path={mdiPlus} />
