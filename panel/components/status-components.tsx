@@ -1,22 +1,20 @@
 "use client";
 
-import { useCurrentRaceId } from "hooks";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { selectedRaceIdAtom } from "states/panel-states";
-import { trpc } from "trpc-core";
-import { PoorSelect2 } from "./poor-select";
 import { mdiPowerStandby } from "@mdi/js";
 import Icon from "@mdi/react";
+import { useCurrentRaceId } from "hooks";
 import { signOut } from "next-auth/react";
-import type { AppRouterOutputs } from "trpc";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { AppRouterOutputs } from "trpc";
+import { trpc } from "trpc-core";
+import { PoorSelect2 } from "./poor-select";
 
 type Races = AppRouterOutputs["race"]["myRaces"];
 
 export const RaceSelector = ({ races: initialData }: { races: Races }) => {
     const { data: items } = trpc.race.myRaces.useQuery(undefined, { initialData });
-    const [selectedRaceId, selectRaceId] = useAtom(selectedRaceIdAtom);
+    const [selectedRaceId, selectRaceId] = useState<number>(0);
     const raceId = useCurrentRaceId() || selectedRaceId;
     const router = useRouter();
 
