@@ -113,7 +113,7 @@
       },
       "list": {
         "header": {
-          "title": "All Races ({number})",
+          "title": "Races ({number})",
           "description": "Manage all past and future races"
         }
       },

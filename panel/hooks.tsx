@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import type { TimerState, TimerDispatch } from "@set/timer/dist/store";
 import { useParams } from "next/navigation";
-import { useAtom } from "jotai";
-import { selectedRaceIdAtom } from "states/panel-states";
 
 export const useFormState = <T,>(initialFormState: T, depts: unknown[]) => {
     const [state, setState] = useState({ ...initialFormState });
@@ -26,10 +24,9 @@ export const useTimerDispatch = () => useDispatch<TimerDispatch>();
 export const useTimerSelector: TypedUseSelectorHook<TimerState> = useSelector;
 
 export const useCurrentRaceId = () => {
-    const [selectedRaceId] = useAtom(selectedRaceIdAtom);
     const { raceId } = useParams() as { raceId: string };
 
-    return raceId ? parseInt(raceId) : selectedRaceId;
+    return parseInt(raceId);
 };
 
 export const usePreviousValue = <T,>(value: T) => {

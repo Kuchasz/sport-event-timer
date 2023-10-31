@@ -113,8 +113,8 @@
       },
       "list": {
         "header": {
-          "title": "Wszystkie Wyścigi ({number})",
-          "description": "Zarządzaj przeszłymi i przyszłymi wyścigami"
+          "title": "Wyścigi ({number})",
+          "description": "Zarządzaj wszystkimi wyścigami wyścigami"
         }
       },
       "wipeStopwatchPopup": {

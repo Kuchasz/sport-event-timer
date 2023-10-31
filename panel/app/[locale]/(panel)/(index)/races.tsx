@@ -236,7 +236,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                 <span className="ml-2">{t("pages.races.addRace")}</span>
                             </Button>
                         </div> */}
-                    <div className={classNames("mt-6 flex flex-wrap gap-6", { ["justify-between"]: upcomingRaces.length === 3 })}>
+                    <div className={classNames("mt-6 flex flex-wrap", { ["justify-between"]: upcomingRaces.length === 3 })}>
                         <div
                             onClick={openCreateDialog}
                             className="flex w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
