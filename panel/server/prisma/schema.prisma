@@ -79,6 +79,8 @@ model Race {
     bibNumber            BibNumber[]
     absence              Absence[]
     playerProfile        PlayerProfile[]
+    TimePenalty          TimePenalty[]
+    Disqualification     Disqualification[]
 }
 
 model ApiKey {
@@ -227,6 +229,25 @@ model ManualSplitTime {
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@unique([timingPointId, bibNumber])
+}
+
+model TimePenalty {
+    id        Int    @id @default(autoincrement())
+    bibNumber String
+    time      BigInt
+    reason    String
+    race      Race   @relation(fields: [raceId], references: [id])
+    raceId    Int
+}
+
+model Disqualification {
+    id        Int    @id @default(autoincrement())
+    bibNumber String
+    reason    String
+    race      Race   @relation(fields: [raceId], references: [id])
+    raceId    Int
+
+    @@unique([raceId, bibNumber])
 }
 
 model PlayerRegistration {
