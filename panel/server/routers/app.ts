@@ -11,6 +11,8 @@ import { timingPointRouter } from "./timing-point";
 import { playerRegistrationRouter } from "./player-registration";
 import { accountRouter } from "./account";
 import { bibNumberRouter } from "./bib-number";
+import { timePenaltyRouter } from "./time-penalty";
+import { disqualificationRouter } from "./disqualification";
 
 export const appRouter = router({
     classification: classificationRouter,
@@ -25,6 +27,8 @@ export const appRouter = router({
     playerRegistration: playerRegistrationRouter,
     account: accountRouter,
     bibNumber: bibNumberRouter,
+    timePenalty: timePenaltyRouter,
+    disqualification: disqualificationRouter,
 });
 
 // export type definition of API
