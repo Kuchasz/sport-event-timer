@@ -624,7 +624,8 @@
           "playerLastName": "Nazwisko",
           "start": "Start",
           "finish": "Meta",
-          "result": "Wynik"
+          "result": "Wynik",
+          "actions": "Akcje"
         }
       },
       "header": {

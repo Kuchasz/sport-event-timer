@@ -624,7 +624,8 @@
           "playerLastName": "Last Name",
           "start": "Start",
           "finish": "Finish",
-          "result": "Result"
+          "result": "Result",
+          "actions": "Actions"
         }
       },
       "header": {

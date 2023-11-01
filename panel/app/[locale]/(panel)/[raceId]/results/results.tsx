@@ -10,6 +10,11 @@ import { useCallback, useRef } from "react";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import { PoorActions } from "components/poor-actions";
+import { mdiTrashCan } from "@mdi/js";
+import { Confirmation } from "components/confirmation";
+import { Demodal } from "demodal";
+import { NiceModal } from "components/modal";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
@@ -22,6 +27,52 @@ export const Results = () => {
     }, []);
 
     const t = useTranslations();
+
+    const revertDisqualification = {
+        name: t("pages.playerRegistrations.delete.title"),
+        description: t("pages.playerRegistrations.delete.description"),
+        iconPath: mdiTrashCan,
+        execute: async (_result: Result) => {
+            const confirmed = await Demodal.open<boolean>(NiceModal, {
+                title: t("pages.playerRegistrations.delete.confirmation.title"),
+                component: Confirmation,
+                props: {
+                    message: t("pages.playerRegistrations.delete.confirmation.text", {
+                        // name: playerRegistration.name,
+                        // lastName: playerRegistration.lastName,
+                    }),
+                },
+            });
+
+            if (confirmed) {
+                // await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
+                void refetch();
+            }
+        },
+    };
+
+    const revertTimePenalty = {
+        name: t("pages.playerRegistrations.delete.title"),
+        description: t("pages.playerRegistrations.delete.description"),
+        iconPath: mdiTrashCan,
+        execute: async (_result: Result) => {
+            const confirmed = await Demodal.open<boolean>(NiceModal, {
+                title: t("pages.playerRegistrations.delete.confirmation.title"),
+                component: Confirmation,
+                props: {
+                    message: t("pages.playerRegistrations.delete.confirmation.text", {
+                        // name: playerRegistration.name,
+                        // lastName: playerRegistration.lastName,
+                    }),
+                },
+            });
+
+            if (confirmed) {
+                // await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
+                void refetch();
+            }
+        },
+    };
 
     const defaultColumns: ColDef<Result>[] = [
         { field: "bibNumber", sortable: true, filter: true, headerName: t("pages.results.grid.columns.bibNumber") },
@@ -60,6 +111,14 @@ export const Results = () => {
                 <span className="flex flex-col items-end font-mono uppercase">
                     {p.data.invalidState ? p.data.invalidState : formatTimeWithMilliSecUTC(p.data.result)}
                 </span>
+            ),
+        },
+        {
+            resizable: true,
+            width: 130,
+            headerName: t("pages.results.grid.columns.actions"),
+            cellRenderer: (props: { data: Result; context: { refetch: () => void } }) => (
+                <PoorActions item={props.data} actions={[revertTimePenalty, revertDisqualification]} />
             ),
         },
     ];
