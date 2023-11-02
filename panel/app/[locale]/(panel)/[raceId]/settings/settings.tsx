@@ -13,15 +13,95 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import React from "react";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
+type Player = AppRouterOutputs["player"]["players"][0];
+
+type PoorDataTableColumn<T> = {
+    field: keyof T;
+    headerName: string;
+    sortable: boolean;
+    cellRenderer: React.FC<T>;
+};
+
+type PoorDataTableProps<T> = {
+    columns: PoorDataTableColumn<T>[];
+    data: T[];
+    getRowId: (row: T) => string | number;
+};
+
+const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
+    const { data, columns, getRowId } = props;
+
+    return (
+        <div className="relative grid h-96 overflow-auto" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
+            <div className="contents text-xs font-bold">
+                {columns.map(c => (
+                    <div className="border-b py-4 pl-4" key={c.headerName}>
+                        {c.headerName}
+                    </div>
+                ))}
+            </div>
+            {data.map(d => (
+                <div className="group contents text-sm" key={getRowId(d)}>
+                    {columns.map(c => (
+                        <div className="px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
+                            {c.cellRenderer(d)}
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export const Settings = () => {
     const raceId = useCurrentRaceId();
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId });
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
+    const { data: players } = trpc.player.players.useQuery({ raceId }, { initialData: [] });
+
+    const cols: PoorDataTableColumn<Player>[] = [
+        {
+            field: "classificationId",
+            sortable: false,
+            headerName: "Klasyfikacja",
+            cellRenderer: d => <div>{d.classificationId}</div>,
+        },
+        {
+            field: "bibNumber",
+            sortable: false,
+            headerName: "Numer startowy",
+            cellRenderer: d => <div>{d.bibNumber}</div>,
+        },
+        {
+            field: "name",
+            sortable: false,
+            headerName: "Imię",
+            cellRenderer: d => <div>{d.name}</div>,
+        },
+        {
+            field: "lastName",
+            sortable: false,
+            headerName: "Nazwisko",
+            cellRenderer: d => <div>{d.lastName}</div>,
+        },
+        {
+            field: "gender",
+            sortable: false,
+            headerName: "Płeć",
+            cellRenderer: d => <div>{d.gender}</div>,
+        },
+        {
+            field: "startTime",
+            sortable: false,
+            headerName: "Godzina startu",
+            cellRenderer: d => <div>{d.startTime}</div>,
+        },
+    ];
 
     const t = useTranslations();
 
@@ -96,6 +176,7 @@ export const Settings = () => {
                         </div>
                     </div>
                 ))}
+                <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} />
             </div>
         </>
     );
