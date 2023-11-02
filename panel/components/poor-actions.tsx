@@ -3,7 +3,7 @@
 import { Popover } from "@headlessui/react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
-import { mdiDotsVertical } from "@mdi/js";
+import { mdiDotsHorizontal } from "@mdi/js";
 
 type Action<TItem> = {
     name: string;
@@ -27,7 +27,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                 leaveTo="opacity-0 translate-y-1"
             >
                 <Popover.Button className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium text-white hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    <Icon className="text-black" size={0.8} path={mdiDotsVertical} />
+                    <Icon className="text-black" size={0.8} path={mdiDotsHorizontal} />
                 </Popover.Button>
 
                 <Popover.Panel className="mt-3 w-screen max-w-sm px-4 sm:px-0">
