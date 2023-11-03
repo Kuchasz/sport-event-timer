@@ -38,7 +38,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 {data.map(d => (
                     <div onDoubleClick={() => onRowDoubleClicked(d)} className="group contents text-sm" key={getRowId(d)}>
                         {visibleColumns.map(c => (
-                            <div className="py-3 pl-4 group-hover:bg-gray-50" key={c.headerName}>
+                            <div className="flex items-center py-3 pl-4 group-hover:bg-gray-50" key={c.headerName}>
                                 {c.cellRenderer ? c.cellRenderer(d) : <div className="whitespace-nowrap">{d[c.field] as any}</div>}
                             </div>
                         ))}
