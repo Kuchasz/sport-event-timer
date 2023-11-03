@@ -36,7 +36,10 @@ const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const { data, columns, getRowId } = props;
 
     return (
-        <div className="relative grid h-96 overflow-auto" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
+        <div
+            className="relative grid h-96"
+            style={{ gridTemplateRows: "auto 1fr", gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
+        >
             <div className="contents text-xs font-bold">
                 {columns.map(c => (
                     <div className="border-b py-4 pl-4" key={c.headerName}>
@@ -44,15 +47,23 @@ const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     </div>
                 ))}
             </div>
-            {data.map(d => (
-                <div className="group contents text-sm" key={getRowId(d)}>
-                    {columns.map(c => (
-                        <div className="px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
-                            {c.cellRenderer(d)}
-                        </div>
-                    ))}
-                </div>
-            ))}
+            <div
+                className="grid overflow-auto"
+                style={{
+                    gridColumn: `span ${columns.length} / span ${columns.length}`,
+                    gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
+                }}
+            >
+                {data.map(d => (
+                    <div className="group contents text-sm" key={getRowId(d)}>
+                        {columns.map(c => (
+                            <div className="py-3 pl-4 group-hover:bg-gray-50" key={c.headerName}>
+                                {c.cellRenderer(d)}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
