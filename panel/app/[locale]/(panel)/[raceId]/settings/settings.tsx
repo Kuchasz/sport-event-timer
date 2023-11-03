@@ -139,7 +139,7 @@ export const Settings = () => {
                         </div>
                     </div>
                 ))}
-                <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} />
+                <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} onRowDoubleClicked={() => {}} />
             </div>
         </>
     );

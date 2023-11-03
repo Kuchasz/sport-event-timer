@@ -22,6 +22,7 @@ import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { useTranslations, useLocale } from "next-intl";
 import { refreshRow } from "ag-grid";
+import { PoorDataTable, PoorDataTableColumn } from "components/poor-data-table";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 type EditedPlayer = AppRouterInputs["player"]["edit"]["player"];
@@ -57,6 +58,115 @@ export const Players = () => {
     const locale = useLocale();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId });
     const gridRef = useRef<AgGridReact<Player>>(null);
+
+    const cols: PoorDataTableColumn<Player>[] = [
+        {
+            headerName: t("pages.players.grid.columns.index"),
+            // headerClass: "hidden",
+            sortable: false,
+            // filter: false,
+            // valueGetter: r => r.node?.rowIndex,
+            field: "bibNumber",
+            cellRenderer: () => 0,
+        },
+        {
+            field: "classificationId",
+            headerName: t("pages.players.grid.columns.classification"),
+            sortable: false,
+        },
+        {
+            field: "bibNumber",
+            headerName: t("pages.players.grid.columns.bibNumber"),
+            // sort: "asc",
+            // comparator: (valueA, valueB) => valueA - valueB,
+            // filter: true,
+            sortable: true,
+        },
+        {
+            field: "name",
+            headerName: t("pages.players.grid.columns.name"),
+            sortable: true,
+            // filter: true
+        },
+        {
+            field: "lastName",
+            headerName: t("pages.players.grid.columns.lastName"),
+            sortable: true,
+            // filter: true
+        },
+        {
+            field: "gender",
+            headerName: t("pages.players.grid.columns.gender"),
+            sortable: true,
+            // filter: true,
+            // resizable: true,
+            // cellStyle: { justifyContent: "center", display: "flex" },
+            // width: 150,
+            cellRenderer: data => <GenderIcon gender={data.gender as Gender} />,
+        },
+        {
+            field: "startTime",
+            headerName: t("pages.players.grid.columns.startTime"),
+            sortable: true,
+            cellRenderer: data => <div>{milisecondsToTimeString(data.startTime)}</div>,
+        },
+        {
+            field: "birthDate",
+            headerName: t("pages.players.grid.columns.birthDate"),
+            sortable: true,
+            // hide: true,
+            cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
+        },
+        {
+            field: "country",
+            headerName: t("pages.players.grid.columns.country"),
+            // width: 10,
+            sortable: true,
+            // filter: true,
+            // hide: true,
+        },
+        {
+            field: "city",
+            headerName: t("pages.players.grid.columns.city"),
+            sortable: true,
+            //filter: true,
+            // hide: true,
+        },
+        {
+            field: "team",
+            headerName: t("pages.players.grid.columns.team"),
+            sortable: true,
+            // filter: true,
+            // hide: true,
+        },
+        {
+            field: "email",
+            headerName: t("pages.players.grid.columns.email"),
+            sortable: true,
+            // filter: true,
+            // hide: true,
+        },
+        {
+            field: "phoneNumber",
+            headerName: t("pages.players.grid.columns.phoneNumber"),
+            sortable: true,
+            // filter: true,
+            // hide: true,
+        },
+        {
+            field: "icePhoneNumber",
+            headerName: t("pages.players.grid.columns.icePhoneNumber"),
+            sortable: true,
+            //  filter: true,
+            // hide: true,
+        },
+        {
+            headerName: t("pages.players.grid.columns.actions"),
+            field: "bibNumber",
+            sortable: true,
+            cellRenderer: data => <PlayerDeleteButton refetch={null as any} player={data} />,
+        },
+    ];
 
     const defaultColumns: ColDef<Player>[] = [
         {
@@ -189,7 +299,7 @@ export const Players = () => {
                 {players && (
                     <div className="h-full rounded-lg bg-white p-8 shadow-md">
                         <div className="ag-theme-material h-full">
-                            <AgGridReact<Player>
+                            {/* <AgGridReact<Player>
                                 ref={gridRef}
                                 context={{ refetch }}
                                 onRowDoubleClicked={e => openEditDialog(e.data)}
@@ -200,7 +310,9 @@ export const Players = () => {
                                 rowData={players}
                                 onFirstDataRendered={onFirstDataRendered}
                                 onGridSizeChanged={onFirstDataRendered}
-                            ></AgGridReact>
+                            ></AgGridReact> */}
+
+                            <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} onRowDoubleClicked={() => {}} />
                         </div>
                     </div>
                 )}
