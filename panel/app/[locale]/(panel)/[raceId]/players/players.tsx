@@ -1,28 +1,28 @@
 "use client";
-import Head from "next/head";
-import Icon from "@mdi/react";
-import { Button } from "components/button";
-import { Confirmation } from "../../../../../components/confirmation";
-import { Demodal } from "demodal";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../trpc-core";
-import { mdiExport, mdiTrashCan } from "@mdi/js";
-import { milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { NiceModal } from "../../../../../components/modal";
-import { PlayerEdit } from "components/panel/player/player-edit";
-import { useCurrentRaceId } from "../../../../../hooks";
 import type { ColDef } from "@ag-grid-community/core";
-import { AgGridReact } from "@ag-grid-community/react";
-import { getGridColumnStateAtom } from "states/grid-states";
-import { useAtom } from "jotai";
-import { useCallback, useRef } from "react";
-import { PoorColumnChooser } from "components/poor-column-chooser";
+import type { AgGridReact } from "@ag-grid-community/react";
+import { mdiExport, mdiTrashCan } from "@mdi/js";
+import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
+import { milisecondsToTimeString } from "@set/utils/dist/datetime";
+import { refreshRow } from "ag-grid";
+import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
-import { useTranslations, useLocale } from "next-intl";
-import { refreshRow } from "ag-grid";
-import { PoorDataTable, PoorDataTableColumn } from "components/poor-data-table";
+import { PlayerEdit } from "components/panel/player/player-edit";
+import { PoorColumnChooser } from "components/poor-column-chooser";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
+import { useAtom } from "jotai";
+import { useLocale, useTranslations } from "next-intl";
+import Head from "next/head";
+import { useRef } from "react";
+import { getGridColumnStateAtom } from "states/grid-states";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { Confirmation } from "../../../../../components/confirmation";
+import { NiceModal } from "../../../../../components/modal";
+import { useCurrentRaceId } from "../../../../../hooks";
+import { trpc } from "../../../../../trpc-core";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 type EditedPlayer = AppRouterInputs["player"]["edit"]["player"];
@@ -164,7 +164,7 @@ export const Players = () => {
             headerName: t("pages.players.grid.columns.actions"),
             field: "bibNumber",
             sortable: true,
-            cellRenderer: data => <PlayerDeleteButton refetch={null as any} player={data} />,
+            cellRenderer: data => <PlayerDeleteButton refetch={refetch} player={data} />,
         },
     ];
 
@@ -235,10 +235,10 @@ export const Players = () => {
         ),
     );
 
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
-        gridRef.current?.api.sizeColumnsToFit();
-    }, [gridColumnState]);
+    // const onFirstDataRendered = useCallback(() => {
+    //     gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
+    //     gridRef.current?.api.sizeColumnsToFit();
+    // }, [gridColumnState]);
 
     const openEditDialog = async (editedPlayer?: Player) => {
         const player = await Demodal.open<EditedPlayer>(NiceModal, {
@@ -312,7 +312,12 @@ export const Players = () => {
                                 onGridSizeChanged={onFirstDataRendered}
                             ></AgGridReact> */}
 
-                            <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} onRowDoubleClicked={() => {}} />
+                            <PoorDataTable
+                                data={players}
+                                columns={cols}
+                                getRowId={item => item.bibNumber!}
+                                onRowDoubleClicked={openEditDialog}
+                            />
                         </div>
                     </div>
                 )}

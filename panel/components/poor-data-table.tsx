@@ -22,7 +22,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         >
             <div className="contents text-xs font-bold">
                 {columns.map(c => (
-                    <div className="sticky top-0 border-b bg-white py-4 pl-4" key={c.headerName}>
+                    <div className="sticky top-0 whitespace-nowrap border-b bg-white py-4 pl-4" key={c.headerName}>
                         {c.headerName}
                     </div>
                 ))}
@@ -32,7 +32,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     <div onDoubleClick={() => onRowDoubleClicked(d)} className="group contents text-sm" key={getRowId(d)}>
                         {columns.map(c => (
                             <div className="py-3 pl-4 group-hover:bg-gray-50" key={c.headerName}>
-                                {c.cellRenderer ? c.cellRenderer(d) : <div>{d[c.field] as any}</div>}
+                                {c.cellRenderer ? c.cellRenderer(d) : <div className="whitespace-nowrap">{d[c.field] as any}</div>}
                             </div>
                         ))}
                     </div>
