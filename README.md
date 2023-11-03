@@ -45,6 +45,8 @@ Application for making time measurements
 | 29/10/2023 | Change race and split time forms to use new component      | :heavy_check_mark: (29/10/2023) |
 | 29/10/2023 | Localized example race data                                | :heavy_check_mark: (30/10/2023) |
 | 29/10/2023 | Refactor all useFormState<T> hook usages                   | :heavy_check_mark: (29/10/2023) |
+| 04/11/2023 | Display classification name instead of just id             | todo :date:                     |
+| 04/11/2023 | Add translation to Gender                                  | todo :date:                     |
 
 ## TODO
 
