@@ -61,15 +61,6 @@ export const Players = () => {
 
     const cols: PoorDataTableColumn<Player>[] = [
         {
-            headerName: t("pages.players.grid.columns.index"),
-            // headerClass: "hidden",
-            sortable: false,
-            // filter: false,
-            // valueGetter: r => r.node?.rowIndex,
-            field: "bibNumber",
-            cellRenderer: () => 0,
-        },
-        {
             field: "classificationId",
             headerName: t("pages.players.grid.columns.classification"),
             sortable: false,
@@ -114,7 +105,7 @@ export const Players = () => {
             field: "birthDate",
             headerName: t("pages.players.grid.columns.birthDate"),
             sortable: true,
-            // hide: true,
+            hide: true,
             cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
         },
         {
@@ -123,42 +114,42 @@ export const Players = () => {
             // width: 10,
             sortable: true,
             // filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             field: "city",
             headerName: t("pages.players.grid.columns.city"),
             sortable: true,
             //filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             field: "team",
             headerName: t("pages.players.grid.columns.team"),
             sortable: true,
             // filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             field: "email",
             headerName: t("pages.players.grid.columns.email"),
             sortable: true,
             // filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             field: "phoneNumber",
             headerName: t("pages.players.grid.columns.phoneNumber"),
             sortable: true,
             // filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             field: "icePhoneNumber",
             headerName: t("pages.players.grid.columns.icePhoneNumber"),
             sortable: true,
             //  filter: true,
-            // hide: true,
+            hide: true,
         },
         {
             headerName: t("pages.players.grid.columns.actions"),
@@ -169,14 +160,14 @@ export const Players = () => {
     ];
 
     const defaultColumns: ColDef<Player>[] = [
-        {
-            width: 25,
-            headerName: t("pages.players.grid.columns.index"),
-            headerClass: "hidden",
-            sortable: false,
-            filter: false,
-            valueGetter: r => r.node?.rowIndex,
-        },
+        // {
+        //     width: 25,
+        //     headerName: t("pages.players.grid.columns.index"),
+        //     headerClass: "hidden",
+        //     sortable: false,
+        //     filter: false,
+        //     valueGetter: r => r.node?.rowIndex,
+        // },
         {
             field: "classificationId",
             headerName: t("pages.players.grid.columns.classification"),

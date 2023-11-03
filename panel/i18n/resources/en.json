@@ -216,7 +216,6 @@
     "players": {
       "grid": {
         "columns": {
-          "index": "",
           "classification": "Classification Id",
           "bibNumber": "Bib Number",
           "name": "Name",
