@@ -5,6 +5,8 @@ import { PoorInput } from "./poor-input";
 import { useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import React from "react";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -35,6 +37,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         ),
     );
 
+    const rowsContainer = React.useRef<HTMLDivElement>(null);
+
     const [searchQuery, setSearchQuery] = useState("");
 
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
@@ -48,6 +52,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
+
+    const fileredDataMap = new Map(filteredData.map((d, index) => [index, d.obj]));
+
+    const itemSize = 52;
+
+    const rowVirtualizer = useVirtualizer({
+        count: filteredData.length,
+        getScrollElement: () => rowsContainer.current,
+        estimateSize: () => itemSize,
+    });
 
     return (
         <div className="flex h-full flex-col">
@@ -76,33 +90,49 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
-            <div
-                className="grid max-h-min basis-auto overflow-x-auto overflow-y-auto rounded-md border"
-                style={{
-                    gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
-                }}
-            >
-                <div className="contents text-xs font-bold">
-                    {visibleColumns.map(c => (
-                        <div className="sticky top-0 whitespace-nowrap border-b bg-white px-4 py-4" key={c.headerName}>
-                            {c.headerName}
-                        </div>
-                    ))}
-                </div>
-                <div className="contents">
-                    {filteredData.map(d => (
-                        <div onDoubleClick={() => onRowDoubleClicked(d.obj)} className="group contents text-sm" key={getRowId(d.obj)}>
-                            {visibleColumns.map(c => (
-                                <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
-                                    {c.cellRenderer ? (
-                                        <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
-                                    ) : (
-                                        <div className="whitespace-nowrap">{d.obj[c.field] as any}</div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    ))}
+            <div className="min-h-min basis-auto overflow-x-auto overflow-y-auto rounded-md border">
+                <div
+                    className="relative grid max-h-min"
+                    ref={rowsContainer}
+                    style={{
+                        gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
+                        height: `${rowVirtualizer.getTotalSize() + itemSize}px`,
+                    }}
+                >
+                    <div className="contents text-xs font-bold">
+                        {visibleColumns.map(c => (
+                            <div className="sticky top-0 whitespace-nowrap border-b bg-white px-4 py-4" key={c.headerName}>
+                                {c.headerName}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="contents">
+                        {rowVirtualizer.getVirtualItems().map(vi => (
+                            <div
+                                onDoubleClick={() => onRowDoubleClicked(fileredDataMap.get(vi.index)!)}
+                                className="group contents text-sm"
+                                key={getRowId(fileredDataMap.get(vi.index)!)}
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: `${vi.size}px`,
+                                    transform: `translateY(${vi.start + itemSize}px)`,
+                                }}
+                            >
+                                {visibleColumns.map(c => (
+                                    <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
+                                        {c.cellRenderer ? (
+                                            <span className="whitespace-nowrap">{c.cellRenderer(fileredDataMap.get(vi.index)!)}</span>
+                                        ) : (
+                                            <div className="whitespace-nowrap">{fileredDataMap.get(vi.index)![c.field] as any}</div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
