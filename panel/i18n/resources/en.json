@@ -1106,6 +1106,11 @@
       "running": "Running",
       "hiking": "Hiking"
     },
-    "columns": "Columns"
+    "dataTable": {
+      "columns": "Columns",
+      "search": {
+        "placeholder": "Search..."
+      }
+    }
   }
 }
