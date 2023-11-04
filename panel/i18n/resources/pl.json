@@ -1106,6 +1106,8 @@
       "running": "Bieganie",
       "hiking": "Turystyna piesza"
     },
-    "columns": "Kolumny"
+    "dataTable": {
+      "columns": "Kolumny"
+    }
   }
 }

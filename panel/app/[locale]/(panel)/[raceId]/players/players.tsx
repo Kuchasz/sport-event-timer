@@ -265,6 +265,8 @@ export const Players = () => {
                             columns={cols}
                             getRowId={item => item.bibNumber!}
                             onRowDoubleClicked={openEditDialog}
+                            gridName="players"
+                            searchFields={["name", "lastName", "team", "bibNumber", "city"]}
                         />
                     </div>
                     // <div className="flex-grow rounded-lg bg-orange-500 p-8 shadow-md">

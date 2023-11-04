@@ -38,7 +38,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                     style={{ height: "38px" }}
                     className="relative flex items-center justify-center rounded-md border border-gray-300 pl-4 pr-2.5 text-sm font-medium transition-all"
                 >
-                    <span>{t("shared.columns")}</span>
+                    <span>{t("shared.dataTable.columns")}</span>
                     <Icon className="ml-2" path={mdiChevronDown} size={0.8} />
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">

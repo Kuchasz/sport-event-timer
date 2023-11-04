@@ -2,6 +2,9 @@ import { useAtom } from "jotai";
 import { getGridColumnVisibilityStateAtom } from "states/grid-states";
 import { PoorColumnChooser } from "./poor-column-chooser";
 import { PoorInput } from "./poor-input";
+import { useState } from "react";
+import fuzzysort from "fuzzysort";
+import { useTranslations } from "next-intl";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -12,30 +15,50 @@ export type PoorDataTableColumn<T> = {
 };
 
 type PoorDataTableProps<T> = {
+    gridName: string;
     columns: PoorDataTableColumn<T>[];
     data: T[];
     getRowId: (row: T) => string | number;
     onRowDoubleClicked: (row: T) => void;
+    searchFields?: (keyof T)[];
+    searchPlaceholder?: string;
 };
 
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
-    const { data, columns, getRowId, onRowDoubleClicked } = props;
+    const { gridName, data, columns, getRowId, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
+    const t = useTranslations();
 
     const [gridColumnVisibilityState, setGridColumnVisibilityState] = useAtom(
         getGridColumnVisibilityStateAtom(
-            "players",
+            gridName,
             columns.map(c => ({ hide: c.hide, colId: c.field as string })),
         ),
     );
+
+    const [searchQuery, setSearchQuery] = useState("");
 
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
     const visibleColumns = columns.filter(c => visibleColumnKeys.has(c.field));
 
+    const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
+
+    const filteredData = usableSearchFields?.length
+        ? fuzzysort.go(searchQuery, data, { all: true, keys: (usableSearchFields as string[]) ?? [] })
+        : data.map(obj => ({ obj }));
+
     return (
         <div className="flex h-full flex-col">
             <div className="mb-4 flex justify-between">
-                <PoorInput onChange={() => {}} placeholder="Search for players..." />
+                {searchFields?.length ? (
+                    <PoorInput
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        placeholder={searchPlaceholder ?? t("shared.dataTable.search.placeholder")}
+                    />
+                ) : (
+                    <div></div>
+                )}
                 <PoorColumnChooser
                     items={columns}
                     initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
@@ -63,11 +86,15 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     ))}
                 </div>
                 <div className="contents">
-                    {data.map(d => (
-                        <div onDoubleClick={() => onRowDoubleClicked(d)} className="group contents text-sm" key={getRowId(d)}>
+                    {filteredData.map(d => (
+                        <div onDoubleClick={() => onRowDoubleClicked(d.obj)} className="group contents text-sm" key={getRowId(d.obj)}>
                             {visibleColumns.map(c => (
                                 <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
-                                    {c.cellRenderer ? c.cellRenderer(d) : <div className="whitespace-nowrap">{d[c.field] as any}</div>}
+                                    {c.cellRenderer ? (
+                                        c.cellRenderer(d.obj)
+                                    ) : (
+                                        <div className="whitespace-nowrap">{d.obj[c.field] as any}</div>
+                                    )}
                                 </div>
                             ))}
                         </div>
