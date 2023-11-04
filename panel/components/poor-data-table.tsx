@@ -24,7 +24,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     return (
         <div
-            className="grid h-96 overflow-x-auto overflow-y-auto"
+            className="grid h-full overflow-x-auto overflow-y-auto"
             style={{ gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))` }}
         >
             <div className="contents text-xs font-bold">

@@ -253,7 +253,7 @@ export const Players = () => {
                 <title>{t("pages.players.header.title")}</title>
             </Head>
 
-            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
+            <div className="border-1 flex h-full flex-col overflow-y-hidden border-solid border-gray-600">
                 <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
                 <div className="mb-4 flex">
                     <Button
@@ -287,30 +287,38 @@ export const Players = () => {
                         }}
                     />
                 </div>
-                {players && (
-                    <div className="h-full rounded-lg bg-white p-8 shadow-md">
-                        <div className="ag-theme-material h-full">
-                            {/* <AgGridReact<Player>
-                                ref={gridRef}
-                                context={{ refetch }}
-                                onRowDoubleClicked={e => openEditDialog(e.data)}
-                                suppressCellFocus={true}
-                                suppressAnimationFrame={true}
-                                columnDefs={defaultColumns}
-                                getRowId={item => item.data.id.toString()}
-                                rowData={players}
-                                onFirstDataRendered={onFirstDataRendered}
-                                onGridSizeChanged={onFirstDataRendered}
-                            ></AgGridReact> */}
 
-                            <PoorDataTable
-                                data={players}
-                                columns={cols}
-                                getRowId={item => item.bibNumber!}
-                                onRowDoubleClicked={openEditDialog}
-                            />
-                        </div>
+                {players && (
+                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                        <PoorDataTable
+                            data={players}
+                            columns={cols}
+                            getRowId={item => item.bibNumber!}
+                            onRowDoubleClicked={openEditDialog}
+                        />
                     </div>
+                    // <div className="flex-grow rounded-lg bg-orange-500 p-8 shadow-md">
+                    //     {/* <div className="flex h-full flex-col bg-orange-200"> */}
+                    //     {/* <AgGridReact<Player>
+                    //             ref={gridRef}
+                    //             context={{ refetch }}
+                    //             onRowDoubleClicked={e => openEditDialog(e.data)}
+                    //             suppressCellFocus={true}
+                    //             suppressAnimationFrame={true}
+                    //             columnDefs={defaultColumns}
+                    //             getRowId={item => item.data.id.toString()}
+                    //             rowData={players}
+                    //             onFirstDataRendered={onFirstDataRendered}
+                    //             onGridSizeChanged={onFirstDataRendered}
+                    //         ></AgGridReact> */}
+                    //     <PoorDataTable
+                    //         data={players}
+                    //         columns={cols}
+                    //         getRowId={item => item.bibNumber!}
+                    //         onRowDoubleClicked={openEditDialog}
+                    //     />
+                    //     {/* </div> */}
+                    // </div>
                 )}
             </div>
         </>
