@@ -29,8 +29,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
-    // const [visibleColumnKeys, _setVisibleColumns] = useState<Set<keyof T>>(new Set(columns.filter(c => !c.hide).map(c => c.field)));
-
     const visibleColumns = columns.filter(c => visibleColumnKeys.has(c.field));
 
     return (
@@ -42,14 +40,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 nameKey="headerName"
                 onChange={e => {
                     const visibleColumns = e.target.value as string[];
-                    // const notSelectedColumns = gridColumnVisibilityState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
-
-                    // gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns, false);
-                    // gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
-                    // gridRef.current?.api.sizeColumnsToFit();
-
-                    //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                    // const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
 
                     const saveState = gridColumnVisibilityState.map(v => ({ ...v, hide: !visibleColumns.includes(v.colId) }));
 
