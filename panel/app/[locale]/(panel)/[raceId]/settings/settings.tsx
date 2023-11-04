@@ -13,58 +13,15 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import Head from "next/head";
 import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import React from "react";
-import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
-type Player = AppRouterOutputs["player"]["players"][0];
 
 export const Settings = () => {
     const raceId = useCurrentRaceId();
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId });
     const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
-    const { data: players } = trpc.player.players.useQuery({ raceId }, { initialData: [] });
-
-    const cols: PoorDataTableColumn<Player>[] = [
-        {
-            field: "classificationId",
-            sortable: false,
-            headerName: "Klasyfikacja",
-            cellRenderer: d => <div>{d.classificationId}</div>,
-        },
-        {
-            field: "bibNumber",
-            sortable: false,
-            headerName: "Numer startowy",
-            cellRenderer: d => <div>{d.bibNumber}</div>,
-        },
-        {
-            field: "name",
-            sortable: false,
-            headerName: "Imię",
-            cellRenderer: d => <div>{d.name}</div>,
-        },
-        {
-            field: "lastName",
-            sortable: false,
-            headerName: "Nazwisko",
-            cellRenderer: d => <div>{d.lastName}</div>,
-        },
-        {
-            field: "gender",
-            sortable: false,
-            headerName: "Płeć",
-            cellRenderer: d => <div>{d.gender}</div>,
-        },
-        {
-            field: "startTime",
-            sortable: false,
-            headerName: "Godzina startu",
-            cellRenderer: d => <div>{d.startTime}</div>,
-        },
-    ];
 
     const t = useTranslations();
 
@@ -139,7 +96,6 @@ export const Settings = () => {
                         </div>
                     </div>
                 ))}
-                <PoorDataTable data={players} columns={cols} getRowId={item => item.bibNumber!} onRowDoubleClicked={() => {}} />
             </div>
         </>
     );
