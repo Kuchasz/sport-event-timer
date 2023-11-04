@@ -33,7 +33,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="flex justify-end">
+            <div className="mb-4 flex justify-end">
                 <PoorColumnChooser
                     items={columns}
                     initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
@@ -50,7 +50,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             </div>
 
             <div
-                className="grid flex-grow overflow-x-auto overflow-y-auto"
+                className="grid flex-grow overflow-x-auto overflow-y-auto rounded-md border"
                 style={{ gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))` }}
             >
                 <div className="contents text-xs font-bold">

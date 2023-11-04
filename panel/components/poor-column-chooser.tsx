@@ -34,7 +34,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
             }}
         >
             <div className={`flex ${className}`}>
-                <Listbox.Button className="relative flex items-center justify-center rounded-full border py-2 pl-4 pr-2.5 text-sm font-medium transition-all">
+                <Listbox.Button className="relative flex items-center justify-center rounded-md border py-2 pl-4 pr-2.5 text-sm font-medium transition-all">
                     <span>{t("shared.columns")}</span>
                     <Icon className="ml-2" path={mdiChevronDown} size={0.8} />
                 </Listbox.Button>
