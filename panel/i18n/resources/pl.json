@@ -216,7 +216,7 @@
     "players": {
       "grid": {
         "columns": {
-          "classification": "Id Klasyfikacji",
+          "classification": "Klasyfikacja",
           "bibNumber": "Numer Startowy",
           "name": "Imię",
           "gender": "Płeć",
@@ -230,6 +230,9 @@
           "icePhoneNumber": "Numer ICE",
           "actions": "Akcje",
           "lastName": "Nazwisko"
+        },
+        "search": {
+          "placeholder": "Szukaj zawodników..."
         }
       },
       "delete": {
@@ -1107,7 +1110,10 @@
       "hiking": "Turystyna piesza"
     },
     "dataTable": {
-      "columns": "Kolumny"
+      "columns": "Kolumny",
+      "search": {
+        "placeholder": "Szukaj..."
+      }
     }
   }
 }

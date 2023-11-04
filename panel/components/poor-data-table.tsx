@@ -81,7 +81,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             <div
                 className="grid max-h-min basis-auto overflow-x-auto overflow-y-auto rounded-md border"
                 style={{
-                    // gridTemplateRows: "auto 1fr",
                     gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
                 }}
             >
@@ -98,7 +97,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                             {visibleColumns.map(c => (
                                 <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
                                     {c.cellRenderer ? (
-                                        c.cellRenderer(d.obj)
+                                        <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
                                     ) : (
                                         <div className="whitespace-nowrap">{d.obj[c.field] as any}</div>
                                     )}
