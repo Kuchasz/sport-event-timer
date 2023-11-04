@@ -33,7 +33,7 @@ Application for making time measurements
 | 26/10/2023 | Add links to stopwatch and timer to the race panel         | :heavy_check_mark: (29/10/2023) |
 | 26/10/2023 | Timer for finish line                                      | todo :date:                     |
 | 26/10/2023 | Races list quick search                                    | :heavy_check_mark: (25/10/2023) |
-| 26/10/2023 | Players list rework (with quick search)                    | todo :date:                     |
+| 26/10/2023 | Players list rework (with quick search)                    | :heavy_check_mark: (04/11/2023) |
 | 26/10/2023 | QR Code to results list                                    | :heavy_check_mark: (30/10/2023) |
 | 27/10/2023 | Penalties management in panel                              | todo :date:                     |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
@@ -45,7 +45,7 @@ Application for making time measurements
 | 29/10/2023 | Change race and split time forms to use new component      | :heavy_check_mark: (29/10/2023) |
 | 29/10/2023 | Localized example race data                                | :heavy_check_mark: (30/10/2023) |
 | 29/10/2023 | Refactor all useFormState<T> hook usages                   | :heavy_check_mark: (29/10/2023) |
-| 04/11/2023 | Display classification name instead of just id             | todo :date:                     |
+| 04/11/2023 | Display classification name instead of just id             | :heavy_check_mark: (04/11/2023) |
 | 04/11/2023 | Add translation to Gender                                  | todo :date:                     |
 
 ## TODO

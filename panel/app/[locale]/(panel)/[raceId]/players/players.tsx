@@ -1,10 +1,8 @@
 "use client";
-import type { AgGridReact } from "@ag-grid-community/react";
 import { mdiExport, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { refreshRow } from "ag-grid";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
@@ -13,7 +11,6 @@ import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-ta
 import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
-import { useRef } from "react";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
 import { NiceModal } from "../../../../../components/modal";
@@ -53,14 +50,9 @@ export const Players = () => {
     const t = useTranslations();
     const locale = useLocale();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId });
-    const gridRef = useRef<AgGridReact<Player>>(null);
+    // const gridRef = useRef<AgGridReact<Player>>(null);
 
     const cols: PoorDataTableColumn<Player>[] = [
-        {
-            field: "classificationId",
-            headerName: t("pages.players.grid.columns.classification"),
-            sortable: false,
-        },
         {
             field: "bibNumber",
             headerName: t("pages.players.grid.columns.bibNumber"),
@@ -68,6 +60,12 @@ export const Players = () => {
             // comparator: (valueA, valueB) => valueA - valueB,
             // filter: true,
             sortable: true,
+        },
+        {
+            field: "classificationId",
+            headerName: t("pages.players.grid.columns.classification"),
+            sortable: false,
+            cellRenderer: data => data.classification.name,
         },
         {
             field: "name",
@@ -232,7 +230,6 @@ export const Players = () => {
 
         if (player) {
             await refetch();
-            refreshRow(gridRef, editedPlayer!.id.toString());
         }
     };
 
@@ -248,9 +245,9 @@ export const Players = () => {
                     <Button
                         outline
                         onClick={() => {
-                            gridRef.current?.api.exportDataAsCsv({
-                                fileName: `players-${new Date().toLocaleDateString(locale)}.csv`,
-                            });
+                            // gridRef.current?.api.exportDataAsCsv({
+                            //     fileName: `players-${new Date().toLocaleDateString(locale)}.csv`,
+                            // });
                         }}
                     >
                         <Icon size={0.8} path={mdiExport} />
@@ -263,6 +260,7 @@ export const Players = () => {
                         <PoorDataTable
                             data={players}
                             columns={cols}
+                            searchPlaceholder={t("pages.players.grid.search.placeholder")}
                             getRowId={item => item.bibNumber!}
                             onRowDoubleClicked={openEditDialog}
                             gridName="players"

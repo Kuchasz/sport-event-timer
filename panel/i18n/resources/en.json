@@ -216,7 +216,7 @@
     "players": {
       "grid": {
         "columns": {
-          "classification": "Classification Id",
+          "classification": "Classification",
           "bibNumber": "Bib Number",
           "name": "Name",
           "gender": "Gender",
@@ -230,6 +230,9 @@
           "icePhoneNumber": "Ice Phone Number",
           "actions": "Actions",
           "lastName": "Last Name"
+        },
+        "search": {
+          "placeholder": "Search players..."
         }
       },
       "delete": {
