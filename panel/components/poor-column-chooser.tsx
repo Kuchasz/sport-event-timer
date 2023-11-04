@@ -1,6 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiEye, mdiEyeOff, mdiTableCog } from "@mdi/js";
+import { mdiChevronDown, mdiEye, mdiEyeOff } from "@mdi/js";
 import Icon from "@mdi/react";
+import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 
 export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends keyof T>({
@@ -9,14 +10,17 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
     nameKey,
     valueKey,
     onChange,
+    className,
 }: {
     initialValue?: string[];
     items: T[];
+    className?: string;
     nameKey: TNameKey;
     valueKey: TValueKey;
     onChange: (event: { target: { value: T[TValueKey][] } }) => void;
 }) => {
     const [selected, setSelected] = useState(initialValue ?? []);
+    const t = useTranslations();
 
     return (
         <Listbox
@@ -29,9 +33,10 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                 onChange({ target: { value: desiredItems } });
             }}
         >
-            <div className="flex">
-                <Listbox.Button className="relative cursor-pointer self-center rounded-lg px-5 text-left text-gray-500 hover:text-black">
-                    <Icon path={mdiTableCog} size={0.8} />
+            <div className={`flex ${className}`}>
+                <Listbox.Button className="relative flex items-center justify-center rounded-full border py-2 pl-4 pr-2.5 text-sm font-medium transition-all">
+                    <span>{t("shared.columns")}</span>
+                    <Icon className="ml-2" path={mdiChevronDown} size={0.8} />
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
