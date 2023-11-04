@@ -33,19 +33,21 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     return (
         <div className="flex h-full flex-col">
-            <PoorColumnChooser
-                items={columns}
-                initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
-                valueKey="field"
-                nameKey="headerName"
-                onChange={e => {
-                    const visibleColumns = e.target.value as string[];
+            <div className="flex justify-end">
+                <PoorColumnChooser
+                    items={columns}
+                    initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
+                    valueKey="field"
+                    nameKey="headerName"
+                    onChange={e => {
+                        const visibleColumns = e.target.value as string[];
 
-                    const saveState = gridColumnVisibilityState.map(v => ({ ...v, hide: !visibleColumns.includes(v.colId) }));
+                        const saveState = gridColumnVisibilityState.map(v => ({ ...v, hide: !visibleColumns.includes(v.colId) }));
 
-                    setGridColumnVisibilityState(saveState);
-                }}
-            />
+                        setGridColumnVisibilityState(saveState);
+                    }}
+                />
+            </div>
 
             <div
                 className="grid flex-grow overflow-x-auto overflow-y-auto"
@@ -53,7 +55,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             >
                 <div className="contents text-xs font-bold">
                     {visibleColumns.map(c => (
-                        <div className="sticky top-0 whitespace-nowrap border-b bg-white py-4 pl-4" key={c.headerName}>
+                        <div className="sticky top-0 whitespace-nowrap border-b bg-white px-4 py-4" key={c.headerName}>
                             {c.headerName}
                         </div>
                     ))}
@@ -62,7 +64,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     {data.map(d => (
                         <div onDoubleClick={() => onRowDoubleClicked(d)} className="group contents text-sm" key={getRowId(d)}>
                             {visibleColumns.map(c => (
-                                <div className="flex items-center py-3 pl-4 group-hover:bg-gray-50" key={c.headerName}>
+                                <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
                                     {c.cellRenderer ? c.cellRenderer(d) : <div className="whitespace-nowrap">{d[c.field] as any}</div>}
                                 </div>
                             ))}
