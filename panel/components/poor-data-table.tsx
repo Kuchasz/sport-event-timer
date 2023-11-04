@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { getGridColumnVisibilityStateAtom } from "states/grid-states";
 import { PoorColumnChooser } from "./poor-column-chooser";
+import { PoorInput } from "./poor-input";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -33,7 +34,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="mb-4 flex justify-end">
+            <div className="mb-4 flex justify-between">
+                <PoorInput onChange={() => {}} placeholder="Search for players..." />
                 <PoorColumnChooser
                     items={columns}
                     initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
