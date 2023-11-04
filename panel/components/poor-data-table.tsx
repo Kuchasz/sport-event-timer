@@ -43,9 +43,13 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
+    const searchableData = usableSearchFields?.length
+        ? data.map(d => ({ ...d, __searchField: usableSearchFields?.map(f => d[f]).join("|") }))
+        : data.map(d => ({ ...d, __searchField: "" }));
+
     const filteredData = usableSearchFields?.length
-        ? fuzzysort.go(searchQuery, data, { all: true, keys: (usableSearchFields as string[]) ?? [] })
-        : data.map(obj => ({ obj }));
+        ? fuzzysort.go(searchQuery, searchableData, { all: true, key: "__searchField" })
+        : searchableData.map(obj => ({ obj }));
 
     return (
         <div className="flex h-full flex-col">
