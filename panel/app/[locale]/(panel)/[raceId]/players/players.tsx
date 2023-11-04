@@ -1,5 +1,4 @@
 "use client";
-import type { ColDef } from "@ag-grid-community/core";
 import type { AgGridReact } from "@ag-grid-community/react";
 import { mdiExport, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -10,14 +9,11 @@ import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { PlayerEdit } from "components/panel/player/player-edit";
-import { PoorColumnChooser } from "components/poor-column-chooser";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
-import { useAtom } from "jotai";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import { useRef } from "react";
-import { getGridColumnStateAtom } from "states/grid-states";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
 import { NiceModal } from "../../../../../components/modal";
@@ -159,72 +155,65 @@ export const Players = () => {
         },
     ];
 
-    const defaultColumns: ColDef<Player>[] = [
-        // {
-        //     width: 25,
-        //     headerName: t("pages.players.grid.columns.index"),
-        //     headerClass: "hidden",
-        //     sortable: false,
-        //     filter: false,
-        //     valueGetter: r => r.node?.rowIndex,
-        // },
-        {
-            field: "classificationId",
-            headerName: t("pages.players.grid.columns.classification"),
-        },
-        {
-            field: "bibNumber",
-            headerName: t("pages.players.grid.columns.bibNumber"),
-            sort: "asc",
-            comparator: (valueA, valueB) => valueA - valueB,
-            filter: true,
-            sortable: true,
-        },
-        { field: "name", headerName: t("pages.players.grid.columns.name"), sortable: true, filter: true },
-        { field: "lastName", headerName: t("pages.players.grid.columns.lastName"), sortable: true, filter: true },
-        {
-            field: "gender",
-            headerName: t("pages.players.grid.columns.gender"),
-            sortable: true,
-            filter: true,
-            resizable: true,
-            cellStyle: { justifyContent: "center", display: "flex" },
-            width: 150,
-            cellRenderer: (props: { data: Player }) => <GenderIcon gender={props.data.gender as Gender} />,
-        },
-        {
-            field: "startTime",
-            headerName: t("pages.players.grid.columns.startTime"),
-            sortable: true,
-            cellRenderer: (props: { data: Player }) => <div>{milisecondsToTimeString(props.data.startTime)}</div>,
-        },
-        {
-            field: "birthDate",
-            headerName: t("pages.players.grid.columns.birthDate"),
-            sortable: true,
-            hide: true,
-            cellRenderer: (props: { data: Player }) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
-        },
-        { field: "country", headerName: t("pages.players.grid.columns.country"), width: 10, sortable: true, filter: true, hide: true },
-        { field: "city", headerName: t("pages.players.grid.columns.city"), sortable: true, filter: true, hide: true },
-        { field: "team", headerName: t("pages.players.grid.columns.team"), sortable: true, filter: true, hide: true },
-        { field: "email", headerName: t("pages.players.grid.columns.email"), sortable: true, filter: true, hide: true },
-        { field: "phoneNumber", headerName: t("pages.players.grid.columns.phoneNumber"), sortable: true, filter: true, hide: true },
-        { field: "icePhoneNumber", headerName: t("pages.players.grid.columns.icePhoneNumber"), sortable: true, filter: true, hide: true },
-        {
-            headerName: t("pages.players.grid.columns.actions"),
-            cellRenderer: (props: { context: any; data: Player }) => (
-                <PlayerDeleteButton refetch={props.context.refetch} player={props.data} />
-            ),
-        },
-    ];
-
-    const [gridColumnState, setGridColumnState] = useAtom(
-        getGridColumnStateAtom(
-            "players",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! })),
-        ),
-    );
+    // const defaultColumns: ColDef<Player>[] = [
+    //     // {
+    //     //     width: 25,
+    //     //     headerName: t("pages.players.grid.columns.index"),
+    //     //     headerClass: "hidden",
+    //     //     sortable: false,
+    //     //     filter: false,
+    //     //     valueGetter: r => r.node?.rowIndex,
+    //     // },
+    //     {
+    //         field: "classificationId",
+    //         headerName: t("pages.players.grid.columns.classification"),
+    //     },
+    //     {
+    //         field: "bibNumber",
+    //         headerName: t("pages.players.grid.columns.bibNumber"),
+    //         sort: "asc",
+    //         comparator: (valueA, valueB) => valueA - valueB,
+    //         filter: true,
+    //         sortable: true,
+    //     },
+    //     { field: "name", headerName: t("pages.players.grid.columns.name"), sortable: true, filter: true },
+    //     { field: "lastName", headerName: t("pages.players.grid.columns.lastName"), sortable: true, filter: true },
+    //     {
+    //         field: "gender",
+    //         headerName: t("pages.players.grid.columns.gender"),
+    //         sortable: true,
+    //         filter: true,
+    //         resizable: true,
+    //         cellStyle: { justifyContent: "center", display: "flex" },
+    //         width: 150,
+    //         cellRenderer: (props: { data: Player }) => <GenderIcon gender={props.data.gender as Gender} />,
+    //     },
+    //     {
+    //         field: "startTime",
+    //         headerName: t("pages.players.grid.columns.startTime"),
+    //         sortable: true,
+    //         cellRenderer: (props: { data: Player }) => <div>{milisecondsToTimeString(props.data.startTime)}</div>,
+    //     },
+    //     {
+    //         field: "birthDate",
+    //         headerName: t("pages.players.grid.columns.birthDate"),
+    //         sortable: true,
+    //         hide: true,
+    //         cellRenderer: (props: { data: Player }) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
+    //     },
+    //     { field: "country", headerName: t("pages.players.grid.columns.country"), width: 10, sortable: true, filter: true, hide: true },
+    //     { field: "city", headerName: t("pages.players.grid.columns.city"), sortable: true, filter: true, hide: true },
+    //     { field: "team", headerName: t("pages.players.grid.columns.team"), sortable: true, filter: true, hide: true },
+    //     { field: "email", headerName: t("pages.players.grid.columns.email"), sortable: true, filter: true, hide: true },
+    //     { field: "phoneNumber", headerName: t("pages.players.grid.columns.phoneNumber"), sortable: true, filter: true, hide: true },
+    //     { field: "icePhoneNumber", headerName: t("pages.players.grid.columns.icePhoneNumber"), sortable: true, filter: true, hide: true },
+    //     {
+    //         headerName: t("pages.players.grid.columns.actions"),
+    //         cellRenderer: (props: { context: any; data: Player }) => (
+    //             <PlayerDeleteButton refetch={props.context.refetch} player={props.data} />
+    //         ),
+    //     },
+    // ];
 
     // const onFirstDataRendered = useCallback(() => {
     //     gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
@@ -267,25 +256,6 @@ export const Players = () => {
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.players.export.button")}</span>
                     </Button>
-                    <PoorColumnChooser
-                        items={defaultColumns}
-                        initialValue={gridColumnState.filter(c => !c.hide).map(c => c.colId)}
-                        valueKey="field"
-                        nameKey="headerName"
-                        onChange={e => {
-                            const visibleColumns = e.target.value as string[];
-                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
-
-                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns, false);
-                            gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
-                            gridRef.current?.api.sizeColumnsToFit();
-
-                            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                            const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
-
-                            setGridColumnState(saveState);
-                        }}
-                    />
                 </div>
 
                 {players && (
