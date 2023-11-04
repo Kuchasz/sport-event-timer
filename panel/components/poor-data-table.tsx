@@ -43,26 +43,24 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
-    const searchableData = usableSearchFields?.length
-        ? data.map(d => ({ ...d, __searchField: usableSearchFields?.map(f => d[f]).join("|") }))
-        : data.map(d => ({ ...d, __searchField: "" }));
+    const useSearch = !!usableSearchFields?.length;
 
-    const filteredData = usableSearchFields?.length
-        ? fuzzysort.go(searchQuery, searchableData, { all: true, key: "__searchField" })
-        : searchableData.map(obj => ({ obj }));
+    if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
+
+    const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
 
     return (
         <div className="flex h-full flex-col">
             <div className="mb-4 flex justify-between">
-                {searchFields?.length ? (
+                {searchFields?.length && (
                     <PoorInput
+                        className="flex-grow"
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         placeholder={searchPlaceholder ?? t("shared.dataTable.search.placeholder")}
                     />
-                ) : (
-                    <div></div>
                 )}
+                <div className="flex-grow"></div>
                 <PoorColumnChooser
                     items={columns}
                     initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
