@@ -79,8 +79,11 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             </div>
 
             <div
-                className="grid flex-grow overflow-x-auto overflow-y-auto rounded-md border"
-                style={{ gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))` }}
+                className="grid max-h-min basis-auto overflow-x-auto overflow-y-auto rounded-md border"
+                style={{
+                    // gridTemplateRows: "auto 1fr",
+                    gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
+                }}
             >
                 <div className="contents text-xs font-bold">
                     {visibleColumns.map(c => (
