@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { mdiChevronDown, mdiEye, mdiEyeOff } from "@mdi/js";
+import { mdiEye, mdiEyeOff, mdiTuneVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
@@ -36,10 +36,11 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
             <div className={`flex ${className}`}>
                 <Listbox.Button
                     style={{ height: "38px" }}
-                    className="relative flex items-center justify-center rounded-md border border-gray-300 pl-4 pr-2.5 text-sm font-medium transition-all"
+                    className="relative flex items-center justify-center rounded-md border border-gray-300 px-4 text-sm font-medium transition-all"
                 >
+                    <Icon className="mr-2" path={mdiTuneVariant} size={0.8} />
                     <span>{t("shared.dataTable.columns")}</span>
-                    <Icon className="ml-2" path={mdiChevronDown} size={0.8} />
+                    {/* <Icon className="ml-2" path={mdiChevronDown} size={0.8} /> */}
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">

@@ -6,6 +6,10 @@ import { useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import Icon from "@mdi/react";
+import { clamp } from "@set/utils/dist/number";
+import classNames from "classnames";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -39,6 +43,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const rowsContainer = React.useRef<HTMLDivElement>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, changePage] = useState(0);
 
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
@@ -50,7 +55,18 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
+    const rowsPerPage = 27;
+
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
+
+    const pagesData = filteredData.slice(
+        currentPage * rowsPerPage,
+        clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, filteredData.length),
+    );
+
+    const numberOfPages = Math.ceil(filteredData.length / rowsPerPage);
+    const isFirstPage = currentPage + 1 <= 1;
+    const isLastPage = currentPage + 1 >= numberOfPages;
 
     return (
         <div className="flex h-full flex-col">
@@ -95,7 +111,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                         ))}
                     </div>
                     <div className="contents">
-                        {filteredData.map(d => (
+                        {pagesData.map(d => (
                             <div onDoubleClick={() => onRowDoubleClicked(d.obj)} className="group contents text-sm" key={getRowId(d.obj)}>
                                 {visibleColumns.map(c => (
                                     <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
@@ -109,6 +125,39 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                             </div>
                         ))}
                     </div>
+                </div>
+            </div>
+            <div className="flex items-center gap-6 py-4 text-sm">
+                <div className="flex-grow"></div>
+                <div>
+                    <span className="font-semibold">
+                        {t("shared.dataTable.paging.rowsPerPage")} {rowsPerPage}
+                    </span>
+                </div>
+                <div className="font-semibold">
+                    {t("shared.dataTable.paging.currentPage", { currentPage: currentPage + 1, totalPages: numberOfPages })}
+                </div>
+                <div className="flex gap-2">
+                    <button
+                        disabled={isFirstPage}
+                        className={classNames(
+                            "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
+                            { ["opacity-50"]: isFirstPage },
+                        )}
+                        onClick={() => changePage(currentPage - 1)}
+                    >
+                        <Icon path={mdiChevronLeft} size={1}></Icon>
+                    </button>
+                    <button
+                        disabled={isLastPage}
+                        className={classNames(
+                            "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
+                            { ["opacity-50"]: isLastPage },
+                        )}
+                        onClick={() => changePage(currentPage + 1)}
+                    >
+                        <Icon path={mdiChevronRight} size={1}></Icon>
+                    </button>
                 </div>
             </div>
         </div>
