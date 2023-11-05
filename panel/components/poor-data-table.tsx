@@ -90,12 +90,12 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
-            <div className="min-h-min basis-auto overflow-x-auto overflow-y-auto rounded-md border">
+            <div ref={rowsContainer} className="basis-auto overflow-x-auto overflow-y-auto rounded-md border" style={{ height: "300px" }}>
                 <div
-                    className="relative grid max-h-min"
-                    ref={rowsContainer}
+                    className="relative grid w-full"
                     style={{
                         gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
+                        gridAutoRows: `${itemSize}px`,
                         height: `${rowVirtualizer.getTotalSize() + itemSize}px`,
                     }}
                 >
@@ -112,17 +112,20 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                 onDoubleClick={() => onRowDoubleClicked(fileredDataMap.get(vi.index)!)}
                                 className="group contents text-sm"
                                 key={getRowId(fileredDataMap.get(vi.index)!)}
-                                style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: `${vi.size}px`,
-                                    transform: `translateY(${vi.start + itemSize}px)`,
-                                }}
                             >
                                 {visibleColumns.map(c => (
-                                    <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            // left: 0,
+                                            // width: "100%",
+                                            height: `${itemSize}px`,
+                                            transform: `translateY(${vi.start + itemSize}px)`,
+                                        }}
+                                        className="flex items-center px-4 py-3 group-hover:bg-gray-50"
+                                        key={c.headerName}
+                                    >
                                         {c.cellRenderer ? (
                                             <span className="whitespace-nowrap">{c.cellRenderer(fileredDataMap.get(vi.index)!)}</span>
                                         ) : (
