@@ -1113,6 +1113,10 @@
       "columns": "Kolumny",
       "search": {
         "placeholder": "Szukaj..."
+      },
+      "paging": {
+        "rowsPerPage": "Wierszy na stronę:",
+        "currentPage": "Strona {currentPage} z {totalPages}"
       }
     }
   }
