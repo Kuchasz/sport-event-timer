@@ -787,10 +787,6 @@
     "header": {
       "title": "Rejestracja",
       "description": "Zarejestruj nowego uczestnika"
-    },
-    "gender": {
-      "male": "Mężczyzna",
-      "female": "Kobieta"
     }
   },
   "results": {
@@ -1098,6 +1094,10 @@
       "ZM": "Zambia",
       "ZW": "Zimbabwe",
       "AE": "Zjednoczone Emiraty Arabskie"
+    },
+    "genders": {
+      "female": "Kobieta",
+      "male": "Mężczyzna"
     },
     "sportKinds": {
       "road-cycling": "Kolarstwo szosowe",

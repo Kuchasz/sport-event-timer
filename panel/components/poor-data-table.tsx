@@ -59,7 +59,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
-    const rowsPerPage = 27;
+    const rowsPerPage = 25;
 
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
 

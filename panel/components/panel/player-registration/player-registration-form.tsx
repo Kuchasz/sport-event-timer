@@ -26,6 +26,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
     const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
+    const genderOptions = genders.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
 
     return (
         <Form<PlayerRegistration>
@@ -63,10 +64,10 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
-                            items={genders}
+                            items={genderOptions}
                             placeholder={t("pages.playerRegistrations.form.gender.placeholder")}
                             nameKey="name"
-                            valueKey="value"
+                            valueKey="gender"
                             onChange={onChange}
                         />
                     )}

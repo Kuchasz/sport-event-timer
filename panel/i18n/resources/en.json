@@ -787,10 +787,6 @@
     "header": {
       "title": "Registration",
       "description": "Register new participant"
-    },
-    "gender": {
-      "male": "Male",
-      "female": "Female"
     }
   },
   "results": {
@@ -1098,6 +1094,10 @@
       "ZM": "Zambia",
       "ZW": "Zimbabwe",
       "AE": "United Arab Emirates"
+    },
+    "genders": {
+      "female": "Female",
+      "male": "Male"
     },
     "sportKinds": {
       "road-cycling": "Road Cycling",
