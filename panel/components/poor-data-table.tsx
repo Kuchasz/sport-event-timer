@@ -5,7 +5,6 @@ import { PoorInput } from "./poor-input";
 import { useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
 
 export type PoorDataTableColumn<T> = {
@@ -53,16 +52,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
 
-    const fileredDataMap = new Map(filteredData.map((d, index) => [index, d.obj]));
-
-    const itemSize = 52;
-
-    const rowVirtualizer = useVirtualizer({
-        count: filteredData.length,
-        getScrollElement: () => rowsContainer.current,
-        estimateSize: () => itemSize,
-    });
-
     return (
         <div className="flex h-full flex-col">
             <div className="mb-4 flex justify-between">
@@ -90,13 +79,12 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
-            <div ref={rowsContainer} className="basis-auto overflow-x-auto overflow-y-auto rounded-md border" style={{ height: "300px" }}>
+            <div ref={rowsContainer} className="flex-grow basis-auto overflow-x-auto overflow-y-auto rounded-md border">
                 <div
                     className="relative grid w-full"
                     style={{
                         gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
-                        gridAutoRows: `${itemSize}px`,
-                        height: `${rowVirtualizer.getTotalSize() + itemSize}px`,
+                        gridAutoRows: "auto",
                     }}
                 >
                     <div className="contents text-xs font-bold">
@@ -107,29 +95,14 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                         ))}
                     </div>
                     <div className="contents">
-                        {rowVirtualizer.getVirtualItems().map(vi => (
-                            <div
-                                onDoubleClick={() => onRowDoubleClicked(fileredDataMap.get(vi.index)!)}
-                                className="group contents text-sm"
-                                key={getRowId(fileredDataMap.get(vi.index)!)}
-                            >
+                        {filteredData.map(d => (
+                            <div onDoubleClick={() => onRowDoubleClicked(d.obj)} className="group contents text-sm" key={getRowId(d.obj)}>
                                 {visibleColumns.map(c => (
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            top: 0,
-                                            // left: 0,
-                                            // width: "100%",
-                                            height: `${itemSize}px`,
-                                            transform: `translateY(${vi.start + itemSize}px)`,
-                                        }}
-                                        className="flex items-center px-4 py-3 group-hover:bg-gray-50"
-                                        key={c.headerName}
-                                    >
+                                    <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
                                         {c.cellRenderer ? (
-                                            <span className="whitespace-nowrap">{c.cellRenderer(fileredDataMap.get(vi.index)!)}</span>
+                                            <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
                                         ) : (
-                                            <div className="whitespace-nowrap">{fileredDataMap.get(vi.index)![c.field] as any}</div>
+                                            <div className="whitespace-nowrap">{d.obj[c.field] as any}</div>
                                         )}
                                     </div>
                                 ))}
