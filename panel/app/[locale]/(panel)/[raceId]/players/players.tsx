@@ -50,15 +50,11 @@ export const Players = () => {
     const t = useTranslations();
     const locale = useLocale();
     const { data: players, refetch } = trpc.player.players.useQuery({ raceId: raceId });
-    // const gridRef = useRef<AgGridReact<Player>>(null);
 
     const cols: PoorDataTableColumn<Player>[] = [
         {
             field: "bibNumber",
             headerName: t("pages.players.grid.columns.bibNumber"),
-            // sort: "asc",
-            // comparator: (valueA, valueB) => valueA - valueB,
-            // filter: true,
             sortable: true,
         },
         {
@@ -71,22 +67,16 @@ export const Players = () => {
             field: "name",
             headerName: t("pages.players.grid.columns.name"),
             sortable: true,
-            // filter: true
         },
         {
             field: "lastName",
             headerName: t("pages.players.grid.columns.lastName"),
             sortable: true,
-            // filter: true
         },
         {
             field: "gender",
             headerName: t("pages.players.grid.columns.gender"),
             sortable: true,
-            // filter: true,
-            // resizable: true,
-            // cellStyle: { justifyContent: "center", display: "flex" },
-            // width: 150,
             cellRenderer: data => <GenderIcon gender={data.gender as Gender} />,
         },
         {
@@ -105,44 +95,37 @@ export const Players = () => {
         {
             field: "country",
             headerName: t("pages.players.grid.columns.country"),
-            // width: 10,
             sortable: true,
-            // filter: true,
             hide: true,
         },
         {
             field: "city",
             headerName: t("pages.players.grid.columns.city"),
             sortable: true,
-            //filter: true,
             hide: true,
         },
         {
             field: "team",
             headerName: t("pages.players.grid.columns.team"),
             sortable: true,
-            // filter: true,
             hide: true,
         },
         {
             field: "email",
             headerName: t("pages.players.grid.columns.email"),
             sortable: true,
-            // filter: true,
             hide: true,
         },
         {
             field: "phoneNumber",
             headerName: t("pages.players.grid.columns.phoneNumber"),
             sortable: true,
-            // filter: true,
             hide: true,
         },
         {
             field: "icePhoneNumber",
             headerName: t("pages.players.grid.columns.icePhoneNumber"),
             sortable: true,
-            //  filter: true,
             hide: true,
         },
         {
@@ -152,71 +135,6 @@ export const Players = () => {
             cellRenderer: data => <PlayerDeleteButton refetch={refetch} player={data} />,
         },
     ];
-
-    // const defaultColumns: ColDef<Player>[] = [
-    //     // {
-    //     //     width: 25,
-    //     //     headerName: t("pages.players.grid.columns.index"),
-    //     //     headerClass: "hidden",
-    //     //     sortable: false,
-    //     //     filter: false,
-    //     //     valueGetter: r => r.node?.rowIndex,
-    //     // },
-    //     {
-    //         field: "classificationId",
-    //         headerName: t("pages.players.grid.columns.classification"),
-    //     },
-    //     {
-    //         field: "bibNumber",
-    //         headerName: t("pages.players.grid.columns.bibNumber"),
-    //         sort: "asc",
-    //         comparator: (valueA, valueB) => valueA - valueB,
-    //         filter: true,
-    //         sortable: true,
-    //     },
-    //     { field: "name", headerName: t("pages.players.grid.columns.name"), sortable: true, filter: true },
-    //     { field: "lastName", headerName: t("pages.players.grid.columns.lastName"), sortable: true, filter: true },
-    //     {
-    //         field: "gender",
-    //         headerName: t("pages.players.grid.columns.gender"),
-    //         sortable: true,
-    //         filter: true,
-    //         resizable: true,
-    //         cellStyle: { justifyContent: "center", display: "flex" },
-    //         width: 150,
-    //         cellRenderer: (props: { data: Player }) => <GenderIcon gender={props.data.gender as Gender} />,
-    //     },
-    //     {
-    //         field: "startTime",
-    //         headerName: t("pages.players.grid.columns.startTime"),
-    //         sortable: true,
-    //         cellRenderer: (props: { data: Player }) => <div>{milisecondsToTimeString(props.data.startTime)}</div>,
-    //     },
-    //     {
-    //         field: "birthDate",
-    //         headerName: t("pages.players.grid.columns.birthDate"),
-    //         sortable: true,
-    //         hide: true,
-    //         cellRenderer: (props: { data: Player }) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
-    //     },
-    //     { field: "country", headerName: t("pages.players.grid.columns.country"), width: 10, sortable: true, filter: true, hide: true },
-    //     { field: "city", headerName: t("pages.players.grid.columns.city"), sortable: true, filter: true, hide: true },
-    //     { field: "team", headerName: t("pages.players.grid.columns.team"), sortable: true, filter: true, hide: true },
-    //     { field: "email", headerName: t("pages.players.grid.columns.email"), sortable: true, filter: true, hide: true },
-    //     { field: "phoneNumber", headerName: t("pages.players.grid.columns.phoneNumber"), sortable: true, filter: true, hide: true },
-    //     { field: "icePhoneNumber", headerName: t("pages.players.grid.columns.icePhoneNumber"), sortable: true, filter: true, hide: true },
-    //     {
-    //         headerName: t("pages.players.grid.columns.actions"),
-    //         cellRenderer: (props: { context: any; data: Player }) => (
-    //             <PlayerDeleteButton refetch={props.context.refetch} player={props.data} />
-    //         ),
-    //     },
-    // ];
-
-    // const onFirstDataRendered = useCallback(() => {
-    //     gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
-    //     gridRef.current?.api.sizeColumnsToFit();
-    // }, [gridColumnState]);
 
     const openEditDialog = async (editedPlayer?: Player) => {
         const player = await Demodal.open<EditedPlayer>(NiceModal, {
@@ -267,28 +185,6 @@ export const Players = () => {
                             searchFields={["name", "lastName", "team", "bibNumber", "city"]}
                         />
                     </div>
-                    // <div className="flex-grow rounded-lg bg-orange-500 p-8 shadow-md">
-                    //     {/* <div className="flex h-full flex-col bg-orange-200"> */}
-                    //     {/* <AgGridReact<Player>
-                    //             ref={gridRef}
-                    //             context={{ refetch }}
-                    //             onRowDoubleClicked={e => openEditDialog(e.data)}
-                    //             suppressCellFocus={true}
-                    //             suppressAnimationFrame={true}
-                    //             columnDefs={defaultColumns}
-                    //             getRowId={item => item.data.id.toString()}
-                    //             rowData={players}
-                    //             onFirstDataRendered={onFirstDataRendered}
-                    //             onGridSizeChanged={onFirstDataRendered}
-                    //         ></AgGridReact> */}
-                    //     <PoorDataTable
-                    //         data={players}
-                    //         columns={cols}
-                    //         getRowId={item => item.bibNumber!}
-                    //         onRowDoubleClicked={openEditDialog}
-                    //     />
-                    //     {/* </div> */}
-                    // </div>
                 )}
             </div>
         </>
