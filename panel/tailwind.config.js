@@ -71,10 +71,17 @@ module.exports = {
                     "0%": { transform: "scale(0.95)" },
                     "100%": { transfrm: "scale(1)" },
                 },
+                fadeIn: {
+                    "0%": { opacity: "0" },
+                    "100%": { opacity: "100" },
+                },
+                fadeOut: { "0%": { opacity: "100" }, "100%": { opacity: "0" } },
             },
             animation: {
                 pushIn: "pushIn 0.2s ease-out",
                 pushInLittle: "pushInLittle 0.2s ease-out",
+                fadeIn: "fadeIn 0.2s",
+                fadeOut: "fadeOut 0.2s",
             },
         },
     },
