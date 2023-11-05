@@ -5,6 +5,7 @@ import type { Route } from "next";
 import { MenuButton } from "./menu-button";
 import { usePathname } from "next/navigation";
 import { MenuHeader } from "./menu-header";
+import { ScrollArea } from "./scroll-area";
 
 type MenuGroup = {
     name: string;
@@ -29,7 +30,7 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 
     return (
-        <div className="flex-1 overflow-y-auto">
+        <ScrollArea className="flex-1">
             {menuGroups.map(g => (
                 <div key={g.name}>
                     <MenuHeader text={g.name} />
@@ -45,6 +46,6 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
                     </div>
                 </div>
             ))}
-        </div>
+        </ScrollArea>
     );
 };

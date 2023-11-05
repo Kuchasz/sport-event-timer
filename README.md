@@ -47,7 +47,7 @@ Application for making time measurements
 | 29/10/2023 | Refactor all useFormState<T> hook usages                   | :heavy_check_mark: (29/10/2023) |
 | 04/11/2023 | Display classification name instead of just id             | :heavy_check_mark: (04/11/2023) |
 | 04/11/2023 | Add translation to Gender                                  | :heavy_check_mark: (05/11/2023) |
-| 05/11/2023 | Add custom hideable scrollbar to side menu                 | todo :date:                     |
+| 05/11/2023 | Add custom hideable scrollbar to side menu                 | :heavy_check_mark: (05/11/2023) |
 
 ## TODO
 
