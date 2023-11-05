@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { getGridColumnVisibilityStateAtom } from "states/grid-states";
 import { PoorColumnChooser } from "./poor-column-chooser";
 import { PoorInput } from "./poor-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -52,6 +52,10 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
     const useSearch = !!usableSearchFields?.length;
+
+    useEffect(() => {
+        changePage(0);
+    }, [searchQuery]);
 
     if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
