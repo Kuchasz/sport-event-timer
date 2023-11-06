@@ -1,10 +1,11 @@
 "use client";
-
+import Icon from "@mdi/react";
 import { sortDesc } from "@set/utils/dist/array";
+import classNames from "classnames";
 import type { Route } from "next";
-import { MenuButton } from "./menu-button";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MenuHeader } from "./menu-header";
+
 import { ScrollArea } from "./scroll-area";
 
 type MenuGroup = {
@@ -14,6 +15,28 @@ type MenuGroup = {
     to: string;
     items: { text: string; icon: string; to: string; color: string; bg: string }[];
 };
+
+export const MenuHeader = (n: { text: string }) => (
+    <div className={classNames("flex items-center px-6 text-xs font-semibold uppercase text-gray-300")}>{n.text}</div>
+);
+
+export const MenuButton = (n: { color: string; bg: string; text: string; icon: string; to: Route; isActive: boolean }) => (
+    <Link href={n.to}>
+        <div
+            className={classNames(
+                "my-1.5 mr-3 flex cursor-pointer items-center rounded-r-md py-3 pl-6 text-sm font-medium transition-all",
+                {
+                    [n.bg]: n.isActive,
+                    ["text-gray-600 hover:bg-gray-100"]: !n.isActive,
+                    [n.color]: n.isActive,
+                },
+            )}
+        >
+            <Icon className={classNames("transition-opacity", { ["opacity-50"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
+            <span className="ml-2.5">{n.text}</span>
+        </div>
+    </Link>
+);
 
 export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }) => {
     const pathname = usePathname()!;
@@ -30,9 +53,9 @@ export const Menu = ({ groups, raceId }: { groups: MenuGroup[]; raceId: string }
     const longestMatchedRoute = sortDesc(matchedRoutes, r => r.to.length)[0];
 
     return (
-        <ScrollArea className="flex-1">
+        <ScrollArea className="mt-8 flex-1">
             {menuGroups.map(g => (
-                <div key={g.name}>
+                <div className="pt-8 first:pt-0" key={g.name}>
                     <MenuHeader text={g.name} />
                     <div>
                         {g.items.map(n => (
