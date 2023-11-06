@@ -32,25 +32,10 @@ const ScrollBar = React.forwardRef<
         {...props}
     >
         <ScrollAreaPrimitive.ScrollAreaThumb
-            className={classNames(
-                "relative rounded-full bg-gray-100 transition-colors group-hover:bg-gray-200",
-                orientation === "vertical" && "flex-1",
-            )}
+            className={"relative flex-1 rounded-full bg-gray-500 opacity-25 transition-colors group-hover:opacity-50"}
         />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ));
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
 
 export { ScrollArea, ScrollBar };
-
-// import * as ScrollAreaA from "@radix-ui/react-scroll-area";
-
-// export const ScrollArea = ({ children }) => (
-//     <ScrollAreaA.Root type="scroll" className="scrollarea">
-//         <ScrollAreaA.Viewport className="scrollarea__viewport">{children}</ScrollAreaA.Viewport>
-
-//         <ScrollAreaA.Scrollbar className="scrollarea__bar" orientation="vertical">
-//             <ScrollAreaA.Thumb className="scrollarea__thumb" />
-//         </ScrollAreaA.Scrollbar>
-//     </ScrollAreaA.Root>
-// );
