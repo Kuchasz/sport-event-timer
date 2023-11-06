@@ -98,7 +98,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
-            <ScrollArea className="flex-grow basis-auto rounded-md border">
+            <ScrollArea className=" basis-auto rounded-md border">
                 <div
                     className="relative grid"
                     style={{
