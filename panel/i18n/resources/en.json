@@ -353,7 +353,6 @@
       },
       "grid": {
         "columns": {
-          "index": "",
           "name": "Name",
           "lastName": "Last Name",
           "gender": "Gender",
