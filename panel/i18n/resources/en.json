@@ -367,6 +367,9 @@
           "payment": "Payment",
           "promotedToPlayer": "Promoted",
           "actions": "Actions"
+        },
+        "search": {
+          "placeholder": "Search for registrations..."
         }
       },
       "create": {

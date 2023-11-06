@@ -367,6 +367,9 @@
           "payment": "Płatność",
           "promotedToPlayer": "Awansowany",
           "actions": "Akcje"
+        },
+        "search": {
+          "placeholder": "Szukaj rejestracji..."
         }
       },
       "create": {

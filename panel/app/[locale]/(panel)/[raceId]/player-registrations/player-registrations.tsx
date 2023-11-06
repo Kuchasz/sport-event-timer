@@ -158,7 +158,6 @@ export const PlayerRegistrations = () => {
         {
             field: "birthDate",
             headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
-            //eslint-disable-next-line @typescript-eslint/no-unsafe-call
             cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
             sortable: true,
             hide: true,
@@ -287,11 +286,11 @@ export const PlayerRegistrations = () => {
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>
                 </div>
-                <div className="ag-theme-material h-full">
+                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
                     <PoorDataTable
                         data={registrations}
                         columns={cols}
-                        searchPlaceholder={t("pages.players.grid.search.placeholder")}
+                        searchPlaceholder={t("pages.playerRegistrations.grid.search.placeholder")}
                         getRowId={data => data.id}
                         onRowDoubleClicked={openEditDialog}
                         gridName="player-registrations"
