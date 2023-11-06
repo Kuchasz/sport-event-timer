@@ -52,7 +52,7 @@ Application for making time measurements
 | 06/11/2023 | Bib Numbers print mechanism                                | todo :date:                     |
 | 06/11/2023 | Printable start list                                       | todo :date:                     |
 | 06/11/2023 | Printable results                                          | todo :date:                     |
-| 06/11/2023 | Add cerfificates including printing                        | todo :date:                     |
+| 06/11/2023 | Add participation cerfificates with printing               | todo :date:                     |
 
 ## TODO
 
