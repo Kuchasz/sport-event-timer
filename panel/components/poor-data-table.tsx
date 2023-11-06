@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { mdiChevronLeft, mdiChevronRight, mdiUnfoldMoreHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
@@ -108,8 +108,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 >
                     <div className="contents text-xs font-bold">
                         {visibleColumns.map(c => (
-                            <div className="sticky top-0 whitespace-nowrap border-b bg-white px-4 py-4" key={c.headerName}>
-                                {c.headerName}
+                            <div className="sticky top-0 flex border-b bg-white" key={c.headerName}>
+                                <div
+                                    className={classNames(
+                                        "m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors",
+                                        c.sortable && "cursor-pointer hover:bg-gray-100",
+                                    )}
+                                >
+                                    <span>{c.headerName}</span>
+                                    {c.sortable && <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />}
+                                </div>
                             </div>
                         ))}
                     </div>
