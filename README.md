@@ -53,6 +53,7 @@ Application for making time measurements
 | 06/11/2023 | Printable start list                                       | todo :date:                     |
 | 06/11/2023 | Printable results                                          | todo :date:                     |
 | 06/11/2023 | Add participation cerfificates with printing               | todo :date:                     |
+| 06/11/2023 | Badge counters on certain menu items                             | todo :date:                     |
 
 ## TODO
 

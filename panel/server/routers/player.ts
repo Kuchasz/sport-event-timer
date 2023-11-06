@@ -172,21 +172,14 @@ export const playerRouter = router({
         return await ctx.db.player.update({
             where: { id: input.player.id! },
             data: {
-                // name: input.player.name,
-                // lastName: input.player.lastName,
-                // gender: input.player.gender,
-                // bibNumber: input.player.bibNumber,
+                bibNumber: input.player.bibNumber,
                 startTime: input.player.startTime,
-                // birthDate: input.player.birthDate,
-                // country: input.player.country,
-                // city: input.player.city,
-                // team: input.player.team,
-                // email: input.player.email,
-                // phoneNumber: input.player.phoneNumber,
-                // icePhoneNumber: input.player.icePhoneNumber,
                 classificationId: classification.id,
             },
         });
+    }),
+    totalPlayers: protectedProcedure.input(z.object({ raceId: z.number() })).query(async ({ input, ctx }) => {
+        return await ctx.db.player.count({ where: { raceId: input.raceId } });
     }),
 });
 
