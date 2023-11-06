@@ -170,6 +170,9 @@ export const playerRegistrationRouter = router({
             },
         });
     }),
+    totalRegistrations: protectedProcedure.input(z.object({ raceId: z.number() })).query(async ({ input, ctx }) => {
+        return await ctx.db.playerRegistration.count({ where: { raceId: input.raceId } });
+    }),
 });
 
 export type PlayerRouter = typeof playerRegistrationRouter;

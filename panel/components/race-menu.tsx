@@ -11,9 +11,12 @@ import {
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
+import { trpcRSC } from "../trpc-core-rsc";
 
 export const RaceMenu = ({ raceId }: { raceId: string }) => {
     const t = useTranslations();
+    const totalPlayers = trpcRSC.player.totalPlayers.query({ raceId: Number(raceId) });
+    const totalRegistrations = trpcRSC.playerRegistration.totalRegistrations.query({ raceId: Number(raceId) });
 
     const generalMenuGroup = {
         name: t("menuOptions.general.title"),
@@ -41,6 +44,7 @@ export const RaceMenu = ({ raceId }: { raceId: string }) => {
                 to: "/:raceId/players",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
+                badgeCount: totalPlayers,
             },
             {
                 text: t("menuOptions.general.registrations"),
@@ -48,6 +52,7 @@ export const RaceMenu = ({ raceId }: { raceId: string }) => {
                 to: "/:raceId/player-registrations",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
+                badgeCount: totalRegistrations,
             },
             {
                 text: t("menuOptions.general.classifications"),
