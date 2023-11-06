@@ -49,6 +49,7 @@ Application for making time measurements
 | 04/11/2023 | Add translation to Gender                                  | :heavy_check_mark: (05/11/2023) |
 | 05/11/2023 | Add custom hideable scrollbar to side menu                 | :heavy_check_mark: (05/11/2023) |
 | 06/11/2023 | Implement sort over columns to Data Table                  | todo :date:                     |
+| 06/11/2023 | Bib Numbers print mechanism                                | todo :date:                     |
 
 ## TODO
 
