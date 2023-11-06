@@ -10,6 +10,7 @@ import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
+import { ScrollArea, ScrollBar } from "./scroll-area";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -39,8 +40,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             columns.map(c => ({ hide: c.hide, colId: c.field as string })),
         ),
     );
-
-    const rowsContainer = React.useRef<HTMLDivElement>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, changePage] = useState(0);
@@ -99,9 +98,9 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
-            <div ref={rowsContainer} className="flex-grow basis-auto overflow-x-auto overflow-y-auto rounded-md border">
+            <ScrollArea className="flex-grow basis-auto rounded-md border">
                 <div
-                    className="relative grid w-full"
+                    className="relative grid"
                     style={{
                         gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
                         gridAutoRows: "auto",
@@ -130,7 +129,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                         ))}
                     </div>
                 </div>
-            </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
             <div className="flex items-center gap-6 py-4 text-sm">
                 <div className="flex-grow"></div>
                 <div>
