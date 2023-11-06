@@ -1,44 +1,29 @@
 "use client";
-import Head from "next/head";
-import Icon from "@mdi/react";
-import { AgGridReact } from "@ag-grid-community/react";
-import { Button } from "components/button";
-import { Confirmation } from "../../../../../components/confirmation";
-import { Demodal } from "demodal";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../trpc-core";
 import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
-import { NiceModal } from "../../../../../components/modal";
-import { useCurrentRaceId } from "../../../../../hooks";
+import Icon from "@mdi/react";
+import type { Gender } from "@set/timer/dist/model";
+import classNames from "classnames";
+import { Button } from "components/button";
+import { GenderIcon } from "components/gender-icon";
+import { PageHeader } from "components/page-header";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
-import classNames from "classnames";
-import type { ColDef } from "@ag-grid-community/core";
-import { useCallback, useRef } from "react";
-import { PoorColumnChooser } from "components/poor-column-chooser";
-import { useAtom } from "jotai";
-import { getGridColumnStateAtom } from "states/grid-states";
-import { GenderIcon } from "components/gender-icon";
-import type { Gender } from "@set/timer/dist/model";
 import { PoorActions } from "components/poor-actions";
-import { PageHeader } from "components/page-header";
-import { useTranslations, useLocale } from "next-intl";
-import { refreshRow } from "ag-grid";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
+import { useLocale, useTranslations } from "next-intl";
+import Head from "next/head";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { Confirmation } from "../../../../../components/confirmation";
+import { NiceModal } from "../../../../../components/modal";
+import { useCurrentRaceId } from "../../../../../hooks";
+import { trpc } from "../../../../../trpc-core";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
-
-const PaymentRenderer = (props: any) => (
-    <PlayerRegistrationPayment
-        refreshRegistrationRow={props.context.refreshRegistrationRow}
-        refetch={props.context.refetch}
-        playerRegistration={props.data}
-    />
-);
-const PromotedToPlayerRenderer = (props: any) => <PlayerRegistrationPromotedToPlayer playerRegistration={props.data} />;
 
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
     return (
@@ -108,7 +93,6 @@ export const PlayerRegistrations = () => {
     const t = useTranslations();
     const locale = useLocale();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
-    const gridRef = useRef<AgGridReact<PlayerRegistration>>(null);
     const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
 
     const promoteToPlayerAction = {
@@ -127,13 +111,8 @@ export const PlayerRegistrations = () => {
 
             if (promotedPlayer) {
                 await refetch();
-                refreshRegistrationRow(playerRegistration.id.toString());
             }
         },
-    };
-
-    const refreshRegistrationRow = (itemId: string) => {
-        refreshRow(gridRef, itemId);
     };
 
     const deleteRegistrationAction = {
@@ -159,131 +138,95 @@ export const PlayerRegistrations = () => {
         },
     };
 
-    const defaultColumns: ColDef<PlayerRegistration>[] = [
-        {
-            width: 25,
-            headerName: t("pages.playerRegistrations.grid.columns.index"),
-            headerClass: "hidden",
-            sortable: false,
-            filter: false,
-            valueGetter: r => r.node?.rowIndex,
-        },
+    const cols: PoorDataTableColumn<PlayerRegistration>[] = [
         {
             field: "name",
             headerName: t("pages.playerRegistrations.grid.columns.name"),
-            flex: 1,
             sortable: true,
-            resizable: true,
-            filter: true,
         },
         {
             field: "lastName",
             headerName: t("pages.playerRegistrations.grid.columns.lastName"),
-            flex: 1,
             sortable: true,
-            resizable: true,
-            filter: true,
         },
         {
             field: "gender",
             headerName: t("pages.playerRegistrations.grid.columns.gender"),
             sortable: true,
-            filter: true,
-            cellStyle: { justifyContent: "center", display: "flex" },
-            resizable: true,
-            maxWidth: 120,
-            cellRenderer: (props: { data: PlayerRegistration }) => <GenderIcon gender={props.data.gender as Gender} />,
+            cellRenderer: data => <GenderIcon gender={data.gender as Gender} />,
         },
         {
             field: "birthDate",
             headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
-            resizable: true,
             //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            cellRenderer: (props: any) => <div>{props.data.birthDate.toLocaleDateString(locale)}</div>,
+            cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
             sortable: true,
             hide: true,
-            maxWidth: 120,
         },
         {
             field: "country",
             headerName: t("pages.playerRegistrations.grid.columns.country"),
-            resizable: true,
             sortable: true,
-            filter: true,
-            maxWidth: 150,
             hide: true,
-        }, // width: 10 },
+        },
         {
             field: "city",
             headerName: t("pages.playerRegistrations.grid.columns.city"),
-            resizable: true,
             sortable: true,
-            filter: true,
             hide: true,
-        }, // width: 20 },
+        },
         {
             field: "team",
             headerName: t("pages.playerRegistrations.grid.columns.team"),
-            flex: 1,
             sortable: true,
-            resizable: true,
-            filter: true,
-            cellRenderer: (props: any) => <div className="text-ellipsis">{props.data.team}</div>,
+            cellRenderer: data => <div className="text-ellipsis">{data.team}</div>,
         },
-        { field: "phoneNumber", headerName: t("pages.playerRegistrations.grid.columns.phone"), resizable: true, filter: true, hide: true }, // width: 20 },
-        { field: "email", headerName: t("pages.playerRegistrations.grid.columns.email"), resizable: true, filter: true, hide: true }, // width: 20 },
+        { field: "phoneNumber", headerName: t("pages.playerRegistrations.grid.columns.phone"), sortable: true, hide: true },
+        { field: "email", headerName: t("pages.playerRegistrations.grid.columns.email"), sortable: true, hide: true },
         {
             field: "icePhoneNumber",
             headerName: t("pages.playerRegistrations.grid.columns.icePhoneNumber"),
-            resizable: true,
-            filter: true,
+            sortable: true,
             hide: true,
-        }, // width: 20 },
+        },
         {
             field: "registrationDate",
             headerName: t("pages.playerRegistrations.grid.columns.registrationDate"),
-            maxWidth: 120,
-            resizable: true,
             sortable: true,
-            //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            cellRenderer: (props: any) => <div>{props.data.registrationDate.toLocaleDateString(locale)}</div>,
+            cellRenderer: data => <div>{data.registrationDate.toLocaleDateString(locale)}</div>,
         },
         {
             field: "paymentDate",
             headerName: t("pages.playerRegistrations.grid.columns.payment"),
             sortable: true,
-            resizable: true,
-            maxWidth: 140,
-            cellRenderer: PaymentRenderer,
+            cellRenderer: data => (
+                <PlayerRegistrationPayment
+                    refreshRegistrationRow={() => {}}
+                    refetch={async () => {
+                        await refetch();
+                    }}
+                    playerRegistration={data}
+                />
+            ),
         },
         {
             field: "promotedToPlayer",
             headerName: t("pages.playerRegistrations.grid.columns.promotedToPlayer"),
             sortable: true,
-            filter: true,
-            resizable: true,
-            width: 130,
-            cellRenderer: PromotedToPlayerRenderer,
+            cellRenderer: data => <PlayerRegistrationPromotedToPlayer playerRegistration={data} />,
         },
         {
-            resizable: true,
-            width: 130,
+            field: "id",
+            sortable: false,
             headerName: t("pages.playerRegistrations.grid.columns.actions"),
-            cellRenderer: (props: { data: PlayerRegistration; context: { refetch: () => void } }) => (
+            cellRenderer: data => (
                 <PoorActions
-                    item={props.data}
-                    actions={props.data.promotedToPlayer ? [deleteRegistrationAction] : [promoteToPlayerAction, deleteRegistrationAction]}
+                    item={data}
+                    actions={data.promotedToPlayer ? [deleteRegistrationAction] : [promoteToPlayerAction, deleteRegistrationAction]}
                 />
             ),
         },
     ];
-
-    const [gridColumnState, setGridColumnState] = useAtom(
-        getGridColumnStateAtom(
-            "player-registrations",
-            defaultColumns.map(c => ({ hide: c.hide, colId: c.field! })),
-        ),
-    );
 
     const openCreateDialog = async () => {
         const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
@@ -299,11 +242,6 @@ export const PlayerRegistrations = () => {
         }
     };
 
-    const onFirstDataRendered = useCallback(() => {
-        gridColumnState && gridRef.current?.columnApi.applyColumnState({ state: gridColumnState });
-        // gridRef.current?.api.sizeColumnsToFit();
-    }, [gridColumnState]);
-
     const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
         const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
             title: t("pages.playerRegistrations.edit.title"),
@@ -316,7 +254,7 @@ export const PlayerRegistrations = () => {
 
         if (playerRegistration) {
             await refetch();
-            refreshRegistrationRow(playerRegistration.id!.toString());
+            // refreshRegistrationRow(playerRegistration.id!.toString());
         }
     };
 
@@ -339,48 +277,26 @@ export const PlayerRegistrations = () => {
                         outline
                         className="ml-2"
                         onClick={() => {
-                            gridRef.current?.api.exportDataAsCsv({
-                                fileName: `player-registrations-${new Date().toLocaleDateString(locale)}.csv`,
-                            });
+                            alert("export does not work for now!");
+                            // gridRef.current?.api.exportDataAsCsv({
+                            //     fileName: `player-registrations-${new Date().toLocaleDateString(locale)}.csv`,
+                            // });
                         }}
                     >
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>
-                    <PoorColumnChooser
-                        items={defaultColumns}
-                        initialValue={gridColumnState.filter(c => !c.hide).map(c => c.colId)}
-                        valueKey="field"
-                        nameKey="headerName"
-                        onChange={e => {
-                            const visibleColumns = e.target.value as string[];
-                            const notSelectedColumns = gridColumnState.map(c => c.colId).filter(c => !visibleColumns.includes(c));
-
-                            gridRef.current?.columnApi.setColumnsVisible(notSelectedColumns, false);
-                            gridRef.current?.columnApi.setColumnsVisible(visibleColumns, true);
-                            gridRef.current?.api.sizeColumnsToFit();
-
-                            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                            const saveState = gridRef.current?.columnApi.getColumnState()!.map(({ colId, hide }) => ({ colId, hide }))!;
-
-                            setGridColumnState(saveState);
-                        }}
-                    />
                 </div>
                 <div className="ag-theme-material h-full">
-                    <AgGridReact<PlayerRegistration>
-                        ref={gridRef}
-                        context={{ refetch, refreshRegistrationRow }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        suppressColumnVirtualisation={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={registrations}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                    <PoorDataTable
+                        data={registrations}
+                        columns={cols}
+                        searchPlaceholder={t("pages.players.grid.search.placeholder")}
+                        getRowId={data => data.id}
+                        onRowDoubleClicked={openEditDialog}
+                        gridName="player-registrations"
+                        searchFields={["name", "lastName", "team", "country", "city"]}
+                    />
                 </div>
             </div>
         </>

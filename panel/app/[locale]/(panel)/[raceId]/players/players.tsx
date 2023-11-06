@@ -163,6 +163,7 @@ export const Players = () => {
                     <Button
                         outline
                         onClick={() => {
+                            alert("It does not work now!");
                             // gridRef.current?.api.exportDataAsCsv({
                             //     fileName: `players-${new Date().toLocaleDateString(locale)}.csv`,
                             // });
