@@ -55,6 +55,7 @@ Application for making time measurements
 | 06/11/2023 | Add participation cerfificates with printing               | todo :date:                     |
 | 06/11/2023 | Badge counters on certain menu items                       | :heavy_check_mark: (06/11/2023) |
 | 06/11/2023 | Special filters on Data Table(eg. for paid players)        | todo :date:                     |
+| 07/11/2023 | Use Data Table on results                                  | todo :date:                     |
 
 ## TODO
 
