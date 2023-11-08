@@ -30,6 +30,8 @@ type PoorDataTableProps<T> = {
     searchPlaceholder?: string;
 };
 
+type SortState<T> = { field: keyof T; order: "desc" | "asc" };
+
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const { gridName, data, columns, getRowId, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
     const t = useTranslations();
@@ -66,6 +68,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         currentPage * rowsPerPage,
         clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, filteredData.length),
     );
+
+    const [sortColumn, sortOverColumn] = useState<SortState<T> | null>(null);
 
     const numberOfPages = Math.ceil(filteredData.length / rowsPerPage);
     const isFirstPage = currentPage + 1 <= 1;

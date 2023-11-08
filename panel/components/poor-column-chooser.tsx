@@ -40,7 +40,6 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                 >
                     <Icon className="mr-2" path={mdiTuneVariant} size={0.8} />
                     <span>{t("shared.dataTable.columns")}</span>
-                    {/* <Icon className="ml-2" path={mdiChevronDown} size={0.8} /> */}
                 </Listbox.Button>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
                     <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
