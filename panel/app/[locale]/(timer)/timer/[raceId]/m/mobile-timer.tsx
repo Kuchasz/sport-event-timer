@@ -44,8 +44,8 @@ const StartListPlayer = ({
         : player.bibNumber?.toString() || "";
     return (
         <span
-            className={classNames("flex items-center py-2 transition-colors duration-500", {
-                ["font-semibold text-orange-500"]: isNext,
+            className={classNames("flex items-center py-2 font-semibold transition-colors duration-500", {
+                ["text-orange-500"]: isNext,
                 ["text-gray-500"]: hasPassed,
             })}
         >
@@ -98,7 +98,16 @@ const StartList = ({
     );
 };
 
-const NextPlayer = () => <div>DUPECZKA</div>;
+const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => (
+    <div className="flex flex-col items-center px-4 pb-3 pt-2">
+        <div className="text-xs font-bold">NEXT PLAYER</div>
+        <div className="text-xl">
+            <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
+            <span>{nextStartPlayer?.name}</span>
+            <span className="ml-2">{nextStartPlayer?.lastName}</span>
+        </div>
+    </div>
+);
 
 export const MobileTimer = () => {
     const [globalTime, setGlobalTime] = useState<number>(0);
@@ -144,8 +153,8 @@ export const MobileTimer = () => {
                 ) : (
                     <div className="flex h-full w-full flex-col items-center">
                         <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                            <Clock fontSize={4} time={globalTime} />
-                            <NextPlayer />
+                            <Clock fontSize={3} time={globalTime} />
+                            <NextPlayer nextStartPlayer={nextStartPlayer} />
                             <StartList
                                 maxBibNumber={maxBibNumber}
                                 nextStartPlayer={nextStartPlayer}
