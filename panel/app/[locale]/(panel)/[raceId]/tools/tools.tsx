@@ -83,7 +83,7 @@ export const Tools = () => {
                                     icon={mdiTimer10}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/t`)}
+                                    href={buildApplicationPath(`/timer/${raceId}/m`)}
                                     qrFileName={`qr-start-list-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.tools.applications.startList.title")}
                                     description={t("pages.tools.applications.startList.description")}

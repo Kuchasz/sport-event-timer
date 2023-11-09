@@ -26,7 +26,7 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const NextPlayer = ({
+const StartListPlayer = ({
     padBib,
     isNext,
     hasPassed,
@@ -56,18 +56,19 @@ const NextPlayer = ({
     );
 };
 
-const Players = ({
-    globalTime,
+const StartList = ({
     clockState,
     players,
+    nextStartPlayer,
+    nextStartPlayerIndex,
+    maxBibNumber,
 }: {
-    globalTime: number;
+    maxBibNumber?: number;
+    nextStartPlayer?: StartListPlayer;
+    nextStartPlayerIndex: number;
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
-    const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
-    const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
-    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : players.length;
     return (
         <div
             style={{
@@ -83,7 +84,7 @@ const Players = ({
             />
             <div style={{ padding: "0.1em" }} className="flex flex-col justify-between">
                 {players.map((p, index) => (
-                    <NextPlayer
+                    <StartListPlayer
                         padBib={maxBibNumber}
                         isNext={p.bibNumber === nextStartPlayer?.bibNumber}
                         hasPassed={index < nextStartPlayerIndex}
@@ -97,14 +98,16 @@ const Players = ({
     );
 };
 
+const NextPlayer = () => <div>DUPECZKA</div>;
+
 export const MobileTimer = () => {
-    const [globalTime, setGlobalTime] = useState<number>();
+    const [globalTime, setGlobalTime] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams() as { raceId: string };
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime), initialData: [] },
     );
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
@@ -129,6 +132,10 @@ export const MobileTimer = () => {
         };
     }, [systemTime, players]);
 
+    const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
+    const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
+    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : players.length;
+
     return (
         <>
             <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
@@ -138,7 +145,14 @@ export const MobileTimer = () => {
                     <div className="flex h-full w-full flex-col items-center">
                         <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                             <Clock fontSize={4} time={globalTime} />
-                            <Players globalTime={globalTime} players={players} clockState={{ players: { size: 16 } }} />
+                            <NextPlayer />
+                            <StartList
+                                maxBibNumber={maxBibNumber}
+                                nextStartPlayer={nextStartPlayer}
+                                nextStartPlayerIndex={nextStartPlayerIndex}
+                                players={players}
+                                clockState={{ players: { size: 16 } }}
+                            />
                         </div>
                     </div>
                 )}
