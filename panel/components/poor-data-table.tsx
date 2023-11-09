@@ -11,6 +11,7 @@ import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
 import { ScrollArea, ScrollBar } from "./scroll-area";
+import { sort } from "@set/utils/dist/array";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
@@ -64,6 +65,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const rowsPerPage = 25;
 
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
+
+    // const sortedFilteredData = sortColumn ? sort(filteredData) : filteredData;
 
     const pagesData = filteredData.slice(
         currentPage * rowsPerPage,

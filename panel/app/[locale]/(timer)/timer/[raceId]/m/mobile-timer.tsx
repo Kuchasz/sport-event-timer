@@ -1,18 +1,17 @@
 "use client";
 
+import { mdiChevronDoubleRight } from "@mdi/js";
 import Icon from "@mdi/react";
-import React from "react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
-import { mdiChevronDoubleRight } from "@mdi/js";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import type { AppRouterOutputs } from "trpc";
-import { trpc } from "trpc-core";
 import classNames from "classnames";
 import { Clock } from "components/timer/clock";
 import { allowedLatency } from "connection";
 import { useSystemTime } from "hooks";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import type { AppRouterOutputs } from "trpc";
+import { trpc } from "trpc-core";
 
 type StartListPlayer = AppRouterOutputs["player"]["startList"][0];
 
@@ -44,8 +43,12 @@ const NextPlayer = ({
         ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
     return (
-        <span className={classNames("mx-1 flex items-center", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
-            <Icon className={classNames("visible", { ["invisible"]: !isNext })} size="2em" path={mdiChevronDoubleRight} />
+        <span
+            className={classNames("flex items-center py-2 transition-colors duration-500", {
+                ["font-semibold text-orange-500"]: isNext,
+                ["text-gray-500"]: hasPassed,
+            })}
+        >
             {showTime && <span className="font-mono font-bold">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
             <div className="px-4 font-mono font-bold" dangerouslySetInnerHTML={{ __html: bibText }}></div>
             {player.name} {player.lastName}
@@ -70,9 +73,15 @@ const Players = ({
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="w-full overflow-y-auto leading-none transition-all"
+            className="flex w-full overflow-y-auto leading-none transition-all"
         >
-            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between overflow-y-auto">
+            <Icon
+                className="visible text-orange-500 transition-transform duration-500 ease-out"
+                style={{ transform: `translateY(${32 * nextStartPlayerIndex + 2}px)` }}
+                size="2em"
+                path={mdiChevronDoubleRight}
+            />
+            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between">
                 {players.map((p, index) => (
                     <NextPlayer
                         padBib={maxBibNumber}
@@ -129,9 +138,6 @@ export const MobileTimer = () => {
                     <div className="flex h-full w-full flex-col items-center">
                         <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                             <Clock fontSize={4} time={globalTime} />
-                            {/* <div className="flex flex-grow items-center flex-col">
-                                <Countdown beep={() => {}} fontSize={48} seconds={secondsToNextPlayer} />
-                            </div> */}
                             <Players globalTime={globalTime} players={players} clockState={{ players: { size: 16 } }} />
                         </div>
                     </div>

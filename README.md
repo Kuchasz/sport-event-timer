@@ -57,6 +57,7 @@ Application for making time measurements
 | 06/11/2023 | Special filters on Data Table(eg. for paid players)        | todo :date:                     |
 | 07/11/2023 | Use Data Table on results                                  | todo :date:                     |
 | 09/11/2023 | Persist some grid settings in url                          | todo :date:                     |
+| 09/11/2023 | Animate chevron on switching to next player (start list)   | todo :date:                     |
 
 ## TODO
 
