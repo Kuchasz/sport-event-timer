@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { mdiChevronLeft, mdiChevronRight, mdiUnfoldMoreHorizontal } from "@mdi/js";
+import { mdiArrowDown, mdiArrowUp, mdiChevronLeft, mdiChevronRight, mdiUnfoldMoreHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
@@ -45,6 +45,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, changePage] = useState(0);
+    const [sortColumn, sortOverColumn] = useState<SortState<T> | null>(null);
 
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
@@ -69,11 +70,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, filteredData.length),
     );
 
-    const [sortColumn, sortOverColumn] = useState<SortState<T> | null>(null);
-
     const numberOfPages = Math.ceil(filteredData.length / rowsPerPage);
     const isFirstPage = currentPage + 1 <= 1;
     const isLastPage = currentPage + 1 >= numberOfPages;
+
+    function handleSortClick(c: PoorDataTableColumn<T>, sortColumn: SortState<T> | null): void {
+        if (sortColumn?.field === c.field)
+            if (sortColumn.order === "asc") sortOverColumn({ order: "desc", field: c.field });
+            else sortOverColumn(null);
+        else sortOverColumn({ order: "asc", field: c.field });
+    }
 
     return (
         <div className="flex h-full flex-col">
@@ -102,6 +108,24 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 />
             </div>
 
+            {/* <div
+                                    className={classNames(
+                                        "m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors",
+                                        c.sortable && "cursor-pointer hover:bg-gray-100",
+                                    )}
+                                >
+                                    <span>{c.headerName}</span>
+                                    {c.sortable && c.field === sortColumn?.field ? (
+                                        sortColumn.order === "asc" ? (
+                                            <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
+                                        ) : (
+                                            <Icon className="text-gray-600" size={0.6} path={mdiArrowDown} />
+                                        )
+                                    ) : (
+                                        <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />
+                                    )}
+                                </div> */}
+
             <ScrollArea className=" basis-auto rounded-md border">
                 <div
                     className="relative grid"
@@ -113,15 +137,27 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     <div className="contents text-xs font-bold">
                         {visibleColumns.map(c => (
                             <div className="sticky top-0 flex border-b bg-white" key={c.headerName}>
-                                <div
-                                    className={classNames(
-                                        "m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors",
-                                        c.sortable && "cursor-pointer hover:bg-gray-100",
-                                    )}
-                                >
-                                    <span>{c.headerName}</span>
-                                    {c.sortable && <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />}
-                                </div>
+                                {c.sortable ? (
+                                    <div
+                                        onClick={() => handleSortClick(c, sortColumn)}
+                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors hover:bg-gray-100"
+                                    >
+                                        <span>{c.headerName}</span>
+                                        {c.field === sortColumn?.field ? (
+                                            sortColumn.order === "asc" ? (
+                                                <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
+                                            ) : (
+                                                <Icon className="text-gray-600" size={0.6} path={mdiArrowDown} />
+                                            )
+                                        ) : (
+                                            <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors">
+                                        <span>{c.headerName}</span>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

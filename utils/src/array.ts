@@ -23,6 +23,20 @@ export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
     return i.sort((a, b) => func(b) - func(a));
 };
 
+export const sortNumber = <T>(items: T[], order: "desc" | "asc", func: (item: T) => number): T[] => {
+    const i = [...items];
+
+    return order === "asc" ? i.sort((a, b) => func(a) - func(b)) : i.sort((a, b) => func(b) - func(a));
+};
+
+export const naturalSort = <T>(items: T[], order: "desc" | "asc", func: (item: T) => string): T[] => {
+    const i = [...items];
+
+    return order === "asc"
+        ? i.sort((a, b) => func(a).localeCompare(func(b), undefined, { numeric: true }))
+        : i.sort((a, b) => func(b).localeCompare(func(a), undefined, { numeric: true }));
+};
+
 export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
