@@ -69,6 +69,7 @@ const StartList = ({
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
+    const index = nextStartPlayer ? nextStartPlayerIndex : nextStartPlayerIndex - 1;
     return (
         <div
             style={{
@@ -78,11 +79,12 @@ const StartList = ({
         >
             <Icon
                 className="visible text-orange-500 transition-transform duration-500 ease-out"
-                style={{ transform: `translateY(${32 * nextStartPlayerIndex + 2}px)` }}
+                style={{ transform: `translateY(${32 * index + 2}px) translateX(${nextStartPlayer ? 0 : -26}px)` }}
                 size="2em"
                 path={mdiChevronDoubleRight}
             />
-            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between">
+
+            <div style={{ padding: "0.1em" }} className="ml-2 flex flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
                         padBib={maxBibNumber}
@@ -98,16 +100,26 @@ const StartList = ({
     );
 };
 
-const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => (
-    <div className="flex flex-col items-center px-4 pb-3 pt-2">
-        <div className="text-xs font-bold">NEXT PLAYER</div>
-        <div className="text-xl">
-            <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
-            <span>{nextStartPlayer?.name}</span>
-            <span className="ml-2">{nextStartPlayer?.lastName}</span>
+const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) =>
+    nextStartPlayer ? (
+        <div className="flex flex-col items-center px-4 pb-3 pt-2">
+            <div className="flex justify-between text-xs font-bold">
+                <div>NEXT PLAYER</div>
+                <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
+            </div>
+            <div className="text-xl">
+                <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
+                <span>{nextStartPlayer?.name}</span>
+                <span className="ml-2">{nextStartPlayer?.lastName}</span>
+            </div>
         </div>
-    </div>
-);
+    ) : (
+        <div className="flex h-16 flex-col items-center px-4 pb-3 pt-2">
+            <div className="flex justify-between text-xs font-bold">
+                <div>NO PLAYERS LEFT</div>
+            </div>
+        </div>
+    );
 
 export const MobileTimer = () => {
     const [globalTime, setGlobalTime] = useState<number>(0);
