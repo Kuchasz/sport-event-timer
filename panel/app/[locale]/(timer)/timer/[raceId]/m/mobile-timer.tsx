@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { Clock } from "components/timer/clock";
 import { allowedLatency } from "connection";
 import { useSystemTime } from "hooks";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { AppRouterOutputs } from "trpc";
@@ -65,7 +66,7 @@ const StartList = ({
 }: {
     maxBibNumber?: number;
     nextStartPlayer?: StartListPlayer;
-    nextStartPlayerIndex: number;
+    nextStartPlayerIndex?: number;
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
@@ -100,11 +101,12 @@ const StartList = ({
     );
 };
 
-const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) =>
-    nextStartPlayer ? (
+const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => {
+    const t = useTranslations();
+    return nextStartPlayer ? (
         <div className="flex flex-col items-center px-4 pb-3 pt-2">
             <div className="flex justify-between text-xs font-bold">
-                <div>NEXT PLAYER</div>
+                <div className="uppercase">{t("startList.nextPlayer")}</div>
                 <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
             </div>
             <div className="text-xl">
@@ -114,12 +116,18 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
             </div>
         </div>
     ) : (
-        <div className="flex h-16 flex-col items-center px-4 pb-3 pt-2">
+        <div className="flex flex-col items-center px-4 pb-3 pt-2">
             <div className="flex justify-between text-xs font-bold">
-                <div>NO PLAYERS LEFT</div>
+                <div className="uppercase">{t("startList.noPlayersLeft")}</div>
+                <div className="ml-2 opacity-0">...</div>
+            </div>
+            <div className="text-xl opacity-0">
+                <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">...</span>
+                <span className="ml-2">...</span>
             </div>
         </div>
     );
+};
 
 export const MobileTimer = () => {
     const [globalTime, setGlobalTime] = useState<number>(0);
@@ -128,7 +136,7 @@ export const MobileTimer = () => {
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime), initialData: [] },
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
     );
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
@@ -153,9 +161,9 @@ export const MobileTimer = () => {
         };
     }, [systemTime, players]);
 
-    const nextStartPlayer = players.find(p => p.absoluteStartTime - globalTime > 0);
-    const maxBibNumber = players.slice(-1)[0]?.bibNumber?.toString().length;
-    const nextStartPlayerIndex = nextStartPlayer ? players.indexOf(nextStartPlayer) : players.length;
+    const nextStartPlayer = players?.find(p => p.absoluteStartTime - globalTime > 0);
+    const maxBibNumber = players?.slice(-1)[0]?.bibNumber?.toString().length;
+    const nextStartPlayerIndex = nextStartPlayer ? players?.indexOf(nextStartPlayer) : players?.length;
 
     return (
         <>
