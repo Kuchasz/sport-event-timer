@@ -1121,5 +1121,9 @@
         "currentPage": "Page {currentPage} of {totalPages}"
       }
     }
+  },
+  "startList": {
+    "nextPlayer": "Next player",
+    "noPlayersLeft": "No pending players left"
   }
 }
