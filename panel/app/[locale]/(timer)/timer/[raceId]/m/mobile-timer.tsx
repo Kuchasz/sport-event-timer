@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronDoubleRight } from "@mdi/js";
+import { mdiCheck, mdiChevronDoubleRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -41,19 +41,35 @@ const StartListPlayer = ({
     player: StartListPlayer;
 }) => {
     const bibText = padBib
-        ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
+        ? ".".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
     return (
-        <span
-            className={classNames("flex items-center py-2 font-semibold transition-colors duration-500", {
-                ["text-orange-500"]: isNext,
-                ["text-gray-500"]: hasPassed,
-            })}
-        >
-            {showTime && <span className="font-mono font-bold">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
-            <div className="px-4 font-mono font-bold" dangerouslySetInnerHTML={{ __html: bibText }}></div>
-            {player.name} {player.lastName}
-        </span>
+        <div className="flex items-center">
+            <Icon
+                className={classNames("mx-4", { ["rounded-full bg-yellow-300 p-1 text-white"]: hasPassed })}
+                size={1}
+                path={hasPassed ? mdiCheck : mdiChevronDoubleRight}
+            ></Icon>
+            <span
+                className={classNames(
+                    "my-1 flex flex-grow items-center rounded-xl bg-gray-50 p-4 font-semibold transition-colors duration-500",
+                    {
+                        ["bg-yellow-300"]: isNext,
+                        ["opacity-50"]: hasPassed,
+                    },
+                )}
+            >
+                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 font-mono text-sm font-semibold">
+                    <span className="opacity-0">{bibText}</span>
+                    <span className="absolute">{player.bibNumber}</span>
+                </div>
+                <div className="ml-4 font-bold">
+                    {player.name} {player.lastName}
+                </div>
+                <div className="flex-grow"></div>
+                {showTime && <span className="text-gray-600">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
+            </span>
+        </div>
     );
 };
 
@@ -66,11 +82,11 @@ const StartList = ({
 }: {
     maxBibNumber?: number;
     nextStartPlayer?: StartListPlayer;
-    nextStartPlayerIndex?: number;
+    nextStartPlayerIndex: number;
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
-    const index = nextStartPlayer ? nextStartPlayerIndex : nextStartPlayerIndex - 1;
+    // const index = nextStartPlayer ? nextStartPlayerIndex : nextStartPlayerIndex - 1;
     return (
         <div
             style={{
@@ -78,14 +94,14 @@ const StartList = ({
             }}
             className="flex w-full overflow-y-auto leading-none transition-all"
         >
-            <Icon
+            {/* <Icon
                 className="visible text-orange-500 transition-transform duration-500 ease-out"
-                style={{ transform: `translateY(${32 * index + 2}px) translateX(${nextStartPlayer ? 0 : -26}px)` }}
+                style={{ transform: `translateY(${77 * index + 2}px) translateX(${nextStartPlayer ? 0 : -26}px)` }}
                 size="2em"
                 path={mdiChevronDoubleRight}
-            />
+            /> */}
 
-            <div style={{ padding: "0.1em" }} className="ml-2 flex flex-col justify-between">
+            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
                         padBib={maxBibNumber}
@@ -109,8 +125,8 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
                 <div className="uppercase">{t("startList.nextPlayer")}</div>
                 <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
             </div>
-            <div className="text-xl">
-                <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
+            <div className="mt-2 text-xl">
+                <span className="mr-2 rounded-md bg-yellow-300 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
                 <span>{nextStartPlayer?.name}</span>
                 <span className="ml-2">{nextStartPlayer?.lastName}</span>
             </div>
@@ -121,8 +137,8 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
                 <div className="uppercase">{t("startList.noPlayersLeft")}</div>
                 <div className="ml-2 opacity-0">...</div>
             </div>
-            <div className="text-xl opacity-0">
-                <span className="mr-2 rounded-md bg-orange-500 px-2 font-bold">...</span>
+            <div className="mt-2 text-xl opacity-0">
+                <span className="mr-2 rounded-md bg-yellow-300 px-2 font-bold">...</span>
                 <span className="ml-2">...</span>
             </div>
         </div>
@@ -167,8 +183,8 @@ export const MobileTimer = () => {
 
     return (
         <>
-            <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
-                {globalTime === undefined || players === undefined ? (
+            <div className="relative h-full w-full select-none overflow-hidden bg-white text-black">
+                {globalTime === undefined || players === undefined || nextStartPlayerIndex === undefined ? (
                     <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
                 ) : (
                     <div className="flex h-full w-full flex-col items-center">
