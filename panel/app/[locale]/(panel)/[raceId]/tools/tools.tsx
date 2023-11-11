@@ -76,21 +76,21 @@ export const Tools = () => {
                         <div className="mb-4 mt-8">
                             <div className="flex flex-col">
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}`)}
+                                    href={buildApplicationPath(`/tools/${raceId}/countdown`)}
                                     qrFileName={`qr-countdown-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.tools.applications.countdown.title")}
                                     description={t("pages.tools.applications.countdown.description")}
                                     icon={mdiTimer10}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/m`)}
+                                    href={buildApplicationPath(`/tools/${raceId}/start-list`)}
                                     qrFileName={`qr-start-list-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.tools.applications.startList.title")}
                                     description={t("pages.tools.applications.startList.description")}
                                     icon={mdiPlaylistPlay}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/t`)}
+                                    href={buildApplicationPath(`/timer/${raceId}/stopwatch`)}
                                     qrFileName={`qr-stopwatch-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.tools.applications.stopwatch.title")}
                                     description={t("pages.tools.applications.stopwatch.description")}

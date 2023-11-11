@@ -4,8 +4,8 @@ import Icon from "@mdi/react";
 import React from "react";
 import type { BeepFunction } from "@set/utils/dist/beep";
 import { createBeep } from "@set/utils/dist/beep";
-import { Clock } from "../../../../../components/timer/clock";
-import { ConfigMenu } from "../../../../../components/timer/config-menu";
+import { Clock } from "../../../../../../components/timer/clock";
+import { ConfigMenu } from "../../../../../../components/timer/config-menu";
 import { Countdown } from "components/timer/countdown";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec, getCountdownTime } from "@set/utils/dist/datetime";
@@ -135,7 +135,7 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
     );
 };
 
-export const Timer = () => {
+export const RaceCountdown = () => {
     const [globalTime, setGlobalTime] = useState<number>();
     const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
