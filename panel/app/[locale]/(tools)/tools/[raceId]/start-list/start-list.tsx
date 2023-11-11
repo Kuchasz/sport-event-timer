@@ -145,7 +145,7 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
     );
 };
 
-export const MobileTimer = () => {
+export const RaceStartList = () => {
     const [globalTime, setGlobalTime] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams() as { raceId: string };
