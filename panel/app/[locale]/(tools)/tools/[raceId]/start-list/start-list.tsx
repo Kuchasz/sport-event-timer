@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiCheck, mdiChevronDoubleRight } from "@mdi/js";
+import { mdiCheck, mdiCheckBold, mdiChevronDoubleRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -31,9 +31,11 @@ const PlayerBibNumber = ({ maxBibNumber, bibNumber }: { maxBibNumber: number; bi
     const bibText = maxBibNumber ? ".".repeat(maxBibNumber - bibNumber.toString().length) + bibNumber : bibNumber.toString() || "";
 
     return (
-        <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 text-lg font-bold">
-            <span className="font-mono opacity-0">{bibText}</span>
-            <span className="absolute">{bibNumber}</span>
+        <div className="mx-2 flex flex-col rounded-md bg-gray-100 p-1">
+            <div className="relative flex items-center justify-center rounded-xl text-lg font-bold">
+                <span className="font-mono opacity-0">{bibText}</span>
+                <span className="absolute">{bibNumber}</span>
+            </div>
         </div>
     );
 };
@@ -55,28 +57,31 @@ const StartListPlayer = ({
     return (
         <div id={isNext ? "next" : undefined} className="relative flex items-center">
             <Icon
-                className={classNames("mx-4 transition-colors duration-500", { ["text-gray-200"]: !hasPassed && !isNext })}
+                className={classNames("transition-opacity duration-500", {
+                    ["opacity-20"]: !hasPassed && !isNext,
+                    ["opacity-0"]: hasPassed,
+                })}
                 size={1}
                 path={mdiChevronDoubleRight}
             ></Icon>
             <Icon
-                className={classNames("absolute mx-4 rounded-full bg-yellow-300 p-1 text-white opacity-0 transition-opacity duration-500", {
+                className={classNames("absolute ml-1 opacity-0 transition-opacity duration-500", {
                     ["opacity-100"]: hasPassed,
                 })}
-                size={1}
-                path={mdiCheck}
+                size={0.7}
+                path={mdiCheckBold}
             ></Icon>
+            <PlayerBibNumber bibNumber={player.bibNumber!} maxBibNumber={maxBibNumber!} />
             <span
                 className={classNames(
-                    "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 p-3 font-semibold transition-colors duration-500",
+                    "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
                     {
                         ["bg-yellow-300"]: isNext,
                         ["opacity-50"]: hasPassed,
                     },
                 )}
             >
-                <PlayerBibNumber bibNumber={player.bibNumber!} maxBibNumber={maxBibNumber!} />
-                <div className="ml-4 flex-grow">
+                <div className="flex-grow">
                     <div className="font-normal">{player.name}</div>
                     <div className="mt-1.5 font-bold">{player.lastName}</div>
                 </div>
@@ -111,7 +116,7 @@ const StartList = ({
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="flex w-full overflow-y-auto leading-none transition-all"
+            className="flex w-full overflow-y-auto px-2 leading-none transition-all"
         >
             {/* <Icon
                 className="visible text-orange-500 transition-transform duration-500 ease-out"
@@ -120,7 +125,7 @@ const StartList = ({
                 path={mdiChevronDoubleRight}
             /> */}
 
-            <div className="flex w-full flex-col justify-between pr-4">
+            <div className="flex w-full flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
                         maxBibNumber={maxBibNumber}
