@@ -1,7 +1,8 @@
 import Icon from "@mdi/react";
 import { mdiEyeOffOutline, mdiEyeOutline, mdiFormatFontSizeDecrease, mdiFormatFontSizeIncrease, mdiWindowClose } from "@mdi/js";
-import type { TextActions, TextSettings } from "../../app/[locale]/(timer)/timer/[raceId]/timer";
+
 import type { TimerSettings } from "states/timer-states";
+import type { TextActions, TextSettings } from "app/[locale]/(tools)/tools/[raceId]/f/tablet-timer";
 
 const ConfigButton = ({ text, path, click }: { text: string; path: string; click: () => void }) => (
     <span className="flex cursor-pointer items-center py-2" onClick={click}>
