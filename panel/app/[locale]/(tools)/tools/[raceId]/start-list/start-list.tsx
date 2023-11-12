@@ -27,22 +27,30 @@ export type TextActions = {
     toggle: () => void;
 };
 
+const PlayerBibNumber = ({ maxBibNumber, bibNumber }: { maxBibNumber: number; bibNumber: string }) => {
+    const bibText = maxBibNumber ? ".".repeat(maxBibNumber - bibNumber.toString().length) + bibNumber : bibNumber.toString() || "";
+
+    return (
+        <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 text-lg font-bold">
+            <span className="font-mono opacity-0">{bibText}</span>
+            <span className="absolute">{bibNumber}</span>
+        </div>
+    );
+};
+
 const StartListPlayer = ({
-    padBib,
+    maxBibNumber,
     isNext,
     hasPassed,
     showTime,
     player,
 }: {
-    padBib?: number;
+    maxBibNumber?: number;
     hasPassed?: boolean;
     isNext: boolean;
     showTime?: boolean;
     player: StartListPlayer;
 }) => {
-    const bibText = padBib
-        ? ".".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
-        : player.bibNumber?.toString() || "";
     const t = useTranslations();
     return (
         <div id={isNext ? "next" : undefined} className="relative flex items-center">
@@ -67,10 +75,7 @@ const StartListPlayer = ({
                     },
                 )}
             >
-                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 text-lg font-bold">
-                    <span className="font-mono opacity-0">{bibText}</span>
-                    <span className="absolute">{player.bibNumber}</span>
-                </div>
+                <PlayerBibNumber bibNumber={player.bibNumber!} maxBibNumber={maxBibNumber!} />
                 <div className="ml-4 flex-grow">
                     <div className="font-normal">{player.name}</div>
                     <div className="mt-1.5 font-bold">{player.lastName}</div>
@@ -118,7 +123,7 @@ const StartList = ({
             <div className="flex w-full flex-col justify-between pr-4">
                 {players.map((p, index) => (
                     <StartListPlayer
-                        padBib={maxBibNumber}
+                        maxBibNumber={maxBibNumber}
                         isNext={p.bibNumber === nextStartPlayer?.bibNumber}
                         hasPassed={index < nextStartPlayerIndex}
                         showTime={true}
