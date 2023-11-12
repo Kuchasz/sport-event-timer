@@ -1,17 +1,15 @@
-import { useAtom } from "jotai";
-import { getGridColumnVisibilityStateAtom } from "states/grid-states";
-import { PoorColumnChooser } from "./poor-column-chooser";
-import { PoorInput } from "./poor-input";
-import { useEffect, useState } from "react";
-import fuzzysort from "fuzzysort";
-import { useTranslations } from "next-intl";
-import React from "react";
 import { mdiArrowDown, mdiArrowUp, mdiChevronLeft, mdiChevronRight, mdiUnfoldMoreHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
+import fuzzysort from "fuzzysort";
+import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
+import { getGridColumnVisibilityStateAtom } from "states/grid-states";
+import { PoorColumnChooser } from "./poor-column-chooser";
+import { PoorInput } from "./poor-input";
 import { ScrollArea, ScrollBar } from "./scroll-area";
-import { sort } from "@set/utils/dist/array";
 
 export type PoorDataTableColumn<T> = {
     field: keyof T;
