@@ -45,7 +45,7 @@ const StartListPlayer = ({
         : player.bibNumber?.toString() || "";
     const t = useTranslations();
     return (
-        <div className="relative flex items-center">
+        <div id={isNext ? "next" : undefined} className="relative flex items-center">
             <Icon
                 className={classNames("mx-4 transition-colors duration-500", { ["text-gray-200"]: !hasPassed && !isNext })}
                 size={1}
@@ -67,8 +67,8 @@ const StartListPlayer = ({
                     },
                 )}
             >
-                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 font-mono text-lg font-semibold">
-                    <span className="opacity-0">{bibText}</span>
+                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 text-lg font-bold">
+                    <span className="font-mono opacity-0">{bibText}</span>
                     <span className="absolute">{player.bibNumber}</span>
                 </div>
                 <div className="ml-4 flex-grow">
@@ -134,15 +134,15 @@ const StartList = ({
 const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => {
     const t = useTranslations();
     return nextStartPlayer ? (
-        <div className="flex flex-col items-center px-4 pb-3 pt-2">
+        <div className="flex flex-col items-center bg-yellow-300 px-4 pb-3 pt-2">
             <div className="flex justify-between text-xs font-bold">
                 <div className="uppercase">{t("startList.nextPlayer")}</div>
                 <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
             </div>
             <div className="mt-2 text-xl">
-                <span className="mr-2 rounded-md bg-yellow-300 px-2 font-bold">{nextStartPlayer?.bibNumber}</span>
+                <span className="mr-2 rounded-md bg-white px-2 py-1 font-bold">{nextStartPlayer?.bibNumber}</span>
+                <span className="mr-2 font-bold">{nextStartPlayer?.lastName}</span>
                 <span>{nextStartPlayer?.name}</span>
-                <span className="ml-2">{nextStartPlayer?.lastName}</span>
             </div>
         </div>
     ) : (
