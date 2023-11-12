@@ -3,8 +3,8 @@ import { Races } from "./races";
 import { trpcRSC } from "trpc-core-rsc";
 
 export default async function () {
+    await authenticate();
     const races = await trpcRSC.race.races.query();
 
-    await authenticate();
     return <Races initialData={races} />;
 }

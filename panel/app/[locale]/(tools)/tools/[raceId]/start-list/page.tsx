@@ -6,5 +6,5 @@ export default async function ({ params }: { params: { raceId: string } }) {
 
     const players = await trpcRSC.player.startList.query({ raceId: Number.parseInt(raceId) });
 
-    return <RaceStartList players={players} />;
+    return <RaceStartList players={players} renderTime={new Date().getTime()} />;
 }
