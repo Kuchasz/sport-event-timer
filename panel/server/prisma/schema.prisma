@@ -141,7 +141,6 @@ model Player {
     playerProfileId      Int
 
     @@unique([raceId, bibNumber])
-    @@unique([classificationId, startTime])
 }
 
 model TimingPoint {
