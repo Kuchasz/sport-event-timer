@@ -45,15 +45,18 @@ const StartListPlayer = ({
         : player.bibNumber?.toString() || "";
     const t = useTranslations();
     return (
-        <div className="flex items-center">
+        <div className="relative flex items-center">
             <Icon
-                className={classNames(
-                    "mx-4",
-                    { ["text-gray-200"]: !hasPassed && !isNext },
-                    { ["rounded-full bg-yellow-300 p-1 text-white"]: hasPassed },
-                )}
+                className={classNames("mx-4 transition-colors duration-500", { ["text-gray-200"]: !hasPassed && !isNext })}
                 size={1}
-                path={hasPassed ? mdiCheck : mdiChevronDoubleRight}
+                path={mdiChevronDoubleRight}
+            ></Icon>
+            <Icon
+                className={classNames("absolute mx-4 rounded-full bg-yellow-300 p-1 text-white opacity-0 transition-opacity duration-500", {
+                    ["opacity-100"]: hasPassed,
+                })}
+                size={1}
+                path={mdiCheck}
             ></Icon>
             <span
                 className={classNames(
@@ -156,8 +159,8 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
     );
 };
 
-export const RaceStartList = ({ players: initialData }: { players: StartListPlayer[] }) => {
-    const [globalTime, setGlobalTime] = useState<number>(0);
+export const RaceStartList = ({ players: initialData, renderTime }: { players: StartListPlayer[]; renderTime: number }) => {
+    const [globalTime, setGlobalTime] = useState<number>(renderTime);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams() as { raceId: string };
 
@@ -195,23 +198,23 @@ export const RaceStartList = ({ players: initialData }: { players: StartListPlay
     return (
         <>
             <div className="relative h-full w-full select-none overflow-hidden bg-white text-black">
-                {globalTime === undefined || players === undefined || nextStartPlayerIndex === undefined ? (
+                {/* {nextStartPlayerIndex === undefined ? (
                     <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
-                ) : (
-                    <div className="flex h-full w-full flex-col items-center">
-                        <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                            <Clock fontSize={3} time={globalTime} />
-                            <NextPlayer nextStartPlayer={nextStartPlayer} />
-                            <StartList
-                                maxBibNumber={maxBibNumber}
-                                nextStartPlayer={nextStartPlayer}
-                                nextStartPlayerIndex={nextStartPlayerIndex}
-                                players={players}
-                                clockState={{ players: { size: 16 } }}
-                            />
-                        </div>
+                ) : ( */}
+                <div className="flex h-full w-full flex-col items-center">
+                    <div className="flex w-full flex-grow flex-col overflow-y-hidden">
+                        <Clock fontSize={3} time={globalTime} />
+                        <NextPlayer nextStartPlayer={nextStartPlayer} />
+                        <StartList
+                            maxBibNumber={maxBibNumber}
+                            nextStartPlayer={nextStartPlayer}
+                            nextStartPlayerIndex={nextStartPlayerIndex}
+                            players={players}
+                            clockState={{ players: { size: 16 } }}
+                        />
                     </div>
-                )}
+                </div>
+                {/* )} */}
             </div>
         </>
     );
