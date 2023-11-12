@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiCheck, mdiCheckBold, mdiChevronDoubleRight } from "@mdi/js";
+import { mdiCheckBold, mdiChevronDoubleRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -110,7 +110,6 @@ const StartList = ({
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
-    // const index = nextStartPlayer ? nextStartPlayerIndex : nextStartPlayerIndex - 1;
     return (
         <div
             style={{
@@ -118,13 +117,6 @@ const StartList = ({
             }}
             className="flex w-full overflow-y-auto px-2 leading-none transition-all"
         >
-            {/* <Icon
-                className="visible text-orange-500 transition-transform duration-500 ease-out"
-                style={{ transform: `translateY(${77 * index + 2}px) translateX(${nextStartPlayer ? 0 : -26}px)` }}
-                size="2em"
-                path={mdiChevronDoubleRight}
-            /> */}
-
             <div className="flex w-full flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
@@ -144,8 +136,8 @@ const StartList = ({
 const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => {
     const t = useTranslations();
     return nextStartPlayer ? (
-        <div className="flex flex-col items-center bg-yellow-300 px-4 pb-3 pt-2">
-            <div className="flex justify-between text-xs font-bold">
+        <div className="flex w-full flex-col bg-yellow-300 px-4 pb-3 pt-2">
+            <div className="flex w-full justify-between bg-black px-1 py-0.5 text-xs font-bold text-yellow-300">
                 <div className="uppercase">{t("startList.nextPlayer")}</div>
                 <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
             </div>
@@ -156,8 +148,8 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
             </div>
         </div>
     ) : (
-        <div className="flex flex-col items-center px-4 pb-3 pt-2">
-            <div className="flex justify-between text-xs font-bold">
+        <div className="flex w-full flex-col items-center justify-center bg-yellow-300 px-4 pb-3 pt-2">
+            <div className="flex w-full bg-black px-1 py-0.5 text-xs font-bold text-yellow-300">
                 <div className="uppercase">{t("startList.noPlayersLeft")}</div>
                 <div className="ml-2 opacity-0">...</div>
             </div>
@@ -208,12 +200,11 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     return (
         <>
             <div className="relative h-full w-full select-none overflow-hidden bg-white text-black">
-                {/* {nextStartPlayerIndex === undefined ? (
-                    <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
-                ) : ( */}
                 <div className="flex h-full w-full flex-col items-center">
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                        <Clock fontSize={3} time={globalTime} />
+                        <div className="bg-yellow-300">
+                            <Clock fontSize={3} time={globalTime} />
+                        </div>
                         <NextPlayer nextStartPlayer={nextStartPlayer} />
                         <StartList
                             maxBibNumber={maxBibNumber}
@@ -224,7 +215,6 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                         />
                     </div>
                 </div>
-                {/* )} */}
             </div>
         </>
     );
