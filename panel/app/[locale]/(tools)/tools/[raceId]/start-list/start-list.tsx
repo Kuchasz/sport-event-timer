@@ -43,31 +43,42 @@ const StartListPlayer = ({
     const bibText = padBib
         ? ".".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
+    const t = useTranslations();
     return (
         <div className="flex items-center">
             <Icon
-                className={classNames("mx-4", { ["rounded-full bg-yellow-300 p-1 text-white"]: hasPassed })}
+                className={classNames(
+                    "mx-4",
+                    { ["text-gray-200"]: !hasPassed && !isNext },
+                    { ["rounded-full bg-yellow-300 p-1 text-white"]: hasPassed },
+                )}
                 size={1}
                 path={hasPassed ? mdiCheck : mdiChevronDoubleRight}
             ></Icon>
             <span
                 className={classNames(
-                    "my-1 flex flex-grow items-center rounded-xl bg-gray-50 p-4 font-semibold transition-colors duration-500",
+                    "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 p-3 font-semibold transition-colors duration-500",
                     {
                         ["bg-yellow-300"]: isNext,
                         ["opacity-50"]: hasPassed,
                     },
                 )}
             >
-                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 font-mono text-sm font-semibold">
+                <div className="relative flex aspect-square items-center justify-center rounded-xl bg-white p-1 font-mono text-lg font-semibold">
                     <span className="opacity-0">{bibText}</span>
                     <span className="absolute">{player.bibNumber}</span>
                 </div>
-                <div className="ml-4 font-bold">
-                    {player.name} {player.lastName}
+                <div className="ml-4 flex-grow">
+                    <div className="font-normal">{player.name}</div>
+                    <div className="mt-1.5 font-bold">{player.lastName}</div>
                 </div>
-                <div className="flex-grow"></div>
-                {showTime && <span className="text-gray-600">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</span>}
+
+                {showTime && (
+                    <div className="flex flex-col items-end">
+                        <div className="text-2xs font-bold uppercase opacity-40">{t("startList.startTime")}</div>
+                        <div className="mt-1">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</div>
+                    </div>
+                )}
             </span>
         </div>
     );
@@ -101,7 +112,7 @@ const StartList = ({
                 path={mdiChevronDoubleRight}
             /> */}
 
-            <div style={{ padding: "0.1em" }} className="flex flex-col justify-between">
+            <div className="flex w-full flex-col justify-between pr-4">
                 {players.map((p, index) => (
                     <StartListPlayer
                         padBib={maxBibNumber}
@@ -145,14 +156,14 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
     );
 };
 
-export const RaceStartList = () => {
+export const RaceStartList = ({ players: initialData }: { players: StartListPlayer[] }) => {
     const [globalTime, setGlobalTime] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams() as { raceId: string };
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
+        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime), initialData },
     );
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
