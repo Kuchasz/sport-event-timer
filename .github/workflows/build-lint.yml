@@ -41,8 +41,7 @@ jobs:
             - name: Generate prisma
               run: |
                   cd ./panel
-                  ls -l
-                  ls cache -l
+                  ls -la
                   bun run generate-prisma
 
             - name: Build Application
