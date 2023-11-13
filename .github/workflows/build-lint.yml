@@ -48,6 +48,7 @@ jobs:
                   cd ./panel
                   bun next telemetry disable
                   bun run build
+                  ls -la
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
@@ -60,7 +61,7 @@ jobs:
                   name: application-artifact
                   path: set-package.zip
 
-    # Code linting 
+    # Code linting
     # lint:
     #     runs-on: ubuntu-latest
 
