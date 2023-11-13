@@ -1125,6 +1125,7 @@
   "startList": {
     "nextPlayer": "Next player",
     "noPlayersLeft": "No pending players left",
-    "startTime": "Starts at"
+    "startTime": "Starts at",
+    "headerStartTime": "Starts at: "
   }
 }

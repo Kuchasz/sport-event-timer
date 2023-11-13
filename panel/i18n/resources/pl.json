@@ -1125,6 +1125,7 @@
   "startList": {
     "nextPlayer": "Następny zawodnik",
     "noPlayersLeft": "Brak oczekujących zawodników",
-    "startTime": "Start"
+    "startTime": "Start",
+    "headerStartTime": "Czas startu: "
   }
 }

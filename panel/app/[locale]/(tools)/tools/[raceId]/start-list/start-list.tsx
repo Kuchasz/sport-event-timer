@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiCheckBold, mdiChevronDoubleRight } from "@mdi/js";
+import { mdiCheckBold, mdiChevronDoubleRight, mdiOpenInNew } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -136,19 +136,26 @@ const StartList = ({
 const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => {
     const t = useTranslations();
     return nextStartPlayer ? (
-        <div className="flex w-full flex-col bg-yellow-300 px-4 pb-3 pt-2">
-            <div className="flex w-full justify-between bg-black px-1 py-0.5 text-xs font-bold text-yellow-300">
-                <div className="uppercase">{t("startList.nextPlayer")}</div>
-                <div className="ml-2">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
+        <div className="flex w-full flex-col bg-yellow-300 px-4 pb-4 pt-2">
+            <div className="flex w-full justify-between bg-black px-1 py-0.5 text-xs font-bold uppercase text-yellow-300">
+                <div>{t("startList.nextPlayer")}</div>
+                <div className="ml-2">
+                    {t("startList.headerStartTime")}
+                    {timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}
+                </div>
             </div>
-            <div className="mt-2 text-xl">
+            <div className="mt-2 flex items-center text-xl">
                 <span className="mr-2 rounded-md bg-white px-2 py-1 font-bold">{nextStartPlayer?.bibNumber}</span>
                 <span className="mr-2 font-bold">{nextStartPlayer?.lastName}</span>
                 <span>{nextStartPlayer?.name}</span>
+                <span className="flex-grow"></span>
+                <a href="#next" className="cursor-pointer rounded-full p-2 hover:bg-yellow-200">
+                    <Icon size={1} path={mdiOpenInNew} />
+                </a>
             </div>
         </div>
     ) : (
-        <div className="flex w-full flex-col items-center justify-center bg-yellow-300 px-4 pb-3 pt-2">
+        <div className="flex w-full flex-col items-center justify-center bg-yellow-300 px-4 pb-4 pt-2">
             <div className="flex w-full bg-black px-1 py-0.5 text-xs font-bold text-yellow-300">
                 <div className="uppercase">{t("startList.noPlayersLeft")}</div>
                 <div className="ml-2 opacity-0">...</div>
