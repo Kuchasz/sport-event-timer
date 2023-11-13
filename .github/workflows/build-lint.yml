@@ -18,7 +18,7 @@ jobs:
               with:
                   path: |
                       ~./npm
-                      /panel/.next/cache
+                      **/.next/cache
                       **/node_modules
                   key: ${{ runner.os }}-appp-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
                   restore-keys: |
