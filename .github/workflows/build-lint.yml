@@ -40,7 +40,6 @@ jobs:
             - name: Generate prisma
               run: |
                   cd ./panel
-                  ls -la
                   bun run generate-prisma
 
             - name: Build Application
@@ -48,7 +47,6 @@ jobs:
                   cd ./panel
                   bun next telemetry disable
                   bun run build
-                  ls -la
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
