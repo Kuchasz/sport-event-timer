@@ -30,8 +30,6 @@ jobs:
 
             - name: Build library - utils
               run: |
-                  echo ${{ github.workspace }}
-                  echo $GITHUB_WORKSPACE
                   cd ./utils
                   bun run build
 
@@ -43,6 +41,8 @@ jobs:
             - name: Generate prisma
               run: |
                   cd ./panel
+                  ls -l
+                  ls cache -l
                   bun run generate-prisma
 
             - name: Build Application
