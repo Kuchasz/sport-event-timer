@@ -25,7 +25,7 @@ jobs:
                       ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: bun install --production
 
             - name: Build library - utils
               run: |
@@ -46,7 +46,7 @@ jobs:
               run: |
                   cd ./panel
                   bun next telemetry disable
-                  npm run build
+                  bun run build
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
