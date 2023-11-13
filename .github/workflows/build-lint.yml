@@ -50,7 +50,6 @@ jobs:
                   cd ./panel
                   bun next telemetry disable
                   bun run build
-                  rm -rf
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
