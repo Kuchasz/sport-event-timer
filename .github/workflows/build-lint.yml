@@ -1,4 +1,4 @@
-name: Prod.Build-Lint
+name: Prod.Build_Lint
 
 on:
     push:
