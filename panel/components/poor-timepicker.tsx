@@ -20,11 +20,11 @@ export const PoorTimepicker = ({
             value={value}
             onChange={e => {
                 setValue(e.currentTarget.value);
+
+                const miliseconds = timeStringToMiliseconds(e.currentTarget.value);
+                if (miliseconds.status === "Success") onChange({ target: { value: miliseconds.value } });
             }}
             placeholder={placeholder}
-            onBlur={e => {
-                onChange({ target: { value: timeStringToMiliseconds(e.target.value) ?? 0 } });
-            }}
         />
     );
 };
@@ -44,9 +44,8 @@ export const PoorFullTimepicker = ({
             value={value}
             onChange={e => {
                 setValue(e.currentTarget.value);
-            }}
-            onBlur={e => {
-                onChange({ target: { value: fullTimeStringToEpochMiliseconds(e.target.value, date) ?? 0 } });
+                const miliseconds = fullTimeStringToEpochMiliseconds(e.currentTarget.value, date);
+                if (miliseconds.status === "Success") onChange({ target: { value: miliseconds.value } });
             }}
         />
     );

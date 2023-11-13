@@ -58,7 +58,7 @@ Application for making time measurements
 | 07/11/2023 | Use Data Table on results                                  | todo :date:                     |
 | 09/11/2023 | Persist some grid settings in url                          | todo :date:                     |
 | 09/11/2023 | Animate chevron on switching to next player (start list)   | :heavy_check_mark: (13/11/2023) |
-| 10/11/2023 | Enter to submit form                                       | todo :date:                     |
+| 10/11/2023 | Enter to submit form                                       | :heavy_check_mark: (13/11/2023) |
 | 12/11/2023 | Ability to edit basic race info from race panel            | todo :date:                     |
 
 ## TODO
