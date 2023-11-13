@@ -20,6 +20,7 @@ jobs:
                       ~./npm
                       ${{ github.workspace }}/panel/.next/cache
                       **/node_modules
+                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
                   key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
                   restore-keys: |
                       ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
@@ -47,11 +48,12 @@ jobs:
                   cd ./panel
                   bun next telemetry disable
                   bun run build
+                  rm -rf .next/cache
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
               with:
-                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer -x "**/.next/*"
+                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer
 
             - uses: actions/upload-artifact@v3
               name: Store Application Package
