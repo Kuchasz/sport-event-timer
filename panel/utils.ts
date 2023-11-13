@@ -12,32 +12,40 @@ const minuteSeconds = 60;
 const hourSeconds = minuteSeconds * 60;
 const daySeconds = hourSeconds * 24;
 
-export const timeStringToMiliseconds = (timeString: string) => {
+type ParseResult<T> =
+    | {
+          status: "Success";
+          value: T;
+      }
+    | { status: "Error"; error: string };
+
+export const timeStringToMiliseconds = (timeString: string): ParseResult<number> => {
     if (!/\d\d:\d\d/gm.test(timeString)) {
-        alert("Passed value does not match pattern HH:MM");
-        return undefined;
+        return { status: "Error", error: "Passed value does not match pattern HH:MM" };
     }
 
     const [hour, minutes] = timeString.split(":");
-    return minuteMillis * Number(minutes) + hourMillis * Number(hour);
+    const timeResult = minuteMillis * Number(minutes) + hourMillis * Number(hour);
+
+    return { status: "Success", value: timeResult };
 };
 
-export const fullTimeStringToEpochMiliseconds = (timeString: string, date: number) => {
+export const fullTimeStringToEpochMiliseconds = (timeString: string, date: number): ParseResult<number> => {
     if (!/\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}/gm.test(timeString)) {
-        alert("Passed value does not match pattern HH:MM:SS.Ms");
-        return undefined;
+        return { status: "Error", error: "Passed value does not match pattern HH:MM:SS.Ms" };
     }
 
     const [hour, minutes, sec_ms] = timeString.split(":");
     const [seconds, miliseconds] = sec_ms.split(".");
 
-    return (
+    const msResult =
         date +
         Number(miliseconds.padEnd(3, "0")) +
         secondMillis * Number(seconds) +
         minuteMillis * Number(minutes) +
-        hourMillis * Number(hour)
-    );
+        hourMillis * Number(hour);
+
+    return { status: "Success", value: msResult };
 };
 
 export const formatSecondsToTimeSpan = (seconds: number) => {

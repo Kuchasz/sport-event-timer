@@ -21,9 +21,6 @@ export const PoorDatepicker = ({
             onChange={e => {
                 onChange({ target: { value: toDate(e.currentTarget.value) ?? new Date() } });
             }}
-            onBlur={e => {
-                onChange({ target: { value: toDate(e.target.value) ?? new Date() } });
-            }}
             type="date"
         />
     );
@@ -56,9 +53,6 @@ export const PoorUTCDatepicker = ({
             defaultValue={value}
             onChange={e => {
                 onChange({ target: { value: toDateUTC(e.currentTarget.value) } });
-            }}
-            onBlur={e => {
-                onChange({ target: { value: toDateUTC(e.target.value) } });
             }}
             type="date"
         />
