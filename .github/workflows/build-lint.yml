@@ -30,6 +30,8 @@ jobs:
 
             - name: Build library - utils
               run: |
+                  echo ${{ github.workspace }}
+                  echo $GITHUB_WORKSPACE
                   cd ./utils
                   bun run build
 
