@@ -50,12 +50,12 @@ jobs:
                   cd ./panel
                   bun next telemetry disable
                   bun run build
-                  rm -rf .next/cache
+                  rm -rf
 
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
               with:
-                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer
+                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer -x "**/.next/cache/**"
 
             - uses: actions/upload-artifact@v3
               name: Store Application Package
