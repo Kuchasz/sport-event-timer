@@ -61,7 +61,7 @@ jobs:
                   name: application-artifact
                   path: set-package.zip
 
-    # Code linting
+    # Code linting 
     lint:
         runs-on: ubuntu-latest
 
