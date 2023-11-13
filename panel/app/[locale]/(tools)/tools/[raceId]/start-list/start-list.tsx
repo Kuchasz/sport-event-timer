@@ -149,7 +149,10 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
                 <span className="mr-2 font-bold">{nextStartPlayer?.lastName}</span>
                 <span>{nextStartPlayer?.name}</span>
                 <span className="flex-grow"></span>
-                <a href="#next" className="cursor-pointer rounded-full p-2 hover:bg-yellow-200">
+                <a
+                    onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
+                    className="cursor-pointer rounded-full p-2 hover:bg-yellow-200"
+                >
                     <Icon size={1} path={mdiOpenInNew} />
                 </a>
             </div>
