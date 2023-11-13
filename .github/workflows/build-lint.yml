@@ -18,9 +18,8 @@ jobs:
               with:
                   path: |
                       ~./npm
-                      ${{ github.workspace }}/panel/.next/cache
+                      /panel/.next/cache
                       **/node_modules
-                      ${{ steps.yarn-cache-dir-path.outputs.dir }}
                   key: ${{ runner.os }}-app-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
                   restore-keys: |
                       ${{ runner.os }}-app-${{ hashFiles('**/bun.lockb') }}-
