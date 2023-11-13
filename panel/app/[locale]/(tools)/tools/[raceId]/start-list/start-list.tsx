@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiCheckBold, mdiChevronDoubleRight, mdiOpenInNew } from "@mdi/js";
+import { mdiCheckBold, mdiChevronDoubleRight, mdiDebugStepInto } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -153,7 +153,7 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
                     onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
                     className="cursor-pointer rounded-full p-2 hover:bg-yellow-200"
                 >
-                    <Icon size={1} path={mdiOpenInNew} />
+                    <Icon size={1} path={mdiDebugStepInto} />
                 </a>
             </div>
         </div>
