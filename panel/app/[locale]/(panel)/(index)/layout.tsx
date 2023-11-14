@@ -1,12 +1,13 @@
-import "../../../../globals.scss";
-import type { ReactNode } from "react";
-import { NextAuthProvider, TrpcProvider } from "providers";
-import { NextIntlClientProvider, useLocale } from "next-intl";
-import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
-import { Meta } from "../../../../components/meta";
-import { IndexStatus } from "../../../../components/index-status";
+import { type Locales, locales } from "i18n";
+import { NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
+import { NextAuthProvider, TrpcProvider } from "providers";
+import type { ReactNode } from "react";
 import { AgGridProvider } from "../../../../components/ag-grid-provider";
+import { IndexStatus } from "../../../../components/index-status";
+import { Meta } from "../../../../components/meta";
+import "../../../../globals.scss";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
@@ -29,11 +30,12 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
 };
 
 export default async function PanelLayout(props: { children: ReactNode; params: { locale: string } }) {
-    const locale = useLocale();
+    const isValidLocale = locales.includes(props.params.locale as Locales);
+    if (!isValidLocale) notFound();
 
-    if (props?.params?.locale !== locale) {
-        notFound();
-    }
+    const {
+        params: { locale },
+    } = props;
 
     let messages;
 
