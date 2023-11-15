@@ -1,10 +1,8 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 
 export default function SignIn() {
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
     return (
         <>
@@ -19,15 +17,15 @@ export default function SignIn() {
                             <div className="space-y-4 md:space-y-6">
                                 <div>
                                     <button
-                                        onClick={() =>
-                                            signIn("auth0", {
-                                                callbackUrl: `${
-                                                    searchParams?.get("callbackUrl")
-                                                        ? searchParams?.get("callbackUrl")
-                                                        : window.location.origin
-                                                }`,
-                                            })
-                                        }
+                                        onClick={() => {
+                                            // signIn("auth0", {
+                                            //     callbackUrl: `${
+                                            //         searchParams?.get("callbackUrl")
+                                            //             ? searchParams?.get("callbackUrl")
+                                            //             : window.location.origin
+                                            //     }`,
+                                            // })
+                                        }}
                                         className="flex w-full items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
                                     >
                                         Sign in with Auth0{" "}

@@ -1,4 +1,4 @@
-import { createContext } from "./trpc";
+import { createContextWs } from "./trpc";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import http from "http";
 import next from "next";
@@ -34,7 +34,7 @@ void app.prepare().then(() => {
         void handle(req, res, parsedUrl);
     });
     const wss = new ws.Server({ server });
-    const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContext(true) });
+    const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContextWs });
 
     process.on("SIGTERM", () => {
         logger.log("SIGTERM");

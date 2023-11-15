@@ -1,8 +1,8 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter } from "server/routers/app";
-import { createContext } from "../../../../server/trpc";
+import { createContextNext } from "../../../../server/trpc";
 
-const handler = (request: Request, _response: Response) => {
+const handler = (request: Request) => {
     return fetchRequestHandler({
         endpoint: "/api/trpc",
         req: request,
@@ -10,7 +10,7 @@ const handler = (request: Request, _response: Response) => {
         batching: {
             enabled: true,
         },
-        createContext: createContext(false),
+        createContext: createContextNext,
     });
 };
 
