@@ -11,7 +11,7 @@ const intlMiddleware = createMiddleware({
 export const middleware = (request: NextRequest) => {
     // console.log(JSON.stringify(request.nextUrl));
     //eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return intlMiddleware(request as any);
+    return intlMiddleware(request);
 };
 
 export const config = {
