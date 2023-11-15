@@ -1,6 +1,6 @@
 import * as jsonwebtoken from "jsonwebtoken";
 import { promisify } from "util";
-import { createSession, getUser } from "./db";
+import { createSession, getUser, getSession } from "./db";
 
 const jwt = {
     sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
@@ -78,9 +78,51 @@ export const verify = async (token: string) => {
         return { payload, expired: false };
     } catch (e: any) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        return { payload: null, expired: e.messages.includes("jwt expired") };
+        return { payload: null, expired: e.messages.includes("jwt expired") as boolean };
     }
 };
+
+async function deserializeUser(cookies: Record<string, string>) {
+    const { accessToken, refreshToken } = cookies;
+
+    if (!accessToken) {
+        return null;
+    }
+
+    const { payload, expired } = await verify(accessToken);
+
+    // For a valid access token
+    if (payload) {
+        return payload;
+    }
+
+    // expired but valid access token
+
+    const { payload: refresh } = expired && refreshToken ? await verify(refreshToken) : { payload: null };
+
+    if (!refresh) {
+        return null;
+    }
+
+    // @ts-ignore
+    const session = getSession(refresh.sessionId);
+
+    if (!session) {
+        return next();
+    }
+
+    const newAccessToken = signJWT(session, "5s");
+
+    res.cookie("accessToken", newAccessToken, {
+        maxAge: 300000, // 5 minutes
+        httpOnly: true,
+    });
+
+    // @ts-ignore
+    req.user = verifyJWT(newAccessToken).payload;
+
+    return next();
+}
 
 // export const verify = async (request: Request, _response: Response) => {
 //     const accessToken: string = parseCookies(request.headers.get("cookie")!)[auth.cookieName];
