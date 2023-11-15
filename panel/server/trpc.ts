@@ -12,9 +12,9 @@ import superjson from "superjson";
 import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
 import { parseCookies } from "@set/utils/dist/cookie";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
-import type { NextRequest, NextResponse } from "next/server";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
 
@@ -31,20 +31,21 @@ export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<Incom
     };
 };
 
-export const createContextNext = async (req: NextRequest, res: NextResponse) => {
-    const cookies = Object.fromEntries(req.cookies.getAll().map(c => [c.name, c.value]));
+export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
+    const cookies = parseCookies(opts.req.headers.get("cookie") ?? "");
+
     const session = await getUserSession(cookies);
 
     if (session.accessToken) {
-        res.cookies?.set("accessToken", session.accessToken);
+        opts.resHeaders.set("accessToken", session.accessToken);
     } else {
-        res.cookies.delete("accessToken");
+        opts.resHeaders.delete("accessToken");
     }
 
     if (session.refreshToken) {
-        res.cookies?.set("refreshToken", session.refreshToken);
+        opts.resHeaders.set("refreshToken", session.refreshToken);
     } else {
-        res.cookies.delete("refreshToken");
+        opts.resHeaders.delete("refreshToken");
     }
 
     return {
@@ -72,7 +73,7 @@ const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
     }
     return next({
         ctx: {
-            session: { ...ctx.session, user: ctx.session.user },
+            session: { ...ctx.session },
         },
     });
 });

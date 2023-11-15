@@ -1,4 +1,4 @@
-import { createContext } from "./trpc";
+import { createContextWs } from "./trpc";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import fetch from "node-fetch";
 import ws from "ws";
@@ -15,7 +15,7 @@ const wss = new ws.Server({
     port: env.NEXT_PUBLIC_APP_WS_PORT,
 });
 
-const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContext(true) });
+const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContextWs });
 
 wss.on("connection", ws => {
     console.log(`➕➕ Connection (${wss.clients.size})`);
