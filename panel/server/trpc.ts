@@ -7,69 +7,53 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 // import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
-import { getServerSession } from "next-auth";
 // import { getSession } from "next-auth/react";
 // import { PrismaClient } from "@prisma/client";
 import { db } from "./db";
 // import { getServerAuthSession } from "./auth";
-import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { authOptions } from "./auth";
+import { parseCookies } from "@set/utils/dist/cookie";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
+import type { NextRequest, NextResponse } from "next/server";
 import type ws from "ws";
-import { getSession } from "next-auth/react";
+import { getUserSession } from "../auth/index";
 
-export const createContext =
-    (forWS: boolean) => async (opts: FetchCreateContextFnOptions | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
-        // export const createContext = async (opts: CreateNextContextOptions) => {
-        // const { req, res } = opts;
+export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
+    const cookies = parseCookies(opts.req.headers.cookie ?? "");
 
-        // req.headers.cookie
+    const session = await getUserSession(cookies);
 
-        // console.log(a, b);
+    //cookies invalidation on existing ws connection
 
-        // console.log(opts);
-        // opts.req.
-        // Get the session from the server using the unstable_getServerSession wrapper function
-        // const session = await getServerAuthSession({ req: opts.req, res: opts.res });
-        // const session = await getSession(opts as any);
-
-        // const req = {
-        //     headers: Object.fromEntries(headers()),
-        //     cookies: Object.fromEntries(
-        //       cookies()
-        //         .getAll()
-        //         .map(c => [c.name, c.value]),
-        //     ),
-        //   } as any;
-        //   const res = {
-        //     getHeader() {
-        //       /* empty */
-        //     },
-        //     setCookie() {
-        //       /* empty */
-        //     },
-        //     setHeader() {
-        //       /* empty */
-        //     },
-        //   } as any;
-        //| NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
-
-        // console.log(opts.res);
-
-        // console.log('forWS', forWS);
-
-        const sessionPromise = forWS
-            ? getSession(opts as NodeHTTPCreateContextFnOptions<IncomingMessage, ws>)
-            : getServerSession(authOptions());
-
-        return {
-            session: await sessionPromise,
-            db,
-        };
+    return {
+        session: session.payload,
+        db,
     };
+};
 
-export type Context = inferAsyncReturnType<ReturnType<typeof createContext>>;
+export const createContextNext = async (req: NextRequest, res: NextResponse) => {
+    const cookies = Object.fromEntries(req.cookies.getAll().map(c => [c.name, c.value]));
+    const session = await getUserSession(cookies);
+
+    if (session.accessToken) {
+        res.cookies?.set("accessToken", session.accessToken);
+    } else {
+        res.cookies.delete("accessToken");
+    }
+
+    if (session.refreshToken) {
+        res.cookies?.set("refreshToken", session.refreshToken);
+    } else {
+        res.cookies.delete("refreshToken");
+    }
+
+    return {
+        session: session.payload,
+        db,
+    };
+};
+
+export type Context = inferAsyncReturnType<typeof createContextWs>;
 
 const t = initTRPC.context<Context>().create({
     transformer: superjson,
@@ -83,7 +67,7 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
+    if (!ctx.session?.name) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     return next({

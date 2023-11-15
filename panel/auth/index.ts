@@ -20,6 +20,12 @@ const auth = {
     cookieName: "awdawd",
 };
 
+export type UserSession = {
+    email: string;
+    name: string;
+    sessionId: string;
+};
+
 export const login = async ({ email, password }: UserCredentials) => {
     const user = getUser(email);
 
@@ -74,55 +80,59 @@ export const verify = async (token: string) => {
     try {
         //use the jwt.verify method to verify the access token
         //throws an error if the token has expired or has a invalid signature
-        const payload = await jwt.verify(token, auth.publicKey);
+        const payload = (await jwt.verify(token, auth.publicKey)) as UserSession;
         return { payload, expired: false };
     } catch (e: any) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        return { payload: null, expired: e.messages.includes("jwt expired") as boolean };
+        return { payload: undefined, expired: e.messages.includes("jwt expired") as boolean };
     }
 };
 
-async function deserializeUser(cookies: Record<string, string>) {
+export const getUserSession = async (
+    cookies: Record<string, string>,
+): Promise<{ payload?: UserSession; accessToken?: string; refreshToken?: string }> => {
     const { accessToken, refreshToken } = cookies;
 
     if (!accessToken) {
-        return null;
+        return { payload: undefined, accessToken, refreshToken };
     }
 
     const { payload, expired } = await verify(accessToken);
 
     // For a valid access token
     if (payload) {
-        return payload;
+        return { payload, accessToken, refreshToken };
     }
 
     // expired but valid access token
 
-    const { payload: refresh } = expired && refreshToken ? await verify(refreshToken) : { payload: null };
+    const { payload: refresh } = expired && refreshToken ? await verify(refreshToken) : { payload: undefined };
 
+    //invalid refresh token
     if (!refresh) {
-        return null;
+        return { payload: undefined, accessToken: undefined, refreshToken: undefined };
     }
 
-    // @ts-ignore
     const session = getSession(refresh.sessionId);
 
     if (!session) {
-        return next();
+        return { payload: undefined, accessToken, refreshToken };
     }
 
-    const newAccessToken = signJWT(session, "5s");
+    const newAccessToken = await jwt.sign(session, auth.secretKey, { expiresIn: "5s" });
 
-    res.cookie("accessToken", newAccessToken, {
-        maxAge: 300000, // 5 minutes
-        httpOnly: true,
-    });
+    return { payload: (await verify(newAccessToken))?.payload, accessToken: newAccessToken, refreshToken };
 
-    // @ts-ignore
-    req.user = verifyJWT(newAccessToken).payload;
+    // res.cookie("accessToken", newAccessToken, {
+    //     maxAge: 300000, // 5 minutes
+    //     httpOnly: true,
+    // });
 
-    return next();
-}
+    // // @ts-ignore
+    // req.user = verifyJWT(newAccessToken).payload;
+
+    // return next();
+};
 
 // export const verify = async (request: Request, _response: Response) => {
 //     const accessToken: string = parseCookies(request.headers.get("cookie")!)[auth.cookieName];
