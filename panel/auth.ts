@@ -1,5 +1,4 @@
-import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse, PreviewData } from "next";
-import type { ParsedUrlQuery } from "querystring";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
 import { z } from "zod";
 
@@ -34,53 +33,28 @@ export const withRaceApiKey =
         await next(req, res);
     };
 
-export async function getSecuredServerSideProps(context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) {
-    const { resolvedUrl } = context;
-    const session = await getServerSession(authConfig);
-    const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
-    const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
+// export async function authenticate() {
+//     // const { req, resolvedUrl } = context;
+//     const session = await getServerSession(authConfig);
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: callbackUrl,
-                permenant: false,
-            },
-        };
-    }
+//     // const resolvedUrl = usePathname();
 
-    if (session) {
-        return {
-            props: {
-                session,
-            },
-        };
-    }
-}
+//     // const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
+//     // const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
+//     const callbackUrl = `/auth/signin`;
 
-export async function authenticate() {
-    // const { req, resolvedUrl } = context;
-    const session = await getServerSession(authConfig);
+//     if (!session) {
+//         redirect(callbackUrl);
+//     }
+// }
 
-    // const resolvedUrl = usePathname();
+// import NextAuth, { getServerSession } from "next-auth";
+// import { redirect } from "next/navigation";
 
-    // const destination = `${process.env.NEXTAUTH_URL}${resolvedUrl}`;
-    // const callbackUrl = `/auth/signin?callbackUrl=${encodeURIComponent(destination)}`;
-    const callbackUrl = `/auth/signin`;
-
-    if (!session) {
-        redirect(callbackUrl);
-    }
-}
-
-import NextAuth, { getServerSession } from "next-auth";
-import authConfig from "auth-config";
-import { redirect } from "next/navigation";
-
-export const {
-    // handlers: { GET, POST },
-    auth,
-    CSRF_experimental,
-} = NextAuth({
-    ...authConfig,
-});
+// export const {
+//     // handlers: { GET, POST },
+//     auth,
+//     CSRF_experimental,
+// } = NextAuth({
+//     ...authConfig,
+// });
