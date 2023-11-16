@@ -17,9 +17,10 @@ import { useAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom } from "states/stopwatch-states";
 import Icon from "@mdi/react";
 import { mdiCloudOffOutline, mdiCogOutline } from "@mdi/js";
-import { SessionProvider, useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "auth/provider";
 import { getConnection } from "connection";
 import { TrpcProvider } from "providers";
+import type { UserSession } from "auth";
 
 const clientId = uuidv4();
 
@@ -54,19 +55,19 @@ const store = createStore([addIssuerMiddleware, postActionsMiddleware], {});
 
 const ExternalsExposer = () => {
     const [timeOffset] = useAtom(timeOffsetAtom);
-    const { data: sessionData } = useSession();
+    const sessionData = useSession();
 
     const { raceId } = useParams() as { raceId: string };
 
     const trpcHack = trpc.useContext().client;
 
     //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-    externals = { timeOffset, user: sessionData?.user?.name!, raceId: parseInt(raceId), trpc: trpcHack };
+    externals = { timeOffset, user: sessionData.name, raceId: parseInt(raceId), trpc: trpcHack };
 
     return <></>;
 };
 
-export function StopwatchLayout({ children }: { children: ReactNode }) {
+export function StopwatchLayout({ children, session }: { children: ReactNode; session: UserSession }) {
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
     const { raceId } = useParams() as { raceId: string };
@@ -76,7 +77,7 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
     const timingPointMissing = !timingPointId;
 
     return (
-        <SessionProvider>
+        <SessionProvider session={session}>
             <TrpcProvider>
                 <ReduxStoreProvider store={store}>
                     <ExternalsExposer />

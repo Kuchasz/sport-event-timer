@@ -1,9 +1,8 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "../../../auth/index";
 import { NextResponse } from "next/server";
-import { authOptions } from "server/auth";
 
 export async function GET(_request: Request) {
-    const session = await getServerSession(authOptions());
+    const session = await getServerSession();
 
     if (!session) {
         return new NextResponse(JSON.stringify({ status: "fail", message: "You are not logged in" }), { status: 401 });

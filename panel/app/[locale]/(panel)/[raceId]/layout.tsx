@@ -2,10 +2,12 @@ import deepmerge from "deepmerge";
 import { locales, type Locales } from "i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { NextAuthProvider, TrpcProvider } from "providers";
+import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
+import { SessionProvider } from "auth/provider";
+import { getServerSession } from "auth";
 
 export default async function PanelLayout(props: {
     children: ReactNode;
@@ -14,6 +16,8 @@ export default async function PanelLayout(props: {
 }) {
     const isValidLocale = locales.includes(props.params.locale as Locales);
     if (!isValidLocale) notFound();
+
+    const session = await getServerSession();
 
     const {
         params: { locale },
@@ -34,13 +38,13 @@ export default async function PanelLayout(props: {
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col text-zinc-900">
                 <TrpcProvider>
-                    <NextAuthProvider>
+                    <SessionProvider session={session!}>
                         <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                             <RacePageLayout raceId={props.params.raceId} breadcrumbs={props.breadcrumbs}>
                                 {props.children}
                             </RacePageLayout>
                         </NextIntlClientProvider>
-                    </NextAuthProvider>
+                    </SessionProvider>
                 </TrpcProvider>
             </body>
         </html>

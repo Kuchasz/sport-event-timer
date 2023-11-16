@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { trpc } from "trpc-core";
@@ -15,12 +14,4 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode }> = p => {
             <QueryClientProvider client={queryClient}>{p.children}</QueryClientProvider>
         </trpc.Provider>
     );
-};
-
-type Props = {
-    children?: React.ReactNode;
-};
-
-export const NextAuthProvider = ({ children }: Props) => {
-    return <SessionProvider>{children}</SessionProvider>;
 };
