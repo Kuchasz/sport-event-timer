@@ -20,42 +20,73 @@ type UserCredentials = {
 
 const auth = {
     maxAge: 5000,
-    secretKey: `-----BEGIN RSA PRIVATE KEY-----
-    MIIEoQIBAAKCAQBWhHO+SR4GuJWVLFvyTh8WlprRD6B1Sc/uKELSc59Ou9ZWyBkV
-    ss6fGAuw3pmBa9nBJ9r/Ia4dRnyml7WFpvSLm99CGNTsgA2xDYyq+Tq90X8zHE45
-    lNFEuahCXP6YIbSEz9cbgZI5gB5a/GzPf8tf1mA47IPqaCRXGJr/+Fu+1O7TGm4S
-    gCVoYoIRml/dD97nePLvsv7gLGv06Luj+Cv3WiB+imVLBAoMGjkNaVEqYuAhsE0q
-    kZNhZToX8EXn7BbUCf0T8IrHRCMxIWlUEf9z4FBBtbFFlENfXvitZ4EANMd/Ot1U
-    WqWZTqlkA7+fx8t8GclhO+nesCmZdHLZebbLAgMBAAECggEARNB/O0fu8QuaNpec
-    3qKSiaXqqASU7RVzpIszcy7x9G7lMgtgIGkjfVlj2x+C23UMM11fC/UfBzwMY3lh
-    sVe1ROIK9wjHOwEzYrNTQp6PwXFDikSmV5htxwsgsQBEpH6Sldy2zLMHumKUQmxq
-    o7SS77yUtlIxLp384aW5i4Vge+z1zg3SUThYNNG/RsvDX9uF8twHJcvT2WTjegQ5
-    c/DKok2yvZMj2Xmq3B9VAVOH7y2aBTPDtt5ZeAWJtSoJKM2CXpxb38rFLdt8zH7H
-    yKLUTpi2VRVOAjYcU/F9ecWsTvkSj/N+JreZqo4q32tU6TCvy2q+2trKanKz6qMP
-    +zfVuQKBgQCkQ0W35TeYQal0fBs64IPlqW7fFuCZiUMcVuZZPucUQ0eqbFEPbKlR
-    oi3UIP+Xe6oPqFxKcAJ7C8g9BXNSM5/6gsQPgXzDJYJ4xMJjJ5yu//VJ9gkW3BhZ
-    YbqNrFk7ulYXGfGZ8RnnLw7Vcw9n+GXdV0l9/fNxuMLC7qjXz3yFbQKBgQCG1eJp
-    ZtfLtTQTQOw2wHNKnLhhssQYtfY1SNK5k1U3X9/4XGHEKyB1Y2pQUruWPZt0dfrY
-    b7GxJVZWzJXC3AUPprUqpAGXpcK7rREjTJuszboYiA2IYsZgzKe004O5QToe9rF4
-    kt34YTk8MNi9kOlRrRu3saLgSVcwWpUtj05iFwKBgHGBYt2t8HqvdM7fK1nF5p5+
-    M/TINC8kIFGm4slso/TmgNEMw/6qkV2teYmJu9QLSfpD1nJBcBVikN1JtORqc/OB
-    BMXKLlISy1N0cvZdWvG6QN74ulMnh1PMKkLXg1m4auDPtpkvdzy+0btBJLYteQY3
-    2LrNDrnYeAyHKfjmkR8JAoGAOR6UephBpJ9PvzRKnOssLBh2F5U2c01qTqpZ8pmS
-    iRHJfJoOJJ8sce46lGpn4z6YA18Tc+rlOKkbiUvDybeRQU8bAkRWFFr5Qq4PS4fh
-    jvPb+RZxvSwy48Du7rCH5cvXBlT1W6HD/LubFn+O4cdov9v4mPnciO0ozWgiOBm0
-    V+MCgYA2FLFIDK/VDM3p31pALvWm4ZBP035O0GEW1ZBv6yZvD1+ZvSaGnJQy6QJ6
-    au7gi62vkmV9VQku4gOGkxD3bo2UkCVlj/ZuB4YJCRqo+TTJfSy+mequTKuUlhye
-    sQw6/yF6hNX3Wbmt0765YTAImCgLoZp9LJBd5SSRV+8XXnfalQ==
-    -----END RSA PRIVATE KEY-----`,
-    publicKey: `-----BEGIN PUBLIC KEY-----
-    MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBWhHO+SR4GuJWVLFvyTh8W
-    lprRD6B1Sc/uKELSc59Ou9ZWyBkVss6fGAuw3pmBa9nBJ9r/Ia4dRnyml7WFpvSL
-    m99CGNTsgA2xDYyq+Tq90X8zHE45lNFEuahCXP6YIbSEz9cbgZI5gB5a/GzPf8tf
-    1mA47IPqaCRXGJr/+Fu+1O7TGm4SgCVoYoIRml/dD97nePLvsv7gLGv06Luj+Cv3
-    WiB+imVLBAoMGjkNaVEqYuAhsE0qkZNhZToX8EXn7BbUCf0T8IrHRCMxIWlUEf9z
-    4FBBtbFFlENfXvitZ4EANMd/Ot1UWqWZTqlkA7+fx8t8GclhO+nesCmZdHLZebbL
-    AgMBAAE=
-    -----END PUBLIC KEY-----`,
+    secretKey: `
+-----BEGIN RSA PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----`,
+    publicKey: `
+-----BEGIN PUBLIC KEY-----
+MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBvTe9Y5Kp3x3H1sGVkDUWz
+6qscVR5HxCCxkSMhpczvNcCsl4fOF6V81Y7YfH9reBwMmfJ1Aq0S0015qon0pPxB
+1qCKb+l6s9YavZCaoMnzFuTkZy/h/RcKf9QxARvpzFIX3cuU2EldO+8RfKxEl4Ql
+T7frYAFrcmmr8fY7CrgT9TCedoUAB6+ipnd5qGFIg7yz+fbOsXQMXbh999ccSsMg
+f+/WRZ0f6Tvn385To0JKwsFsv21PCRvjnST3d0IFodIQUou+4LDhL5fC4xhp7kwF
+eVqpQjwhvhzcqw/EkUPDjgrtXBESAyOreeeXQ8sVw21ImLODhpaCfNm3qr5Ms6iK
+bfU55eCccY58C4iNfofh0o6ZC4wk1zTxMixVLtCcnL9l+Gzop0bXiN0dfyTaJUG9
+gICZ3+Q71RtdPMtrZB441WwhMG+J2o36uMN3qfHz0JevCEoIhGoYn/Rtl00Scenp
+JE0oWItkBQ8qFTjTjffReAgN8rH7k5uXovIY+hY0+0rtCOHDIIOVqrPDpT8mp1tl
+CES2rhd1zZhHBkehXgUCB8zGH2honCR7LS3cs6C1bYFPIJkwfpGHQMKLehs+TJtr
+RUj8XBHtUw67mx0yLh0QrnO3EL75v+tIC2/WanSBJ8wLKvJi8v2MS2SW38HskpE5
+wyNd2Oz8b0J4fS+AQkvU8QIDAQAB
+-----END PUBLIC KEY-----`,
     cookieName: "auth.session",
 };
 
@@ -76,7 +107,7 @@ export const login = async ({ email, password }: UserCredentials) => {
 
     const accessToken = await jwt.sign({ email: user.email, name: user.name, sessionId: session.sessionId }, auth.secretKey, {
         algorithm: "RS256",
-        expiresIn: "5s",
+        expiresIn: "5m",
     });
 
     const refreshToken = await jwt.sign({ sessionId: session.sessionId }, auth.secretKey, { algorithm: "RS256", expiresIn: "1y" });
@@ -123,7 +154,7 @@ export const verify = async (token: string) => {
         return { payload, expired: false };
     } catch (e: any) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        return { payload: undefined, expired: e.messages.includes("jwt expired") as boolean };
+        return { payload: undefined, expired: e.message.includes("jwt expired") as boolean };
     }
 };
 
@@ -179,6 +210,7 @@ export const getServerSession = async () => {
             .getAll()
             .map(c => [c.name, c.value]),
     );
+
     return (await getUserSession(nextCookies)).payload;
 };
 
