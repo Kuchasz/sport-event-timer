@@ -74,12 +74,12 @@ export const login = async ({ email, password }: UserCredentials) => {
 
     const session = createSession(email, user.name);
 
-    const accessToken = jwt.sign({ email: user.email, name: user.name, sessionId: session.sessionId }, auth.secretKey, {
+    const accessToken = await jwt.sign({ email: user.email, name: user.name, sessionId: session.sessionId }, auth.secretKey, {
         algorithm: "RS256",
         expiresIn: "5s",
     });
 
-    const refreshToken = jwt.sign({ sessionId: session.sessionId }, auth.secretKey, { algorithm: "RS256", expiresIn: "1y" });
+    const refreshToken = await jwt.sign({ sessionId: session.sessionId }, auth.secretKey, { algorithm: "RS256", expiresIn: "1y" });
 
     return { accessToken, refreshToken };
     // // set access token in cookie
