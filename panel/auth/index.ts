@@ -107,7 +107,7 @@ export const login = async ({ email, password }: UserCredentials) => {
 
     const accessToken = await jwt.sign({ email: user.email, name: user.name, sessionId: session.sessionId }, auth.secretKey, {
         algorithm: "RS256",
-        expiresIn: "5m",
+        expiresIn: "15s",
     });
 
     const refreshToken = await jwt.sign({ sessionId: session.sessionId }, auth.secretKey, { algorithm: "RS256", expiresIn: "1y" });
@@ -189,7 +189,7 @@ export const getUserSession = async (
         return { payload: undefined, accessToken, refreshToken };
     }
 
-    const newAccessToken = await jwt.sign(session, auth.secretKey, { expiresIn: "5s" });
+    const newAccessToken = await jwt.sign(session, auth.secretKey, { algorithm: "RS256", expiresIn: "15s" });
 
     return { payload: (await verify(newAccessToken))?.payload, accessToken: newAccessToken, refreshToken };
 
