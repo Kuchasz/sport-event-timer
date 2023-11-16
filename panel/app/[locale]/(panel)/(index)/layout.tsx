@@ -2,12 +2,14 @@ import deepmerge from "deepmerge";
 import { type Locales, locales } from "i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { NextAuthProvider, TrpcProvider } from "providers";
+import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import { AgGridProvider } from "../../../../components/ag-grid-provider";
 import { IndexStatus } from "../../../../components/index-status";
 import { Meta } from "../../../../components/meta";
 import "../../../../globals.scss";
+import { SessionProvider } from "auth/provider";
+import { getServerSession } from "auth";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
@@ -31,6 +33,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
 
 export default async function PanelLayout(props: { children: ReactNode; params: { locale: string } }) {
     const isValidLocale = locales.includes(props.params.locale as Locales);
+    const session = await getServerSession();
     if (!isValidLocale) notFound();
 
     const {
@@ -52,11 +55,11 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col text-zinc-900">
                 <TrpcProvider>
-                    <NextAuthProvider>
+                    <SessionProvider session={session!}>
                         <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                             <IndexPageLayout>{props.children}</IndexPageLayout>
                         </NextIntlClientProvider>
-                    </NextAuthProvider>
+                    </SessionProvider>
                 </TrpcProvider>
             </body>
         </html>

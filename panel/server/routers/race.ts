@@ -137,7 +137,7 @@ export const raceRouter = router({
         const { id: _id, useSampleData, ...data } = race;
 
         if (useSampleData) {
-            const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.user.email! } });
+            const user = await ctx.db.user.findFirstOrThrow({ where: { email: ctx.session.email } });
             await createExampleRaces(user.id, 1, locale, data);
         } else {
             const race = await ctx.db.race.create({ data });

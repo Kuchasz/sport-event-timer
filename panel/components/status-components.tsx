@@ -3,7 +3,6 @@
 import { mdiPowerStandby } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useCurrentRaceId } from "hooks";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { AppRouterOutputs } from "trpc";
@@ -41,7 +40,12 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
 };
 
 export const LogoutButton = () => (
-    <div className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100" onClick={() => signOut()}>
+    <div
+        className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100"
+        onClick={() => {
+            // signOut();
+        }}
+    >
         <Icon path={mdiPowerStandby} size={0.5}></Icon>
         <span className="ml-1">Logout</span>
     </div>
