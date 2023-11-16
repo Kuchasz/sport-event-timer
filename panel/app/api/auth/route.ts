@@ -1,62 +1,76 @@
-"use server";
-
-import { getServerSession } from "auth";
-import { createSession, getUser } from "auth/db";
+import { getServerSession, login } from "auth";
 import { cookies } from "next/headers";
 
 export const GET = async () => {
     const session = await getServerSession();
-    return Response.json(session);
+    return session ? Response.json(session) : new Response("no session", { status: 200 });
 };
 
-export const POST = async (req: Request, res: Response) => {
+export const POST = async (req: Request) => {
     const cookieStore = cookies();
-    const { email, password } = req.body;
+    const { email, password } = req.body as unknown as { email?: string; password?: string };
 
-    const user = getUser(email);
-
-    if (!user || user.password !== password) {
-        return res.status(401).send("Invalid email or password");
+    if (!email || !password) {
+        return new Response("Not authorized", { status: 403 });
     }
 
-    const session = createSession(email, user.name);
+    const token = await login({ email, password });
 
-    // create access token
-    const accessToken = signJWT({ email: user.email, name: user.name, sessionId: session.sessionId }, "5s");
+    // const user = getUser(email);
 
-    const refreshToken = signJWT({ sessionId: session.sessionId }, "1y");
+    if (!token) {
+        return new Response("Not authorized", { status: 403 });
+    }
+
+    // const session = createSession(email, user.name);
+
+    // // create access token
+    // const accessToken = signJWT({ email: user.email, name: user.name, sessionId: session.sessionId }, "5s");
+
+    // const refreshToken = signJWT({ sessionId: session.sessionId }, "1y");
 
     // set access token in cookie
-    res.cookie("accessToken", accessToken, {
-        maxAge: 300000, // 5 minutes
-        httpOnly: true,
+    // res.cookie("accessToken", accessToken, {
+    //     maxAge: 300000, // 5 minutes
+    //     httpOnly: true,
+    // });
+
+    cookieStore.set({
+        maxAge: 300000,
+        name: "accessToken",
+        value: token.accessToken,
+        // httpOnly: true,
     });
 
-    // cookies().set("awd");
-
-    res.cookie("refreshToken", refreshToken, {
-        maxAge: 3.154e10, // 1 year
-        httpOnly: true,
+    cookieStore.set({
+        maxAge: 3.154e10,
+        name: "refreshToken",
+        value: token.refreshToken,
+        // httpOnly: true,
     });
-
     // send user back
     // return res.send(session);
     return new Response("ok", { status: 200 });
 };
 
-export const DELETE = async (req: Request, res: Response) => {
-    res.cookie("accessToken", "", {
-        maxAge: 0,
-        httpOnly: true,
-    });
+export const DELETE = () => {
+    const cookieStore = cookies();
 
-    res.cookie("refreshToken", "", {
-        maxAge: 0,
-        httpOnly: true,
-    });
+    cookieStore.delete("accessToken");
+    cookieStore.delete("refreshToken");
 
-    // @ts-ignore
-    const session = invalidateSession(req.user.sessionId);
+    // res.cookie("accessToken", "", {
+    //     maxAge: 0,
+    //     httpOnly: true,
+    // });
 
-    return res.send(session);
+    // res.cookie("refreshToken", "", {
+    //     maxAge: 0,
+    //     httpOnly: true,
+    // });
+
+    // const session = invalidateSession(req.user.sessionId);
+
+    // return res.send(session);
+    return new Response("ok", { status: 200 });
 };
