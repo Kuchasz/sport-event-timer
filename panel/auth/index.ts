@@ -20,9 +20,43 @@ type UserCredentials = {
 
 const auth = {
     maxAge: 5000,
-    secretKey: "aawdad",
-    publicKey: "awdawdaw",
-    cookieName: "awdawd",
+    secretKey: `-----BEGIN RSA PRIVATE KEY-----
+    MIIEoQIBAAKCAQBWhHO+SR4GuJWVLFvyTh8WlprRD6B1Sc/uKELSc59Ou9ZWyBkV
+    ss6fGAuw3pmBa9nBJ9r/Ia4dRnyml7WFpvSLm99CGNTsgA2xDYyq+Tq90X8zHE45
+    lNFEuahCXP6YIbSEz9cbgZI5gB5a/GzPf8tf1mA47IPqaCRXGJr/+Fu+1O7TGm4S
+    gCVoYoIRml/dD97nePLvsv7gLGv06Luj+Cv3WiB+imVLBAoMGjkNaVEqYuAhsE0q
+    kZNhZToX8EXn7BbUCf0T8IrHRCMxIWlUEf9z4FBBtbFFlENfXvitZ4EANMd/Ot1U
+    WqWZTqlkA7+fx8t8GclhO+nesCmZdHLZebbLAgMBAAECggEARNB/O0fu8QuaNpec
+    3qKSiaXqqASU7RVzpIszcy7x9G7lMgtgIGkjfVlj2x+C23UMM11fC/UfBzwMY3lh
+    sVe1ROIK9wjHOwEzYrNTQp6PwXFDikSmV5htxwsgsQBEpH6Sldy2zLMHumKUQmxq
+    o7SS77yUtlIxLp384aW5i4Vge+z1zg3SUThYNNG/RsvDX9uF8twHJcvT2WTjegQ5
+    c/DKok2yvZMj2Xmq3B9VAVOH7y2aBTPDtt5ZeAWJtSoJKM2CXpxb38rFLdt8zH7H
+    yKLUTpi2VRVOAjYcU/F9ecWsTvkSj/N+JreZqo4q32tU6TCvy2q+2trKanKz6qMP
+    +zfVuQKBgQCkQ0W35TeYQal0fBs64IPlqW7fFuCZiUMcVuZZPucUQ0eqbFEPbKlR
+    oi3UIP+Xe6oPqFxKcAJ7C8g9BXNSM5/6gsQPgXzDJYJ4xMJjJ5yu//VJ9gkW3BhZ
+    YbqNrFk7ulYXGfGZ8RnnLw7Vcw9n+GXdV0l9/fNxuMLC7qjXz3yFbQKBgQCG1eJp
+    ZtfLtTQTQOw2wHNKnLhhssQYtfY1SNK5k1U3X9/4XGHEKyB1Y2pQUruWPZt0dfrY
+    b7GxJVZWzJXC3AUPprUqpAGXpcK7rREjTJuszboYiA2IYsZgzKe004O5QToe9rF4
+    kt34YTk8MNi9kOlRrRu3saLgSVcwWpUtj05iFwKBgHGBYt2t8HqvdM7fK1nF5p5+
+    M/TINC8kIFGm4slso/TmgNEMw/6qkV2teYmJu9QLSfpD1nJBcBVikN1JtORqc/OB
+    BMXKLlISy1N0cvZdWvG6QN74ulMnh1PMKkLXg1m4auDPtpkvdzy+0btBJLYteQY3
+    2LrNDrnYeAyHKfjmkR8JAoGAOR6UephBpJ9PvzRKnOssLBh2F5U2c01qTqpZ8pmS
+    iRHJfJoOJJ8sce46lGpn4z6YA18Tc+rlOKkbiUvDybeRQU8bAkRWFFr5Qq4PS4fh
+    jvPb+RZxvSwy48Du7rCH5cvXBlT1W6HD/LubFn+O4cdov9v4mPnciO0ozWgiOBm0
+    V+MCgYA2FLFIDK/VDM3p31pALvWm4ZBP035O0GEW1ZBv6yZvD1+ZvSaGnJQy6QJ6
+    au7gi62vkmV9VQku4gOGkxD3bo2UkCVlj/ZuB4YJCRqo+TTJfSy+mequTKuUlhye
+    sQw6/yF6hNX3Wbmt0765YTAImCgLoZp9LJBd5SSRV+8XXnfalQ==
+    -----END RSA PRIVATE KEY-----`,
+    publicKey: `-----BEGIN PUBLIC KEY-----
+    MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBWhHO+SR4GuJWVLFvyTh8W
+    lprRD6B1Sc/uKELSc59Ou9ZWyBkVss6fGAuw3pmBa9nBJ9r/Ia4dRnyml7WFpvSL
+    m99CGNTsgA2xDYyq+Tq90X8zHE45lNFEuahCXP6YIbSEz9cbgZI5gB5a/GzPf8tf
+    1mA47IPqaCRXGJr/+Fu+1O7TGm4SgCVoYoIRml/dD97nePLvsv7gLGv06Luj+Cv3
+    WiB+imVLBAoMGjkNaVEqYuAhsE0qkZNhZToX8EXn7BbUCf0T8IrHRCMxIWlUEf9z
+    4FBBtbFFlENfXvitZ4EANMd/Ot1UWqWZTqlkA7+fx8t8GclhO+nesCmZdHLZebbL
+    AgMBAAE=
+    -----END PUBLIC KEY-----`,
+    cookieName: "auth.session",
 };
 
 export type UserSession = {
