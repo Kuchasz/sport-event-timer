@@ -10,8 +10,6 @@ export const POST = async (req: Request) => {
     const cookieStore = cookies();
     const { email, password } = (await req.json()) as unknown as { email?: string; password?: string };
 
-    console.log(email, password);
-
     if (!email || !password) {
         return new Response("Not authorized", { status: 403 });
     }
@@ -38,7 +36,7 @@ export const POST = async (req: Request) => {
     // });
 
     cookieStore.set({
-        maxAge: 300000,
+        maxAge: 15000,
         name: "accessToken",
         value: token.accessToken,
         httpOnly: true,
