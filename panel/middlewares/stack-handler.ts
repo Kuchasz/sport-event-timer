@@ -1,5 +1,7 @@
 import { type NextMiddleware, NextResponse } from "next/server";
 
+// export type MiddlewareFunction = (request: NextRequest, response: NextResponse) => Promise<void>;
+
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 
 export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0): NextMiddleware {

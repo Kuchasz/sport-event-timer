@@ -9,6 +9,7 @@ const users = [
 export const sessions: Record<string, { sessionId: string; email: string; valid: boolean }> = {};
 
 export function getSession(sessionId: string) {
+    console.log(sessions, sessionId);
     const session = sessions[sessionId];
 
     return session && session.valid ? session : null;

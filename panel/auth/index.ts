@@ -151,8 +151,10 @@ export const verify = async (token: string) => {
         //use the jwt.verify method to verify the access token
         //throws an error if the token has expired or has a invalid signature
         const payload = (await jwt.verify(token, auth.publicKey)) as UserSession;
+        console.log("verify.return", payload);
         return { payload, expired: false };
     } catch (e: any) {
+        console.log("verify.error", e);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return { payload: undefined, expired: e.message.includes("jwt expired") as boolean };
     }
@@ -163,14 +165,19 @@ export const getUserSession = async (
 ): Promise<{ payload?: UserSession; accessToken?: string; refreshToken?: string }> => {
     const { accessToken, refreshToken } = cookies;
 
-    if (!accessToken) {
+    if (!accessToken && !refreshToken) {
+        console.log("no access token");
         return { payload: undefined, accessToken, refreshToken };
     }
+
+    console.log("accessToken: ", accessToken.split(".")[2].slice(10, 20));
+    console.log("refreshToken: ", refreshToken.split(".")[2].slice(10, 20));
 
     const { payload, expired } = await verify(accessToken);
 
     // For a valid access token
     if (payload) {
+        console.log("session return");
         return { payload, accessToken, refreshToken };
     }
 
@@ -180,15 +187,18 @@ export const getUserSession = async (
 
     //invalid refresh token
     if (!refresh) {
+        console.log("invalid refresh token");
         return { payload: undefined, accessToken: undefined, refreshToken: undefined };
     }
 
     const session = getSession(refresh.sessionId);
 
     if (!session) {
+        console.log("invalid session");
         return { payload: undefined, accessToken, refreshToken };
     }
 
+    console.log("refresh access token");
     const newAccessToken = await jwt.sign(session, auth.secretKey, { algorithm: "RS256", expiresIn: "15s" });
 
     return { payload: (await verify(newAccessToken))?.payload, accessToken: newAccessToken, refreshToken };
@@ -211,7 +221,21 @@ export const getServerSession = async () => {
             .map(c => [c.name, c.value]),
     );
 
-    return (await getUserSession(nextCookies)).payload;
+    const { accessToken } = nextCookies;
+
+    if (!accessToken) {
+        return undefined;
+    }
+
+    const tokenVerification = await verify(accessToken);
+
+    return !tokenVerification.expired
+        ? {
+              email: tokenVerification.payload!.email,
+              name: tokenVerification.payload!.name,
+              sessionId: tokenVerification.payload!.sessionId,
+          }
+        : undefined;
 };
 
 const ApiKeyAuthModel = z.object({

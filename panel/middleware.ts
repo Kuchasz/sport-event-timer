@@ -1,9 +1,24 @@
-import { stackMiddlewares } from "./middlewares/stack-handler";
-import { withIntl } from "./middlewares/with-intl";
-import { withAuth } from "./middlewares/with-auth";
+import { stackMiddlewares } from "middlewares/stack-handler";
+import { withIntl } from "middlewares/with-intl";
+// import { withAuth } from "./middlewares/with-auth";
 
-const middlewares = [withIntl, withAuth];
+const middlewares = [
+    // withAuth,
+    withIntl,
+];
 export default stackMiddlewares(middlewares);
+
+// const intlMiddleware = createMiddleware({
+//     locales,
+//     localePrefix: "never",
+//     defaultLocale: "en",
+// });
+
+// export const middleware = (request: NextRequest) => {
+//     // console.log(JSON.stringify(request.nextUrl));
+//     //eslint-disable-next-line @typescript-eslint/no-unsafe-return
+//     return intlMiddleware(request as any);
+// };
 
 // export const config = {
 //     // Skip all paths that should not be internationalized. This example skips the
