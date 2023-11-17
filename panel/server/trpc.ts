@@ -36,16 +36,19 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
 
     const session = await getUserSession(cookies);
 
+    // console.log(opts.resHeaders.set());
+
     if (session.accessToken) {
-        opts.resHeaders.set("accessToken", session.accessToken);
+        opts.resHeaders.append("cookies", `accessToken=${session.accessToken}`);
     } else {
-        opts.resHeaders.delete("accessToken");
+        // opts.resHeaders.delete("accessToken");
     }
 
     if (session.refreshToken) {
-        opts.resHeaders.set("refreshToken", session.refreshToken);
+        opts.resHeaders.append("cookies", `refreshToken=${session.refreshToken}`);
+        // opts.resHeaders.set("refreshToken", session.refreshToken);
     } else {
-        opts.resHeaders.delete("refreshToken");
+        // opts.resHeaders.delete("refreshToken");
     }
 
     return {

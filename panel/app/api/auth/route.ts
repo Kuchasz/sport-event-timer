@@ -36,14 +36,14 @@ export const POST = async (req: Request) => {
     // });
 
     cookieStore.set({
-        maxAge: 15,
+        // maxAge: 300,
         name: "accessToken",
         value: token.accessToken,
         httpOnly: true,
     });
 
     cookieStore.set({
-        maxAge: 3.154e10,
+        // maxAge: 3.154e10,
         name: "refreshToken",
         value: token.refreshToken,
         httpOnly: true,
