@@ -1,40 +1,54 @@
-const users = [
-    {
-        email: "test@test.com",
-        password: "password",
-        name: "Jane Doe",
-    },
-];
+// const users = [
+//     {
+//         email: "test@test.com",
+//         password: "password",
+//         name: "Jane Doe",
+//     },
+// ];
 
-export const sessions: Record<string, { sessionId: string; email: string; valid: boolean }> = {};
+import { db } from "../server/db";
 
-export function getSession(sessionId: string) {
-    console.log(sessions, sessionId);
-    const session = sessions[sessionId];
+// export const sessions: Record<string, { sessionId: string; email: string; valid: boolean }> = {};
 
-    return session && session.valid ? session : null;
+export async function getSession(sessionId: string) {
+    // console.log(sessions, sessionId);
+    const session = await db.session.findUnique({ where: { id: sessionId } }); //sessions[sessionId];
+
+    return session?.valid ? session : null;
 }
 
-export function invalidateSession(sessionId: string) {
-    const session = sessions[sessionId];
+export async function invalidateSession(sessionId: string) {
+    // const session = sessions[sessionId];
+
+    const session = await db.session.findUnique({ where: { id: sessionId } }); //sessions[sessionId];
 
     if (session) {
-        sessions[sessionId].valid = false;
+        await db.session.update({ where: { id: sessionId }, data: { valid: false } });
+        // sessions[sessionId].valid = false;
     }
-
-    return sessions[sessionId];
-}
-
-export function createSession(email: string, name: string) {
-    const sessionId = String(Object.keys(sessions).length + 1);
-
-    const session = { sessionId, email, valid: true, name };
-
-    sessions[sessionId] = session;
 
     return session;
 }
 
-export function getUser(email: string) {
-    return users.find(user => user.email === email);
+export async function createSession(userId: string) {
+    // const sessionId = String(Object.keys(sessions).length + 1);
+
+    // id           String   @id @default(cuid())
+    // sessionToken String   @unique
+    // userId       String
+    // expires      DateTime
+    // user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    // valid        Boolean
+
+    const session = await db.session.create({ data: { sessionToken: "aaaa", userId, expires: new Date(), valid: true } });
+
+    // const session = { sessionId, email, valid: true, name };
+
+    // sessions[sessionId] = session;
+
+    return session;
+}
+
+export async function getUser(email: string) {
+    return db.user.findUnique({ where: { email } });
 }

@@ -6,11 +6,34 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../server/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { SignJWT as signToken, jwtVerify as verifyToken, importPKCS8, importSPKI } from "jose";
 
 const jwt = {
-    sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
-    verify: promisify<string, jsonwebtoken.Secret, any>(jsonwebtoken.verify),
-    decode: jsonwebtoken.decode,
+    _sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
+    sign: async (payload: object, secret: string, options: { algorithm: "RS256"; expiresIn: number }) => {
+        const iat = Math.floor(Date.now() / 1000);
+        const exp = iat + options.expiresIn; // * 60; // one hour
+
+        const privateKey = await importPKCS8(secret, "RS256");
+
+        const token = new signToken({ ...payload })
+            .setProtectedHeader({ alg: options.algorithm, typ: "JWT" })
+            .setExpirationTime(exp)
+            .setIssuedAt(iat)
+            .setNotBefore(iat)
+            .sign(privateKey);
+
+        return token;
+    },
+    _verify: promisify<string, jsonwebtoken.Secret, any>(jsonwebtoken.verify),
+    verify: async (token: string, secret: string) => {
+        const publicKey = await importSPKI(secret, "RS256");
+
+        const { payload } = await verifyToken(token, publicKey);
+
+        return payload;
+    },
+    // decode: jsonwebtoken.decode,
 };
 
 type UserCredentials = {
@@ -20,72 +43,71 @@ type UserCredentials = {
 
 const auth = {
     maxAge: 5000,
-    secretKey: `
------BEGIN RSA PRIVATE KEY-----
-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
------END RSA PRIVATE KEY-----`,
-    publicKey: `
------BEGIN PUBLIC KEY-----
-MIICITANBgkqhkiG9w0BAQEFAAOCAg4AMIICCQKCAgBvTe9Y5Kp3x3H1sGVkDUWz
-6qscVR5HxCCxkSMhpczvNcCsl4fOF6V81Y7YfH9reBwMmfJ1Aq0S0015qon0pPxB
-1qCKb+l6s9YavZCaoMnzFuTkZy/h/RcKf9QxARvpzFIX3cuU2EldO+8RfKxEl4Ql
-T7frYAFrcmmr8fY7CrgT9TCedoUAB6+ipnd5qGFIg7yz+fbOsXQMXbh999ccSsMg
-f+/WRZ0f6Tvn385To0JKwsFsv21PCRvjnST3d0IFodIQUou+4LDhL5fC4xhp7kwF
-eVqpQjwhvhzcqw/EkUPDjgrtXBESAyOreeeXQ8sVw21ImLODhpaCfNm3qr5Ms6iK
-bfU55eCccY58C4iNfofh0o6ZC4wk1zTxMixVLtCcnL9l+Gzop0bXiN0dfyTaJUG9
-gICZ3+Q71RtdPMtrZB441WwhMG+J2o36uMN3qfHz0JevCEoIhGoYn/Rtl00Scenp
-JE0oWItkBQ8qFTjTjffReAgN8rH7k5uXovIY+hY0+0rtCOHDIIOVqrPDpT8mp1tl
-CES2rhd1zZhHBkehXgUCB8zGH2honCR7LS3cs6C1bYFPIJkwfpGHQMKLehs+TJtr
-RUj8XBHtUw67mx0yLh0QrnO3EL75v+tIC2/WanSBJ8wLKvJi8v2MS2SW38HskpE5
-wyNd2Oz8b0J4fS+AQkvU8QIDAQAB
+    secretKey: `-----BEGIN PRIVATE KEY-----
+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
+g0RqIXgYcu4v25StwfpqUHXW2m6T
+-----END PRIVATE KEY-----`,
+    publicKey: `-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAw/WA7/OdWW1BdgcugeDh
+9TKnw/T5y77WEb6guAXg1erYLHFXI8bgrsc80NLGeKdj677GyuOWCRz2OPbV/eo7
+l/DriAGRk/OrlqVK7qCFrdmG3xNxP66OeQkuH4KWWqoSIRb73f4BJ5Tb3fAr+uQk
+IIFHK9RqknJo+gq2CPvypgr22Rz61J3buJ3UEHKqqDCdpZjy8ognZSlkKyAK7/M9
+ctRsHbAoH33duyDfNJzmnU40+H3iFOyy0EIkzKfbvMng3zcuPmZJCgF2BFE1dfER
+5bORD1ZcGpZjVa92fdgbeD6E0MpfXAZxKMjjk/ePTocldQQR+wiN3k3vdRWEC+jS
+VP8DDMyZHPw0oHpFLfMtqBY71doLeootBxs2FBhgeaTf9U4QMzzXMRvmCDQOds5I
+wdJAnsc54x3mS7KW/wUgWRJoCZDCSHH1kxT0UbBVbfWNzmQPg2gaCFcQ3HZEoPlg
+i1m2QVFO6juck2yiDMme2IuqqUCyLfe0n/2OPq/DU2R+9WohZf8EEnG8Wn+jzYVS
+AOAk00KlLJ5+9WgAAYrQk5P9n7a+o9j8V9KeXwPOVHwAfoZzgfYbIBAT9x0LWYqC
+txJ3NrAldz857FsnVkM5NVJJXSZMnmnuEa8b2z+1bFiLVLdpuGI4Aor3URGOhBNX
+ALs4M6DV4CRutHLHPIdQlGUCAwEAAQ==
 -----END PUBLIC KEY-----`,
     cookieName: "auth.session",
 };
@@ -96,21 +118,25 @@ export type UserSession = {
     sessionId: string;
 };
 
-export const login = async ({ email, password }: UserCredentials) => {
-    const user = getUser(email);
+export const login = async ({ email }: UserCredentials) => {
+    const user = await getUser(email);
 
-    if (!user || user.password !== password) {
+    // if (!user || user.password !== password) {
+    if (!user) {
         return Promise.reject("Invalid email or password");
     }
 
-    const session = createSession(email, user.name);
+    const session = await createSession(user.id);
 
-    const accessToken = await jwt.sign({ email: user.email, name: user.name, sessionId: session.sessionId }, auth.secretKey, {
+    const accessToken = await jwt.sign({ email: user.email, name: user.name, sessionId: session.id }, auth.secretKey, {
         algorithm: "RS256",
-        expiresIn: "15s",
+        expiresIn: 15,
     });
 
-    const refreshToken = await jwt.sign({ sessionId: session.sessionId }, auth.secretKey, { algorithm: "RS256", expiresIn: "1y" });
+    const refreshToken = await jwt.sign({ sessionId: session.id }, auth.secretKey, {
+        algorithm: "RS256",
+        expiresIn: 60 * 60 * 24 * 7,
+    });
 
     return { accessToken, refreshToken };
     // // set access token in cookie
@@ -156,7 +182,7 @@ export const verify = async (token: string) => {
     } catch (e: any) {
         console.log("verify.error", e);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        return { payload: undefined, expired: e.message.includes("jwt expired") as boolean };
+        return { payload: undefined, expired: (e.code === "ERR_JWT_EXPIRED") as boolean };
     }
 };
 
@@ -170,8 +196,8 @@ export const getUserSession = async (
         return { payload: undefined, accessToken, refreshToken };
     }
 
-    console.log("accessToken: ", accessToken.split(".")[2].slice(10, 20));
-    console.log("refreshToken: ", refreshToken.split(".")[2].slice(10, 20));
+    // console.log("accessToken: ", accessToken.split(".")[2].slice(10, 20));
+    // console.log("refreshToken: ", refreshToken.split(".")[2].slice(10, 20));
 
     const { payload, expired } = await verify(accessToken);
 
@@ -182,16 +208,17 @@ export const getUserSession = async (
     }
 
     // expired but valid access token
-
+    console.log(expired, refreshToken.split(".")[2].slice(10, 20));
     const { payload: refresh } = expired && refreshToken ? await verify(refreshToken) : { payload: undefined };
 
     //invalid refresh token
     if (!refresh) {
-        console.log("invalid refresh token");
+        console.log("invalid refresh token", refresh);
         return { payload: undefined, accessToken: undefined, refreshToken: undefined };
     }
 
-    const session = getSession(refresh.sessionId);
+    console.log("refresh.sessionId", refresh.sessionId);
+    const session = await getSession(refresh.sessionId);
 
     if (!session) {
         console.log("invalid session");
@@ -199,7 +226,7 @@ export const getUserSession = async (
     }
 
     console.log("refresh access token");
-    const newAccessToken = await jwt.sign(session, auth.secretKey, { algorithm: "RS256", expiresIn: "15s" });
+    const newAccessToken = await jwt.sign(session, auth.secretKey, { algorithm: "RS256", expiresIn: 15 });
 
     return { payload: (await verify(newAccessToken))?.payload, accessToken: newAccessToken, refreshToken };
 
