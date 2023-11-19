@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { timingPointIdAtom } from "states/stopwatch-states";
 
 export const Dashboard = () => {
-    const { timingPointId } = useParams() as { timingPointId?: string };
+    const { timingPointId } = useParams<{ timingPointId?: string }>()!;
 
     const [_, chooseTimingPoint] = useAtom(timingPointIdAtom);
 
