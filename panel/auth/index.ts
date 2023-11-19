@@ -6,7 +6,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../server/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { SignJWT as signToken, jwtVerify as verifyToken, importPKCS8, importSPKI } from "jose";
+import { SignJWT as signToken, jwtVerify as verifyToken, importPKCS8, importSPKI, decodeJwt as decodeToken } from "jose";
+import { fetchJson } from "@set/utils/dist/fetch";
 
 const jwt = {
     _sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
@@ -14,10 +15,12 @@ const jwt = {
         const iat = Math.floor(Date.now() / 1000);
         const exp = iat + options.expiresIn; // * 60; // one hour
 
-        const privateKey = await importPKCS8(secret, "RS256");
+        const privateKey = await importPKCS8(secret, options.algorithm);
+
+        // console.log("sign....", { ...payload });
 
         const token = new signToken({ ...payload })
-            .setProtectedHeader({ alg: options.algorithm, typ: "JWT" })
+            .setProtectedHeader({ alg: options.algorithm })
             .setExpirationTime(exp)
             .setIssuedAt(iat)
             .setNotBefore(iat)
@@ -28,12 +31,13 @@ const jwt = {
     _verify: promisify<string, jsonwebtoken.Secret, any>(jsonwebtoken.verify),
     verify: async (token: string, secret: string) => {
         const publicKey = await importSPKI(secret, "RS256");
-
         const { payload } = await verifyToken(token, publicKey);
-
+        // console.log("t!O!", payload);
         return payload;
     },
-    // decode: jsonwebtoken.decode,
+    decode: (token: string) => {
+        return decodeToken(token);
+    },
 };
 
 type UserCredentials = {
@@ -177,10 +181,10 @@ export const verify = async (token: string) => {
         //use the jwt.verify method to verify the access token
         //throws an error if the token has expired or has a invalid signature
         const payload = (await jwt.verify(token, auth.publicKey)) as UserSession;
-        console.log("verify.return", payload);
+        // console.log("verify.return", jwt.decode(token));
         return { payload, expired: false };
     } catch (e: any) {
-        console.log("verify.error", e);
+        console.log("verify.error", e.code === "ERR_JWT_EXPIRED" ? null : e);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return { payload: undefined, expired: (e.code === "ERR_JWT_EXPIRED") as boolean };
     }
@@ -188,44 +192,44 @@ export const verify = async (token: string) => {
 
 export const getUserSession = async (
     cookies: Record<string, string>,
+    useFetch = false,
 ): Promise<{ payload?: UserSession; accessToken?: string; refreshToken?: string }> => {
     const { accessToken, refreshToken } = cookies;
 
-    if (!accessToken && !refreshToken) {
-        console.log("no access token");
+    if (!refreshToken) {
         return { payload: undefined, accessToken, refreshToken };
     }
 
     // console.log("accessToken: ", accessToken.split(".")[2].slice(10, 20));
     // console.log("refreshToken: ", refreshToken.split(".")[2].slice(10, 20));
 
-    const { payload, expired } = await verify(accessToken);
+    let expired = true;
+    if (accessToken) {
+        const { payload, ...token } = await verify(accessToken);
+        expired = token.expired;
 
-    // For a valid access token
-    if (payload) {
-        console.log("session return");
-        return { payload, accessToken, refreshToken };
+        // For a valid access token
+        if (payload) {
+            return { payload, accessToken, refreshToken };
+        }
     }
 
     // expired but valid access token
-    console.log(expired, refreshToken.split(".")[2].slice(10, 20));
     const { payload: refresh } = expired && refreshToken ? await verify(refreshToken) : { payload: undefined };
 
     //invalid refresh token
     if (!refresh) {
-        console.log("invalid refresh token", refresh);
         return { payload: undefined, accessToken: undefined, refreshToken: undefined };
     }
 
-    console.log("refresh.sessionId", refresh.sessionId);
-    const session = await getSession(refresh.sessionId);
+    const session = useFetch
+        ? await fetchJson("http://localhost:3000/api/session", { sessionId: refresh.sessionId })
+        : await getSession(refresh.sessionId);
 
     if (!session) {
-        console.log("invalid session");
         return { payload: undefined, accessToken, refreshToken };
     }
 
-    console.log("refresh access token");
     const newAccessToken = await jwt.sign(session, auth.secretKey, { algorithm: "RS256", expiresIn: 15 });
 
     return { payload: (await verify(newAccessToken))?.payload, accessToken: newAccessToken, refreshToken };
