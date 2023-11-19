@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     // const session = await getServerSession();
 
     const { sessionId } = await request.json();
-    console.log("SESSSION_ID!!", sessionId);
+    // console.log("SESSSION_ID!!", sessionId);
     // if (!session) {
     //     return new NextResponse(JSON.stringify({ status: "fail", message: "You are not logged in" }), { status: 401 });
     // }
