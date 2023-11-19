@@ -16,7 +16,7 @@ import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
 import type ws from "ws";
-import { getUserSession } from "../auth/index";
+import { getUserSession, secondsInWeek } from "../auth/index";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -42,13 +42,13 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
 
     if (session.accessToken) {
         // Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<number>
-        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Max-Age=15`);
+        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; HttpOnly Max-Age=15`);
     } else {
         // opts.resHeaders.delete("accessToken");
     }
 
     if (session.refreshToken) {
-        opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; Max-Age=30000`);
+        opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=${secondsInWeek}`);
         // opts.resHeaders.set("refreshToken", session.refreshToken);
     } else {
         // opts.resHeaders.delete("refreshToken");

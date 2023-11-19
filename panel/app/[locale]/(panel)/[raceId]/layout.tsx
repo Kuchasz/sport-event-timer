@@ -6,15 +6,16 @@ import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
-import { SessionProvider } from "auth/provider";
-import { getServerSession } from "auth";
+import { SessionProvider } from "../../../../auth/provider";
+import { getServerSession } from "../../../../auth";
 
 export default async function PanelLayout(props: {
     children: ReactNode;
     breadcrumbs: ReactNode;
     params: { locale: string; raceId: string };
 }) {
-    const isValidLocale = locales.includes(props.params.locale as Locales);
+    // console.log("props.params: ", props.params);
+    const isValidLocale = locales.includes(props?.params?.locale as Locales);
     if (!isValidLocale) notFound();
 
     const session = await getServerSession();

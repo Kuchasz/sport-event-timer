@@ -250,6 +250,8 @@ export const getServerSession = async () => {
             .map(c => [c.name, c.value]),
     );
 
+    // console.log(headers());
+
     const { accessToken } = nextCookies;
 
     if (!accessToken) {
