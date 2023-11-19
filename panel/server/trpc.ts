@@ -38,14 +38,17 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
 
     // console.log(opts.resHeaders.set());
 
+    // console.log(opts.resHeaders);
+
     if (session.accessToken) {
-        opts.resHeaders.append("cookies", `accessToken=${session.accessToken}`);
+        // Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<number>
+        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Max-Age=15`);
     } else {
         // opts.resHeaders.delete("accessToken");
     }
 
     if (session.refreshToken) {
-        opts.resHeaders.append("cookies", `refreshToken=${session.refreshToken}`);
+        opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; Max-Age=30000`);
         // opts.resHeaders.set("refreshToken", session.refreshToken);
     } else {
         // opts.resHeaders.delete("refreshToken");
