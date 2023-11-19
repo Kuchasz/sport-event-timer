@@ -27,7 +27,6 @@
     "@headlessui/react": "1.7.17",
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
-    "@next-auth/prisma-adapter": "1.0.7",
     "@popperjs/core": "2.11.8",
     "@prisma/client": "5.5.2",
     "@radix-ui/react-scroll-area": "1.0.5",
