@@ -8,7 +8,7 @@ type Props = {
     children?: React.ReactNode;
 };
 
-const SessionContext = createContext<UserSession>(null as any);
+const SessionContext = createContext<UserSession>({ sessionId: "", name: "", email: "" });
 
 export const useSession = () => useContext(SessionContext);
 

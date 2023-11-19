@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import { refreshRow } from "ag-grid";
 
 export const useCurrentClassificationId = () => {
-    const { classificationId } = useParams() as { classificationId: string };
+    const { classificationId } = useParams<{ classificationId: string }>()!;
 
     return classificationId ? parseInt(classificationId) : undefined;
 };
@@ -203,5 +203,3 @@ export const ClassificationCategories = () => {
         </>
     );
 };
-
-export default ClassificationCategories;

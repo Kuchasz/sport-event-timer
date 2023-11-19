@@ -5,7 +5,7 @@ export const env = createEnv({
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
     server: {
         DATABASE_URL: z.string().url(),
-        NODE_ENV: z.enum(["development", "test", "production"]),
+        // NODE_ENV: z.enum(["development", "test", "production"]),
         PORT: z
             .string()
             .regex(/[0-9]+/)
@@ -37,7 +37,7 @@ export const env = createEnv({
         NEXT_PUBLIC_APP_HTTP_PORT: z.number(),
     },
     runtimeEnv: {
-        NODE_ENV: process.env.NODE_ENV,
+        // NODE_ENV: process.env.NODE_ENV,
         DATABASE_URL: process.env.DATABASE_URL,
         PORT: process.env.PORT,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
