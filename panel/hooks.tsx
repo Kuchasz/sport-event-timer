@@ -24,7 +24,7 @@ export const useTimerDispatch = () => useDispatch<TimerDispatch>();
 export const useTimerSelector: TypedUseSelectorHook<TimerState> = useSelector;
 
 export const useCurrentRaceId = () => {
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     return parseInt(raceId);
 };

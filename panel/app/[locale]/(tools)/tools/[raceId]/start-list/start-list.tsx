@@ -174,7 +174,7 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
 export const RaceStartList = ({ players: initialData, renderTime }: { players: StartListPlayer[]; renderTime: number }) => {
     const [globalTime, setGlobalTime] = useState<number>(renderTime);
     const ntpMutation = trpc.ntp.sync.useMutation();
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },

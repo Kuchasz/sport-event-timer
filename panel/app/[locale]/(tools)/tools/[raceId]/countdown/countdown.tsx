@@ -139,7 +139,7 @@ export const RaceCountdown = () => {
     const [globalTime, setGlobalTime] = useState<number>();
     const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);

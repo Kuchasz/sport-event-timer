@@ -43,9 +43,9 @@ const Digit = ({ number }: { number: string }) => <div className="my-4 text-cent
 
 export const TweakTimeStamp = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
-    const { back } = useRouter();
+    const { back } = useRouter() as unknown as { back: () => void };
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
-    const { raceId, timeStampId } = useParams() as { raceId: string; timeStampId: string };
+    const { raceId, timeStampId } = useParams<{ raceId: string; timeStampId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 

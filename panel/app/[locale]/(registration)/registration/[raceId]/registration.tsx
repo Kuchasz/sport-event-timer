@@ -213,7 +213,7 @@ const AvailableSpots = ({ limit, registeredPlayers }: { limit: number; registere
 };
 
 export const Registration = () => {
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
     const [registrationStatus, setRegistrationStatus] = useState<RegistrationStatuses>("pending");
     const t = useTranslations();
 

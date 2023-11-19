@@ -14,7 +14,6 @@ export default async function PanelLayout(props: {
     breadcrumbs: ReactNode;
     params: { locale: string; raceId: string };
 }) {
-    // console.log("props.params: ", props.params);
     const isValidLocale = locales.includes(props?.params?.locale as Locales);
     if (!isValidLocale) notFound();
 
