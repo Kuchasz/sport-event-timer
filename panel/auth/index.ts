@@ -1,13 +1,13 @@
-import * as jsonwebtoken from "jsonwebtoken";
-import { promisify } from "util";
-import { createSession, getUser, getSession } from "./db";
-import { cookies } from "next/headers";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../server/db";
-import { z } from "zod";
-import { redirect } from "next/navigation";
-import { SignJWT as signToken, jwtVerify as verifyToken, importPKCS8, importSPKI, decodeJwt as decodeToken } from "jose";
 import { fetchJson } from "@set/utils/dist/fetch";
+import { decodeJwt as decodeToken, importPKCS8, importSPKI, SignJWT as signToken, jwtVerify as verifyToken } from "jose";
+import * as jsonwebtoken from "jsonwebtoken";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { promisify } from "util";
+import { z } from "zod";
+import { db } from "../server/db";
+import { createSession, getSession, getUser } from "./db";
 
 const jwt = {
     _sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
@@ -116,11 +116,9 @@ ALs4M6DV4CRutHLHPIdQlGUCAwEAAQ==
     cookieName: "auth.session",
 };
 
-export type UserSession = {
-    email: string;
-    name: string;
-    sessionId: string;
-};
+export type UserSession = { name: string; sessionId: string; email: string };
+
+export const secondsInWeek = 604_800;
 
 export const login = async ({ email }: UserCredentials) => {
     const user = await getUser(email);
@@ -139,7 +137,7 @@ export const login = async ({ email }: UserCredentials) => {
 
     const refreshToken = await jwt.sign({ sessionId: session.id }, auth.secretKey, {
         algorithm: "RS256",
-        expiresIn: 60 * 60 * 24 * 7,
+        expiresIn: secondsInWeek,
     });
 
     return { accessToken, refreshToken };
