@@ -7,23 +7,25 @@ export const withAuth: MiddlewareFactory = next => async (request: NextRequest, 
 
     const cookies = Object.fromEntries(request.cookies.getAll().map(c => [c.name, c.value]));
 
-    const session = await getUserSession(cookies);
-    console.log(session);
+    const session = await getUserSession(cookies, true);
+    // console.log(session);
     const response = await next(request, _next);
 
     if (response instanceof NextResponse) {
-        // console.log(session.accessToken?.slice(10, 20));
+        console.log("new_access_token: ", session.accessToken?.split(".")[2].slice(10, 20));
         if (session.accessToken) {
-            response.cookies.set("accessToken", session.accessToken);
+            response.cookies.set("accessToken", session.accessToken, { httpOnly: true, maxAge: 15 });
         } else {
             response.cookies.delete("accessToken");
         }
 
         // console.log(session.refreshToken?.slice(10, 20));
-        if (session.refreshToken) {
-            response.cookies.set("refreshToken", session.refreshToken);
-        } else {
-            response.cookies.delete("refreshToken");
-        }
+        // if (session.refreshToken) {
+        //     response.cookies.set("refreshToken", session.refreshToken);
+        // } else {
+        //     response.cookies.delete("refreshToken");
+        // }
     }
+
+    return response;
 };

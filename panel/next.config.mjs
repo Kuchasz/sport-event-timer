@@ -45,7 +45,7 @@ export default withNextIntl(
         },
 
         experimental: {
-            // runtime: 'nodejs',
+            // runtime: "nodejs",
             appDir: true,
         },
     }),

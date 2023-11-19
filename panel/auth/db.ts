@@ -6,13 +6,14 @@
 //     },
 // ];
 
+import { uuidv4 } from "@set/utils/dist/uuid";
 import { db } from "../server/db";
 
 // export const sessions: Record<string, { sessionId: string; email: string; valid: boolean }> = {};
 
 export async function getSession(sessionId: string) {
     // console.log(sessions, sessionId);
-    const session = await db.session.findUnique({ where: { id: sessionId } }); //sessions[sessionId];
+    const session = await db.session.findUnique({ where: { id: sessionId }, include: { user: true } }); //sessions[sessionId];
 
     return session?.valid ? session : null;
 }
@@ -40,7 +41,7 @@ export async function createSession(userId: string) {
     // user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     // valid        Boolean
 
-    const session = await db.session.create({ data: { sessionToken: "aaaa", userId, expires: new Date(), valid: true } });
+    const session = await db.session.create({ data: { sessionToken: uuidv4(), userId, expires: new Date(), valid: true } });
 
     // const session = { sessionId, email, valid: true, name };
 
