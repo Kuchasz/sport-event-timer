@@ -11,7 +11,7 @@ import Icon from "@mdi/react";
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 
 export const Results = () => {
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
     const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) }, { enabled: !!raceId });
     const { data: results, dataUpdatedAt } = trpc.result.results.useQuery(
         { raceId: parseInt(raceId) },

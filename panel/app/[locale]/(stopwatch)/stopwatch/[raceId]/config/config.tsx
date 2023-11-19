@@ -11,7 +11,7 @@ import { trpc } from "trpc-core";
 
 export const Config = () => {
     const [timingPointId, chooseTimingPoint] = useAtom(timingPointIdAtom);
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
         { raceId: parseInt(raceId) },

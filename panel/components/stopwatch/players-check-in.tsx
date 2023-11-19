@@ -43,7 +43,7 @@ type PlayersDialPadProps = {
 export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
 
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 

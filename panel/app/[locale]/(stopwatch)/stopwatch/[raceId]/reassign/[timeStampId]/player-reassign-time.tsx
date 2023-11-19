@@ -12,9 +12,9 @@ export const PlayerReassignTime = () => {
     const dispatch = useTimerDispatch();
 
     //eslint-disable-next-line @typescript-eslint/unbound-method
-    const { back } = useRouter();
+    const { back } = useRouter() as unknown as { back: () => void };
 
-    const { timeStampId } = useParams() as { timeStampId: string };
+    const { timeStampId } = useParams<{ timeStampId: string }>()!;
 
     return (
         <PlayersCheckIn

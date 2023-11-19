@@ -1,5 +1,6 @@
 "use client";
-import type { UserSession } from "auth";
+
+import type { UserSession } from "../auth";
 import { createContext, useContext } from "react";
 
 type Props = {

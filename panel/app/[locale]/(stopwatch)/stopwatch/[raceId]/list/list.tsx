@@ -16,7 +16,7 @@ import { trpc } from "trpc-core";
 export const PlayersList = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
 
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 

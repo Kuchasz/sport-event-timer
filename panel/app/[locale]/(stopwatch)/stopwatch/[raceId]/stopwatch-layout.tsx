@@ -29,7 +29,7 @@ let externals = {
     user: undefined,
     timeOffset: undefined,
     trpc: undefined,
-} as { raceId?: number; user?: string; timeOffset?: number; trpc?: ReturnType<typeof trpc.useContext>["client"] };
+} as { raceId?: number; user?: string; timeOffset?: number; trpc?: ReturnType<typeof trpc.useUtils>["client"] };
 
 const postActionsMiddleware: Middleware<object, TimerState, TimerDispatch> = _ => next => action => {
     if (!getConnection) return;
@@ -57,9 +57,9 @@ const ExternalsExposer = () => {
     const [timeOffset] = useAtom(timeOffsetAtom);
     const sessionData = useSession();
 
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
-    const trpcHack = trpc.useContext().client;
+    const trpcHack = trpc.useUtils().client;
 
     //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     externals = { timeOffset, user: sessionData.name, raceId: parseInt(raceId), trpc: trpcHack };
@@ -70,7 +70,7 @@ const ExternalsExposer = () => {
 export function StopwatchLayout({ children, session }: { children: ReactNode; session: UserSession }) {
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
     const pathname = usePathname()!;
 
     const isOffline = connectionState !== "connected";

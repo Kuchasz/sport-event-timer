@@ -148,7 +148,7 @@ export const PlayersTimes = () => {
     const { push } = useRouter();
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
-    const { raceId } = useParams() as { raceId: string };
+    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) });
