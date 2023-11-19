@@ -15,7 +15,7 @@ export async function getSession(sessionId: string) {
     // console.log(sessions, sessionId);
     const session = await db.session.findUnique({ where: { id: sessionId }, include: { user: true } }); //sessions[sessionId];
 
-    return session?.valid ? session : null;
+    return session?.valid ? { sessionId: session.id, name: session.user.name, email: session.user.email } : null;
 }
 
 export async function invalidateSession(sessionId: string) {
@@ -30,6 +30,8 @@ export async function invalidateSession(sessionId: string) {
 
     return session;
 }
+
+// export type DbUserSession = Prisma.SessionGetPayload<{ include: { user: true } }>;
 
 export async function createSession(userId: string) {
     // const sessionId = String(Object.keys(sessions).length + 1);

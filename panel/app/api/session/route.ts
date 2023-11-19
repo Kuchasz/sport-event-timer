@@ -14,5 +14,9 @@ export async function POST(request: NextRequest) {
 
     // return session?.valid ? session : null;
 
-    return NextResponse.json(session);
+    return NextResponse.json({
+        sessionId: session?.id,
+        name: session?.user.name,
+        email: session?.user.email,
+    });
 }

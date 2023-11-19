@@ -1,4 +1,4 @@
-import { getServerSession, login } from "auth";
+import { getServerSession, login, secondsInWeek } from "auth";
 import { cookies } from "next/headers";
 
 export const GET = async () => {
@@ -44,6 +44,7 @@ export const POST = async (req: Request) => {
 
     cookieStore.set({
         // maxAge: 3.154e10,
+        maxAge: secondsInWeek,
         name: "refreshToken",
         value: token.refreshToken,
         httpOnly: true,
