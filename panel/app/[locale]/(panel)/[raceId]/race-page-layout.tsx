@@ -15,6 +15,8 @@ type Props = {
 
 export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
     const race = await trpcRSC.race.race.query({ raceId: Number(raceId) });
+    const totalPlayers = await trpcRSC.player.totalPlayers.query({ raceId: Number(raceId) });
+    const totalRegistrations = await trpcRSC.playerRegistration.totalRegistrations.query({ raceId: Number(raceId) });
 
     return (
         <>
@@ -29,7 +31,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                                 </div>
                             </Link>
                             <ConciseRaceIcon r={race!} />
-                            <RaceMenu raceId={raceId} />
+                            <RaceMenu raceId={raceId} totalPlayers={totalPlayers} totalRegistrations={totalRegistrations} />
                         </nav>
                         <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />

@@ -11,12 +11,17 @@ import {
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
-import { trpcRSC } from "../trpc-core-rsc";
 
-export const RaceMenu = ({ raceId }: { raceId: string }) => {
+export const RaceMenu = ({
+    raceId,
+    totalPlayers,
+    totalRegistrations,
+}: {
+    raceId: string;
+    totalPlayers: number;
+    totalRegistrations: number;
+}) => {
     const t = useTranslations();
-    const totalPlayers = trpcRSC.player.totalPlayers.query({ raceId: Number(raceId) });
-    const totalRegistrations = trpcRSC.playerRegistration.totalRegistrations.query({ raceId: Number(raceId) });
 
     const generalMenuGroup = {
         name: t("menuOptions.general.title"),
