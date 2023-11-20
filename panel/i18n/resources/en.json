@@ -1144,9 +1144,12 @@
       },
       "registration": {
         "question": "Don't have an account?",
-        "signup": "Sign up"
+        "button": "Sign up"
       }
     },
-    "rights": "Ravelo. All rights reserved."
+    "rights": "Ravelo. All rights reserved.",
+    "register": {
+      "header": "Create account!"
+    }
   }
 }

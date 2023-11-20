@@ -185,7 +185,7 @@ export const withRaceApiKey =
 export async function authenticate() {
     const session = await getServerSession();
 
-    const callbackUrl = `/login`;
+    const callbackUrl = `/id/login`;
 
     console.log("authenticate():", session);
 
