@@ -9,18 +9,21 @@ import { Form, FormInput } from "form";
 import { type Login, loginSchema } from "modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { trpc } from "trpc-core";
 
 export default function SignIn() {
     const t = useTranslations();
+    const loginMutation = trpc.user.login.useMutation();
 
     const initialForm = {
         email: "",
         password: "",
     };
 
-    const isLoading = false;
-
-    const onResolve = () => {};
+    const onResolve = async (data: Login) => {
+        const result = await loginMutation.mutateAsync({ ...data });
+        alert(JSON.stringify(result));
+    };
 
     return (
         <div className="grid h-full w-full grid-cols-2">
@@ -45,12 +48,13 @@ export default function SignIn() {
                                             placeholder={t("auth.login.form.password.placeholder")}
                                             value={value}
                                             onChange={onChange}
+                                            password
                                         />
                                     )}
                                     name="password"
                                 />
 
-                                <Button className="mt-4 w-full" loading={isLoading} type="submit">
+                                <Button className="mt-4 w-full" loading={loginMutation.isLoading} type="submit">
                                     {t("auth.login.form.submit")}
                                 </Button>
                             </div>

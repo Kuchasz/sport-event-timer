@@ -82,7 +82,7 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
                     <Label>{label}</Label>
                     {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
                     <div className="text-right text-xs font-medium text-red-600 opacity-75">
-                        {formErrors[name]?.slice(0, 1).map(err => t(err as any, { path: label }))}&nbsp;
+                        {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
                     </div>
                 </div>
             )}
