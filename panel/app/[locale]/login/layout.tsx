@@ -3,6 +3,7 @@ import { type Locales, locales } from "i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import "../../../globals.scss";
+import { TrpcProvider } from "providers";
 
 export const metadata = {
     title: "Login",
@@ -23,7 +24,6 @@ export default async function Layout({ children, params }: { children: React.Rea
 
         messages = deepmerge(defaultMessages, localeMessages) as any;
     } catch (error) {
-        console.log("translations-error: ", error);
         notFound();
     }
 
@@ -31,7 +31,7 @@ export default async function Layout({ children, params }: { children: React.Rea
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
-                    {children}
+                    <TrpcProvider>{children}</TrpcProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
