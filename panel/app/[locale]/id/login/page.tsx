@@ -36,7 +36,6 @@ export default function () {
                         )}
                         name="email"
                     />
-                    <div className="p-1"></div>
                     <FormInput<UserLogin, "password">
                         label={t("auth.login.form.password.label")}
                         render={({ value, onChange }) => (
@@ -44,7 +43,6 @@ export default function () {
                         )}
                         name="password"
                     />
-
                     <Button className="mt-4 w-full" loading={loginMutation.isLoading} type="submit">
                         {t("auth.login.form.submit")}
                     </Button>
@@ -52,7 +50,7 @@ export default function () {
             </Form>
             <div className="self-center text-sm">
                 <span>{t("auth.login.registration.question")}</span>{" "}
-                <Link className="font-bold transition-colors hover:text-blue-500" href="#">
+                <Link className="font-bold transition-colors hover:text-blue-500" href="/id/register">
                     {t("auth.login.registration.button")}
                 </Link>
             </div>
