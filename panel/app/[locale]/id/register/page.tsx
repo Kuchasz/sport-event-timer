@@ -11,7 +11,7 @@ import { trpc } from "trpc-core";
 
 export default function () {
     const t = useTranslations();
-    const loginMutation = trpc.user.login.useMutation();
+    const registerMutation = trpc.user.register.useMutation();
     const router = useRouter();
 
     const initialForm = {
@@ -22,8 +22,11 @@ export default function () {
     };
 
     const onResolve = async (data: UserRegistration) => {
-        const result = await loginMutation.mutateAsync({ ...data });
-        if (result.status === "Success") router.push("/");
+        const result = await registerMutation.mutateAsync({ ...data });
+        if (result.status === "Success") {
+            const searchParams = new URLSearchParams({ email: data.email });
+            router.push(`/id/login?${searchParams.toString()}`);
+        }
     };
 
     return (
@@ -69,7 +72,7 @@ export default function () {
                         )}
                         name="confirmPassword"
                     />
-                    <Button className="mt-4 w-full" loading={loginMutation.isLoading} type="submit">
+                    <Button className="mt-4 w-full" loading={registerMutation.isLoading} type="submit">
                         {t("auth.registration.form.submit")}
                     </Button>
                 </div>

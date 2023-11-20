@@ -9,13 +9,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { trpc } from "trpc-core";
 
-export default function () {
+export default function ({ searchParams }: { searchParams: { email?: string } }) {
     const t = useTranslations();
     const loginMutation = trpc.user.login.useMutation();
     const router = useRouter();
 
     const initialForm = {
-        email: "",
+        email: searchParams?.email ?? "",
         password: "",
     };
 
