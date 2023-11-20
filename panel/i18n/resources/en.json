@@ -1127,5 +1127,25 @@
     "noPlayersLeft": "No pending players left",
     "startTime": "Starts at",
     "headerStartTime": "Starts at: "
+  },
+  "auth": {
+    "login": {
+      "header": "Welcome!",
+      "form": {
+        "email": {
+          "label": "Email*",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password*",
+          "placeholder": "Enter valid password"
+        },
+        "submit": "Log in"
+      },
+      "registration": {
+        "question": "Don't have an account?",
+        "signup": "Sign up"
+      }
+    }
   }
 }
