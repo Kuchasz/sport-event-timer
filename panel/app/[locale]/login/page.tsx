@@ -6,16 +6,9 @@ import { getCurrentYear } from "@set/utils/dist/datetime";
 import { Button } from "components/button";
 import { PoorInput } from "components/poor-input";
 import { Form, FormInput } from "form";
+import { type Login, loginSchema } from "modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { z } from "zod";
-
-const loginSchema = z.object({
-    email: z.string().email().nonempty(),
-    password: z.string().nonempty(),
-});
-
-type Login = z.infer<typeof loginSchema>;
 
 export default function SignIn() {
     const t = useTranslations();
@@ -71,7 +64,9 @@ export default function SignIn() {
                     </div>
                 </div>
                 <div className="mb-4 flex w-full items-center justify-between px-4 text-xs text-gray-500">
-                    <span>Copyright © {getCurrentYear()} Ravelo. All rights reserved.</span>
+                    <span>
+                        © {getCurrentYear()} {t("auth.rights")}
+                    </span>
                     <span className="flex items-center">
                         <Icon path={mdiEmailOutline} size={0.6} />
                         <span className="ml-1">help@example.com</span>
