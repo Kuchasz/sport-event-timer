@@ -19,11 +19,17 @@ export const userRouter = router({
     register: publicProcedure.input(registrationSchema).mutation(async ({ ctx, input }) => {
         const user = await ctx.db.user.findUnique({ where: { email: input.email } });
 
-        if (!user) return { status: "Error" as ResultStatus, message: "INVALID_USER_OR_PASSWORD" };
+        if (user) return { status: "Error" as ResultStatus, message: "EMAIL_TAKEN" };
 
-        if (user.password === input.password) return { status: "Success" as ResultStatus };
+        await ctx.db.user.create({
+            data: {
+                email: input.email,
+                name: input.name,
+                password: input.password,
+            },
+        });
 
-        return { status: "Error" as ResultStatus, message: "INVALID_USER_OR_PASSWORD" };
+        return { status: "Success" as ResultStatus };
     }),
 });
 

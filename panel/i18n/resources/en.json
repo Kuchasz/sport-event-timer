@@ -823,7 +823,8 @@
     "shared": {
       "required": "Required",
       "minLength": "Too short",
-      "email": "Invalid email address"
+      "email": "Invalid email address",
+      "passwordMatch": "Passwords don't match"
     },
     "timingPoint": {
       "description": {

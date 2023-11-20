@@ -6,12 +6,17 @@ export const loginSchema = z.object({
     password: z.string().nonempty(sharedErrorCodes.required),
 });
 
-export const registrationSchema = z.object({
-    name: z.string().nonempty(sharedErrorCodes.required),
-    email: z.string().email(sharedErrorCodes.email),
-    password: z.string().nonempty(sharedErrorCodes.required),
-    confirmPassword: z.string().nonempty(sharedErrorCodes.required),
-});
+export const registrationSchema = z
+    .object({
+        name: z.string().nonempty(sharedErrorCodes.required),
+        email: z.string().email(sharedErrorCodes.email),
+        password: z.string().nonempty(sharedErrorCodes.required),
+        confirmPassword: z.string().nonempty(sharedErrorCodes.required),
+    })
+    .refine(registration => registration.password === registration.confirmPassword, {
+        message: sharedErrorCodes.passwordMatch,
+        path: ["confirmPassword"],
+    });
 
 export type UserLogin = z.infer<typeof loginSchema>;
 export type UserRegistration = z.infer<typeof registrationSchema>;
