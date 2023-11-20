@@ -1144,9 +1144,12 @@
       },
       "registration": {
         "question": "Nie posiadasz konta?",
-        "signup": "Utwórz konto"
+        "button": "Utwórz konto"
       }
     },
-    "rights": "Ravelo. Wszelkie prawa zastrzeżone."
+    "rights": "Ravelo. Wszelkie prawa zastrzeżone.",
+    "register": {
+      "header": "Utwórz konto!"
+    }
   }
 }
