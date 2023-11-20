@@ -32,13 +32,12 @@ export default function () {
             <Form<UserRegistration> initialValues={initialForm} validationSchema={registrationSchema} onSubmit={onResolve}>
                 <div className="flex flex-col">
                     <FormInput<UserRegistration, "name">
-                        label={t("auth.registration.form.email.label")}
+                        label={t("auth.registration.form.name.label")}
                         render={({ value, onChange }) => (
-                            <PoorInput placeholder={t("auth.registration.form.email.placeholder")} value={value} onChange={onChange} />
+                            <PoorInput placeholder={t("auth.registration.form.name.placeholder")} value={value} onChange={onChange} />
                         )}
                         name="name"
                     />
-                    <div className="p-1"></div>
                     <FormInput<UserRegistration, "email">
                         label={t("auth.registration.form.email.label")}
                         render={({ value, onChange }) => (
@@ -46,7 +45,6 @@ export default function () {
                         )}
                         name="email"
                     />
-                    <div className="p-1"></div>
                     <FormInput<UserRegistration, "password">
                         label={t("auth.registration.form.password.label")}
                         render={({ value, onChange }) => (
@@ -59,12 +57,11 @@ export default function () {
                         )}
                         name="password"
                     />
-                    <div className="p-1"></div>
                     <FormInput<UserRegistration, "confirmPassword">
-                        label={t("auth.registration.form.password.label")}
+                        label={t("auth.registration.form.confirmPassword.label")}
                         render={({ value, onChange }) => (
                             <PoorInput
-                                placeholder={t("auth.registration.form.password.placeholder")}
+                                placeholder={t("auth.registration.form.confirmPassword.placeholder")}
                                 value={value}
                                 onChange={onChange}
                                 password
@@ -72,7 +69,6 @@ export default function () {
                         )}
                         name="confirmPassword"
                     />
-
                     <Button className="mt-4 w-full" loading={loginMutation.isLoading} type="submit">
                         {t("auth.registration.form.submit")}
                     </Button>
@@ -80,7 +76,7 @@ export default function () {
             </Form>
             <div className="self-center text-sm">
                 <span>{t("auth.registration.login.question")}</span>{" "}
-                <Link className="font-bold transition-colors hover:text-blue-500" href="#">
+                <Link className="font-bold transition-colors hover:text-blue-500" href="/id/login">
                     {t("auth.registration.login.button")}
                 </Link>
             </div>

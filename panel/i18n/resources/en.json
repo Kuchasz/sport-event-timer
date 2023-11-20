@@ -1150,6 +1150,31 @@
     "rights": "Ravelo. All rights reserved.",
     "register": {
       "header": "Create account!"
+    },
+    "registration": {
+      "form": {
+        "name": {
+          "label": "Name*",
+          "placeholder": "Enter username"
+        },
+        "email": {
+          "label": "Email*",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password*",
+          "placeholder": "Enter your password"
+        },
+        "confirmPassword": {
+          "label": "Confirm password*",
+          "placeholder": "Confirm your password"
+        },
+        "submit": "Sign up"
+      },
+      "login": {
+        "question": "Already have an account?",
+        "button": "Log in"
+      }
     }
   }
 }

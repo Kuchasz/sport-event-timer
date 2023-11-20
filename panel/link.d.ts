@@ -30,6 +30,8 @@ declare namespace __next_route_internal_types__ {
         | `/admin/accounts`
         | `/admin/hello`
         | `/admin/races`
+        | `/id/login`
+        | `/id/register`
         | `/my-races`
         | `/api/session`
         | `/api/restricted`;
