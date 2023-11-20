@@ -9,7 +9,7 @@ import { resultRouter } from "./result";
 import { splitTimeRouter } from "./split-time";
 import { timingPointRouter } from "./timing-point";
 import { playerRegistrationRouter } from "./player-registration";
-import { accountRouter } from "./account";
+import { userRouter } from "./user";
 import { bibNumberRouter } from "./bib-number";
 import { timePenaltyRouter } from "./time-penalty";
 import { disqualificationRouter } from "./disqualification";
@@ -25,7 +25,7 @@ export const appRouter = router({
     result: resultRouter,
     apiKey: apiKeyRouter,
     playerRegistration: playerRegistrationRouter,
-    account: accountRouter,
+    user: userRouter,
     bibNumber: bibNumberRouter,
     timePenalty: timePenaltyRouter,
     disqualification: disqualificationRouter,
