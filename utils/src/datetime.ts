@@ -126,6 +126,9 @@ export const isPast = (date: Date) => {
     return dateCopyDateObject < todayDateObject;
 };
 
+//potential timezone related issues
+export const getCurrentYear = () => new Date().getFullYear();
+
 type MonthFormat = "long" | "numeric" | "2-digit" | "short" | "narrow" | undefined;
 type WeekdayFormat = "long" | "short" | "narrow" | undefined;
 
