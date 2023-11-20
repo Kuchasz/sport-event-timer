@@ -1127,5 +1127,25 @@
     "noPlayersLeft": "Brak oczekujących zawodników",
     "startTime": "Start",
     "headerStartTime": "Czas startu: "
+  },
+  "auth": {
+    "login": {
+      "header": "Witaj!",
+      "form": {
+        "email": {
+          "label": "Email*",
+          "placeholder": "Wpisz twój adres email"
+        },
+        "password": {
+          "label": "Hasło*",
+          "placeholder": "Wpisz poprawne hasło"
+        },
+        "submit": "Zaloguj"
+      },
+      "registration": {
+        "question": "Nie posiadasz konta?",
+        "signup": "Utwórz konto"
+      }
+    }
   }
 }

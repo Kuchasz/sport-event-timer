@@ -4,6 +4,7 @@ import { Button } from "components/button";
 import { PoorInput } from "components/poor-input";
 import { Form, FormInput } from "form";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -28,39 +29,43 @@ export default function SignIn() {
     return (
         <div className="grid h-full w-full grid-cols-2">
             <section className="flex h-full flex-col items-center justify-center">
-                <div className="w-full max-w-sm space-y-4 p-6">
-                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Welcome!</h1>
-                    <div className="space-y-4 md:space-y-6">
-                        <Form<Login> initialValues={initialForm} validationSchema={loginSchema} onSubmit={onResolve}>
-                            <div className="flex flex-col">
-                                <FormInput<Login, "email">
-                                    label={t("pages.races.form.name.label")}
-                                    className="flex-1"
-                                    render={({ value, onChange }) => (
-                                        <PoorInput placeholder={t("pages.races.form.name.placeholder")} value={value} onChange={onChange} />
-                                    )}
-                                    name="email"
-                                />
-                                <div className="p-2"></div>
-                                <FormInput<Login, "password">
-                                    label={t("pages.races.form.date.label")}
-                                    className="flex-1"
-                                    render={({ value, onChange }) => (
-                                        <PoorInput placeholder={t("pages.races.form.name.placeholder")} value={value} onChange={onChange} />
-                                    )}
-                                    name="password"
-                                />
+                <div className="flex w-full max-w-sm flex-col space-y-8 p-6">
+                    <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-900">{t("auth.login.header")}</h1>
+                    <Form<Login> initialValues={initialForm} validationSchema={loginSchema} onSubmit={onResolve}>
+                        <div className="flex flex-col">
+                            <FormInput<Login, "email">
+                                label={t("auth.login.form.email.label")}
+                                className="flex-1"
+                                render={({ value, onChange }) => (
+                                    <PoorInput placeholder={t("auth.login.form.email.placeholder")} value={value} onChange={onChange} />
+                                )}
+                                name="email"
+                            />
+                            <div className="p-1"></div>
+                            <FormInput<Login, "password">
+                                label={t("auth.login.form.password.label")}
+                                className="flex-1"
+                                render={({ value, onChange }) => (
+                                    <PoorInput placeholder={t("auth.login.form.password.placeholder")} value={value} onChange={onChange} />
+                                )}
+                                name="password"
+                            />
 
-                                <Button className="mt-4 w-full" loading={isLoading} type="submit">
-                                    {t("shared.save")}
-                                </Button>
-                            </div>
-                        </Form>
+                            <Button className="mt-4 w-full" loading={isLoading} type="submit">
+                                {t("auth.login.form.submit")}
+                            </Button>
+                        </div>
+                    </Form>
+                    <div className="self-center text-sm">
+                        <span>{t("auth.login.registration.question")}</span>{" "}
+                        <Link className="font-bold transition-colors hover:text-blue-500" href="#">
+                            {t("auth.login.registration.signup")}
+                        </Link>
                     </div>
                 </div>
             </section>
             <section className="p-2">
-                <div className="relative flex h-full items-end overflow-hidden rounded-xl bg-blue-900">
+                <div className="relative flex h-full items-end justify-end overflow-hidden rounded-xl bg-blue-900">
                     <img
                         className="absolute top-0 h-full w-full object-cover"
                         src="https://ps-wed.azurewebsites.net/rura/meta-2023/big/PF7B9152.jpg"
