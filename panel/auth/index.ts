@@ -87,11 +87,8 @@ export const verify = async (token: string) => {
         //use the jwt.verify method to verify the access token
         //throws an error if the token has expired or has a invalid signature
         const payload = (await jwt.verify(token, env.AUTH_PUBLIC_KEY)) as UserSession;
-        // console.log("verify.return", jwt.decode(token));
         return { payload, expired: false };
     } catch (e: any) {
-        console.log("verify.error", e.code === "ERR_JWT_EXPIRED" ? null : e);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return { payload: undefined, expired: (e.code === "ERR_JWT_EXPIRED") as boolean };
     }
 };

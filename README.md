@@ -28,7 +28,7 @@ Application for making time measurements
 | 20/10/2023 | Dates should use locale formats                            | todo :date:                     |
 | 20/10/2023 | Configure linter + CI/CD pipeline                          | :heavy_check_mark: (23/10/2023) |
 | 23/10/2023 | Simple website with registration, start list and results   | todo :date:                     |
-| 23/10/2023 | Improve login page look                                    | todo :date:                     |
+| 23/10/2023 | Improve login page look                                    | :heavy_check_mark: (20/11/2023) |
 | 26/10/2023 | Start list .CSV import/export                              | todo :date:                     |
 | 26/10/2023 | Add links to stopwatch and timer to the race panel         | :heavy_check_mark: (29/10/2023) |
 | 26/10/2023 | Timer for finish line                                      | todo :date:                     |
