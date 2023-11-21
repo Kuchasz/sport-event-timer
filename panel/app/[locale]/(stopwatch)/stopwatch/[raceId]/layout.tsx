@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import React from "react";
 import { StopwatchLayout } from "./stopwatch-layout";
-import { getServerSession } from "auth";
+import { authenticate, getServerSession } from "auth";
 
 export default async function ({ children }: { children: ReactNode }) {
+    await authenticate();
     const session = await getServerSession();
     return (
         <html className="h-full w-full" lang="en">
