@@ -1,17 +1,15 @@
 import { fetchJson } from "@set/utils/dist/fetch";
 import { decodeJwt as decodeToken, importPKCS8, importSPKI, SignJWT as signToken, jwtVerify as verifyToken } from "jose";
-import * as jsonwebtoken from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { promisify } from "util";
 import { z } from "zod";
 import { db } from "../server/db";
 import { createSession, getSession, getUser } from "./db";
 import { env } from "../env";
 
 const jwt = {
-    _sign: promisify<string | object | Buffer, jsonwebtoken.Secret, jsonwebtoken.SignOptions, string>(jsonwebtoken.sign),
     sign: async (payload: object, secret: string, options: { algorithm: "RS256"; expiresIn: number }) => {
         const iat = Math.floor(Date.now() / 1000);
         const exp = iat + options.expiresIn;
@@ -27,7 +25,6 @@ const jwt = {
 
         return token;
     },
-    _verify: promisify<string, jsonwebtoken.Secret, any>(jsonwebtoken.verify),
     verify: async (token: string, secret: string) => {
         const publicKey = await importSPKI(secret, "RS256");
         const { payload } = await verifyToken(token, publicKey);
@@ -47,10 +44,26 @@ export type UserSession = { name: string; sessionId: string; email: string };
 
 export const secondsInWeek = 604_800;
 
+export const register = async ({ email, password, name }: UserCredentials & { name: string }) => {
+    const user = await getUser(email);
+
+    if (user) return { status: "Error" as "Success" | "Error", message: "EMAIL_TAKEN" };
+
+    await db.user.create({
+        data: {
+            email: email,
+            name: name,
+            password: await bcrypt.hash(password, 12),
+        },
+    });
+
+    return { status: "Success" as "Success" | "Error" };
+};
+
 export const login = async ({ email, password }: UserCredentials) => {
     const user = await getUser(email);
 
-    if (!user || user.password !== password) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
         return Promise.resolve(undefined);
     }
 

@@ -1,6 +1,6 @@
 import { loginSchema, registrationSchema } from "../../modules/user/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
-import { login, secondsInWeek } from "../../auth";
+import { login, register, secondsInWeek } from "../../auth";
 
 type ResultStatus = "Error" | "Success";
 
@@ -20,20 +20,8 @@ export const userRouter = router({
 
         return { status: "Error" as ResultStatus, message: "INVALID_USER_OR_PASSWORD" };
     }),
-    register: publicProcedure.input(registrationSchema).mutation(async ({ ctx, input }) => {
-        const user = await ctx.db.user.findUnique({ where: { email: input.email } });
-
-        if (user) return { status: "Error" as ResultStatus, message: "EMAIL_TAKEN" };
-
-        await ctx.db.user.create({
-            data: {
-                email: input.email,
-                name: input.name,
-                password: input.password,
-            },
-        });
-
-        return { status: "Success" as ResultStatus };
+    register: publicProcedure.input(registrationSchema).mutation(async ({ input }) => {
+        return register(input);
     }),
     logout: protectedProcedure.mutation(async ({ ctx }) => {
         await ctx.db.session.delete({ where: { id: ctx.session.sessionId } });
