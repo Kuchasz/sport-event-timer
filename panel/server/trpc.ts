@@ -16,7 +16,7 @@ import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
 import type ws from "ws";
-import { getUserSession, secondsInWeek } from "../auth/index";
+import { getUserSession } from "../auth/index";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -28,6 +28,7 @@ export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<Incom
     return {
         session: session.payload,
         db,
+        resHeaders: undefined as unknown as Headers,
     };
 };
 
@@ -37,20 +38,19 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
     const session = await getUserSession(cookies);
 
     if (session.accessToken) {
-        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; HttpOnly Max-Age=15`);
-    } else {
-        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; HttpOnly Max-Age=0`);
+        // && session.refreshToken) {
+        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Secure; HttpOnly; Path=/; Max-Age=15`);
+        // opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=${secondsInWeek}`);
     }
-
-    if (session.refreshToken) {
-        opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=${secondsInWeek}`);
-    } else {
-        opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=0`);
-    }
+    // else {
+    //     opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; HttpOnly Max-Age=0`);
+    //     opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=0`);
+    // }
 
     return {
         session: session.payload,
         db,
+        resHeaders: opts.resHeaders,
     };
 };
 

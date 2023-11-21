@@ -39,14 +39,19 @@ export const RaceSelector = ({ races: initialData }: { races: Races }) => {
     );
 };
 
-export const LogoutButton = () => (
-    <div
-        className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100"
-        onClick={() => {
-            // signOut();
-        }}
-    >
-        <Icon path={mdiPowerStandby} size={0.5}></Icon>
-        <span className="ml-1">Logout</span>
-    </div>
-);
+export const LogoutButton = () => {
+    const logoutMutation = trpc.user.logout.useMutation();
+    const router = useRouter();
+    return (
+        <div
+            className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100"
+            onClick={async () => {
+                await logoutMutation.mutateAsync();
+                router.push("/");
+            }}
+        >
+            <Icon path={mdiPowerStandby} size={0.5}></Icon>
+            <span className="ml-1">Logout</span>
+        </div>
+    );
+};

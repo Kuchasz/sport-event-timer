@@ -3,21 +3,23 @@ import type { MiddlewareFactory } from "./stack-handler";
 import { getUserSession } from "auth";
 
 export const withAuth: MiddlewareFactory = next => async (request: NextRequest, _next: NextFetchEvent) => {
-    const cookies = Object.fromEntries(request.cookies.getAll().map(c => [c.name, c.value]));
+    if (!/((api).*)/.test(request.nextUrl.pathname.slice(1))) {
+        const cookies = Object.fromEntries(request.cookies.getAll().map(c => [c.name, c.value]));
 
-    const session = await getUserSession(cookies, true);
+        const session = await getUserSession(cookies, true);
 
-    request.cookies.set({ name: "accessToken", value: session.accessToken! });
+        if (session.accessToken) request.cookies.set({ name: "accessToken", value: session.accessToken });
 
-    const response = await next(request, _next);
+        const response = await next(request, _next);
 
-    if (response instanceof NextResponse) {
-        if (session.accessToken) {
-            response.cookies.set("accessToken", session.accessToken, { httpOnly: true, maxAge: 15 });
-        } else {
-            response.cookies.delete("accessToken");
+        if (response instanceof NextResponse) {
+            if (session.accessToken) {
+                response.cookies.set("accessToken", session.accessToken, { httpOnly: true, secure: true, maxAge: 15, path: "/" });
+            }
         }
-    }
 
-    return response;
+        return response;
+    } else {
+        return NextResponse.next();
+    }
 };
