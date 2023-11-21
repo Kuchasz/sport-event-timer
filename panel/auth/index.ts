@@ -47,13 +47,11 @@ export type UserSession = { name: string; sessionId: string; email: string };
 
 export const secondsInWeek = 604_800;
 
-export const login = async ({ email }: UserCredentials) => {
+export const login = async ({ email, password }: UserCredentials) => {
     const user = await getUser(email);
 
-    console.warn("Warning: Missing password verification");
-
-    if (!user) {
-        return Promise.reject("Invalid email or password");
+    if (!user || user.password !== password) {
+        return Promise.resolve(undefined);
     }
 
     const session = await createSession(user.id);
@@ -92,7 +90,7 @@ export const getUserSession = async (
     const { accessToken, refreshToken } = cookies;
 
     if (!refreshToken) {
-        return { payload: undefined, accessToken, refreshToken };
+        return { payload: undefined, accessToken: undefined, refreshToken: undefined };
     }
 
     let expired = true;
@@ -186,8 +184,6 @@ export async function authenticate() {
     const session = await getServerSession();
 
     const callbackUrl = `/id/login`;
-
-    console.log("authenticate():", session);
 
     if (!session) {
         redirect(callbackUrl);
