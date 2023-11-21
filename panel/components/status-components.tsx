@@ -47,7 +47,7 @@ export const LogoutButton = () => {
             className="flex cursor-pointer items-center text-sm opacity-50 transition-opacity hover:opacity-100"
             onClick={async () => {
                 await logoutMutation.mutateAsync();
-                router.push("/");
+                router.push("/id/login");
             }}
         >
             <Icon path={mdiPowerStandby} size={0.5}></Icon>
