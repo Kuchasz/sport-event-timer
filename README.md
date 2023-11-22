@@ -48,7 +48,7 @@ Application for making time measurements
 | 04/11/2023 | Display classification name instead of just id             | :heavy_check_mark: (04/11/2023) |
 | 04/11/2023 | Add translation to Gender                                  | :heavy_check_mark: (05/11/2023) |
 | 05/11/2023 | Add custom hideable scrollbar to side menu                 | :heavy_check_mark: (05/11/2023) |
-| 06/11/2023 | Implement sort over columns to Data Table                  | todo :date:                     |
+| 06/11/2023 | Implement sort over columns to Data Table                  | :heavy_check_mark: (22/11/2023) |
 | 06/11/2023 | Bib Numbers print mechanism                                | todo :date:                     |
 | 06/11/2023 | Printable start list                                       | todo :date:                     |
 | 06/11/2023 | Printable results                                          | todo :date:                     |
@@ -61,7 +61,8 @@ Application for making time measurements
 | 10/11/2023 | Enter to submit form                                       | :heavy_check_mark: (13/11/2023) |
 | 12/11/2023 | Ability to edit basic race info from race panel            | todo :date:                     |
 | 14/11/2023 | Replace NextAuth                                           | :heavy_check_mark: (19/11/2023) |
-| 21/11/2023 | Salt passwords                                             | todo :date:                     |
+| 21/11/2023 | Salt passwords                                             | :heavy_check_mark: (22/11/2023) |
+| 22/11/2023 | Support for sort over dates                                | todo :date:                     |
 
 ## TODO
 

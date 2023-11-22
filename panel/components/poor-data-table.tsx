@@ -10,14 +10,17 @@ import { getGridColumnVisibilityStateAtom } from "states/grid-states";
 import { PoorColumnChooser } from "./poor-column-chooser";
 import { PoorInput } from "./poor-input";
 import { ScrollArea, ScrollBar } from "./scroll-area";
+import { naturalSort } from "@set/utils/dist/array";
 
 export type PoorDataTableColumn<T> = {
-    field: keyof T;
-    headerName: string;
-    sortable: boolean;
-    cellRenderer?: React.FC<T>;
-    hide?: boolean;
-};
+    [TField in keyof T]: {
+        field: TField;
+        headerName: string;
+        sortable?: T[TField] extends Date ? false : boolean;
+        cellRenderer?: React.FC<T>;
+        hide?: boolean;
+    };
+}[keyof T];
 
 type PoorDataTableProps<T> = {
     gridName: string;
@@ -64,14 +67,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
 
-    // const sortedFilteredData = sortColumn ? sort(filteredData) : filteredData;
+    const sortedFilteredData = sortColumn
+        ? naturalSort(filteredData as unknown as { obj: T }[], sortColumn.order, d => String(d.obj[sortColumn.field]))
+        : filteredData;
 
-    const pagesData = filteredData.slice(
+    const pagesData = sortedFilteredData.slice(
         currentPage * rowsPerPage,
-        clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, filteredData.length),
+        clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, sortedFilteredData.length),
     );
 
-    const numberOfPages = Math.ceil(filteredData.length / rowsPerPage);
+    const numberOfPages = Math.ceil(sortedFilteredData.length / rowsPerPage);
     const isFirstPage = currentPage + 1 <= 1;
     const isLastPage = currentPage + 1 >= numberOfPages;
 
