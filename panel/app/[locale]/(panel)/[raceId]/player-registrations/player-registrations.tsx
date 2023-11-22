@@ -159,7 +159,7 @@ export const PlayerRegistrations = () => {
             field: "birthDate",
             headerName: t("pages.playerRegistrations.grid.columns.birthDate"),
             cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
-            sortable: true,
+            sortable: false,
             hide: true,
         },
         {
@@ -191,13 +191,13 @@ export const PlayerRegistrations = () => {
         {
             field: "registrationDate",
             headerName: t("pages.playerRegistrations.grid.columns.registrationDate"),
-            sortable: true,
+            sortable: false,
             cellRenderer: data => <div>{data.registrationDate.toLocaleDateString(locale)}</div>,
         },
         {
             field: "paymentDate",
             headerName: t("pages.playerRegistrations.grid.columns.payment"),
-            sortable: true,
+            sortable: false,
             cellRenderer: data => (
                 <PlayerRegistrationPayment
                     refreshRegistrationRow={() => {}}
