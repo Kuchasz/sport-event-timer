@@ -63,6 +63,7 @@ Application for making time measurements
 | 14/11/2023 | Replace NextAuth                                           | :heavy_check_mark: (19/11/2023) |
 | 21/11/2023 | Salt passwords                                             | :heavy_check_mark: (22/11/2023) |
 | 22/11/2023 | Support for sort over dates                                | todo :date:                     |
+| 22/11/2023 | Highlight search phrase in results                         | todo :date:                     |
 
 ## TODO
 
