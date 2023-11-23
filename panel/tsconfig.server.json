@@ -1,11 +1,11 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "module": "CommonJS",
+        "module": "CommonJs",
         "outDir": "dist",
         "target": "ES2019",
         "lib": ["ES2019", "DOM"],
-        "isolatedModules": false,
+        "isolatedModules": true,
         "noEmit": false
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]

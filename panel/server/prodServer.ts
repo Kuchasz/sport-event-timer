@@ -3,7 +3,7 @@ import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import http from "http";
 import next from "next";
 import { parse } from "url";
-import ws from "ws";
+import { WebSocketServer } from "ws";
 import { appRouter } from "./routers/app";
 import { logger } from "../utils";
 import * as dotenv from "dotenv";
@@ -33,7 +33,7 @@ void app.prepare().then(() => {
         const parsedUrl = parse(req.url!, true);
         void handle(req, res, parsedUrl);
     });
-    const wss = new ws.Server({ server });
+    const wss = new WebSocketServer({ server });
     const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContextWs });
 
     process.on("SIGTERM", () => {
