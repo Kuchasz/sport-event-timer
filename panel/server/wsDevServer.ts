@@ -1,7 +1,7 @@
 import { createContextWs } from "./trpc";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import fetch from "node-fetch";
-import ws from "ws";
+import { WebSocketServer } from "ws";
 import { appRouter } from "./routers/app";
 import("../env");
 import { env } from "../env";
@@ -11,7 +11,7 @@ if (!global.fetch) {
     (global as any).fetch = fetch;
 }
 
-const wss = new ws.Server({
+const wss = new WebSocketServer({
     port: env.NEXT_PUBLIC_APP_WS_PORT,
 });
 

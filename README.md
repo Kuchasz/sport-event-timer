@@ -64,6 +64,7 @@ Application for making time measurements
 | 21/11/2023 | Salt passwords                                             | :heavy_check_mark: (22/11/2023) |
 | 22/11/2023 | Support for sort over dates                                | todo :date:                     |
 | 22/11/2023 | Highlight search phrase in Data table results              | :heavy_check_mark: (23/11/2023) |
+| 23/11/2023 | Optional race registration expire time                     | todo :date:                     |
 
 ## TODO
 
