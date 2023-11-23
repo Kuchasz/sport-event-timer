@@ -18,7 +18,7 @@ export const Timer = ({ offset }: { offset: number }) => {
         const tickTime = () => {
             const globalTime = Date.now() + offset;
 
-            setTime(globalTime);
+            !shouldBeStopped && setTime(globalTime);
 
             tickInterval = requestAnimationFrame(tickTime);
         };
