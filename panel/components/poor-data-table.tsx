@@ -34,6 +34,16 @@ type PoorDataTableProps<T> = {
 
 type SortState<T> = { field: keyof T; order: "desc" | "asc" };
 
+interface Result {
+    readonly score: number;
+    readonly target: string;
+}
+
+interface KeysResult<T> extends ReadonlyArray<Result> {
+    readonly score: number;
+    readonly obj: T;
+}
+
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const { gridName, data, columns, getRowId, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
     const t = useTranslations();
@@ -55,20 +65,21 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
-    const useSearch = !!usableSearchFields?.length;
+    // const useSearch = !!usableSearchFields?.length;
 
     useEffect(() => {
         changePage(0);
     }, [searchQuery]);
 
-    if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
+    // if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
     const rowsPerPage = 25;
 
-    const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" });
+    const filteredData = fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[];
+    // const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" }) as readonly KeyResult<T>[];
 
     const sortedFilteredData = sortColumn
-        ? naturalSort(filteredData as unknown as { obj: T }[], sortColumn.order, d => String(d.obj[sortColumn.field]))
+        ? naturalSort([...filteredData], sortColumn.order, d => String(d.obj[sortColumn.field]))
         : filteredData;
 
     const pagesData = sortedFilteredData.slice(
@@ -113,25 +124,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     }}
                 />
             </div>
-
-            {/* <div
-                                    className={classNames(
-                                        "m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors",
-                                        c.sortable && "cursor-pointer hover:bg-gray-100",
-                                    )}
-                                >
-                                    <span>{c.headerName}</span>
-                                    {c.sortable && c.field === sortColumn?.field ? (
-                                        sortColumn.order === "asc" ? (
-                                            <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
-                                        ) : (
-                                            <Icon className="text-gray-600" size={0.6} path={mdiArrowDown} />
-                                        )
-                                    ) : (
-                                        <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />
-                                    )}
-                                </div> */}
-
             <ScrollArea className=" basis-auto rounded-md border">
                 <div
                     className="relative grid"
@@ -175,7 +167,15 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                         {c.cellRenderer ? (
                                             <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
                                         ) : (
-                                            <div className="whitespace-nowrap">{d.obj[c.field] as any}</div>
+                                            <div className="whitespace-nowrap">
+                                                {searchQuery &&
+                                                usableSearchFields?.includes(c.field) &&
+                                                d[usableSearchFields.indexOf(c.field)]
+                                                    ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field)], (m, i) => (
+                                                          <mark key={i}>{m}</mark>
+                                                      ))
+                                                    : (d.obj[c.field] as any)}
+                                            </div>
                                         )}
                                     </div>
                                 ))}

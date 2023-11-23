@@ -88,7 +88,7 @@ export const Players = () => {
         {
             field: "birthDate",
             headerName: t("pages.players.grid.columns.birthDate"),
-            sortable: true,
+            sortable: false,
             hide: true,
             cellRenderer: data => <div>{data.birthDate.toLocaleDateString(locale)}</div>,
         },
