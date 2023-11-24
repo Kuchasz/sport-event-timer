@@ -630,6 +630,9 @@
           "finish": "Finish",
           "result": "Result",
           "actions": "Actions"
+        },
+        "search": {
+          "placeholder": "Search for results..."
         }
       },
       "header": {

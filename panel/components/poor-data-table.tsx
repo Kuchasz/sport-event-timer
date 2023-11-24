@@ -27,7 +27,7 @@ type PoorDataTableProps<T> = {
     columns: PoorDataTableColumn<T>[];
     data: T[];
     getRowId: (row: T) => string | number;
-    onRowDoubleClicked: (row: T) => void;
+    onRowDoubleClicked?: (row: T) => void;
     searchFields?: (keyof T)[];
     searchPlaceholder?: string;
 };
@@ -161,7 +161,11 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     </div>
                     <div className="contents">
                         {pagesData.map(d => (
-                            <div onDoubleClick={() => onRowDoubleClicked(d.obj)} className="group contents text-sm" key={getRowId(d.obj)}>
+                            <div
+                                onDoubleClick={() => onRowDoubleClicked && onRowDoubleClicked(d.obj)}
+                                className="group contents text-sm"
+                                key={getRowId(d.obj)}
+                            >
                                 {visibleColumns.map(c => (
                                     <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
                                         {c.cellRenderer ? (
