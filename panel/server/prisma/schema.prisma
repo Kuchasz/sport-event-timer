@@ -95,7 +95,7 @@ model Category {
 
 model Player {
     id                   Int                @id @default(autoincrement())
-    bibNumber            String?
+    bibNumber            String
     startTime            Int?
     profile              PlayerProfile      @relation(fields: [playerProfileId], references: [id])
     race                 Race               @relation(fields: [raceId], references: [id])
@@ -204,7 +204,7 @@ model ManualSplitTime {
 model TimePenalty {
     id        Int    @id @default(autoincrement())
     bibNumber String
-    time      BigInt
+    time      Int
     reason    String
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int

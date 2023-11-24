@@ -17,7 +17,7 @@ export const playerProfileSchema = z.object({
 });
 
 export const playerPromotionSchema = z.object({
-    bibNumber: z.string().nullish(),
+    bibNumber: z.string(),
     startTime: z.number().optional(),
     classificationId: z.number().int(),
 });
@@ -30,7 +30,7 @@ export const playerRegistrationSchema = z.object({
 export const playerSchema = z.object({
     id: z.number().nullish(),
     classificationId: z.number({ required_error: sharedErrorCodes.required }),
-    bibNumber: z.string().nullish(),
+    bibNumber: z.string(),
     startTime: z.number().optional(),
 });
 

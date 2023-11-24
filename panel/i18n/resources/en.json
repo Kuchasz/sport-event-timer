@@ -638,6 +638,38 @@
       "header": {
         "title": "Race Results",
         "description": "Results measured by the stopwatch, each may be overriden"
+      },
+      "disqualify": {
+        "title": "Disqualify player",
+        "description": "Disqualification may be reverted later",
+        "confirmation": {
+          "title": "Disqualify player",
+          "text": "You are trying to disqualify the competitor {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time."
+        }
+      },
+      "revertDisqualification": {
+        "title": "Revert disqualification",
+        "description": "The original score of the player will be restored",
+        "confirmation": {
+          "title": "Revert disqualification",
+          "text": "You are trying to revert disqualification of the Player {name} {lastName}. Do you want to proceed?\""
+        }
+      },
+      "applyTimePenalty": {
+        "title": "Apply time penalty",
+        "description": "Penalty will be added to player's result",
+        "confirmation": {
+          "title": "Apply time penalty",
+          "text": "You are trying to apply penalty the Player {name} {lastName} result. Do you want to proceed?"
+        }
+      },
+      "revertTimePenalty": {
+        "title": "Revert time penalty",
+        "description": "The result achieved by the player will be restored",
+        "confirmation": {
+          "title": "Revert time penalty",
+          "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
+        }
       }
     },
     "settings": {
@@ -719,6 +751,28 @@
         "results": {
           "title": "Live Results",
           "description": "Displays live results. The results of the athletes appear as soon as you uncheck them in the stopwatch. A breakdown by category is included. The site is adapted for display on a phone, refreshes automatically."
+        }
+      }
+    },
+    "result": {
+      "applyTimePenalty": {
+        "form": {
+          "time": {
+            "label": "Time",
+            "placeholder": "Enter time penalty"
+          },
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Type reason for penalty"
+          }
+        }
+      },
+      "disqualify": {
+        "form": {
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Type reason for disqualification"
+          }
         }
       }
     }
