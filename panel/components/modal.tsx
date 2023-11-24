@@ -7,9 +7,14 @@ import { Dialog, Transition } from "@headlessui/react";
 
 type ResolvableComponentProps<P> = { onResolve: (value: P) => void; onReject: () => void };
 type ResolvableComponent<P> = ComponentType<ResolvableComponentProps<P>>;
-type ResolvableModalProps<P> = { title: string; component: ResolvableComponent<P>; props: ResolvableComponentProps<P> };
+type ResolvableModalProps<P> = {
+    title: string;
+    description?: string;
+    component: ResolvableComponent<P>;
+    props: ResolvableComponentProps<P>;
+};
 
-export const NiceModal = Demodal.create(<P,>({ title, component: Content, props }: ResolvableModalProps<P>) => {
+export const NiceModal = Demodal.create(<P,>({ title, description, component: Content, props }: ResolvableModalProps<P>) => {
     const modal = useModal();
 
     const reject = () => {
@@ -53,6 +58,7 @@ export const NiceModal = Demodal.create(<P,>({ title, component: Content, props 
                                     <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                                         {title}
                                     </Dialog.Title>
+                                    <Dialog.Description>{description}</Dialog.Description>
                                     <div className="mt-2">
                                         <Content {...props} onResolve={resolve} onReject={reject} />
                                         {/* <p className="text-sm text-gray-500">

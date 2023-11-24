@@ -60,7 +60,7 @@ export const playerRouter = router({
         .query(async ({ input, ctx }) => {
             const { raceId } = input;
             const players = await ctx.db.player.findMany({
-                where: { raceId: raceId, bibNumber: { not: null } },
+                where: { raceId: raceId },
                 select: {
                     profile: {
                         select: {
