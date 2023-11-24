@@ -55,7 +55,7 @@ Application for making time measurements
 | 06/11/2023 | Add participation cerfificates with printing               | todo :date:                     |
 | 06/11/2023 | Badge counters on certain menu items                       | :heavy_check_mark: (06/11/2023) |
 | 06/11/2023 | Special filters on Data Table(eg. for paid players)        | todo :date:                     |
-| 07/11/2023 | Use Data Table on results                                  | todo :date:                     |
+| 07/11/2023 | Use Data Table on results                                  | :heavy_check_mark: (24/11/2023) |
 | 09/11/2023 | Persist some grid settings in url                          | todo :date:                     |
 | 09/11/2023 | Animate chevron on switching to next player (start list)   | :heavy_check_mark: (13/11/2023) |
 | 10/11/2023 | Enter to submit form                                       | :heavy_check_mark: (13/11/2023) |
@@ -65,6 +65,7 @@ Application for making time measurements
 | 22/11/2023 | Support for sort over dates                                | todo :date:                     |
 | 22/11/2023 | Highlight search phrase in Data table results              | :heavy_check_mark: (23/11/2023) |
 | 23/11/2023 | Optional race registration expire time                     | todo :date:                     |
+| 24/11/2023 | Add no data message to Data Table                          | todo :date:                     |
 
 ## TODO
 

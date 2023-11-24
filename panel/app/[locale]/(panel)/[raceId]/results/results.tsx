@@ -3,30 +3,68 @@ import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/di
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 
-import { useCurrentRaceId } from "../../../../../hooks";
-import type { ColDef } from "@ag-grid-community/core";
-import { AgGridReact } from "@ag-grid-community/react";
-import { useCallback, useRef } from "react";
-import Head from "next/head";
-import { PageHeader } from "components/page-header";
-import { useTranslations } from "next-intl";
-import { PoorActions } from "components/poor-actions";
 import { mdiTrashCan } from "@mdi/js";
 import { Confirmation } from "components/confirmation";
-import { Demodal } from "demodal";
 import { NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
+import { PoorActions } from "components/poor-actions";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
+import { useTranslations } from "next-intl";
+import Head from "next/head";
+import { useCurrentRaceId } from "../../../../../hooks";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
 export const Results = () => {
     const raceId = useCurrentRaceId();
     const { data: results, refetch } = trpc.result.results.useQuery({ raceId: raceId });
-    const gridRef = useRef<AgGridReact<Result>>(null);
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
-
     const t = useTranslations();
+
+    const cols: PoorDataTableColumn<Result>[] = [
+        {
+            field: "bibNumber",
+            sortable: true,
+            headerName: t("pages.results.grid.columns.bibNumber"),
+        },
+        {
+            field: "name",
+            sortable: true,
+            headerName: t("pages.results.grid.columns.playerName"),
+        },
+        {
+            field: "lastName",
+            sortable: true,
+            headerName: t("pages.results.grid.columns.playerLastName"),
+        },
+        {
+            field: "start",
+            headerName: t("pages.results.grid.columns.start"),
+            sortable: true,
+            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.start)}</span>,
+        },
+        {
+            field: "finish",
+            headerName: t("pages.results.grid.columns.finish"),
+            sortable: true,
+            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.finish)}</span>,
+        },
+        {
+            field: "result",
+            headerName: t("pages.results.grid.columns.result"),
+            sortable: true,
+            cellRenderer: (data: Result) => (
+                <span className="flex flex-col items-end font-mono uppercase">
+                    {data.invalidState ? data.invalidState : formatTimeWithMilliSecUTC(data.result)}
+                </span>
+            ),
+        },
+        {
+            field: "bibNumber",
+            headerName: t("pages.results.grid.columns.actions"),
+            cellRenderer: (data: Result) => <PoorActions item={data} actions={[revertTimePenalty, revertDisqualification]} />,
+        },
+    ];
 
     const revertDisqualification = {
         name: t("pages.playerRegistrations.delete.title"),
@@ -74,55 +112,6 @@ export const Results = () => {
         },
     };
 
-    const defaultColumns: ColDef<Result>[] = [
-        { field: "bibNumber", sortable: true, filter: true, headerName: t("pages.results.grid.columns.bibNumber") },
-        {
-            field: "name",
-            sortable: true,
-            filter: true,
-            headerName: t("pages.results.grid.columns.playerName"),
-            cellRenderer: (p: { data: Result }) => <span>{p.data.name}</span>,
-        },
-        {
-            field: "lastName",
-            sortable: true,
-            filter: true,
-            headerName: t("pages.results.grid.columns.playerLastName"),
-            cellRenderer: (p: { data: Result }) => <span>{p.data.lastName}</span>,
-        },
-        {
-            field: "start",
-            headerName: t("pages.results.grid.columns.start"),
-            sortable: true,
-            cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSec(p.data.start)}</span>,
-        },
-        {
-            field: "finish",
-            headerName: t("pages.results.grid.columns.finish"),
-            sortable: true,
-            cellRenderer: (p: { data: Result }) => <span>{formatTimeWithMilliSec(p.data.finish)}</span>,
-        },
-        {
-            field: "result",
-            headerName: t("pages.results.grid.columns.result"),
-            sort: "asc",
-            sortable: true,
-            cellRenderer: (p: { data: Result }) => (
-                <span className="flex flex-col items-end font-mono uppercase">
-                    {p.data.invalidState ? p.data.invalidState : formatTimeWithMilliSecUTC(p.data.result)}
-                </span>
-            ),
-        },
-        {
-            resizable: true,
-            width: 130,
-            headerName: t("pages.results.grid.columns.actions"),
-            cellRenderer: (props: { data: Result; context: { refetch: () => void } }) => (
-                <PoorActions item={props.data} actions={[revertTimePenalty, revertDisqualification]} />
-            ),
-        },
-    ];
-
     return (
         <>
             <Head>
@@ -130,19 +119,17 @@ export const Results = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
+
                 {results && (
-                    <div className="ag-theme-material h-full">
-                        <AgGridReact<Result>
-                            ref={gridRef}
-                            context={{ refetch }}
-                            suppressCellFocus={true}
-                            suppressAnimationFrame={true}
-                            columnDefs={defaultColumns}
-                            getRowId={item => item.data.bibNumber!}
-                            rowData={results}
-                            onFirstDataRendered={onFirstDataRendered}
-                            onGridSizeChanged={onFirstDataRendered}
-                        ></AgGridReact>
+                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                        <PoorDataTable
+                            data={results}
+                            columns={cols}
+                            searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                            getRowId={item => item.bibNumber!}
+                            gridName="results"
+                            searchFields={["name", "lastName", "team", "bibNumber"]}
+                        />
                     </div>
                 )}
             </div>

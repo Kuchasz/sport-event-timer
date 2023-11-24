@@ -6,12 +6,12 @@ import { useCallback, useRef } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../../trpc-core";
 
-type Account = AppRouterOutputs["account"]["accounts"][0];
+type Account = AppRouterOutputs["user"]["accounts"][0];
 
 const defaultColumns: ColDef<Account>[] = [{ field: "email", headerName: "Email", sortable: true, filter: true }];
 
 export const Accounts = () => {
-    const { data: accounts } = trpc.account.accounts.useQuery(undefined, { initialData: [] });
+    const { data: accounts } = trpc.user.accounts.useQuery(undefined, { initialData: [] });
     const gridRef = useRef<AgGridReact<Account>>(null);
 
     const onFirstDataRendered = useCallback(() => {

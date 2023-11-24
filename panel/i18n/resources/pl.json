@@ -630,6 +630,9 @@
           "finish": "Meta",
           "result": "Wynik",
           "actions": "Akcje"
+        },
+        "search": {
+          "placeholder": "Szukaj wyników..."
         }
       },
       "header": {
