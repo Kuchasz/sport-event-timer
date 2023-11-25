@@ -78,7 +78,13 @@ export const Results = () => {
             field: "bibNumber",
             headerName: t("pages.results.grid.columns.actions"),
             cellRenderer: (data: Result) => (
-                <PoorActions item={data} actions={[applyTimePenalty, revertTimePenalty, disqualify, revertDisqualification]} />
+                <PoorActions
+                    item={data}
+                    actions={[
+                        timePenalties[data.bibNumber] ? revertTimePenalty : applyTimePenalty,
+                        disqualifications[data.bibNumber] ? revertDisqualification : disqualify,
+                    ]}
+                />
             ),
         },
     ];
