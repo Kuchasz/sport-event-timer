@@ -644,7 +644,7 @@
         "description": "Disqualification may be reverted later",
         "confirmation": {
           "title": "Disqualify player",
-          "text": "You are trying to disqualify the competitor {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time."
+          "text": "You are trying to disqualify the player {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time."
         }
       },
       "revertDisqualification": {
