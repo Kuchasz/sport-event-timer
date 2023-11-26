@@ -17,14 +17,28 @@ import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
 import Icon from "@mdi/react";
 import classNames from "classnames";
+import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
 const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () => Promise<void> }) => {
     // const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
-    // const t = useTranslations();
+    const t = useTranslations();
 
-    const managePlayerPenalties = () => {};
+    const managePlayerPenalties = async () => {
+        const fooo = await Demodal.open(NiceModal, {
+            title: t("pages.results.manageTimePenalties.confirmation.title"),
+            description: t("pages.results.manageTimePenalties.confirmation.text", {
+                name: result.name,
+                lastName: result.lastName,
+            }),
+            component: ManageTimePenalties,
+            props: {
+                penalties: result.timePenalties,
+                playerId: result.id,
+            },
+        });
+    };
 
     // const locale = useLocale();
 

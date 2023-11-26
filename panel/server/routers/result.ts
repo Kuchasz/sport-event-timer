@@ -41,6 +41,7 @@ export const resultRouter = router({
             const raceDateStart = race?.date.getTime();
 
             const playersWithTimes = allPlayers.map(p => ({
+                id: p.id,
                 bibNumber: p.bibNumber,
                 name: p.profile.name,
                 lastName: p.profile.lastName,

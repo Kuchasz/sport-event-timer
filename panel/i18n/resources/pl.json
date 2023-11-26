@@ -671,6 +671,18 @@
         },
         "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
         "title": "Wycofaj karę czasową"
+      },
+      "manageTimePenalties": {
+        "grid": {
+          "columns": {
+            "reason": "Powód",
+            "time": "Czas"
+          }
+        },
+        "confirmation": {
+          "title": "Kary czasowe",
+          "text": "Zarządzaj karami czasowymi zawodnika {name} {lastName}"
+        }
       }
     },
     "settings": {
