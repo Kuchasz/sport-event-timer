@@ -7,7 +7,7 @@ import { Demodal } from "demodal";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { TimingPointCreate } from "components/panel/timing-point/timing-point-create";
 import { TimingPointEdit } from "components/panel/timing-point/timing-point-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
@@ -255,7 +255,7 @@ export const TimingPoints = () => {
     };
 
     const openDeleteDialog = async (timingPoint: TimingPoint) => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.timingPoints.delete.confirmation.title"),
             component: Confirmation,
             props: {
@@ -272,7 +272,7 @@ export const TimingPoints = () => {
     };
 
     const openDeleteAccesKeyDialog = async (timingPointAccessKey: AccessKeys[0]) => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.timingPoints.accessUrls.delete.confirmation.title"),
             component: Confirmation,
             props: {

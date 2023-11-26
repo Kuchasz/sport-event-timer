@@ -5,7 +5,7 @@ import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
 import { Button } from "components/button";
 import { Confirmation } from "components/confirmation";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
 import { useCurrentRaceId } from "hooks";
@@ -40,7 +40,7 @@ export const Settings = () => {
     };
 
     const openDeleteDialog = async (apiKey: ApiKey) => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.settings.apiKeys.delete.confirmation.title"),
             component: Confirmation,
             props: {

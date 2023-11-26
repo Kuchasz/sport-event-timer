@@ -6,7 +6,7 @@ import { Demodal } from "demodal";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { Confirmation } from "components/confirmation";
@@ -94,7 +94,7 @@ export const MyRaces = () => {
             description: t("pages.races.wipeStopwatchPopup.description"),
             iconPath: mdiRestore,
             execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                     title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
                     component: Confirmation,
                     props: {
@@ -114,7 +114,7 @@ export const MyRaces = () => {
             description: t("pages.races.deleteRacePopup.description"),
             iconPath: mdiTrashCan,
             execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                     title: t("pages.races.deleteRacePopup.confirmation.title"),
                     component: Confirmation,
                     props: {

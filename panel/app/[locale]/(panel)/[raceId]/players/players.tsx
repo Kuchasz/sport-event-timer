@@ -13,7 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
-import { NiceModal } from "../../../../../components/modal";
+import { NiceConfirmation, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -24,7 +24,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
     const deletePlayerMutation = trpc.player.delete.useMutation();
     const t = useTranslations();
     const deletePlayer = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.players.delete.confirmation.title"),
             component: Confirmation,
             props: {

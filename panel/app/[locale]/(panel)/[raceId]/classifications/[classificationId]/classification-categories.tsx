@@ -12,7 +12,7 @@ import { AgGridReact } from "@ag-grid-community/react";
 import type { ColDef } from "@ag-grid-community/core";
 import { GenderIcon } from "components/gender-icon";
 import { Demodal } from "demodal";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { Confirmation } from "components/confirmation";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
@@ -52,7 +52,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
     const t = useTranslations();
 
     const openDeleteDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.classifications.categories.detele.confirmation.title"),
             component: Confirmation,
             props: {

@@ -8,7 +8,7 @@ import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
 import { Demodal } from "demodal";
 import { trpc } from "../../../../../trpc-core";
 import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { useCallback, useRef } from "react";
 import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
@@ -29,7 +29,7 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
     const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
     const t = useTranslations();
     const deletebibNumber = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.bibNumbers.delete.confirmation.title"),
             component: Confirmation,
             props: {
@@ -90,7 +90,7 @@ export const BibNumbers = () => {
     };
 
     const openDeleteAllDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.bibNumbers.deleteAll.confirmation.title"),
             component: Confirmation,
             props: {

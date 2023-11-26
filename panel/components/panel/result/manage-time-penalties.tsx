@@ -1,7 +1,10 @@
 import { mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
+import { Confirmation } from "components/confirmation";
+import { NiceConfirmation } from "components/modal";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
@@ -13,15 +16,30 @@ type ManageTimePenaltiesProps = {
     onReject: () => void;
     playerId: number;
     penalties: TimePenalty[];
+    name: string;
+    lastName: string;
 };
 
-export const ManageTimePenalties = ({ onResolve, onReject, penalties }: ManageTimePenaltiesProps) => {
+export const ManageTimePenalties = ({ onResolve, onReject, penalties, name, lastName }: ManageTimePenaltiesProps) => {
     const t = useTranslations();
     const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
 
     const revertTimePenalty = async (penaltyId: number) => {
-        await revertTimePenaltyMutation.mutateAsync({ id: penaltyId });
-        onResolve(penaltyId);
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
+            title: t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.title"),
+            component: Confirmation,
+            props: {
+                message: t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.text", {
+                    name: name,
+                    lastName: lastName,
+                }),
+            },
+        });
+
+        if (confirmed) {
+            await revertTimePenaltyMutation.mutateAsync({ id: penaltyId });
+            onResolve(penaltyId);
+        }
     };
 
     const cols: PoorDataTableColumn<TimePenalty>[] = [
@@ -52,10 +70,7 @@ export const ManageTimePenalties = ({ onResolve, onReject, penalties }: ManageTi
             ></PoorDataTable>
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
-                    {t("shared.cancel")}
-                </Button>
-                <Button loading={false} type="submit">
-                    {t("shared.save")}
+                    {t("shared.close")}
                 </Button>
             </div>
         </div>

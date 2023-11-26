@@ -664,14 +664,6 @@
           "text": "You are trying to apply penalty the Player {name} {lastName} result. Do you want to proceed?"
         }
       },
-      "revertTimePenalty": {
-        "title": "Revert time penalty",
-        "description": "The result achieved by the player will be restored",
-        "confirmation": {
-          "title": "Revert time penalty",
-          "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
-        }
-      },
       "manageTimePenalties": {
         "grid": {
           "columns": {
@@ -683,6 +675,14 @@
         "confirmation": {
           "title": "Time penalties",
           "text": "Manage the time penalties of the player {name} {lastName}"
+        },
+        "revertTimePenalty": {
+          "title": "Revert time penalty",
+          "description": "The result achieved by the player will be restored",
+          "confirmation": {
+            "title": "Revert time penalty",
+            "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
+          }
         }
       }
     },
@@ -1193,7 +1193,8 @@
         "rowsPerPage": "Rows per page:",
         "currentPage": "Page {currentPage} of {totalPages}"
       }
-    }
+    },
+    "close": "Close"
   },
   "startList": {
     "nextPlayer": "Next player",
