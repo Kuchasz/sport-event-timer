@@ -84,25 +84,6 @@ export const Results = () => {
                                                 <td className="px-1 py-3 text-xs font-semibold uppercase">
                                                     {s.name.slice(0, 1)}. {s.lastName}
                                                 </td>
-
-                                                {/* {(openCategoriesExist || ageCategoriesExist) && (
-                                                        <td className="px-1 py-2 text-xs">
-                                                            {openCategories.map(
-                                                                c =>
-                                                                    s.openCategory?.name === c && (
-                                                                        <div key={c}>
-                                                                            {s.openCategory.name} ({s.openCategoryPlace})
-                                                                        </div>
-                                                                    )
-                                                            )}
-                                                            {ageCategoriesExist && s.ageCategory && (
-                                                                <div>
-                                                                    {s.ageCategory.name} ({s.ageCategoryPlace})
-                                                                </div>
-                                                            )}
-                                                        </td>
-                                                    )} */}
-
                                                 {openCategoriesExist && (
                                                     <td className="flex flex-col items-center px-1 py-3 text-center text-xs">
                                                         <div
@@ -122,16 +103,6 @@ export const Results = () => {
                                                     </td>
                                                 )}
 
-                                                {/* {openCategories.map(c => (
-                                                        <td key={c} className="px-1 text-center py-2 text-xs">
-                                                            {s.openCategory?.name === c && s.openCategoryPlace}
-                                                        </td>
-                                                    ))}
-                                                    {ageCategoriesExist && (
-                                                        <td className="px-1 py-2 text-center text-xs">
-                                                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
-                                                        </td>
-                                                    )} */}
                                                 <td
                                                     className={classNames(
                                                         "px-1 py-3 text-center font-mono text-xs font-semibold uppercase",
@@ -205,68 +176,3 @@ export const Results = () => {
         </>
     );
 };
-
-{
-    /* <table className="divide-y divide-gray-300 ">
-<thead className="top-0 sticky bg-gray-50">
-    <tr>
-        <th className="px-4 py-2 text-xs text-gray-500">#</th>
-        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.bibNumber")}</th>
-        <th className="px-4 py-2 text-xs text-left text-gray-500">{t("results.grid.columns.name")}</th>
-        <th className="px-4 py-2 text-xs text-left text-gray-500">{t("results.grid.columns.team")}</th>
-        {openCategories.map(c => (
-            <th key={c} className="px-4 py-2 text-xs text-gray-500">
-                {c}
-            </th>
-        ))}
-        {ageCategoriesExist && (
-            <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.category")}</th>
-        )}
-        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.start")}</th>
-        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.finish")}</th>
-        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.result")}</th>
-        <th className="px-4 py-2 text-xs text-gray-500">{t("results.grid.columns.gap")}</th>
-    </tr>
-</thead>
-<tbody className="bg-white divide-y divide-gray-300">
-    {results &&
-        results.map((s, i) => (
-            <>
-                <tr key={i} className="whitespace-nowrap">
-                    <td className="px-4 py-2 text-center text-xs">{i + 1}</td>
-                    <td className="px-4 py-2 text-center text-xs font-semibold">{s.bibNumber}</td>
-                    <td className="px-4 font-semibold py-2 text-xs">
-                        {s.name} {s.lastName}
-                    </td>
-                    <td className="px-4 py-2 text-xs text-ellipsis">{s.team ?? ""}</td>
-                    {openCategories.map(c => (
-                        <td key={c} className="px-4 text-center py-2 text-xs">
-                            {s.openCategory?.name === c && s.openCategoryPlace}
-                        </td>
-                    ))}
-                    {ageCategoriesExist && (
-                        <td className="px-4 py-2 text-center text-xs">
-                            {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
-                        </td>
-                    )}
-                    <td className="px-4 font-mono text-center py-2 text-xs">
-                        {!s.invalidState && formatTimeWithMilliSec(s.start)}
-                    </td>
-                    <td className="px-4 font-mono text-center py-2 text-xs">
-                        {!s.invalidState && formatTimeWithMilliSec(s.finish)}
-                    </td>
-                    <td className="px-4 font-semibold uppercase text-right font-mono py-2 text-xs">
-                        {s.invalidState ? s.invalidState : formatTimeWithMilliSecUTC(s.result)}
-                    </td>
-                    <td className="px-4 text-right font-mono py-2 text-xs">
-                        {!s.invalidState && formatGap(s.gap)}
-                    </td>
-                </tr>
-                <tr key={i} className="whitespace-nowrap">
-                    <td colSpan={10} className="px-4 py-2 text-center text-xs"></td>
-                </tr>
-            </>
-        ))}
-</tbody>
-</table> */
-}

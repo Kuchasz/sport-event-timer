@@ -858,7 +858,8 @@
     },
     "abbreviations": {
       "dns": "Nie wystartował(a)",
-      "dnf": "Nie ukończył(a)"
+      "dnf": "Nie ukończył(a)",
+      "dsq": "Zdyskwalifikowany(a)"
     },
     "grid": {
       "columns": {

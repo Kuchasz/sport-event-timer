@@ -1,5 +1,5 @@
 import { publicProcedure, router } from "../trpc";
-import { groupBy, sort } from "@set/utils/dist/array";
+import { groupBy, sort, toMap } from "@set/utils/dist/array";
 import { z } from "zod";
 import { calculateAge } from "@set/utils/dist/datetime";
 
@@ -14,6 +14,22 @@ export const resultRouter = router({
                 include: { splitTime: true, manualSplitTime: true, absence: true, profile: true },
             });
 
+            const disqualifications = await toMap(
+                ctx.db.disqualification.findMany({
+                    where: { raceId },
+                }),
+                d => d.bibNumber,
+                d => d.id,
+            );
+
+            console.log(disqualifications);
+
+            // const timePenalties = await toMap(
+            //     ctx.db.timePenalty.findMany({ where: { raceId } }),
+            //     p => p.bibNumber,
+            //     p => p.time,
+            // );
+
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p));
@@ -26,7 +42,7 @@ export const resultRouter = router({
 
             const raceDateStart = race?.date.getTime();
 
-            const times = allPlayers.map(p => ({
+            const playersWithTimes = allPlayers.map(p => ({
                 bibNumber: p.bibNumber,
                 name: p.profile.name,
                 lastName: p.profile.lastName,
@@ -43,7 +59,26 @@ export const resultRouter = router({
                 absences: {
                     ...Object.fromEntries(p.absence.map(a => [a.timingPointId, true])),
                 },
+                disqualification: disqualifications[p.bibNumber],
             }));
+
+            //handle disqualified players here
+
+            const times = playersWithTimes.filter(p => !p.disqualification);
+
+            const disqualifiedPlayers = playersWithTimes
+                .filter(d => d.disqualification)
+                .map(t => ({
+                    ...t,
+                    invalidState: "dsq",
+                    start: undefined,
+                    finish: undefined,
+                    result: Number.MAX_VALUE,
+                    ageCategory: undefined,
+                    openCategory: undefined,
+                }));
+
+            console.log(disqualifiedPlayers);
 
             const absentPlayers = times
                 .filter(t => t.absences[startTimingPoint?.id] || t.absences[endTimingPoint?.id])
@@ -98,7 +133,7 @@ export const resultRouter = router({
                 ).map(([catId, results]) => [catId, sort(results, r => r.result)]),
             );
 
-            const sorted = sort([...resultsWithCategories, ...absentPlayers], r => r.result).map(r => ({
+            const sorted = sort([...resultsWithCategories, ...absentPlayers, ...disqualifiedPlayers], r => r.result).map(r => ({
                 ...r,
                 ageCategoryPlace: r.ageCategory ? playersByAgeCategories[r.ageCategory.id].indexOf(r) + 1 : undefined,
                 openCategoryPlace: r.openCategory ? playersByOpenCategories[r.openCategory.id].indexOf(r) + 1 : undefined,
