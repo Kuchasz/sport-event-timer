@@ -22,15 +22,11 @@ export const resultRouter = router({
                 d => d.id,
             );
 
-            console.log(disqualifications);
-
             const timePenalties = await toLookup(
                 ctx.db.timePenalty.findMany({ where: { raceId } }),
                 p => p.bibNumber,
                 p => ({ time: p.time, reason: p.reason }),
             );
-
-            console.log(timePenalties);
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
@@ -62,9 +58,9 @@ export const resultRouter = router({
                     ...Object.fromEntries(p.absence.map(a => [a.timingPointId, true])),
                 },
                 disqualification: disqualifications[p.bibNumber],
+                timePenalties: timePenalties[p.bibNumber] ?? [],
+                totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
             }));
-
-            //handle disqualified players here
 
             const times = playersWithTimes.filter(p => !p.disqualification);
 
@@ -79,8 +75,6 @@ export const resultRouter = router({
                     ageCategory: undefined,
                     openCategory: undefined,
                 }));
-
-            console.log(disqualifiedPlayers);
 
             const absentPlayers = times
                 .filter(t => t.absences[startTimingPoint?.id] || t.absences[endTimingPoint?.id])

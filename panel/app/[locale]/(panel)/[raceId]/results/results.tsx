@@ -3,18 +3,18 @@ import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/di
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 
-import { mdiAccountLockOpenOutline, mdiAccountLockOutline, mdiSync, mdiTimerAlertOutline } from "@mdi/js";
+import { mdiAlertOutline, mdiAlertRemoveOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import { Confirmation } from "components/confirmation";
 import { NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
+import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
+import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 import { PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
-import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
-import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
@@ -65,6 +65,12 @@ export const Results = () => {
             cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.finish)}</span>,
         },
         {
+            field: "totalTimePenalty",
+            headerName: "Time Penalty",
+            sortable: true,
+            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSecUTC(data.totalTimePenalty)}</span>,
+        },
+        {
             field: "result",
             headerName: t("pages.results.grid.columns.result"),
             sortable: true,
@@ -92,7 +98,7 @@ export const Results = () => {
     const disqualify = {
         name: t("pages.results.disqualify.title"),
         description: t("pages.results.disqualify.description"),
-        iconPath: mdiAccountLockOutline,
+        iconPath: mdiCloseOctagonOutline,
         execute: async (result: Result) => {
             const disqualification = await Demodal.open(NiceModal, {
                 title: t("pages.results.disqualify.confirmation.title"),
@@ -117,7 +123,7 @@ export const Results = () => {
     const revertDisqualification = {
         name: t("pages.results.revertDisqualification.title"),
         description: t("pages.results.revertDisqualification.description"),
-        iconPath: mdiAccountLockOpenOutline,
+        iconPath: mdiRestore,
         execute: async (result: Result) => {
             const confirmed = await Demodal.open<boolean>(NiceModal, {
                 title: t("pages.results.revertDisqualification.confirmation.title"),
@@ -141,7 +147,7 @@ export const Results = () => {
     const applyTimePenalty = {
         name: t("pages.results.applyTimePenalty.title"),
         description: t("pages.results.applyTimePenalty.description"),
-        iconPath: mdiTimerAlertOutline,
+        iconPath: mdiAlertOutline,
         execute: async (result: Result) => {
             const timePenalty = await Demodal.open(NiceModal, {
                 title: t("pages.results.applyTimePenalty.confirmation.title"),
@@ -166,7 +172,7 @@ export const Results = () => {
     const revertTimePenalty = {
         name: t("pages.results.revertTimePenalty.title"),
         description: t("pages.results.revertTimePenalty.description"),
-        iconPath: mdiSync,
+        iconPath: mdiAlertRemoveOutline,
         execute: async (result: Result) => {
             const confirmed = await Demodal.open<boolean>(NiceModal, {
                 title: t("pages.results.revertTimePenalty.confirmation.title"),
@@ -201,7 +207,7 @@ export const Results = () => {
                             data={results}
                             columns={cols}
                             searchPlaceholder={t("pages.results.grid.search.placeholder")}
-                            getRowId={item => item.bibNumber!}
+                            getRowId={item => item.bibNumber}
                             gridName="results"
                             searchFields={["name", "lastName", "team", "bibNumber"]}
                         />
