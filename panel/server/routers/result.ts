@@ -25,7 +25,7 @@ export const resultRouter = router({
             const timePenalties = await toLookup(
                 ctx.db.timePenalty.findMany({ where: { raceId } }),
                 p => p.bibNumber,
-                p => ({ time: p.time, reason: p.reason }),
+                p => ({ time: p.time, reason: p.reason, id: p.id }),
             );
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
