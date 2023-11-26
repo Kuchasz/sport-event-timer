@@ -40,7 +40,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                                     onClick={() => action.execute(item)}
                                 >
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-                                        <Icon size={0.8} className="text-black" path={action.iconPath} />,
+                                        <Icon size={1} className="text-black" path={action.iconPath} />,
                                     </div>
                                     <div className="ml-4">
                                         <p className="text-sm font-medium text-gray-900">{action.name}</p>

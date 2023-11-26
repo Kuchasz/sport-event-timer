@@ -180,7 +180,7 @@ export const Players = () => {
                             data={players}
                             columns={cols}
                             searchPlaceholder={t("pages.players.grid.search.placeholder")}
-                            getRowId={item => item.bibNumber!}
+                            getRowId={item => item.bibNumber}
                             onRowDoubleClicked={openEditDialog}
                             gridName="players"
                             searchFields={["name", "lastName", "team", "bibNumber", "city"]}
