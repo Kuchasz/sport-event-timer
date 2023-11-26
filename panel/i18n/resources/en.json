@@ -858,7 +858,8 @@
     },
     "abbreviations": {
       "dns": "Did not start",
-      "dnf": "Dit not finished"
+      "dnf": "Dit not finished",
+      "dsq": "Disqualified"
     },
     "grid": {
       "columns": {

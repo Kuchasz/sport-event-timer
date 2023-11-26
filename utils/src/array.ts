@@ -37,6 +37,12 @@ export const naturalSort = <T>(items: T[], order: "desc" | "asc", func: (item: T
         : i.sort((a, b) => func(b).localeCompare(func(a), undefined, { numeric: true }));
 };
 
+export const toMap = async <T>(array: Promise<T[]>, keySelector: (obj: T) => string | number, valueSelector: (obj: T) => any) => {
+    const elements = await array;
+
+    return Object.fromEntries(elements.map(r => [keySelector(r), valueSelector(r)]));
+};
+
 export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
