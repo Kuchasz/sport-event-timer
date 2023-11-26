@@ -30,6 +30,8 @@ type PoorDataTableProps<T> = {
     onRowDoubleClicked?: (row: T) => void;
     searchFields?: (keyof T)[];
     searchPlaceholder?: string;
+    hideColumnsChooser?: boolean;
+    hidePaging?: boolean;
 };
 
 type SortState<T> = { field: keyof T; order: "desc" | "asc" };
@@ -75,17 +77,21 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const rowsPerPage = 25;
 
-    const filteredData = fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[];
+    const filteredData = usableSearchFields?.length
+        ? (fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[])
+        : (data.map(d => ({ obj: d, field: "", score: 0 })) as unknown as readonly KeysResult<T>[]);
     // const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" }) as readonly KeyResult<T>[];
 
     const sortedFilteredData = sortColumn
         ? naturalSort([...filteredData], sortColumn.order, d => String(d.obj[sortColumn.field]))
         : filteredData;
 
-    const pagesData = sortedFilteredData.slice(
-        currentPage * rowsPerPage,
-        clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, sortedFilteredData.length),
-    );
+    const pagesData = !props.hidePaging
+        ? sortedFilteredData.slice(
+              currentPage * rowsPerPage,
+              clamp(currentPage * rowsPerPage + rowsPerPage, currentPage * rowsPerPage, sortedFilteredData.length),
+          )
+        : sortedFilteredData;
 
     const numberOfPages = Math.ceil(sortedFilteredData.length / rowsPerPage);
     const isFirstPage = currentPage + 1 <= 1;
@@ -110,19 +116,21 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     />
                 )}
                 <div className="flex-grow"></div>
-                <PoorColumnChooser
-                    items={columns}
-                    initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
-                    valueKey="field"
-                    nameKey="headerName"
-                    onChange={e => {
-                        const visibleColumns = e.target.value as string[];
+                {!props.hideColumnsChooser && (
+                    <PoorColumnChooser
+                        items={columns}
+                        initialValue={gridColumnVisibilityState.filter(c => !c.hide).map(c => c.colId)}
+                        valueKey="field"
+                        nameKey="headerName"
+                        onChange={e => {
+                            const visibleColumns = e.target.value as string[];
 
-                        const saveState = gridColumnVisibilityState.map(v => ({ ...v, hide: !visibleColumns.includes(v.colId) }));
+                            const saveState = gridColumnVisibilityState.map(v => ({ ...v, hide: !visibleColumns.includes(v.colId) }));
 
-                        setGridColumnVisibilityState(saveState);
-                    }}
-                />
+                            setGridColumnVisibilityState(saveState);
+                        }}
+                    />
+                )}
             </div>
             <ScrollArea className=" basis-auto rounded-md border">
                 <div
@@ -189,39 +197,41 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 </div>
                 <ScrollBar orientation="horizontal" />
             </ScrollArea>
-            <div className="flex items-center gap-6 py-4 text-sm">
-                <div className="flex-grow"></div>
-                <div>
-                    <span className="font-semibold">
-                        {t("shared.dataTable.paging.rowsPerPage")} {rowsPerPage}
-                    </span>
+            {!props.hidePaging && (
+                <div className="flex items-center gap-6 py-4 text-sm">
+                    <div className="flex-grow"></div>
+                    <div>
+                        <span className="font-semibold">
+                            {t("shared.dataTable.paging.rowsPerPage")} {rowsPerPage}
+                        </span>
+                    </div>
+                    <div className="font-semibold">
+                        {t("shared.dataTable.paging.currentPage", { currentPage: currentPage + 1, totalPages: numberOfPages })}
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            disabled={isFirstPage}
+                            className={classNames(
+                                "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
+                                { ["opacity-50"]: isFirstPage },
+                            )}
+                            onClick={() => changePage(currentPage - 1)}
+                        >
+                            <Icon path={mdiChevronLeft} size={1}></Icon>
+                        </button>
+                        <button
+                            disabled={isLastPage}
+                            className={classNames(
+                                "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
+                                { ["opacity-50"]: isLastPage },
+                            )}
+                            onClick={() => changePage(currentPage + 1)}
+                        >
+                            <Icon path={mdiChevronRight} size={1}></Icon>
+                        </button>
+                    </div>
                 </div>
-                <div className="font-semibold">
-                    {t("shared.dataTable.paging.currentPage", { currentPage: currentPage + 1, totalPages: numberOfPages })}
-                </div>
-                <div className="flex gap-2">
-                    <button
-                        disabled={isFirstPage}
-                        className={classNames(
-                            "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
-                            { ["opacity-50"]: isFirstPage },
-                        )}
-                        onClick={() => changePage(currentPage - 1)}
-                    >
-                        <Icon path={mdiChevronLeft} size={1}></Icon>
-                    </button>
-                    <button
-                        disabled={isLastPage}
-                        className={classNames(
-                            "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
-                            { ["opacity-50"]: isLastPage },
-                        )}
-                        onClick={() => changePage(currentPage + 1)}
-                    >
-                        <Icon path={mdiChevronRight} size={1}></Icon>
-                    </button>
-                </div>
-            </div>
+            )}
         </div>
     );
 };
