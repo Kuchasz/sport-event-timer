@@ -676,7 +676,8 @@
         "grid": {
           "columns": {
             "reason": "Powód",
-            "time": "Czas"
+            "time": "Czas",
+            "actions": "Akcje"
           }
         },
         "confirmation": {
