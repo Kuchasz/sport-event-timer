@@ -43,6 +43,14 @@ export const toMap = async <T>(array: Promise<T[]>, keySelector: (obj: T) => str
     return Object.fromEntries(elements.map(r => [keySelector(r), valueSelector(r)]));
 };
 
+export const toLookup = async <T, TV>(array: Promise<T[]>, keySelector: (obj: T) => string, valueSelector: (obj: T) => TV) => {
+    const elements = await array;
+
+    const foo = elements.map(r => ({ key: keySelector(r), ...valueSelector(r) }));
+
+    return groupBy(foo, x => x.key);
+};
+
 export const arrayRange = (startNumber: number, endNumber: number) =>
     [...Array(1 + endNumber - startNumber).keys()].map(v => startNumber + v);
 
