@@ -15,8 +15,51 @@ import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
+import Icon from "@mdi/react";
+import classNames from "classnames";
 
 type Result = AppRouterOutputs["result"]["results"][0];
+
+const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () => Promise<void> }) => {
+    // const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
+    // const t = useTranslations();
+
+    const managePlayerPenalties = () => {};
+
+    // const locale = useLocale();
+
+    // const togglePlayerPayment = async () => {
+    //     const confirmed = await Demodal.open<boolean>(NiceModal, {
+    //         title: t("pages.playerRegistrations.togglePlayerPayment.confirmation.title"),
+    //         component: Confirmation,
+    //         props: {
+    //             message: t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
+    //                 name: playerRegistration.name,
+    //                 lastName: playerRegistration.lastName,
+    //                 hasPaid: playerRegistration.hasPaid
+    //                     ? t("pages.playerRegistrations.payment.status.notPaid")
+    //                     : t("pages.playerRegistrations.payment.status.paid"),
+    //             }),
+    //         },
+    //     });
+
+    //     if (confirmed) {
+    //         await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
+    //         await refetch();
+    //     }
+    // };
+    return result.totalTimePenalty ? (
+        <span
+            className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
+                ["font-semibold text-orange-600"]: result.totalTimePenalty !== null,
+            })}
+            onClick={managePlayerPenalties}
+        >
+            <Icon size={0.8} path={mdiAlertOutline} />
+            <span className="ml-2">{formatTimeWithMilliSecUTC(result.totalTimePenalty)}</span>
+        </span>
+    ) : null;
+};
 
 export const Results = () => {
     const raceId = useCurrentRaceId();
@@ -66,9 +109,16 @@ export const Results = () => {
         },
         {
             field: "totalTimePenalty",
-            headerName: "Time Penalty",
+            headerName: t("pages.results.grid.columns.totalTimePenalty"),
             sortable: true,
-            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSecUTC(data.totalTimePenalty)}</span>,
+            cellRenderer: (data: Result) => (
+                <PlayerTimePenalty
+                    result={data}
+                    refetch={async () => {
+                        await refetchResults();
+                    }}
+                />
+            ),
         },
         {
             field: "result",

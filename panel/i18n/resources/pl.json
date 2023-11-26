@@ -629,7 +629,8 @@
           "start": "Start",
           "finish": "Meta",
           "result": "Wynik",
-          "actions": "Akcje"
+          "actions": "Akcje",
+          "totalTimePenalty": "Kara czasowa"
         },
         "search": {
           "placeholder": "Szukaj wyników..."

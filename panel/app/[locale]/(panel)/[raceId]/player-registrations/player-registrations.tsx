@@ -28,7 +28,7 @@ type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistratio
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
     return (
         <span
-            className={classNames("flex h-full items-center hover:text-black", {
+            className={classNames("flex h-full items-center", {
                 ["font-semibold text-green-600"]: playerRegistration.promotedToPlayer,
                 ["text-red-600"]: !playerRegistration.promotedToPlayer,
             })}
@@ -41,11 +41,9 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
 const PlayerRegistrationPayment = ({
     playerRegistration,
     refetch,
-    refreshRegistrationRow,
 }: {
     playerRegistration: PlayerRegistration;
     refetch: () => Promise<void>;
-    refreshRegistrationRow: (itemId: string) => void;
 }) => {
     const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
     const t = useTranslations();
@@ -69,7 +67,6 @@ const PlayerRegistrationPayment = ({
         if (confirmed) {
             await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
             await refetch();
-            refreshRegistrationRow(playerRegistration.id.toString());
         }
     };
     return (
@@ -200,7 +197,6 @@ export const PlayerRegistrations = () => {
             sortable: false,
             cellRenderer: data => (
                 <PlayerRegistrationPayment
-                    refreshRegistrationRow={() => {}}
                     refetch={async () => {
                         await refetch();
                     }}

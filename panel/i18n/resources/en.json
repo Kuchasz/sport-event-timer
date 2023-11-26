@@ -629,7 +629,8 @@
           "start": "Start",
           "finish": "Finish",
           "result": "Result",
-          "actions": "Actions"
+          "actions": "Actions",
+          "totalTimePenalty": "Time penalty"
         },
         "search": {
           "placeholder": "Search for results..."
