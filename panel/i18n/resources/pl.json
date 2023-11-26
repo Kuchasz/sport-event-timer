@@ -664,14 +664,6 @@
         "description": "Oryginalny wynik zawodnika zostanie przywrócony",
         "title": "Wycofaj dyskwalifikację"
       },
-      "revertTimePenalty": {
-        "confirmation": {
-          "title": "Wycofaj karę czasową",
-          "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
-        },
-        "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-        "title": "Wycofaj karę czasową"
-      },
       "manageTimePenalties": {
         "grid": {
           "columns": {
@@ -683,6 +675,14 @@
         "confirmation": {
           "title": "Kary czasowe",
           "text": "Zarządzaj karami czasowymi zawodnika {name} {lastName}"
+        },
+        "revertTimePenalty": {
+          "confirmation": {
+            "title": "Wycofaj karę czasową",
+            "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+          },
+          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+          "title": "Wycofaj karę czasową"
         }
       }
     },
@@ -1193,7 +1193,8 @@
         "rowsPerPage": "Wierszy na stronę:",
         "currentPage": "Strona {currentPage} z {totalPages}"
       }
-    }
+    },
+    "close": "Zamknij"
   },
   "startList": {
     "nextPlayer": "Następny zawodnik",

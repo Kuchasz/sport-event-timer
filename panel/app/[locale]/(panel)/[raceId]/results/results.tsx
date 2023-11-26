@@ -3,21 +3,21 @@ import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/di
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 
-import { mdiAlertOutline, mdiAlertRemoveOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
+import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
+import Icon from "@mdi/react";
+import classNames from "classnames";
 import { Confirmation } from "components/confirmation";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
+import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
 import { PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
-import Icon from "@mdi/react";
-import classNames from "classnames";
-import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
@@ -36,8 +36,15 @@ const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () =>
             props: {
                 penalties: result.timePenalties,
                 playerId: result.id,
+                name: result.name,
+                lastName: result.lastName,
             },
         });
+
+        if (fooo) {
+            console.log;
+            void refetch();
+        }
     };
 
     // const locale = useLocale();
@@ -78,10 +85,7 @@ const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () =>
 export const Results = () => {
     const raceId = useCurrentRaceId();
     const { data: results, refetch: refetchResults } = trpc.result.results.useQuery({ raceId: raceId });
-    const { data: timePenalties, refetch: refetchTimePenalties } = trpc.timePenalty.penalties.useQuery(
-        { raceId: raceId },
-        { initialData: {} },
-    );
+
     const { data: disqualifications, refetch: refetchDisqualifications } = trpc.disqualification.disqualifications.useQuery(
         {
             raceId: raceId,
@@ -90,7 +94,6 @@ export const Results = () => {
     );
 
     const revertDisqualificationMutation = trpc.disqualification.revert.useMutation();
-    const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
     const t = useTranslations();
 
     const cols: PoorDataTableColumn<Result>[] = [
@@ -151,7 +154,8 @@ export const Results = () => {
                 <PoorActions
                     item={data}
                     actions={[
-                        timePenalties[data.bibNumber] ? revertTimePenalty : applyTimePenalty,
+                        // timePenalties[data.bibNumber] ? revertTimePenalty : applyTimePenalty,
+                        applyTimePenalty,
                         disqualifications[data.bibNumber] ? revertDisqualification : disqualify,
                     ]}
                 />
@@ -189,7 +193,7 @@ export const Results = () => {
         description: t("pages.results.revertDisqualification.description"),
         iconPath: mdiRestore,
         execute: async (result: Result) => {
-            const confirmed = await Demodal.open<boolean>(NiceModal, {
+            const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                 title: t("pages.results.revertDisqualification.confirmation.title"),
                 component: Confirmation,
                 props: {
@@ -224,35 +228,11 @@ export const Results = () => {
                     bibNumber: result.bibNumber,
                     raceId,
                 },
+                id: "manage-penalties",
             });
 
             if (timePenalty) {
                 void refetchResults();
-                void refetchTimePenalties();
-            }
-        },
-    };
-
-    const revertTimePenalty = {
-        name: t("pages.results.revertTimePenalty.title"),
-        description: t("pages.results.revertTimePenalty.description"),
-        iconPath: mdiAlertRemoveOutline,
-        execute: async (result: Result) => {
-            const confirmed = await Demodal.open<boolean>(NiceModal, {
-                title: t("pages.results.revertTimePenalty.confirmation.title"),
-                component: Confirmation,
-                props: {
-                    message: t("pages.results.revertTimePenalty.confirmation.text", {
-                        name: result.name,
-                        lastName: result.lastName,
-                    }),
-                },
-            });
-
-            if (confirmed) {
-                await revertTimePenaltyMutation.mutateAsync({ id: timePenalties[result.bibNumber] });
-                void refetchResults();
-                void refetchTimePenalties();
             }
         },
     };

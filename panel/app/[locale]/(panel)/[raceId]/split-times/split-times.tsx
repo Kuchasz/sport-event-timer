@@ -7,7 +7,7 @@ import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -167,7 +167,7 @@ export const SplitTimes = () => {
     };
 
     const openRevertDialog = async (editedSplitTime: RevertedSplitTime) => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.splitTimes.revert.confirmation.title"),
             component: Confirmation,
             props: {

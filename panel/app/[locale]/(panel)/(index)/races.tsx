@@ -16,7 +16,7 @@ import {
     mdiRestore,
     mdiTrashCan,
 } from "@mdi/js";
-import { NiceModal } from "components/modal";
+import { NiceConfirmation, NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { useState } from "react";
 import classNames from "classnames";
@@ -153,7 +153,7 @@ export const Races = ({ initialData }: RacesProps) => {
             description: t("pages.races.wipeStopwatchPopup.description"),
             iconPath: mdiRestore,
             execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                     title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
                     component: Confirmation,
                     props: {
@@ -172,7 +172,7 @@ export const Races = ({ initialData }: RacesProps) => {
             description: t("pages.races.deleteRacePopup.description"),
             iconPath: mdiTrashCan,
             execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceModal, {
+                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                     title: t("pages.races.deleteRacePopup.confirmation.title"),
                     component: Confirmation,
                     props: {

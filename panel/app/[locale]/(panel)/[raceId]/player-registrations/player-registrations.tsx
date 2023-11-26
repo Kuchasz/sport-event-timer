@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
-import { NiceModal } from "../../../../../components/modal";
+import { NiceConfirmation, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -50,7 +50,7 @@ const PlayerRegistrationPayment = ({
     const locale = useLocale();
 
     const togglePlayerPayment = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceModal, {
+        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
             title: t("pages.playerRegistrations.togglePlayerPayment.confirmation.title"),
             component: Confirmation,
             props: {
@@ -117,7 +117,7 @@ export const PlayerRegistrations = () => {
         description: t("pages.playerRegistrations.delete.description"),
         iconPath: mdiTrashCan,
         execute: async (playerRegistration: PlayerRegistration) => {
-            const confirmed = await Demodal.open<boolean>(NiceModal, {
+            const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
                 title: t("pages.playerRegistrations.delete.confirmation.title"),
                 component: Confirmation,
                 props: {
