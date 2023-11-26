@@ -1,5 +1,5 @@
 import { publicProcedure, router } from "../trpc";
-import { groupBy, sort, toMap } from "@set/utils/dist/array";
+import { groupBy, sort, toLookup, toMap } from "@set/utils/dist/array";
 import { z } from "zod";
 import { calculateAge } from "@set/utils/dist/datetime";
 
@@ -24,11 +24,13 @@ export const resultRouter = router({
 
             console.log(disqualifications);
 
-            // const timePenalties = await toMap(
-            //     ctx.db.timePenalty.findMany({ where: { raceId } }),
-            //     p => p.bibNumber,
-            //     p => p.time,
-            // );
+            const timePenalties = await toLookup(
+                ctx.db.timePenalty.findMany({ where: { raceId } }),
+                p => p.bibNumber,
+                p => ({ time: p.time, reason: p.reason }),
+            );
+
+            console.log(timePenalties);
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
