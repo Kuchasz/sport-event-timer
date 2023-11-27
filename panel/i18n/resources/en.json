@@ -887,7 +887,8 @@
         "result": "Result",
         "start": "Start",
         "finish": "Finish",
-        "gap": "Gap"
+        "gap": "Gap",
+        "penalties": "Penalties:"
       }
     }
   },

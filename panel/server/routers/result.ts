@@ -95,7 +95,7 @@ export const resultRouter = router({
                     ...t,
                     start: t.times[startTimingPoint.id]?.time,
                     finish: t.times[endTimingPoint.id]?.time,
-                    result: t.times[endTimingPoint.id]?.time - t.times[startTimingPoint.id]?.time,
+                    result: t.times[endTimingPoint.id]?.time - t.times[startTimingPoint.id]?.time + t.totalTimePenalty,
                     invalidState: undefined,
                 }));
 
