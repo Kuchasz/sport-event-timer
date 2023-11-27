@@ -147,7 +147,7 @@ export const BibNumbers = () => {
                     <PoorDataTable
                         data={bibNubers}
                         columns={defaultColumns}
-                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        searchPlaceholder={t("pages.bibNumbers.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
                         gridName="bib-numbers"
                         onRowDoubleClicked={e => openEditDialog(e)}

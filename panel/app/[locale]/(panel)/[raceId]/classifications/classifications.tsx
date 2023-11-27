@@ -81,12 +81,12 @@ export const Classifications = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.classifications.header.title")} description={t("pages.classifications.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button onClick={openCreateDialog} outline>
                         <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.classifications.create.button")}</span>
                     </Button>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false">
+                    <Button autoCapitalize="false" outline>
                         <Icon size={0.8} path={mdiAccountMultiplePlusOutline} />
                         <span className="ml-2">{t("pages.classifications.load.button")}</span>
                     </Button>
@@ -95,7 +95,7 @@ export const Classifications = () => {
                     <PoorDataTable
                         data={classifications}
                         columns={defaultColumns}
-                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        searchPlaceholder={t("pages.classifications.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
                         gridName="classifications"
                         onRowDoubleClicked={e => openEditDialog(e)}
