@@ -68,6 +68,7 @@ Application for making time measurements
 | 24/11/2023 | Add no data message to Data Table                          | todo :date:                     |
 | 27/11/2023 | Full page penalties view                                   | todo :date:                     |
 | 27/11/2023 | Fix nested dialogs/modals disappearing issue               | todo :date:                     |
+| 27/11/2023 | Registration status changing on PlayerRegistrations page   | todo :date:                     |
 
 ## TODO
 
