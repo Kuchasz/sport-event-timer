@@ -54,7 +54,7 @@ Application for making time measurements
 | 06/11/2023 | Printable results                                          | todo :date:                     |
 | 06/11/2023 | Add participation cerfificates with printing               | todo :date:                     |
 | 06/11/2023 | Badge counters on certain menu items                       | :heavy_check_mark: (06/11/2023) |
-| 06/11/2023 | Special filters on Data Table(eg. for paid players)        | todo :date:                     |
+| 06/11/2023 | Special filters on Data Table (eg. for paid players)       | todo :date:                     |
 | 07/11/2023 | Use Data Table on results                                  | :heavy_check_mark: (24/11/2023) |
 | 09/11/2023 | Persist some grid settings in url                          | todo :date:                     |
 | 09/11/2023 | Animate chevron on switching to next player (start list)   | :heavy_check_mark: (13/11/2023) |
@@ -69,6 +69,7 @@ Application for making time measurements
 | 27/11/2023 | Full page penalties view                                   | todo :date:                     |
 | 27/11/2023 | Fix nested dialogs/modals disappearing issue               | todo :date:                     |
 | 27/11/2023 | Registration status changing on PlayerRegistrations page   | todo :date:                     |
+| 27/11/2023 | Improve public results loading time                        | todo :date:                     |
 
 ## TODO
 
