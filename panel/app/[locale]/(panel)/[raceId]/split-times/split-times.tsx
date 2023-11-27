@@ -177,7 +177,7 @@ export const SplitTimes = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.results.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
-                            gridName="results"
+                            gridName="split-times"
                             searchFields={["name", "lastName", "bibNumber"]}
                         />
                     </div>
