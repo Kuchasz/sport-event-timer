@@ -1,42 +1,39 @@
 "use client";
 
-import Icon from "@mdi/react";
-import { Button } from "components/button";
-import { Demodal } from "demodal";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../trpc-core";
 import { mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import Icon from "@mdi/react";
+import classNames from "classnames";
+import { Button } from "components/button";
+import { Confirmation } from "components/confirmation";
 import { NiceConfirmation, NiceModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
-import { Confirmation } from "components/confirmation";
-import { useCallback, useRef } from "react";
-import { AgGridReact } from "@ag-grid-community/react";
-import type { ColDef } from "@ag-grid-community/core";
-import classNames from "classnames";
 import { PoorActions } from "components/poor-actions";
-import { useTranslations, useLocale } from "next-intl";
-import { refreshRow } from "ag-grid";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
+import { useTranslations } from "next-intl";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { trpc } from "../../../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
 type EditedRace = AppRouterInputs["race"]["update"];
 
-const RegistrationEnabledRenderer = (props: { data: Race }) => <RegistrationEnabled race={props.data} />;
-const RegistrationsRenderer = (props: { data: Race }) => <Registrations race={props.data} />;
+// const RegistrationEnabledRenderer = (props: Race) => <RegistrationEnabled race={props} />;
+const RegistrationsRenderer = (props: Race) => <Registrations race={props} />;
 
-const RegistrationEnabled = ({ race }: { race: Race }) => {
-    return (
-        <span
-            className={classNames("flex h-full items-center", {
-                ["font-semibold text-green-600"]: race.registrationEnabled,
-                ["text-red-600"]: !race.registrationEnabled,
-            })}
-        >
-            {race.registrationEnabled ? <Icon size={0.8} path={mdiLockOpenVariantOutline} /> : <Icon size={0.8} path={mdiLockOutline} />}
-        </span>
-    );
-};
+// const RegistrationEnabled = ({ race }: { race: Race }) => {
+//     return (
+//         <span
+//             className={classNames("flex h-full items-center", {
+//                 ["font-semibold text-green-600"]: race.registrationEnabled,
+//                 ["text-red-600"]: !race.registrationEnabled,
+//             })}
+//         >
+//             {race.registrationEnabled ? <Icon size={0.8} path={mdiLockOpenVariantOutline} /> : <Icon size={0.8} path={mdiLockOutline} />}
+//         </span>
+//     );
+// };
 
 const Registrations = ({ race }: { race: Race }) => {
     return (
@@ -61,10 +58,8 @@ export const MyRaces = () => {
     // const addRaceMutation = trpc.race.add.useMutation();
     const deleteRaceMutation = trpc.race.delete.useMutation();
     const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
-    const gridRef = useRef<AgGridReact<Race>>(null);
 
     const t = useTranslations();
-    const locale = useLocale();
 
     const turnOffRegistrationAction = {
         name: t("pages.registration.turnOffPopup.title"),
@@ -73,7 +68,6 @@ export const MyRaces = () => {
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
             await refetch();
-            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -84,7 +78,6 @@ export const MyRaces = () => {
         execute: async (race: Race) => {
             await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
             await refetch();
-            refreshRow(gridRef, race.id.toString());
         },
     };
 
@@ -105,7 +98,6 @@ export const MyRaces = () => {
                 if (confirmed) {
                     await wipeRaceMutation.mutateAsync({ raceId: race.id });
                     await refetch();
-                    refreshRow(gridRef, race.id.toString());
                 }
             },
         },
@@ -130,34 +122,26 @@ export const MyRaces = () => {
         },
     ];
 
-    const defaultColumns: ColDef<Race>[] = [
+    const defaultColumns: PoorDataTableColumn<Race>[] = [
         {
-            width: 25,
             headerName: "",
-            headerClass: "hidden",
             sortable: false,
-            filter: false,
-            valueGetter: r => r.node?.rowIndex,
+            field: "id",
         },
         {
-            valueGetter: r => r.data?.name,
             headerName: t("pages.races.grid.columns.name"),
             sortable: true,
-            filter: true,
+            field: "name",
         },
         {
             field: "date",
             headerName: t("pages.races.grid.columns.date"),
-            sort: "asc",
-            sortable: true,
-            filter: true,
-            cellRenderer: (props: { data: Race }) => <div>{props.data.date.toLocaleDateString(locale)}</div>,
+            sortable: false,
         },
         {
             field: "registrationEnabled",
             headerName: t("pages.races.grid.columns.registrationEnabled"),
             sortable: true,
-            cellRenderer: RegistrationEnabledRenderer,
         },
         {
             field: "registeredPlayers",
@@ -166,14 +150,13 @@ export const MyRaces = () => {
             cellRenderer: RegistrationsRenderer,
         },
         {
-            width: 200,
             headerName: t("pages.races.grid.columns.actions"),
-            cellStyle: { overflow: "visible" },
-            cellRenderer: (props: { data: Race; context: { refetch: () => void } }) => (
+            field: "id",
+            cellRenderer: data => (
                 <PoorActions
-                    item={props.data}
+                    item={data}
                     actions={
-                        props.data.registrationEnabled
+                        data.registrationEnabled
                             ? [turnOffRegistrationAction, ...myRacesActions]
                             : [turnOnRegistrationAction, ...myRacesActions]
                     }
@@ -194,10 +177,6 @@ export const MyRaces = () => {
         }
     };
 
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
-
     const openEditDialog = async (editedRace?: Race) => {
         const race = await Demodal.open<EditedRace>(NiceModal, {
             title: t("pages.races.editRacePopup.title"),
@@ -209,7 +188,6 @@ export const MyRaces = () => {
 
         if (race) {
             await refetch();
-            refreshRow(gridRef, editedRace!.id.toString());
         }
     };
 
@@ -226,28 +204,14 @@ export const MyRaces = () => {
                         <span className="ml-2">{t("pages.races.addRace")}</span>
                     </Button>
                 </div>
-                <div className="ag-theme-material h-full">
-                    <AgGridReact<Race>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        rowClassRules={{
-                            "z-10": () => {
-                                return false;
-                            },
-                        }}
-                        suppressRowVirtualisation={true}
-                        suppressAnimationFrame={true}
-                        suppressContextMenu={true}
-                        suppressRowClickSelection={true}
-                        suppressCellFocus={true}
-                        suppressChangeDetection={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={races}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <PoorDataTable
+                        gridName="my-races"
+                        columns={defaultColumns}
+                        getRowId={item => item.id.toString()}
+                        data={races}
+                        onRowDoubleClicked={e => openEditDialog(e)}
+                    ></PoorDataTable>
                 </div>
             </div>
         </>
