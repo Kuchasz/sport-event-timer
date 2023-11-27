@@ -1,22 +1,19 @@
 "use client";
 
-import Icon from "@mdi/react";
-import { Confirmation } from "../../../../../components/confirmation";
-import { Demodal } from "demodal";
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../trpc-core";
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
+import Icon from "@mdi/react";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { NiceConfirmation, NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
+import { useTranslations } from "next-intl";
+import Head from "next/head";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { Confirmation } from "../../../../../components/confirmation";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
-import { AgGridReact } from "@ag-grid-community/react";
-import type { ColDef } from "@ag-grid-community/core";
-import { useCallback, useRef } from "react";
-import { PageHeader } from "components/page-header";
-import Head from "next/head";
-import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
+import { trpc } from "../../../../../trpc-core";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -99,55 +96,41 @@ export const SplitTimes = () => {
     );
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId }, { initialData: [] });
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId });
-    const gridRef = useRef<AgGridReact<SplitTime>>(null);
+
     const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
     const t = useTranslations();
 
-    const defaultColumns: ColDef<SplitTime>[] = [
+    const cols: PoorDataTableColumn<SplitTime>[] = [
         {
             field: "bibNumber",
             headerName: t("pages.splitTimes.grid.columns.bibNumber"),
             sortable: true,
-            sort: "asc",
-            width: 100,
-            comparator: (valueA, valueB) => valueA - valueB,
         },
         {
             field: "name",
-            resizable: true,
             headerName: t("pages.splitTimes.grid.columns.playerName"),
             sortable: true,
-            filter: true,
-            cellRenderer: (p: { data: SplitTime }) => <span>{p.data.name}</span>,
         },
         {
             field: "lastName",
-            resizable: true,
             headerName: t("pages.splitTimes.grid.columns.playerLastName"),
             sortable: true,
-            filter: true,
-            cellRenderer: (p: { data: SplitTime }) => <span>{p.data.lastName}</span>,
         },
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .map(tp => ({
                 field: tp.name as any,
                 headerName: tp.name,
-                resizable: true,
-                cellRenderer: (p: { data: SplitTime }) => (
+                cellRenderer: (data: SplitTime) => (
                     <SplitTimeResult
                         openEditDialog={openEditDialog}
                         openResetDialog={openRevertDialog}
-                        splitTimeResult={p.data}
+                        splitTimeResult={data}
                         timingPointId={tp.id}
                     />
                 ),
             })),
     ];
-
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
 
     const openEditDialog = async (editedSplitTime: SplitTime) => {
         const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
@@ -162,7 +145,6 @@ export const SplitTimes = () => {
 
         if (splitTime) {
             await refetch();
-            refreshRow(gridRef, editedSplitTime.bibNumber);
         }
     };
 
@@ -178,7 +160,6 @@ export const SplitTimes = () => {
         if (confirmed) {
             await revertSplitTimeMutation.mutateAsync(editedSplitTime);
             await refetch();
-            refreshRow(gridRef, editedSplitTime.bibNumber);
         }
     };
 
@@ -190,18 +171,15 @@ export const SplitTimes = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.splitTimes.header.title")} description={t("pages.splitTimes.header.description")} />
                 {splitTimes && (
-                    <div className="ag-theme-material h-full">
-                        <AgGridReact<SplitTime>
-                            ref={gridRef}
-                            context={{ refetch }}
-                            suppressCellFocus={true}
-                            suppressAnimationFrame={true}
-                            columnDefs={defaultColumns}
-                            getRowId={item => item.data.bibNumber}
-                            rowData={splitTimes}
-                            onFirstDataRendered={onFirstDataRendered}
-                            onGridSizeChanged={onFirstDataRendered}
-                        ></AgGridReact>
+                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                        <PoorDataTable
+                            data={splitTimes}
+                            columns={cols}
+                            searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                            getRowId={item => item.bibNumber}
+                            gridName="results"
+                            searchFields={["name", "lastName", "bibNumber"]}
+                        />
                     </div>
                 )}
             </div>

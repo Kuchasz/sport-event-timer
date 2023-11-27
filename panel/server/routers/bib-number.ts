@@ -26,12 +26,12 @@ export const bibNumberRouter = router({
             const raceId = input.raceId;
             const bibNumbers = await ctx.db.bibNumber.findMany({ where: { raceId }, select: { number: true }, orderBy: { number: "asc" } });
             const playersBibNumbers = await ctx.db.player.findMany({
-                where: { raceId, NOT: { bibNumber: null } },
+                where: { raceId },
                 select: { bibNumber: true },
             });
 
             const allBibNumbers = bibNumbers.map(x => x.number);
-            const allPlayersBibNumbers = new Set(playersBibNumbers.map(x => x.bibNumber!));
+            const allPlayersBibNumbers = new Set(playersBibNumbers.map(x => x.bibNumber));
 
             return allBibNumbers.filter(n => !allPlayersBibNumbers.has(n)).map(x => x.toString());
         }),
