@@ -169,6 +169,9 @@
           "bibNumber": "Bib Number",
           "actions": "Actions",
           "index": ""
+        },
+        "search": {
+          "placeholder": "Search bib numbers..."
         }
       },
       "create": {
@@ -435,6 +438,9 @@
           "name": "Name",
           "actions": "Actions",
           "index": ""
+        },
+        "search": {
+          "placeholder": "Search classifications..."
         }
       },
       "categories": {
@@ -448,6 +454,9 @@
             "gender": "Gender",
             "isSpecial": "Is Special",
             "actions": "Actions"
+          },
+          "search": {
+            "placeholder": "Search categories..."
           }
         },
         "detele": {
@@ -591,6 +600,9 @@
           "bibNumber": "Bib",
           "playerName": "Name",
           "playerLastName": "Last Name"
+        },
+        "search": {
+          "placeholder": "Search split times..."
         }
       },
       "edit": {

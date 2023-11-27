@@ -156,7 +156,7 @@ export const ClassificationCategories = () => {
                     description={t("pages.classifications.categories.header.description")}
                 />
                 <div className="flex">
-                    <Button onClick={openCreateDialog}>
+                    <Button onClick={openCreateDialog} outline>
                         <Icon size={0.8} path={mdiPlus} />
                         <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
                     </Button>
@@ -166,7 +166,7 @@ export const ClassificationCategories = () => {
                     <PoorDataTable
                         data={categories}
                         columns={defaultColumns}
-                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        searchPlaceholder={t("pages.classifications.categories.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
                         gridName="classification-categories"
                         onRowDoubleClicked={e => openEditDialog(e)}

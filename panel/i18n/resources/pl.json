@@ -169,6 +169,9 @@
           "bibNumber": "Numer Startowy",
           "actions": "Akcje",
           "index": ""
+        },
+        "search": {
+          "placeholder": "Szukaj numerów startowych..."
         }
       },
       "create": {
@@ -435,6 +438,9 @@
           "name": "Nazwa",
           "actions": "Akcje",
           "index": ""
+        },
+        "search": {
+          "placeholder": "Szukaj klasyfikacji..."
         }
       },
       "categories": {
@@ -448,6 +454,9 @@
             "gender": "Płeć",
             "isSpecial": "Specjalne",
             "actions": "Akcje"
+          },
+          "search": {
+            "placeholder": "Szukaj kategorii..."
           }
         },
         "detele": {
@@ -591,6 +600,9 @@
           "bibNumber": "Numer",
           "playerName": "Imię",
           "playerLastName": "Nazwisko"
+        },
+        "search": {
+          "placeholder": "Szukaj czasów pomiarowych..."
         }
       },
       "edit": {

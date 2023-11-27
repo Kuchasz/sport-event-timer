@@ -175,7 +175,7 @@ export const SplitTimes = () => {
                         <PoorDataTable
                             data={splitTimes}
                             columns={cols}
-                            searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                            searchPlaceholder={t("pages.splitTimes.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
                             gridName="split-times"
                             searchFields={["name", "lastName", "bibNumber"]}
