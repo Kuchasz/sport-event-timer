@@ -1,23 +1,20 @@
 "use client";
-import Head from "next/head";
+import { mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
+import { NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
 import { ClassificationCreate } from "components/panel/classification/classification-create";
 import { ClassificationEdit } from "components/panel/classification/classification-edit";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
-import { trpc } from "../../../../../trpc-core";
-import { mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
-import { NiceModal } from "components/modal";
-import { useCurrentRaceId } from "../../../../../hooks";
-import { useCallback, useRef } from "react";
-import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
-import Link from "next/link";
-import { AgGridReact } from "@ag-grid-community/react";
-import type { ColDef } from "@ag-grid-community/core";
 import type { Route } from "next";
-import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
+import Head from "next/head";
+import Link from "next/link";
+import { useCurrentRaceId } from "../../../../../hooks";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
+import { trpc } from "../../../../../trpc-core";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 type EditedClassification = AppRouterInputs["classification"]["update"];
@@ -38,7 +35,6 @@ const OpenCategoriesButton = ({ classification }: { classification: Classificati
 export const Classifications = () => {
     const raceId = useCurrentRaceId();
     const { data: classifications, refetch } = trpc.classification.classifications.useQuery({ raceId: raceId }, { initialData: [] });
-    const gridRef = useRef<AgGridReact<Classification>>(null);
     const t = useTranslations();
 
     const openCreateDialog = async () => {
@@ -53,18 +49,15 @@ export const Classifications = () => {
         }
     };
 
-    const defaultColumns: ColDef<Classification>[] = [
-        { headerName: t("pages.classifications.grid.columns.index"), sortable: true, valueGetter: r => r.node?.rowIndex },
-        { field: "name", headerName: t("pages.classifications.grid.columns.name"), sortable: true, filter: true },
+    const defaultColumns: PoorDataTableColumn<Classification>[] = [
+        { headerName: t("pages.classifications.grid.columns.index"), sortable: true, field: "id" },
+        { field: "name", headerName: t("pages.classifications.grid.columns.name"), sortable: true },
         {
             headerName: t("pages.classifications.grid.columns.actions"),
-            cellRenderer: (props: { data: Classification }) => <OpenCategoriesButton classification={props.data} />,
+            field: "id",
+            cellRenderer: data => <OpenCategoriesButton classification={data} />,
         },
     ];
-
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
 
     const openEditDialog = async (editedClassification?: Classification) => {
         const classification = await Demodal.open<EditedClassification>(NiceModal, {
@@ -77,7 +70,6 @@ export const Classifications = () => {
 
         if (classification) {
             await refetch();
-            refreshRow(gridRef, editedClassification!.id.toString());
         }
     };
 
@@ -99,19 +91,16 @@ export const Classifications = () => {
                         <span className="ml-2">{t("pages.classifications.load.button")}</span>
                     </Button>
                 </div>
-                <div className="ag-theme-material h-full">
-                    <AgGridReact<Classification>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={classifications}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <PoorDataTable
+                        data={classifications}
+                        columns={defaultColumns}
+                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        getRowId={data => data.id.toString()}
+                        gridName="split-times"
+                        onRowDoubleClicked={e => openEditDialog(e)}
+                        searchFields={["name"]}
+                    />
                 </div>
             </div>
         </>
