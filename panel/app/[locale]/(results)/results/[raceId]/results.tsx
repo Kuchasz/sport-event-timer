@@ -53,10 +53,10 @@ export const Results = () => {
                 <div className="flex w-full flex-col items-center">
                     <div className="w-full max-w-xl">
                         <div className="w-full border-b border-gray-200 shadow">
-                            <table className="w-full table-fixed divide-y divide-gray-300">
+                            <table className="w-full divide-y divide-gray-300">
                                 <thead className="sticky top-0 bg-gray-100">
                                     <tr>
-                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
+                                        <th className="w-12 px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
                                         <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.bibNumber")}</th>
                                         <th className="px-1 py-4 text-left text-xs text-gray-800">{t("results.grid.columns.player")}</th>
                                         {openCategoriesExist && (
