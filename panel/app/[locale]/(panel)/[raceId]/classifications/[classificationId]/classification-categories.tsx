@@ -1,25 +1,22 @@
 "use client";
-import Icon from "@mdi/react";
 import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
-import type { AppRouterOutputs } from "trpc";
-import { useCallback, useRef } from "react";
+import Icon from "@mdi/react";
 import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
-import { trpc } from "trpc-core";
-import { useParams } from "next/navigation";
-import { AgGridReact } from "@ag-grid-community/react";
-import type { ColDef } from "@ag-grid-community/core";
-import { GenderIcon } from "components/gender-icon";
-import { Demodal } from "demodal";
-import { NiceConfirmation, NiceModal } from "components/modal";
 import { Confirmation } from "components/confirmation";
+import { GenderIcon } from "components/gender-icon";
+import { NiceConfirmation, NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
-import { PageHeader } from "components/page-header";
-import Head from "next/head";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
+import Head from "next/head";
+import { useParams } from "next/navigation";
+import type { AppRouterOutputs } from "trpc";
+import { trpc } from "trpc-core";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams<{ classificationId: string }>()!;
@@ -29,9 +26,9 @@ export const useCurrentClassificationId = () => {
 
 type Category = AppRouterOutputs["classification"]["categories"][0];
 
-const CategoryIsSpecialRenderer = (props: { data: Category }) => <CategoryIsSpecial category={props.data} />;
-const ActionsRenderer = (props: { context: { refetch: () => void }; data: Category }) => (
-    <CategoryActions refetch={props.context.refetch} category={props.data} />
+const CategoryIsSpecialRenderer = (props: Category) => <CategoryIsSpecial category={props} />;
+const ActionsRenderer = (props: { refetch: () => void; data: Category }) => (
+    <CategoryActions refetch={props.refetch} category={props.data} />
 );
 
 const CategoryIsSpecial = ({ category }: { category: Category }) => {
@@ -77,16 +74,11 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
 
 export const ClassificationCategories = () => {
     const classificationId = useCurrentClassificationId();
-    const gridRef = useRef<AgGridReact<Category>>(null);
     const { data: categories, refetch } = trpc.classification.categories.useQuery(
         { classificationId: classificationId! },
         { initialData: [], enabled: !!classificationId },
     );
     const t = useTranslations();
-
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
 
     const openCreateDialog = async () => {
         const category = await Demodal.open<Category>(NiceModal, {
@@ -110,61 +102,46 @@ export const ClassificationCategories = () => {
         });
         if (category) {
             await refetch();
-            refreshRow(gridRef, editedCategory!.id.toString());
         }
     };
 
-    const defaultColumns: ColDef<Category>[] = [
+    const defaultColumns: PoorDataTableColumn<Category>[] = [
         {
-            width: 25,
+            field: "id",
             headerName: t("pages.classifications.categories.grid.columns.index"),
-            headerClass: "hidden",
             sortable: false,
-            filter: false,
-            valueGetter: r => r.node?.rowIndex,
         },
         {
             field: "name",
             headerName: t("pages.classifications.categories.grid.columns.name"),
             sortable: true,
-            resizable: true,
-            filter: true,
         },
         {
             field: "minAge",
             headerName: t("pages.classifications.categories.grid.columns.minAge"),
             sortable: true,
-            resizable: true,
-            filter: true,
         },
         {
             field: "maxAge",
             headerName: t("pages.classifications.categories.grid.columns.maxAge"),
             sortable: true,
-            resizable: true,
-            filter: true,
         },
         {
             field: "gender",
             headerName: t("pages.classifications.categories.grid.columns.gender"),
             sortable: true,
-            resizable: true,
-            filter: true,
-            cellStyle: { justifyContent: "center", display: "flex" },
-            width: 150,
-            cellRenderer: (props: { data: Category }) => <GenderIcon gender={props.data.gender as Gender} />,
+            cellRenderer: data => <GenderIcon gender={data.gender as Gender} />,
         },
         {
             field: "isSpecial",
             headerName: t("pages.classifications.categories.grid.columns.isSpecial"),
             sortable: true,
-            filter: true,
-            resizable: true,
             cellRenderer: CategoryIsSpecialRenderer,
         },
         {
+            field: "id",
             headerName: t("pages.classifications.categories.grid.columns.actions"),
-            cellRenderer: ActionsRenderer,
+            cellRenderer: data => <ActionsRenderer data={data} refetch={async () => await refetch()} />,
         },
     ];
 
@@ -185,19 +162,16 @@ export const ClassificationCategories = () => {
                     </Button>
                 </div>
                 <div className="p-2"></div>
-                <div className="ag-theme-material h-full">
-                    <AgGridReact<Category>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={categories}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <PoorDataTable
+                        data={categories}
+                        columns={defaultColumns}
+                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        getRowId={data => data.id.toString()}
+                        gridName="classification-categories"
+                        onRowDoubleClicked={e => openEditDialog(e)}
+                        searchFields={["name", "minAge", "maxAge", "gender"]}
+                    />
                 </div>
             </div>
         </>
