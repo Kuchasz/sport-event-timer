@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
-import { AgGridProvider } from "../../../../components/ag-grid-provider";
+import { DemodalProvider } from "../../../../components/demodal-provider";
 import { IndexStatus } from "../../../../components/index-status";
 import { Meta } from "../../../../components/meta";
 import "../../../../globals.scss";
@@ -21,7 +21,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
                         <main className="flex h-full grow flex-col items-center overflow-y-auto">
                             <IndexStatus />
                             <div className="flex w-full flex-grow flex-col">
-                                <AgGridProvider>{children}</AgGridProvider>
+                                <DemodalProvider>{children}</DemodalProvider>
                             </div>
                         </main>
                     </div>
