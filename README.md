@@ -35,10 +35,10 @@ Application for making time measurements
 | 26/10/2023 | Races list quick search                                    | :heavy_check_mark: (25/10/2023) |
 | 26/10/2023 | Players list rework (with quick search)                    | :heavy_check_mark: (04/11/2023) |
 | 26/10/2023 | QR Code to results list                                    | :heavy_check_mark: (30/10/2023) |
-| 27/10/2023 | Penalties management in panel                              | todo :date:                     |
+| 27/10/2023 | Penalties management in panel                              | :heavy_check_mark: (27/11/2023) |
 | 27/10/2023 | Stopwatches locking                                        | todo :date:                     |
 | 27/10/2023 | Panel language selector                                    | todo :date:                     |
-| 27/10/2023 | DSQ support                                                | todo :date:                     |
+| 27/10/2023 | DSQ support                                                | :heavy_check_mark: (27/11/2023) |
 | 27/10/2023 | Steps for race creation                                    | todo :date:                     |
 | 27/10/2023 | Add stopwatch history to the race panel                    | todo :date:                     |
 | 28/10/2023 | Replace onclick with mousedown in stopwatch (when needed)  | :heavy_check_mark: (29/10/2023) |
@@ -66,6 +66,8 @@ Application for making time measurements
 | 22/11/2023 | Highlight search phrase in Data table results              | :heavy_check_mark: (23/11/2023) |
 | 23/11/2023 | Optional race registration expire time                     | todo :date:                     |
 | 24/11/2023 | Add no data message to Data Table                          | todo :date:                     |
+| 27/11/2023 | Full page penalties view                                   | todo :date:                     |
+| 27/11/2023 | Fix nested dialogs/modals disappearing issue               | todo :date:                     |
 
 ## TODO
 
