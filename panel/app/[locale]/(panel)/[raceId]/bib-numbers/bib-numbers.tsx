@@ -1,24 +1,21 @@
 "use client";
 
-import Head from "next/head";
+import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
+import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
+import { Confirmation } from "components/confirmation";
+import { NiceConfirmation, NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
+import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
-import { trpc } from "../../../../../trpc-core";
-import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
-import { NiceConfirmation, NiceModal } from "components/modal";
-import { useCurrentRaceId } from "../../../../../hooks";
-import { useCallback, useRef } from "react";
-import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
-import { Confirmation } from "components/confirmation";
-import { AgGridReact } from "@ag-grid-community/react";
-import type { ColDef } from "@ag-grid-community/core";
-import { BibNumberCreateManyForm } from "components/bib-number-create-many";
-import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
-import { refreshRow } from "ag-grid";
+import Head from "next/head";
+import { useCurrentRaceId } from "../../../../../hooks";
+import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
+import { trpc } from "../../../../../trpc-core";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
@@ -52,28 +49,23 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
 
 export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
-    const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId });
-    const gridRef = useRef<AgGridReact<BibNumber>>(null);
+    const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId }, { initialData: [] });
+
     const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
     const t = useTranslations();
 
-    const defaultColumns: ColDef<BibNumber>[] = [
-        { headerName: t("pages.bibNumbers.grid.columns.index"), sortable: true, maxWidth: 80, valueGetter: r => r.node?.rowIndex },
+    const defaultColumns: PoorDataTableColumn<BibNumber>[] = [
+        { headerName: t("pages.bibNumbers.grid.columns.index"), sortable: true, field: "id" },
         {
             field: "number",
             sortable: true,
-            sort: "asc",
-            filter: true,
             headerName: t("pages.bibNumbers.grid.columns.bibNumber"),
-            comparator: (valueA, valueB) => valueA - valueB,
         },
         {
-            width: 15,
+            field: "id",
             headerName: t("pages.bibNumbers.grid.columns.actions"),
-            cellRenderer: (props: { context: any; data: BibNumber }) => (
-                <BibNumberDeleteButton refetch={props.context.refetch} bibNumber={props.data} />
-            ),
+            cellRenderer: data => <BibNumberDeleteButton refetch={refetch} bibNumber={data} />,
         },
     ];
 
@@ -116,10 +108,6 @@ export const BibNumbers = () => {
         }
     };
 
-    const onFirstDataRendered = useCallback(() => {
-        gridRef.current?.api.sizeColumnsToFit();
-    }, []);
-
     const openEditDialog = async (editedBibNumber?: BibNumber) => {
         const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
             title: t("pages.bibNumbers.edit.title"),
@@ -131,7 +119,6 @@ export const BibNumbers = () => {
 
         if (bibNumber) {
             await refetch();
-            refreshRow(gridRef, editedBibNumber!.id.toString());
         }
     };
 
@@ -156,19 +143,16 @@ export const BibNumbers = () => {
                         {t("pages.bibNumbers.deleteAll.button")}
                     </Button>
                 </div>
-                <div className="ag-theme-material h-full">
-                    <AgGridReact<BibNumber>
-                        ref={gridRef}
-                        context={{ refetch }}
-                        onRowDoubleClicked={e => openEditDialog(e.data)}
-                        suppressCellFocus={true}
-                        suppressAnimationFrame={true}
-                        columnDefs={defaultColumns}
-                        getRowId={item => item.data.id.toString()}
-                        rowData={bibNubers}
-                        onFirstDataRendered={onFirstDataRendered}
-                        onGridSizeChanged={onFirstDataRendered}
-                    ></AgGridReact>
+                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <PoorDataTable
+                        data={bibNubers}
+                        columns={defaultColumns}
+                        searchPlaceholder={t("pages.results.grid.search.placeholder")}
+                        getRowId={data => data.id.toString()}
+                        gridName="bib-numbers"
+                        onRowDoubleClicked={e => openEditDialog(e)}
+                        searchFields={["number"]}
+                    />
                 </div>
             </div>
         </>
