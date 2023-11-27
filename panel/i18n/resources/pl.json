@@ -887,7 +887,8 @@
         "result": "Wynik",
         "start": "Start",
         "finish": "Meta",
-        "gap": "Strata"
+        "gap": "Strata",
+        "penalties": "Kary:"
       }
     }
   },

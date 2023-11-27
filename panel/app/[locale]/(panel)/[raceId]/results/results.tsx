@@ -22,11 +22,10 @@ import { useCurrentRaceId } from "../../../../../hooks";
 type Result = AppRouterOutputs["result"]["results"][0];
 
 const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () => Promise<void> }) => {
-    // const setPaymentStatusMutation = trpc.playerRegistration.setPaymentStatus.useMutation();
     const t = useTranslations();
 
     const managePlayerPenalties = async () => {
-        const fooo = await Demodal.open(NiceModal, {
+        const penaltyChanges = await Demodal.open(NiceModal, {
             title: t("pages.results.manageTimePenalties.confirmation.title"),
             description: t("pages.results.manageTimePenalties.confirmation.text", {
                 name: result.name,
@@ -41,34 +40,11 @@ const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () =>
             },
         });
 
-        if (fooo) {
-            console.log;
+        if (penaltyChanges) {
             void refetch();
         }
     };
 
-    // const locale = useLocale();
-
-    // const togglePlayerPayment = async () => {
-    //     const confirmed = await Demodal.open<boolean>(NiceModal, {
-    //         title: t("pages.playerRegistrations.togglePlayerPayment.confirmation.title"),
-    //         component: Confirmation,
-    //         props: {
-    //             message: t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
-    //                 name: playerRegistration.name,
-    //                 lastName: playerRegistration.lastName,
-    //                 hasPaid: playerRegistration.hasPaid
-    //                     ? t("pages.playerRegistrations.payment.status.notPaid")
-    //                     : t("pages.playerRegistrations.payment.status.paid"),
-    //             }),
-    //         },
-    //     });
-
-    //     if (confirmed) {
-    //         await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
-    //         await refetch();
-    //     }
-    // };
     return result.totalTimePenalty ? (
         <span
             className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
@@ -228,7 +204,6 @@ export const Results = () => {
                     bibNumber: result.bibNumber,
                     raceId,
                 },
-                id: "manage-penalties",
             });
 
             if (timePenalty) {

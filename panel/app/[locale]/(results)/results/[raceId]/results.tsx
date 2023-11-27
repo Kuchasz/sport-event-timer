@@ -1,14 +1,14 @@
 "use client";
 
+import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
+import Icon from "@mdi/react";
 import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { trpc } from "trpc-core";
+import classNames from "classnames";
+import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import { useParams } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
 import React, { useState } from "react";
-import classNames from "classnames";
-import Icon from "@mdi/react";
-import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
+import { trpc } from "trpc-core";
 
 export const Results = () => {
     const { raceId } = useParams<{ raceId: string }>()!;
@@ -53,7 +53,7 @@ export const Results = () => {
                 <div className="flex w-full flex-col items-center">
                     <div className="w-full max-w-xl">
                         <div className="w-full border-b border-gray-200 shadow">
-                            <table className="w-full divide-y divide-gray-300 ">
+                            <table className="w-full table-fixed divide-y divide-gray-300">
                                 <thead className="sticky top-0 bg-gray-100">
                                     <tr>
                                         <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
@@ -123,7 +123,7 @@ export const Results = () => {
                                                     })}
                                                 >
                                                     <td></td>
-                                                    <td colSpan={9} className="px-2 pb-3 text-xs font-medium">
+                                                    <td colSpan={5} className="px-2 pb-3 text-xs font-medium">
                                                         <div className="table-row font-semibold">
                                                             <div className="table-cell py-0.5">{t("results.grid.columns.player")}:</div>
                                                             <div className="table-cell py-0.5 pl-2">
@@ -162,6 +162,20 @@ export const Results = () => {
                                                                     : formatTimeWithMilliSecUTC(s.result)}
                                                             </div>
                                                         </div>
+                                                        {s.timePenalties?.length ? (
+                                                            <div className="table-row">
+                                                                <div className="table-cell py-0.5">
+                                                                    {t("results.grid.columns.penalties")}
+                                                                </div>
+                                                                <div className="table-cell py-0.5 pl-2 font-mono">
+                                                                    {s.timePenalties.map(p => (
+                                                                        <div className="whitespace-break-spaces" key={p.id}>
+                                                                            {formatTimeWithMilliSecUTC(p.time)} ({p.reason})
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        ) : null}
                                                     </td>
                                                 </tr>
                                             )}
