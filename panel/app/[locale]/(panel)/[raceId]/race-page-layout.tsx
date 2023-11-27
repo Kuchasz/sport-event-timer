@@ -3,7 +3,7 @@ import type { Route } from "next";
 import { Meta } from "components/meta";
 import { RaceMenu } from "components/race-menu";
 import { Status } from "components/status";
-import { AgGridProvider } from "components/ag-grid-provider";
+import { DemodalProvider } from "components/demodal-provider";
 import { trpcRSC } from "trpc-core-rsc";
 import { ConciseRaceIcon } from "components/race-icon";
 
@@ -36,7 +36,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                         <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
                             <div className="flex-grow overflow-y-scroll px-8 py-4">
-                                <AgGridProvider>{children}</AgGridProvider>
+                                <DemodalProvider>{children}</DemodalProvider>
                             </div>
                         </main>
                     </div>
