@@ -879,8 +879,7 @@
       "title": "Wyniki"
     },
     "refresh": {
-      "message": "Wyniki odświeżają się automatycznie co 10 sekund.",
-      "lastUpdate": "Ostatnia aktualizacja: {updatedAt}"
+      "message": "Wyniki odświeżają się automatycznie co 10 sekund."
     },
     "abbreviations": {
       "dns": "Nie wystartował(a)",

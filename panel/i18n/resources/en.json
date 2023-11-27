@@ -879,8 +879,7 @@
       "title": "Results"
     },
     "refresh": {
-      "message": "Results refresh automatically every 10 seconds.",
-      "lastUpdate": "Last update: {updatedAt}"
+      "message": "Results refresh automatically every 10 seconds."
     },
     "abbreviations": {
       "dns": "Did not start",

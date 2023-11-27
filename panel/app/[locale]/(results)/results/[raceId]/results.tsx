@@ -8,14 +8,18 @@ import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 
-export const Results = () => {
+type Results = AppRouterOutputs["result"]["results"];
+type Race = AppRouterOutputs["race"]["basicInfo"];
+
+export const Results = ({ initialResults, initialRace }: { initialResults: Results; initialRace: Race }) => {
     const { raceId } = useParams<{ raceId: string }>()!;
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) }, { enabled: !!raceId });
-    const { data: results, dataUpdatedAt } = trpc.result.results.useQuery(
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) }, { enabled: !!raceId, initialData: initialRace });
+    const { data: results } = trpc.result.results.useQuery(
         { raceId: parseInt(raceId) },
-        { enabled: !!raceId, refetchInterval: 10_000 },
+        { enabled: !!raceId, refetchInterval: 10_000, initialData: initialResults },
     );
     const [rowIds, setRowIds] = useState<number[]>([]);
 
@@ -43,9 +47,7 @@ export const Results = () => {
                     <h3>{race?.date?.toLocaleDateString(locale)}</h3>
                     <div className="mt-2 text-sm">
                         <span>{t("results.refresh.message")}</span>
-                        <div className="mt-2">
-                            {t("results.refresh.lastUpdate", { updatedAt: new Date(dataUpdatedAt).toLocaleTimeString("pl") })}
-                        </div>
+                        <div className="mt-2"></div>
                     </div>
                 </div>
             </div>
