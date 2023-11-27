@@ -97,7 +97,7 @@ export const Classifications = () => {
                         columns={defaultColumns}
                         searchPlaceholder={t("pages.results.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
-                        gridName="split-times"
+                        gridName="classifications"
                         onRowDoubleClicked={e => openEditDialog(e)}
                         searchFields={["name"]}
                     />
