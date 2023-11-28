@@ -1,9 +1,9 @@
 "use client";
 
+import { Dialog, Transition } from "@headlessui/react";
+import { Demodal, useModal } from "demodal";
 import type { ComponentType } from "react";
 import { Fragment } from "react";
-import { Demodal, useModal } from "demodal";
-import { Dialog, Transition } from "@headlessui/react";
 
 type ResolvableComponentProps<P> = { onResolve: (value: P) => void; onReject: () => void };
 type ResolvableComponent<P> = ComponentType<ResolvableComponentProps<P>>;
