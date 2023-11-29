@@ -1206,7 +1206,8 @@
         "currentPage": "Strona {currentPage} z {totalPages}"
       }
     },
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "ok": "OK"
   },
   "startList": {
     "nextPlayer": "Następny zawodnik",

@@ -1206,7 +1206,8 @@
         "currentPage": "Page {currentPage} of {totalPages}"
       }
     },
-    "close": "Close"
+    "close": "Close",
+    "ok": "OK"
   },
   "startList": {
     "nextPlayer": "Next player",

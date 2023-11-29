@@ -170,8 +170,7 @@ const TimingPointCard = ({
                     <div className="h-5 w-0.5 bg-gray-100"></div>
                     <button
                         onClick={openCreateDialog}
-                        className="my-1 flex cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600"
-                    >
+                        className="my-1 flex cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
                         <Icon path={mdiPlus} size={0.7} />
                         <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
                     </button>
@@ -181,8 +180,7 @@ const TimingPointCard = ({
 
             <div
                 onClick={() => onSelect(timingPoint.id)}
-                className="my-1 w-full cursor-pointer rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4] p-1"
-            >
+                className="my-1 w-full cursor-pointer rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4] p-1">
                 <div className={classNames("flex rounded-lg px-6 py-4", { ["bg-white"]: !isActive })}>
                     <div className={classNames(`mr-4 self-center rounded-full bg-gray-100 p-2 text-gray-500`, { ["rotate-90"]: !isLast })}>
                         <Icon path={getTimingPointIcon(isFirst, isLast)} size={0.8} />
@@ -323,14 +321,12 @@ export const TimingPoints = () => {
                                 <div className="flex items-center">
                                     <button
                                         onClick={() => openEditDialog(activeTimingPoint)}
-                                        className="rounded-lg p-3 text-gray-600 hover:bg-gray-100"
-                                    >
+                                        className="rounded-lg p-3 text-gray-600 hover:bg-gray-100">
                                         <Icon path={mdiPencilOutline} size={0.8}></Icon>
                                     </button>
                                     <button
                                         onClick={() => openDeleteDialog(activeTimingPoint)}
-                                        className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100"
-                                    >
+                                        className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100">
                                         <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                     </button>
                                 </div>
@@ -344,8 +340,7 @@ export const TimingPoints = () => {
                                     <div className="flex-grow"></div>
                                     <button
                                         onClick={() => openCreateAccessKeyDialog(activeTimingPoint)}
-                                        className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200"
-                                    >
+                                        className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200">
                                         <Icon path={mdiPlus} size={0.8}></Icon>
                                     </button>
                                 </div>
