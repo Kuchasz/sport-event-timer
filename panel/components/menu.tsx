@@ -42,7 +42,9 @@ export const MenuButton = (n: {
             <Icon className={classNames("transition-opacity", { ["opacity-50"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
             <span className="ml-2.5">{n.text}</span>
             <span className="flex-grow"></span>
-            {n.badgeCount && <span className="text-2xs mx-2 rounded-full bg-gray-300 p-1 font-bold text-white">{n.badgeCount}</span>}
+            {n.badgeCount != null && (
+                <span className="text-2xs mx-2 rounded-full bg-gray-300 p-1 font-bold text-white">{n.badgeCount}</span>
+            )}
         </div>
     </Link>
 );
