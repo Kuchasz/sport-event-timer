@@ -61,8 +61,7 @@ export const Countdown = ({
                 className={classNames(["text-center font-mono font-black leading-none transition-all"], {
                     ["text-white"]: seconds > tickSecond,
                     ["text-orange-500"]: seconds <= tickSecond,
-                })}
-            >
+                })}>
                 {/* {seconds} */}
                 {formatSecondsToTimeSpan(seconds)}
             </div>

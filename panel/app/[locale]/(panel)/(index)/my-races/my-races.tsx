@@ -210,8 +210,7 @@ export const MyRaces = () => {
                         columns={defaultColumns}
                         getRowId={item => item.id.toString()}
                         data={races}
-                        onRowDoubleClicked={e => openEditDialog(e)}
-                    ></PoorDataTable>
+                        onRowDoubleClicked={e => openEditDialog(e)}></PoorDataTable>
                 </div>
             </div>
         </>

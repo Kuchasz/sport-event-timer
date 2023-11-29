@@ -34,8 +34,7 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
         <Form<Disqualification>
             initialValues={initialDisqualification}
             validationSchema={disqualificationSchema}
-            onSubmit={applyDisqualification}
-        >
+            onSubmit={applyDisqualification}>
             <div className="flex flex-col">
                 <FormInput<Disqualification, "reason">
                     label={t("pages.result.disqualify.form.reason.label")}

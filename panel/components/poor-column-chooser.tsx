@@ -31,13 +31,11 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                 const selectedItemsValueKeys = e.map(ee => String(ee));
                 const desiredItems = items.filter(i => selectedItemsValueKeys.includes(String(i[valueKey]))).map(i => i[valueKey]);
                 onChange({ target: { value: desiredItems } });
-            }}
-        >
+            }}>
             <div className={`flex ${className}`}>
                 <Listbox.Button
                     style={{ height: "38px" }}
-                    className="relative flex items-center justify-center rounded-md border border-gray-300 px-4 text-sm font-medium transition-all"
-                >
+                    className="relative flex items-center justify-center rounded-md border border-gray-300 px-4 text-sm font-medium transition-all">
                     <Icon className="mr-2" path={mdiTuneVariant} size={0.8} />
                     <span>{t("shared.dataTable.columns")}</span>
                 </Listbox.Button>
@@ -51,8 +49,7 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                                         active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                                     }`
                                 }
-                                value={item[valueKey]}
-                            >
+                                value={item[valueKey]}>
                                 {({ selected }) => (
                                     <>
                                         <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>

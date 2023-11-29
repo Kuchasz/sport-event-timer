@@ -62,15 +62,13 @@ const StartListPlayer = ({
                     ["opacity-0"]: hasPassed,
                 })}
                 size={1}
-                path={mdiChevronDoubleRight}
-            ></Icon>
+                path={mdiChevronDoubleRight}></Icon>
             <Icon
                 className={classNames("absolute ml-1 opacity-0 transition-opacity duration-500", {
                     ["opacity-100"]: hasPassed,
                 })}
                 size={0.7}
-                path={mdiCheckBold}
-            ></Icon>
+                path={mdiCheckBold}></Icon>
             <PlayerBibNumber bibNumber={player.bibNumber!} maxBibNumber={maxBibNumber!} />
             <span
                 className={classNames(
@@ -79,8 +77,7 @@ const StartListPlayer = ({
                         ["bg-yellow-300"]: isNext,
                         ["opacity-50"]: hasPassed,
                     },
-                )}
-            >
+                )}>
                 <div className="flex-grow">
                     <div className="font-normal">{player.name}</div>
                     <div className="mt-1.5 font-bold">{player.lastName}</div>
@@ -115,8 +112,7 @@ const StartList = ({
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="flex w-full overflow-y-auto px-2 leading-none transition-all"
-        >
+            className="flex w-full overflow-y-auto px-2 leading-none transition-all">
             <div className="flex w-full flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
@@ -151,8 +147,7 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
                 <span className="flex-grow"></span>
                 <a
                     onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
-                    className="cursor-pointer rounded-full p-2 hover:bg-yellow-200"
-                >
+                    className="cursor-pointer rounded-full p-2 hover:bg-yellow-200">
                     <Icon size={1} path={mdiDebugStepInto} />
                 </a>
             </div>

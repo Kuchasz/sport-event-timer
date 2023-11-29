@@ -50,8 +50,7 @@ export const BottomMenu = ({
         <div
             className={classNames("flex select-none justify-around rounded-t-lg bg-white py-3 transition-transform ease-out", {
                 ["translate-y-full"]: isOffline || timingPointMissing,
-            })}
-        >
+            })}>
             {/* <button
                 className="absolute bg-orange-500 text-white font-bold px-4 shadow-md rounded-full py-1 -translate-y-24"
                 onClick={() => {

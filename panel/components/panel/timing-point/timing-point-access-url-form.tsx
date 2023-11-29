@@ -21,8 +21,7 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
         <Form<TimingPointAccessUrl>
             initialValues={initialTimingPointAccessUrl}
             onSubmit={onResolve}
-            validationSchema={timingPointAccessUrlSchema}
-        >
+            validationSchema={timingPointAccessUrlSchema}>
             <div className="flex">
                 <FormInput<TimingPointAccessUrl, "name">
                     label={t("pages.timingPoints.accessUrls.form.name.label")}

@@ -93,8 +93,7 @@ const Item = <T extends string>({
                 onTouchEnd={e => {
                     deleteTargetElement(e.changedTouches[0].clientX);
                 }}
-                onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
-            >
+                onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}>
                 <div className="absolute -ml-[78px] flex h-[50px] w-[50px] items-center justify-center rounded-full bg-red-500 text-white">
                     <Icon size={0.8} path={mdiDeleteOutline} />
                 </div>
@@ -186,8 +185,7 @@ export const PlayersTimes = () => {
             <div className="my-2 flex flex-col px-2">
                 <button
                     onPointerDown={onAddTime}
-                    className="active:animate-pushInLittle flex w-full justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center outline-none"
-                >
+                    className="active:animate-pushInLittle flex w-full justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center outline-none">
                     <Icon color="white" size={5} path={mdiPlus} />
                 </button>
             </div>
@@ -197,8 +195,7 @@ export const PlayersTimes = () => {
                         height: rowVirtualizer.getTotalSize(),
                         width: "100%",
                         position: "relative",
-                    }}
-                >
+                    }}>
                     {rowVirtualizer.getVirtualItems().map(virtualRow => (
                         <Item
                             style={{ transform: `translateY(${virtualRow.start}px)` }}

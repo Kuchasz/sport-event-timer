@@ -31,8 +31,7 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
             className={classNames("flex h-full items-center", {
                 ["font-semibold text-green-600"]: playerRegistration.promotedToPlayer,
                 ["text-red-600"]: !playerRegistration.promotedToPlayer,
-            })}
-        >
+            })}>
             {playerRegistration.promotedToPlayer ? <Icon size={0.8} path={mdiCheck} /> : <Icon size={0.8} path={mdiClose} />}
         </span>
     );
@@ -75,8 +74,7 @@ const PlayerRegistrationPayment = ({
                 ["font-semibold text-green-600"]: playerRegistration.paymentDate !== null,
                 ["text-red-600"]: playerRegistration.paymentDate === null,
             })}
-            onClick={togglePlayerPayment}
-        >
+            onClick={togglePlayerPayment}>
             {playerRegistration.hasPaid ? <Icon size={0.8} path={mdiCashCheck} /> : <Icon size={0.8} path={mdiCashRemove} />}
             <span className="ml-2">
                 {playerRegistration.paymentDate?.toLocaleDateString(locale) ?? t("pages.playerRegistrations.payment.status.notPaid")}
@@ -276,8 +274,7 @@ export const PlayerRegistrations = () => {
                             // gridRef.current?.api.exportDataAsCsv({
                             //     fileName: `player-registrations-${new Date().toLocaleDateString(locale)}.csv`,
                             // });
-                        }}
-                    >
+                        }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>

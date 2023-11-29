@@ -29,8 +29,7 @@ const ScrollBar = React.forwardRef<
             orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent p-[1px]",
             className,
         )}
-        {...props}
-    >
+        {...props}>
         <ScrollAreaPrimitive.ScrollAreaThumb
             className={"relative flex-1 rounded-full bg-gray-500 opacity-25 transition-colors group-hover:opacity-50"}
         />

@@ -66,8 +66,7 @@ export const ManageTimePenalties = ({ onResolve, onReject, penalties, name, last
                 gridName="time-penalties"
                 columns={cols}
                 data={penalties}
-                getRowId={p => p.id}
-            ></PoorDataTable>
+                getRowId={p => p.id}></PoorDataTable>
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.close")}

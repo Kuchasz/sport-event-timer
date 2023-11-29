@@ -38,8 +38,7 @@ export const MenuButton = (n: {
                     ["text-gray-600 hover:bg-gray-100"]: !n.isActive,
                     [n.color]: n.isActive,
                 },
-            )}
-        >
+            )}>
             <Icon className={classNames("transition-opacity", { ["opacity-50"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
             <span className="ml-2.5">{n.text}</span>
             <span className="flex-grow"></span>

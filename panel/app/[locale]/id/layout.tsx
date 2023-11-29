@@ -52,8 +52,7 @@ export default async function Layout({ children, params }: { children: React.Rea
                                 <div className="relative flex h-full items-end justify-end overflow-hidden rounded-xl bg-blue-900">
                                     <img
                                         className="absolute top-0 h-full w-full object-cover"
-                                        src="https://ps-wed.azurewebsites.net/rura/meta-2023/big/PF7B9152.jpg"
-                                    ></img>
+                                        src="https://ps-wed.azurewebsites.net/rura/meta-2023/big/PF7B9152.jpg"></img>
                                     <div className="absolute top-0 h-full w-full bg-gradient-to-t from-black to-transparent"></div>
                                     <div className="relative">
                                         <img className="m-4" src="/assets/logo_ravelo.png" />

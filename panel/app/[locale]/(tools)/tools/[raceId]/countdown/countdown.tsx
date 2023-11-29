@@ -67,8 +67,7 @@ const NoPlayersLeft = () => (
             style={{
                 paddingInline: "0.25em",
                 paddingBlock: "0.1em",
-            }}
-        >
+            }}>
             No players left
         </div>
     </span>
@@ -80,8 +79,7 @@ const NextPlayers = ({ clockState, players }: { clockState: TimerSettings; playe
             style={{
                 fontSize: `${clockState.nextPlayers.size}px`,
             }}
-            className="w-full overflow-y-auto leading-none transition-all"
-        >
+            className="w-full overflow-y-auto leading-none transition-all">
             <div style={{ padding: "0.1em" }} className="flex justify-between overflow-y-auto">
                 {players.length > 0 ? (
                     players.map((p, index) => <NextPlayer isNext={index === 0} key={p.bibNumber} player={p} />)
@@ -101,8 +99,7 @@ const Latency = ({ latency }: { latency: number }) => {
                 className={classNames("block h-4 w-4 rounded-full", {
                     ["bg-orange-500"]: latency > allowedLatency,
                     ["bg-lime-500"]: latency <= allowedLatency,
-                })}
-            ></span>
+                })}></span>
             <span className={classNames("ml-2 font-semibold transition-opacity", { ["opacity-0"]: !showLatency })}>{latency}ms</span>
         </div>
     );
@@ -117,8 +114,7 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
             style={{
                 fontSize: `${clockState.players.size}px`,
             }}
-            className="w-full max-w-[30%] overflow-y-auto leading-none transition-all"
-        >
+            className="w-full max-w-[30%] overflow-y-auto leading-none transition-all">
             <div style={{ padding: "0.1em" }} className="flex flex-col justify-between overflow-y-auto">
                 {players.map((p, index) => (
                     <NextPlayer
@@ -223,8 +219,7 @@ export const RaceCountdown = () => {
                                         className="transition-all"
                                         style={{
                                             fontSize: `${clockState.currentPlayer.size}px`,
-                                        }}
-                                    >
+                                        }}>
                                         <NextPlayer isNext={true} player={nextPlayers[0]} />
                                     </div>
                                 )}
