@@ -4,9 +4,8 @@ import Icon from "@mdi/react";
 import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
-import { Confirmation } from "components/confirmation";
 import { GenderIcon } from "components/gender-icon";
-import { NiceConfirmation, NiceModal } from "components/modal";
+import { ConfirmationModal, NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
@@ -47,26 +46,21 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
     const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
     const t = useTranslations();
 
-    const openDeleteDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.classifications.categories.detele.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.classifications.categories.detele.confirmation.text", { name: category.name }),
-            },
-        });
-
-        if (confirmed) {
-            await removeCategoryMutation.mutateAsync({ categoryId: category.id });
-            refetch();
-        }
+    const deleteCategory = async () => {
+        await removeCategoryMutation.mutateAsync({ categoryId: category.id });
+        refetch();
     };
 
     return (
         <div className="flex h-full">
-            <span className="flex cursor-pointer items-center px-2 hover:text-red-600" onClick={openDeleteDialog}>
-                <Icon size={0.8} path={mdiTrashCan} />
-            </span>
+            <ConfirmationModal
+                onAccept={deleteCategory}
+                message={t("pages.classifications.categories.detele.confirmation.text", { name: category.name })}
+                title={t("pages.classifications.categories.detele.confirmation.title")}>
+                <span className="flex cursor-pointer items-center px-2 hover:text-red-600">
+                    <Icon size={0.8} path={mdiTrashCan} />
+                </span>
+            </ConfirmationModal>
         </div>
     );
 };

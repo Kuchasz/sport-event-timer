@@ -131,7 +131,7 @@ type ConfirmationProps = {
     children: React.ReactElement;
 };
 
-export const Confirmation = ({ onAccept, title, description, message, children }: ConfirmationProps) => {
+export const ConfirmationModal = ({ onAccept, title, description, message, children }: ConfirmationProps) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const t = useTranslations();
 
