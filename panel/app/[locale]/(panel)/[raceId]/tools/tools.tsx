@@ -40,8 +40,7 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
             <Link
                 href={href}
                 target="_blank"
-                className="mx-5 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm"
-            >
+                className="mx-5 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm">
                 <Icon path={icon} size={3} />
                 <span>{name}</span>
             </Link>

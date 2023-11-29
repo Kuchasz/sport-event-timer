@@ -25,8 +25,7 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onPointerDown={() => onPlayerCheckIn(player.bibNumber)}
-        className="mt-2 flex w-full items-center rounded-md bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 shadow-md"
-    >
+        className="mt-2 flex w-full items-center rounded-md bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 shadow-md">
         <div className="mr-4 text-2xl font-bold">{player.bibNumber}</div>
         <div>
             {player.name} {player.lastName}

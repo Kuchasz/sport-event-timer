@@ -54,8 +54,7 @@ const RegistrationFormComponent = ({
             <Form<PlayerRegistration>
                 onSubmit={r => onResolve(r)}
                 initialValues={initialRegistration()}
-                validationSchema={playerRegistrationSchema}
-            >
+                validationSchema={playerRegistrationSchema}>
                 <FormInput<PlayerRegistration, "name">
                     label={t("registration.fields.name.label")}
                     render={({ value, onChange }) => (

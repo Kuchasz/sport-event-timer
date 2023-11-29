@@ -167,8 +167,7 @@ export const Players = () => {
                             // gridRef.current?.api.exportDataAsCsv({
                             //     fileName: `players-${new Date().toLocaleDateString(locale)}.csv`,
                             // });
-                        }}
-                    >
+                        }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.players.export.button")}</span>
                     </Button>

@@ -30,8 +30,7 @@ export const PlayerWithTimeStampDisplay = ({
                     className={classNames("overflow-hidden font-semibold transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.timeStamp == null,
                         ["max-h-8 opacity-100"]: playerWithTimeStamp.timeStamp,
-                    })}
-                >
+                    })}>
                     <span>
                         {playerWithTimeStamp.timeStamp
                             ? formatTime(new Date(playerWithTimeStamp.timeStamp.time))
@@ -44,8 +43,7 @@ export const PlayerWithTimeStampDisplay = ({
                     className={classNames("overflow-hidden font-semibold transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.absent == null,
                         ["max-h-8 opacity-100"]: playerWithTimeStamp.absent,
-                    })}
-                >
+                    })}>
                     <span>{playerWithTimeStamp.absent ? "ABSENT" : previousAbsentState ? "ABSENT" : null}</span>
                 </div>
                 <div className="text-sm opacity-50">

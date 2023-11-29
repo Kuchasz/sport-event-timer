@@ -34,8 +34,7 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                             placeholder={t("pages.players.form.classification.placeholder")}
                             nameKey="name"
                             valueKey="id"
-                            onChange={onChange}
-                        ></PoorSelect>
+                            onChange={onChange}></PoorSelect>
                     )}
                     name="classificationId"
                 />

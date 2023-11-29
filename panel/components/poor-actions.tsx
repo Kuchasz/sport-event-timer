@@ -24,8 +24,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                 enterTo="opacity-100 translate-y-0"
                 leave="transition ease-in duration-150"
                 leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-            >
+                leaveTo="opacity-0 translate-y-1">
                 <Popover.Button className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium text-white hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <Icon className="text-black" size={0.8} path={mdiDotsHorizontal} />
                 </Popover.Button>
@@ -37,8 +36,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
                                 <a
                                     key={action.name}
                                     className="-m-3 flex cursor-pointer items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                                    onClick={() => action.execute(item)}
-                                >
+                                    onClick={() => action.execute(item)}>
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
                                         <Icon size={1} className="text-black" path={action.iconPath} />,
                                     </div>

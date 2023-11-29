@@ -50,8 +50,7 @@ const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () =>
             className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
                 ["font-semibold text-orange-600"]: result.totalTimePenalty !== null,
             })}
-            onClick={managePlayerPenalties}
-        >
+            onClick={managePlayerPenalties}>
             <Icon size={0.8} path={mdiAlertOutline} />
             <span className="ml-2">{formatTimeWithMilliSecUTC(result.totalTimePenalty)}</span>
         </span>

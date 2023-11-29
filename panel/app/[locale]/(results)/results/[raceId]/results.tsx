@@ -79,8 +79,7 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                 className={classNames("cursor-pointer whitespace-nowrap", {
                                                     "bg-white": i % 2 === 1,
                                                     "bg-gray-100": i % 2 === 0,
-                                                })}
-                                            >
+                                                })}>
                                                 <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
                                                 <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
                                                 <td className="px-1 py-3 text-xs font-semibold uppercase">
@@ -92,8 +91,7 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                             className={classNames("text-center", {
                                                                 ["flex h-5 w-5 items-center justify-center rounded-md bg-gray-600 font-bold text-white"]:
                                                                     s.openCategoryPlace && s.openCategoryPlace <= 3,
-                                                            })}
-                                                        >
+                                                            })}>
                                                             {s.openCategory && `${s.openCategoryPlace}`}
                                                         </div>
                                                     </td>
@@ -109,8 +107,7 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                     className={classNames(
                                                         "px-1 py-3 text-center font-mono text-xs font-semibold uppercase",
                                                         { "text-right": !s.invalidState },
-                                                    )}
-                                                >
+                                                    )}>
                                                     {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
                                                 </td>
                                                 <td>
@@ -122,8 +119,7 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                     className={classNames("whitespace-nowrap", {
                                                         "bg-white": i % 2 === 1,
                                                         "bg-gray-100": i % 2 === 0,
-                                                    })}
-                                                >
+                                                    })}>
                                                     <td></td>
                                                     <td colSpan={5} className="px-2 pb-3 text-xs font-medium">
                                                         <div className="table-row font-semibold">

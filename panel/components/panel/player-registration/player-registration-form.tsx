@@ -32,8 +32,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
         <Form<PlayerRegistration>
             initialValues={initialPlayerRegistration}
             validationSchema={playerRegistrationSchema}
-            onSubmit={onResolve}
-        >
+            onSubmit={onResolve}>
             <div className="flex">
                 <FormInput<PlayerRegistration, "name">
                     label={t("pages.playerRegistrations.form.name.label")}

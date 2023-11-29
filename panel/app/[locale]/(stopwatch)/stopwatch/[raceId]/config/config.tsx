@@ -40,8 +40,7 @@ export const Config = () => {
                     <button
                         onClick={() => setTimingPointId(tk.id)}
                         className="relative my-2 flex items-center rounded-xl bg-white px-3 py-2 shadow transition-opacity"
-                        key={tk.id}
-                    >
+                        key={tk.id}>
                         <TimingPointIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />
                         <span className="ml-4 text-xl">{tk.name}</span>
                         <Icon

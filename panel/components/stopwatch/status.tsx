@@ -59,14 +59,12 @@ const StatusBar = ({
                 ["h-auto py-2"]: connectionState === desiredState,
                 ["animate-pulse"]: pulse,
             },
-        )}
-    >
+        )}>
         <span
             className={classNames("flex items-center transition-opacity", {
                 ["opacity-0"]: connectionState !== desiredState,
                 ["opacity-100"]: connectionState === desiredState,
-            })}
-        >
+            })}>
             <div className="mr-2">{text}</div>
             <Icon
                 className={classNames({

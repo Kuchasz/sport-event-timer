@@ -37,8 +37,7 @@ const CategoryIsSpecial = ({ category }: { category: Category }) => {
             className={classNames("flex h-full items-center hover:text-black", {
                 ["font-semibold text-green-600"]: category.isSpecial,
                 ["text-red-600"]: !category.isSpecial,
-            })}
-        >
+            })}>
             {category.isSpecial ? <Icon size={0.8} path={mdiCheck} /> : <Icon size={0.8} path={mdiClose} />}
         </span>
     );

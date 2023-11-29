@@ -138,16 +138,14 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     style={{
                         gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
                         gridAutoRows: "auto",
-                    }}
-                >
+                    }}>
                     <div className="contents text-xs font-bold">
                         {visibleColumns.map(c => (
                             <div className="sticky top-0 flex border-b bg-white" key={c.headerName}>
                                 {c.sortable ? (
                                     <div
                                         onClick={() => handleSortClick(c, sortColumn)}
-                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors hover:bg-gray-100"
-                                    >
+                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors hover:bg-gray-100">
                                         <span>{c.headerName}</span>
                                         {c.field === sortColumn?.field ? (
                                             sortColumn.order === "asc" ? (
@@ -172,8 +170,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                             <div
                                 onDoubleClick={() => onRowDoubleClicked && onRowDoubleClicked(d.obj)}
                                 className="group contents text-sm"
-                                key={getRowId(d.obj)}
-                            >
+                                key={getRowId(d.obj)}>
                                 {visibleColumns.map(c => (
                                     <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
                                         {c.cellRenderer ? (
@@ -215,8 +212,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                 "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
                                 { ["opacity-50"]: isFirstPage },
                             )}
-                            onClick={() => changePage(currentPage - 1)}
-                        >
+                            onClick={() => changePage(currentPage - 1)}>
                             <Icon path={mdiChevronLeft} size={1}></Icon>
                         </button>
                         <button
@@ -225,8 +221,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                 "relative flex items-center justify-center rounded-md border border-gray-300 p-1 text-sm font-medium shadow-sm transition-all",
                                 { ["opacity-50"]: isLastPage },
                             )}
-                            onClick={() => changePage(currentPage + 1)}
-                        >
+                            onClick={() => changePage(currentPage + 1)}>
                             <Icon path={mdiChevronRight} size={1}></Icon>
                         </button>
                     </div>

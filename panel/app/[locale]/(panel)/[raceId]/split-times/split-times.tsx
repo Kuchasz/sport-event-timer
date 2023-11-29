@@ -45,8 +45,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="flex cursor-pointer items-center hover:text-red-600"
-                >
+                    className="flex cursor-pointer items-center hover:text-red-600">
                     <Icon size={0.75} path={mdiClockEditOutline} />
                     {/* <span className="ml-1">change</span> */}
                 </span>
@@ -60,8 +59,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="flex cursor-pointer items-center hover:text-red-600"
-                >
+                    className="flex cursor-pointer items-center hover:text-red-600">
                     <Icon size={0.75} path={mdiClockPlusOutline} />
                     {/* <span className="ml-1">change</span> */}
                 </span>
@@ -75,8 +73,7 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                             timingPointId: timingPointId,
                         } as any)
                     }
-                    className="ml-2 flex cursor-pointer items-center hover:text-red-600"
-                >
+                    className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                     <Icon size={0.75} path={mdiReload} />
                     {/* <span className="ml-1">revert</span> */}
                 </span>

@@ -43,8 +43,7 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
             className={classNames("flex h-full items-center", {
                 ["font-semibold text-green-600"]: race.registrationEnabled,
                 ["text-red-600"]: !race.registrationEnabled,
-            })}
-        >
+            })}>
             {race.registrationEnabled ? <Icon size={1} path={mdiLockOpenVariantOutline} /> : <Icon size={1} path={mdiLockOutline} />}
         </span>
     );
@@ -72,8 +71,7 @@ const RaceFilterKind = ({ onSelect, isActive, name }: { onSelect: () => void; is
         className={classNames("mx-0.5 cursor-default rounded-lg px-4", {
             ["bg-white"]: isActive,
             ["cursor-pointer hover:bg-gray-50"]: !isActive,
-        })}
-    >
+        })}>
         {name}
     </div>
 );
@@ -240,12 +238,10 @@ export const Races = ({ initialData }: RacesProps) => {
                         className={classNames("mt-6 flex flex-wrap", {
                             ["justify-between"]: upcomingRaces.length === 3,
                             ["gap-5"]: upcomingRaces.length < 3,
-                        })}
-                    >
+                        })}>
                         <div
                             onClick={openCreateDialog}
-                            className="flex w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
-                        >
+                            className="flex w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1">
                             <button className="flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 font-medium">
                                 <Icon size={1.2} path={mdiPlus} />
                             </button>
@@ -255,8 +251,7 @@ export const Races = ({ initialData }: RacesProps) => {
                             <Link
                                 key={r.id}
                                 href={`/${r.id}`}
-                                className="h-64 w-40 overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1"
-                            >
+                                className="h-64 w-40 overflow-hidden rounded-lg shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1">
                                 <FullRaceIcon r={r} />
                                 <div className="p-4 ">
                                     <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">{r.name}</div>
@@ -367,8 +362,7 @@ export const Races = ({ initialData }: RacesProps) => {
 
                                 <Link
                                     className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                    href={`/${r.obj.id}`}
-                                >
+                                    href={`/${r.obj.id}`}>
                                     <Icon size={0.8} path={mdiOpenInNew} />
                                     <span className="ml-2">{t("pages.races.open")}</span>
                                 </Link>

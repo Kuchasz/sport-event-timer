@@ -47,8 +47,7 @@ export const PoorCombo = ({
                                 onClick={() => setQuery(item.target)}
                                 key={item.target}
                                 className="relative cursor-default select-none py-2 pl-4 pr-4 text-gray-900"
-                                value={item.target}
-                            >
+                                value={item.target}>
                                 <span className="block truncate font-normal">{item.target}</span>
                             </Combobox.Option>
                         ))}

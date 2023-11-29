@@ -29,8 +29,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
                 setSelected(e);
                 const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
                 onChange({ target: { value: desiredItem[valueKey] } });
-            }}
-        >
+            }}>
             <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                     {desiredItem ? (
@@ -53,8 +52,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
                                         active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                                     }`
                                 }
-                                value={item[valueKey]}
-                            >
+                                value={item[valueKey]}>
                                 {({ selected }) => (
                                     <>
                                         <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
@@ -109,8 +107,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                     setSelected(e);
                     const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
                     onChange({ target: { value: desiredItem[valueKey] } });
-                }}
-            >
+                }}>
                 <div className="relative w-full flex-shrink px-2">
                     <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-gray-100 py-2 pl-3 pr-10 text-left hover:bg-gray-200 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">{String(desiredItem[nameKey])}</span>
@@ -129,8 +126,7 @@ export const PoorSelect2 = <T, TNameKey extends keyof T, TValueKey extends keyof
                                             active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                                         }`
                                     }
-                                    value={item[valueKey]}
-                                >
+                                    value={item[valueKey]}>
                                     {({ selected }) => (
                                         <>
                                             <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>

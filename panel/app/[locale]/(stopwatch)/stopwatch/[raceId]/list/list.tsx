@@ -66,14 +66,12 @@ export const PlayersList = () => {
                     height: rowVirtualizer.getTotalSize(),
                     width: "100%",
                     position: "relative",
-                }}
-            >
+                }}>
                 {rowVirtualizer.getVirtualItems().map(virtualRow => (
                     <div
                         key={players[virtualRow.index].bibNumber}
                         className="t-0 absolute left-0 w-full py-0.5"
-                        style={{ transform: `translateY(${virtualRow.start}px)` }}
-                    >
+                        style={{ transform: `translateY(${virtualRow.start}px)` }}>
                         <div className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow">
                             <PlayerWithTimeStampDisplay
                                 padBibNumber={highestBibNumber.toString().length}

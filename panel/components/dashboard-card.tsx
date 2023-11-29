@@ -20,8 +20,7 @@ const Range = ({ title, min, max }: { title: string; min: number; max?: number |
                         ["bg-red-500"]: min > max,
                         ["bg-orange-500"]: min === max,
                         ["bg-green-500"]: min < max,
-                    })}
-                ></div>
+                    })}></div>
             )}
         </div>
     </Card>
@@ -32,8 +31,10 @@ const Discrete = ({ title, enabled }: { title: string; enabled: boolean }) => {
     return (
         <Card value={`${enabled ? t("enabled") : t("disabled")}`} title={title}>
             <div
-                className={classNames("relative h-2 w-1/2 rounded bg-gray-100", { ["bg-red-500"]: !enabled, ["bg-green-500"]: enabled })}
-            ></div>
+                className={classNames("relative h-2 w-1/2 rounded bg-gray-100", {
+                    ["bg-red-500"]: !enabled,
+                    ["bg-green-500"]: enabled,
+                })}></div>
         </Card>
     );
 };

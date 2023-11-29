@@ -35,8 +35,7 @@ const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) =
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl transition-opacity disabled:opacity-20 "
-    >
+        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl transition-opacity disabled:opacity-20 ">
         {char}
     </button>
 );

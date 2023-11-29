@@ -48,8 +48,7 @@ export const LogoutButton = () => {
             onClick={async () => {
                 await logoutMutation.mutateAsync();
                 router.push("/id/login");
-            }}
-        >
+            }}>
             <Icon path={mdiPowerStandby} size={0.5}></Icon>
             <span className="ml-1">Logout</span>
         </div>
