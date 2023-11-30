@@ -9,14 +9,14 @@ import { PageHeader } from "components/page-header";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
-import { PoorActions } from "components/poor-actions";
+import { NewPoorActions, NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
-import { NiceConfirmation, NiceModal } from "../../../../../components/modal";
+import { ConfirmationModal, NiceConfirmation, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -34,6 +34,33 @@ const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegi
             })}>
             {playerRegistration.promotedToPlayer ? <Icon size={0.8} path={mdiCheck} /> : <Icon size={0.8} path={mdiClose} />}
         </span>
+    );
+};
+
+const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegistration: PlayerRegistration; refetch: () => void }) => {
+    const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
+    const t = useTranslations();
+
+    const deletePlayerRegistration = async () => {
+        await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
+        void refetch();
+    };
+
+    return (
+        <NewPoorActions>
+            <ConfirmationModal
+                message={t("pages.playerRegistrations.delete.confirmation.text", {
+                    name: playerRegistration.name,
+                    lastName: playerRegistration.lastName,
+                })}
+                title={t("pages.playerRegistrations.delete.confirmation.title")}
+                onAccept={() => deletePlayerRegistration()}>
+                <NewPoorActionsItem
+                    name={t("pages.playerRegistrations.delete.title")}
+                    description={t("pages.playerRegistrations.delete.description")}
+                    iconPath={mdiTrashCan}></NewPoorActionsItem>
+            </ConfirmationModal>
+        </NewPoorActions>
     );
 };
 
@@ -88,7 +115,6 @@ export const PlayerRegistrations = () => {
     const t = useTranslations();
     const locale = useLocale();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
-    const deletePlayerMutation = trpc.playerRegistration.delete.useMutation();
 
     const promoteToPlayerAction = {
         name: t("pages.playerRegistrations.promoteToPlayer.title"),
@@ -106,29 +132,6 @@ export const PlayerRegistrations = () => {
 
             if (promotedPlayer) {
                 await refetch();
-            }
-        },
-    };
-
-    const deleteRegistrationAction = {
-        name: t("pages.playerRegistrations.delete.title"),
-        description: t("pages.playerRegistrations.delete.description"),
-        iconPath: mdiTrashCan,
-        execute: async (playerRegistration: PlayerRegistration) => {
-            const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-                title: t("pages.playerRegistrations.delete.confirmation.title"),
-                component: Confirmation,
-                props: {
-                    message: t("pages.playerRegistrations.delete.confirmation.text", {
-                        name: playerRegistration.name,
-                        lastName: playerRegistration.lastName,
-                    }),
-                },
-            });
-
-            if (confirmed) {
-                await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
-                void refetch();
             }
         },
     };
@@ -212,12 +215,7 @@ export const PlayerRegistrations = () => {
             field: "id",
             sortable: false,
             headerName: t("pages.playerRegistrations.grid.columns.actions"),
-            cellRenderer: data => (
-                <PoorActions
-                    item={data}
-                    actions={data.promotedToPlayer ? [deleteRegistrationAction] : [promoteToPlayerAction, deleteRegistrationAction]}
-                />
-            ),
+            cellRenderer: data => <PlayerRegistrationActions refetch={refetch} playerRegistration={data} />,
         },
     ];
 
