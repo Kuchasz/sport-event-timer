@@ -10,6 +10,18 @@ export const timePenaltyRouter = router({
             const timePenalties = await ctx.db.timePenalty.findMany({ where: { raceId } });
             return Object.fromEntries(timePenalties.map(tp => [tp.bibNumber, tp.id])) as Record<string, number>;
         }),
+    playerPenalties: protectedProcedure
+        .input(
+            z.object({
+                bibNumber: z.string({ required_error: "bibNumber is required" }),
+                raceId: z.number({ required_error: "raceId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, bibNumber } = input;
+            const timePenalties = await ctx.db.timePenalty.findMany({ where: { raceId, bibNumber } });
+            return timePenalties.map(tp => ({ key: tp.bibNumber, id: tp.id, time: tp.time, reason: tp.reason }));
+        }),
     applyPenalty: protectedProcedure.input(timePenaltySchema).mutation(async ({ input, ctx }) => {
         const { ...timePenalty } = input;
 

@@ -174,7 +174,13 @@ export const ConfirmationModal = ({ onAccept, title, description, message, child
                                                 <Button onClick={() => setModalOpen(false)} outline>
                                                     {t("shared.cancel")}
                                                 </Button>
-                                                <Button onClick={onAccept}>{t("shared.ok")}</Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        onAccept();
+                                                        setModalOpen(false);
+                                                    }}>
+                                                    {t("shared.ok")}
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
