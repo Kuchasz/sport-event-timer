@@ -9,7 +9,7 @@ import { PageHeader } from "components/page-header";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
-import { NewPoorActions, NewPoorActionsItem, PoorActions } from "components/poor-actions";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";

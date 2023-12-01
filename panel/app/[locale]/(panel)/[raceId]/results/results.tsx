@@ -21,7 +21,7 @@ import { useCurrentRaceId } from "../../../../../hooks";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
-const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () => Promise<void> }) => {
+const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result: Result; refetch: () => Promise<void> }) => {
     const t = useTranslations();
 
     const managePlayerPenalties = async () => {
@@ -34,6 +34,8 @@ const PlayerTimePenalty = ({ result, refetch }: { result: Result; refetch: () =>
             component: ManageTimePenalties,
             props: {
                 penalties: result.timePenalties,
+                bibNumber: result.bibNumber,
+                raceId: raceId,
                 playerId: result.id,
                 name: result.name,
                 lastName: result.lastName,
@@ -106,6 +108,7 @@ export const Results = () => {
             cellRenderer: (data: Result) => (
                 <PlayerTimePenalty
                     result={data}
+                    raceId={raceId}
                     refetch={async () => {
                         await refetchResults();
                     }}
