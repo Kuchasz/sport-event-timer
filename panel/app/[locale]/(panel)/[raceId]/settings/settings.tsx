@@ -1,18 +1,17 @@
 "use client";
 import { mdiPen, mdiPlus, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
+import { Button } from "components/button";
+import { ConfirmationModal, NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
 import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
-import { Button } from "components/button";
-import { Confirmation } from "components/confirmation";
-import { NiceConfirmation, NiceModal } from "components/modal";
-import { trpc } from "trpc-core";
 import { Demodal } from "demodal";
 import { useCurrentRaceId } from "hooks";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import Head from "next/head";
-import { PageHeader } from "components/page-header";
 import { useTranslations } from "next-intl";
+import Head from "next/head";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { trpc } from "trpc-core";
 
 type EditedApiKey = AppRouterInputs["apiKey"]["addApiKey"]["key"];
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
@@ -39,19 +38,9 @@ export const Settings = () => {
         }
     };
 
-    const openDeleteDialog = async (apiKey: ApiKey) => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.settings.apiKeys.delete.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.settings.apiKeys.delete.confirmation.text", { name: apiKey.name }),
-            },
-        });
-
-        if (confirmed) {
-            await deleteApiKeyMutation.mutateAsync({ raceId: apiKey.raceId, keyId: apiKey.id });
-            void refetch();
-        }
+    const deleteApiKey = async (apiKey: ApiKey) => {
+        await deleteApiKeyMutation.mutateAsync({ raceId: apiKey.raceId, keyId: apiKey.id });
+        void refetch();
     };
 
     const openEditDialog = async (editedApiKey?: ApiKey) => {
@@ -90,9 +79,14 @@ export const Settings = () => {
                             <Button className="mr-2" onClick={() => openEditDialog(key)}>
                                 <Icon size={0.8} path={mdiPen} />
                             </Button>
-                            <Button onClick={() => openDeleteDialog(key)}>
-                                <Icon size={0.8} path={mdiTrashCan} />
-                            </Button>
+                            <ConfirmationModal
+                                title={t("pages.settings.apiKeys.delete.confirmation.title")}
+                                message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
+                                onAccept={() => deleteApiKey(key)}>
+                                <Button>
+                                    <Icon size={0.8} path={mdiTrashCan} />
+                                </Button>
+                            </ConfirmationModal>
                         </div>
                     </div>
                 ))}
