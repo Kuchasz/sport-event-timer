@@ -4,8 +4,7 @@ import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
-import { Confirmation } from "components/confirmation";
-import { NiceConfirmation, NiceModal } from "components/modal";
+import { ConfirmationModal, NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
@@ -25,25 +24,22 @@ type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
     const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
     const t = useTranslations();
-    const deletebibNumber = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.bibNumbers.delete.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number }),
-            },
-        });
 
-        if (confirmed) {
-            await deletebibNumberMutation.mutateAsync({ bibNumberId: bibNumber.id });
-            refetch();
-        }
+    const deletebibNumber = async () => {
+        await deletebibNumberMutation.mutateAsync({ bibNumberId: bibNumber.id });
+        refetch();
     };
+
     return (
-        <span className="flex cursor-pointer items-center hover:text-red-600" onClick={deletebibNumber}>
-            <Icon size={0.8} path={mdiTrashCan} />
-            {t("pages.bibNumbers.delete.button")}
-        </span>
+        <ConfirmationModal
+            title={t("pages.bibNumbers.delete.confirmation.title")}
+            message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
+            onAccept={deletebibNumber}>
+            <span className="flex cursor-pointer items-center hover:text-red-600">
+                <Icon size={0.8} path={mdiTrashCan} />
+                {t("pages.bibNumbers.delete.button")}
+            </span>
+        </ConfirmationModal>
     );
 };
 
@@ -81,19 +77,9 @@ export const BibNumbers = () => {
         }
     };
 
-    const openDeleteAllDialog = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.bibNumbers.deleteAll.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.bibNumbers.deleteAll.confirmation.text"),
-            },
-        });
-
-        if (confirmed) {
-            await deleteAllMutation.mutateAsync({ raceId: raceId });
-            void refetch();
-        }
+    const deleteAll = async () => {
+        await deleteAllMutation.mutateAsync({ raceId: raceId });
+        void refetch();
     };
 
     const openCreateManyDialog = async () => {
@@ -135,13 +121,18 @@ export const BibNumbers = () => {
                         <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
                     </Button>
                     <Button outline className="ml-2" onClick={openCreateManyDialog}>
-                        {/* <Icon size={0.8} path={mdiPlusM} /> */}
+                        <Icon size={0.8} path={mdiPlus} />
                         {t("pages.bibNumbers.createMany.button")}
                     </Button>{" "}
-                    <Button outline className="ml-2" onClick={openDeleteAllDialog}>
-                        <Icon size={0.8} path={mdiRestore} className="mr-2" />
-                        {t("pages.bibNumbers.deleteAll.button")}
-                    </Button>
+                    <ConfirmationModal
+                        title={t("pages.bibNumbers.deleteAll.confirmation.title")}
+                        message={t("pages.bibNumbers.deleteAll.confirmation.text")}
+                        onAccept={deleteAll}>
+                        <Button outline className="ml-2">
+                            <Icon size={0.8} path={mdiRestore} className="mr-2" />
+                            {t("pages.bibNumbers.deleteAll.button")}
+                        </Button>
+                    </ConfirmationModal>
                 </div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
                     <PoorDataTable
