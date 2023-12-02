@@ -3,14 +3,13 @@
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { NiceConfirmation, NiceModal } from "components/modal";
+import { ConfirmationModal, NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { Confirmation } from "../../../../../components/confirmation";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
@@ -30,6 +29,7 @@ type SplitTimeResultTypes = {
 };
 const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, timingPointId }: SplitTimeResultTypes) => {
     const result = splitTimeResult.times[timingPointId];
+    const t = useTranslations();
     return (
         <div className="flex font-mono">
             <span className={result?.manual ? "text-yellow-600" : ""}>
@@ -65,18 +65,20 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
                 </span>
             )}
             {result?.manual == true && (
-                <span
-                    onClick={() =>
+                <ConfirmationModal
+                    title={t("pages.splitTimes.revert.confirmation.title")}
+                    message={t("pages.splitTimes.revert.confirmation.text")}
+                    onAccept={() =>
                         openResetDialog({
                             bibNumber: splitTimeResult.bibNumber,
                             time: result?.time,
                             timingPointId: timingPointId,
                         } as any)
-                    }
-                    className="ml-2 flex cursor-pointer items-center hover:text-red-600">
-                    <Icon size={0.75} path={mdiReload} />
-                    {/* <span className="ml-1">revert</span> */}
-                </span>
+                    }>
+                    <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
+                        <Icon size={0.75} path={mdiReload} />
+                    </span>
+                </ConfirmationModal>
             )}
         </div>
     );
@@ -121,7 +123,7 @@ export const SplitTimes = () => {
                 cellRenderer: (data: SplitTime) => (
                     <SplitTimeResult
                         openEditDialog={openEditDialog}
-                        openResetDialog={openRevertDialog}
+                        openResetDialog={revertManualSplitTime}
                         splitTimeResult={data}
                         timingPointId={tp.id}
                     />
@@ -145,19 +147,9 @@ export const SplitTimes = () => {
         }
     };
 
-    const openRevertDialog = async (editedSplitTime: RevertedSplitTime) => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.splitTimes.revert.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.splitTimes.revert.confirmation.text"),
-            },
-        });
-
-        if (confirmed) {
-            await revertSplitTimeMutation.mutateAsync(editedSplitTime);
-            await refetch();
-        }
+    const revertManualSplitTime = async (editedSplitTime: RevertedSplitTime) => {
+        await revertSplitTimeMutation.mutateAsync(editedSplitTime);
+        await refetch();
     };
 
     return (
