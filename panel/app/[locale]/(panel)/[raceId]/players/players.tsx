@@ -12,8 +12,7 @@ import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { Confirmation } from "../../../../../components/confirmation";
-import { NiceConfirmation, NiceModal } from "../../../../../components/modal";
+import { ConfirmationModal, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -24,24 +23,20 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
     const deletePlayerMutation = trpc.player.delete.useMutation();
     const t = useTranslations();
     const deletePlayer = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.players.delete.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName }),
-            },
-        });
-
-        if (confirmed) {
-            await deletePlayerMutation.mutateAsync({ playerId: player.id });
-            refetch();
-        }
+        await deletePlayerMutation.mutateAsync({ playerId: player.id });
+        refetch();
     };
+
     return (
-        <span className="flex cursor-pointer items-center hover:text-red-600" onClick={deletePlayer}>
-            <Icon size={0.8} path={mdiTrashCan} />
-            {t("pages.players.delete.button")}
-        </span>
+        <ConfirmationModal
+            title={t("pages.players.delete.confirmation.title")}
+            message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
+            onAccept={deletePlayer}>
+            <span className="flex cursor-pointer items-center hover:text-red-600">
+                <Icon size={0.8} path={mdiTrashCan} />
+                {t("pages.players.delete.button")}
+            </span>
+        </ConfirmationModal>
     );
 };
 

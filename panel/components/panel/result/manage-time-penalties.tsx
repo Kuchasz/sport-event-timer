@@ -4,6 +4,7 @@ import { Button } from "components/button";
 import { ConfirmationModal } from "components/modal";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 
@@ -11,7 +12,6 @@ type TimePenalty = AppRouterOutputs["result"]["results"][0]["timePenalties"][0];
 
 type ManageTimePenaltiesProps = {
     onResolve: (status: boolean) => void;
-    onReject: () => void;
     playerId: number;
     initialPenalties: TimePenalty[];
     bibNumber: string;
@@ -55,12 +55,14 @@ const TimePenaltyActions = ({
     );
 };
 
-export const ManageTimePenalties = ({ onReject, initialPenalties, bibNumber, raceId, name, lastName }: ManageTimePenaltiesProps) => {
+export const ManageTimePenalties = ({ onResolve, initialPenalties, bibNumber, raceId, name, lastName }: ManageTimePenaltiesProps) => {
     const t = useTranslations();
     const { data: penalties, refetch } = trpc.timePenalty.playerPenalties.useQuery(
         { bibNumber, raceId },
         { initialData: initialPenalties },
     );
+
+    const [penaltiesChanged, setPenaltiesChanged] = useState<boolean>(false);
 
     const cols: PoorDataTableColumn<TimePenalty>[] = [
         { field: "reason", headerName: t("pages.results.manageTimePenalties.grid.columns.reason"), sortable: false },
@@ -69,7 +71,17 @@ export const ManageTimePenalties = ({ onReject, initialPenalties, bibNumber, rac
             field: "time",
             headerName: t("pages.results.manageTimePenalties.grid.columns.actions"),
             sortable: false,
-            cellRenderer: data => <TimePenaltyActions name={name} lastName={lastName} refetch={refetch} timePenalty={data} />,
+            cellRenderer: data => (
+                <TimePenaltyActions
+                    name={name}
+                    lastName={lastName}
+                    refetch={() => {
+                        setPenaltiesChanged(true);
+                        void refetch();
+                    }}
+                    timePenalty={data}
+                />
+            ),
         },
     ];
 
@@ -83,7 +95,7 @@ export const ManageTimePenalties = ({ onReject, initialPenalties, bibNumber, rac
                 data={penalties ?? []}
                 getRowId={p => p.id}></PoorDataTable>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <Button onClick={() => onResolve(penaltiesChanged)} outline>
                     {t("shared.close")}
                 </Button>
             </div>
