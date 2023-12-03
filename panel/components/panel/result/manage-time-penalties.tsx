@@ -1,4 +1,4 @@
-import { mdiTrashCan } from "@mdi/js";
+import { mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { ConfirmationModal } from "components/modal";
@@ -48,7 +48,7 @@ const TimePenaltyActions = ({
             title={t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.title")}
             onAccept={() => revertTimePenalty()}>
             <span className="flex cursor-pointer items-center hover:text-red-600">
-                <Icon size={0.8} path={mdiTrashCan} />
+                <Icon size={0.8} path={mdiTrashCanOutline} />
                 {t("pages.bibNumbers.delete.button")}
             </span>
         </ConfirmationModal>

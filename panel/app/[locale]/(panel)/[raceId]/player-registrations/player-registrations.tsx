@@ -1,5 +1,5 @@
 "use client";
-import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
 import classNames from "classnames";
@@ -15,8 +15,7 @@ import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { Confirmation } from "../../../../../components/confirmation";
-import { ConfirmationModal, ModalModal, NiceConfirmation, NiceModal } from "../../../../../components/modal";
+import { ConfirmationModal, ModalModal, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -46,7 +45,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
         void refetch();
     };
 
-    const promoteToPlayerAction = (_playerRegistration: PlayerRegistration) => {
+    const playerPromoted = () => {
         void refetch();
     };
 
@@ -62,22 +61,24 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                 <NewPoorActionsItem
                     name={t("pages.playerRegistrations.delete.title")}
                     description={t("pages.playerRegistrations.delete.description")}
-                    iconPath={mdiTrashCan}></NewPoorActionsItem>
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </ConfirmationModal>
-            <ModalModal
-                title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
-                component={PlayerRegistrationPromotion}
-                onResolve={p => promoteToPlayerAction(p)}
-                componentProps={{
-                    raceId: playerRegistration.raceId,
-                    playerRegistrationId: playerRegistration.id,
-                    onReject: () => null,
-                }}>
-                <NewPoorActionsItem
-                    name={t("pages.playerRegistrations.promoteToPlayer.title")}
-                    description={t("pages.playerRegistrations.promoteToPlayer.description")}
-                    iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
-            </ModalModal>
+            {!playerRegistration.promotedToPlayer && (
+                <ModalModal
+                    title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
+                    component={PlayerRegistrationPromotion}
+                    onResolve={playerPromoted}
+                    componentProps={{
+                        raceId: playerRegistration.raceId,
+                        playerRegistrationId: playerRegistration.id,
+                        onReject: () => null,
+                    }}>
+                    <NewPoorActionsItem
+                        name={t("pages.playerRegistrations.promoteToPlayer.title")}
+                        description={t("pages.playerRegistrations.promoteToPlayer.description")}
+                        iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
+                </ModalModal>
+            )}
         </NewPoorActions>
     );
 };
@@ -94,37 +95,31 @@ const PlayerRegistrationPayment = ({
     const locale = useLocale();
 
     const togglePlayerPayment = async () => {
-        const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-            title: t("pages.playerRegistrations.togglePlayerPayment.confirmation.title"),
-            component: Confirmation,
-            props: {
-                message: t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
-                    name: playerRegistration.name,
-                    lastName: playerRegistration.lastName,
-                    hasPaid: playerRegistration.hasPaid
-                        ? t("pages.playerRegistrations.payment.status.notPaid")
-                        : t("pages.playerRegistrations.payment.status.paid"),
-                }),
-            },
-        });
-
-        if (confirmed) {
-            await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
-            await refetch();
-        }
+        await setPaymentStatusMutation.mutateAsync({ playerId: playerRegistration.id, hasPaid: !playerRegistration.hasPaid });
+        await refetch();
     };
     return (
-        <span
-            className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
-                ["font-semibold text-green-600"]: playerRegistration.paymentDate !== null,
-                ["text-red-600"]: playerRegistration.paymentDate === null,
+        <ConfirmationModal
+            title={t("pages.playerRegistrations.togglePlayerPayment.confirmation.title")}
+            message={t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
+                name: playerRegistration.name,
+                lastName: playerRegistration.lastName,
+                hasPaid: playerRegistration.hasPaid
+                    ? t("pages.playerRegistrations.payment.status.notPaid")
+                    : t("pages.playerRegistrations.payment.status.paid"),
             })}
-            onClick={togglePlayerPayment}>
-            {playerRegistration.hasPaid ? <Icon size={0.8} path={mdiCashCheck} /> : <Icon size={0.8} path={mdiCashRemove} />}
-            <span className="ml-2">
-                {playerRegistration.paymentDate?.toLocaleDateString(locale) ?? t("pages.playerRegistrations.payment.status.notPaid")}
+            onAccept={togglePlayerPayment}>
+            <span
+                className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
+                    ["font-semibold text-green-600"]: playerRegistration.paymentDate !== null,
+                    ["text-red-600"]: playerRegistration.paymentDate === null,
+                })}>
+                {playerRegistration.hasPaid ? <Icon size={0.8} path={mdiCashCheck} /> : <Icon size={0.8} path={mdiCashRemove} />}
+                <span className="ml-2">
+                    {playerRegistration.paymentDate?.toLocaleDateString(locale) ?? t("pages.playerRegistrations.payment.status.notPaid")}
+                </span>
             </span>
-        </span>
+        </ConfirmationModal>
     );
 };
 

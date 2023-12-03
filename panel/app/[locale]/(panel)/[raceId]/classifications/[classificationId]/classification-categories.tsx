@@ -1,5 +1,5 @@
 "use client";
-import { mdiCheck, mdiClose, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiCheck, mdiClose, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
@@ -58,7 +58,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
                 message={t("pages.classifications.categories.detele.confirmation.text", { name: category.name })}
                 title={t("pages.classifications.categories.detele.confirmation.title")}>
                 <span className="flex cursor-pointer items-center px-2 hover:text-red-600">
-                    <Icon size={0.8} path={mdiTrashCan} />
+                    <Icon size={0.8} path={mdiTrashCanOutline} />
                 </span>
             </ConfirmationModal>
         </div>

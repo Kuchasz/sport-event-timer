@@ -1,5 +1,5 @@
 "use client";
-import { mdiExport, mdiTrashCan } from "@mdi/js";
+import { mdiExport, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
@@ -33,7 +33,7 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
             message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
             onAccept={deletePlayer}>
             <span className="flex cursor-pointer items-center hover:text-red-600">
-                <Icon size={0.8} path={mdiTrashCan} />
+                <Icon size={0.8} path={mdiTrashCanOutline} />
                 {t("pages.players.delete.button")}
             </span>
         </ConfirmationModal>

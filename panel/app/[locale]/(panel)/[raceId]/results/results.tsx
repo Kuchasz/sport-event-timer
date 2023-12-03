@@ -6,13 +6,12 @@ import { trpc } from "../../../../../trpc-core";
 import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { Confirmation } from "components/confirmation";
-import { NiceConfirmation, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal, NiceModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
-import { PoorActions } from "components/poor-actions";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
@@ -43,9 +42,7 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
             },
         });
 
-        // if (penaltyChanges) {
         void refetch();
-        // }
     };
 
     return result.totalTimePenalty ? (
@@ -130,89 +127,72 @@ export const Results = () => {
             field: "bibNumber",
             headerName: t("pages.results.grid.columns.actions"),
             cellRenderer: (data: Result) => (
-                <PoorActions
-                    item={data}
-                    actions={[
-                        // timePenalties[data.bibNumber] ? revertTimePenalty : applyTimePenalty,
-                        applyTimePenalty,
-                        disqualifications[data.bibNumber] ? revertDisqualification : disqualify,
-                    ]}
-                />
+                <NewPoorActions>
+                    <ModalModal
+                        onResolve={() => refetchResults()}
+                        title={t("pages.results.applyTimePenalty.confirmation.title")}
+                        description={t("pages.results.applyTimePenalty.confirmation.text", {
+                            name: data.name,
+                            lastName: data.lastName,
+                        })}
+                        component={ApplyTimePenalty}
+                        componentProps={{
+                            bibNumber: data.bibNumber,
+                            raceId,
+                            onReject: () => {},
+                        }}>
+                        <NewPoorActionsItem
+                            name={t("pages.results.applyTimePenalty.title")}
+                            description={t("pages.results.applyTimePenalty.description")}
+                            iconPath={mdiAlertOutline}></NewPoorActionsItem>
+                    </ModalModal>
+                    {disqualifications[data.bibNumber] ? (
+                        <ConfirmationModal
+                            onAccept={() => revertDisqualification(data)}
+                            title={t("pages.results.revertDisqualification.confirmation.title")}
+                            message={t("pages.results.revertDisqualification.confirmation.text", {
+                                name: data.name,
+                                lastName: data.lastName,
+                            })}>
+                            <NewPoorActionsItem
+                                name={t("pages.results.revertDisqualification.title")}
+                                description={t("pages.results.revertDisqualification.description")}
+                                iconPath={mdiRestore}></NewPoorActionsItem>
+                        </ConfirmationModal>
+                    ) : (
+                        <ModalModal
+                            onResolve={() => disqualify(data)}
+                            title={t("pages.results.disqualify.confirmation.title")}
+                            description={t("pages.results.disqualify.confirmation.text", {
+                                name: data.name,
+                                lastName: data.lastName,
+                            })}
+                            component={DisqualifyPlayer}
+                            componentProps={{
+                                bibNumber: data.bibNumber,
+                                raceId,
+                                onReject: () => {},
+                            }}>
+                            <NewPoorActionsItem
+                                name={t("pages.results.disqualify.title")}
+                                description={t("pages.results.disqualify.description")}
+                                iconPath={mdiCloseOctagonOutline}></NewPoorActionsItem>
+                        </ModalModal>
+                    )}
+                </NewPoorActions>
             ),
         },
     ];
 
-    const disqualify = {
-        name: t("pages.results.disqualify.title"),
-        description: t("pages.results.disqualify.description"),
-        iconPath: mdiCloseOctagonOutline,
-        execute: async (result: Result) => {
-            const disqualification = await Demodal.open(NiceModal, {
-                title: t("pages.results.disqualify.confirmation.title"),
-                description: t("pages.results.disqualify.confirmation.text", {
-                    name: result.name,
-                    lastName: result.lastName,
-                }),
-                component: DisqualifyPlayer,
-                props: {
-                    bibNumber: result.bibNumber,
-                    raceId,
-                },
-            });
-
-            if (disqualification) {
-                void refetchResults();
-                void refetchDisqualifications();
-            }
-        },
+    const disqualify = (_result: Result) => {
+        void refetchResults();
+        void refetchDisqualifications();
     };
 
-    const revertDisqualification = {
-        name: t("pages.results.revertDisqualification.title"),
-        description: t("pages.results.revertDisqualification.description"),
-        iconPath: mdiRestore,
-        execute: async (result: Result) => {
-            const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-                title: t("pages.results.revertDisqualification.confirmation.title"),
-                component: Confirmation,
-                props: {
-                    message: t("pages.results.revertDisqualification.confirmation.text", {
-                        name: result.name,
-                        lastName: result.lastName,
-                    }),
-                },
-            });
-
-            if (confirmed) {
-                await revertDisqualificationMutation.mutateAsync({ id: disqualifications[result.bibNumber] });
-                void refetchResults();
-                void refetchDisqualifications();
-            }
-        },
-    };
-
-    const applyTimePenalty = {
-        name: t("pages.results.applyTimePenalty.title"),
-        description: t("pages.results.applyTimePenalty.description"),
-        iconPath: mdiAlertOutline,
-        execute: async (result: Result) => {
-            const timePenalty = await Demodal.open(NiceModal, {
-                title: t("pages.results.applyTimePenalty.confirmation.title"),
-                description: t("pages.results.applyTimePenalty.confirmation.text", {
-                    name: result.name,
-                    lastName: result.lastName,
-                }),
-                component: ApplyTimePenalty,
-                props: {
-                    bibNumber: result.bibNumber,
-                    raceId,
-                },
-            });
-
-            if (timePenalty) {
-                void refetchResults();
-            }
-        },
+    const revertDisqualification = async (result: Result) => {
+        await revertDisqualificationMutation.mutateAsync({ id: disqualifications[result.bibNumber] });
+        void refetchResults();
+        void refetchDisqualifications();
     };
 
     return (
