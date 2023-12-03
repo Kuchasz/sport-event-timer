@@ -70,7 +70,7 @@ Application for making time measurements
 | 27/11/2023 | Fix nested dialogs/modals disappearing issue               | todo :date:                     |
 | 27/11/2023 | Registration status changing on PlayerRegistrations page   | todo :date:                     |
 | 27/11/2023 | Improve public results loading time                        | :heavy_check_mark: (27/11/2023) |
-| 28/11/2023 | Rework confirmation popups                                 | todo :date:                     |
+| 28/11/2023 | Rework confirmation popups                                 | :heavy_check_mark: (03/12/2023) |
 | 29/11/2023 | API for timings upload                                     | todo :date:                     |
 
 ## TODO

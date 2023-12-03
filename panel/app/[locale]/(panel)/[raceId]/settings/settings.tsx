@@ -1,5 +1,5 @@
 "use client";
-import { mdiPen, mdiPlus, mdiTrashCan } from "@mdi/js";
+import { mdiPen, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { ConfirmationModal, NiceModal } from "components/modal";
@@ -84,7 +84,7 @@ export const Settings = () => {
                                 message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
                                 onAccept={() => deleteApiKey(key)}>
                                 <Button>
-                                    <Icon size={0.8} path={mdiTrashCan} />
+                                    <Icon size={0.8} path={mdiTrashCanOutline} />
                                 </Button>
                             </ConfirmationModal>
                         </div>

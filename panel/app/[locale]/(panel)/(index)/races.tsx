@@ -1,9 +1,5 @@
 "use client";
 
-import Icon from "@mdi/react";
-import { Demodal } from "demodal";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../trpc-core";
 import {
     mdiCalendarEditOutline,
     mdiCalendarOutline,
@@ -14,28 +10,30 @@ import {
     mdiOpenInNew,
     mdiPlus,
     mdiRestore,
-    mdiTrashCan,
+    mdiTrashCanOutline,
 } from "@mdi/js";
-import { NiceConfirmation, NiceModal } from "components/modal";
-import { RaceCreate } from "components/panel/race/race-create";
-import { useState } from "react";
-import classNames from "classnames";
-import { PageHeader } from "components/page-header";
-import { useLocale, useTranslations } from "next-intl";
-import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
+import Icon from "@mdi/react";
 import { sort, sortDesc } from "@set/utils/dist/array";
-import Link from "next/link";
-import { PoorActions } from "components/poor-actions";
-import { Confirmation } from "components/confirmation";
-import { RaceEdit } from "components/panel/race/race-edit";
+import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
 import { sportKinds } from "@set/utils/dist/sport-kind";
-import { FullRaceIcon } from "components/race-icon";
+import classNames from "classnames";
+import { ConfirmationModal, ModalModal, NiceModal } from "components/modal";
+import { PageHeader } from "components/page-header";
+import { RaceCreate } from "components/panel/race/race-create";
+import { RaceEdit } from "components/panel/race/race-edit";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorInput } from "components/poor-input";
+import { FullRaceIcon } from "components/race-icon";
+import { Demodal } from "demodal";
 import fuzzysort from "fuzzysort";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import { useState } from "react";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import { trpc } from "../../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 type CreatedRace = AppRouterInputs["race"]["add"];
-type EditedRace = AppRouterInputs["race"]["update"];
 
 const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
@@ -107,84 +105,25 @@ export const Races = ({ initialData }: RacesProps) => {
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
 
-    const turnOffRegistrationAction = {
-        name: t("pages.registration.turnOffPopup.title"),
-        description: t("pages.registration.turnOffPopup.description"),
-        iconPath: mdiLockOutline,
-        execute: async (race: Race) => {
-            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
-            void refetch();
-        },
+    const turnOffRegistrationAction = async (race: Race) => {
+        await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: false });
+        void refetch();
     };
 
-    const turnOnRegistrationAction = {
-        name: t("pages.registration.turnOnPopup.title"),
-        description: t("pages.registration.turnOnPopup.description"),
-        iconPath: mdiLockOpenVariantOutline,
-        execute: async (race: Race) => {
-            await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
-            void refetch();
-        },
+    const turnOnRegistrationAction = async (race: Race) => {
+        await setRegistrationStatusMutation.mutateAsync({ id: race.id, registrationEnabled: true });
+        void refetch();
     };
 
-    const myRacesActions = [
-        {
-            name: t("pages.races.editRacePopup.title"),
-            description: t("pages.races.editRacePopup.description"),
-            iconPath: mdiCalendarEditOutline,
-            execute: async (editedRace: Race) => {
-                const race = await Demodal.open<EditedRace>(NiceModal, {
-                    title: t("pages.races.editRacePopup.title"),
-                    component: RaceEdit,
-                    props: {
-                        editedRace,
-                    },
-                });
+    const wipeRaceData = async (race: Race) => {
+        await wipeRaceMutation.mutateAsync({ raceId: race.id });
+        void refetch();
+    };
 
-                if (race) {
-                    void refetch();
-                }
-            },
-        },
-        {
-            name: t("pages.races.wipeStopwatchPopup.title"),
-            description: t("pages.races.wipeStopwatchPopup.description"),
-            iconPath: mdiRestore,
-            execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-                    title: t("pages.races.wipeStopwatchPopup.confirmation.title"),
-                    component: Confirmation,
-                    props: {
-                        message: t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: race.name }),
-                    },
-                });
-
-                if (confirmed) {
-                    await wipeRaceMutation.mutateAsync({ raceId: race.id });
-                    void refetch();
-                }
-            },
-        },
-        {
-            name: t("pages.races.deleteRacePopup.title"),
-            description: t("pages.races.deleteRacePopup.description"),
-            iconPath: mdiTrashCan,
-            execute: async (race: Race) => {
-                const confirmed = await Demodal.open<boolean>(NiceConfirmation, {
-                    title: t("pages.races.deleteRacePopup.confirmation.title"),
-                    component: Confirmation,
-                    props: {
-                        message: t("pages.races.deleteRacePopup.confirmation.text", { raceName: race.name }),
-                    },
-                });
-
-                if (confirmed) {
-                    await deleteRaceMutation.mutateAsync({ raceId: race.id });
-                    void refetch();
-                }
-            },
-        },
-    ];
+    const deleteRace = async (race: Race) => {
+        await deleteRaceMutation.mutateAsync({ raceId: race.id });
+        void refetch();
+    };
 
     const [filter, setFilter] = useState<RaceFilterType>("all");
 
@@ -350,14 +289,54 @@ export const Races = ({ initialData }: RacesProps) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <PoorActions
-                                        item={r.obj}
-                                        actions={
-                                            r.obj.registrationEnabled
-                                                ? [turnOffRegistrationAction, ...myRacesActions]
-                                                : [turnOnRegistrationAction, ...myRacesActions]
-                                        }
-                                    />
+                                    <NewPoorActions>
+                                        {r.obj.registrationEnabled ? (
+                                            <div onClick={() => turnOffRegistrationAction(r.obj)}>
+                                                <NewPoorActionsItem
+                                                    name={t("pages.registration.turnOffPopup.title")}
+                                                    description={t("pages.registration.turnOffPopup.description")}
+                                                    iconPath={mdiLockOutline}></NewPoorActionsItem>
+                                            </div>
+                                        ) : (
+                                            <div onClick={() => turnOnRegistrationAction(r.obj)}>
+                                                <NewPoorActionsItem
+                                                    name={t("pages.registration.turnOnPopup.title")}
+                                                    description={t("pages.registration.turnOnPopup.description")}
+                                                    iconPath={mdiLockOpenVariantOutline}></NewPoorActionsItem>
+                                            </div>
+                                        )}
+                                        <ModalModal
+                                            component={RaceEdit}
+                                            componentProps={{
+                                                editedRace: r.obj,
+                                                onReject: () => {},
+                                            }}
+                                            title={t("pages.races.editRacePopup.title")}
+                                            onResolve={() => refetch()}>
+                                            <NewPoorActionsItem
+                                                name={t("pages.races.editRacePopup.title")}
+                                                description={t("pages.races.editRacePopup.description")}
+                                                iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
+                                        </ModalModal>
+                                        <ConfirmationModal
+                                            title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
+                                            message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: r.obj.name })}
+                                            onAccept={() => wipeRaceData(r.obj)}>
+                                            <NewPoorActionsItem
+                                                name={t("pages.races.wipeStopwatchPopup.title")}
+                                                description={t("pages.races.wipeStopwatchPopup.description")}
+                                                iconPath={mdiRestore}></NewPoorActionsItem>
+                                        </ConfirmationModal>
+                                        <ConfirmationModal
+                                            title={t("pages.races.deleteRacePopup.confirmation.title")}
+                                            message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: r.obj.name })}
+                                            onAccept={() => deleteRace(r.obj)}>
+                                            <NewPoorActionsItem
+                                                name={t("pages.races.deleteRacePopup.title")}
+                                                description={t("pages.races.deleteRacePopup.description")}
+                                                iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+                                        </ConfirmationModal>
+                                    </NewPoorActions>
                                 </div>
 
                                 <Link

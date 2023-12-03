@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiPlus, mdiRestore, mdiTrashCan } from "@mdi/js";
+import { mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
@@ -36,7 +36,7 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
             message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
             onAccept={deletebibNumber}>
             <span className="flex cursor-pointer items-center hover:text-red-600">
-                <Icon size={0.8} path={mdiTrashCan} />
+                <Icon size={0.8} path={mdiTrashCanOutline} />
                 {t("pages.bibNumbers.delete.button")}
             </span>
         </ConfirmationModal>
