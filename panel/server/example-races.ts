@@ -259,7 +259,7 @@ const createStopwatches = (
             .flatMap(p =>
                 timingPointsForRace.map((tp, i) => ({
                     id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
-                    bibNumber: Number(p.bibNumber!),
+                    bibNumber: Number(p.bibNumber),
                     timingPointId: tp.id,
                     time: faker.date
                         .between({

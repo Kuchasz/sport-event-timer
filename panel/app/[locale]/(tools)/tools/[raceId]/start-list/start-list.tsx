@@ -69,7 +69,7 @@ const StartListPlayer = ({
                 })}
                 size={0.7}
                 path={mdiCheckBold}></Icon>
-            <PlayerBibNumber bibNumber={player.bibNumber!} maxBibNumber={maxBibNumber!} />
+            <PlayerBibNumber bibNumber={player.bibNumber} maxBibNumber={maxBibNumber!} />
             <span
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",

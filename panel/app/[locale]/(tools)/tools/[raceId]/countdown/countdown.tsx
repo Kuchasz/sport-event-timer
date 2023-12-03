@@ -48,7 +48,7 @@ const NextPlayer = ({
     player: StartListPlayer;
 }) => {
     const bibText = padBib
-        ? "&nbsp;".repeat(padBib - player.bibNumber!.toString().length) + player.bibNumber
+        ? "&nbsp;".repeat(padBib - player.bibNumber.toString().length) + player.bibNumber
         : player.bibNumber?.toString() || "";
     return (
         <span className={classNames("mx-1 flex items-center", { ["font-semibold text-orange-500"]: isNext, ["text-gray-500"]: hasPassed })}>
