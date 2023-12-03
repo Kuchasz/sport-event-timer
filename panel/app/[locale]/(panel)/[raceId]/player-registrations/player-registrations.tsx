@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Confirmation } from "../../../../../components/confirmation";
-import { ConfirmationModal, NiceConfirmation, NiceModal } from "../../../../../components/modal";
+import { ConfirmationModal, ModalModal, NiceConfirmation, NiceModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -46,6 +46,10 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
         void refetch();
     };
 
+    const promoteToPlayerAction = (_playerRegistration: PlayerRegistration) => {
+        void refetch();
+    };
+
     return (
         <NewPoorActions>
             <ConfirmationModal
@@ -60,6 +64,20 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     description={t("pages.playerRegistrations.delete.description")}
                     iconPath={mdiTrashCan}></NewPoorActionsItem>
             </ConfirmationModal>
+            <ModalModal
+                title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
+                component={PlayerRegistrationPromotion}
+                onResolve={p => promoteToPlayerAction(p)}
+                componentProps={{
+                    raceId: playerRegistration.raceId,
+                    playerRegistrationId: playerRegistration.id,
+                    onReject: () => null,
+                }}>
+                <NewPoorActionsItem
+                    name={t("pages.playerRegistrations.promoteToPlayer.title")}
+                    description={t("pages.playerRegistrations.promoteToPlayer.description")}
+                    iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
+            </ModalModal>
         </NewPoorActions>
     );
 };
@@ -115,26 +133,6 @@ export const PlayerRegistrations = () => {
     const t = useTranslations();
     const locale = useLocale();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
-
-    const promoteToPlayerAction = {
-        name: t("pages.playerRegistrations.promoteToPlayer.title"),
-        description: t("pages.playerRegistrations.promoteToPlayer.description"),
-        iconPath: mdiAccountPlusOutline,
-        execute: async (playerRegistration: PlayerRegistration) => {
-            const promotedPlayer = await Demodal.open<PlayerRegistrationPromotion>(NiceModal, {
-                title: t("pages.playerRegistrations.promoteToPlayer.confirmation.title"),
-                component: PlayerRegistrationPromotion,
-                props: {
-                    raceId: raceId,
-                    playerRegistrationId: playerRegistration.id,
-                },
-            });
-
-            if (promotedPlayer) {
-                await refetch();
-            }
-        },
-    };
 
     const cols: PoorDataTableColumn<PlayerRegistration>[] = [
         {
