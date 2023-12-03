@@ -2,10 +2,10 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Demodal, useModal } from "demodal";
+import { useTranslations } from "next-intl";
 import type { FunctionComponent } from "react";
 import React, { Fragment, useState } from "react";
 import { Button } from "./button";
-import { useTranslations } from "next-intl";
 
 type ResolvableComponentProps<P> = { onResolve: (value: P) => void; onReject: () => void };
 type ResolvableComponent<P> = FunctionComponent<ResolvableComponentProps<P>>;
@@ -195,7 +195,7 @@ export const ConfirmationModal = ({ onAccept, title, description, message, child
 };
 
 type ResolvableModalComponentProps<P> = { onResolve: (value: P) => void };
-type ResolvableModalComponent<T, P> = FunctionComponent<T & ResolvableModalComponentProps<P>>;
+type ResolvableModalComponent<T, P> = React.FunctionComponent<T & ResolvableModalComponentProps<P>>;
 
 type ModalProps<T, P> = {
     title: string;
@@ -208,6 +208,15 @@ type ModalProps<T, P> = {
 
 export const ModalModal = <T, P>({ onResolve, title, description, children, component: Content, componentProps }: ModalProps<T, P>) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const resolveInternal = (data: P) => {
+        setModalOpen(false);
+        onResolve(data);
+    };
+
+    const rejectInternal = () => {
+        setModalOpen(false);
+    };
 
     return (
         <>
@@ -240,7 +249,7 @@ export const ModalModal = <T, P>({ onResolve, title, description, children, comp
                                     </Dialog.Title>
                                     <Dialog.Description>{description}</Dialog.Description>
                                     <div className="mt-2">
-                                        <Content {...componentProps} onResolve={onResolve} />
+                                        <Content {...componentProps} onResolve={resolveInternal} onReject={rejectInternal} />
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
