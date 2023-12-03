@@ -37,6 +37,7 @@ export const NewPoorActions = ({ children }: { children: ReactNode }) => {
     return (
         <Popover className="flex h-full items-center">
             <Float
+                zIndex={10}
                 transform={false}
                 portal
                 placement="bottom-end"
@@ -63,6 +64,7 @@ export const PoorActions = <TItem,>({ item, actions }: { item: TItem; actions: A
     return (
         <Popover className="flex h-full items-center">
             <Float
+                zIndex={10}
                 transform={false}
                 portal
                 placement="bottom-end"

@@ -85,7 +85,7 @@ export const NiceConfirmation = Demodal.create(<P,>({ title, description, compon
 
     return (
         <Transition appear show={modal.isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={reject}>
+            <Dialog as="div" className="relative z-20" onClose={reject}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -139,7 +139,7 @@ export const ConfirmationModal = ({ onAccept, title, description, message, child
         <>
             <span onClick={() => setModalOpen(!modalOpen)}>{children}</span>
             <Transition appear show={modalOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => setModalOpen(false)}>
+                <Dialog as="div" className="relative z-20" onClose={() => setModalOpen(false)}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
