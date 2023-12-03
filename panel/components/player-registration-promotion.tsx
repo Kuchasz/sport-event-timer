@@ -102,7 +102,7 @@ export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onRe
 
     const initialPlayerPromotion: PlayerPromotion = {
         classificationId: classifications[0]!.id,
-        bibNumber: initialBibNumber,
+        bibNumber: initialBibNumber ?? "0",
         startTime: initialStartTime,
     };
 
