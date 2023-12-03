@@ -67,7 +67,7 @@ Application for making time measurements
 | 23/11/2023 | Optional race registration expire time                     | todo :date:                     |
 | 24/11/2023 | Add no data message to Data Table                          | todo :date:                     |
 | 27/11/2023 | Full page penalties view                                   | todo :date:                     |
-| 27/11/2023 | Fix nested dialogs/modals disappearing issue               | todo :date:                     |
+| 27/11/2023 | Fix nested dialogs/modals disappearing issue               | :heavy_check_mark: (01/12/2023) |
 | 27/11/2023 | Registration status changing on PlayerRegistrations page   | todo :date:                     |
 | 27/11/2023 | Improve public results loading time                        | :heavy_check_mark: (27/11/2023) |
 | 28/11/2023 | Rework confirmation popups                                 | :heavy_check_mark: (03/12/2023) |
