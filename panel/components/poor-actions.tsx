@@ -23,12 +23,12 @@ export const NewPoorActionsItem = ({ name, description, iconPath }: PoorActionPr
     <a
         key={name}
         className="-m-3 flex cursor-pointer items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white sm:h-12 sm:w-12">
-            <Icon size={1} className="text-black" path={iconPath} />,
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-blue-100 text-white">
+            <Icon size={1} className="text-blue-700" path={iconPath} />
         </div>
-        <div className="ml-4">
-            <p className="text-sm font-medium text-gray-900">{name}</p>
-            <p className="text-sm text-gray-500">{description}</p>
+        <div className="ml-4 text-sm">
+            <p className="font-medium text-gray-900">{name}</p>
+            <p className="text-gray-500">{description}</p>
         </div>
     </a>
 );
