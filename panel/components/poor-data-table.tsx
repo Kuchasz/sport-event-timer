@@ -67,20 +67,15 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
-    // const useSearch = !!usableSearchFields?.length;
-
     useEffect(() => {
         changePage(0);
     }, [searchQuery]);
-
-    // if (useSearch) data.forEach(d => ((d as T & { __searchField: string }).__searchField = usableSearchFields?.map(f => d[f]).join("|")));
 
     const rowsPerPage = 25;
 
     const filteredData = usableSearchFields?.length
         ? (fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[])
         : (data.map(d => ({ obj: d, field: "", score: 0 })) as unknown as readonly KeysResult<T>[]);
-    // const filteredData = fuzzysort.go(searchQuery, data, { all: true, key: "__searchField" }) as readonly KeyResult<T>[];
 
     const sortedFilteredData = sortColumn
         ? naturalSort([...filteredData], sortColumn.order, d => String(d.obj[sortColumn.field]))
