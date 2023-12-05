@@ -162,7 +162,8 @@
           "title": "Usuń numer startowy",
           "text": "Próbujesz usunąć Numer Startowy {bibNumber}. Czy chcesz kontynuować?"
         },
-        "button": "Usuń"
+        "name": "Usuń number startowy",
+        "description": "Możesz usunąć numer startowy"
       },
       "grid": {
         "columns": {
@@ -203,7 +204,9 @@
         }
       },
       "edit": {
-        "title": "Edytuj Numer Startowy"
+        "title": "Edytuj Numer Startowy",
+        "name": "Edytuj numer startowy",
+        "description": "Możesz edytować numer startowy"
       },
       "header": {
         "title": "Numery Startowe",
