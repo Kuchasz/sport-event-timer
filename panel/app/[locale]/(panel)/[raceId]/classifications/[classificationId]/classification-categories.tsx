@@ -1,16 +1,16 @@
 "use client";
-import { mdiCheck, mdiClose, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import { mdiAccountEditOutline, mdiCheck, mdiClose, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
-import { ConfirmationModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useParams } from "next/navigation";
@@ -20,15 +20,12 @@ import { trpc } from "trpc-core";
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams<{ classificationId: string }>()!;
 
-    return classificationId ? parseInt(classificationId) : undefined;
+    return parseInt(classificationId);
 };
 
 type Category = AppRouterOutputs["classification"]["categories"][0];
 
 const CategoryIsSpecialRenderer = (props: Category) => <CategoryIsSpecial category={props} />;
-const ActionsRenderer = (props: { refetch: () => void; data: Category }) => (
-    <CategoryActions refetch={props.refetch} category={props.data} />
-);
 
 const CategoryIsSpecial = ({ category }: { category: Category }) => {
     return (
@@ -52,51 +49,40 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
     };
 
     return (
-        <div className="flex h-full">
+        <NewPoorActions>
+            <ModalModal
+                onResolve={refetch}
+                title={t("pages.classifications.categories.edit.title")}
+                component={CategoryEdit}
+                componentProps={{
+                    editedCategory: category,
+                    onReject: () => {},
+                }}>
+                <NewPoorActionsItem
+                    name={t("pages.classifications.categories.edit.name")}
+                    description={t("pages.classifications.categories.edit.description")}
+                    iconPath={mdiAccountEditOutline}></NewPoorActionsItem>
+            </ModalModal>
             <ConfirmationModal
                 onAccept={deleteCategory}
-                message={t("pages.classifications.categories.detele.confirmation.text", { name: category.name })}
-                title={t("pages.classifications.categories.detele.confirmation.title")}>
-                <span className="flex cursor-pointer items-center px-2 hover:text-red-600">
-                    <Icon size={0.8} path={mdiTrashCanOutline} />
-                </span>
+                message={t("pages.classifications.categories.delete.confirmation.text", { name: category.name })}
+                title={t("pages.classifications.categories.delete.confirmation.title")}>
+                <NewPoorActionsItem
+                    name={t("pages.classifications.categories.delete.name")}
+                    description={t("pages.classifications.categories.delete.description")}
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </ConfirmationModal>
-        </div>
+        </NewPoorActions>
     );
 };
 
 export const ClassificationCategories = () => {
     const classificationId = useCurrentClassificationId();
     const { data: categories, refetch } = trpc.classification.categories.useQuery(
-        { classificationId: classificationId! },
+        { classificationId },
         { initialData: [], enabled: !!classificationId },
     );
     const t = useTranslations();
-
-    const openCreateDialog = async () => {
-        const category = await Demodal.open<Category>(NiceModal, {
-            title: t("pages.classifications.categories.create.title"),
-            component: CategoryCreate,
-            props: { classificationId },
-        });
-
-        if (category) {
-            void refetch();
-        }
-    };
-
-    const openEditDialog = async (editedCategory?: Category) => {
-        const category = await Demodal.open<Category>(NiceModal, {
-            title: t("pages.classifications.categories.edit.title"),
-            component: CategoryEdit,
-            props: {
-                editedCategory,
-            },
-        });
-        if (category) {
-            await refetch();
-        }
-    };
 
     const defaultColumns: PoorDataTableColumn<Category>[] = [
         {
@@ -134,7 +120,7 @@ export const ClassificationCategories = () => {
         {
             field: "id",
             headerName: t("pages.classifications.categories.grid.columns.actions"),
-            cellRenderer: data => <ActionsRenderer data={data} refetch={async () => await refetch()} />,
+            cellRenderer: data => <CategoryActions category={data} refetch={async () => await refetch()} />,
         },
     ];
 
@@ -149,10 +135,16 @@ export const ClassificationCategories = () => {
                     description={t("pages.classifications.categories.header.description")}
                 />
                 <div className="flex">
-                    <Button onClick={openCreateDialog} outline>
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
-                    </Button>
+                    <ModalModal
+                        title={t("pages.classifications.categories.create.title")}
+                        component={CategoryCreate}
+                        componentProps={{ classificationId, onReject: () => {} }}
+                        onResolve={() => refetch()}>
+                        <Button outline>
+                            <Icon size={0.8} path={mdiPlus} />
+                            <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
+                        </Button>
+                    </ModalModal>
                 </div>
                 <div className="p-2"></div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
@@ -162,7 +154,6 @@ export const ClassificationCategories = () => {
                         searchPlaceholder={t("pages.classifications.categories.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
                         gridName="classification-categories"
-                        onRowDoubleClicked={e => openEditDialog(e)}
                         searchFields={["name", "minAge", "maxAge", "gender"]}
                     />
                 </div>
