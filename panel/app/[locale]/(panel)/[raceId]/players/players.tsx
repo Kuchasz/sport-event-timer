@@ -1,5 +1,5 @@
 "use client";
-import { mdiExport, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiHumanEdit, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
@@ -7,19 +7,18 @@ import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { PlayerEdit } from "components/panel/player/player-edit";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { ConfirmationModal, NiceModal } from "../../../../../components/modal";
+import type { AppRouterOutputs } from "trpc";
+import { ConfirmationModal, ModalModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
 type Player = AppRouterOutputs["player"]["players"][0];
-type EditedPlayer = AppRouterInputs["player"]["edit"]["player"];
 
-const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () => void }) => {
+const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => void }) => {
     const deletePlayerMutation = trpc.player.delete.useMutation();
     const t = useTranslations();
     const deletePlayer = async () => {
@@ -28,15 +27,31 @@ const PlayerDeleteButton = ({ player, refetch }: { player: Player; refetch: () =
     };
 
     return (
-        <ConfirmationModal
-            title={t("pages.players.delete.confirmation.title")}
-            message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
-            onAccept={deletePlayer}>
-            <span className="flex cursor-pointer items-center hover:text-red-600">
-                <Icon size={0.8} path={mdiTrashCanOutline} />
-                {t("pages.players.delete.button")}
-            </span>
-        </ConfirmationModal>
+        <NewPoorActions>
+            <ModalModal
+                title={t("pages.players.edit.title")}
+                component={PlayerEdit}
+                componentProps={{
+                    raceId: player.raceId,
+                    editedPlayer: player,
+                    onReject: () => {},
+                }}
+                onResolve={refetch}>
+                <NewPoorActionsItem
+                    name={t("pages.players.edit.name")}
+                    description={t("pages.players.edit.description")}
+                    iconPath={mdiHumanEdit}></NewPoorActionsItem>
+            </ModalModal>
+            <ConfirmationModal
+                title={t("pages.players.delete.confirmation.title")}
+                message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
+                onAccept={deletePlayer}>
+                <NewPoorActionsItem
+                    name={t("pages.players.delete.name")}
+                    description={t("pages.players.delete.description")}
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+            </ConfirmationModal>
+        </NewPoorActions>
     );
 };
 
@@ -127,24 +142,9 @@ export const Players = () => {
             headerName: t("pages.players.grid.columns.actions"),
             field: "bibNumber",
             sortable: false,
-            cellRenderer: data => <PlayerDeleteButton refetch={refetch} player={data} />,
+            cellRenderer: data => <PlayerActions refetch={refetch} player={data} />,
         },
     ];
-
-    const openEditDialog = async (editedPlayer?: Player) => {
-        const player = await Demodal.open<EditedPlayer>(NiceModal, {
-            title: t("pages.players.edit.title"),
-            component: PlayerEdit,
-            props: {
-                raceId: raceId,
-                editedPlayer,
-            },
-        });
-
-        if (player) {
-            await refetch();
-        }
-    };
 
     return (
         <>
@@ -175,7 +175,6 @@ export const Players = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.players.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
-                            onRowDoubleClicked={openEditDialog}
                             gridName="players"
                             searchFields={["name", "lastName", "team", "bibNumber", "city"]}
                         />
