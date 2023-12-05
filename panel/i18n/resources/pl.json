@@ -467,18 +467,22 @@
             "placeholder": "Szukaj kategorii..."
           }
         },
-        "detele": {
+        "delete": {
           "confirmation": {
             "title": "Usuń kategorię",
             "text": "Próbujesz usunąć Kategorię {name}. Czy chcesz kontynuować?"
-          }
+          },
+          "name": "Usuń kategorię",
+          "description": "Możesz usunąć kategorię"
         },
         "create": {
           "title": "Stwórz nową kategorię",
           "button": "Dodaj kategorię"
         },
         "edit": {
-          "title": "Edytuj kategorię"
+          "title": "Edytuj kategorię",
+          "name": "Edytuj kategorię",
+          "description": "Możesz modyfikować kategorię"
         },
         "header": {
           "title": "Kategorie",

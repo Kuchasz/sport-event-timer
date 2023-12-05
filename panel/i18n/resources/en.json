@@ -467,18 +467,22 @@
             "placeholder": "Search categories..."
           }
         },
-        "detele": {
+        "delete": {
           "confirmation": {
             "title": "Delete category",
             "text": "You are trying to delete the Category {name}. Do you want to proceed?"
-          }
+          },
+          "name": "Delete category",
+          "description": "You may delete the category"
         },
         "create": {
           "title": "Create new category",
           "button": "Add category"
         },
         "edit": {
-          "title": "Edit category"
+          "title": "Edit category",
+          "name": "Edit category",
+          "description": "You may modify the category"
         },
         "header": {
           "title": "Categories",
