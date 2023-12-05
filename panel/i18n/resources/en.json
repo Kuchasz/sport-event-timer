@@ -243,14 +243,17 @@
           "title": "Delete player",
           "text": "You are trying to delete the Player {name} {lastName}. Do you want to proceed?"
         },
-        "button": "delete"
+        "name": "Delete player",
+        "description": "You may delete the player"
       },
       "create": {
         "title": "Create new player",
         "button": "Add Player"
       },
       "edit": {
-        "title": "Edit player"
+        "title": "Edit player",
+        "name": "Edit player",
+        "description": "You may modify the player"
       },
       "header": {
         "title": "Players",

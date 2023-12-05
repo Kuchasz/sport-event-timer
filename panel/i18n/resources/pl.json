@@ -243,14 +243,17 @@
           "title": "Usuń zawodnika",
           "text": "Próbujesz usunąć Zawodnika {name} {lastName}. Czy chcesz kontynuować?"
         },
-        "button": "Usuń"
+        "name": "Usuń zawodnika",
+        "description": "Możesz usunąć zawodnika"
       },
       "create": {
         "title": "Stwórz nowego zawodnika",
         "button": "Dodaj Zawodnika"
       },
       "edit": {
-        "title": "Edytuj zawodnika"
+        "title": "Edytuj zawodnika",
+        "name": "Edytuj zawodnika",
+        "description": "Możesz modyfikować zawodnika"
       },
       "header": {
         "title": "Zawodnicy",
