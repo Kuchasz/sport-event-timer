@@ -162,7 +162,8 @@
           "title": "Delete bibNumber",
           "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?"
         },
-        "button": "Delete"
+        "name": "Delete bib number",
+        "description": "You may delete the bib number"
       },
       "grid": {
         "columns": {
@@ -203,7 +204,9 @@
         }
       },
       "edit": {
-        "title": "Edit BibNumber"
+        "title": "Edit BibNumber",
+        "name": "Edit bib number",
+        "description": "You may edit the bib number"
       },
       "header": {
         "title": "Bib Numbers",

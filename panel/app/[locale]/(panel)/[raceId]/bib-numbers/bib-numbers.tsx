@@ -1,27 +1,24 @@
 "use client";
 
-import { mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
+import { mdiNumeric, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
-import { ConfirmationModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
+import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
-import type { AppRouterInputs, AppRouterOutputs } from "../../../../../trpc";
+import type { AppRouterOutputs } from "../../../../../trpc";
 import { trpc } from "../../../../../trpc-core";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
-type EditedBibNumber = AppRouterInputs["bibNumber"]["update"];
-type CreatedBibNumber = AppRouterInputs["bibNumber"]["add"];
-type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
-const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
+const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
     const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
     const t = useTranslations();
 
@@ -31,15 +28,30 @@ const BibNumberDeleteButton = ({ refetch, bibNumber }: { refetch: () => void; bi
     };
 
     return (
-        <ConfirmationModal
-            title={t("pages.bibNumbers.delete.confirmation.title")}
-            message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
-            onAccept={deletebibNumber}>
-            <span className="flex cursor-pointer items-center hover:text-red-600">
-                <Icon size={0.8} path={mdiTrashCanOutline} />
-                {t("pages.bibNumbers.delete.button")}
-            </span>
-        </ConfirmationModal>
+        <NewPoorActions>
+            <ModalModal
+                onResolve={refetch}
+                title={t("pages.bibNumbers.edit.title")}
+                component={BibNumberEdit}
+                componentProps={{
+                    editedBibNumber: bibNumber,
+                    onReject: () => {},
+                }}>
+                <NewPoorActionsItem
+                    name={t("pages.bibNumbers.edit.name")}
+                    description={t("pages.bibNumbers.edit.description")}
+                    iconPath={mdiNumeric}></NewPoorActionsItem>
+            </ModalModal>
+            <ConfirmationModal
+                title={t("pages.bibNumbers.delete.confirmation.title")}
+                message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
+                onAccept={deletebibNumber}>
+                <NewPoorActionsItem
+                    name={t("pages.bibNumbers.delete.name")}
+                    description={t("pages.bibNumbers.delete.description")}
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+            </ConfirmationModal>
+        </NewPoorActions>
     );
 };
 
@@ -61,51 +73,13 @@ export const BibNumbers = () => {
         {
             field: "id",
             headerName: t("pages.bibNumbers.grid.columns.actions"),
-            cellRenderer: data => <BibNumberDeleteButton refetch={refetch} bibNumber={data} />,
+            cellRenderer: data => <BibNumberActions refetch={refetch} bibNumber={data} />,
         },
     ];
-
-    const openCreateDialog = async () => {
-        const bibNumber = await Demodal.open<CreatedBibNumber>(NiceModal, {
-            title: t("pages.bibNumbers.create.title"),
-            component: BibNumberCreate,
-            props: { raceId: raceId },
-        });
-
-        if (bibNumber) {
-            void refetch();
-        }
-    };
 
     const deleteAll = async () => {
         await deleteAllMutation.mutateAsync({ raceId: raceId });
         void refetch();
-    };
-
-    const openCreateManyDialog = async () => {
-        const createManyBibNumbers = await Demodal.open<CreateManyBibNumbers>(NiceModal, {
-            title: t("pages.bibNumbers.createMany.title"),
-            component: BibNumberCreateManyForm,
-            props: { initialConfig: { raceId: raceId, omitDuplicates: true } },
-        });
-
-        if (createManyBibNumbers) {
-            void refetch();
-        }
-    };
-
-    const openEditDialog = async (editedBibNumber?: BibNumber) => {
-        const bibNumber = await Demodal.open<EditedBibNumber>(NiceModal, {
-            title: t("pages.bibNumbers.edit.title"),
-            component: BibNumberEdit,
-            props: {
-                editedBibNumber,
-            },
-        });
-
-        if (bibNumber) {
-            await refetch();
-        }
     };
 
     return (
@@ -116,14 +90,30 @@ export const BibNumbers = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <Button outline onClick={openCreateDialog}>
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
-                    </Button>
-                    <Button outline className="ml-2" onClick={openCreateManyDialog}>
-                        <Icon size={0.8} path={mdiPlus} />
-                        {t("pages.bibNumbers.createMany.button")}
-                    </Button>{" "}
+                    <ModalModal
+                        onResolve={() => refetch()}
+                        title={t("pages.bibNumbers.create.title")}
+                        component={BibNumberCreate}
+                        componentProps={{ raceId: raceId, onReject: () => {} }}>
+                        <Button outline>
+                            <Icon size={0.8} path={mdiPlus} />
+                            <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
+                        </Button>
+                    </ModalModal>
+
+                    <ModalModal
+                        onResolve={() => refetch()}
+                        title={t("pages.bibNumbers.createMany.title")}
+                        component={BibNumberCreateManyForm}
+                        componentProps={{
+                            initialConfig: { raceId: raceId, startNumber: 1, endNumber: 100, omitDuplicates: true },
+                            onReject: () => {},
+                        }}>
+                        <Button outline className="ml-2">
+                            <Icon size={0.8} path={mdiPlus} />
+                            {t("pages.bibNumbers.createMany.button")}
+                        </Button>
+                    </ModalModal>
                     <ConfirmationModal
                         title={t("pages.bibNumbers.deleteAll.confirmation.title")}
                         message={t("pages.bibNumbers.deleteAll.confirmation.text")}
@@ -141,7 +131,6 @@ export const BibNumbers = () => {
                         searchPlaceholder={t("pages.bibNumbers.grid.search.placeholder")}
                         getRowId={data => data.id.toString()}
                         gridName="bib-numbers"
-                        onRowDoubleClicked={e => openEditDialog(e)}
                         searchFields={["number"]}
                     />
                 </div>
