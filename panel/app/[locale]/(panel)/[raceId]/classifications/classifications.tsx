@@ -13,6 +13,7 @@ import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
 import type { AppRouterOutputs } from "../../../../../trpc";
 import { trpc } from "../../../../../trpc-core";
+import { type Route } from "next";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 
@@ -36,7 +37,8 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
             <NewPoorActionsItem
                 name={t("pages.classifications.manageCategories.name")}
                 description={t("pages.classifications.manageCategories.description")}
-                iconPath={mdiAccountMultiple}></NewPoorActionsItem>
+                iconPath={mdiAccountMultiple}
+                href={`/${classification.raceId}/classifications/${classification.id}` as Route}></NewPoorActionsItem>
         </NewPoorActions>
     );
 };
