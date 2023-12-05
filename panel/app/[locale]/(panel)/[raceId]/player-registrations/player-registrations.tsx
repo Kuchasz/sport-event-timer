@@ -1,5 +1,15 @@
 "use client";
-import { mdiAccountPlusOutline, mdiCashCheck, mdiCashRemove, mdiCheck, mdiClose, mdiExport, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import {
+    mdiAccountPlusOutline,
+    mdiCashCheck,
+    mdiCashRemove,
+    mdiCheck,
+    mdiClose,
+    mdiExport,
+    mdiHumanEdit,
+    mdiPlus,
+    mdiTrashCanOutline,
+} from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "@set/timer/dist/model";
 import classNames from "classnames";
@@ -11,17 +21,14 @@ import { PlayerRegistrationEdit } from "components/panel/player-registration/pla
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
 import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { ConfirmationModal, ModalModal, NiceModal } from "../../../../../components/modal";
+import { ConfirmationModal, ModalModal } from "../../../../../components/modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
-type CreatedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
-type EditedPlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
 const PlayerRegistrationPromotedToPlayer = ({ playerRegistration }: { playerRegistration: PlayerRegistration }) => {
@@ -51,6 +58,20 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
 
     return (
         <NewPoorActions>
+            <ModalModal
+                title={t("pages.playerRegistrations.edit.title")}
+                component={PlayerRegistrationEdit}
+                onResolve={refetch}
+                componentProps={{
+                    raceId: playerRegistration.raceId,
+                    editedPlayerRegistration: playerRegistration,
+                    onReject: () => null,
+                }}>
+                <NewPoorActionsItem
+                    name={t("pages.playerRegistrations.edit.name")}
+                    description={t("pages.playerRegistrations.edit.description")}
+                    iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
+            </ModalModal>
             <ConfirmationModal
                 message={t("pages.playerRegistrations.delete.confirmation.text", {
                     name: playerRegistration.name,
@@ -76,7 +97,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     <NewPoorActionsItem
                         name={t("pages.playerRegistrations.promoteToPlayer.title")}
                         description={t("pages.playerRegistrations.promoteToPlayer.description")}
-                        iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
+                        iconPath={mdiHumanEdit}></NewPoorActionsItem>
                 </ModalModal>
             )}
         </NewPoorActions>
@@ -212,36 +233,6 @@ export const PlayerRegistrations = () => {
         },
     ];
 
-    const openCreateDialog = async () => {
-        const player = await Demodal.open<CreatedPlayerRegistration>(NiceModal, {
-            title: t("pages.playerRegistrations.create.title"),
-            component: PlayerRegistrationCreate,
-            props: {
-                raceId: raceId,
-            },
-        });
-
-        if (player) {
-            void refetch();
-        }
-    };
-
-    const openEditDialog = async (editedPlayerRegistration?: PlayerRegistration) => {
-        const playerRegistration = await Demodal.open<EditedPlayerRegistration>(NiceModal, {
-            title: t("pages.playerRegistrations.edit.title"),
-            component: PlayerRegistrationEdit,
-            props: {
-                raceId: raceId,
-                editedPlayerRegistration,
-            },
-        });
-
-        if (playerRegistration) {
-            await refetch();
-            // refreshRegistrationRow(playerRegistration.id!.toString());
-        }
-    };
-
     return (
         <>
             <Head>
@@ -253,10 +244,19 @@ export const PlayerRegistrations = () => {
                     description={t("pages.playerRegistrations.header.description")}
                 />
                 <div className="mb-4 flex">
-                    <Button outline onClick={openCreateDialog}>
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
-                    </Button>
+                    <ModalModal
+                        title={t("pages.playerRegistrations.create.title")}
+                        component={PlayerRegistrationCreate}
+                        onResolve={() => refetch()}
+                        componentProps={{
+                            raceId: raceId,
+                            onReject: () => {},
+                        }}>
+                        <Button outline>
+                            <Icon size={0.8} path={mdiPlus} />
+                            <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
+                        </Button>
+                    </ModalModal>
                     <Button
                         outline
                         className="ml-2"
@@ -276,7 +276,6 @@ export const PlayerRegistrations = () => {
                         columns={cols}
                         searchPlaceholder={t("pages.playerRegistrations.grid.search.placeholder")}
                         getRowId={data => data.id}
-                        onRowDoubleClicked={openEditDialog}
                         gridName="player-registrations"
                         searchFields={["name", "lastName", "team", "country", "city"]}
                     />

@@ -380,7 +380,9 @@
         "button": "Zarejestruj Zawodnika"
       },
       "edit": {
-        "title": "Edytuj rejestrację zawodnika"
+        "title": "Edytuj rejestrację zawodnika",
+        "name": "Edytuj rejestrację",
+        "description": "Możesz modyfikować rejestrację"
       },
       "header": {
         "title": "Zarejestrowani zawodnicy",

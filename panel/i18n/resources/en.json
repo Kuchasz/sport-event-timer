@@ -380,7 +380,9 @@
         "button": "Register Player"
       },
       "edit": {
-        "title": "Edit player registration"
+        "title": "Edit player registration",
+        "name": "Edit registration",
+        "description": "You can change the registration"
       },
       "header": {
         "title": "Registered players",
