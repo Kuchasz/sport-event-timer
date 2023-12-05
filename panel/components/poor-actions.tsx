@@ -17,11 +17,13 @@ type PoorActionProps = {
     name: string;
     description: string;
     iconPath: string;
+    href?: string;
 };
 
-export const NewPoorActionsItem = ({ name, description, iconPath }: PoorActionProps) => (
+export const NewPoorActionsItem = ({ name, description, iconPath, href }: PoorActionProps) => (
     <a
         key={name}
+        {...(href ? { href } : null)}
         className="-m-3 flex cursor-pointer items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-blue-100 text-white">
             <Icon size={1} className="text-blue-700" path={iconPath} />
