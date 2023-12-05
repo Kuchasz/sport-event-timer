@@ -443,8 +443,11 @@
           "placeholder": "Search classifications..."
         }
       },
+      "manageCategories": {
+        "name": "Manage categories",
+        "description": "You can define categories within the classification"
+      },
       "categories": {
-        "button": "categories",
         "grid": {
           "columns": {
             "index": "",
@@ -504,7 +507,11 @@
         "button": "Add Classification"
       },
       "edit": {
-        "title": "Edit classification"
+        "title": "Edit classification",
+        "description": "You can change already existing classification",
+        "confirmation": {
+          "title": "Edit the classification"
+        }
       },
       "header": {
         "title": "Classifications",

@@ -21,7 +21,9 @@ export const classificationRouter = router({
             const raceId = input.raceId;
             const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
 
-            return classifications.map((c, index) => ({ ...c, index: index + 1 }) as z.infer<typeof classificationsSchema>);
+            return classifications.map(
+                (c, index) => ({ ...c, categoriesNumber: c.categories.length, index: index + 1 }) as z.infer<typeof classificationsSchema>,
+            );
         }),
     categories: protectedProcedure
         .input(

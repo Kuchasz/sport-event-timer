@@ -443,8 +443,11 @@
           "placeholder": "Szukaj klasyfikacji..."
         }
       },
+      "manageCategories": {
+        "name": "Zarządzaj kategoriami",
+        "description": "Możesz zdefiniować kategorie dla klasyfikacji"
+      },
       "categories": {
-        "button": "kategorie",
         "grid": {
           "columns": {
             "index": "",
@@ -504,7 +507,11 @@
         "button": "Dodaj Klasyfikację"
       },
       "edit": {
-        "title": "Edytuj klasyfikację"
+        "title": "Edytuj klasyfikację",
+        "description": "Możesz zmienić istniejącą klasyfikację",
+        "confirmation": {
+          "title": "Edytujesz klasyfikację"
+        }
       },
       "header": {
         "title": "Klasyfikacje",
