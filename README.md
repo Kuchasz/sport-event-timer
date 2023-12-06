@@ -74,6 +74,8 @@ Application for making time measurements
 | 29/11/2023 | API for timings upload                                     | todo :date:                     |
 | 06/12/2023 | Omit ws connection when not needed                         | :heavy_check_mark: (06/12/2023) |
 | 06/12/2023 | Add next race stats to the home page                       | todo :date:                     |
+| 06/12/2023 | Configure runtime environment to run multiple threads      | todo :date:                     |
+| 06/12/2023 | Universal requests error handling                          | todo :date:                     |
 
 ## TODO
 

@@ -190,7 +190,6 @@ export const PlayerRegistrations = () => {
             field: "team",
             headerName: t("pages.playerRegistrations.grid.columns.team"),
             sortable: true,
-            cellRenderer: data => <div className="text-ellipsis">{data.team}</div>,
         },
         { field: "phoneNumber", headerName: t("pages.playerRegistrations.grid.columns.phone"), sortable: true, hide: true },
         { field: "email", headerName: t("pages.playerRegistrations.grid.columns.email"), sortable: true, hide: true },

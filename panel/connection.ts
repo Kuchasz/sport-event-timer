@@ -1,8 +1,8 @@
 "use client";
 
+import { type CreateTRPCClientOptions, createWSClient, httpBatchLink, splitLink, wsLink } from "@trpc/client";
+import { type AppRouter } from "server/routers/app";
 import superjson from "superjson";
-import { splitLink, createWSClient, wsLink, httpBatchLink } from "@trpc/client";
-import type { QueryClient } from "@tanstack/react-query";
 import { env } from "./env";
 
 const url =
@@ -58,10 +58,9 @@ const getWsClient = () => {
 
 export const getConnection = () => getWsClient()?.getConnection();
 
-export const connectionConfig = (queryClient: QueryClient, enableSubscriptions: boolean) => ({
+export const connectionConfig = (enableSubscriptions: boolean): CreateTRPCClientOptions<AppRouter> => ({
     transformer: superjson,
-    ssr: true,
-    queryClient,
+    // queryClient,
     links: [
         // loggerLink({
         //     enabled: opts =>
