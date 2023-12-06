@@ -17,7 +17,7 @@ import { sort, sortDesc } from "@set/utils/dist/array";
 import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import classNames from "classnames";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
@@ -164,7 +164,7 @@ export const Races = ({ initialData }: RacesProps) => {
                             ["justify-between"]: upcomingRaces.length === 3,
                             ["gap-5"]: upcomingRaces.length < 3,
                         })}>
-                        <ModalModal
+                        <PoorModal
                             onResolve={() => refetch()}
                             title={t("pages.races.createRace.title")}
                             component={RaceCreate}
@@ -175,7 +175,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                 </button>
                                 <span className="mt-4 text-sm font-semibold">{t("pages.races.addRace")}</span>
                             </div>
-                        </ModalModal>
+                        </PoorModal>
 
                         {upcomingRaces.map(r => (
                             <Link
@@ -296,7 +296,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                                     iconPath={mdiLockOpenVariantOutline}></NewPoorActionsItem>
                                             </div>
                                         )}
-                                        <ModalModal
+                                        <PoorModal
                                             component={RaceEdit}
                                             componentProps={{
                                                 editedRace: r.obj,
@@ -308,8 +308,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 name={t("pages.races.editRace.title")}
                                                 description={t("pages.races.editRace.description")}
                                                 iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
-                                        </ModalModal>
-                                        <ConfirmationModal
+                                        </PoorModal>
+                                        <PoorConfirmation
                                             title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                                             message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => wipeRaceData(r.obj)}>
@@ -317,8 +317,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 name={t("pages.races.wipeStopwatchPopup.title")}
                                                 description={t("pages.races.wipeStopwatchPopup.description")}
                                                 iconPath={mdiRestore}></NewPoorActionsItem>
-                                        </ConfirmationModal>
-                                        <ConfirmationModal
+                                        </PoorConfirmation>
+                                        <PoorConfirmation
                                             title={t("pages.races.deleteRacePopup.confirmation.title")}
                                             message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => deleteRace(r.obj)}>
@@ -326,7 +326,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 name={t("pages.races.deleteRacePopup.title")}
                                                 description={t("pages.races.deleteRacePopup.description")}
                                                 iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-                                        </ConfirmationModal>
+                                        </PoorConfirmation>
                                     </NewPoorActions>
                                 </div>
 

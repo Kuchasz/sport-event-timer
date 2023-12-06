@@ -3,7 +3,7 @@
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
@@ -37,7 +37,7 @@ const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTime
             </span>
             <div className="flex-grow"></div>
             {result?.time > 0 && (
-                <ModalModal
+                <PoorModal
                     onResolve={refetch}
                     title={t("pages.splitTimes.edit.title")}
                     component={SplitTimeEdit}
@@ -55,10 +55,10 @@ const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTime
                     <span className="flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiClockEditOutline} />
                     </span>
-                </ModalModal>
+                </PoorModal>
             )}
             {result == null && (
-                <ModalModal
+                <PoorModal
                     onResolve={refetch}
                     title={t("pages.splitTimes.edit.title")}
                     component={SplitTimeEdit}
@@ -76,10 +76,10 @@ const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTime
                     <span className="flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiClockPlusOutline} />
                     </span>
-                </ModalModal>
+                </PoorModal>
             )}
             {result?.manual == true && (
-                <ConfirmationModal
+                <PoorConfirmation
                     title={t("pages.splitTimes.revert.confirmation.title")}
                     message={t("pages.splitTimes.revert.confirmation.text")}
                     onAccept={() =>
@@ -92,7 +92,7 @@ const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTime
                     <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiReload} />
                     </span>
-                </ConfirmationModal>
+                </PoorConfirmation>
             )}
         </div>
     );

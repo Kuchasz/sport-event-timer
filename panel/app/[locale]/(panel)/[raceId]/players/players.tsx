@@ -12,7 +12,7 @@ import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-ta
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterOutputs } from "trpc";
-import { ConfirmationModal, ModalModal } from "../../../../../components/modal";
+import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -28,7 +28,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
 
     return (
         <NewPoorActions>
-            <ModalModal
+            <PoorModal
                 title={t("pages.players.edit.title")}
                 component={PlayerEdit}
                 componentProps={{
@@ -41,8 +41,8 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
                     name={t("pages.players.edit.name")}
                     description={t("pages.players.edit.description")}
                     iconPath={mdiHumanEdit}></NewPoorActionsItem>
-            </ModalModal>
-            <ConfirmationModal
+            </PoorModal>
+            <PoorConfirmation
                 title={t("pages.players.delete.confirmation.title")}
                 message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
                 onAccept={deletePlayer}>
@@ -50,7 +50,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
                     name={t("pages.players.delete.name")}
                     description={t("pages.players.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-            </ConfirmationModal>
+            </PoorConfirmation>
         </NewPoorActions>
     );
 };

@@ -3,7 +3,7 @@
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { TimingPointAccessUrlCreate } from "components/panel/timing-point/timing-point-access-url-create-form";
 import { TimingPointCreate } from "components/panel/timing-point/timing-point-create";
@@ -60,7 +60,7 @@ const TimingPointCard = ({
             {!isFirst && (
                 <div className="flex flex-col items-center">
                     <div className="h-5 w-0.5 bg-gray-100"></div>
-                    <ModalModal
+                    <PoorModal
                         onResolve={onCreate}
                         title={t("pages.timingPoints.create.title")}
                         component={TimingPointCreate}
@@ -69,7 +69,7 @@ const TimingPointCard = ({
                             <Icon path={mdiPlus} size={0.7} />
                             <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
                         </button>
-                    </ModalModal>
+                    </PoorModal>
                     <div className="h-5 w-0.5 bg-gray-100"></div>
                 </div>
             )}
@@ -153,14 +153,14 @@ export const TimingPoints = () => {
             headerName: t("pages.timingPoints.accessUrls.edit.button"),
             sortable: false,
             cellRenderer: d => (
-                <ConfirmationModal
+                <PoorConfirmation
                     onAccept={() => deleteAccessKey(d)}
                     title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
                     message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}>
                     <button className="font-medium hover:text-red-600 hover:underline">
                         <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                     </button>
-                </ConfirmationModal>
+                </PoorConfirmation>
             ),
         },
     ];
@@ -212,7 +212,7 @@ export const TimingPoints = () => {
                                     <div>{activeTimingPoint.description}</div>
                                 </div>
                                 <div className="flex items-center">
-                                    <ModalModal
+                                    <PoorModal
                                         onResolve={() => refetchTimingPoints()}
                                         title={t("pages.timingPoints.edit.title")}
                                         component={TimingPointEdit}
@@ -223,15 +223,15 @@ export const TimingPoints = () => {
                                         <button className="rounded-lg p-3 text-gray-600 hover:bg-gray-100">
                                             <Icon path={mdiPencilOutline} size={0.8}></Icon>
                                         </button>
-                                    </ModalModal>
-                                    <ConfirmationModal
+                                    </PoorModal>
+                                    <PoorConfirmation
                                         onAccept={() => deleteTimingPoint(activeTimingPoint)}
                                         title={t("pages.timingPoints.delete.confirmation.title")}
                                         message={t("pages.timingPoints.delete.confirmation.text", { name: activeTimingPoint.name })}>
                                         <button className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100">
                                             <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                         </button>
-                                    </ConfirmationModal>
+                                    </PoorConfirmation>
                                 </div>
                             </div>
                             <div className="mt-8">
@@ -241,7 +241,7 @@ export const TimingPoints = () => {
                                         <div>{t("pages.timingPoints.accessUrls.header.description")}</div>
                                     </div>
                                     <div className="flex-grow"></div>
-                                    <ModalModal
+                                    <PoorModal
                                         onResolve={() => refetchAccessKeys()}
                                         title={t("pages.timingPoints.accessUrls.create.title")}
                                         component={TimingPointAccessUrlCreate}
@@ -253,7 +253,7 @@ export const TimingPoints = () => {
                                         <button className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200">
                                             <Icon path={mdiPlus} size={0.8}></Icon>
                                         </button>
-                                    </ModalModal>
+                                    </PoorModal>
                                 </div>
                                 <PoorDataTable columns={cols} getRowId={d => d.id} gridName="timing-point-access-keys" data={accessKeys} />
                             </div>

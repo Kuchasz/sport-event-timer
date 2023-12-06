@@ -6,7 +6,7 @@ import { trpc } from "../../../../../trpc-core";
 import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
@@ -23,7 +23,7 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
     const t = useTranslations();
 
     return result.totalTimePenalty ? (
-        <ModalModal
+        <PoorModal
             onResolve={refetch}
             title={t("pages.results.manageTimePenalties.confirmation.title")}
             description={t("pages.results.manageTimePenalties.confirmation.text", {
@@ -47,7 +47,7 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
                 <Icon size={0.8} path={mdiAlertOutline} />
                 <span className="ml-2">{formatTimeWithMilliSecUTC(result.totalTimePenalty)}</span>
             </span>
-        </ModalModal>
+        </PoorModal>
     ) : null;
 };
 
@@ -122,7 +122,7 @@ export const Results = () => {
             headerName: t("pages.results.grid.columns.actions"),
             cellRenderer: (data: Result) => (
                 <NewPoorActions>
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetchResults()}
                         title={t("pages.results.applyTimePenalty.confirmation.title")}
                         description={t("pages.results.applyTimePenalty.confirmation.text", {
@@ -139,9 +139,9 @@ export const Results = () => {
                             name={t("pages.results.applyTimePenalty.title")}
                             description={t("pages.results.applyTimePenalty.description")}
                             iconPath={mdiAlertOutline}></NewPoorActionsItem>
-                    </ModalModal>
+                    </PoorModal>
                     {disqualifications[data.bibNumber] ? (
-                        <ConfirmationModal
+                        <PoorConfirmation
                             onAccept={() => revertDisqualification(data)}
                             title={t("pages.results.revertDisqualification.confirmation.title")}
                             message={t("pages.results.revertDisqualification.confirmation.text", {
@@ -152,9 +152,9 @@ export const Results = () => {
                                 name={t("pages.results.revertDisqualification.title")}
                                 description={t("pages.results.revertDisqualification.description")}
                                 iconPath={mdiRestore}></NewPoorActionsItem>
-                        </ConfirmationModal>
+                        </PoorConfirmation>
                     ) : (
-                        <ModalModal
+                        <PoorModal
                             onResolve={() => disqualify(data)}
                             title={t("pages.results.disqualify.confirmation.title")}
                             description={t("pages.results.disqualify.confirmation.text", {
@@ -171,7 +171,7 @@ export const Results = () => {
                                 name={t("pages.results.disqualify.title")}
                                 description={t("pages.results.disqualify.description")}
                                 iconPath={mdiCloseOctagonOutline}></NewPoorActionsItem>
-                        </ModalModal>
+                        </PoorModal>
                     )}
                 </NewPoorActions>
             ),

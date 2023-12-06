@@ -4,7 +4,7 @@ import { mdiNumeric, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
@@ -29,7 +29,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
 
     return (
         <NewPoorActions>
-            <ModalModal
+            <PoorModal
                 onResolve={refetch}
                 title={t("pages.bibNumbers.edit.title")}
                 component={BibNumberEdit}
@@ -41,8 +41,8 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
                     name={t("pages.bibNumbers.edit.name")}
                     description={t("pages.bibNumbers.edit.description")}
                     iconPath={mdiNumeric}></NewPoorActionsItem>
-            </ModalModal>
-            <ConfirmationModal
+            </PoorModal>
+            <PoorConfirmation
                 title={t("pages.bibNumbers.delete.confirmation.title")}
                 message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
                 onAccept={deletebibNumber}>
@@ -50,7 +50,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
                     name={t("pages.bibNumbers.delete.name")}
                     description={t("pages.bibNumbers.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-            </ConfirmationModal>
+            </PoorConfirmation>
         </NewPoorActions>
     );
 };
@@ -90,7 +90,7 @@ export const BibNumbers = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.bibNumbers.header.title")} description={t("pages.bibNumbers.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.bibNumbers.create.title")}
                         component={BibNumberCreate}
@@ -99,9 +99,9 @@ export const BibNumbers = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
 
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.bibNumbers.createMany.title")}
                         component={BibNumberCreateManyForm}
@@ -113,8 +113,8 @@ export const BibNumbers = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             {t("pages.bibNumbers.createMany.button")}
                         </Button>
-                    </ModalModal>
-                    <ConfirmationModal
+                    </PoorModal>
+                    <PoorConfirmation
                         title={t("pages.bibNumbers.deleteAll.confirmation.title")}
                         message={t("pages.bibNumbers.deleteAll.confirmation.text")}
                         onAccept={deleteAll}>
@@ -122,7 +122,7 @@ export const BibNumbers = () => {
                             <Icon size={0.8} path={mdiRestore} className="mr-2" />
                             {t("pages.bibNumbers.deleteAll.button")}
                         </Button>
-                    </ConfirmationModal>
+                    </PoorConfirmation>
                 </div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
                     <PoorDataTable
