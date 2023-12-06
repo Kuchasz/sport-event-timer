@@ -3,10 +3,9 @@
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { ConfirmationModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
@@ -16,18 +15,19 @@ import { trpc } from "../../../../../trpc-core";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
-type EditedSplitTime = AppRouterInputs["splitTime"]["update"];
 
 type SplitTimeResultTypes = {
-    openEditDialog: (params: SplitTime) => Promise<void>;
     openResetDialog: (params: RevertedSplitTime) => Promise<void>;
     splitTimeResult: {
         times: Record<number, { time: number; manual: boolean }>;
         bibNumber: string | null;
     };
+    refetch: () => void;
+    raceId: number;
+    raceDate: Date;
     timingPointId: number;
 };
-const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, timingPointId }: SplitTimeResultTypes) => {
+const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTimeResult, timingPointId }: SplitTimeResultTypes) => {
     const result = splitTimeResult.times[timingPointId];
     const t = useTranslations();
     return (
@@ -37,32 +37,46 @@ const SplitTimeResult = ({ openEditDialog, openResetDialog, splitTimeResult, tim
             </span>
             <div className="flex-grow"></div>
             {result?.time > 0 && (
-                <span
-                    onClick={() =>
-                        openEditDialog({
-                            bibNumber: splitTimeResult.bibNumber,
+                <ModalModal
+                    onResolve={refetch}
+                    title={t("pages.splitTimes.edit.title")}
+                    component={SplitTimeEdit}
+                    componentProps={{
+                        editedSplitTime: {
+                            bibNumber: splitTimeResult.bibNumber!,
                             time: result?.time,
                             timingPointId: timingPointId,
-                        } as any)
-                    }
-                    className="flex cursor-pointer items-center hover:text-red-600">
-                    <Icon size={0.75} path={mdiClockEditOutline} />
-                    {/* <span className="ml-1">change</span> */}
-                </span>
+                            raceId,
+                        },
+                        raceId,
+                        raceDate: raceDate.getTime(),
+                        onReject: () => {},
+                    }}>
+                    <span className="flex cursor-pointer items-center hover:text-red-600">
+                        <Icon size={0.75} path={mdiClockEditOutline} />
+                    </span>
+                </ModalModal>
             )}
             {result == null && (
-                <span
-                    onClick={() =>
-                        openEditDialog({
-                            bibNumber: splitTimeResult.bibNumber,
+                <ModalModal
+                    onResolve={refetch}
+                    title={t("pages.splitTimes.edit.title")}
+                    component={SplitTimeEdit}
+                    componentProps={{
+                        editedSplitTime: {
+                            bibNumber: splitTimeResult.bibNumber!,
                             time: 0,
                             timingPointId: timingPointId,
-                        } as any)
-                    }
-                    className="flex cursor-pointer items-center hover:text-red-600">
-                    <Icon size={0.75} path={mdiClockPlusOutline} />
-                    {/* <span className="ml-1">change</span> */}
-                </span>
+                            raceId,
+                        },
+                        raceId,
+                        raceDate: raceDate.getTime(),
+                        onReject: () => {},
+                    }}>
+                    <span className="flex cursor-pointer items-center hover:text-red-600">
+                        <Icon size={0.75} path={mdiClockPlusOutline} />
+                    </span>
+                </ModalModal>
             )}
             {result?.manual == true && (
                 <ConfirmationModal
@@ -122,7 +136,9 @@ export const SplitTimes = () => {
                 headerName: tp.name,
                 cellRenderer: (data: SplitTime) => (
                     <SplitTimeResult
-                        openEditDialog={openEditDialog}
+                        refetch={() => refetch()}
+                        raceId={raceId}
+                        raceDate={race?.date ?? new Date()}
                         openResetDialog={revertManualSplitTime}
                         splitTimeResult={data}
                         timingPointId={tp.id}
@@ -130,22 +146,6 @@ export const SplitTimes = () => {
                 ),
             })),
     ];
-
-    const openEditDialog = async (editedSplitTime: SplitTime) => {
-        const splitTime = await Demodal.open<EditedSplitTime>(NiceModal, {
-            title: t("pages.splitTimes.edit.title"),
-            component: SplitTimeEdit,
-            props: {
-                editedSplitTime,
-                raceId,
-                raceDate: race?.date?.getTime(),
-            },
-        });
-
-        if (splitTime) {
-            await refetch();
-        }
-    };
 
     const revertManualSplitTime = async (editedSplitTime: RevertedSplitTime) => {
         await revertSplitTimeMutation.mutateAsync(editedSplitTime);
