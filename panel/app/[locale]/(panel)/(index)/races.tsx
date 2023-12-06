@@ -17,23 +17,21 @@ import { sort, sortDesc } from "@set/utils/dist/array";
 import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import classNames from "classnames";
-import { ConfirmationModal, ModalModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorInput } from "components/poor-input";
 import { FullRaceIcon } from "components/race-icon";
-import { Demodal } from "demodal";
 import fuzzysort from "fuzzysort";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
-type CreatedRace = AppRouterInputs["race"]["add"];
 
 const RegistrationEnabled = ({ race }: { race: Race }) => {
     return (
@@ -127,18 +125,6 @@ export const Races = ({ initialData }: RacesProps) => {
 
     const [filter, setFilter] = useState<RaceFilterType>("all");
 
-    const openCreateDialog = async () => {
-        const race = await Demodal.open<CreatedRace>(NiceModal, {
-            title: t("pages.races.createRace.title"),
-            component: RaceCreate,
-            props: {},
-        });
-
-        if (race) {
-            void refetch();
-        }
-    };
-
     const futureRaces = races.filter(r => isTodayOrLater(r.date));
     const ascSortedFutureRaces = sort(futureRaces, f => f.date.getTime());
 
@@ -178,14 +164,19 @@ export const Races = ({ initialData }: RacesProps) => {
                             ["justify-between"]: upcomingRaces.length === 3,
                             ["gap-5"]: upcomingRaces.length < 3,
                         })}>
-                        <div
-                            onClick={openCreateDialog}
-                            className="flex w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1">
-                            <button className="flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 font-medium">
-                                <Icon size={1.2} path={mdiPlus} />
-                            </button>
-                            <span className="mt-4 text-sm font-semibold">{t("pages.races.addRace")}</span>
-                        </div>
+                        <ModalModal
+                            onResolve={() => refetch()}
+                            title={t("pages.races.createRace.title")}
+                            component={RaceCreate}
+                            componentProps={{ onReject: () => {} }}>
+                            <div className="flex h-64 w-40 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg text-gray-900 shadow-lg transition-transform duration-300 ease-in-out will-change-transform hover:-translate-y-1">
+                                <button className="flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 font-medium">
+                                    <Icon size={1.2} path={mdiPlus} />
+                                </button>
+                                <span className="mt-4 text-sm font-semibold">{t("pages.races.addRace")}</span>
+                            </div>
+                        </ModalModal>
+
                         {upcomingRaces.map(r => (
                             <Link
                                 key={r.id}
