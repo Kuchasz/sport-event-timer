@@ -12,6 +12,7 @@ type TimePenalty = AppRouterOutputs["result"]["results"][0]["timePenalties"][0];
 
 type ManageTimePenaltiesProps = {
     onResolve: (status: boolean) => void;
+    onReject: () => void;
     playerId: number;
     initialPenalties: TimePenalty[];
     bibNumber: string;

@@ -6,14 +6,13 @@ import { trpc } from "../../../../../trpc-core";
 import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { ConfirmationModal, ModalModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
 import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
@@ -23,36 +22,32 @@ type Result = AppRouterOutputs["result"]["results"][0];
 const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result: Result; refetch: () => Promise<void> }) => {
     const t = useTranslations();
 
-    const managePlayerPenalties = async () => {
-        await Demodal.open(NiceModal, {
-            title: t("pages.results.manageTimePenalties.confirmation.title"),
-            description: t("pages.results.manageTimePenalties.confirmation.text", {
+    return result.totalTimePenalty ? (
+        <ModalModal
+            onResolve={refetch}
+            title={t("pages.results.manageTimePenalties.confirmation.title")}
+            description={t("pages.results.manageTimePenalties.confirmation.text", {
                 name: result.name,
                 lastName: result.lastName,
-            }),
-            component: ManageTimePenalties,
-            props: {
-                penalties: result.timePenalties,
+            })}
+            component={ManageTimePenalties}
+            componentProps={{
+                initialPenalties: result.timePenalties,
                 bibNumber: result.bibNumber,
                 raceId: raceId,
                 playerId: result.id,
                 name: result.name,
                 lastName: result.lastName,
-            },
-        });
-
-        void refetch();
-    };
-
-    return result.totalTimePenalty ? (
-        <span
-            className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
-                ["font-semibold text-orange-600"]: result.totalTimePenalty !== null,
-            })}
-            onClick={managePlayerPenalties}>
-            <Icon size={0.8} path={mdiAlertOutline} />
-            <span className="ml-2">{formatTimeWithMilliSecUTC(result.totalTimePenalty)}</span>
-        </span>
+                onReject: () => {},
+            }}>
+            <span
+                className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
+                    ["font-semibold text-orange-600"]: result.totalTimePenalty !== null,
+                })}>
+                <Icon size={0.8} path={mdiAlertOutline} />
+                <span className="ml-2">{formatTimeWithMilliSecUTC(result.totalTimePenalty)}</span>
+            </span>
+        </ModalModal>
     ) : null;
 };
 
