@@ -15,25 +15,14 @@ const wsUrl =
         ? `wss://${env.NEXT_PUBLIC_APP_URL}`
         : `ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_WS_PORT}`;
 
-const wsClient =
-    typeof window === "undefined"
-        ? null
-        : createWSClient({
-              url: wsUrl,
-          });
-
-//eslint-disable-next-line @typescript-eslint/unbound-method
-export const getConnection = wsClient?.getConnection;
-
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));
 };
 
-const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
+const registerStateChangeHandlers = (socket: WebSocket) => {
     let previousState = 0;
 
     setInterval(() => {
-        const socket = getConnection();
         const currentState = socket.readyState;
         if (currentState === previousState) return;
 
@@ -51,7 +40,23 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
     }, 250);
 };
 
-if (getConnection) registerStateChangeHandlers(getConnection);
+type WSClient = ReturnType<typeof createWSClient>;
+
+let websocketClient: WSClient;
+const getWsClient = () => {
+    if (typeof window === "undefined") return null;
+
+    if (!websocketClient) {
+        websocketClient = createWSClient({
+            url: wsUrl,
+        });
+
+        registerStateChangeHandlers(websocketClient.getConnection());
+    }
+    return websocketClient;
+};
+
+export const getConnection = () => getWsClient()?.getConnection();
 
 export const connectionConfig = (queryClient: QueryClient, enableSubscriptions: boolean) => ({
     transformer: superjson,
@@ -63,17 +68,21 @@ export const connectionConfig = (queryClient: QueryClient, enableSubscriptions: 
         //         (process.env.NODE_ENV === "development" && typeof window !== "undefined") ||
         //         (opts.direction === "down" && opts.result instanceof Error),
         // }),
-        splitLink({
-            condition(op) {
-                return enableSubscriptions && wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
-            },
-            true: wsLink({
-                client: wsClient!,
-            }),
-            false: httpBatchLink({
-                url: `${url}/api/trpc`,
-            }),
-        }),
+        enableSubscriptions
+            ? splitLink({
+                  condition(op) {
+                      return getWsClient() !== null && (op.type === "subscription" || op.path === "action.dispatch");
+                  },
+                  true: wsLink({
+                      client: getWsClient()!,
+                  }),
+                  false: httpBatchLink({
+                      url: `${url}/api/trpc`,
+                  }),
+              })
+            : httpBatchLink({
+                  url: `${url}/api/trpc`,
+              }),
     ],
 });
 
