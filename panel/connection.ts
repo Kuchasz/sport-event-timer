@@ -53,7 +53,7 @@ const registerStateChangeHandlers = (getConnection: () => WebSocket) => {
 
 if (getConnection) registerStateChangeHandlers(getConnection);
 
-export const connectionConfig = (queryClient: QueryClient) => ({
+export const connectionConfig = (queryClient: QueryClient, enableSubscriptions: boolean) => ({
     transformer: superjson,
     ssr: true,
     queryClient,
@@ -65,7 +65,7 @@ export const connectionConfig = (queryClient: QueryClient) => ({
         // }),
         splitLink({
             condition(op) {
-                return wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
+                return enableSubscriptions && wsClient !== null && (op.type === "subscription" || op.path === "action.dispatch");
             },
             true: wsLink({
                 client: wsClient!,

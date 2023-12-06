@@ -34,7 +34,7 @@ export default async function Layout({ children, params }: { children: React.Rea
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
-                    <TrpcProvider>
+                    <TrpcProvider enableSubscriptions={false}>
                         <div className="grid h-full w-full grid-cols-2">
                             <section className="flex h-full flex-col items-center justify-center">
                                 <div className="flex w-full max-w-sm flex-grow flex-col items-center justify-center">{children}</div>
