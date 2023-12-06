@@ -714,7 +714,8 @@
           "confirmation": {
             "title": "Revert time penalty",
             "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
-          }
+          },
+          "button": "Delete"
         }
       }
     },
