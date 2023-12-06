@@ -1,22 +1,19 @@
 "use client";
 
-import { mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
+import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { Button } from "components/button";
-import { ConfirmationModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
-type CreatedRace = AppRouterInputs["race"]["add"];
-type EditedRace = AppRouterInputs["race"]["update"];
 
 const RegistrationsRenderer = (props: Race) => <Registrations race={props} />;
 
@@ -96,6 +93,19 @@ export const MyRaces = () => {
             field: "id",
             cellRenderer: data => (
                 <NewPoorActions>
+                    <ModalModal
+                        onResolve={() => refetch()}
+                        title={t("pages.races.editRace.title")}
+                        component={RaceEdit}
+                        componentProps={{
+                            editedRace: data,
+                            onReject: () => {},
+                        }}>
+                        <NewPoorActionsItem
+                            name={t("pages.races.editRace.name")}
+                            description={t("pages.races.editRace.description")}
+                            iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
+                    </ModalModal>
                     {data.registrationEnabled ? (
                         <div onClick={() => turnOffRegistrationAction(data)}>
                             <NewPoorActionsItem
@@ -134,32 +144,6 @@ export const MyRaces = () => {
         },
     ];
 
-    const openCreateDialog = async () => {
-        const race = await Demodal.open<CreatedRace>(NiceModal, {
-            title: t("pages.races.createRace.title"),
-            component: RaceCreate,
-            props: {},
-        });
-
-        if (race) {
-            void refetch();
-        }
-    };
-
-    const openEditDialog = async (editedRace?: Race) => {
-        const race = await Demodal.open<EditedRace>(NiceModal, {
-            title: t("pages.races.editRacePopup.title"),
-            component: RaceEdit,
-            props: {
-                editedRace,
-            },
-        });
-
-        if (race) {
-            await refetch();
-        }
-    };
-
     return (
         <>
             {/* <Head>
@@ -168,18 +152,23 @@ export const MyRaces = () => {
             <div className="border-1 relative flex h-full flex-col border-solid border-gray-600">
                 {/* <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} /> */}
                 <div className="mb-4 inline-flex">
-                    <Button outline onClick={openCreateDialog}>
-                        <Icon size={0.8} path={mdiPlus} />
-                        <span className="ml-2">{t("pages.races.addRace")}</span>
-                    </Button>
+                    <ModalModal
+                        onResolve={() => refetch()}
+                        title={t("pages.races.createRace.title")}
+                        component={RaceCreate}
+                        componentProps={{ onReject: () => {} }}>
+                        <Button outline>
+                            <Icon size={0.8} path={mdiPlus} />
+                            <span className="ml-2">{t("pages.races.addRace")}</span>
+                        </Button>
+                    </ModalModal>
                 </div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
                     <PoorDataTable
                         gridName="my-races"
                         columns={defaultColumns}
                         getRowId={item => item.id.toString()}
-                        data={races}
-                        onRowDoubleClicked={e => openEditDialog(e)}></PoorDataTable>
+                        data={races}></PoorDataTable>
                 </div>
             </div>
         </>
