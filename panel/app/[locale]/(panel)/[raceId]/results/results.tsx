@@ -24,7 +24,6 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
     const t = useTranslations();
 
     const managePlayerPenalties = async () => {
-        // const penaltyChanges =
         await Demodal.open(NiceModal, {
             title: t("pages.results.manageTimePenalties.confirmation.title"),
             description: t("pages.results.manageTimePenalties.confirmation.text", {

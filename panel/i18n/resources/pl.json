@@ -709,12 +709,13 @@
           "text": "Zarządzaj karami czasowymi zawodnika {name} {lastName}"
         },
         "revertTimePenalty": {
+          "title": "Wycofaj karę czasową",
+          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
           "confirmation": {
             "title": "Wycofaj karę czasową",
             "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
           },
-          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-          "title": "Wycofaj karę czasową"
+          "button": "Usuń"
         }
       }
     },

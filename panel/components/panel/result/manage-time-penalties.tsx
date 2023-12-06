@@ -49,7 +49,7 @@ const TimePenaltyActions = ({
             onAccept={() => revertTimePenalty()}>
             <span className="flex cursor-pointer items-center hover:text-red-600">
                 <Icon size={0.8} path={mdiTrashCanOutline} />
-                {t("pages.bibNumbers.delete.button")}
+                {t("pages.results.manageTimePenalties.revertTimePenalty.button")}
             </span>
         </ConfirmationModal>
     );
