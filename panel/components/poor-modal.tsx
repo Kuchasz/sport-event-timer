@@ -7,7 +7,7 @@ import { Button } from "./button";
 import Icon from "@mdi/react";
 import { mdiWindowClose } from "@mdi/js";
 
-type ConfirmationProps = {
+type PoorConfirmationProps = {
     title: string;
     description?: string;
     message: string;
@@ -15,7 +15,7 @@ type ConfirmationProps = {
     children: React.ReactElement;
 };
 
-export const PoorConfirmation = ({ onAccept, title, description, message, children }: ConfirmationProps) => {
+export const PoorConfirmation = ({ onAccept, title, description, message, children }: PoorConfirmationProps) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const t = useTranslations();
 
@@ -91,7 +91,7 @@ export const PoorConfirmation = ({ onAccept, title, description, message, childr
 type ResolvableModalComponentProps<P> = { onResolve: (value: P) => void };
 type ResolvableModalComponent<T, P> = React.FunctionComponent<T & ResolvableModalComponentProps<P>>;
 
-type ModalProps<T, P> = {
+type PoorModalProps<T, P> = {
     title: string;
     description?: string;
     onResolve: (data: P) => void;
@@ -100,7 +100,7 @@ type ModalProps<T, P> = {
     componentProps: T;
 };
 
-export const PoorModal = <T, P>({ onResolve, title, description, children, component: Content, componentProps }: ModalProps<T, P>) => {
+export const PoorModal = <T, P>({ onResolve, title, description, children, component: Content, componentProps }: PoorModalProps<T, P>) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const resolveInternal = (data: P) => {
