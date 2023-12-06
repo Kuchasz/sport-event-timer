@@ -145,8 +145,9 @@
       "createRace": {
         "title": "Create new race"
       },
-      "editRacePopup": {
+      "editRace": {
         "title": "Edit race",
+        "name": "Edit race",
         "description": "Open edit race popup"
       },
       "registration": "Registration",

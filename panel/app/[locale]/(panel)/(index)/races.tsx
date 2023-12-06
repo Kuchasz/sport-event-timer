@@ -311,11 +311,11 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 editedRace: r.obj,
                                                 onReject: () => {},
                                             }}
-                                            title={t("pages.races.editRacePopup.title")}
+                                            title={t("pages.races.editRace.title")}
                                             onResolve={() => refetch()}>
                                             <NewPoorActionsItem
-                                                name={t("pages.races.editRacePopup.title")}
-                                                description={t("pages.races.editRacePopup.description")}
+                                                name={t("pages.races.editRace.title")}
+                                                description={t("pages.races.editRace.description")}
                                                 iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
                                         </ModalModal>
                                         <ConfirmationModal
