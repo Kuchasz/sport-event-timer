@@ -3,25 +3,21 @@
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { ConfirmationModal, NiceModal } from "components/modal";
+import { ConfirmationModal, ModalModal } from "components/modal";
 import { PageHeader } from "components/page-header";
 import { TimingPointAccessUrlCreate } from "components/panel/timing-point/timing-point-access-url-create-form";
 import { TimingPointCreate } from "components/panel/timing-point/timing-point-create";
 import { TimingPointEdit } from "components/panel/timing-point/timing-point-edit";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
-import { Demodal } from "demodal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useState } from "react";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
+import type { AppRouterOutputs } from "trpc";
 import { getTimingPointIcon } from "utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
-type CreatedTimingPoint = AppRouterInputs["timingPoint"]["add"]["timingPoint"];
-type EditedTimingPoint = AppRouterInputs["timingPoint"]["update"];
-type CreatedTimingPointAccessKey = AppRouterInputs["timingPoint"]["addTimingPointAccessUrl"];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 type AccessKey = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"][0];
 
@@ -58,29 +54,22 @@ const TimingPointCard = ({
     timingPoint: TimingPoint;
 }) => {
     const t = useTranslations();
-    const openCreateDialog = async () => {
-        const TimingPoint = await Demodal.open<CreatedTimingPoint>(NiceModal, {
-            title: t("pages.timingPoints.create.title"),
-            component: TimingPointCreate,
-            props: { raceId: raceId, index },
-        });
-
-        if (TimingPoint) {
-            onCreate();
-        }
-    };
 
     return (
         <div className="flex flex-col">
             {!isFirst && (
                 <div className="flex flex-col items-center">
                     <div className="h-5 w-0.5 bg-gray-100"></div>
-                    <button
-                        onClick={openCreateDialog}
-                        className="my-1 flex cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
-                        <Icon path={mdiPlus} size={0.7} />
-                        <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
-                    </button>
+                    <ModalModal
+                        onResolve={onCreate}
+                        title={t("pages.timingPoints.create.title")}
+                        component={TimingPointCreate}
+                        componentProps={{ raceId: raceId, index, onReject: () => {} }}>
+                        <button className="my-1 flex cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
+                            <Icon path={mdiPlus} size={0.7} />
+                            <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
+                        </button>
+                    </ModalModal>
                     <div className="h-5 w-0.5 bg-gray-100"></div>
                 </div>
             )}
@@ -176,35 +165,6 @@ export const TimingPoints = () => {
         },
     ];
 
-    const openEditDialog = async (editedTimingPoint?: TimingPoint) => {
-        const timingPoint = await Demodal.open<EditedTimingPoint>(NiceModal, {
-            title: t("pages.timingPoints.edit.title"),
-            component: TimingPointEdit,
-            props: {
-                editedTimingPoint,
-            },
-        });
-
-        if (timingPoint) {
-            void refetchTimingPoints();
-        }
-    };
-
-    const openCreateAccessKeyDialog = async (timingPoint: TimingPoint) => {
-        const timingPointAccessKey = await Demodal.open<CreatedTimingPointAccessKey>(NiceModal, {
-            title: t("pages.timingPoints.accessUrls.create.title"),
-            component: TimingPointAccessUrlCreate,
-            props: {
-                timingPointId: timingPoint.id,
-                raceId: timingPoint.raceId,
-            },
-        });
-
-        if (timingPointAccessKey) {
-            void refetchAccessKeys();
-        }
-    };
-
     const deleteTimingPoint = async (timingPoint: TimingPoint) => {
         await deleteTimingPointMutation.mutateAsync(timingPoint);
 
@@ -252,11 +212,18 @@ export const TimingPoints = () => {
                                     <div>{activeTimingPoint.description}</div>
                                 </div>
                                 <div className="flex items-center">
-                                    <button
-                                        onClick={() => openEditDialog(activeTimingPoint)}
-                                        className="rounded-lg p-3 text-gray-600 hover:bg-gray-100">
-                                        <Icon path={mdiPencilOutline} size={0.8}></Icon>
-                                    </button>
+                                    <ModalModal
+                                        onResolve={() => refetchTimingPoints()}
+                                        title={t("pages.timingPoints.edit.title")}
+                                        component={TimingPointEdit}
+                                        componentProps={{
+                                            editedTimingPoint: activeTimingPoint,
+                                            onReject: () => {},
+                                        }}>
+                                        <button className="rounded-lg p-3 text-gray-600 hover:bg-gray-100">
+                                            <Icon path={mdiPencilOutline} size={0.8}></Icon>
+                                        </button>
+                                    </ModalModal>
                                     <ConfirmationModal
                                         onAccept={() => deleteTimingPoint(activeTimingPoint)}
                                         title={t("pages.timingPoints.delete.confirmation.title")}
@@ -274,11 +241,19 @@ export const TimingPoints = () => {
                                         <div>{t("pages.timingPoints.accessUrls.header.description")}</div>
                                     </div>
                                     <div className="flex-grow"></div>
-                                    <button
-                                        onClick={() => openCreateAccessKeyDialog(activeTimingPoint)}
-                                        className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200">
-                                        <Icon path={mdiPlus} size={0.8}></Icon>
-                                    </button>
+                                    <ModalModal
+                                        onResolve={() => refetchAccessKeys()}
+                                        title={t("pages.timingPoints.accessUrls.create.title")}
+                                        component={TimingPointAccessUrlCreate}
+                                        componentProps={{
+                                            timingPointId: activeTimingPoint.id,
+                                            raceId: activeTimingPoint.raceId,
+                                            onReject: () => {},
+                                        }}>
+                                        <button className="rounded-lg bg-gray-100 p-3 text-gray-600 hover:bg-gray-200">
+                                            <Icon path={mdiPlus} size={0.8}></Icon>
+                                        </button>
+                                    </ModalModal>
                                 </div>
                                 <PoorDataTable columns={cols} getRowId={d => d.id} gridName="timing-point-access-keys" data={accessKeys} />
                             </div>
