@@ -2,7 +2,7 @@
 import { mdiPen, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
@@ -35,7 +35,7 @@ export const Settings = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.settings.header.title")} description={t("pages.settings.header.description")} />
                 <div className="mb-4 flex">
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.settings.apiKeys.create.title")}
                         component={ApiKeyCreate}
@@ -47,14 +47,14 @@ export const Settings = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.settings.apiKeys.create.button")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
                 </div>
                 {apiKeys?.map(key => (
                     <div key={key.key} className="flex flex-col">
                         <div>{key.name}</div>
                         <div className="flex items-center">
                             <div className="my-2 mr-2 rounded-md bg-[#c2e59c] px-4 py-2">{key.key}</div>
-                            <ModalModal
+                            <PoorModal
                                 onResolve={() => refetch()}
                                 title={t("pages.settings.apiKeys.edit.title")}
                                 component={ApiKeyEdit}
@@ -66,16 +66,16 @@ export const Settings = () => {
                                 <Button className="mr-2">
                                     <Icon size={0.8} path={mdiPen} />
                                 </Button>
-                            </ModalModal>
+                            </PoorModal>
 
-                            <ConfirmationModal
+                            <PoorConfirmation
                                 title={t("pages.settings.apiKeys.delete.confirmation.title")}
                                 message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
                                 onAccept={() => deleteApiKey(key)}>
                                 <Button>
                                     <Icon size={0.8} path={mdiTrashCanOutline} />
                                 </Button>
-                            </ConfirmationModal>
+                            </PoorConfirmation>
                         </div>
                     </div>
                 ))}

@@ -4,6 +4,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useTranslations } from "next-intl";
 import React, { Fragment, useState } from "react";
 import { Button } from "./button";
+import Icon from "@mdi/react";
+import { mdiWindowClose } from "@mdi/js";
 
 type ConfirmationProps = {
     title: string;
@@ -13,9 +15,13 @@ type ConfirmationProps = {
     children: React.ReactElement;
 };
 
-export const ConfirmationModal = ({ onAccept, title, description, message, children }: ConfirmationProps) => {
+export const PoorConfirmation = ({ onAccept, title, description, message, children }: ConfirmationProps) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const t = useTranslations();
+
+    const rejectInternal = () => {
+        setModalOpen(false);
+    };
 
     return (
         <>
@@ -30,7 +36,7 @@ export const ConfirmationModal = ({ onAccept, title, description, message, child
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0">
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-gray-500 bg-opacity-25" />
                     </Transition.Child>
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -42,11 +48,17 @@ export const ConfirmationModal = ({ onAccept, title, description, message, child
                                 leave="ease-in duration-200"
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95">
-                                <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                        {title}
+                                <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title as="h3" className="flex items-center text-lg font-bold leading-6 text-gray-900">
+                                        <span>{title}</span>
+                                        <span className="grow"></span>
+                                        <span
+                                            className="cursor-pointer rounded-full p-1 text-gray-800 transition-colors hover:bg-gray-100 hover:text-black"
+                                            onClick={rejectInternal}>
+                                            <Icon size={0.8} path={mdiWindowClose} />
+                                        </span>
                                     </Dialog.Title>
-                                    <Dialog.Description>{description}</Dialog.Description>
+                                    <Dialog.Description className="mt-1 text-sm text-gray-500">{description}</Dialog.Description>
                                     <div className="mt-2">
                                         <div className="flex flex-col">
                                             <div className="flex">
@@ -88,7 +100,7 @@ type ModalProps<T, P> = {
     componentProps: T;
 };
 
-export const ModalModal = <T, P>({ onResolve, title, description, children, component: Content, componentProps }: ModalProps<T, P>) => {
+export const PoorModal = <T, P>({ onResolve, title, description, children, component: Content, componentProps }: ModalProps<T, P>) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const resolveInternal = (data: P) => {
@@ -113,7 +125,7 @@ export const ModalModal = <T, P>({ onResolve, title, description, children, comp
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0">
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-gray-500 bg-opacity-25" />
                     </Transition.Child>
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -125,11 +137,17 @@ export const ModalModal = <T, P>({ onResolve, title, description, children, comp
                                 leave="ease-in duration-200"
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95">
-                                <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                        {title}
+                                <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title as="h3" className="flex items-center text-lg font-bold leading-6 text-gray-900">
+                                        <span>{title}</span>
+                                        <span className="grow"></span>
+                                        <span
+                                            className="cursor-pointer rounded-full p-1 text-gray-800 transition-colors hover:bg-gray-100 hover:text-black"
+                                            onClick={rejectInternal}>
+                                            <Icon size={0.8} path={mdiWindowClose} />
+                                        </span>
                                     </Dialog.Title>
-                                    <Dialog.Description>{description}</Dialog.Description>
+                                    <Dialog.Description className="mt-1 text-sm text-gray-500">{description}</Dialog.Description>
                                     <div className="mt-2">
                                         <Content {...componentProps} onResolve={resolveInternal} onReject={rejectInternal} />
                                     </div>

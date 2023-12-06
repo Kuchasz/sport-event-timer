@@ -1,7 +1,7 @@
 import { mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { ConfirmationModal } from "components/modal";
+import { PoorConfirmation } from "components/poor-modal";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -41,7 +41,7 @@ const TimePenaltyActions = ({
     };
 
     return (
-        <ConfirmationModal
+        <PoorConfirmation
             message={t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.text", {
                 name: name,
                 lastName: lastName,
@@ -52,7 +52,7 @@ const TimePenaltyActions = ({
                 <Icon size={0.8} path={mdiTrashCanOutline} />
                 {t("pages.results.manageTimePenalties.revertTimePenalty.button")}
             </span>
-        </ConfirmationModal>
+        </PoorConfirmation>
     );
 };
 

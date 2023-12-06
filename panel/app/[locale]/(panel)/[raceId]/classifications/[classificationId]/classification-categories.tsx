@@ -5,7 +5,7 @@ import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
@@ -50,7 +50,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
 
     return (
         <NewPoorActions>
-            <ModalModal
+            <PoorModal
                 onResolve={refetch}
                 title={t("pages.classifications.categories.edit.title")}
                 component={CategoryEdit}
@@ -62,8 +62,8 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
                     name={t("pages.classifications.categories.edit.name")}
                     description={t("pages.classifications.categories.edit.description")}
                     iconPath={mdiAccountEditOutline}></NewPoorActionsItem>
-            </ModalModal>
-            <ConfirmationModal
+            </PoorModal>
+            <PoorConfirmation
                 onAccept={deleteCategory}
                 message={t("pages.classifications.categories.delete.confirmation.text", { name: category.name })}
                 title={t("pages.classifications.categories.delete.confirmation.title")}>
@@ -71,7 +71,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
                     name={t("pages.classifications.categories.delete.name")}
                     description={t("pages.classifications.categories.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-            </ConfirmationModal>
+            </PoorConfirmation>
         </NewPoorActions>
     );
 };
@@ -135,7 +135,7 @@ export const ClassificationCategories = () => {
                     description={t("pages.classifications.categories.header.description")}
                 />
                 <div className="flex">
-                    <ModalModal
+                    <PoorModal
                         title={t("pages.classifications.categories.create.title")}
                         component={CategoryCreate}
                         componentProps={{ classificationId, onReject: () => {} }}
@@ -144,7 +144,7 @@ export const ClassificationCategories = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
                 </div>
                 <div className="p-2"></div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">

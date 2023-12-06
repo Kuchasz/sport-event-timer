@@ -2,7 +2,7 @@
 import { mdiAccountEditOutline, mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { ModalModal } from "components/modal";
+import { PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ClassificationCreate } from "components/panel/classification/classification-create";
 import { ClassificationEdit } from "components/panel/classification/classification-edit";
@@ -21,7 +21,7 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
     const t = useTranslations();
     return (
         <NewPoorActions>
-            <ModalModal
+            <PoorModal
                 title={t("pages.classifications.edit.confirmation.title")}
                 component={ClassificationEdit}
                 onResolve={refetch}
@@ -33,7 +33,7 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
                     name={t("pages.classifications.edit.title")}
                     description={t("pages.classifications.edit.description")}
                     iconPath={mdiAccountEditOutline}></NewPoorActionsItem>
-            </ModalModal>
+            </PoorModal>
             <NewPoorActionsItem
                 name={t("pages.classifications.manageCategories.name")}
                 description={t("pages.classifications.manageCategories.description")}
@@ -66,7 +66,7 @@ export const Classifications = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.classifications.header.title")} description={t("pages.classifications.header.description")} />
                 <div className="mb-4 inline-flex">
-                    <ModalModal
+                    <PoorModal
                         title={t("pages.classifications.create.title")}
                         component={ClassificationCreate}
                         onResolve={() => refetch()}
@@ -75,7 +75,7 @@ export const Classifications = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.classifications.create.button")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
                     <div className="px-1"></div>
                     <Button autoCapitalize="false" outline>
                         <Icon size={0.8} path={mdiAccountMultiplePlusOutline} />

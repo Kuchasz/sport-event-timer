@@ -24,7 +24,7 @@ import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-ta
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { ConfirmationModal, ModalModal } from "../../../../../components/modal";
+import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -58,7 +58,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
 
     return (
         <NewPoorActions>
-            <ModalModal
+            <PoorModal
                 title={t("pages.playerRegistrations.edit.title")}
                 component={PlayerRegistrationEdit}
                 onResolve={refetch}
@@ -71,8 +71,8 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     name={t("pages.playerRegistrations.edit.name")}
                     description={t("pages.playerRegistrations.edit.description")}
                     iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
-            </ModalModal>
-            <ConfirmationModal
+            </PoorModal>
+            <PoorConfirmation
                 message={t("pages.playerRegistrations.delete.confirmation.text", {
                     name: playerRegistration.name,
                     lastName: playerRegistration.lastName,
@@ -83,9 +83,9 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     name={t("pages.playerRegistrations.delete.title")}
                     description={t("pages.playerRegistrations.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-            </ConfirmationModal>
+            </PoorConfirmation>
             {!playerRegistration.promotedToPlayer && (
-                <ModalModal
+                <PoorModal
                     title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
                     component={PlayerRegistrationPromotion}
                     onResolve={playerPromoted}
@@ -98,7 +98,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                         name={t("pages.playerRegistrations.promoteToPlayer.title")}
                         description={t("pages.playerRegistrations.promoteToPlayer.description")}
                         iconPath={mdiHumanEdit}></NewPoorActionsItem>
-                </ModalModal>
+                </PoorModal>
             )}
         </NewPoorActions>
     );
@@ -120,7 +120,7 @@ const PlayerRegistrationPayment = ({
         await refetch();
     };
     return (
-        <ConfirmationModal
+        <PoorConfirmation
             title={t("pages.playerRegistrations.togglePlayerPayment.confirmation.title")}
             message={t("pages.playerRegistrations.togglePlayerPayment.confirmation.text", {
                 name: playerRegistration.name,
@@ -140,7 +140,7 @@ const PlayerRegistrationPayment = ({
                     {playerRegistration.paymentDate?.toLocaleDateString(locale) ?? t("pages.playerRegistrations.payment.status.notPaid")}
                 </span>
             </span>
-        </ConfirmationModal>
+        </PoorConfirmation>
     );
 };
 
@@ -244,7 +244,7 @@ export const PlayerRegistrations = () => {
                     description={t("pages.playerRegistrations.header.description")}
                 />
                 <div className="mb-4 flex">
-                    <ModalModal
+                    <PoorModal
                         title={t("pages.playerRegistrations.create.title")}
                         component={PlayerRegistrationCreate}
                         onResolve={() => refetch()}
@@ -256,7 +256,7 @@ export const PlayerRegistrations = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
                     <Button
                         outline
                         className="ml-2"

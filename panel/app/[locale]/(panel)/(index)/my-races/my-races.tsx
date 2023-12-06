@@ -4,7 +4,7 @@ import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiP
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { Button } from "components/button";
-import { ConfirmationModal, ModalModal } from "components/modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
@@ -93,7 +93,7 @@ export const MyRaces = () => {
             field: "id",
             cellRenderer: data => (
                 <NewPoorActions>
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.races.editRace.title")}
                         component={RaceEdit}
@@ -105,7 +105,7 @@ export const MyRaces = () => {
                             name={t("pages.races.editRace.name")}
                             description={t("pages.races.editRace.description")}
                             iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
-                    </ModalModal>
+                    </PoorModal>
                     {data.registrationEnabled ? (
                         <div onClick={() => turnOffRegistrationAction(data)}>
                             <NewPoorActionsItem
@@ -121,7 +121,7 @@ export const MyRaces = () => {
                                 iconPath={mdiLockOpenVariantOutline}></NewPoorActionsItem>
                         </div>
                     )}
-                    <ConfirmationModal
+                    <PoorConfirmation
                         title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                         message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: data.name })}
                         onAccept={() => wipeRaceData(data)}>
@@ -129,8 +129,8 @@ export const MyRaces = () => {
                             name={t("pages.races.wipeStopwatchPopup.title")}
                             description={t("pages.races.wipeStopwatchPopup.description")}
                             iconPath={mdiRestore}></NewPoorActionsItem>
-                    </ConfirmationModal>
-                    <ConfirmationModal
+                    </PoorConfirmation>
+                    <PoorConfirmation
                         title={t("pages.races.deleteRacePopup.confirmation.title")}
                         message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: data.name })}
                         onAccept={() => deleteRace(data)}>
@@ -138,7 +138,7 @@ export const MyRaces = () => {
                             name={t("pages.races.deleteRacePopup.title")}
                             description={t("pages.races.deleteRacePopup.description")}
                             iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-                    </ConfirmationModal>
+                    </PoorConfirmation>
                 </NewPoorActions>
             ),
         },
@@ -152,7 +152,7 @@ export const MyRaces = () => {
             <div className="border-1 relative flex h-full flex-col border-solid border-gray-600">
                 {/* <PageHeader title={t("pages.races.header.title")} description={t("pages.races.header.description")} /> */}
                 <div className="mb-4 inline-flex">
-                    <ModalModal
+                    <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.races.createRace.title")}
                         component={RaceCreate}
@@ -161,7 +161,7 @@ export const MyRaces = () => {
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.races.addRace")}</span>
                         </Button>
-                    </ModalModal>
+                    </PoorModal>
                 </div>
                 <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
                     <PoorDataTable
