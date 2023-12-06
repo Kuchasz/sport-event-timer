@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
-import { DemodalProvider } from "../../../../components/demodal-provider";
 import { IndexStatus } from "../../../../components/index-status";
 import { Meta } from "../../../../components/meta";
 import "../../../../globals.scss";
@@ -20,9 +19,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <main className="flex h-full grow flex-col items-center overflow-y-auto">
                             <IndexStatus />
-                            <div className="flex w-full flex-grow flex-col">
-                                <DemodalProvider>{children}</DemodalProvider>
-                            </div>
+                            <div className="flex w-full flex-grow flex-col">{children}</div>
                         </main>
                     </div>
                 </div>
