@@ -27,7 +27,7 @@ export default async function ResultLayout({ children, params }: { children: Rea
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col text-zinc-900">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
-                    <TrpcProvider>{children}</TrpcProvider>
+                    <TrpcProvider enableSubscriptions={false}>{children}</TrpcProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

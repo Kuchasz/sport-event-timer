@@ -4,5 +4,5 @@ import type { ReactNode } from "react";
 import "../../../../../globals.scss";
 
 export default function TimerLayout({ children }: { children: ReactNode }) {
-    return <TrpcProvider>{children}</TrpcProvider>;
+    return <TrpcProvider enableSubscriptions={false}>{children}</TrpcProvider>;
 }

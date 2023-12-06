@@ -51,7 +51,7 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     return (
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col text-zinc-900">
-                <TrpcProvider>
+                <TrpcProvider enableSubscriptions={false}>
                     <SessionProvider session={session!}>
                         <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                             <IndexPageLayout>{props.children}</IndexPageLayout>
