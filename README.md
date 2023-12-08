@@ -76,6 +76,7 @@ Application for making time measurements
 | 06/12/2023 | Add next race stats to the home page                       | todo :date:                     |
 | 06/12/2023 | Configure runtime environment to run multiple threads      | todo :date:                     |
 | 06/12/2023 | Universal requests error handling                          | todo :date:                     |
+| 09/12/2023 | Fix server url in trpc session fetching                    | todo :date:                     |
 
 ## TODO
 

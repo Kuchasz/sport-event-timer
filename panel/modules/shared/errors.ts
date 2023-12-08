@@ -8,3 +8,8 @@ export class DomainError extends TRPCError {
         });
     }
 }
+
+const raiseError = (messageKey: string) => new DomainError(messageKey);
+
+export const createErrors = <T extends Record<string, string>>(errors: T) =>
+    Object.fromEntries(Object.entries(errors).map(([k, v]) => [k, raiseError(v)])) as { [Key in keyof T]: DomainError };
