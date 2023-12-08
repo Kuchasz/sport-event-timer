@@ -5,12 +5,20 @@ import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@ta
 import { trpc } from "trpc-core";
 import { useState } from "react";
 import { connectionConfig } from "connection";
+import { toast } from "components/use-toast";
+import { type TRPCClientError } from "@trpc/client";
+import { type AppRouter } from "server/routers/app";
 
 export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean }> = p => {
     const [queryClient] = useState(
         () =>
             new QueryClient({
-                mutationCache: new MutationCache({ onError: console.log }),
+                mutationCache: new MutationCache({
+                    onError: _e => {
+                        const e = _e as TRPCClientError<AppRouter>;
+                        toast({ title: "Error occured", description: e.message, variant: "destructive" });
+                    },
+                }),
                 queryCache: new QueryCache({ onError: console.log }),
             }),
     );

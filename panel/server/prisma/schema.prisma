@@ -111,6 +111,7 @@ model Player {
     absence              Absence[]
     playerProfileId      Int
 
+    @@unique([raceId, playerRegistrationId])
     @@unique([raceId, bibNumber])
 }
 
