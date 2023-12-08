@@ -137,7 +137,7 @@ export const playerRouter = router({
             : null;
 
         if (playerWithTheSameTime || playerWithTheSameBibNumber)
-            return new TRPCError({ code: "CONFLICT", message: "Already there is a player with that Bib Number or Start Time" });
+            throw new TRPCError({ code: "CONFLICT", message: "Already there is a player with that Bib Number or Start Time" });
 
         const registration = await ctx.db.playerRegistration.findFirstOrThrow({ where: { id: input.registrationId } });
         const classification = await ctx.db.classification.findFirstOrThrow({

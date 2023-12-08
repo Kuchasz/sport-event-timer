@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "cva";
-// import { X } from "lucide-react";
 import classnames from "classnames";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";

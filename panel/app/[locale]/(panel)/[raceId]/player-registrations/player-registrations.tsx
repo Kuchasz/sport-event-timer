@@ -49,7 +49,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
     const t = useTranslations();
 
     const deletePlayerRegistration = async () => {
-        await deletePlayerMutation.mutateAsync({ playerId: playerRegistration.id });
+        await deletePlayerMutation.mutateAsync({ id: playerRegistration.id, raceId: playerRegistration.raceId });
         void refetch();
     };
 

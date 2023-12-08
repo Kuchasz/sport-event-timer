@@ -63,11 +63,11 @@ export const playerRegistrationRouter = router({
         const raceRegistrationsCount = race.playerRegistration.length;
 
         if (!race.registrationEnabled) {
-            return new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
+            throw new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
         }
 
         if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            return new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
+            throw new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
         }
 
         const profile = await ctx.db.playerProfile.create({
@@ -107,8 +107,21 @@ export const playerRegistrationRouter = router({
             ],
         });
     }),
-    delete: protectedProcedure.input(z.object({ playerId: z.number() })).mutation(async ({ input, ctx }) => {
-        return await ctx.db.playerRegistration.delete({ where: { id: input.playerId } });
+    delete: protectedProcedure.input(z.object({ id: z.number(), raceId: z.number() })).mutation(async ({ input, ctx }) => {
+        const playerExists = await ctx.db.player.findUnique({
+            where: {
+                raceId_playerRegistrationId: {
+                    raceId: input.raceId,
+                    playerRegistrationId: input.id,
+                },
+            },
+        });
+
+        if (playerExists) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Registration already promoted to player" });
+        }
+
+        return await ctx.db.playerRegistration.delete({ where: { id: input.id } });
     }),
     setPaymentStatus: protectedProcedure
         .input(z.object({ playerId: z.number(), hasPaid: z.boolean() }))
@@ -124,7 +137,7 @@ export const playerRegistrationRouter = router({
         const raceRegistrationsCount = race.playerRegistration.length;
 
         if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            return new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
+            throw new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
         }
 
         const profile = await ctx.db.playerProfile.create({
