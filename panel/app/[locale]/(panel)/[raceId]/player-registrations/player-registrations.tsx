@@ -27,6 +27,7 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { useToast } from "components/use-toast";
 
 type PlayerRegistration = AppRouterOutputs["playerRegistration"]["registrations"][0];
 type PlayerRegistrationPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
@@ -150,6 +151,8 @@ export const PlayerRegistrations = () => {
     const locale = useLocale();
     const { data: registrations, refetch } = trpc.playerRegistration.registrations.useQuery({ raceId: raceId }, { initialData: [] });
 
+    const { toast } = useToast();
+
     const cols: PoorDataTableColumn<PlayerRegistration>[] = [
         {
             field: "name",
@@ -260,7 +263,11 @@ export const PlayerRegistrations = () => {
                         outline
                         className="ml-2"
                         onClick={() => {
-                            alert("export does not work for now!");
+                            // alert("export does not work for now!");
+                            toast({
+                                title: "pages.playerRegistrations.export.title",
+                                description: "pages.playerRegistrations.export.description",
+                            });
                             // gridRef.current?.api.exportDataAsCsv({
                             //     fileName: `player-registrations-${new Date().toLocaleDateString(locale)}.csv`,
                             // });
