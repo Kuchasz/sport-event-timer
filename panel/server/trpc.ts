@@ -1,16 +1,7 @@
 import type { inferAsyncReturnType } from "@trpc/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-// import { initTRPC} from "@trpc/server";
-// import type { Session } from "next-auth";
-// import { getServerAuthSession } from "./auth";
-// import { db } from "./db";
 import superjson from "superjson";
-// import { db } from "./db";
-// import { getServerAuthSession } from "./auth";
-// import { getSession } from "next-auth/react";
-// import { PrismaClient } from "@prisma/client";
 import { db } from "./db";
-// import { getServerAuthSession } from "./auth";
 import { parseCookies } from "@set/utils/dist/cookie";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
