@@ -1,8 +1,8 @@
-import { protectedProcedure, publicProcedure, router } from "../trpc";
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { sort } from "@set/utils/dist/array";
+import { playerErrors } from "modules/player/errors";
+import { z } from "zod";
 import { playerPromotionSchema, racePlayerSchema } from "../../modules/player/models";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 const stopwatchPlayersSchema = z.array(
     z.object({
@@ -93,11 +93,7 @@ export const playerRouter = router({
                 },
             });
 
-            if (playersWithTimes.some(p => !p.startTime))
-                throw new TRPCError({
-                    message: "Some of the players does not have start times",
-                    code: "PRECONDITION_FAILED",
-                });
+            if (playersWithTimes.some(p => !p.startTime)) throw playerErrors.PLAYER_WITHOUT_START_TIME_EXISTS;
 
             return playersWithTimes.map(p => ({
                 name: p.profile.name,
@@ -136,17 +132,16 @@ export const playerRouter = router({
               })
             : null;
 
-        if (playerWithTheSameTime || playerWithTheSameBibNumber)
-            throw new TRPCError({ code: "CONFLICT", message: "Already there is a player with that Bib Number or Start Time" });
+        if (playerWithTheSameBibNumber) throw playerErrors.BIB_NUMBER_ALREADY_TAKEN;
+        if (playerWithTheSameTime) throw playerErrors.START_TIME_ALREADY_TAKEN;
 
-        const registration = await ctx.db.playerRegistration.findFirstOrThrow({ where: { id: input.registrationId } });
-        const classification = await ctx.db.classification.findFirstOrThrow({
+        const registration = await ctx.db.playerRegistration.findUniqueOrThrow({ where: { id: input.registrationId } });
+        const classification = await ctx.db.classification.findUniqueOrThrow({
             where: { id: player.classificationId, race: { id: input.raceId } },
             include: { race: true },
         });
-        if (!classification) return;
 
-        const user = await ctx.db.user.findFirstOrThrow();
+        const user = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
 
         return await ctx.db.player.create({
             data: {
@@ -160,20 +155,39 @@ export const playerRouter = router({
         });
     }),
     edit: protectedProcedure.input(racePlayerSchema).mutation(async ({ input, ctx }) => {
-        const classification = await ctx.db.classification.findFirstOrThrow({
+        const { player } = input;
+
+        const classification = await ctx.db.classification.findUniqueOrThrow({
             where: { id: input.player.classificationId, race: { id: input.raceId } },
             include: { race: true },
         });
-        if (!classification) return;
 
-        const user = await ctx.db.user.findFirst();
-        if (!user) return;
+        const playerWithTheSameTime = player.startTime
+            ? await ctx.db.player.findFirst({
+                  where: {
+                      raceId: input.raceId,
+                      OR: [{ startTime: player.startTime }, { bibNumber: player.bibNumber }],
+                  },
+              })
+            : null;
+
+        const playerWithTheSameBibNumber = player.bibNumber
+            ? await ctx.db.player.findFirst({
+                  where: {
+                      raceId: input.raceId,
+                      bibNumber: player.bibNumber,
+                  },
+              })
+            : null;
+
+        if (playerWithTheSameBibNumber) throw playerErrors.BIB_NUMBER_ALREADY_TAKEN;
+        if (playerWithTheSameTime) throw playerErrors.START_TIME_ALREADY_TAKEN;
 
         return await ctx.db.player.update({
-            where: { id: input.player.id! },
+            where: { id: player.id! },
             data: {
-                bibNumber: input.player.bibNumber,
-                startTime: input.player.startTime,
+                bibNumber: player.bibNumber,
+                startTime: player.startTime,
                 classificationId: classification.id,
             },
         });
