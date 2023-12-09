@@ -8,18 +8,41 @@ import { connectionConfig } from "connection";
 import { toast } from "components/use-toast";
 import { type TRPCClientError } from "@trpc/client";
 import { type AppRouter } from "server/routers/app";
+import { useTranslations } from "next-intl";
 
 export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean }> = p => {
+    const t = useTranslations();
     const [queryClient] = useState(
         () =>
             new QueryClient({
                 mutationCache: new MutationCache({
                     onError: _e => {
                         const e = _e as TRPCClientError<AppRouter>;
-                        toast({ title: "Error occured", description: e.message, variant: "destructive" });
+
+                        if (e.data?.domainErrorKey) {
+                            console.log(e.data?.domainErrorKey);
+                            toast({
+                                title: t("shared.errorOccured"),
+                                description: t(e.data.domainErrorKey as any),
+                                variant: "destructive",
+                            });
+                        }
                     },
                 }),
-                queryCache: new QueryCache({ onError: console.log }),
+                queryCache: new QueryCache({
+                    onError: _e => {
+                        const e = _e as TRPCClientError<AppRouter>;
+
+                        if (e.data?.domainErrorKey) {
+                            console.log(e.data?.domainErrorKey);
+                            toast({
+                                title: t("shared.errorOccured"),
+                                description: t(e.data.domainErrorKey as any),
+                                variant: "destructive",
+                            });
+                        }
+                    },
+                }),
             }),
     );
     const [trpcClient] = useState(() => trpc.createClient(connectionConfig(p.enableSubscriptions)));

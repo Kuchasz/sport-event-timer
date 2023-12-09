@@ -1228,7 +1228,8 @@
       }
     },
     "close": "Zamknij",
-    "ok": "OK"
+    "ok": "OK",
+    "errorOccured": "Wystąpił błąd"
   },
   "startList": {
     "nextPlayer": "Następny zawodnik",
@@ -1282,6 +1283,13 @@
       "login": {
         "question": "Masz już konto?",
         "button": "Zaloguj się"
+      }
+    }
+  },
+  "playersManagement": {
+    "playerRegistration": {
+      "errors": {
+        "registrationPromotedToPlayer": "Rejestracja została awansowana do zawodnika. Musisz najpierw usunąć zawodnika."
       }
     }
   }

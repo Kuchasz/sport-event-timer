@@ -1228,7 +1228,8 @@
       }
     },
     "close": "Close",
-    "ok": "OK"
+    "ok": "OK",
+    "errorOccured": "Error occured"
   },
   "startList": {
     "nextPlayer": "Next player",
@@ -1282,6 +1283,13 @@
       "login": {
         "question": "Already have an account?",
         "button": "Log in"
+      }
+    }
+  },
+  "playersManagement": {
+    "playerRegistration": {
+      "errors": {
+        "registrationPromotedToPlayer": "Registration already promoted to Player. You have to delete the player first."
       }
     }
   }

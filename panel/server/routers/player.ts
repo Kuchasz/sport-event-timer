@@ -141,16 +141,15 @@ export const playerRouter = router({
             include: { race: true },
         });
 
-        const user = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
-
-        console.log({
-            ...player,
-            raceId: registration.raceId,
-            playerProfileId: registration.playerProfileId,
-            classificationId: classification.id,
-            promotedByUserId: user.id,
-            playerRegistrationId: registration.id,
+        const playerAlreadyPromoted = await ctx.db.player.findFirst({
+            where: {
+                playerRegistrationId: registration.id,
+            },
         });
+
+        if (playerAlreadyPromoted) throw playerErrors.REGISTRATION_ALREADY_PROMOTED;
+
+        const user = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
 
         return await ctx.db.player.create({
             data: {

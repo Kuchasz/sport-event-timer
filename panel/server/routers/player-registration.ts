@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import { env } from "../../env";
 import type { CountryCode } from "../../modules/player-registration/models";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
+import { playerRegistrationErrors } from "modules/player-registration/errors";
 
 type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
 
@@ -118,7 +119,7 @@ export const playerRegistrationRouter = router({
         });
 
         if (playerExists) {
-            throw new TRPCError({ code: "NOT_FOUND", message: "Registration already promoted to player" });
+            throw playerRegistrationErrors.REGISTRATION_PROMOTED_TO_PLAYER;
         }
 
         return await ctx.db.playerRegistration.delete({ where: { id: input.id } });
