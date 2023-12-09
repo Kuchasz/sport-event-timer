@@ -6,7 +6,7 @@ import { PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ClassificationCreate } from "components/panel/classification/classification-create";
 import { ClassificationEdit } from "components/panel/classification/classification-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -20,7 +20,7 @@ type Classification = AppRouterOutputs["classification"]["classifications"][0];
 const ClassificationActions = ({ classification, refetch }: { classification: Classification; refetch: () => void }) => {
     const t = useTranslations();
     return (
-        <NewPoorActions>
+        <PoorActions>
             <PoorModal
                 title={t("pages.classifications.edit.confirmation.title")}
                 component={ClassificationEdit}
@@ -39,7 +39,7 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
                 description={t("pages.classifications.manageCategories.description")}
                 iconPath={mdiAccountMultiple}
                 href={`/${classification.raceId}/classifications/${classification.id}` as Route}></NewPoorActionsItem>
-        </NewPoorActions>
+        </PoorActions>
     );
 };
 

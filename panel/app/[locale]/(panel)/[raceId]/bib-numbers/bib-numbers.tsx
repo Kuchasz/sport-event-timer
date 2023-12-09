@@ -8,7 +8,7 @@ import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -28,7 +28,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
     };
 
     return (
-        <NewPoorActions>
+        <PoorActions>
             <PoorModal
                 onResolve={refetch}
                 title={t("pages.bibNumbers.edit.title")}
@@ -51,7 +51,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
                     description={t("pages.bibNumbers.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
-        </NewPoorActions>
+        </PoorActions>
     );
 };
 

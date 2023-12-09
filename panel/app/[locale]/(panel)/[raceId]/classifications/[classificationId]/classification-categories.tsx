@@ -9,7 +9,7 @@ import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -49,7 +49,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
     };
 
     return (
-        <NewPoorActions>
+        <PoorActions>
             <PoorModal
                 onResolve={refetch}
                 title={t("pages.classifications.categories.edit.title")}
@@ -72,7 +72,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
                     description={t("pages.classifications.categories.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
-        </NewPoorActions>
+        </PoorActions>
     );
 };
 

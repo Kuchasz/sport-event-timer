@@ -19,7 +19,7 @@ import { PageHeader } from "components/page-header";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
@@ -58,7 +58,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
     };
 
     return (
-        <NewPoorActions>
+        <PoorActions>
             {!playerRegistration.promotedToPlayer && (
                 <PoorModal
                     title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
@@ -101,7 +101,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     description={t("pages.playerRegistrations.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
-        </NewPoorActions>
+        </PoorActions>
     );
 };
 

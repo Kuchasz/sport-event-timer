@@ -7,7 +7,7 @@ import { Button } from "components/button";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import type { AppRouterOutputs } from "trpc";
@@ -92,7 +92,7 @@ export const MyRaces = () => {
             headerName: t("pages.races.grid.columns.actions"),
             field: "id",
             cellRenderer: data => (
-                <NewPoorActions>
+                <PoorActions>
                     <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.races.editRace.title")}
@@ -139,7 +139,7 @@ export const MyRaces = () => {
                             description={t("pages.races.deleteRacePopup.description")}
                             iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
                     </PoorConfirmation>
-                </NewPoorActions>
+                </PoorActions>
             ),
         },
     ];

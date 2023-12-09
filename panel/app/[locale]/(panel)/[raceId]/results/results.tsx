@@ -11,7 +11,7 @@ import { PageHeader } from "components/page-header";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -121,7 +121,7 @@ export const Results = () => {
             field: "bibNumber",
             headerName: t("pages.results.grid.columns.actions"),
             cellRenderer: (data: Result) => (
-                <NewPoorActions>
+                <PoorActions>
                     <PoorModal
                         onResolve={() => refetchResults()}
                         title={t("pages.results.applyTimePenalty.confirmation.title")}
@@ -173,7 +173,7 @@ export const Results = () => {
                                 iconPath={mdiCloseOctagonOutline}></NewPoorActionsItem>
                         </PoorModal>
                     )}
-                </NewPoorActions>
+                </PoorActions>
             ),
         },
     ];

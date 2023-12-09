@@ -4,19 +4,21 @@ import { Popover } from "@headlessui/react";
 import { Float } from "@headlessui-float/react";
 import Icon from "@mdi/react";
 import { mdiDotsHorizontal } from "@mdi/js";
-import { type ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
 type PoorActionProps = {
     name: string;
     description: string;
     iconPath: string;
     href?: string;
+    onClick?: () => void;
 };
 
-export const NewPoorActionsItem = ({ name, description, iconPath, href }: PoorActionProps) => (
+export const NewPoorActionsItem = ({ name, description, iconPath, href, onClick }: PoorActionProps) => (
     <a
         key={name}
         {...(href ? { href } : null)}
+        {...(onClick ? { onClick } : null)}
         className="-m-3 flex cursor-pointer items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-blue-100 text-white">
             <Icon size={1} className="text-blue-700" path={iconPath} />
@@ -28,7 +30,7 @@ export const NewPoorActionsItem = ({ name, description, iconPath, href }: PoorAc
     </a>
 );
 
-export const NewPoorActions = ({ children }: { children: ReactNode }) => {
+export const PoorActions = ({ children }: { children: ReactNode }) => {
     return (
         <Popover className="flex h-full items-center">
             <Float
