@@ -36,8 +36,8 @@ export const PoorActions = ({ children }: { children: ReactNode }) => {
             <Float
                 zIndex={10}
                 transform={false}
+                autoPlacement
                 portal
-                placement="bottom-end"
                 enter="transition ease-out duration-200"
                 enterFrom="opacity-0 translate-y-1"
                 enterTo="opacity-100 translate-y-0"
