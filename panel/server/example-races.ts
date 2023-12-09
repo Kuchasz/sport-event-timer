@@ -181,7 +181,7 @@ const createPlayers = (
     return playerRegistrations
         .filter(pr => pr.hasPaid)
         .map(pr => ({
-            registeredByUserId: userId,
+            promotedByUserId: userId,
             bibNumber: bibNumbers.splice(faker.number.int({ min: 0, max: bibNumbers.length }), 1)[0].toString(),
             classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
             raceId: pr.raceId,
