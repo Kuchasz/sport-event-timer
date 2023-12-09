@@ -7,7 +7,7 @@ import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { PlayerEdit } from "components/panel/player/player-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
@@ -27,7 +27,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
     };
 
     return (
-        <NewPoorActions>
+        <PoorActions>
             <PoorModal
                 title={t("pages.players.edit.title")}
                 component={PlayerEdit}
@@ -51,7 +51,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
                     description={t("pages.players.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
-        </NewPoorActions>
+        </PoorActions>
     );
 };
 

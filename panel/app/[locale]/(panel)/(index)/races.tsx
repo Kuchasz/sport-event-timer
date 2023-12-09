@@ -21,7 +21,7 @@ import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
-import { NewPoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorInput } from "components/poor-input";
 import { FullRaceIcon } from "components/race-icon";
 import fuzzysort from "fuzzysort";
@@ -280,7 +280,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <NewPoorActions>
+                                    <PoorActions>
                                         {r.obj.registrationEnabled ? (
                                             <div onClick={() => turnOffRegistrationAction(r.obj)}>
                                                 <NewPoorActionsItem
@@ -327,7 +327,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 description={t("pages.races.deleteRacePopup.description")}
                                                 iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
                                         </PoorConfirmation>
-                                    </NewPoorActions>
+                                    </PoorActions>
                                 </div>
 
                                 <Link
