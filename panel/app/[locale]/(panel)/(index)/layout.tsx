@@ -51,13 +51,13 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     return (
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col text-zinc-900">
-                <TrpcProvider enableSubscriptions={false}>
-                    <SessionProvider session={session!}>
-                        <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
+                <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
+                    <TrpcProvider enableSubscriptions={false}>
+                        <SessionProvider session={session!}>
                             <IndexPageLayout>{props.children}</IndexPageLayout>
-                        </NextIntlClientProvider>
-                    </SessionProvider>
-                </TrpcProvider>
+                        </SessionProvider>
+                    </TrpcProvider>
+                </NextIntlClientProvider>
             </body>
         </html>
     );

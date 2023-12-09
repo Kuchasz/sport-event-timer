@@ -8,6 +8,7 @@ import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/
 import type { IncomingMessage } from "http";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
+import { DomainError } from "modules/shared/errors";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -49,8 +50,14 @@ export type Context = inferAsyncReturnType<typeof createContextWs>;
 
 const t = initTRPC.context<Context>().create({
     transformer: superjson,
-    errorFormatter({ shape }) {
-        return shape;
+    errorFormatter({ shape, error }) {
+        return {
+            ...shape,
+            data: {
+                ...shape.data,
+                domainErrorKey: error.code === "BAD_REQUEST" && error.cause instanceof DomainError ? error.cause.messageKey : null,
+            },
+        };
     },
 });
 

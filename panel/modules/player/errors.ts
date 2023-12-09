@@ -7,4 +7,5 @@ export const playerErrors = createErrors({
     BIB_NUMBER_ALREADY_TAKEN: `${sharedSpace}.bibNumberAlreadyTaken`,
     START_TIME_ALREADY_TAKEN: `${sharedSpace}.startTimeAlreadyTaken`,
     CLASSIFICATION_NOT_FOUND: `${sharedSpace}.classificationNotFound`,
+    REGISTRATION_ALREADY_PROMOTED: `${sharedSpace}.registrationAlreadyPromoted`,
 });
