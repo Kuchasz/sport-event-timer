@@ -2,7 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
 import { createStore } from "@set/timer/dist/store";
 
-export const db = new PrismaClient();
+export const db = new PrismaClient({
+    log: ["query", "info", "warn", "error"],
+});
 
 const defaultState = createStore([]).getState();
 

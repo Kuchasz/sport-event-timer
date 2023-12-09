@@ -143,13 +143,22 @@ export const playerRouter = router({
 
         const user = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
 
+        console.log({
+            ...player,
+            raceId: registration.raceId,
+            playerProfileId: registration.playerProfileId,
+            classificationId: classification.id,
+            promotedByUserId: user.id,
+            playerRegistrationId: registration.id,
+        });
+
         return await ctx.db.player.create({
             data: {
                 ...player,
                 raceId: registration.raceId,
                 playerProfileId: registration.playerProfileId,
                 classificationId: classification.id,
-                registeredByUserId: user.id,
+                promotedByUserId: user.id,
                 playerRegistrationId: registration.id,
             },
         });

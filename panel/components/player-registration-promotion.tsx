@@ -95,8 +95,9 @@ export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onRe
     const { data: classifications } = trpc.classification.classifications.useQuery({ raceId });
     const { data: initialBibNumber } = trpc.player.lastAvailableBibNumber.useQuery({ raceId });
     const { data: initialStartTime } = trpc.player.lastAvailableStartTime.useQuery({ raceId });
-    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
     const { data: bibNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
+    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+
     const utils = trpc.useUtils();
     if (!classifications || !bibNumbers) return;
 
