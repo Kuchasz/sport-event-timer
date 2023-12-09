@@ -102,8 +102,8 @@ model Player {
     raceId               Int
     classification       Classification     @relation(fields: [classificationId], references: [id])
     classificationId     Int
-    registeredBy         User               @relation(fields: [registeredByUserId], references: [id])
-    registeredByUserId   String
+    promotedBy           User               @relation(fields: [promotedByUserId], references: [id])
+    promotedByUserId     String
     splitTime            SplitTime[]
     manualSplitTime      ManualSplitTime[]
     fromRegistration     PlayerRegistration @relation(fields: [playerRegistrationId], references: [id])

@@ -59,6 +59,22 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
 
     return (
         <NewPoorActions>
+            {!playerRegistration.promotedToPlayer && (
+                <PoorModal
+                    title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
+                    component={PlayerRegistrationPromotion}
+                    onResolve={playerPromoted}
+                    componentProps={{
+                        raceId: playerRegistration.raceId,
+                        playerRegistrationId: playerRegistration.id,
+                        onReject: () => null,
+                    }}>
+                    <NewPoorActionsItem
+                        name={t("pages.playerRegistrations.promoteToPlayer.title")}
+                        description={t("pages.playerRegistrations.promoteToPlayer.description")}
+                        iconPath={mdiHumanEdit}></NewPoorActionsItem>
+                </PoorModal>
+            )}
             <PoorModal
                 title={t("pages.playerRegistrations.edit.title")}
                 component={PlayerRegistrationEdit}
@@ -85,22 +101,6 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     description={t("pages.playerRegistrations.delete.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
-            {!playerRegistration.promotedToPlayer && (
-                <PoorModal
-                    title={t("pages.playerRegistrations.promoteToPlayer.confirmation.title")}
-                    component={PlayerRegistrationPromotion}
-                    onResolve={playerPromoted}
-                    componentProps={{
-                        raceId: playerRegistration.raceId,
-                        playerRegistrationId: playerRegistration.id,
-                        onReject: () => null,
-                    }}>
-                    <NewPoorActionsItem
-                        name={t("pages.playerRegistrations.promoteToPlayer.title")}
-                        description={t("pages.playerRegistrations.promoteToPlayer.description")}
-                        iconPath={mdiHumanEdit}></NewPoorActionsItem>
-                </PoorModal>
-            )}
         </NewPoorActions>
     );
 };
