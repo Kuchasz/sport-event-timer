@@ -1289,7 +1289,16 @@
   "playersManagement": {
     "playerRegistration": {
       "errors": {
-        "registrationPromotedToPlayer": "Rejestracja została awansowana do zawodnika. Musisz najpierw usunąć zawodnika."
+        "registrationPromotedToPlayer": "Rejestracja została awansowana na gracza. Musisz usunąć gracza najpierw."
+      }
+    },
+    "player": {
+      "errors": {
+        "bibNumberAlreadyTaken": "Numer startowy jest już przypisany.",
+        "classificationNotFound": "Wybrana klasyfikacja nie została znaleziona.",
+        "playerWithoutStartTimeExists": "Istnieje gracz bez zdefiniowanej godziny startu.",
+        "registrationAlreadyPromoted": "Rejestracja jest już awansowana na gracza.",
+        "startTimeAlreadyTaken": "Godzina startu jest już przypisana."
       }
     }
   }
