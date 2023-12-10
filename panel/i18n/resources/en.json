@@ -1289,7 +1289,16 @@
   "playersManagement": {
     "playerRegistration": {
       "errors": {
-        "registrationPromotedToPlayer": "Registration already promoted to Player. You have to delete the player first."
+        "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first."
+      }
+    },
+    "player": {
+      "errors": {
+        "bibNumberAlreadyTaken": "Bib number is already assigned.",
+        "classificationNotFound": "Chosen classification was not found.",
+        "playerWithoutStartTimeExists": "There is a player without the start time defined.",
+        "registrationAlreadyPromoted": "Registration is already promoted to player.",
+        "startTimeAlreadyTaken": "Start time is already assigned."
       }
     }
   }
