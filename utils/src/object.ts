@@ -44,3 +44,19 @@ export const getObjectSlice = (obj: Record<string, any>, paths: Path[]): Record<
         return acc;
     }, {});
 };
+
+type PropertyList = string[];
+
+export const getAllPropertyNames = (obj: Record<string, any>, parentKey = ""): PropertyList => {
+    return Object.entries(obj).reduce((acc: PropertyList, [key, value]) => {
+        const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+        if (typeof value === "object" && value !== null) {
+            const nestedProperties = getAllPropertyNames(value, newKey);
+            return acc.concat(nestedProperties);
+        } else {
+            acc.push(newKey);
+            return acc;
+        }
+    }, []);
+};
