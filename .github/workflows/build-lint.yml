@@ -97,8 +97,8 @@ jobs:
               run: |
                   bun run lint
 
-    # Unit tests
-    unit-tests:
+    # Tests
+    tests:
         runs-on: ubuntu-latest
 
         steps:
