@@ -64,3 +64,7 @@ export const groupBy = <TItem, TKey extends string | number>(xs: TItem[], key: (
 export const excludeItems = <T>(array: T[], itemsToExclude: T[]): T[] => {
     return array.filter(item => !itemsToExclude.includes(item));
 };
+
+export const findCommonElements = <T>(arr1: T[], arr2: T[]): T[] => {
+    return arr1.filter(element => arr2.includes(element));
+};

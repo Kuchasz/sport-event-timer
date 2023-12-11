@@ -1,19 +1,18 @@
+import { excludeItems } from "@set/utils/dist/array";
+import { getAllPropertyNames } from "@set/utils/dist/object";
+import { errorKeys } from "../modules/shared/error-keys";
 import enTranslations from "./resources/en.json";
 import plTranslations from "./resources/pl.json";
-import { errorKeys } from "../modules/shared/error-keys";
-import { createNestedObject, getObjectSlice } from "@set/utils/dist/object";
 
 describe("Errors translations", () => {
-    //eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const rootKeys = [...new Set<string>(Object.values(errorKeys).map(k => k.split(".")[0]))];
-    const allValues = createNestedObject(Object.values(errorKeys).map(k => [k, expect.any(String)]));
-    const slicedPlTranslations = getObjectSlice(plTranslations, rootKeys);
-    const slicedEnTranslations = getObjectSlice(enTranslations, rootKeys);
+    const errorTranslationKeys = Object.values(errorKeys) as string[];
 
     test("Polish error translations", () => {
-        expect(slicedPlTranslations).toMatchObject(expect.objectContaining(allValues));
+        const notTranslatedErrorKeys = excludeItems(errorTranslationKeys, getAllPropertyNames(plTranslations));
+        expect(notTranslatedErrorKeys).toHaveLength(0);
     });
     test("English error translations", () => {
-        expect(slicedEnTranslations).toMatchObject(expect.objectContaining(allValues));
+        const notTranslatedErrorKeys = excludeItems(errorTranslationKeys, getAllPropertyNames(enTranslations));
+        expect(notTranslatedErrorKeys).toHaveLength(0);
     });
 });
