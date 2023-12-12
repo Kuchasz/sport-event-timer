@@ -1,14 +1,14 @@
-import type { inferAsyncReturnType } from "@trpc/server";
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { db } from "./db";
 import { parseCookies } from "@set/utils/dist/cookie";
+import type { inferAsyncReturnType } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
+import { DomainError, sharedErrors } from "modules/shared/errors";
+import superjson from "superjson";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
-import { DomainError } from "modules/shared/errors";
+import { db } from "./db";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -67,7 +67,7 @@ export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
     if (!ctx.session?.name) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+        throw sharedErrors.UNAUTHORIZED;
     }
     return next({
         ctx: {

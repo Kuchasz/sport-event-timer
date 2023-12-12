@@ -946,6 +946,7 @@
     }
   },
   "shared": {
+    "unauthorized": "Nieautoryzowany",
     "cancel": "Anuluj",
     "save": "Zapisz",
     "status": {
@@ -1289,7 +1290,9 @@
   "playersManagement": {
     "playerRegistration": {
       "errors": {
-        "registrationPromotedToPlayer": "Rejestracja została awansowana na gracza. Musisz usunąć gracza najpierw."
+        "exceededNumberOfRegistrations": "Osiągnięto limit rejestracji.",
+        "registrationPromotedToPlayer": "Rejestracja została awansowana na gracza. Musisz usunąć gracza najpierw.",
+        "registrationDisabled": "Rejestracja do tych zawodów została zamknięta."
       }
     },
     "player": {
@@ -1299,6 +1302,20 @@
         "playerWithoutStartTimeExists": "Istnieje gracz bez zdefiniowanej godziny startu.",
         "registrationAlreadyPromoted": "Rejestracja jest już awansowana na gracza.",
         "startTimeAlreadyTaken": "Godzina startu jest już przypisana."
+      }
+    }
+  },
+  "raceManagement": {
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
+      }
+    }
+  },
+  "timeMeasurement": {
+    "timingPoint": {
+      "errors": {
+        "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
     }
   }
