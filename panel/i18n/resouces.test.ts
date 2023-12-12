@@ -4,7 +4,7 @@ import { errorKeys } from "../modules/shared/error-keys";
 import { locales } from "./index";
 
 describe("Errors translations", () => {
-    const errorTranslationKeys = Object.values(errorKeys) as string[];
+    const errorTranslationKeys = Object.values(errorKeys);
 
     test.each(locales)("%s error translations", async locale => {
         const translations = await import(`./resources/${locale}.json`);
