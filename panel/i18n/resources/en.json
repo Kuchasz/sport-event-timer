@@ -946,6 +946,7 @@
     }
   },
   "shared": {
+    "unauthorized": "Unauthorized",
     "cancel": "Cancel",
     "save": "Save",
     "status": {
@@ -1289,7 +1290,9 @@
   "playersManagement": {
     "playerRegistration": {
       "errors": {
-        "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first."
+        "exceededNumberOfRegistrations": "Maximum number of registrations reached.",
+        "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first.",
+        "registrationDisabled": "Registration for this race is disabled."
       }
     },
     "player": {
@@ -1299,6 +1302,20 @@
         "playerWithoutStartTimeExists": "There is a player without the start time defined.",
         "registrationAlreadyPromoted": "Registration is already promoted to player.",
         "startTimeAlreadyTaken": "Start time is already assigned."
+      }
+    }
+  },
+  "raceManagement": {
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "You must have at least one race"
+      }
+    }
+  },
+  "timeMeasurement": {
+    "timingPoint": {
+      "errors": {
+        "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
     }
   }

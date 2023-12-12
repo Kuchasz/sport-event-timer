@@ -1,8 +1,8 @@
-import { protectedProcedure, router } from "../trpc";
-import { z } from "zod";
 import { daysFromNow } from "@set/utils/dist/datetime";
+import { timingPointErrors } from "modules/timing-point/errors";
+import { z } from "zod";
 import { timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
-import { TRPCError } from "@trpc/server";
+import { protectedProcedure, router } from "../trpc";
 
 export const timingPointRouter = router({
     timingPoints: protectedProcedure
@@ -61,11 +61,7 @@ export const timingPointRouter = router({
         const { id } = input;
 
         const numberOfTimingPoints = await ctx.db.timingPoint.count({ where: { raceId: input.raceId } });
-        if (numberOfTimingPoints <= 2)
-            throw new TRPCError({
-                code: "BAD_REQUEST",
-                message: "Race must have at least 2 timing points",
-            });
+        if (numberOfTimingPoints <= 2) throw timingPointErrors.AT_LEAST_TWO_TIMING_POINTS_REQUIRED;
 
         const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } });
 

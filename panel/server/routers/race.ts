@@ -1,10 +1,10 @@
-import { protectedProcedure, publicProcedure, router } from "../trpc";
-import { z } from "zod";
-import { createExampleRaces } from "../example-races";
-import { TRPCError } from "@trpc/server";
-import { type SportKind, raceSchema } from "../../modules/race/models";
 import { daysFromNow } from "@set/utils/dist/datetime";
+import { raceErrors } from "modules/race/errors";
+import { z } from "zod";
 import { locales } from "../../i18n";
+import { raceSchema, type SportKind } from "../../modules/race/models";
+import { createExampleRaces } from "../example-races";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 const createRaceSchema = z.object({
     locale: z.enum(locales),
@@ -90,11 +90,7 @@ export const raceRouter = router({
         )
         .mutation(async ({ input, ctx }) => {
             const numberOfRaces = await ctx.db.race.count();
-            if (numberOfRaces <= 1)
-                throw new TRPCError({
-                    code: "BAD_REQUEST",
-                    message: "At least one race must exist",
-                });
+            if (numberOfRaces <= 1) throw raceErrors.AT_LEAST_ONE_RACE_REQUIRED;
 
             await ctx.db.absence.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.splitTime.deleteMany({ where: { raceId: input.raceId } });

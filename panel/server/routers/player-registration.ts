@@ -1,11 +1,10 @@
-import { protectedProcedure, publicProcedure, router } from "../trpc";
-import { z } from "zod";
-import { TRPCError } from "@trpc/server";
+import { playerRegistrationErrors } from "modules/player-registration/errors";
 import nodemailer from "nodemailer";
+import { z } from "zod";
 import { env } from "../../env";
 import type { CountryCode } from "../../modules/player-registration/models";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
-import { playerRegistrationErrors } from "modules/player-registration/errors";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
 
@@ -64,11 +63,11 @@ export const playerRegistrationRouter = router({
         const raceRegistrationsCount = race.playerRegistration.length;
 
         if (!race.registrationEnabled) {
-            throw new TRPCError({ code: "FORBIDDEN", message: "Registration disabled" });
+            throw playerRegistrationErrors.REGISTRATION_DISABLED;
         }
 
         if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            throw new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
+            throw playerRegistrationErrors.EXCEEDED_NUMBER_OF_REGISTRATIONS;
         }
 
         const profile = await ctx.db.playerProfile.create({
@@ -138,7 +137,7 @@ export const playerRegistrationRouter = router({
         const raceRegistrationsCount = race.playerRegistration.length;
 
         if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            throw new TRPCError({ code: "FORBIDDEN", message: "Registrations exceeded" });
+            throw playerRegistrationErrors.EXCEEDED_NUMBER_OF_REGISTRATIONS;
         }
 
         const profile = await ctx.db.playerProfile.create({
