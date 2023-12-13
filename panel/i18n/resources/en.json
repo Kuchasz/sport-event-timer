@@ -1226,7 +1226,8 @@
       "paging": {
         "rowsPerPage": "Rows per page:",
         "currentPage": "Page {currentPage} of {totalPages}"
-      }
+      },
+      "noRowsToShow": "No rows to show here. Table's feeling a bit minimalist!"
     },
     "close": "Close",
     "ok": "OK",

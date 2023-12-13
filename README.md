@@ -65,7 +65,7 @@ Application for making time measurements
 | 22/11/2023 | Support for sort over dates                                | todo :date:                     |
 | 22/11/2023 | Highlight search phrase in Data table results              | :heavy_check_mark: (23/11/2023) |
 | 23/11/2023 | Optional race registration expire time                     | todo :date:                     |
-| 24/11/2023 | Add no data message to Data Table                          | todo :date:                     |
+| 24/11/2023 | Add no data message to Data Table                          | :heavy_check_mark: (14/12/2023) |
 | 27/11/2023 | Full page penalties view                                   | todo :date:                     |
 | 27/11/2023 | Fix nested dialogs/modals disappearing issue               | :heavy_check_mark: (01/12/2023) |
 | 27/11/2023 | Registration status changing on PlayerRegistrations page   | todo :date:                     |
