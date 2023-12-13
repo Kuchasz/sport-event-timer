@@ -1,4 +1,4 @@
-import { mdiArrowDown, mdiArrowUp, mdiChevronLeft, mdiChevronRight, mdiUnfoldMoreHorizontal } from "@mdi/js";
+import { mdiArrowDown, mdiArrowUp, mdiChevronLeft, mdiChevronRight, mdiMagnify, mdiUnfoldMoreHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";
 import classNames from "classnames";
@@ -161,30 +161,39 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                         ))}
                     </div>
                     <div className="contents">
-                        {pagesData.map(d => (
+                        {pagesData.length ? (
+                            pagesData.map(d => (
+                                <div
+                                    onDoubleClick={() => onRowDoubleClicked && onRowDoubleClicked(d.obj)}
+                                    className="group contents text-sm"
+                                    key={getRowId(d.obj)}>
+                                    {visibleColumns.map(c => (
+                                        <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
+                                            {c.cellRenderer ? (
+                                                <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
+                                            ) : (
+                                                <div className="whitespace-nowrap">
+                                                    {searchQuery &&
+                                                    usableSearchFields?.includes(c.field) &&
+                                                    d[usableSearchFields.indexOf(c.field)]
+                                                        ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field)], (m, i) => (
+                                                              <mark key={i}>{m}</mark>
+                                                          ))
+                                                        : (d.obj[c.field] as any)}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))
+                        ) : (
                             <div
-                                onDoubleClick={() => onRowDoubleClicked && onRowDoubleClicked(d.obj)}
-                                className="group contents text-sm"
-                                key={getRowId(d.obj)}>
-                                {visibleColumns.map(c => (
-                                    <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
-                                        {c.cellRenderer ? (
-                                            <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
-                                        ) : (
-                                            <div className="whitespace-nowrap">
-                                                {searchQuery &&
-                                                usableSearchFields?.includes(c.field) &&
-                                                d[usableSearchFields.indexOf(c.field)]
-                                                    ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field)], (m, i) => (
-                                                          <mark key={i}>{m}</mark>
-                                                      ))
-                                                    : (d.obj[c.field] as any)}
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
+                                className="flex items-center justify-center p-8 text-sm"
+                                style={{ gridColumn: `1 / span ${visibleColumns.length}` }}>
+                                <Icon className="mx-2" path={mdiMagnify} size={1}></Icon>
+                                <span>{t("shared.dataTable.noRowsToShow")}</span>
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
                 <ScrollBar orientation="horizontal" />

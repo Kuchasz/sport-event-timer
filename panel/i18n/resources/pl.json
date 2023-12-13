@@ -1226,7 +1226,8 @@
       "paging": {
         "rowsPerPage": "Wierszy na stronę:",
         "currentPage": "Strona {currentPage} z {totalPages}"
-      }
+      },
+      "noRowsToShow": "Brak wierszy do wyświetlenia. Tabela prezentuje się minimalistycznie!"
     },
     "close": "Zamknij",
     "ok": "OK",
