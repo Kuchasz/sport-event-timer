@@ -75,7 +75,7 @@ Application for making time measurements
 | 06/12/2023 | Omit ws connection when not needed                         | :heavy_check_mark: (06/12/2023) |
 | 06/12/2023 | Add next race stats to the home page                       | todo :date:                     |
 | 06/12/2023 | Configure runtime environment to run multiple threads      | todo :date:                     |
-| 06/12/2023 | Universal requests error handling                          | todo :date:                     |
+| 06/12/2023 | Universal requests error handling                          | :heavy_check_mark: (13/12/2023) |
 | 09/12/2023 | Fix server url in trpc session fetching                    | todo :date:                     |
 | 12/12/2023 | Specify timezone for race                                  | todo :date:                     |
 
