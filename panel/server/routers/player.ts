@@ -149,7 +149,16 @@ export const playerRouter = router({
 
         if (playerAlreadyPromoted) throw playerErrors.REGISTRATION_ALREADY_PROMOTED;
 
-        const user = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
+        const session = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
+
+        console.log({
+            ...player,
+            raceId: registration.raceId,
+            playerProfileId: registration.playerProfileId,
+            classificationId: classification.id,
+            promotedByUserId: session.userId,
+            playerRegistrationId: registration.id,
+        });
 
         return await ctx.db.player.create({
             data: {
@@ -157,7 +166,7 @@ export const playerRouter = router({
                 raceId: registration.raceId,
                 playerProfileId: registration.playerProfileId,
                 classificationId: classification.id,
-                promotedByUserId: user.id,
+                promotedByUserId: session.userId,
                 playerRegistrationId: registration.id,
             },
         });
