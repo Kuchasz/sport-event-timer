@@ -19,28 +19,36 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscript
                     onError: _e => {
                         const e = _e as TRPCClientError<AppRouter>;
 
-                        if (e.data?.domainErrorKey) {
-                            console.log(e.data?.domainErrorKey);
+                        if (e.data?.domainErrorKey)
                             toast({
                                 title: t("shared.errorOccured"),
                                 description: t(e.data.domainErrorKey as any),
                                 variant: "destructive",
                             });
-                        }
+                        else
+                            toast({
+                                title: t("shared.errorOccured"),
+                                description: t("shared.generalError"),
+                                variant: "destructive",
+                            });
                     },
                 }),
                 queryCache: new QueryCache({
                     onError: _e => {
                         const e = _e as TRPCClientError<AppRouter>;
 
-                        if (e.data?.domainErrorKey) {
-                            console.log(e.data?.domainErrorKey);
+                        if (e.data?.domainErrorKey)
                             toast({
                                 title: t("shared.errorOccured"),
                                 description: t(e.data.domainErrorKey as any),
                                 variant: "destructive",
                             });
-                        }
+                        else
+                            toast({
+                                title: t("shared.errorOccured"),
+                                description: t("shared.generalError"),
+                                variant: "destructive",
+                            });
                     },
                 }),
             }),

@@ -1230,7 +1230,8 @@
     },
     "close": "Zamknij",
     "ok": "OK",
-    "errorOccured": "Wystąpił błąd"
+    "errorOccured": "Wystąpił błąd",
+    "generalError": "Ups! Coś poszło nie tak po naszej stronie. Nasz zespół został powiadomiony i pracujemy nad naprawą. Prosimy spróbować ponownie później. Jeśli problem będzie się utrzymywał, prosimy o kontakt z pomocą techniczną. Przepraszamy za wszelkie niedogodności."
   },
   "startList": {
     "nextPlayer": "Następny zawodnik",
@@ -1291,7 +1292,7 @@
     "playerRegistration": {
       "errors": {
         "exceededNumberOfRegistrations": "Osiągnięto limit rejestracji.",
-        "registrationPromotedToPlayer": "Rejestracja została awansowana na gracza. Musisz usunąć gracza najpierw.",
+        "registrationPromotedToPlayer": "Rejestracja została awansowana na zawodnika. Musisz usunąć zawodnika zanim usuniesz rejestrację.",
         "registrationDisabled": "Rejestracja do tych zawodów została zamknięta."
       }
     },
@@ -1300,7 +1301,7 @@
         "bibNumberAlreadyTaken": "Numer startowy jest już przypisany.",
         "classificationNotFound": "Wybrana klasyfikacja nie została znaleziona.",
         "playerWithoutStartTimeExists": "Istnieje gracz bez zdefiniowanej godziny startu.",
-        "registrationAlreadyPromoted": "Rejestracja jest już awansowana na gracza.",
+        "registrationAlreadyPromoted": "Rejestracja jest już awansowana na zawodnika.",
         "startTimeAlreadyTaken": "Godzina startu jest już przypisana."
       }
     }
