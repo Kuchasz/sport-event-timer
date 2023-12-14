@@ -3,6 +3,13 @@ import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 
 export const timePenaltyRouter = router({
+    allPenalties: protectedProcedure
+        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+            return await ctx.db.timePenalty.findMany({ where: { raceId } });
+        }),
+
     penalties: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
