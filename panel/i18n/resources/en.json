@@ -1350,6 +1350,26 @@
             "title": "Revert time penalty",
             "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
           }
+        },
+        "disqualification": {
+          "grid": {
+            "columns": {
+              "bibNumber": "Bib number",
+              "reason": "Reason",
+              "name": "Name",
+              "lastName": "Last name"
+            },
+            "search": {
+              "placeholder": "Search disqualifications..."
+            }
+          },
+          "header": {
+            "title": "Disqualifications",
+            "description": "Disqualified players"
+          },
+          "export": {
+            "button": "Export disqualifications"
+          }
         }
       }
     }

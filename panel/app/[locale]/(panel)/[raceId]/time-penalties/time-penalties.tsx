@@ -13,6 +13,7 @@ import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
+type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
 
 const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: () => void }) => {
     const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
@@ -57,9 +58,12 @@ const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: ()
 export const TimePenalties = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
-    const { data: timePenalties, refetch } = trpc.timePenalty.allPenalties.useQuery({ raceId: raceId });
+    const { data: timePenalties, refetch: refetchTimePenalties } = trpc.timePenalty.allPenalties.useQuery({ raceId: raceId });
+    const { data: disqualifications, refetch: refetchDisqualifications } = trpc.disqualification.allDisqualifications.useQuery({
+        raceId: raceId,
+    });
 
-    const cols: PoorDataTableColumn<TimePenalty>[] = [
+    const timePenaltiesCols: PoorDataTableColumn<TimePenalty>[] = [
         {
             field: "bibNumber",
             headerName: t("timeMeasurement.timePenalty.page.grid.columns.bibNumber"),
@@ -90,8 +94,38 @@ export const TimePenalties = () => {
             headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
             field: "bibNumber",
             sortable: false,
-            cellRenderer: data => <PlayerActions refetch={refetch} penalty={data} />,
+            cellRenderer: data => <PlayerActions refetch={refetchTimePenalties} penalty={data} />,
         },
+    ];
+
+    const disqualificationCols: PoorDataTableColumn<Disqualification>[] = [
+        {
+            field: "bibNumber",
+            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.bibNumber"),
+            sortable: true,
+        },
+        {
+            field: "reason",
+            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.reason"),
+            sortable: true,
+        },
+        {
+            field: "player",
+            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.name"),
+            sortable: true,
+            cellRenderer: d => <div>{d.player?.name}</div>,
+        },
+        {
+            field: "player",
+            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.lastName"),
+            cellRenderer: d => <div>{d.player?.lastName}</div>,
+        },
+        // {
+        //     headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
+        //     field: "bibNumber",
+        //     sortable: false,
+        //     cellRenderer: data => <PlayerActions refetch={refetchTimePenalties} penalty={data} />,
+        // },
     ];
 
     return (
@@ -100,7 +134,7 @@ export const TimePenalties = () => {
                 <title>{t("timeMeasurement.timePenalty.page.header.title")}</title>
             </Head>
 
-            <div className="border-1 flex h-full flex-col overflow-y-hidden border-solid border-gray-600">
+            <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader
                     title={t("timeMeasurement.timePenalty.page.header.title")}
                     description={t("timeMeasurement.timePenalty.page.header.description")}
@@ -120,14 +154,41 @@ export const TimePenalties = () => {
                 </div>
 
                 {timePenalties && (
-                    <div className="flex-grow overflow-hidden">
+                    <div className="flex-grow">
                         <PoorDataTable
                             data={timePenalties}
-                            columns={cols}
+                            columns={timePenaltiesCols}
                             searchPlaceholder={t("timeMeasurement.timePenalty.page.grid.search.placeholder")}
                             getRowId={item => item.id}
                             gridName="time-penalties"
                             searchFields={["reason", "time", "bibNumber"]}
+                        />
+                    </div>
+                )}
+                <PageHeader
+                    title={t("timeMeasurement.timePenalty.page.disqualification.header.title")}
+                    description={t("timeMeasurement.timePenalty.page.disqualification.header.description")}
+                />
+                <div className="mb-4 flex">
+                    <Button
+                        outline
+                        onClick={() => {
+                            alert("It does not work now!");
+                        }}>
+                        <Icon size={0.8} path={mdiExport} />
+                        <span className="ml-2">{t("timeMeasurement.timePenalty.page.disqualification.export.button")}</span>
+                    </Button>
+                </div>
+
+                {disqualifications && (
+                    <div className="flex-grow">
+                        <PoorDataTable
+                            data={disqualifications}
+                            columns={disqualificationCols}
+                            searchPlaceholder={t("timeMeasurement.timePenalty.page.disqualification.grid.search.placeholder")}
+                            getRowId={item => item.id}
+                            gridName="disqualifications"
+                            searchFields={["reason", "bibNumber"]}
                         />
                     </div>
                 )}
