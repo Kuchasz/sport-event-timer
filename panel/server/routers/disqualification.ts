@@ -3,6 +3,18 @@ import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 
 export const disqualificationRouter = router({
+    allDisqualifications: protectedProcedure
+        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+            const players = await ctx.db.player.findMany({ where: { raceId }, include: { profile: true } });
+            const playersByBibNumbers = new Map<string, { name: string; lastName: string }>(
+                players.map(p => [p.bibNumber, { name: p.profile.name, lastName: p.profile.lastName }]),
+            );
+            const disqualifications = await ctx.db.disqualification.findMany({ where: { raceId } });
+
+            return disqualifications.map(p => ({ ...p, player: playersByBibNumbers.get(p.bibNumber) }));
+        }),
     disqualifications: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {

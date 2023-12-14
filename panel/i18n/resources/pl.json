@@ -169,7 +169,7 @@
       },
       "grid": {
         "columns": {
-          "bibNumber": "Numer Startowy",
+          "bibNumber": "Numer",
           "actions": "Akcje",
           "index": ""
         },
@@ -225,7 +225,7 @@
       "grid": {
         "columns": {
           "classification": "Klasyfikacja",
-          "bibNumber": "Numer Startowy",
+          "bibNumber": "Numer",
           "name": "Imię",
           "gender": "Płeć",
           "startTime": "Czas Startu",
@@ -1329,7 +1329,7 @@
         "grid": {
           "columns": {
             "actions": "Akcje",
-            "bibNumber": "Numer startowy",
+            "bibNumber": "Numer",
             "lastName": "Nazwisko",
             "name": "Imię",
             "reason": "Powód",
@@ -1349,6 +1349,26 @@
           "confirmation": {
             "title": "Wycofaj karę czasową",
             "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+          }
+        },
+        "disqualification": {
+          "grid": {
+            "columns": {
+              "bibNumber": "Numer",
+              "reason": "Powód",
+              "name": "Imię",
+              "lastName": "Nazwisko"
+            },
+            "search": {
+              "placeholder": "Szukaj dyskwalifikacji..."
+            }
+          },
+          "header": {
+            "title": "Dyskwalifikacje",
+            "description": "Zdyskwalifikowani zawodnicy"
+          },
+          "export": {
+            "button": "Eksportuj dyskwalifikacje"
           }
         }
       }
