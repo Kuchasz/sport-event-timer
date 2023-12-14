@@ -59,18 +59,16 @@ const TimingPointCard = ({
         <div className="flex flex-col">
             {!isFirst && (
                 <div className="flex flex-col items-center">
-                    <div className="h-5 w-0.5 bg-gray-100"></div>
                     <PoorModal
                         onResolve={onCreate}
                         title={t("pages.timingPoints.create.title")}
                         component={TimingPointCreate}
                         componentProps={{ raceId: raceId, index, onReject: () => {} }}>
-                        <button className="my-1 flex cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
+                        <button className="my-1 flex w-full cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
                             <Icon path={mdiPlus} size={0.7} />
                             <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
                         </button>
                     </PoorModal>
-                    <div className="h-5 w-0.5 bg-gray-100"></div>
                 </div>
             )}
 
