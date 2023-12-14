@@ -17,7 +17,7 @@ type MenuGroup = {
 };
 
 export const MenuHeader = (n: { text: string }) => (
-    <div className={classNames("flex items-center px-6 text-xs font-semibold uppercase text-gray-300")}>{n.text}</div>
+    <div className={classNames("flex items-center px-6 text-sm font-semibold")}>{n.text}</div>
 );
 
 export const MenuButton = (n: {
@@ -32,14 +32,14 @@ export const MenuButton = (n: {
     <Link href={n.to}>
         <div
             className={classNames(
-                "my-1.5 mr-3 flex cursor-pointer items-center rounded-r-md py-3 pl-6 text-sm font-medium transition-all",
+                "mx-3 my-1.5 flex cursor-pointer items-center rounded-md py-2.5 pl-3 text-sm font-medium transition-all",
                 {
                     [n.bg]: n.isActive,
-                    ["text-gray-600 hover:bg-gray-100"]: !n.isActive,
+                    ["text-gray-700 hover:bg-gray-100"]: !n.isActive,
                     [n.color]: n.isActive,
                 },
             )}>
-            <Icon className={classNames("transition-opacity", { ["opacity-50"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
+            <Icon className={classNames("transition-opacity", { ["opacity-75"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
             <span className="ml-2.5">{n.text}</span>
             <span className="flex-grow"></span>
             {n.badgeCount != null && (
