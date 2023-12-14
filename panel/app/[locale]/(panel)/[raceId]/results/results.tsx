@@ -198,7 +198,7 @@ export const Results = () => {
                 <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
 
                 {results && (
-                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <div className="flex-grow overflow-hidden">
                         <PoorDataTable
                             data={results}
                             columns={cols}

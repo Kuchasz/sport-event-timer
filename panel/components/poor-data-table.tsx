@@ -127,7 +127,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     />
                 )}
             </div>
-            <ScrollArea className=" basis-auto rounded-md border">
+            <ScrollArea className="basis-auto rounded-md border">
                 <div
                     className="relative grid"
                     style={{
@@ -140,8 +140,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                 {c.sortable ? (
                                     <div
                                         onClick={() => handleSortClick(c, sortColumn)}
-                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors hover:bg-gray-100">
-                                        <span>{c.headerName}</span>
+                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors hover:bg-gray-100">
+                                        <span className="mr-2">{c.headerName}</span>
                                         {c.field === sortColumn?.field ? (
                                             sortColumn.order === "asc" ? (
                                                 <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
@@ -153,7 +153,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                         )}
                                     </div>
                                 ) : (
-                                    <div className="m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white p-2 transition-colors">
+                                    <div className="m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
                                         <span>{c.headerName}</span>
                                     </div>
                                 )}
@@ -168,7 +168,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                     className="group contents text-sm"
                                     key={getRowId(d.obj)}>
                                     {visibleColumns.map(c => (
-                                        <div className="flex items-center px-4 py-3 group-hover:bg-gray-50" key={c.headerName}>
+                                        <div className="flex items-center border-b px-4 py-2 group-hover:bg-gray-50" key={c.headerName}>
                                             {c.cellRenderer ? (
                                                 <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
                                             ) : (

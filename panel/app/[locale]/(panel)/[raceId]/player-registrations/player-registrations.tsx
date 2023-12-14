@@ -276,7 +276,7 @@ export const PlayerRegistrations = () => {
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
                     </Button>
                 </div>
-                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                <div className="flex-grow overflow-hidden">
                     <PoorDataTable
                         data={registrations}
                         columns={cols}

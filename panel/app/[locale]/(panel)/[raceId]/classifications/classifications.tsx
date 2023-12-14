@@ -82,7 +82,7 @@ export const Classifications = () => {
                         <span className="ml-2">{t("pages.classifications.load.button")}</span>
                     </Button>
                 </div>
-                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                <div className="flex-grow overflow-hidden">
                     <PoorDataTable
                         data={classifications}
                         columns={defaultColumns}

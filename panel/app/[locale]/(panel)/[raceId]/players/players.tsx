@@ -169,7 +169,7 @@ export const Players = () => {
                 </div>
 
                 {players && (
-                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <div className="flex-grow overflow-hidden">
                         <PoorDataTable
                             data={players}
                             columns={cols}
