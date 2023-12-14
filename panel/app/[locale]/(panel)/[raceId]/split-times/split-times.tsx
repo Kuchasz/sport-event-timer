@@ -160,7 +160,7 @@ export const SplitTimes = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.splitTimes.header.title")} description={t("pages.splitTimes.header.description")} />
                 {splitTimes && (
-                    <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                    <div className="flex-grow overflow-hidden">
                         <PoorDataTable
                             data={splitTimes}
                             columns={cols}

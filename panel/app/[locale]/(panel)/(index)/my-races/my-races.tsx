@@ -163,7 +163,7 @@ export const MyRaces = () => {
                         </Button>
                     </PoorModal>
                 </div>
-                <div className="m-4 flex-grow overflow-hidden rounded-xl p-8 shadow-md">
+                <div className="flex-grow overflow-hidden">
                     <PoorDataTable
                         gridName="my-races"
                         columns={defaultColumns}
