@@ -11,6 +11,7 @@ import type { AppRouterOutputs } from "trpc";
 import { PoorConfirmation } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
@@ -72,6 +73,7 @@ export const TimePenalties = () => {
             field: "time",
             headerName: t("timeMeasurement.timePenalty.page.grid.columns.time"),
             sortable: false,
+            cellRenderer: data => <span>{formatTimeWithMilliSecUTC(data.time)}</span>,
         },
         {
             field: "reason",
@@ -143,6 +145,7 @@ export const TimePenalties = () => {
                 {timePenalties && (
                     <div className="flex-grow">
                         <PoorDataTable
+                            hideColumnsChooser
                             data={timePenalties}
                             columns={timePenaltiesCols}
                             searchPlaceholder={t("timeMeasurement.timePenalty.page.grid.search.placeholder")}
@@ -170,6 +173,7 @@ export const TimePenalties = () => {
                 {disqualifications && (
                     <div className="flex-grow">
                         <PoorDataTable
+                            hideColumnsChooser
                             data={disqualifications}
                             columns={disqualificationCols}
                             searchPlaceholder={t("timeMeasurement.timePenalty.page.disqualification.grid.search.placeholder")}
