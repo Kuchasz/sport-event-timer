@@ -1325,12 +1325,11 @@
       "page": {
         "grid": {
           "columns": {
+            "actions": "Actions",
             "bibNumber": "Bib number",
             "time": "Time",
-            "name": "Name",
             "reason": "Reason",
-            "lastName": "LastName",
-            "actions": "Actions"
+            "player": "Player"
           },
           "search": {
             "placeholder": "Search time penalties..."
@@ -1348,7 +1347,7 @@
           "description": "The result achieved by the player will be restored",
           "confirmation": {
             "title": "Revert time penalty",
-            "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
+            "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?"
           }
         },
         "disqualification": {
@@ -1356,8 +1355,7 @@
             "columns": {
               "bibNumber": "Bib number",
               "reason": "Reason",
-              "name": "Name",
-              "lastName": "Last name"
+              "player": "Player"
             },
             "search": {
               "placeholder": "Search disqualifications..."
