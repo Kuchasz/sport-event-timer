@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
+import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 
 type TimePenalty = AppRouterOutputs["result"]["results"][0]["timePenalties"][0];
 
@@ -67,7 +68,12 @@ export const ManageTimePenalties = ({ onResolve, initialPenalties, bibNumber, ra
 
     const cols: PoorDataTableColumn<TimePenalty>[] = [
         { field: "reason", headerName: t("pages.results.manageTimePenalties.grid.columns.reason"), sortable: false },
-        { field: "time", headerName: t("pages.results.manageTimePenalties.grid.columns.time"), sortable: false },
+        {
+            field: "time",
+            headerName: t("pages.results.manageTimePenalties.grid.columns.time"),
+            sortable: false,
+            cellRenderer: data => <span>{formatTimeWithMilliSecUTC(data.time)}</span>,
+        },
         {
             field: "time",
             headerName: t("pages.results.manageTimePenalties.grid.columns.actions"),
