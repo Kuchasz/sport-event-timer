@@ -46,6 +46,7 @@ declare namespace __next_route_internal_types__ {
         | `/${SafeSlug<T>}/settings`
         | `/${SafeSlug<T>}/timing-points`
         | `/${SafeSlug<T>}/split-times`
+        | `/${SafeSlug<T>}/time-penalties`
         | `/registration/${SafeSlug<T>}`
         | `/results/${SafeSlug<T>}`
         | `/timer/${SafeSlug<T>}`

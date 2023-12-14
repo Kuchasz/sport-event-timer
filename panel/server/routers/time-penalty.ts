@@ -7,7 +7,14 @@ export const timePenaltyRouter = router({
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            return await ctx.db.timePenalty.findMany({ where: { raceId } });
+
+            const players = await ctx.db.player.findMany({ where: { raceId }, include: { profile: true } });
+            const playersByBibNumbers = new Map<string, { name: string; lastName: string }>(
+                players.map(p => [p.bibNumber, { name: p.profile.name, lastName: p.profile.lastName }]),
+            );
+            const penalties = await ctx.db.timePenalty.findMany({ where: { raceId } });
+
+            return penalties.map(p => ({ ...p, player: playersByBibNumbers.get(p.bibNumber) }));
         }),
 
     penalties: protectedProcedure

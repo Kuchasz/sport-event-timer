@@ -1,53 +1,55 @@
 "use client";
-import { mdiExport, mdiHumanEdit, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
-import { PlayerEdit } from "components/panel/player/player-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterOutputs } from "trpc";
-import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
+import { PoorConfirmation } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 
-const PlayerActions = ({ player, refetch }: { player: TimePenalty; refetch: () => void }) => {
-    const deletePlayerMutation = trpc.player.delete.useMutation();
+const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: () => void }) => {
+    const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
     const t = useTranslations();
-    const deletePlayer = async () => {
-        await deletePlayerMutation.mutateAsync({ playerId: player.id });
+    const revertTimePenalty = async () => {
+        await revertTimePenaltyMutation.mutateAsync({ id: penalty.id });
         refetch();
     };
 
     return (
         <PoorActions>
             {/* <PoorModal
-                title={t("pages.players.edit.title")}
+                title={t("timeMeasurement.timePenalty.page.edit.title")}
                 component={PlayerEdit}
                 componentProps={{
-                    raceId: player.raceId,
-                    editedPlayer: player,
+                    raceId: penalty.raceId,
+                    editedPlayer: penalty,
                     onReject: () => {},
                 }}
                 onResolve={refetch}>
                 <NewPoorActionsItem
-                    name={t("pages.players.edit.name")}
-                    description={t("pages.players.edit.description")}
+                    name={t("timeMeasurement.timePenalty.page.edit.name")}
+                    description={t("timeMeasurement.timePenalty.page.edit.description")}
                     iconPath={mdiHumanEdit}></NewPoorActionsItem>
-            </PoorModal>
+            </PoorModal> */}
             <PoorConfirmation
-                title={t("pages.players.delete.confirmation.title")}
-                message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
-                onAccept={deletePlayer}>
+                title={t("timeMeasurement.timePenalty.page.revert.confirmation.title")}
+                message={t("timeMeasurement.timePenalty.page.revert.confirmation.text", {
+                    name: penalty.player?.name,
+                    lastName: penalty.player?.lastName,
+                })}
+                onAccept={revertTimePenalty}>
                 <NewPoorActionsItem
-                    name={t("pages.players.delete.name")}
-                    description={t("pages.players.delete.description")}
+                    name={t("timeMeasurement.timePenalty.page.revert.name")}
+                    description={t("timeMeasurement.timePenalty.page.revert.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-            </PoorConfirmation> */}
+            </PoorConfirmation>
         </PoorActions>
     );
 };
@@ -55,41 +57,54 @@ const PlayerActions = ({ player, refetch }: { player: TimePenalty; refetch: () =
 export const TimePenalties = () => {
     const raceId = useCurrentRaceId();
     const t = useTranslations();
-    // const locale = useLocale();
     const { data: timePenalties, refetch } = trpc.timePenalty.allPenalties.useQuery({ raceId: raceId });
 
     const cols: PoorDataTableColumn<TimePenalty>[] = [
         {
             field: "bibNumber",
-            headerName: t("pages.players.grid.columns.bibNumber"),
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.bibNumber"),
             sortable: true,
         },
         {
             field: "time",
-            headerName: t("pages.players.grid.columns.classification"),
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.time"),
             sortable: false,
         },
         {
             field: "reason",
-            headerName: t("pages.players.grid.columns.name"),
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.reason"),
             sortable: true,
         },
         {
-            headerName: t("pages.players.grid.columns.actions"),
+            field: "player",
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.name"),
+            sortable: true,
+            cellRenderer: d => <div>{d.player?.name}</div>,
+        },
+        {
+            field: "player",
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.lastName"),
+            cellRenderer: d => <div>{d.player?.lastName}</div>,
+        },
+        {
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
             field: "bibNumber",
             sortable: false,
-            cellRenderer: data => <PlayerActions refetch={refetch} player={data} />,
+            cellRenderer: data => <PlayerActions refetch={refetch} penalty={data} />,
         },
     ];
 
     return (
         <>
             <Head>
-                <title>{t("pages.players.header.title")}</title>
+                <title>{t("timeMeasurement.timePenalty.page.header.title")}</title>
             </Head>
 
             <div className="border-1 flex h-full flex-col overflow-y-hidden border-solid border-gray-600">
-                <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
+                <PageHeader
+                    title={t("timeMeasurement.timePenalty.page.header.title")}
+                    description={t("timeMeasurement.timePenalty.page.header.description")}
+                />
                 <div className="mb-4 flex">
                     <Button
                         outline
@@ -100,7 +115,7 @@ export const TimePenalties = () => {
                             // });
                         }}>
                         <Icon size={0.8} path={mdiExport} />
-                        <span className="ml-2">{t("pages.players.export.button")}</span>
+                        <span className="ml-2">{t("timeMeasurement.timePenalty.page.export.button")}</span>
                     </Button>
                 </div>
 
@@ -109,8 +124,8 @@ export const TimePenalties = () => {
                         <PoorDataTable
                             data={timePenalties}
                             columns={cols}
-                            searchPlaceholder={t("pages.players.grid.search.placeholder")}
-                            getRowId={item => item.bibNumber}
+                            searchPlaceholder={t("timeMeasurement.timePenalty.page.grid.search.placeholder")}
+                            getRowId={item => item.id}
                             gridName="time-penalties"
                             searchFields={["reason", "time", "bibNumber"]}
                         />
