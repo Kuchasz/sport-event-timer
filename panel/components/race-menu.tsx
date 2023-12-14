@@ -8,6 +8,7 @@ import {
     mdiTimerCogOutline,
     mdiCog,
     mdiToolboxOutline,
+    mdiAlertOutline,
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
@@ -93,6 +94,13 @@ export const RaceMenu = ({
                 text: t("menuOptions.timeMeasurement.splitTimes"),
                 icon: mdiAlarm,
                 to: "/:raceId/split-times",
+                color: "text-blue-700",
+                bg: "bg-blue-100",
+            },
+            {
+                text: t("menuOptions.timeMeasurement.timePenalties"),
+                icon: mdiAlertOutline,
+                to: "/:raceId/time-penalties",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },
