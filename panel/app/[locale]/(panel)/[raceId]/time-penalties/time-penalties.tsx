@@ -42,8 +42,7 @@ const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: ()
             <PoorConfirmation
                 title={t("timeMeasurement.timePenalty.page.revert.confirmation.title")}
                 message={t("timeMeasurement.timePenalty.page.revert.confirmation.text", {
-                    name: penalty.player?.name,
-                    lastName: penalty.player?.lastName,
+                    player: penalty.player,
                 })}
                 onAccept={revertTimePenalty}>
                 <NewPoorActionsItem
@@ -81,14 +80,8 @@ export const TimePenalties = () => {
         },
         {
             field: "player",
-            headerName: t("timeMeasurement.timePenalty.page.grid.columns.name"),
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.player"),
             sortable: true,
-            cellRenderer: d => <div>{d.player?.name}</div>,
-        },
-        {
-            field: "player",
-            headerName: t("timeMeasurement.timePenalty.page.grid.columns.lastName"),
-            cellRenderer: d => <div>{d.player?.lastName}</div>,
         },
         {
             headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
@@ -111,14 +104,8 @@ export const TimePenalties = () => {
         },
         {
             field: "player",
-            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.name"),
+            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.player"),
             sortable: true,
-            cellRenderer: d => <div>{d.player?.name}</div>,
-        },
-        {
-            field: "player",
-            headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.lastName"),
-            cellRenderer: d => <div>{d.player?.lastName}</div>,
         },
         // {
         //     headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
@@ -161,7 +148,7 @@ export const TimePenalties = () => {
                             searchPlaceholder={t("timeMeasurement.timePenalty.page.grid.search.placeholder")}
                             getRowId={item => item.id}
                             gridName="time-penalties"
-                            searchFields={["reason", "time", "bibNumber"]}
+                            searchFields={["reason", "time", "bibNumber", "player"]}
                         />
                     </div>
                 )}
@@ -188,7 +175,7 @@ export const TimePenalties = () => {
                             searchPlaceholder={t("timeMeasurement.timePenalty.page.disqualification.grid.search.placeholder")}
                             getRowId={item => item.id}
                             gridName="disqualifications"
-                            searchFields={["reason", "bibNumber"]}
+                            searchFields={["reason", "bibNumber", "player"]}
                         />
                     </div>
                 )}
