@@ -1320,6 +1320,38 @@
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
+    },
+    "timePenalty": {
+      "page": {
+        "grid": {
+          "columns": {
+            "bibNumber": "Bib number",
+            "time": "time",
+            "name": "Name",
+            "reason": "Reason",
+            "lastName": "LastName",
+            "actions": "Actions"
+          },
+          "search": {
+            "placeholder": "Search time penalties..."
+          }
+        },
+        "header": {
+          "title": "Time penalties",
+          "description": "Time penalties applied to the players"
+        },
+        "export": {
+          "button": "Export penalties"
+        },
+        "revert": {
+          "name": "Revert time penalty",
+          "description": "The result achieved by the player will be restored",
+          "confirmation": {
+            "title": "Revert time penalty",
+            "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
+          }
+        }
+      }
     }
   }
 }
