@@ -1320,6 +1320,38 @@
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
+    },
+    "timePenalty": {
+      "page": {
+        "export": {
+          "button": "Eksportuj kary"
+        },
+        "grid": {
+          "columns": {
+            "actions": "Akcje",
+            "bibNumber": "Numer startowy",
+            "lastName": "Nazwisko",
+            "name": "Imię",
+            "reason": "Powód",
+            "time": "Czas"
+          },
+          "search": {
+            "placeholder": "Szukaj kar..."
+          }
+        },
+        "header": {
+          "description": "Kary czasowe zaaplikowane dla zawodnika",
+          "title": "Kary czasowe"
+        },
+        "revert": {
+          "name": "Wycofaj karę czasową",
+          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+          "confirmation": {
+            "title": "Wycofaj karę czasową",
+            "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+          }
+        }
+      }
     }
   }
 }

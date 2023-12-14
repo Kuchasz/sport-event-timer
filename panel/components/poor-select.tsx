@@ -30,7 +30,7 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
                 const desiredItem = items.find(i => String(i[valueKey]) === String(e))!;
                 onChange({ target: { value: desiredItem[valueKey] } });
             }}>
-            <div className="relative mt-1">
+            <div className="relative">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                     {desiredItem ? (
                         <span className="block truncate">{String(desiredItem[nameKey])}</span>

@@ -1326,7 +1326,7 @@
         "grid": {
           "columns": {
             "bibNumber": "Bib number",
-            "time": "time",
+            "time": "Time",
             "name": "Name",
             "reason": "Reason",
             "lastName": "LastName",
