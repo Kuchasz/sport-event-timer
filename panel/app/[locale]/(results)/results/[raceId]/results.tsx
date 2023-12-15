@@ -121,7 +121,7 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                         "bg-gray-100": i % 2 === 0,
                                                     })}>
                                                     <td></td>
-                                                    <td colSpan={5} className="px-2 pb-3 text-xs font-medium">
+                                                    <td colSpan={6} className="px-2 pb-3 text-xs font-medium">
                                                         <div className="table-row font-semibold">
                                                             <div className="table-cell py-0.5">{t("results.grid.columns.player")}:</div>
                                                             <div className="table-cell py-0.5 pl-2">
@@ -160,6 +160,16 @@ export const Results = ({ initialResults, initialRace }: { initialResults: Resul
                                                                     : formatTimeWithMilliSecUTC(s.result)}
                                                             </div>
                                                         </div>
+                                                        {s.disqualification ? (
+                                                            <div className="table-row">
+                                                                <div className="table-cell py-0.5">
+                                                                    {t("results.grid.columns.disqualifiaction")}
+                                                                </div>
+                                                                <div className="table-cell whitespace-break-spaces py-0.5 pl-2 font-mono">
+                                                                    {s.disqualification.reason}
+                                                                </div>
+                                                            </div>
+                                                        ) : null}
                                                         {s.timePenalties?.length ? (
                                                             <div className="table-row">
                                                                 <div className="table-cell py-0.5">

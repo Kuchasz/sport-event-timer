@@ -921,7 +921,8 @@
         "start": "Start",
         "finish": "Meta",
         "gap": "Strata",
-        "penalties": "Kary:"
+        "penalties": "Kary:",
+        "disqualifiaction": "Dyskwalifikacja:"
       }
     }
   },
@@ -1367,6 +1368,14 @@
           },
           "export": {
             "button": "Eksportuj dyskwalifikacje"
+          },
+          "revert": {
+            "name": "Wycofaj dyskwalifikację",
+            "description": "Oryginalny wynik zawodnika zostanie przywrócony",
+            "confirmation": {
+              "title": "Cofnij dyskwalifikację",
+              "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\""
+            }
           }
         }
       }

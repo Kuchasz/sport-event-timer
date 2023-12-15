@@ -16,7 +16,7 @@ import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
 
-const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: () => void }) => {
+const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: () => void }) => {
     const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
     const t = useTranslations();
     const revertTimePenalty = async () => {
@@ -49,6 +49,45 @@ const PlayerActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: ()
                 <NewPoorActionsItem
                     name={t("timeMeasurement.timePenalty.page.revert.name")}
                     description={t("timeMeasurement.timePenalty.page.revert.description")}
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+            </PoorConfirmation>
+        </PoorActions>
+    );
+};
+
+const DisqualificationActions = ({ disqualification, refetch }: { disqualification: Disqualification; refetch: () => void }) => {
+    const revertDisqualificationMutation = trpc.disqualification.revert.useMutation();
+    const t = useTranslations();
+    const revertTimePenalty = async () => {
+        await revertDisqualificationMutation.mutateAsync({ id: disqualification.id });
+        refetch();
+    };
+
+    return (
+        <PoorActions>
+            {/* <PoorModal
+                title={t("timeMeasurement.timePenalty.page.edit.title")}
+                component={PlayerEdit}
+                componentProps={{
+                    raceId: penalty.raceId,
+                    editedPlayer: penalty,
+                    onReject: () => {},
+                }}
+                onResolve={refetch}>
+                <NewPoorActionsItem
+                    name={t("timeMeasurement.timePenalty.page.edit.name")}
+                    description={t("timeMeasurement.timePenalty.page.edit.description")}
+                    iconPath={mdiHumanEdit}></NewPoorActionsItem>
+            </PoorModal> */}
+            <PoorConfirmation
+                title={t("timeMeasurement.timePenalty.page.disqualification.revert.confirmation.title")}
+                message={t("timeMeasurement.timePenalty.page.disqualification.revert.confirmation.text", {
+                    player: disqualification.player,
+                })}
+                onAccept={revertTimePenalty}>
+                <NewPoorActionsItem
+                    name={t("timeMeasurement.timePenalty.page.disqualification.revert.name")}
+                    description={t("timeMeasurement.timePenalty.page.disqualification.revert.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
         </PoorActions>
@@ -89,7 +128,7 @@ export const TimePenalties = () => {
             headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
             field: "bibNumber",
             sortable: false,
-            cellRenderer: data => <PlayerActions refetch={refetchTimePenalties} penalty={data} />,
+            cellRenderer: data => <TimePenaltyActions refetch={refetchTimePenalties} penalty={data} />,
         },
     ];
 
@@ -109,12 +148,12 @@ export const TimePenalties = () => {
             headerName: t("timeMeasurement.timePenalty.page.disqualification.grid.columns.player"),
             sortable: true,
         },
-        // {
-        //     headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
-        //     field: "bibNumber",
-        //     sortable: false,
-        //     cellRenderer: data => <PlayerActions refetch={refetchTimePenalties} penalty={data} />,
-        // },
+        {
+            headerName: t("timeMeasurement.timePenalty.page.grid.columns.actions"),
+            field: "bibNumber",
+            sortable: false,
+            cellRenderer: data => <DisqualificationActions refetch={refetchDisqualifications} disqualification={data} />,
+        },
     ];
 
     return (
