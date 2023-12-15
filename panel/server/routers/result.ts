@@ -19,7 +19,7 @@ export const resultRouter = router({
                     where: { raceId },
                 }),
                 d => d.bibNumber,
-                d => d.id,
+                d => ({ id: d.id, reason: d.reason }),
             );
 
             const timePenalties = await toLookup(

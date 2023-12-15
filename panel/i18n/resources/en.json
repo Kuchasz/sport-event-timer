@@ -921,7 +921,8 @@
         "start": "Start",
         "finish": "Finish",
         "gap": "Gap",
-        "penalties": "Penalties:"
+        "penalties": "Penalties:",
+        "disqualifiaction": "Disqualification:"
       }
     }
   },
@@ -1367,6 +1368,14 @@
           },
           "export": {
             "button": "Export disqualifications"
+          },
+          "revert": {
+            "name": "Revert disqualification",
+            "description": "The original score of the player will be restored",
+            "confirmation": {
+              "title": "Revert disqualification",
+              "text": "You are trying to revert disqualification of the Player {player}. Do you want to proceed?\""
+            }
           }
         }
       }
