@@ -99,25 +99,29 @@ export const resultRouter = router({
                     invalidState: undefined,
                 }));
 
-            const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
+            const classifications = await toMap(
+                ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } }),
+                c => c.id,
+                c => c,
+            );
 
             const resultsWithCategories = results.map(r => ({
                 ...r,
-                ageCategory: classifications
-                    .find(c => r.classificationId === c.id)!
-                    .categories.filter(c => !!c.minAge && !!c.maxAge)
-                    .find(c => c.minAge! <= r.age && c.maxAge! >= r.age && (!c.gender || c.gender === r.gender)),
-                openCategory: classifications
-                    .find(c => r.classificationId === c.id)!
-                    .categories.filter(c => !c.minAge && !c.maxAge && !!c.gender)
-                    .find(c => c.gender === r.gender),
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                ageCategory: classifications[r.classificationId]!.categories!.filter(c => !!c.minAge && !!c.maxAge).find(
+                    c => c.minAge! <= r.age && c.maxAge! >= r.age && (!c.gender || c.gender === r.gender),
+                )!,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                openCategory: classifications[r.classificationId]!.categories!.filter(c => !c.minAge && !c.maxAge && !!c.gender).find(
+                    c => c.gender === r.gender,
+                )!,
             }));
 
             const playersByAgeCategories = Object.fromEntries(
                 Object.entries(
                     groupBy(
                         resultsWithCategories.filter(r => !!r.ageCategory),
-                        r => r.ageCategory!.id.toString(),
+                        r => r.ageCategory.id.toString(),
                     ),
                 ).map(([catId, results]) => [catId, sort(results, r => r.result)]),
             );
@@ -125,7 +129,7 @@ export const resultRouter = router({
                 Object.entries(
                     groupBy(
                         resultsWithCategories.filter(r => !!r.openCategory),
-                        r => r.openCategory!.id.toString(),
+                        r => r.openCategory.id.toString(),
                     ),
                 ).map(([catId, results]) => [catId, sort(results, r => r.result)]),
             );
