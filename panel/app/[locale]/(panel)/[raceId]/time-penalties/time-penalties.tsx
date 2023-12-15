@@ -1,5 +1,5 @@
 "use client";
-import { mdiExport, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
@@ -88,7 +88,7 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
                 <NewPoorActionsItem
                     name={t("timeMeasurement.timePenalty.page.disqualification.revert.name")}
                     description={t("timeMeasurement.timePenalty.page.disqualification.revert.description")}
-                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+                    iconPath={mdiRestore}></NewPoorActionsItem>
             </PoorConfirmation>
         </PoorActions>
     );
