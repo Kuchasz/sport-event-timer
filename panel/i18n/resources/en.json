@@ -13,7 +13,7 @@
       "timingPoints": "Timing Points",
       "splitTimes": "Split Times",
       "results": "Results",
-      "timePenalties": "Time Penalties",
+      "penalties": "Penalties",
       "tools": "Tools"
     },
     "management": {
@@ -1322,7 +1322,28 @@
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
     },
-    "timePenalty": {
+    "penalties": {
+      "disqualification": {
+        "disqualificationReasons": {
+          "illegalSubstanceUse": "Illegal Substance Use",
+          "ruleViolations": "Rule Violations",
+          "incompleteGear": "Incomplete Gear",
+          "outsideAssistance": "Outside Assistance",
+          "failureToFollowCourse": "Failure to Follow Course",
+          "falseStart": "False Start",
+          "disorderlyConduct": "Disorderly Conduct",
+          "missedCheckpoints": "Missed Checkpoints",
+          "courseCutting": "Course Cutting",
+          "noVisibleBib": "No visible Bib",
+          "invalidBibPlacement": "Invalid Bib placement",
+          "unsportsmanlikeConduct": "Unsportsmanlike Conduct",
+          "littering": "Littering",
+          "unauthorizedAssistance": "Unauthorized Assistance",
+          "failureToFinishInTime": "Failure to Finish in Time",
+          "equipmentViolations": "Equipment Violations",
+          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)"
+        }
+      },
       "page": {
         "grid": {
           "columns": {

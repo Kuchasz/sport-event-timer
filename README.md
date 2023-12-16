@@ -33,7 +33,7 @@ Application for making time measurements
 | 26/10/2023 | Add links to stopwatch and timer to the race panel                   | :heavy_check_mark: <sup>(29/10/2023)</sup> |
 | 26/10/2023 | Timer for finish line                                                | todo :date:                                |
 | 26/10/2023 | Races list quick search                                              | :heavy_check_mark: <sup>(25/10/2023)</sup> |
-| 26/10/2023 | Players list rework <sup>(with quick </sup>search)                   | :heavy_check_mark: <sup>(04/11/2023)</sup> |
+| 26/10/2023 | Players list rework <sup>(with quick search)</sup>                   | :heavy_check_mark: <sup>(04/11/2023)</sup> |
 | 26/10/2023 | QR Code to results list                                              | :heavy_check_mark: <sup>(30/10/2023)</sup> |
 | 27/10/2023 | Penalties management in panel                                        | :heavy_check_mark: <sup>(27/11/2023)</sup> |
 | 27/10/2023 | Stopwatches locking                                                  | todo :date:                                |

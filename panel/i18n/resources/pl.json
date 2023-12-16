@@ -14,7 +14,7 @@
       "splitTimes": "Zmierzone czasy",
       "results": "Wyniki",
       "tools": "Narzędzia",
-      "timePenalties": "Kary Czasowe"
+      "penalties": "Kary"
     },
     "management": {
       "title": "Zarządzanie",
@@ -1322,7 +1322,7 @@
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
     },
-    "timePenalty": {
+    "penalties": {
       "page": {
         "export": {
           "button": "Eksportuj kary"
