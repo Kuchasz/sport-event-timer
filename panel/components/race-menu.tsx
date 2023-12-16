@@ -98,9 +98,9 @@ export const RaceMenu = ({
                 bg: "bg-blue-100",
             },
             {
-                text: t("menuOptions.timeMeasurement.timePenalties"),
+                text: t("menuOptions.timeMeasurement.penalties"),
                 icon: mdiAlertOutline,
-                to: "/:raceId/time-penalties",
+                to: "/:raceId/penalties",
                 color: "text-blue-700",
                 bg: "bg-blue-100",
             },

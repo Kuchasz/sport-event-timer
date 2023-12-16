@@ -21,15 +21,15 @@ export const disqualificationRouter = router({
             return Object.fromEntries(disqualifications.map(tp => [tp.bibNumber, tp.id])) as Record<string, number>;
         }),
     disqualify: protectedProcedure.input(disqualificationSchema).mutation(async ({ input, ctx }) => {
-        const { ...disqualification } = input;
+        const { id: _id, ...disqualification } = input;
 
         return await ctx.db.disqualification.create({ data: disqualification });
     }),
-    // update: protectedProcedure.input(disqualificationSchema).mutation(async ({ input, ctx }) => {
-    //     const { ...disqualification } = input;
+    update: protectedProcedure.input(disqualificationSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...disqualification } = input;
 
-    //     return await ctx.db.disqualification.update({ where: { id: disqualification.id }, data: disqualification });
-    // }),
+        return await ctx.db.disqualification.update({ where: { id: id! }, data: disqualification });
+    }),
     revert: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input, ctx }) => {
         const { id } = input;
 
