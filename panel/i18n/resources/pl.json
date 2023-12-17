@@ -1343,14 +1343,6 @@
           "description": "Kary czasowe zaaplikowane dla zawodnika",
           "title": "Kary czasowe"
         },
-        "revert": {
-          "name": "Wycofaj karę czasową",
-          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-          "confirmation": {
-            "title": "Wycofaj karę czasową",
-            "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?"
-          }
-        },
         "disqualification": {
           "grid": {
             "columns": {
@@ -1375,6 +1367,16 @@
             "confirmation": {
               "title": "Cofnij dyskwalifikację",
               "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\""
+            }
+          }
+        },
+        "timePenalty": {
+          "revert": {
+            "name": "Wycofaj karę czasową",
+            "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+            "confirmation": {
+              "title": "Wycofaj karę czasową",
+              "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?"
             }
           }
         }
