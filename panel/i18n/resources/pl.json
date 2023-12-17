@@ -1368,6 +1368,21 @@
               "title": "Cofnij dyskwalifikację",
               "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\""
             }
+          },
+          "create": {
+            "button": "Zdyskwalifikuj zawodnika",
+            "confirmation": {
+              "text": "Dyskwalifikacja może być cofnięta później",
+              "title": "Zdyskwalifikuj zawodnika"
+            }
+          },
+          "edit": {
+            "confirmation": {
+              "description": "Zmień szczegóły dyskwalifikacji",
+              "title": "Edytuj dyskwalifikację"
+            },
+            "description": "Zmień szczegóły dyskwalifikacji",
+            "name": "Edytuj dyskwalifikację"
           }
         },
         "timePenalty": {
@@ -1378,6 +1393,87 @@
               "title": "Wycofaj karę czasową",
               "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?"
             }
+          },
+          "edit": {
+            "confirmation": {
+              "description": "Zmień szczegóły kary czasowej",
+              "title": "Edytuj karę czasową"
+            },
+            "description": "Zmień szczegóły kary czasowej",
+            "name": "Edytuj karę czasową"
+          }
+        }
+      },
+      "disqualification": {
+        "disqualificationReasons": {
+          "illegalSubstanceUse": "Użycie nielegalnych substancji",
+          "ruleViolations": "Naruszenie zasad",
+          "incompleteGear": "Niekompletne wyposażenie",
+          "outsideAssistance": "Zewnętrzna pomoc",
+          "failureToFollowCourse": "Nie podążanie za trasą",
+          "falseStart": "False start",
+          "disorderlyConduct": "Zakłócanie porządku",
+          "missedCheckpoints": "Pominięcie punktów kontrolnych",
+          "courseCutting": "Skracanie trasy",
+          "noVisibleBib": "Brak widocznego numeru startowego",
+          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
+          "unsportsmanlikeConduct": "Niesportowe zachowanie",
+          "littering": "Śmiecenie",
+          "unauthorizedAssistance": "Nieautoryzowana pomoc",
+          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
+          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
+          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)"
+        },
+        "form": {
+          "bibNumber": {
+            "label": "Numer startowy",
+            "placeholder": "Wprowadź numer startowy"
+          },
+          "reason": {
+            "label": "Powód",
+            "placeholder": "Uzasadnij dyskwalifikację"
+          }
+        }
+      },
+      "timePenalty": {
+        "timePenaltyReasons": {
+          "illegalSubstanceUse": "Użycie nielegalnych substancji",
+          "ruleViolations": "Naruszenie zasad",
+          "incompleteGear": "Niekompletne wyposażenie",
+          "outsideAssistance": "Zewnętrzna pomoc",
+          "failureToFollowCourse": "Nie podążanie za trasą",
+          "falseStart": "False start",
+          "disorderlyConduct": "Zakłócanie porządku",
+          "missedCheckpoints": "Pominięcie punktów kontrolnych",
+          "courseCutting": "Skracanie trasy",
+          "noVisibleBib": "Brak widocznego numeru startowego",
+          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
+          "unsportsmanlikeConduct": "Niesportowe zachowanie",
+          "littering": "Śmiecenie",
+          "unauthorizedAssistance": "Nieautoryzowana pomoc",
+          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
+          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
+          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)"
+        },
+        "create": {
+          "button": "Zaaplikuj karę czasową",
+          "confirmation": {
+            "text": "Kara zostanie dodana do rezultatu zawodnika",
+            "title": "Zaaplikuj karę czasową"
+          }
+        },
+        "form": {
+          "bibNumber": {
+            "label": "Numer startowy",
+            "placeholder": "Wprowadź numer startowy"
+          },
+          "reason": {
+            "label": "Powód",
+            "placeholder": "Uzasadnij karę czasową"
+          },
+          "time": {
+            "label": "Czas",
+            "placeholder": "Wpisz czas"
           }
         }
       }
