@@ -1,5 +1,5 @@
 "use client";
-import { mdiExport, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
@@ -12,6 +12,8 @@ import { PoorConfirmation, PoorModal } from "../../../../../components/poor-moda
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
+import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
+import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
@@ -102,9 +104,6 @@ export const Penalties = () => {
         raceId: raceId,
     });
 
-    const createDisqualification = () => {};
-    const createTimePenalty = () => {};
-
     const timePenaltiesCols: PoorDataTableColumn<TimePenalty>[] = [
         {
             field: "bibNumber",
@@ -172,24 +171,20 @@ export const Penalties = () => {
                 />
                 <div className="mb-4 flex">
                     <PoorModal
-                        onResolve={() => createTimePenalty()}
-                        title={t("timeManagement.penalties.timePenalty.create.confirmation.title")}
-                        description={t("timeManagement.penalties.timePenalty.create.confirmation.text", {
-                            name: data.name,
-                            lastName: data.lastName,
-                        })}
-                        component={DisqualifyPlayer}
+                        onResolve={() => refetchTimePenalties()}
+                        title={t("timeMeasurement.penalties.timePenalty.create.confirmation.title")}
+                        description={t("timeMeasurement.penalties.timePenalty.create.confirmation.text")}
+                        component={TimePenaltyCreate}
                         componentProps={{
-                            bibNumber: data.bibNumber,
-                            raceId,
                             onReject: () => {},
                         }}>
                         <Button outline>
                             <Icon size={0.8} path={mdiPlus} />
-                            <span className="ml-2">{t("timeManagement.penalties.timePenalty.create.button")}</span>
+                            <span className="ml-2">{t("timeMeasurement.penalties.timePenalty.create.button")}</span>
                         </Button>
                     </PoorModal>
                     <Button
+                        className="ml-2"
                         outline
                         onClick={() => {
                             alert("It does not work now!");
@@ -221,24 +216,20 @@ export const Penalties = () => {
                 />
                 <div className="mb-4 flex">
                     <PoorModal
-                        onResolve={() => createDisqualification()}
-                        title={t("timeManagement.penalties.page.disqualification.create.confirmation.title")}
-                        description={t("timeManagement.penalties.page.disqualification.create.confirmation.text", {
-                            name: data.name,
-                            lastName: data.lastName,
-                        })}
-                        component={DisqualifyPlayer}
+                        onResolve={() => refetchDisqualifications()}
+                        title={t("timeMeasurement.penalties.page.disqualification.create.confirmation.title")}
+                        description={t("timeMeasurement.penalties.page.disqualification.create.confirmation.text")}
+                        component={DisqualificationCreate}
                         componentProps={{
-                            bibNumber: data.bibNumber,
-                            raceId,
                             onReject: () => {},
                         }}>
                         <Button outline>
                             <Icon size={0.8} path={mdiPlus} />
-                            <span className="ml-2">{t("timeManagement.penalties.page.disqualification.create.button")}</span>
+                            <span className="ml-2">{t("timeMeasurement.penalties.page.disqualification.create.button")}</span>
                         </Button>
                     </PoorModal>
                     <Button
+                        className="ml-2"
                         outline
                         onClick={() => {
                             alert("It does not work now!");

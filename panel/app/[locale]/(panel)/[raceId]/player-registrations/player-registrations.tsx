@@ -18,7 +18,7 @@ import { GenderIcon } from "components/gender-icon";
 import { PageHeader } from "components/page-header";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
-import { PlayerRegistrationPromotion } from "components/player-registration-promotion";
+import { PlayerRegistrationPromotion } from "components/panel/player-registration/player-registration-promotion";
 import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useLocale, useTranslations } from "next-intl";

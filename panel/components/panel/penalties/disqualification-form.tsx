@@ -1,12 +1,10 @@
-import { Button } from "../../button";
-import { PoorFullTimepicker } from "../../poor-timepicker";
-import { PoorSelect } from "../../poor-select";
-import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { Form, FormInput } from "form";
-
+import type { AppRouterInputs } from "trpc";
+import { Button } from "../../button";
+import { PoorSelect } from "../../poor-select";
 import { PoorCombo } from "components/poor-combo";
+import { disqualificationReasons, disqualificationSchema } from "modules/disqualification/models";
 import { useTranslations } from "next-intl";
-import { disqualificationSchema } from "modules/disqualification/models";
 
 type Disqualification = AppRouterInputs["disqualification"]["update"];
 
@@ -14,10 +12,8 @@ type DisqualificationFormProps = {
     onReject: () => void;
     onResolve: (disqualification: Disqualification) => void;
     initialDisqualification: Disqualification;
-    bibNumbers: { id: string; name: string }[];
-    raceDate: number;
+    bibNumbers: string[];
     isLoading: boolean;
-    timingPoints: AppRouterOutputs["timingPoint"]["timingPoints"];
 };
 
 export const DisqualificationForm = ({
@@ -26,25 +22,26 @@ export const DisqualificationForm = ({
     initialDisqualification,
     bibNumbers,
     isLoading,
-    timingPoints,
 }: DisqualificationFormProps) => {
-    const t = useTranslations();
     const reasonsTranslations = useTranslations("timeMeasurement.penalties.disqualification.disqualificationReasons");
+    const reasons = disqualificationReasons.map(r => reasonsTranslations(r));
 
-    const reasons = Object.values(reasonsTranslations);
+    const t = useTranslations();
+
+    const bibNumbersPositions = bibNumbers.map(b => ({ name: b, id: b }));
 
     return (
         <Form<Disqualification> initialValues={initialDisqualification} validationSchema={disqualificationSchema} onSubmit={onResolve}>
             <div className="flex flex-col">
-                {timingPoints?.length && (
+                {bibNumbers?.length && (
                     <FormInput<Disqualification, "bibNumber">
-                        label={t("timeMeasurement.penalties.disqualification.form.timingPoint.label")}
+                        label={t("timeMeasurement.penalties.disqualification.form.bibNumber.label")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorSelect
                                 initialValue={value}
-                                items={bibNumbers}
-                                placeholder={t("timeMeasurement.penalties.disqualification.form.timingPoint.placeholder")}
+                                items={bibNumbersPositions}
+                                placeholder={t("timeMeasurement.penalties.disqualification.form.bibNumber.placeholder")}
                                 nameKey="name"
                                 valueKey="id"
                                 onChange={onChange}
@@ -53,15 +50,14 @@ export const DisqualificationForm = ({
                         name="bibNumber"
                     />
                 )}
-                <div className="p-2"></div>
                 <div className="flex">
                     <FormInput<Disqualification, "reason">
-                        label={t("timeMeasurement.penalties.disqualification.form.bibNumber.label")}
+                        label={t("timeMeasurement.penalties.disqualification.form.reason.label")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorCombo
                                 initialValue={value}
-                                placeholder={t("timeMeasurement.penalties.disqualification.form.bibNumber.placeholder")}
+                                placeholder={t("timeMeasurement.penalties.disqualification.form.reason.placeholder")}
                                 items={reasons}
                                 onChange={onChange}
                             />

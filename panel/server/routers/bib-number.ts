@@ -16,6 +16,41 @@ export const bibNumberRouter = router({
 
             return bibNumbers.map((c, index) => ({ ...c, index: index + 1 }));
         }),
+    playersNumbers: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const raceId = input.raceId;
+            const playersBibNumbers = await ctx.db.player.findMany({
+                where: { raceId },
+                select: { bibNumber: true },
+            });
+
+            return playersBibNumbers.map(b => b.bibNumber);
+        }),
+    nonDisqualifiedPlayerNumbers: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId } = input;
+            const playersBibNumbers = await ctx.db.player.findMany({
+                where: { raceId },
+                select: { bibNumber: true },
+            });
+
+            const disqualifiedBibNumbers = await ctx.db.disqualification.findMany({ where: { raceId }, select: { bibNumber: true } });
+
+            return excludeItems(
+                playersBibNumbers.map(p => p.bibNumber),
+                disqualifiedBibNumbers.map(d => d.bibNumber),
+            );
+        }),
     availableNumbers: protectedProcedure
         .input(
             z.object({
