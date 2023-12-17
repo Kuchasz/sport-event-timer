@@ -28,14 +28,12 @@ export const DisqualificationForm = ({
 
     const t = useTranslations();
 
-    const bibNumbersPositions = bibNumbers
-        .map(b => ({ name: b, id: b }))
-        .concat(initialDisqualification ? [{ name: initialDisqualification.bibNumber, id: initialDisqualification.bibNumber }] : []);
+    const bibNumbersPositions = bibNumbers.map(b => ({ name: b, id: b }));
 
     return (
         <Form<Disqualification> initialValues={initialDisqualification} validationSchema={disqualificationSchema} onSubmit={onResolve}>
             <div className="flex flex-col">
-                {bibNumbers?.length && (
+                {bibNumbersPositions.length && (
                     <FormInput<Disqualification, "bibNumber">
                         label={t("timeMeasurement.penalties.disqualification.form.bibNumber.label")}
                         className="flex-1"

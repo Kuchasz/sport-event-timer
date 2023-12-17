@@ -15,7 +15,10 @@ type DisqualificationEditProps = {
 export const DisqualificationEdit = ({ editedDisqualification, onReject, onResolve }: DisqualificationEditProps) => {
     const updateDisqualificationMutation = trpc.disqualification.update.useMutation();
     const raceId = useCurrentRaceId();
-    const { data: bibNumbers } = trpc.bibNumber.nonDisqualifiedPlayerNumbers.useQuery({ raceId }, { initialData: [] });
+    const { data: bibNumbers } = trpc.bibNumber.nonDisqualifiedPlayerNumbers.useQuery(
+        { raceId, bibNumber: editedDisqualification.bibNumber },
+        { initialData: [] },
+    );
 
     const disqualification: UpdateDisqualification = {
         id: editedDisqualification.id,

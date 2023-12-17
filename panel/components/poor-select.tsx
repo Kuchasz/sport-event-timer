@@ -21,7 +21,6 @@ export const PoorSelect = <T, TNameKey extends keyof T, TValueKey extends keyof 
     const [selected, setSelected] = useState(initialValue);
 
     const desiredItem = selected ? items.find(i => String(i[valueKey]) === String(selected))! : undefined; //({ [valueKey]: -1, [nameKey]: placeholder || "Select value" } as unknown as T);
-
     return (
         <Listbox
             value={selected}

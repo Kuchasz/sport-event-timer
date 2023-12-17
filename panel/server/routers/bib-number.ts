@@ -35,16 +35,20 @@ export const bibNumberRouter = router({
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
+                bibNumber: z.string().optional(),
             }),
         )
         .query(async ({ input, ctx }) => {
-            const { raceId } = input;
+            const { raceId, bibNumber } = input;
             const playersBibNumbers = await ctx.db.player.findMany({
-                where: { raceId },
+                where: { OR: [{ raceId }, { bibNumber }] },
                 select: { bibNumber: true },
             });
 
-            const disqualifiedBibNumbers = await ctx.db.disqualification.findMany({ where: { raceId }, select: { bibNumber: true } });
+            const disqualifiedBibNumbers = await ctx.db.disqualification.findMany({
+                where: { AND: [{ raceId }, { NOT: { bibNumber } }] },
+                select: { bibNumber: true },
+            });
 
             return excludeItems(
                 playersBibNumbers.map(p => p.bibNumber),
