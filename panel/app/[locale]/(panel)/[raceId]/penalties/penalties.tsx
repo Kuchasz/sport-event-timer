@@ -1,8 +1,13 @@
 "use client";
-import { mdiExport, mdiHumanEdit, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiPencil, mdiPlus, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
+import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
+import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
+import { DisqualificationEdit } from "components/panel/penalties/disqualification-edit";
+import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";
+import { TimePenaltyEdit } from "components/panel/penalties/time-penalty-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
@@ -11,11 +16,6 @@ import type { AppRouterOutputs } from "trpc";
 import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
-import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";
-import { DisqualificationEdit } from "components/panel/penalties/disqualification-edit";
-import { TimePenaltyEdit } from "components/panel/penalties/time-penalty-edit";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
@@ -42,7 +42,7 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.timePenalty.edit.name")}
                     description={t("timeMeasurement.penalties.page.timePenalty.edit.description")}
-                    iconPath={mdiHumanEdit}></NewPoorActionsItem>
+                    iconPath={mdiPencil}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
                 title={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.title")}
@@ -53,7 +53,7 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.timePenalty.revert.name")}
                     description={t("timeMeasurement.penalties.page.timePenalty.revert.description")}
-                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+                    iconPath={mdiRestore}></NewPoorActionsItem>
             </PoorConfirmation>
         </PoorActions>
     );
@@ -81,7 +81,7 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.disqualification.edit.name")}
                     description={t("timeMeasurement.penalties.page.disqualification.edit.description")}
-                    iconPath={mdiHumanEdit}></NewPoorActionsItem>
+                    iconPath={mdiPencil}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
                 title={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.title")}
