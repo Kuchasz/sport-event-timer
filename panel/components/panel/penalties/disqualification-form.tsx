@@ -1,10 +1,10 @@
+import { PoorCombo } from "components/poor-combo";
 import { Form, FormInput } from "form";
+import { disqualificationReasons, disqualificationSchema } from "modules/disqualification/models";
+import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "trpc";
 import { Button } from "../../button";
 import { PoorSelect } from "../../poor-select";
-import { PoorCombo } from "components/poor-combo";
-import { disqualificationReasons, disqualificationSchema } from "modules/disqualification/models";
-import { useTranslations } from "next-intl";
 
 type Disqualification = AppRouterInputs["disqualification"]["update"];
 
@@ -28,7 +28,9 @@ export const DisqualificationForm = ({
 
     const t = useTranslations();
 
-    const bibNumbersPositions = bibNumbers.map(b => ({ name: b, id: b }));
+    const bibNumbersPositions = bibNumbers
+        .map(b => ({ name: b, id: b }))
+        .concat(initialDisqualification ? [{ name: initialDisqualification.bibNumber, id: initialDisqualification.bibNumber }] : []);
 
     return (
         <Form<Disqualification> initialValues={initialDisqualification} validationSchema={disqualificationSchema} onSubmit={onResolve}>

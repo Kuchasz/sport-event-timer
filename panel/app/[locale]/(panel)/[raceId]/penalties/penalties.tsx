@@ -1,5 +1,5 @@
 "use client";
-import { mdiExport, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
+import { mdiExport, mdiHumanEdit, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
@@ -14,6 +14,7 @@ import { trpc } from "../../../../../trpc-core";
 import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
 import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";
+import { DisqualificationEdit } from "components/panel/penalties/disqualification-edit";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
@@ -67,20 +68,20 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
 
     return (
         <PoorActions>
-            {/* <PoorModal
-                title={t("timeMeasurement.penalties.page.edit.title")}
-                component={PlayerEdit}
+            <PoorModal
+                title={t("timeMeasurement.penalties.page.disqualification.edit.confirmation.title")}
+                description={t("timeMeasurement.penalties.page.disqualification.edit.confirmation.description")}
+                component={DisqualificationEdit}
                 componentProps={{
-                    raceId: penalty.raceId,
-                    editedPlayer: penalty,
+                    editedDisqualification: disqualification,
                     onReject: () => {},
                 }}
                 onResolve={refetch}>
                 <NewPoorActionsItem
-                    name={t("timeMeasurement.penalties.page.edit.name")}
-                    description={t("timeMeasurement.penalties.page.edit.description")}
+                    name={t("timeMeasurement.penalties.page.disqualification.edit.name")}
+                    description={t("timeMeasurement.penalties.page.disqualification.edit.description")}
                     iconPath={mdiHumanEdit}></NewPoorActionsItem>
-            </PoorModal> */}
+            </PoorModal>
             <PoorConfirmation
                 title={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.title")}
                 message={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.text", {

@@ -1456,6 +1456,14 @@
               "title": "Disqualify player",
               "text": "Disqualification may be reverted later"
             }
+          },
+          "edit": {
+            "confirmation": {
+              "title": "Edit disqualification",
+              "description": "Change disqualification details"
+            },
+            "description": "Change disqualification details",
+            "name": "Edit disqualification"
           }
         }
       }
