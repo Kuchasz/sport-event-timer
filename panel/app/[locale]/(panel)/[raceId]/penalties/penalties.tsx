@@ -15,6 +15,7 @@ import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
 import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";
 import { DisqualificationEdit } from "components/panel/penalties/disqualification-edit";
+import { TimePenaltyEdit } from "components/panel/penalties/time-penalty-edit";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
@@ -29,29 +30,29 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
 
     return (
         <PoorActions>
-            {/* <PoorModal
-                title={t("timeMeasurement.penalties.page.edit.title")}
-                component={PlayerEdit}
+            <PoorModal
+                title={t("timeMeasurement.penalties.page.timePenalty.edit.confirmation.title")}
+                description={t("timeMeasurement.penalties.page.timePenalty.edit.confirmation.description")}
+                component={TimePenaltyEdit}
                 componentProps={{
-                    raceId: penalty.raceId,
-                    editedPlayer: penalty,
+                    editedTimePenalty: penalty,
                     onReject: () => {},
                 }}
                 onResolve={refetch}>
                 <NewPoorActionsItem
-                    name={t("timeMeasurement.penalties.page.edit.name")}
-                    description={t("timeMeasurement.penalties.page.edit.description")}
+                    name={t("timeMeasurement.penalties.page.timePenalty.edit.name")}
+                    description={t("timeMeasurement.penalties.page.timePenalty.edit.description")}
                     iconPath={mdiHumanEdit}></NewPoorActionsItem>
-            </PoorModal> */}
+            </PoorModal>
             <PoorConfirmation
-                title={t("timeMeasurement.penalties.page.revert.confirmation.title")}
-                message={t("timeMeasurement.penalties.page.revert.confirmation.text", {
+                title={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.title")}
+                message={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.text", {
                     player: penalty.player,
                 })}
                 onAccept={revertTimePenalty}>
                 <NewPoorActionsItem
-                    name={t("timeMeasurement.penalties.page.revert.name")}
-                    description={t("timeMeasurement.penalties.page.revert.description")}
+                    name={t("timeMeasurement.penalties.page.timePenalty.revert.name")}
+                    description={t("timeMeasurement.penalties.page.timePenalty.revert.description")}
                     iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
             </PoorConfirmation>
         </PoorActions>

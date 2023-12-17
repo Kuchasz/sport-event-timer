@@ -33,9 +33,9 @@ export const NewPoorActionsItem = ({ name, description, iconPath, href, onClick 
 const PoorActionsCloser = (props: { close: () => void }) => {
     useEffect(() => {
         const close = props.close;
-        window.addEventListener("scroll", close, true);
+        window.addEventListener("scroll", close);
         return () => {
-            window.removeEventListener("scroll", close, true);
+            window.removeEventListener("scroll", close);
         };
     }, [props.close]);
     return null;

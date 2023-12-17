@@ -1416,14 +1416,6 @@
         "export": {
           "button": "Export penalties"
         },
-        "revert": {
-          "name": "Revert time penalty",
-          "description": "The result achieved by the player will be restored",
-          "confirmation": {
-            "title": "Revert time penalty",
-            "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?"
-          }
-        },
         "disqualification": {
           "grid": {
             "columns": {
@@ -1464,6 +1456,24 @@
             },
             "description": "Change disqualification details",
             "name": "Edit disqualification"
+          }
+        },
+        "timePenalty": {
+          "revert": {
+            "name": "Revert time penalty",
+            "description": "The result achieved by the player will be restored",
+            "confirmation": {
+              "title": "Revert time penalty",
+              "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?"
+            }
+          },
+          "edit": {
+            "confirmation": {
+              "title": "Edit time penalty",
+              "description": "Change time penalty details"
+            },
+            "name": "Change time penalty",
+            "description": "Change time penalty details"
           }
         }
       }
