@@ -6,3 +6,23 @@ export const disqualificationSchema = z.object({
     bibNumber: z.string(),
     reason: z.string(),
 });
+
+export const disqualificationReasons = [
+    "illegalSubstanceUse",
+    "ruleViolations",
+    "incompleteGear",
+    "outsideAssistance",
+    "failureToFollowCourse",
+    "falseStart",
+    "disorderlyConduct",
+    "missedCheckpoints",
+    "courseCutting",
+    "noVisibleBib",
+    "invalidBibPlacement",
+    "unsportsmanlikeConduct",
+    "littering",
+    "unauthorizedAssistance",
+    "failureToFinishInTime",
+    "equipmentViolations",
+    "inadequateLightingNightRaces",
+] as const;

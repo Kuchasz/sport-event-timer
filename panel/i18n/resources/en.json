@@ -1342,6 +1342,58 @@
           "failureToFinishInTime": "Failure to Finish in Time",
           "equipmentViolations": "Equipment Violations",
           "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)"
+        },
+        "form": {
+          "bibNumber": {
+            "label": "Bib Number",
+            "placeholder": "Enter bib number"
+          },
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Reason the disqualification"
+          }
+        }
+      },
+      "timePenalty": {
+        "timePenaltyReasons": {
+          "illegalSubstanceUse": "Illegal Substance Use",
+          "ruleViolations": "Rule Violations",
+          "incompleteGear": "Incomplete Gear",
+          "outsideAssistance": "Outside Assistance",
+          "failureToFollowCourse": "Failure to Follow Course",
+          "falseStart": "False Start",
+          "disorderlyConduct": "Disorderly Conduct",
+          "missedCheckpoints": "Missed Checkpoints",
+          "courseCutting": "Course Cutting",
+          "noVisibleBib": "No visible Bib",
+          "invalidBibPlacement": "Invalid Bib placement",
+          "unsportsmanlikeConduct": "Unsportsmanlike Conduct",
+          "littering": "Littering",
+          "unauthorizedAssistance": "Unauthorized Assistance",
+          "failureToFinishInTime": "Failure to Finish in Time",
+          "equipmentViolations": "Equipment Violations",
+          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)"
+        },
+        "create": {
+          "button": "Apply time penalty",
+          "confirmation": {
+            "title": "Apply time penalty",
+            "text": "Penalty will be added to player's result"
+          }
+        },
+        "form": {
+          "bibNumber": {
+            "label": "Bib Number",
+            "placeholder": "Enter bib number"
+          },
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Reason the time penalty"
+          },
+          "time": {
+            "label": "Time",
+            "placeholder": "Enter time"
+          }
         }
       },
       "page": {
@@ -1396,6 +1448,13 @@
             "confirmation": {
               "title": "Revert disqualification",
               "text": "You are trying to revert disqualification of the Player {player}. Do you want to proceed?\""
+            }
+          },
+          "create": {
+            "button": "Disqualify player",
+            "confirmation": {
+              "title": "Disqualify player",
+              "text": "Disqualification may be reverted later"
             }
           }
         }

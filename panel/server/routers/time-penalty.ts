@@ -14,7 +14,6 @@ export const timePenaltyRouter = router({
 
             return penalties.map(p => ({ ...p, player: playersByBibNumbers.get(p.bibNumber) }));
         }),
-
     penalties: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
@@ -35,15 +34,15 @@ export const timePenaltyRouter = router({
             return timePenalties.map(tp => ({ key: tp.bibNumber, id: tp.id, time: tp.time, reason: tp.reason }));
         }),
     applyPenalty: protectedProcedure.input(timePenaltySchema).mutation(async ({ input, ctx }) => {
-        const { ...timePenalty } = input;
+        const { id: _id, ...timePenalty } = input;
 
         return await ctx.db.timePenalty.create({ data: timePenalty });
     }),
-    // update: protectedProcedure.input(timePenaltySchema).mutation(async ({ input, ctx }) => {
-    //     const { ...timePenalty } = input;
+    update: protectedProcedure.input(timePenaltySchema).mutation(async ({ input, ctx }) => {
+        const { id, ...timePenalty } = input;
 
-    //     return await ctx.db.timePenalty.update({ where: { id: timePenalty.id }, data: timePenalty });
-    // }),
+        return await ctx.db.timePenalty.update({ where: { id: id! }, data: timePenalty });
+    }),
     revert: protectedProcedure.input(z.object({ id: z.number() })).mutation(async ({ input, ctx }) => {
         const { id } = input;
         return await ctx.db.timePenalty.delete({

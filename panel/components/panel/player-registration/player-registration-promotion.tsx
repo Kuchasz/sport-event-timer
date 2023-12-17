@@ -1,12 +1,12 @@
-import { Button } from "./button";
+import { Button } from "../../button";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
-import { PoorSelect } from "./poor-select";
-import { PoorTimepicker } from "./poor-timepicker";
+import { PoorSelect } from "../../poor-select";
+import { PoorTimepicker } from "../../poor-timepicker";
 import { trpc } from "trpc-core";
 import { playerPromotionSchema } from "modules/player/models";
 import { useTranslations } from "next-intl";
 import { Form, FormInput } from "form";
-import { PoorCombo } from "./poor-combo";
+import { PoorCombo } from "../../poor-combo";
 
 type PlayerPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
 
