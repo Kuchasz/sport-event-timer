@@ -30,14 +30,17 @@ export const NewPoorActionsItem = ({ name, description, iconPath, href, onClick 
     </a>
 );
 
-const PoorActionsCloser = (props: { close: () => void }) => {
+const PoorActionsCloser = ({ close }: { close: () => void }) => {
     useEffect(() => {
-        const close = props.close;
-        window.addEventListener("scroll", close);
-        return () => {
-            window.removeEventListener("scroll", close);
+        const handleClose = () => {
+            const anyDialogOpen = document.querySelector("[id^='headlessui-dialog-']");
+            if (!anyDialogOpen) close();
         };
-    }, [props.close]);
+        window.addEventListener("scroll", handleClose, true);
+        return () => {
+            window.removeEventListener("scroll", handleClose, true);
+        };
+    }, [close]);
     return null;
 };
 
