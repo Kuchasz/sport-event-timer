@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import Icon from "@mdi/react";
-import { mdiChevronDoubleDown } from "@mdi/js";
+import { mdiCheck, mdiChevronDoubleDown } from "@mdi/js";
 import fuzzysort from "fuzzysort";
 
 export type KeysOfType<T, X> = {
@@ -41,7 +41,7 @@ export const PoorCombo = ({
                     </Combobox.Button>
                 </div>
                 <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                    <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 will-change-scroll focus:outline-none sm:text-sm">
+                    <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                         {filteredItems.map(item => (
                             <Combobox.Option
                                 onClick={() => {
@@ -49,9 +49,25 @@ export const PoorCombo = ({
                                     onChange({ target: { value: item.target } });
                                 }}
                                 key={item.target}
-                                className="relative cursor-default select-none py-2 pl-4 pr-4 text-gray-900"
+                                className={({ active }) =>
+                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active ? "bg-amber-600 text-white" : "text-gray-900"
+                                    }`
+                                }
                                 value={item.target}>
-                                <span className="block truncate font-normal">{item.target}</span>
+                                {({ selected, active }) => (
+                                    <>
+                                        <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>{item.target}</span>
+                                        {selected ? (
+                                            <span
+                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                                    active ? "text-white" : "text-amber-600"
+                                                }`}>
+                                                <Icon path={mdiCheck} size={0.8} />
+                                            </span>
+                                        ) : null}
+                                    </>
+                                )}
                             </Combobox.Option>
                         ))}
                     </Combobox.Options>
