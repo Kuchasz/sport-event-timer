@@ -522,7 +522,7 @@
         "title": "Zawodnicy"
       }
     },
-    "race": {
+    "basicInfo": {
       "statistics": {
         "header": {
           "title": "Statystyki"
@@ -531,6 +531,10 @@
           "registeredPlayers": "Zarejestrowani Zawodnicy",
           "registrationStatus": "Status Rejestracji"
         }
+      },
+      "header": {
+        "title": "Podstawowe informacje",
+        "description": "Podstawowe informacje o wyścigu"
       }
     },
     "races": {

@@ -20,11 +20,6 @@ type RaceFormProps = {
     isLoading: boolean;
 };
 
-export const registrationEnabledValues = [
-    { name: "Enabled", value: true },
-    { name: "Disabled", value: false },
-];
-
 export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFormProps) => {
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
