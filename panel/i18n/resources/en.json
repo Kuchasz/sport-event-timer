@@ -1,46 +1,287 @@
 {
+  "auth": {
+    "login": {
+      "form": {
+        "email": {
+          "label": "Email*",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password*",
+          "placeholder": "Enter valid password"
+        },
+        "submit": "Log in"
+      },
+      "header": "Welcome!",
+      "registration": {
+        "button": "Sign up",
+        "question": "Don't have an account?"
+      }
+    },
+    "register": {
+      "header": "Create account!"
+    },
+    "registration": {
+      "form": {
+        "confirmPassword": {
+          "label": "Confirm password*",
+          "placeholder": "Confirm your password"
+        },
+        "email": {
+          "label": "Email*",
+          "placeholder": "Enter your email"
+        },
+        "name": {
+          "label": "Name*",
+          "placeholder": "Enter username"
+        },
+        "password": {
+          "label": "Password*",
+          "placeholder": "Enter your password"
+        },
+        "submit": "Sign up"
+      },
+      "login": {
+        "button": "Log in",
+        "question": "Already have an account?"
+      }
+    },
+    "rights": "Ravelo. All rights reserved."
+  },
+  "errorCodes": {
+    "bibNumber": {
+      "endNumber": {
+        "higherThanStartNumber": "End number must be higher than Start number"
+      }
+    },
+    "shared": {
+      "email": "Invalid email address",
+      "minLength": "Too short",
+      "passwordMatch": "Passwords don't match",
+      "required": "Required"
+    },
+    "timingPoint": {
+      "description": {
+        "length": "Description should not be longer than 100 characters"
+      },
+      "shortName": {
+        "length": "Short name should not be longer than 3 characters"
+      }
+    }
+  },
   "menuOptions": {
+    "admin": {
+      "accounts": "Accounts",
+      "dashboard": "Dashboard",
+      "hello": "Say hay!",
+      "races": "All Races",
+      "title": "Administrator"
+    },
     "general": {
-      "title": "General",
-      "index": "Base Info",
       "bibNumbers": "Bib Numbers",
+      "classifications": "Classifications",
+      "index": "Base Info",
       "players": "Players",
       "registrations": "Registrations",
-      "classifications": "Classifications"
-    },
-    "timeMeasurement": {
-      "title": "Time measurement",
-      "timingPoints": "Timing Points",
-      "splitTimes": "Split Times",
-      "results": "Results",
-      "penalties": "Penalties",
-      "tools": "Tools"
+      "title": "General"
     },
     "management": {
-      "title": "Management",
-      "settings": "Settings"
+      "settings": "Settings",
+      "title": "Management"
     },
-    "admin": {
-      "title": "Administrator",
-      "dashboard": "Dashboard",
-      "races": "All Races",
-      "hello": "Say hay!",
-      "accounts": "Accounts"
+    "timeMeasurement": {
+      "penalties": "Penalties",
+      "results": "Results",
+      "splitTimes": "Split Times",
+      "timingPoints": "Timing Points",
+      "title": "Time measurement",
+      "tools": "Tools"
     }
   },
   "pages": {
+    "admin": {
+      "accounts": {
+        "header": {
+          "title": "accounts"
+        }
+      },
+      "header": {
+        "title": "Admin"
+      },
+      "hello": {
+        "title": "hello"
+      },
+      "races": {
+        "title": "races"
+      }
+    },
+    "bibNumbers": {
+      "create": {
+        "button": "Add Bib Number",
+        "title": "Create new BibNumber"
+      },
+      "createMany": {
+        "button": "Add many",
+        "form": {
+          "endNumber": {
+            "label": "End number",
+            "placeholder": "Enter range end number"
+          },
+          "omitDuplicates": {
+            "label": "Omit duplicates"
+          },
+          "startNumber": {
+            "label": "Start number",
+            "placeholder": "Enter range start number"
+          }
+        },
+        "title": "Create many bib numbers"
+      },
+      "delete": {
+        "confirmation": {
+          "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?",
+          "title": "Delete bibNumber"
+        },
+        "description": "You may delete the bib number",
+        "name": "Delete bib number"
+      },
+      "deleteAll": {
+        "button": "Remove all",
+        "confirmation": {
+          "text": "You are trying to delete all Bib Numbers. Do you want to proceed?",
+          "title": "Delete bibNumber"
+        }
+      },
+      "edit": {
+        "description": "You may edit the bib number",
+        "name": "Edit bib number",
+        "title": "Edit BibNumber"
+      },
+      "form": {
+        "number": {
+          "label": "Bib Number",
+          "placeholder": "Bib number"
+        }
+      },
+      "grid": {
+        "columns": {
+          "actions": "Actions",
+          "bibNumber": "Bib Number",
+          "index": ""
+        },
+        "search": {
+          "placeholder": "Search bib numbers..."
+        }
+      },
+      "header": {
+        "description": "Configure the bib numbers to easily assign them to players",
+        "title": "Bib Numbers"
+      }
+    },
+    "classifications": {
+      "categories": {
+        "create": {
+          "button": "Add category",
+          "title": "Create new category"
+        },
+        "delete": {
+          "confirmation": {
+            "text": "You are trying to delete the Category {name}. Do you want to proceed?",
+            "title": "Delete category"
+          },
+          "description": "You may delete the category",
+          "name": "Delete category"
+        },
+        "edit": {
+          "description": "You may modify the category",
+          "name": "Edit category",
+          "title": "Edit category"
+        },
+        "form": {
+          "gender": {
+            "kind": {
+              "any": "Any",
+              "female": "Female",
+              "male": "Male"
+            },
+            "label": "Gender"
+          },
+          "maxAge": {
+            "label": "Max age",
+            "placeholder": "Enter maximum age"
+          },
+          "minAge": {
+            "label": "Min age",
+            "placeholder": "Enter minimum age"
+          },
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter category name"
+          }
+        },
+        "grid": {
+          "columns": {
+            "actions": "Actions",
+            "gender": "Gender",
+            "index": "",
+            "isSpecial": "Is Special",
+            "maxAge": "Max Age",
+            "minAge": "Min Age",
+            "name": "Name"
+          },
+          "search": {
+            "placeholder": "Search categories..."
+          }
+        },
+        "header": {
+          "description": "Configure categories for category",
+          "title": "Categories"
+        }
+      },
+      "create": {
+        "button": "Add Classification",
+        "title": "Create new classification"
+      },
+      "edit": {
+        "confirmation": {
+          "title": "Edit the classification"
+        },
+        "description": "You can change already existing classification",
+        "title": "Edit classification"
+      },
+      "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter the name"
+        }
+      },
+      "grid": {
+        "columns": {
+          "actions": "Actions",
+          "index": "",
+          "name": "Name"
+        },
+        "search": {
+          "placeholder": "Search classifications..."
+        }
+      },
+      "header": {
+        "description": "Configure race classifications",
+        "title": "Classifications"
+      },
+      "load": {
+        "button": "Load"
+      },
+      "manageCategories": {
+        "description": "You can define categories within the classification",
+        "name": "Manage categories"
+      }
+    },
     "general": {
       "dashboard": {
         "header": {
-          "title": "Dashboard",
-          "description": "Monitor what is the most important"
-        },
-        "statistics": {
-          "title": "Statistics",
-          "widgets": {
-            "futureRaces": "Future races",
-            "pastRaces": "Past races"
-          }
+          "description": "Monitor what is the most important",
+          "title": "Dashboard"
         },
         "raceStatistics": {
           "title": "Incoming race statistics",
@@ -50,283 +291,103 @@
             "registeredPlayers": "Registered Players",
             "registrationStatus": "Registration Status"
           }
-        }
-      }
-    },
-    "registration": {
-      "turnOffPopup": {
-        "title": "Turn off registration",
-        "description": "Online registration will be turned off"
-      },
-      "turnOnPopup": {
-        "title": "Turn on registration",
-        "description": "Online registration will be turned on"
-      }
-    },
-    "races": {
-      "addRace": "Add Race",
-      "form": {
-        "name": {
-          "label": "Name",
-          "placeholder": "Enter race name"
         },
-        "date": {
-          "label": "Date",
-          "placeholder": "Date of the race"
-        },
-        "playersLimit": {
-          "label": "Players limit",
-          "placeholder": "Enter limit of players"
-        },
-        "location": {
-          "label": "Location",
-          "placeholder": "Enter location"
-        },
-        "sportKind": {
-          "label": "Sport kind",
-          "placeholder": "Choose the sport kind"
-        },
-        "registrationEnabled": {
-          "label": "Registration enabled"
-        },
-        "useSampleData": {
-          "label": "Add sample data"
-        },
-        "description": {
-          "label": "Description",
-          "placeholder": "Describe the race"
-        },
-        "terms": {
-          "label": "Terms and conditions",
-          "placeholder": "Url to the terms and conditions"
-        },
-        "emailTemplate": {
-          "label": "Email template",
-          "placeholder": "Enter your appendinx to the registration confirmation email"
-        }
-      },
-      "open": "Open",
-      "upcomingRaces": {
-        "header": {
-          "title": "Upcoming Races",
-          "description": "Races that will happen soon"
-        }
-      },
-      "list": {
-        "header": {
-          "title": "Races ({number})",
-          "description": "Manage all past and future races"
-        }
-      },
-      "wipeStopwatchPopup": {
-        "title": "Wipe stopwatch",
-        "description": "Wipe all stopwatch data",
-        "confirmation": {
-          "title": "Wipe race data",
-          "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?"
-        }
-      },
-      "deleteRacePopup": {
-        "title": "Delete",
-        "description": "Delete race",
-        "confirmation": {
-          "title": "Delete race",
-          "text": "You are trying to delete the Race {raceName}. Do you want to proceed?"
-        }
-      },
-      "grid": {
-        "columns": {
-          "name": "Name",
-          "date": "Date",
-          "registrationEnabled": "Registration",
-          "registeredPlayers": "Registrations",
-          "actions": "Actions"
-        }
-      },
-      "createRace": {
-        "title": "Create new race"
-      },
-      "editRace": {
-        "title": "Edit race",
-        "name": "Edit race",
-        "description": "Open edit race popup"
-      },
-      "registration": "Registration",
-      "filter": {
-        "all": "All",
-        "upcoming": "Upcoming",
-        "past": "Past"
-      }
-    },
-    "bibNumbers": {
-      "delete": {
-        "confirmation": {
-          "title": "Delete bibNumber",
-          "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?"
-        },
-        "name": "Delete bib number",
-        "description": "You may delete the bib number"
-      },
-      "grid": {
-        "columns": {
-          "bibNumber": "Bib Number",
-          "actions": "Actions",
-          "index": ""
-        },
-        "search": {
-          "placeholder": "Search bib numbers..."
-        }
-      },
-      "create": {
-        "title": "Create new BibNumber",
-        "button": "Add Bib Number"
-      },
-      "deleteAll": {
-        "confirmation": {
-          "title": "Delete bibNumber",
-          "text": "You are trying to delete all Bib Numbers. Do you want to proceed?"
-        },
-        "button": "Remove all"
-      },
-      "createMany": {
-        "title": "Create many bib numbers",
-        "button": "Add many",
-        "form": {
-          "startNumber": {
-            "label": "Start number",
-            "placeholder": "Enter range start number"
-          },
-          "endNumber": {
-            "label": "End number",
-            "placeholder": "Enter range end number"
-          },
-          "omitDuplicates": {
-            "label": "Omit duplicates"
+        "statistics": {
+          "title": "Statistics",
+          "widgets": {
+            "futureRaces": "Future races",
+            "pastRaces": "Past races"
           }
         }
-      },
-      "edit": {
-        "title": "Edit BibNumber",
-        "name": "Edit bib number",
-        "description": "You may edit the bib number"
-      },
-      "header": {
-        "title": "Bib Numbers",
-        "description": "Configure the bib numbers to easily assign them to players"
-      },
-      "form": {
-        "number": {
-          "label": "Bib Number",
-          "placeholder": "Bib number"
-        }
       }
     },
-    "players": {
-      "grid": {
-        "columns": {
-          "classification": "Classification",
-          "bibNumber": "Bib Number",
-          "name": "Name",
-          "gender": "Gender",
-          "startTime": "Start Time",
-          "birthDate": "Birth Date",
-          "country": "Country",
-          "city": "City",
-          "team": "Team",
-          "email": "Email",
-          "phoneNumber": "Phone Number",
-          "icePhoneNumber": "Ice Phone Number",
-          "actions": "Actions",
-          "lastName": "Last Name"
-        },
-        "search": {
-          "placeholder": "Search players..."
-        }
+    "playerRegistrations": {
+      "create": {
+        "button": "Register Player",
+        "title": "Create new player registration"
       },
       "delete": {
         "confirmation": {
-          "title": "Delete player",
-          "text": "You are trying to delete the Player {name} {lastName}. Do you want to proceed?"
+          "text": "You are trying to delete the Player Registration {name} {lastName}. Do you want to proceed?",
+          "title": "Delete player registration"
         },
-        "name": "Delete player",
-        "description": "You may delete the player"
-      },
-      "create": {
-        "title": "Create new player",
-        "button": "Add Player"
+        "description": "It is permanent action",
+        "title": "Delete registered Player"
       },
       "edit": {
-        "title": "Edit player",
-        "name": "Edit player",
-        "description": "You may modify the player"
-      },
-      "header": {
-        "title": "Players",
-        "description": "Players available in the stopwatch, their times may be measured"
+        "description": "You can change the registration",
+        "name": "Edit registration",
+        "title": "Edit player registration"
       },
       "export": {
-        "button": "export"
+        "button": "Export"
       },
       "form": {
-        "classification": {
-          "label": "Classification",
-          "placeholder": "Choose classification"
-        },
-        "bibNumber": {
-          "label": "Bib Number",
-          "placeholder": "bib number"
-        },
-        "name": {
-          "label": "Name",
-          "placeholder": "Name"
-        },
-        "lastName": {
-          "label": "Last Name",
-          "placeholder": "Last Name"
-        },
-        "gender": {
-          "label": "Gender",
-          "placeholder": "Gender"
-        },
         "birthDate": {
+          "label": "Birth Date",
           "placeholder": "Birth Date"
-        },
-        "team": {
-          "label": "Team",
-          "placeholder": "Team"
-        },
-        "country": {
-          "label": "Country",
-          "placeholder": "Country"
         },
         "city": {
           "label": "City",
           "placeholder": "City"
         },
+        "country": {
+          "label": "Country",
+          "placeholder": "Country"
+        },
         "email": {
           "label": "Email",
-          "placeholder": "Email"
+          "placeholder": "xyz@domain.com"
         },
-        "phoneNumber": {
-          "label": "Phone Number",
-          "placeholder": "Phone Number"
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Gender"
         },
         "icePhoneNumber": {
           "label": "ICE Phone Number",
           "placeholder": "ICE Phone Number"
         },
-        "startTime": {
-          "label": "Start Time",
-          "placeholder": "eg. 11:11"
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Last name"
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "First name"
+        },
+        "phoneNumber": {
+          "label": "Phone Number",
+          "placeholder": "Phone Number"
+        },
+        "team": {
+          "label": "Team",
+          "placeholder": "Team"
         }
-      }
-    },
-    "playerRegistrations": {
-      "togglePlayerPayment": {
-        "confirmation": {
-          "title": "Confirm payment change",
-          "text": "You are trying to change {name} {lastName} payment status to: {hasPaid. Do you want to proceed?"
+      },
+      "grid": {
+        "columns": {
+          "actions": "Actions",
+          "birthDate": "Birth Date",
+          "city": "City",
+          "country": "Country",
+          "email": "E-mail",
+          "gender": "Gender",
+          "icePhoneNumber": "ICE Number",
+          "lastName": "Last Name",
+          "name": "Name",
+          "payment": "Payment",
+          "phone": "Phone",
+          "promotedToPlayer": "Promoted",
+          "registrationDate": "Registered",
+          "team": "Team"
+        },
+        "search": {
+          "placeholder": "Search for registrations..."
         }
+      },
+      "header": {
+        "description": "Players registered for the race, may be promoted to players",
+        "title": "Registered players"
       },
       "payment": {
         "status": {
@@ -335,334 +396,296 @@
         }
       },
       "promoteToPlayer": {
-        "title": "Promote to Player",
-        "description": "Promoted player will be available in stopwatch",
         "confirmation": {
           "title": "Promote player registration to player"
         },
+        "description": "Promoted player will be available in stopwatch",
         "form": {
-          "classification": {
-            "label": "Classification",
-            "placeholder": "Select classification"
-          },
           "bibNumber": {
             "label": "Bib number",
             "placeholder": "Enter bib number"
           },
+          "classification": {
+            "label": "Classification",
+            "placeholder": "Select classification"
+          },
           "startTime": {
             "label": "Start time"
           }
+        },
+        "title": "Promote to Player"
+      },
+      "togglePlayerPayment": {
+        "confirmation": {
+          "text": "You are trying to change {name} {lastName} payment status to: {hasPaid. Do you want to proceed?",
+          "title": "Confirm payment change"
         }
+      }
+    },
+    "players": {
+      "create": {
+        "button": "Add Player",
+        "title": "Create new player"
       },
       "delete": {
-        "title": "Delete registered Player",
-        "description": "It is permanent action",
         "confirmation": {
-          "title": "Delete player registration",
-          "text": "You are trying to delete the Player Registration {name} {lastName}. Do you want to proceed?"
-        }
-      },
-      "grid": {
-        "columns": {
-          "name": "Name",
-          "lastName": "Last Name",
-          "gender": "Gender",
-          "birthDate": "Birth Date",
-          "country": "Country",
-          "city": "City",
-          "team": "Team",
-          "phone": "Phone",
-          "email": "E-mail",
-          "icePhoneNumber": "ICE Number",
-          "registrationDate": "Registered",
-          "payment": "Payment",
-          "promotedToPlayer": "Promoted",
-          "actions": "Actions"
+          "text": "You are trying to delete the Player {name} {lastName}. Do you want to proceed?",
+          "title": "Delete player"
         },
-        "search": {
-          "placeholder": "Search for registrations..."
-        }
-      },
-      "create": {
-        "title": "Create new player registration",
-        "button": "Register Player"
+        "description": "You may delete the player",
+        "name": "Delete player"
       },
       "edit": {
-        "title": "Edit player registration",
-        "name": "Edit registration",
-        "description": "You can change the registration"
-      },
-      "header": {
-        "title": "Registered players",
-        "description": "Players registered for the race, may be promoted to players"
+        "description": "You may modify the player",
+        "name": "Edit player",
+        "title": "Edit player"
       },
       "export": {
-        "button": "Export"
+        "button": "export"
       },
       "form": {
-        "name": {
-          "label": "Name",
-          "placeholder": "First name"
-        },
-        "lastName": {
-          "label": "Last Name",
-          "placeholder": "Last name"
-        },
-        "gender": {
-          "label": "Gender",
-          "placeholder": "Gender"
+        "bibNumber": {
+          "label": "Bib Number",
+          "placeholder": "bib number"
         },
         "birthDate": {
-          "label": "Birth Date",
           "placeholder": "Birth Date"
-        },
-        "team": {
-          "label": "Team",
-          "placeholder": "Team"
-        },
-        "country": {
-          "label": "Country",
-          "placeholder": "Country"
         },
         "city": {
           "label": "City",
           "placeholder": "City"
         },
+        "classification": {
+          "label": "Classification",
+          "placeholder": "Choose classification"
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Country"
+        },
         "email": {
           "label": "Email",
-          "placeholder": "xyz@domain.com"
+          "placeholder": "Email"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Gender"
+        },
+        "icePhoneNumber": {
+          "label": "ICE Phone Number",
+          "placeholder": "ICE Phone Number"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Last Name"
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "Name"
         },
         "phoneNumber": {
           "label": "Phone Number",
           "placeholder": "Phone Number"
         },
-        "icePhoneNumber": {
-          "label": "ICE Phone Number",
-          "placeholder": "ICE Phone Number"
+        "startTime": {
+          "label": "Start Time",
+          "placeholder": "eg. 11:11"
+        },
+        "team": {
+          "label": "Team",
+          "placeholder": "Team"
         }
-      }
-    },
-    "classifications": {
+      },
       "grid": {
         "columns": {
-          "name": "Name",
           "actions": "Actions",
-          "index": ""
+          "bibNumber": "Bib Number",
+          "birthDate": "Birth Date",
+          "city": "City",
+          "classification": "Classification",
+          "country": "Country",
+          "email": "Email",
+          "gender": "Gender",
+          "icePhoneNumber": "Ice Phone Number",
+          "lastName": "Last Name",
+          "name": "Name",
+          "phoneNumber": "Phone Number",
+          "startTime": "Start Time",
+          "team": "Team"
         },
         "search": {
-          "placeholder": "Search classifications..."
-        }
-      },
-      "manageCategories": {
-        "name": "Manage categories",
-        "description": "You can define categories within the classification"
-      },
-      "categories": {
-        "grid": {
-          "columns": {
-            "index": "",
-            "name": "Name",
-            "minAge": "Min Age",
-            "maxAge": "Max Age",
-            "gender": "Gender",
-            "isSpecial": "Is Special",
-            "actions": "Actions"
-          },
-          "search": {
-            "placeholder": "Search categories..."
-          }
-        },
-        "delete": {
-          "confirmation": {
-            "title": "Delete category",
-            "text": "You are trying to delete the Category {name}. Do you want to proceed?"
-          },
-          "name": "Delete category",
-          "description": "You may delete the category"
-        },
-        "create": {
-          "title": "Create new category",
-          "button": "Add category"
-        },
-        "edit": {
-          "title": "Edit category",
-          "name": "Edit category",
-          "description": "You may modify the category"
-        },
-        "header": {
-          "title": "Categories",
-          "description": "Configure categories for category"
-        },
-        "form": {
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter category name"
-          },
-          "minAge": {
-            "label": "Min age",
-            "placeholder": "Enter minimum age"
-          },
-          "maxAge": {
-            "label": "Max age",
-            "placeholder": "Enter maximum age"
-          },
-          "gender": {
-            "label": "Gender",
-            "kind": {
-              "any": "Any",
-              "male": "Male",
-              "female": "Female"
-            }
-          }
-        }
-      },
-      "create": {
-        "title": "Create new classification",
-        "button": "Add Classification"
-      },
-      "edit": {
-        "title": "Edit classification",
-        "description": "You can change already existing classification",
-        "confirmation": {
-          "title": "Edit the classification"
+          "placeholder": "Search players..."
         }
       },
       "header": {
-        "title": "Classifications",
-        "description": "Configure race classifications"
-      },
-      "load": {
-        "button": "Load"
-      },
-      "form": {
-        "name": {
-          "label": "Name",
-          "placeholder": "Enter the name"
+        "description": "Players available in the stopwatch, their times may be measured",
+        "title": "Players"
+      }
+    },
+    "race": {
+      "statistics": {
+        "header": {
+          "title": "Statistics"
+        },
+        "widgets": {
+          "registeredPlayers": "Registered players",
+          "registrationStatus": "Registration status"
         }
       }
     },
-    "timingPoints": {
-      "accessUrls": {
-        "grid": {
-          "columns": {
-            "keyName": "Key name",
-            "expiresAt": "Expires At",
-            "code": "Code",
-            "supervisor": "Supervisor",
-            "token": "Token",
-            "url": "URL"
-          }
-        },
-        "edit": {
-          "button": "Edit"
-        },
-        "create": {
-          "title": "Create access key"
-        },
-        "delete": {
-          "confirmation": {
-            "title": "Delete timing point access url",
-            "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?"
-          }
-        },
-        "header": {
-          "title": "Access URLs",
-          "description": "Copy access URLs and send them to the timekeepers"
-        },
-        "form": {
-          "name": {
-            "label": "Access Url name",
-            "placeholder": "Type Access Url name"
-          },
-          "code": {
-            "name": "Code (optional)",
-            "placeholder": "Type Passcode"
-          },
-          "canAccessOthers": {
-            "label": "Can access others"
-          }
-        }
+    "races": {
+      "addRace": "Add Race",
+      "createRace": {
+        "title": "Create new race"
       },
-      "create": {
-        "title": "Create new timing point",
-        "button": "Add timing point"
-      },
-      "edit": {
-        "title": "Edit timing point"
-      },
-      "delete": {
+      "deleteRacePopup": {
         "confirmation": {
-          "title": "Delete timing point",
-          "text": "You are trying to delete the Timing Point {name}. Do you want to proceed?"
-        }
+          "text": "You are trying to delete the Race {raceName}. Do you want to proceed?",
+          "title": "Delete race"
+        },
+        "description": "Delete race",
+        "title": "Delete"
       },
-      "header": {
-        "title": "Timing points",
-        "description": "Configure points where time will be measured, used in stopwatch"
+      "editRace": {
+        "description": "Open edit race popup",
+        "name": "Edit race",
+        "title": "Edit race"
+      },
+      "filter": {
+        "all": "All",
+        "past": "Past",
+        "upcoming": "Upcoming"
       },
       "form": {
-        "name": {
-          "label": "Timing Point Name",
-          "placeholder": "Type Timing Point Name"
+        "date": {
+          "label": "Date",
+          "placeholder": "Date of the race"
         },
         "description": {
           "label": "Description",
-          "placeholder": "Describe the timing point"
+          "placeholder": "Describe the race"
         },
-        "shortName": {
-          "label": "Short name",
-          "placeholder": "Enter short name"
+        "emailTemplate": {
+          "label": "Email template",
+          "placeholder": "Enter your appendinx to the registration confirmation email"
+        },
+        "location": {
+          "label": "Location",
+          "placeholder": "Enter location"
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter race name"
+        },
+        "playersLimit": {
+          "label": "Players limit",
+          "placeholder": "Enter limit of players"
+        },
+        "registrationEnabled": {
+          "label": "Registration enabled"
+        },
+        "sportKind": {
+          "label": "Sport kind",
+          "placeholder": "Choose the sport kind"
+        },
+        "terms": {
+          "label": "Terms and conditions",
+          "placeholder": "Url to the terms and conditions"
+        },
+        "useSampleData": {
+          "label": "Add sample data"
         }
-      }
-    },
-    "splitTimes": {
+      },
       "grid": {
         "columns": {
-          "bibNumber": "Bib",
-          "playerName": "Name",
-          "playerLastName": "Last Name"
-        },
-        "search": {
-          "placeholder": "Search split times..."
+          "actions": "Actions",
+          "date": "Date",
+          "name": "Name",
+          "registeredPlayers": "Registrations",
+          "registrationEnabled": "Registration"
         }
       },
-      "edit": {
-        "title": "Edit split time"
+      "list": {
+        "header": {
+          "description": "Manage all past and future races",
+          "title": "Races ({number})"
+        }
       },
-      "revert": {
+      "open": "Open",
+      "registration": "Registration",
+      "upcomingRaces": {
+        "header": {
+          "description": "Races that will happen soon",
+          "title": "Upcoming Races"
+        }
+      },
+      "wipeStopwatchPopup": {
         "confirmation": {
-          "title": "Revert manual split time",
-          "text": "You are trying to revert manual split time changes. Do you want to proceed?"
+          "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?",
+          "title": "Wipe race data"
+        },
+        "description": "Wipe all stopwatch data",
+        "title": "Wipe stopwatch"
+      }
+    },
+    "registration": {
+      "turnOffPopup": {
+        "description": "Online registration will be turned off",
+        "title": "Turn off registration"
+      },
+      "turnOnPopup": {
+        "description": "Online registration will be turned on",
+        "title": "Turn on registration"
+      }
+    },
+    "result": {
+      "applyTimePenalty": {
+        "form": {
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Type reason for penalty"
+          },
+          "time": {
+            "label": "Time",
+            "placeholder": "Enter time penalty"
+          }
         }
       },
-      "header": {
-        "title": "Split times",
-        "description": "Times measured by the stopwatches"
-      },
-      "form": {
-        "bibNumber": {
-          "label": "Bib number",
-          "placeholder": "Enter bib number"
-        },
-        "time": {
-          "label": "Time"
-        },
-        "timingPoint": {
-          "label": "Timing Point",
-          "placeholder": "Choose timing point"
+      "disqualify": {
+        "form": {
+          "reason": {
+            "label": "Reason",
+            "placeholder": "Type reason for disqualification"
+          }
         }
       }
     },
     "results": {
+      "applyTimePenalty": {
+        "confirmation": {
+          "text": "You are trying to apply penalty the Player {name} {lastName} result. Do you want to proceed?",
+          "title": "Apply time penalty"
+        },
+        "description": "Penalty will be added to player's result",
+        "title": "Apply time penalty"
+      },
+      "disqualify": {
+        "confirmation": {
+          "text": "You are trying to disqualify the player {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time.",
+          "title": "Disqualify player"
+        },
+        "description": "Disqualification may be reverted later",
+        "title": "Disqualify player"
+      },
       "grid": {
         "columns": {
-          "bibNumber": "Bib",
-          "playerName": "Name",
-          "playerLastName": "Last Name",
-          "start": "Start",
-          "finish": "Finish",
-          "result": "Result",
           "actions": "Actions",
+          "bibNumber": "Bib",
+          "finish": "Finish",
+          "playerLastName": "Last Name",
+          "playerName": "Name",
+          "result": "Result",
+          "start": "Start",
           "totalTimePenalty": "Time penalty"
         },
         "search": {
@@ -670,66 +693,50 @@
         }
       },
       "header": {
-        "title": "Race Results",
-        "description": "Results measured by the stopwatch, each may be overriden"
+        "description": "Results measured by the stopwatch, each may be overriden",
+        "title": "Race Results"
       },
-      "disqualify": {
-        "title": "Disqualify player",
-        "description": "Disqualification may be reverted later",
+      "manageTimePenalties": {
         "confirmation": {
-          "title": "Disqualify player",
-          "text": "You are trying to disqualify the player {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time."
+          "text": "Manage the time penalties of the player {name} {lastName}",
+          "title": "Time penalties"
+        },
+        "grid": {
+          "columns": {
+            "actions": "Actions",
+            "reason": "Reason",
+            "time": "Time"
+          }
+        },
+        "revertTimePenalty": {
+          "button": "Delete",
+          "confirmation": {
+            "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?",
+            "title": "Revert time penalty"
+          },
+          "description": "The result achieved by the player will be restored",
+          "title": "Revert time penalty"
         }
       },
       "revertDisqualification": {
-        "title": "Revert disqualification",
+        "confirmation": {
+          "text": "You are trying to revert disqualification of the Player {name} {lastName}. Do you want to proceed?\"",
+          "title": "Revert disqualification"
+        },
         "description": "The original score of the player will be restored",
-        "confirmation": {
-          "title": "Revert disqualification",
-          "text": "You are trying to revert disqualification of the Player {name} {lastName}. Do you want to proceed?\""
-        }
-      },
-      "applyTimePenalty": {
-        "title": "Apply time penalty",
-        "description": "Penalty will be added to player's result",
-        "confirmation": {
-          "title": "Apply time penalty",
-          "text": "You are trying to apply penalty the Player {name} {lastName} result. Do you want to proceed?"
-        }
-      },
-      "manageTimePenalties": {
-        "grid": {
-          "columns": {
-            "reason": "Reason",
-            "time": "Time",
-            "actions": "Actions"
-          }
-        },
-        "confirmation": {
-          "title": "Time penalties",
-          "text": "Manage the time penalties of the player {name} {lastName}"
-        },
-        "revertTimePenalty": {
-          "title": "Revert time penalty",
-          "description": "The result achieved by the player will be restored",
-          "confirmation": {
-            "title": "Revert time penalty",
-            "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?"
-          },
-          "button": "Delete"
-        }
+        "title": "Revert disqualification"
       }
     },
     "settings": {
       "apiKeys": {
         "create": {
-          "title": "Create api key",
-          "button": "Add API Key"
+          "button": "Add API Key",
+          "title": "Create api key"
         },
         "delete": {
           "confirmation": {
-            "title": "Delete ApiKey",
-            "text": "You are trying to delete the ApiKey {name}. Do you want to proceed?"
+            "text": "You are trying to delete the ApiKey {name}. Do you want to proceed?",
+            "title": "Delete ApiKey"
           }
         },
         "edit": {
@@ -743,46 +750,135 @@
         }
       },
       "header": {
-        "title": "Settings",
-        "description": "API Keys may be configured here"
+        "description": "API Keys may be configured here",
+        "title": "Settings"
       }
     },
-    "admin": {
-      "header": {
-        "title": "Admin"
+    "splitTimes": {
+      "edit": {
+        "title": "Edit split time"
       },
-      "accounts": {
-        "header": {
-          "title": "accounts"
+      "form": {
+        "bibNumber": {
+          "label": "Bib number",
+          "placeholder": "Enter bib number"
+        },
+        "time": {
+          "label": "Time"
+        },
+        "timingPoint": {
+          "label": "Timing Point",
+          "placeholder": "Choose timing point"
         }
       },
-      "hello": {
-        "title": "hello"
+      "grid": {
+        "columns": {
+          "bibNumber": "Bib",
+          "playerLastName": "Last Name",
+          "playerName": "Name"
+        },
+        "search": {
+          "placeholder": "Search split times..."
+        }
       },
-      "races": {
-        "title": "races"
+      "header": {
+        "description": "Times measured by the stopwatches",
+        "title": "Split times"
+      },
+      "revert": {
+        "confirmation": {
+          "text": "You are trying to revert manual split time changes. Do you want to proceed?",
+          "title": "Revert manual split time"
+        }
       }
     },
-    "race": {
-      "statistics": {
-        "widgets": {
-          "registeredPlayers": "Registered players",
-          "registrationStatus": "Registration status"
+    "timingPoints": {
+      "accessUrls": {
+        "create": {
+          "title": "Create access key"
+        },
+        "delete": {
+          "confirmation": {
+            "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
+            "title": "Delete timing point access url"
+          }
+        },
+        "edit": {
+          "button": "Edit"
+        },
+        "form": {
+          "canAccessOthers": {
+            "label": "Can access others"
+          },
+          "code": {
+            "name": "Code (optional)",
+            "placeholder": "Type Passcode"
+          },
+          "name": {
+            "label": "Access Url name",
+            "placeholder": "Type Access Url name"
+          }
+        },
+        "grid": {
+          "columns": {
+            "code": "Code",
+            "expiresAt": "Expires At",
+            "keyName": "Key name",
+            "supervisor": "Supervisor",
+            "token": "Token",
+            "url": "URL"
+          }
         },
         "header": {
-          "title": "Statistics"
+          "description": "Copy access URLs and send them to the timekeepers",
+          "title": "Access URLs"
         }
+      },
+      "create": {
+        "button": "Add timing point",
+        "title": "Create new timing point"
+      },
+      "delete": {
+        "confirmation": {
+          "text": "You are trying to delete the Timing Point {name}. Do you want to proceed?",
+          "title": "Delete timing point"
+        }
+      },
+      "edit": {
+        "title": "Edit timing point"
+      },
+      "form": {
+        "description": {
+          "label": "Description",
+          "placeholder": "Describe the timing point"
+        },
+        "name": {
+          "label": "Timing Point Name",
+          "placeholder": "Type Timing Point Name"
+        },
+        "shortName": {
+          "label": "Short name",
+          "placeholder": "Enter short name"
+        }
+      },
+      "header": {
+        "description": "Configure points where time will be measured, used in stopwatch",
+        "title": "Timing points"
       }
     },
     "tools": {
-      "header": {
-        "title": "Tools",
-        "description": "Tools useful during the race"
-      },
       "applications": {
+        "buttons": {
+          "getQrCode": "Get QR code",
+          "open": "Open"
+        },
         "countdown": {
           "description": "Useful at the launch site. Can be displayed on a phone, tablet or any larger screen. Displays the start number and the name of the next competitor. Counts down the number of seconds until his start. It also allows you to trigger a sound signal.",
           "title": "Countdown (to zero)"
+        },
+        "results": {
+          "description": "Displays live results. The results of the athletes appear as soon as you uncheck them in the stopwatch. A breakdown by category is included. The site is adapted for display on a phone, refreshes automatically.",
+          "title": "Live Results"
         },
         "startList": {
           "description": "The app is useful for all athletes. They can check their starting time. See who has already started, who will start next and how many competitors are left. The entire start list is included. Optimized for mobile phones.",
@@ -791,61 +887,48 @@
         "stopwatch": {
           "description": "A countdown timer from the start of the competition. In the case of individual starts it is the time from the start of the first competitor, in the case of a mass start it is the time from the start of all competitors.",
           "title": "Stopwatch"
-        },
-        "buttons": {
-          "getQrCode": "Get QR code",
-          "open": "Open"
-        },
-        "results": {
-          "title": "Live Results",
-          "description": "Displays live results. The results of the athletes appear as soon as you uncheck them in the stopwatch. A breakdown by category is included. The site is adapted for display on a phone, refreshes automatically."
-        }
-      }
-    },
-    "result": {
-      "applyTimePenalty": {
-        "form": {
-          "time": {
-            "label": "Time",
-            "placeholder": "Enter time penalty"
-          },
-          "reason": {
-            "label": "Reason",
-            "placeholder": "Type reason for penalty"
-          }
         }
       },
-      "disqualify": {
-        "form": {
-          "reason": {
-            "label": "Reason",
-            "placeholder": "Type reason for disqualification"
-          }
-        }
+      "header": {
+        "description": "Tools useful during the race",
+        "title": "Tools"
+      }
+    }
+  },
+  "playersManagement": {
+    "player": {
+      "errors": {
+        "bibNumberAlreadyTaken": "Bib number is already assigned.",
+        "classificationNotFound": "Chosen classification was not found.",
+        "playerWithoutStartTimeExists": "There is a player without the start time defined.",
+        "registrationAlreadyPromoted": "Registration is already promoted to player.",
+        "startTimeAlreadyTaken": "Start time is already assigned."
+      }
+    },
+    "playerRegistration": {
+      "errors": {
+        "exceededNumberOfRegistrations": "Maximum number of registrations reached.",
+        "registrationDisabled": "Registration for this race is disabled.",
+        "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first."
+      }
+    }
+  },
+  "raceManagement": {
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "You must have at least one race"
       }
     }
   },
   "registration": {
+    "buttons": {
+      "pending": "Registration pending",
+      "register": "Register"
+    },
     "fields": {
-      "gender": {
-        "placeholder": "Select gender",
-        "label": "Gender"
-      },
       "birthDate": {
         "label": "Birth Date",
         "placeholder": "Your birth date"
-      },
-      "name": {
-        "label": "First Name",
-        "placeholder": "Your first name"
-      },
-      "lastName": {
-        "label": "Last Name",
-        "placeholder": "Your last name"
-      },
-      "team": {
-        "label": "Team (optional)",
-        "placeholder": "Your team"
       },
       "city": {
         "label": "City",
@@ -859,22 +942,38 @@
         "label": "Email",
         "placeholder": "Your email address"
       },
-      "phoneNumber": {
-        "label": "Phone number",
-        "placeholder": "Your phone number"
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select gender"
       },
       "icePhoneNumber": {
         "label": "ICE phone number (optional)",
         "placeholder": "Phone number in case of Emergency"
       },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Your last name"
+      },
+      "name": {
+        "label": "First Name",
+        "placeholder": "Your first name"
+      },
+      "phoneNumber": {
+        "label": "Phone number",
+        "placeholder": "Your phone number"
+      },
+      "team": {
+        "label": "Team (optional)",
+        "placeholder": "Your team"
+      },
       "terms": {
-        "termsAndConditions": "Terms and conditions",
-        "agree": "I agree with the"
+        "agree": "I agree with the",
+        "termsAndConditions": "Terms and conditions"
       }
     },
-    "buttons": {
-      "pending": "Registration pending",
-      "register": "Register"
+    "header": {
+      "description": "Register new participant",
+      "title": "Registration"
     },
     "result": {
       "failed": {
@@ -890,458 +989,354 @@
       "availableSpots": "Available spots",
       "closed": "Registration is closed.",
       "noSpotsLeft": "No available spots. Registration is closed."
-    },
-    "header": {
-      "title": "Registration",
-      "description": "Register new participant"
     }
   },
   "results": {
+    "abbreviations": {
+      "dnf": "Dit not finished",
+      "dns": "Did not start",
+      "dsq": "Disqualified"
+    },
+    "grid": {
+      "columns": {
+        "bibNumber": "Bib",
+        "category": "Cat",
+        "disqualifiaction": "Disqualification:",
+        "finish": "Finish",
+        "gap": "Gap",
+        "open": "Open",
+        "penalties": "Penalties:",
+        "place": "Loc",
+        "player": "Player",
+        "result": "Result",
+        "start": "Start",
+        "team": "Team",
+        "yearOfBirth": "YoB"
+      }
+    },
     "header": {
       "title": "Results"
     },
     "refresh": {
       "message": "Results refresh automatically every 10 seconds."
-    },
-    "abbreviations": {
-      "dns": "Did not start",
-      "dnf": "Dit not finished",
-      "dsq": "Disqualified"
-    },
-    "grid": {
-      "columns": {
-        "yearOfBirth": "YoB",
-        "place": "Loc",
-        "player": "Player",
-        "team": "Team",
-        "bibNumber": "Bib",
-        "open": "Open",
-        "category": "Cat",
-        "result": "Result",
-        "start": "Start",
-        "finish": "Finish",
-        "gap": "Gap",
-        "penalties": "Penalties:",
-        "disqualifiaction": "Disqualification:"
-      }
-    }
-  },
-  "errorCodes": {
-    "shared": {
-      "required": "Required",
-      "minLength": "Too short",
-      "email": "Invalid email address",
-      "passwordMatch": "Passwords don't match"
-    },
-    "timingPoint": {
-      "description": {
-        "length": "Description should not be longer than 100 characters"
-      },
-      "shortName": {
-        "length": "Short name should not be longer than 3 characters"
-      }
-    },
-    "bibNumber": {
-      "endNumber": {
-        "higherThanStartNumber": "End number must be higher than Start number"
-      }
     }
   },
   "shared": {
-    "unauthorized": "Unauthorized",
     "cancel": "Cancel",
-    "save": "Save",
-    "status": {
-      "disabled": "Disabled",
-      "enabled": "Enabled"
-    },
+    "close": "Close",
     "countryCodes": {
-      "AF": "Afghanistan",
-      "AL": "Albania",
-      "DZ": "Algeria",
       "AD": "Andorra",
-      "AO": "Angola",
-      "AI": "Anguilla",
-      "AQ": "Antarctica",
+      "AE": "United Arab Emirates",
+      "AF": "Afghanistan",
       "AG": "Antigua and Barbuda",
-      "SA": "Saudi Arabia",
-      "AR": "Argentina",
+      "AI": "Anguilla",
+      "AL": "Albania",
       "AM": "Armenia",
-      "AW": "Aruba",
-      "AU": "Australia",
+      "AO": "Angola",
+      "AQ": "Antarctica",
+      "AR": "Argentina",
+      "AS": "American Samoa",
       "AT": "Austria",
+      "AU": "Australia",
+      "AW": "Aruba",
+      "AX": "Åland Islands",
       "AZ": "Azerbaijan",
-      "BS": "Bahamas",
-      "BH": "Bahrain",
-      "BD": "Bangladesh",
+      "BA": "Bosnia and Herzegovina",
       "BB": "Barbados",
+      "BD": "Bangladesh",
       "BE": "Belgium",
-      "BZ": "Belize",
+      "BF": "Burkina Faso",
+      "BG": "Bulgaria",
+      "BH": "Bahrain",
+      "BI": "Burundi",
       "BJ": "Benin",
+      "BL": "Saint Barthélemy",
       "BM": "Bermuda",
-      "BT": "Bhutan",
-      "BY": "Belarus",
+      "BN": "Brunei Darussalam",
       "BO": "Bolivia, Plurinational State of",
       "BQ": "Bonaire, Sint Eustatius and Saba",
-      "BA": "Bosnia and Herzegovina",
-      "BW": "Botswana",
       "BR": "Brazil",
-      "BN": "Brunei Darussalam",
-      "IO": "British Indian Ocean Territory",
-      "VG": "Virgin Islands, British",
-      "BG": "Bulgaria",
-      "BF": "Burkina Faso",
-      "BI": "Burundi",
-      "CL": "Chile",
-      "CN": "China",
-      "HR": "Croatia",
-      "CW": "Curaçao",
-      "CY": "Cyprus",
-      "TD": "Chad",
-      "ME": "Montenegro",
-      "CZ": "Czech Republic",
-      "UM": "United States Minor Outlying Islands",
-      "DK": "Denmark",
-      "CD": "Congo, the Democratic Republic of the",
-      "DM": "Dominica",
-      "DO": "Dominican Republic",
-      "DJ": "Djibouti",
-      "EG": "Egypt",
-      "EC": "Ecuador",
-      "ER": "Eritrea",
-      "EE": "Estonia",
-      "ET": "Ethiopia",
-      "FK": "Falkland Islands (Malvinas)",
-      "FJ": "Fiji",
-      "PH": "Philippines",
-      "FI": "Finland",
-      "FR": "France",
-      "TF": "French Southern Territories",
-      "GA": "Gabon",
-      "GM": "Gambia",
-      "GS": "South Georgia and the South Sandwich Islands",
-      "GH": "Ghana",
-      "GI": "Gibraltar",
-      "GR": "Greece",
-      "GD": "Grenada",
-      "GL": "Greenland",
-      "GE": "Georgia",
-      "GU": "Guam",
-      "GG": "Guernsey",
-      "GF": "French Guiana",
-      "GY": "Guyana",
-      "GP": "Guadeloupe",
-      "GT": "Guatemala",
-      "GW": "Guinea-Bissau",
-      "GQ": "Equatorial Guinea",
-      "GN": "Guinea",
-      "HT": "Haiti",
-      "ES": "Spain",
-      "NL": "Netherlands",
-      "HN": "Honduras",
-      "HK": "Hong Kong",
-      "IN": "India",
-      "ID": "Indonesia",
-      "IQ": "Iraq",
-      "IR": "Iran, Islamic Republic of",
-      "IE": "Ireland",
-      "IS": "Iceland",
-      "IL": "Israel",
-      "JM": "Jamaica",
-      "JP": "Japan",
-      "YE": "Yemen",
-      "JE": "Jersey",
-      "JO": "Jordan",
-      "KY": "Cayman Islands",
-      "KH": "Cambodia",
-      "CM": "Cameroon",
+      "BS": "Bahamas",
+      "BT": "Bhutan",
+      "BV": "Bouvet Island",
+      "BW": "Botswana",
+      "BY": "Belarus",
+      "BZ": "Belize",
       "CA": "Canada",
-      "QA": "Qatar",
-      "KZ": "Kazakhstan",
-      "KE": "Kenya",
-      "KG": "Kyrgyzstan",
-      "KI": "Kiribati",
-      "CO": "Colombia",
-      "KM": "Comoros",
+      "CC": "Cocos (Keeling) Islands",
+      "CD": "Congo, the Democratic Republic of the",
+      "CF": "Central African Republic",
       "CG": "Congo",
-      "KR": "Korea, Republic of",
-      "KP": "Korea, Democratic People's Republic of",
+      "CH": "Switzerland",
+      "CI": "Côte d'Ivoire",
+      "CK": "Cook Islands",
+      "CL": "Chile",
+      "CM": "Cameroon",
+      "CN": "China",
+      "CO": "Colombia",
       "CR": "Costa Rica",
       "CU": "Cuba",
+      "CV": "Cape Verde",
+      "CW": "Curaçao",
+      "CX": "Christmas Island",
+      "CY": "Cyprus",
+      "CZ": "Czech Republic",
+      "DE": "Germany",
+      "DJ": "Djibouti",
+      "DK": "Denmark",
+      "DM": "Dominica",
+      "DO": "Dominican Republic",
+      "DZ": "Algeria",
+      "EC": "Ecuador",
+      "EE": "Estonia",
+      "EG": "Egypt",
+      "EH": "Western Sahara",
+      "ER": "Eritrea",
+      "ES": "Spain",
+      "ET": "Ethiopia",
+      "FI": "Finland",
+      "FJ": "Fiji",
+      "FK": "Falkland Islands (Malvinas)",
+      "FM": "Micronesia, Federated States of",
+      "FO": "Faroe Islands",
+      "FR": "France",
+      "GA": "Gabon",
+      "GB": "United Kingdom",
+      "GD": "Grenada",
+      "GE": "Georgia",
+      "GF": "French Guiana",
+      "GG": "Guernsey",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GL": "Greenland",
+      "GM": "Gambia",
+      "GN": "Guinea",
+      "GP": "Guadeloupe",
+      "GQ": "Equatorial Guinea",
+      "GR": "Greece",
+      "GS": "South Georgia and the South Sandwich Islands",
+      "GT": "Guatemala",
+      "GU": "Guam",
+      "GW": "Guinea-Bissau",
+      "GY": "Guyana",
+      "HK": "Hong Kong",
+      "HM": "Heard Island and McDonald Islands",
+      "HN": "Honduras",
+      "HR": "Croatia",
+      "HT": "Haiti",
+      "HU": "Hungary",
+      "ID": "Indonesia",
+      "IE": "Ireland",
+      "IL": "Israel",
+      "IM": "Isle of Man",
+      "IN": "India",
+      "IO": "British Indian Ocean Territory",
+      "IQ": "Iraq",
+      "IR": "Iran, Islamic Republic of",
+      "IS": "Iceland",
+      "IT": "Italy",
+      "JE": "Jersey",
+      "JM": "Jamaica",
+      "JO": "Jordan",
+      "JP": "Japan",
+      "KE": "Kenya",
+      "KG": "Kyrgyzstan",
+      "KH": "Cambodia",
+      "KI": "Kiribati",
+      "KM": "Comoros",
+      "KN": "Saint Kitts and Nevis",
+      "KP": "Korea, Democratic People's Republic of",
+      "KR": "Korea, Republic of",
       "KW": "Kuwait",
+      "KY": "Cayman Islands",
+      "KZ": "Kazakhstan",
       "LA": "Lao People's Democratic Republic",
-      "LS": "Lesotho",
       "LB": "Lebanon",
-      "LR": "Liberia",
-      "LY": "Libyan Arab Jamahiriya",
+      "LC": "Saint Lucia",
       "LI": "Liechtenstein",
+      "LK": "Sri Lanka",
+      "LR": "Liberia",
+      "LS": "Lesotho",
       "LT": "Lithuania",
       "LU": "Luxembourg",
       "LV": "Latvia",
-      "MK": "Macedonia, the former Yugoslav Republic of",
-      "MG": "Madagascar",
-      "YT": "Mayotte",
-      "MO": "Macao",
-      "MW": "Malawi",
-      "MV": "Maldives",
-      "MY": "Malaysia",
-      "ML": "Mali",
-      "MT": "Malta",
-      "MP": "Northern Mariana Islands",
+      "LY": "Libyan Arab Jamahiriya",
       "MA": "Morocco",
+      "MC": "Monaco",
+      "MD": "Moldova, Republic of",
+      "ME": "Montenegro",
+      "MF": "Saint Martin (French part)",
+      "MG": "Madagascar",
+      "MH": "Marshall Islands",
+      "MK": "Macedonia, the former Yugoslav Republic of",
+      "ML": "Mali",
+      "MM": "Myanmar",
+      "MN": "Mongolia",
+      "MO": "Macao",
+      "MP": "Northern Mariana Islands",
       "MQ": "Martinique",
       "MR": "Mauritania",
-      "MU": "Mauritius",
-      "MX": "Mexico",
-      "FM": "Micronesia, Federated States of",
-      "MM": "Myanmar",
-      "MD": "Moldova, Republic of",
-      "MC": "Monaco",
-      "MN": "Mongolia",
       "MS": "Montserrat",
+      "MT": "Malta",
+      "MU": "Mauritius",
+      "MV": "Maldives",
+      "MW": "Malawi",
+      "MX": "Mexico",
+      "MY": "Malaysia",
       "MZ": "Mozambique",
       "NA": "Namibia",
-      "NR": "Nauru",
-      "NP": "Nepal",
-      "DE": "Germany",
+      "NC": "New Caledonia",
       "NE": "Niger",
+      "NF": "Norfolk Island",
       "NG": "Nigeria",
       "NI": "Nicaragua",
-      "NU": "Niue",
-      "NF": "Norfolk Island",
+      "NL": "Netherlands",
       "NO": "Norway",
-      "NC": "New Caledonia",
+      "NP": "Nepal",
+      "NR": "Nauru",
+      "NU": "Niue",
       "NZ": "New Zealand",
       "OM": "Oman",
-      "PK": "Pakistan",
-      "PW": "Palau",
-      "PS": "Palestinian Territory, Occupied",
       "PA": "Panama",
-      "PG": "Papua New Guinea",
-      "PY": "Paraguay",
       "PE": "Peru",
-      "PN": "Pitcairn",
       "PF": "French Polynesia",
+      "PG": "Papua New Guinea",
+      "PH": "Philippines",
+      "PK": "Pakistan",
       "PL": "Poland",
-      "PR": "Puerto Rico",
-      "PT": "Portugal",
-      "ZA": "South Africa",
-      "CF": "Central African Republic",
-      "CV": "Cape Verde",
-      "RE": "Réunion",
-      "RU": "Russian Federation",
-      "RO": "Romania",
-      "RW": "Rwanda",
-      "EH": "Western Sahara",
-      "KN": "Saint Kitts and Nevis",
-      "LC": "Saint Lucia",
-      "VC": "Saint Vincent and the Grenadines",
-      "BL": "Saint Barthélemy",
-      "MF": "Saint Martin (French part)",
       "PM": "Saint Pierre and Miquelon",
-      "SV": "El Salvador",
-      "AS": "American Samoa",
-      "WS": "Samoa",
+      "PN": "Pitcairn",
+      "PR": "Puerto Rico",
+      "PS": "Palestinian Territory, Occupied",
+      "PT": "Portugal",
+      "PW": "Palau",
+      "PY": "Paraguay",
+      "QA": "Qatar",
+      "RE": "Réunion",
+      "RO": "Romania",
+      "RS": "Serbia",
+      "RU": "Russian Federation",
+      "RW": "Rwanda",
+      "SA": "Saudi Arabia",
+      "SB": "Solomon Islands",
+      "SC": "Seychelles",
+      "SD": "Sudan",
+      "SE": "Sweden",
+      "SG": "Singapore",
+      "SH": "Saint Helena, Ascension and Tristan Cunha",
+      "SI": "Slovenia",
+      "SJ": "Svalbard and Jan Mayen",
+      "SK": "Slovakia",
+      "SL": "Sierra Leone",
       "SM": "San Marino",
       "SN": "Senegal",
-      "RS": "Serbia",
-      "SC": "Seychelles",
-      "SL": "Sierra Leone",
-      "SG": "Singapore",
-      "SX": "Sint Maarten (Dutch part)",
-      "SK": "Slovakia",
-      "SI": "Slovenia",
       "SO": "Somalia",
-      "LK": "Sri Lanka",
-      "US": "United States",
-      "SZ": "Swaziland",
-      "SD": "Sudan",
-      "SS": "South Sudan",
       "SR": "Suriname",
-      "SJ": "Svalbard and Jan Mayen",
+      "SS": "South Sudan",
+      "ST": "Sao Tome and Principe",
+      "SV": "El Salvador",
+      "SX": "Sint Maarten (Dutch part)",
       "SY": "Syrian Arab Republic",
-      "CH": "Switzerland",
-      "SE": "Sweden",
-      "TJ": "Tajikistan",
+      "SZ": "Swaziland",
+      "TC": "Turks and Caicos Islands",
+      "TD": "Chad",
+      "TF": "French Southern Territories",
+      "TG": "Togo",
       "TH": "Thailand",
+      "TJ": "Tajikistan",
+      "TK": "Tokelau",
+      "TL": "Timor-Leste",
+      "TM": "Turkmenistan",
+      "TN": "Tunisia",
+      "TO": "Tonga",
+      "TR": "Turkey",
+      "TT": "Trinidad and Tobago",
+      "TV": "Tuvalu",
       "TW": "Taiwan, Province of China",
       "TZ": "Tanzania, United Republic of",
-      "TL": "Timor-Leste",
-      "TG": "Togo",
-      "TK": "Tokelau",
-      "TO": "Tonga",
-      "TT": "Trinidad and Tobago",
-      "TN": "Tunisia",
-      "TR": "Turkey",
-      "TM": "Turkmenistan",
-      "TC": "Turks and Caicos Islands",
-      "TV": "Tuvalu",
-      "UG": "Uganda",
       "UA": "Ukraine",
+      "UG": "Uganda",
+      "UM": "United States Minor Outlying Islands",
+      "US": "United States",
       "UY": "Uruguay",
       "UZ": "Uzbekistan",
+      "VA": "Holy See (Vatican City State)",
+      "VC": "Saint Vincent and the Grenadines",
+      "VE": "Venezuela, Bolivarian Republic of",
+      "VG": "Virgin Islands, British",
+      "VI": "Virgin Islands, U.S.",
+      "VN": "Viet Nam",
       "VU": "Vanuatu",
       "WF": "Wallis and Futuna",
-      "VA": "Holy See (Vatican City State)",
-      "VE": "Venezuela, Bolivarian Republic of",
-      "HU": "Hungary",
-      "GB": "United Kingdom",
-      "VN": "Viet Nam",
-      "IT": "Italy",
-      "CI": "Côte d'Ivoire",
-      "BV": "Bouvet Island",
-      "CX": "Christmas Island",
-      "IM": "Isle of Man",
-      "SH": "Saint Helena, Ascension and Tristan Cunha",
-      "AX": "Åland Islands",
-      "CK": "Cook Islands",
-      "VI": "Virgin Islands, U.S.",
-      "HM": "Heard Island and McDonald Islands",
-      "CC": "Cocos (Keeling) Islands",
-      "MH": "Marshall Islands",
-      "FO": "Faroe Islands",
-      "SB": "Solomon Islands",
-      "ST": "Sao Tome and Principe",
+      "WS": "Samoa",
+      "YE": "Yemen",
+      "YT": "Mayotte",
+      "ZA": "South Africa",
       "ZM": "Zambia",
-      "ZW": "Zimbabwe",
-      "AE": "United Arab Emirates"
+      "ZW": "Zimbabwe"
     },
+    "dataTable": {
+      "columns": "Columns",
+      "noRowsToShow": "No rows to show here. Table's feeling a bit minimalist!",
+      "paging": {
+        "currentPage": "Page {currentPage} of {totalPages}",
+        "rowsPerPage": "Rows per page:"
+      },
+      "search": {
+        "placeholder": "Search..."
+      }
+    },
+    "errorOccured": "Error occured",
     "genders": {
       "female": "Female",
       "male": "Male"
     },
-    "sportKinds": {
-      "road-cycling": "Road Cycling",
-      "mtb-cycling": "Mountain Biking",
-      "gravel-cycling": "Gravel Cycling",
-      "canoeing": "Canoeing",
-      "bobsleigh": "Bobsleigh",
-      "swimming": "Swimming",
-      "running": "Running",
-      "hiking": "Hiking"
-    },
-    "dataTable": {
-      "columns": "Columns",
-      "search": {
-        "placeholder": "Search..."
-      },
-      "paging": {
-        "rowsPerPage": "Rows per page:",
-        "currentPage": "Page {currentPage} of {totalPages}"
-      },
-      "noRowsToShow": "No rows to show here. Table's feeling a bit minimalist!"
-    },
-    "close": "Close",
+    "generalError": "Oops! Something went wrong on our end. Our team has been notified, and we're working to fix it. Please try again later. If the problem persists, feel free to contact support. We apologize for any inconvenience.",
     "ok": "OK",
-    "errorOccured": "Error occured",
-    "generalError": "Oops! Something went wrong on our end. Our team has been notified, and we're working to fix it. Please try again later. If the problem persists, feel free to contact support. We apologize for any inconvenience."
+    "save": "Save",
+    "sportKinds": {
+      "bobsleigh": "Bobsleigh",
+      "canoeing": "Canoeing",
+      "gravel-cycling": "Gravel Cycling",
+      "hiking": "Hiking",
+      "mtb-cycling": "Mountain Biking",
+      "road-cycling": "Road Cycling",
+      "running": "Running",
+      "swimming": "Swimming"
+    },
+    "status": {
+      "disabled": "Disabled",
+      "enabled": "Enabled"
+    },
+    "unauthorized": "Unauthorized"
   },
   "startList": {
+    "headerStartTime": "Starts at: ",
     "nextPlayer": "Next player",
     "noPlayersLeft": "No pending players left",
-    "startTime": "Starts at",
-    "headerStartTime": "Starts at: "
-  },
-  "auth": {
-    "login": {
-      "header": "Welcome!",
-      "form": {
-        "email": {
-          "label": "Email*",
-          "placeholder": "Enter your email"
-        },
-        "password": {
-          "label": "Password*",
-          "placeholder": "Enter valid password"
-        },
-        "submit": "Log in"
-      },
-      "registration": {
-        "question": "Don't have an account?",
-        "button": "Sign up"
-      }
-    },
-    "rights": "Ravelo. All rights reserved.",
-    "register": {
-      "header": "Create account!"
-    },
-    "registration": {
-      "form": {
-        "name": {
-          "label": "Name*",
-          "placeholder": "Enter username"
-        },
-        "email": {
-          "label": "Email*",
-          "placeholder": "Enter your email"
-        },
-        "password": {
-          "label": "Password*",
-          "placeholder": "Enter your password"
-        },
-        "confirmPassword": {
-          "label": "Confirm password*",
-          "placeholder": "Confirm your password"
-        },
-        "submit": "Sign up"
-      },
-      "login": {
-        "question": "Already have an account?",
-        "button": "Log in"
-      }
-    }
-  },
-  "playersManagement": {
-    "playerRegistration": {
-      "errors": {
-        "exceededNumberOfRegistrations": "Maximum number of registrations reached.",
-        "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first.",
-        "registrationDisabled": "Registration for this race is disabled."
-      }
-    },
-    "player": {
-      "errors": {
-        "bibNumberAlreadyTaken": "Bib number is already assigned.",
-        "classificationNotFound": "Chosen classification was not found.",
-        "playerWithoutStartTimeExists": "There is a player without the start time defined.",
-        "registrationAlreadyPromoted": "Registration is already promoted to player.",
-        "startTimeAlreadyTaken": "Start time is already assigned."
-      }
-    }
-  },
-  "raceManagement": {
-    "race": {
-      "errors": {
-        "atLeastOneRaceRequired": "You must have at least one race"
-      }
-    }
+    "startTime": "Starts at"
   },
   "timeMeasurement": {
-    "timingPoint": {
-      "errors": {
-        "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
-      }
-    },
     "penalties": {
       "disqualification": {
         "disqualificationReasons": {
-          "illegalSubstanceUse": "Illegal Substance Use",
-          "ruleViolations": "Rule Violations",
-          "incompleteGear": "Incomplete Gear",
-          "outsideAssistance": "Outside Assistance",
+          "courseCutting": "Course Cutting",
+          "disorderlyConduct": "Disorderly Conduct",
+          "equipmentViolations": "Equipment Violations",
+          "failureToFinishInTime": "Failure to Finish in Time",
           "failureToFollowCourse": "Failure to Follow Course",
           "falseStart": "False Start",
-          "disorderlyConduct": "Disorderly Conduct",
-          "missedCheckpoints": "Missed Checkpoints",
-          "courseCutting": "Course Cutting",
-          "noVisibleBib": "No visible Bib",
+          "illegalSubstanceUse": "Illegal Substance Use",
+          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)",
+          "incompleteGear": "Incomplete Gear",
           "invalidBibPlacement": "Invalid Bib placement",
-          "unsportsmanlikeConduct": "Unsportsmanlike Conduct",
           "littering": "Littering",
+          "missedCheckpoints": "Missed Checkpoints",
+          "noVisibleBib": "No visible Bib",
+          "outsideAssistance": "Outside Assistance",
+          "ruleViolations": "Rule Violations",
           "unauthorizedAssistance": "Unauthorized Assistance",
-          "failureToFinishInTime": "Failure to Finish in Time",
-          "equipmentViolations": "Equipment Violations",
-          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)"
+          "unsportsmanlikeConduct": "Unsportsmanlike Conduct"
         },
         "form": {
           "bibNumber": {
@@ -1354,31 +1349,93 @@
           }
         }
       },
-      "timePenalty": {
-        "timePenaltyReasons": {
-          "illegalSubstanceUse": "Illegal Substance Use",
-          "ruleViolations": "Rule Violations",
-          "incompleteGear": "Incomplete Gear",
-          "outsideAssistance": "Outside Assistance",
-          "failureToFollowCourse": "Failure to Follow Course",
-          "falseStart": "False Start",
-          "disorderlyConduct": "Disorderly Conduct",
-          "missedCheckpoints": "Missed Checkpoints",
-          "courseCutting": "Course Cutting",
-          "noVisibleBib": "No visible Bib",
-          "invalidBibPlacement": "Invalid Bib placement",
-          "unsportsmanlikeConduct": "Unsportsmanlike Conduct",
-          "littering": "Littering",
-          "unauthorizedAssistance": "Unauthorized Assistance",
-          "failureToFinishInTime": "Failure to Finish in Time",
-          "equipmentViolations": "Equipment Violations",
-          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)"
+      "page": {
+        "disqualification": {
+          "create": {
+            "button": "Disqualify player",
+            "confirmation": {
+              "text": "Disqualification may be reverted later",
+              "title": "Disqualify player"
+            }
+          },
+          "edit": {
+            "confirmation": {
+              "description": "Change disqualification details",
+              "title": "Edit disqualification"
+            },
+            "description": "Change disqualification details",
+            "name": "Edit disqualification"
+          },
+          "export": {
+            "button": "Export disqualifications"
+          },
+          "grid": {
+            "columns": {
+              "bibNumber": "Bib number",
+              "player": "Player",
+              "reason": "Reason"
+            },
+            "search": {
+              "placeholder": "Search disqualifications..."
+            }
+          },
+          "header": {
+            "description": "Disqualified players",
+            "title": "Disqualifications"
+          },
+          "revert": {
+            "confirmation": {
+              "text": "You are trying to revert disqualification of the Player {player}. Do you want to proceed?\"",
+              "title": "Revert disqualification"
+            },
+            "description": "The original score of the player will be restored",
+            "name": "Revert disqualification"
+          }
         },
+        "export": {
+          "button": "Export penalties"
+        },
+        "grid": {
+          "columns": {
+            "actions": "Actions",
+            "bibNumber": "Bib number",
+            "player": "Player",
+            "reason": "Reason",
+            "time": "Time"
+          },
+          "search": {
+            "placeholder": "Search time penalties..."
+          }
+        },
+        "header": {
+          "description": "Time penalties applied to the players",
+          "title": "Time penalties"
+        },
+        "timePenalty": {
+          "edit": {
+            "confirmation": {
+              "description": "Change time penalty details",
+              "title": "Edit time penalty"
+            },
+            "description": "Change time penalty details",
+            "name": "Change time penalty"
+          },
+          "revert": {
+            "confirmation": {
+              "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?",
+              "title": "Revert time penalty"
+            },
+            "description": "The result achieved by the player will be restored",
+            "name": "Revert time penalty"
+          }
+        }
+      },
+      "timePenalty": {
         "create": {
           "button": "Apply time penalty",
           "confirmation": {
-            "title": "Apply time penalty",
-            "text": "Penalty will be added to player's result"
+            "text": "Penalty will be added to player's result",
+            "title": "Apply time penalty"
           }
         },
         "form": {
@@ -1394,88 +1451,31 @@
             "label": "Time",
             "placeholder": "Enter time"
           }
+        },
+        "timePenaltyReasons": {
+          "courseCutting": "Course Cutting",
+          "disorderlyConduct": "Disorderly Conduct",
+          "equipmentViolations": "Equipment Violations",
+          "failureToFinishInTime": "Failure to Finish in Time",
+          "failureToFollowCourse": "Failure to Follow Course",
+          "falseStart": "False Start",
+          "illegalSubstanceUse": "Illegal Substance Use",
+          "inadequateLightingNightRaces": "Inadequate Lighting (Night Races)",
+          "incompleteGear": "Incomplete Gear",
+          "invalidBibPlacement": "Invalid Bib placement",
+          "littering": "Littering",
+          "missedCheckpoints": "Missed Checkpoints",
+          "noVisibleBib": "No visible Bib",
+          "outsideAssistance": "Outside Assistance",
+          "ruleViolations": "Rule Violations",
+          "unauthorizedAssistance": "Unauthorized Assistance",
+          "unsportsmanlikeConduct": "Unsportsmanlike Conduct"
         }
-      },
-      "page": {
-        "grid": {
-          "columns": {
-            "actions": "Actions",
-            "bibNumber": "Bib number",
-            "time": "Time",
-            "reason": "Reason",
-            "player": "Player"
-          },
-          "search": {
-            "placeholder": "Search time penalties..."
-          }
-        },
-        "header": {
-          "title": "Time penalties",
-          "description": "Time penalties applied to the players"
-        },
-        "export": {
-          "button": "Export penalties"
-        },
-        "disqualification": {
-          "grid": {
-            "columns": {
-              "bibNumber": "Bib number",
-              "reason": "Reason",
-              "player": "Player"
-            },
-            "search": {
-              "placeholder": "Search disqualifications..."
-            }
-          },
-          "header": {
-            "title": "Disqualifications",
-            "description": "Disqualified players"
-          },
-          "export": {
-            "button": "Export disqualifications"
-          },
-          "revert": {
-            "name": "Revert disqualification",
-            "description": "The original score of the player will be restored",
-            "confirmation": {
-              "title": "Revert disqualification",
-              "text": "You are trying to revert disqualification of the Player {player}. Do you want to proceed?\""
-            }
-          },
-          "create": {
-            "button": "Disqualify player",
-            "confirmation": {
-              "title": "Disqualify player",
-              "text": "Disqualification may be reverted later"
-            }
-          },
-          "edit": {
-            "confirmation": {
-              "title": "Edit disqualification",
-              "description": "Change disqualification details"
-            },
-            "description": "Change disqualification details",
-            "name": "Edit disqualification"
-          }
-        },
-        "timePenalty": {
-          "revert": {
-            "name": "Revert time penalty",
-            "description": "The result achieved by the player will be restored",
-            "confirmation": {
-              "title": "Revert time penalty",
-              "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?"
-            }
-          },
-          "edit": {
-            "confirmation": {
-              "title": "Edit time penalty",
-              "description": "Change time penalty details"
-            },
-            "name": "Change time penalty",
-            "description": "Change time penalty details"
-          }
-        }
+      }
+    },
+    "timingPoint": {
+      "errors": {
+        "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
     }
   }

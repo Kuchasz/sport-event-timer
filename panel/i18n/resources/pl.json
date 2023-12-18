@@ -1,46 +1,287 @@
 {
+  "auth": {
+    "login": {
+      "form": {
+        "email": {
+          "label": "Email*",
+          "placeholder": "Wpisz twój adres email"
+        },
+        "password": {
+          "label": "Hasło*",
+          "placeholder": "Wpisz poprawne hasło"
+        },
+        "submit": "Zaloguj"
+      },
+      "header": "Witaj!",
+      "registration": {
+        "button": "Utwórz konto",
+        "question": "Nie posiadasz konta?"
+      }
+    },
+    "register": {
+      "header": "Utwórz konto!"
+    },
+    "registration": {
+      "form": {
+        "confirmPassword": {
+          "label": "Potwierdzenie hasła*",
+          "placeholder": "Potwierdź swoje hasło"
+        },
+        "email": {
+          "label": "Adres email*",
+          "placeholder": "Wpisz twój adres email"
+        },
+        "name": {
+          "label": "Nazwa*",
+          "placeholder": "Wpisz nazwę użytkownika"
+        },
+        "password": {
+          "label": "Hasło*",
+          "placeholder": "Wpisz swoje hasło"
+        },
+        "submit": "Utwórz konto"
+      },
+      "login": {
+        "button": "Zaloguj się",
+        "question": "Masz już konto?"
+      }
+    },
+    "rights": "Ravelo. Wszelkie prawa zastrzeżone."
+  },
+  "errorCodes": {
+    "bibNumber": {
+      "endNumber": {
+        "higherThanStartNumber": "Ostatni number musi być wyższy niż pierwszy"
+      }
+    },
+    "shared": {
+      "email": "Nieprawidłowy adres email",
+      "minLength": "Zbyt krótkie",
+      "passwordMatch": "Hasła nie są takie same",
+      "required": "Wymagane"
+    },
+    "timingPoint": {
+      "description": {
+        "length": "Opis nie może zawierać więcej niż 100 znaków"
+      },
+      "shortName": {
+        "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
+      }
+    }
+  },
   "menuOptions": {
+    "admin": {
+      "accounts": "Konta",
+      "dashboard": "Panel",
+      "hello": "Cześć!",
+      "races": "Wszystkie Wyścigi",
+      "title": "Administrator"
+    },
     "general": {
-      "title": "Ogólne",
-      "index": "Podstawowe Informacje",
       "bibNumbers": "Numerki Startowe",
+      "classifications": "Klasyfikacje",
+      "index": "Podstawowe Informacje",
       "players": "Zawodnicy",
       "registrations": "Rejestracje",
-      "classifications": "Klasyfikacje"
-    },
-    "timeMeasurement": {
-      "title": "Pomiar czasu",
-      "timingPoints": "Punkty Pomiarowe",
-      "splitTimes": "Zmierzone czasy",
-      "results": "Wyniki",
-      "tools": "Narzędzia",
-      "penalties": "Kary"
+      "title": "Ogólne"
     },
     "management": {
-      "title": "Zarządzanie",
-      "settings": "Ustawienia"
+      "settings": "Ustawienia",
+      "title": "Zarządzanie"
     },
-    "admin": {
-      "title": "Administrator",
-      "dashboard": "Panel",
-      "races": "Wszystkie Wyścigi",
-      "hello": "Cześć!",
-      "accounts": "Konta"
+    "timeMeasurement": {
+      "penalties": "Kary",
+      "results": "Wyniki",
+      "splitTimes": "Zmierzone czasy",
+      "timingPoints": "Punkty Pomiarowe",
+      "title": "Pomiar czasu",
+      "tools": "Narzędzia"
     }
   },
   "pages": {
+    "admin": {
+      "accounts": {
+        "header": {
+          "title": "Konta"
+        }
+      },
+      "header": {
+        "title": "Admin"
+      },
+      "hello": {
+        "title": "Cześć"
+      },
+      "races": {
+        "title": "Wyścigi"
+      }
+    },
+    "bibNumbers": {
+      "create": {
+        "button": "Dodaj Numer Startowy",
+        "title": "Stwórz nowy Numer Startowy"
+      },
+      "createMany": {
+        "button": "Dodaj wiele",
+        "form": {
+          "endNumber": {
+            "label": "Końcowy numer",
+            "placeholder": "Wpisz końcowy numer"
+          },
+          "omitDuplicates": {
+            "label": "Pomijaj duplikaty"
+          },
+          "startNumber": {
+            "label": "Początkowy numer",
+            "placeholder": "Wpisz początkowy numer"
+          }
+        },
+        "title": "Stwórz wiele numerów startowych"
+      },
+      "delete": {
+        "confirmation": {
+          "text": "Próbujesz usunąć Numer Startowy {bibNumber}. Czy chcesz kontynuować?",
+          "title": "Usuń numer startowy"
+        },
+        "description": "Możesz usunąć numer startowy",
+        "name": "Usuń number startowy"
+      },
+      "deleteAll": {
+        "button": "Usuń wszystkie",
+        "confirmation": {
+          "text": "Próbujesz usunąć wszystkie Numery Startowe. Czy chcesz kontynuować?",
+          "title": "Usuń numery startowe"
+        }
+      },
+      "edit": {
+        "description": "Możesz edytować numer startowy",
+        "name": "Edytuj numer startowy",
+        "title": "Edytuj Numer Startowy"
+      },
+      "form": {
+        "number": {
+          "label": "Numer startowy",
+          "placeholder": "Numer Startowy"
+        }
+      },
+      "grid": {
+        "columns": {
+          "actions": "Akcje",
+          "bibNumber": "Numer",
+          "index": ""
+        },
+        "search": {
+          "placeholder": "Szukaj numerów startowych..."
+        }
+      },
+      "header": {
+        "description": "Skonfiguruj numery startowe, aby łatwo przypisywać je zawodnikom",
+        "title": "Numery Startowe"
+      }
+    },
+    "classifications": {
+      "categories": {
+        "create": {
+          "button": "Dodaj kategorię",
+          "title": "Stwórz nową kategorię"
+        },
+        "delete": {
+          "confirmation": {
+            "text": "Próbujesz usunąć Kategorię {name}. Czy chcesz kontynuować?",
+            "title": "Usuń kategorię"
+          },
+          "description": "Możesz usunąć kategorię",
+          "name": "Usuń kategorię"
+        },
+        "edit": {
+          "description": "Możesz modyfikować kategorię",
+          "name": "Edytuj kategorię",
+          "title": "Edytuj kategorię"
+        },
+        "form": {
+          "gender": {
+            "kind": {
+              "any": "Dowolna",
+              "female": "Kobieta",
+              "male": "Mężczyzna"
+            },
+            "label": "Płeć"
+          },
+          "maxAge": {
+            "label": "Max wiek",
+            "placeholder": "Wpisz maksymalny wiek"
+          },
+          "minAge": {
+            "label": "Min wiek",
+            "placeholder": "Wpisz minimalny wiek"
+          },
+          "name": {
+            "label": "Nazwa",
+            "placeholder": "Wpisz nazwę kategorii"
+          }
+        },
+        "grid": {
+          "columns": {
+            "actions": "Akcje",
+            "gender": "Płeć",
+            "index": "",
+            "isSpecial": "Specjalne",
+            "maxAge": "Maksymalny Wiek",
+            "minAge": "Minimalny Wiek",
+            "name": "Nazwa"
+          },
+          "search": {
+            "placeholder": "Szukaj kategorii..."
+          }
+        },
+        "header": {
+          "description": "Skonfiguruj kategorie dla klasyfikacji",
+          "title": "Kategorie"
+        }
+      },
+      "create": {
+        "button": "Dodaj Klasyfikację",
+        "title": "Stwórz nową klasyfikację"
+      },
+      "edit": {
+        "confirmation": {
+          "title": "Edytujesz klasyfikację"
+        },
+        "description": "Możesz zmienić istniejącą klasyfikację",
+        "title": "Edytuj klasyfikację"
+      },
+      "form": {
+        "name": {
+          "label": "Nazwa",
+          "placeholder": "Wpisz nazwę"
+        }
+      },
+      "grid": {
+        "columns": {
+          "actions": "Akcje",
+          "index": "",
+          "name": "Nazwa"
+        },
+        "search": {
+          "placeholder": "Szukaj klasyfikacji..."
+        }
+      },
+      "header": {
+        "description": "Skonfiguruj klasyfikacje wyścigu",
+        "title": "Klasyfikacje"
+      },
+      "load": {
+        "button": "Załaduj"
+      },
+      "manageCategories": {
+        "description": "Możesz zdefiniować kategorie dla klasyfikacji",
+        "name": "Zarządzaj kategoriami"
+      }
+    },
     "general": {
       "dashboard": {
         "header": {
-          "title": "Panel",
-          "description": "Monitoruj to, co najważniejsze"
-        },
-        "statistics": {
-          "title": "Statystyki",
-          "widgets": {
-            "futureRaces": "Przyszłe wyścigi",
-            "pastRaces": "Przeszłe wyścigi"
-          }
+          "description": "Monitoruj to, co najważniejsze",
+          "title": "Panel"
         },
         "raceStatistics": {
           "title": "Statystyki nadchodzącego wyścigu",
@@ -50,283 +291,103 @@
             "registeredPlayers": "Zarejestrowani Zawodnicy",
             "registrationStatus": "Status Rejestracji"
           }
-        }
-      }
-    },
-    "registration": {
-      "turnOffPopup": {
-        "title": "Wyłącz rejestrację",
-        "description": "Rejestracja online zostanie wyłączona"
-      },
-      "turnOnPopup": {
-        "title": "Włącz rejestrację",
-        "description": "Rejestracja online zostanie włączona"
-      }
-    },
-    "races": {
-      "addRace": "Dodaj Wyścig",
-      "form": {
-        "name": {
-          "label": "Nazwa",
-          "placeholder": "Wpisz nazwę wyścigu"
         },
-        "date": {
-          "label": "Data",
-          "placeholder": "Data wyścigu"
-        },
-        "playersLimit": {
-          "label": "Limit zawodników",
-          "placeholder": "Wpisz limit zawodników"
-        },
-        "location": {
-          "label": "Lokalizacja",
-          "placeholder": "Podaj lokalizację"
-        },
-        "sportKind": {
-          "label": "Dyscyplina sportowa",
-          "placeholder": "Wybierz dyscyplinę sportową"
-        },
-        "registrationEnabled": {
-          "label": "Rejestracja uruchomiona"
-        },
-        "useSampleData": {
-          "label": "Dodaj przykładowe dane"
-        },
-        "description": {
-          "label": "Opis",
-          "placeholder": "Opis wyścig"
-        },
-        "terms": {
-          "label": "Regulamin",
-          "placeholder": "Link do regulaminu"
-        },
-        "emailTemplate": {
-          "label": "Szablon email",
-          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji"
-        }
-      },
-      "open": "Otwórz",
-      "upcomingRaces": {
-        "header": {
-          "title": "Nadchodzące Wyścigi",
-          "description": "Wyścigi które niedługo się odbędą"
-        }
-      },
-      "list": {
-        "header": {
-          "title": "Wyścigi ({number})",
-          "description": "Zarządzaj wszystkimi wyścigami wyścigami"
-        }
-      },
-      "wipeStopwatchPopup": {
-        "title": "Wyczyść stoper",
-        "description": "Wyczyść wszystkie dane stopera",
-        "confirmation": {
-          "title": "Wyczyść dane wyścigu",
-          "text": "Próbujesz wyczyścić dane Wyścigu {raceName}. Czy chcesz kontynuować?"
-        }
-      },
-      "deleteRacePopup": {
-        "title": "Usuń",
-        "description": "Usuń wyścig",
-        "confirmation": {
-          "title": "Usuń wyścig",
-          "text": "Próbujesz usunąć Wyścig {raceName}. Czy chcesz kontynuować?"
-        }
-      },
-      "grid": {
-        "columns": {
-          "name": "Nazwa",
-          "date": "Data",
-          "registrationEnabled": "Rejestracja",
-          "registeredPlayers": "Zarejestrowani",
-          "actions": "Akcje"
-        }
-      },
-      "createRace": {
-        "title": "Stwórz nowy wyścig"
-      },
-      "editRace": {
-        "title": "Edytuj wyścig",
-        "name": "Edytuj wyścig",
-        "description": "Uruchom okno edycji wyścigu"
-      },
-      "registration": "Rejestracja",
-      "filter": {
-        "all": "Wszystkie",
-        "past": "Przeszłe",
-        "upcoming": "Nadchodzące"
-      }
-    },
-    "bibNumbers": {
-      "delete": {
-        "confirmation": {
-          "title": "Usuń numer startowy",
-          "text": "Próbujesz usunąć Numer Startowy {bibNumber}. Czy chcesz kontynuować?"
-        },
-        "name": "Usuń number startowy",
-        "description": "Możesz usunąć numer startowy"
-      },
-      "grid": {
-        "columns": {
-          "bibNumber": "Numer",
-          "actions": "Akcje",
-          "index": ""
-        },
-        "search": {
-          "placeholder": "Szukaj numerów startowych..."
-        }
-      },
-      "create": {
-        "title": "Stwórz nowy Numer Startowy",
-        "button": "Dodaj Numer Startowy"
-      },
-      "deleteAll": {
-        "confirmation": {
-          "title": "Usuń numery startowe",
-          "text": "Próbujesz usunąć wszystkie Numery Startowe. Czy chcesz kontynuować?"
-        },
-        "button": "Usuń wszystkie"
-      },
-      "createMany": {
-        "title": "Stwórz wiele numerów startowych",
-        "button": "Dodaj wiele",
-        "form": {
-          "startNumber": {
-            "label": "Początkowy numer",
-            "placeholder": "Wpisz początkowy numer"
-          },
-          "endNumber": {
-            "label": "Końcowy numer",
-            "placeholder": "Wpisz końcowy numer"
-          },
-          "omitDuplicates": {
-            "label": "Pomijaj duplikaty"
+        "statistics": {
+          "title": "Statystyki",
+          "widgets": {
+            "futureRaces": "Przyszłe wyścigi",
+            "pastRaces": "Przeszłe wyścigi"
           }
         }
-      },
-      "edit": {
-        "title": "Edytuj Numer Startowy",
-        "name": "Edytuj numer startowy",
-        "description": "Możesz edytować numer startowy"
-      },
-      "header": {
-        "title": "Numery Startowe",
-        "description": "Skonfiguruj numery startowe, aby łatwo przypisywać je zawodnikom"
-      },
-      "form": {
-        "number": {
-          "label": "Numer startowy",
-          "placeholder": "Numer Startowy"
-        }
       }
     },
-    "players": {
-      "grid": {
-        "columns": {
-          "classification": "Klasyfikacja",
-          "bibNumber": "Numer",
-          "name": "Imię",
-          "gender": "Płeć",
-          "startTime": "Czas Startu",
-          "birthDate": "Data Urodzenia",
-          "country": "Kraj",
-          "city": "Miasto",
-          "team": "Drużyna",
-          "email": "E-mail",
-          "phoneNumber": "Numer Telefonu",
-          "icePhoneNumber": "Numer ICE",
-          "actions": "Akcje",
-          "lastName": "Nazwisko"
-        },
-        "search": {
-          "placeholder": "Szukaj zawodników..."
-        }
+    "playerRegistrations": {
+      "create": {
+        "button": "Zarejestruj Zawodnika",
+        "title": "Stwórz nową rejestrację zawodnika"
       },
       "delete": {
         "confirmation": {
-          "title": "Usuń zawodnika",
-          "text": "Próbujesz usunąć Zawodnika {name} {lastName}. Czy chcesz kontynuować?"
+          "text": "Próbujesz usunąć Rejestrację Zawodnika {name} {lastName}. Czy chcesz kontynuować?",
+          "title": "Usuń rejestrację zawodnika"
         },
-        "name": "Usuń zawodnika",
-        "description": "Możesz usunąć zawodnika"
-      },
-      "create": {
-        "title": "Stwórz nowego zawodnika",
-        "button": "Dodaj Zawodnika"
+        "description": "To jest trwała akcja",
+        "title": "Usuń zarejestrowanego zawodnika"
       },
       "edit": {
-        "title": "Edytuj zawodnika",
-        "name": "Edytuj zawodnika",
-        "description": "Możesz modyfikować zawodnika"
-      },
-      "header": {
-        "title": "Zawodnicy",
-        "description": "Zawodnicy dostępni w stoperze, ich czasy mogą być mierzone"
+        "description": "Możesz modyfikować rejestrację",
+        "name": "Edytuj rejestrację",
+        "title": "Edytuj rejestrację zawodnika"
       },
       "export": {
         "button": "Eksportuj"
       },
       "form": {
-        "classification": {
-          "label": "Klasyfikacja",
-          "placeholder": "Wybierz klasyfikację"
-        },
-        "bibNumber": {
-          "label": "Numer startowy",
-          "placeholder": "Numer startowy"
-        },
-        "name": {
-          "label": "Imię",
-          "placeholder": "Imię"
-        },
-        "lastName": {
-          "label": "Nazwisko",
-          "placeholder": "Nazwisko"
-        },
-        "gender": {
-          "label": "Płeć",
-          "placeholder": "Płeć"
-        },
         "birthDate": {
+          "label": "Data urodzenia",
           "placeholder": "Data urodzenia"
-        },
-        "team": {
-          "label": "Drużyna",
-          "placeholder": "Drużyna"
-        },
-        "country": {
-          "label": "Kraj",
-          "placeholder": "Kraj"
         },
         "city": {
           "label": "Miasto",
           "placeholder": "Miasto"
         },
+        "country": {
+          "label": "Kraj",
+          "placeholder": "Kraj"
+        },
         "email": {
           "label": "Email",
-          "placeholder": "Email"
+          "placeholder": "xyz@domain.com"
         },
-        "phoneNumber": {
-          "label": "Numer telefonu",
-          "placeholder": "Numer telefonu"
+        "gender": {
+          "label": "Płeć",
+          "placeholder": "Płeć"
         },
         "icePhoneNumber": {
           "label": "Numer telefonu ICE",
           "placeholder": "Numer telefonu do kontaktu awaryjnego"
         },
-        "startTime": {
-          "label": "Godzina rozpoczęcia",
-          "placeholder": "np. 11:11"
+        "lastName": {
+          "label": "Nazwisko",
+          "placeholder": "Nazwisko"
+        },
+        "name": {
+          "label": "Imię",
+          "placeholder": "Imię"
+        },
+        "phoneNumber": {
+          "label": "Numer telefonu",
+          "placeholder": "Numer telefonu"
+        },
+        "team": {
+          "label": "Drużyna",
+          "placeholder": "Drużyna"
         }
-      }
-    },
-    "playerRegistrations": {
-      "togglePlayerPayment": {
-        "confirmation": {
-          "title": "Potwierdź zmianę płatności",
-          "text": "Próbujesz zmienić status płatności dla {name} {lastName} na: {hasPaid}. Czy chcesz kontynuować?"
+      },
+      "grid": {
+        "columns": {
+          "actions": "Akcje",
+          "birthDate": "Data Urodzenia",
+          "city": "Miasto",
+          "country": "Kraj",
+          "email": "E-mail",
+          "gender": "Płeć",
+          "icePhoneNumber": "Numer ICE",
+          "lastName": "Nazwisko",
+          "name": "Imię",
+          "payment": "Płatność",
+          "phone": "Telefon",
+          "promotedToPlayer": "Awansowany",
+          "registrationDate": "Zarejestrowany",
+          "team": "Drużyna"
+        },
+        "search": {
+          "placeholder": "Szukaj rejestracji..."
         }
+      },
+      "header": {
+        "description": "Zawodnicy zarejestrowani na wyścig, mogą być awansowani na zawodników",
+        "title": "Zarejestrowani zawodnicy"
       },
       "payment": {
         "status": {
@@ -335,471 +396,246 @@
         }
       },
       "promoteToPlayer": {
-        "title": "Awansuj na Zawodnika",
-        "description": "Awansowany zawodnik będzie dostępny w stoperze",
         "confirmation": {
           "title": "Awansuj rejestrację na zawodnika"
         },
+        "description": "Awansowany zawodnik będzie dostępny w stoperze",
         "form": {
-          "classification": {
-            "label": "Klasyfikacja",
-            "placeholder": "Wybierz klasyfikację"
-          },
           "bibNumber": {
             "label": "Numer startowy",
             "placeholder": "Wpisz numer startowy"
           },
+          "classification": {
+            "label": "Klasyfikacja",
+            "placeholder": "Wybierz klasyfikację"
+          },
           "startTime": {
             "label": "Czas startu"
           }
+        },
+        "title": "Awansuj na Zawodnika"
+      },
+      "togglePlayerPayment": {
+        "confirmation": {
+          "text": "Próbujesz zmienić status płatności dla {name} {lastName} na: {hasPaid}. Czy chcesz kontynuować?",
+          "title": "Potwierdź zmianę płatności"
         }
+      }
+    },
+    "players": {
+      "create": {
+        "button": "Dodaj Zawodnika",
+        "title": "Stwórz nowego zawodnika"
       },
       "delete": {
-        "title": "Usuń zarejestrowanego zawodnika",
-        "description": "To jest trwała akcja",
         "confirmation": {
-          "title": "Usuń rejestrację zawodnika",
-          "text": "Próbujesz usunąć Rejestrację Zawodnika {name} {lastName}. Czy chcesz kontynuować?"
-        }
-      },
-      "grid": {
-        "columns": {
-          "name": "Imię",
-          "lastName": "Nazwisko",
-          "gender": "Płeć",
-          "birthDate": "Data Urodzenia",
-          "country": "Kraj",
-          "city": "Miasto",
-          "team": "Drużyna",
-          "phone": "Telefon",
-          "email": "E-mail",
-          "icePhoneNumber": "Numer ICE",
-          "registrationDate": "Zarejestrowany",
-          "payment": "Płatność",
-          "promotedToPlayer": "Awansowany",
-          "actions": "Akcje"
+          "text": "Próbujesz usunąć Zawodnika {name} {lastName}. Czy chcesz kontynuować?",
+          "title": "Usuń zawodnika"
         },
-        "search": {
-          "placeholder": "Szukaj rejestracji..."
-        }
-      },
-      "create": {
-        "title": "Stwórz nową rejestrację zawodnika",
-        "button": "Zarejestruj Zawodnika"
+        "description": "Możesz usunąć zawodnika",
+        "name": "Usuń zawodnika"
       },
       "edit": {
-        "title": "Edytuj rejestrację zawodnika",
-        "name": "Edytuj rejestrację",
-        "description": "Możesz modyfikować rejestrację"
-      },
-      "header": {
-        "title": "Zarejestrowani zawodnicy",
-        "description": "Zawodnicy zarejestrowani na wyścig, mogą być awansowani na zawodników"
+        "description": "Możesz modyfikować zawodnika",
+        "name": "Edytuj zawodnika",
+        "title": "Edytuj zawodnika"
       },
       "export": {
         "button": "Eksportuj"
       },
       "form": {
-        "name": {
-          "label": "Imię",
-          "placeholder": "Imię"
-        },
-        "lastName": {
-          "label": "Nazwisko",
-          "placeholder": "Nazwisko"
-        },
-        "gender": {
-          "label": "Płeć",
-          "placeholder": "Płeć"
+        "bibNumber": {
+          "label": "Numer startowy",
+          "placeholder": "Numer startowy"
         },
         "birthDate": {
-          "label": "Data urodzenia",
           "placeholder": "Data urodzenia"
-        },
-        "team": {
-          "label": "Drużyna",
-          "placeholder": "Drużyna"
-        },
-        "country": {
-          "label": "Kraj",
-          "placeholder": "Kraj"
         },
         "city": {
           "label": "Miasto",
           "placeholder": "Miasto"
         },
+        "classification": {
+          "label": "Klasyfikacja",
+          "placeholder": "Wybierz klasyfikację"
+        },
+        "country": {
+          "label": "Kraj",
+          "placeholder": "Kraj"
+        },
         "email": {
           "label": "Email",
-          "placeholder": "xyz@domain.com"
+          "placeholder": "Email"
+        },
+        "gender": {
+          "label": "Płeć",
+          "placeholder": "Płeć"
+        },
+        "icePhoneNumber": {
+          "label": "Numer telefonu ICE",
+          "placeholder": "Numer telefonu do kontaktu awaryjnego"
+        },
+        "lastName": {
+          "label": "Nazwisko",
+          "placeholder": "Nazwisko"
+        },
+        "name": {
+          "label": "Imię",
+          "placeholder": "Imię"
         },
         "phoneNumber": {
           "label": "Numer telefonu",
           "placeholder": "Numer telefonu"
         },
-        "icePhoneNumber": {
-          "label": "Numer telefonu ICE",
-          "placeholder": "Numer telefonu do kontaktu awaryjnego"
+        "startTime": {
+          "label": "Godzina rozpoczęcia",
+          "placeholder": "np. 11:11"
+        },
+        "team": {
+          "label": "Drużyna",
+          "placeholder": "Drużyna"
         }
-      }
-    },
-    "classifications": {
+      },
       "grid": {
         "columns": {
-          "name": "Nazwa",
           "actions": "Akcje",
-          "index": ""
-        },
-        "search": {
-          "placeholder": "Szukaj klasyfikacji..."
-        }
-      },
-      "manageCategories": {
-        "name": "Zarządzaj kategoriami",
-        "description": "Możesz zdefiniować kategorie dla klasyfikacji"
-      },
-      "categories": {
-        "grid": {
-          "columns": {
-            "index": "",
-            "name": "Nazwa",
-            "minAge": "Minimalny Wiek",
-            "maxAge": "Maksymalny Wiek",
-            "gender": "Płeć",
-            "isSpecial": "Specjalne",
-            "actions": "Akcje"
-          },
-          "search": {
-            "placeholder": "Szukaj kategorii..."
-          }
-        },
-        "delete": {
-          "confirmation": {
-            "title": "Usuń kategorię",
-            "text": "Próbujesz usunąć Kategorię {name}. Czy chcesz kontynuować?"
-          },
-          "name": "Usuń kategorię",
-          "description": "Możesz usunąć kategorię"
-        },
-        "create": {
-          "title": "Stwórz nową kategorię",
-          "button": "Dodaj kategorię"
-        },
-        "edit": {
-          "title": "Edytuj kategorię",
-          "name": "Edytuj kategorię",
-          "description": "Możesz modyfikować kategorię"
-        },
-        "header": {
-          "title": "Kategorie",
-          "description": "Skonfiguruj kategorie dla klasyfikacji"
-        },
-        "form": {
-          "name": {
-            "label": "Nazwa",
-            "placeholder": "Wpisz nazwę kategorii"
-          },
-          "minAge": {
-            "label": "Min wiek",
-            "placeholder": "Wpisz minimalny wiek"
-          },
-          "maxAge": {
-            "label": "Max wiek",
-            "placeholder": "Wpisz maksymalny wiek"
-          },
-          "gender": {
-            "label": "Płeć",
-            "kind": {
-              "any": "Dowolna",
-              "male": "Mężczyzna",
-              "female": "Kobieta"
-            }
-          }
-        }
-      },
-      "create": {
-        "title": "Stwórz nową klasyfikację",
-        "button": "Dodaj Klasyfikację"
-      },
-      "edit": {
-        "title": "Edytuj klasyfikację",
-        "description": "Możesz zmienić istniejącą klasyfikację",
-        "confirmation": {
-          "title": "Edytujesz klasyfikację"
-        }
-      },
-      "header": {
-        "title": "Klasyfikacje",
-        "description": "Skonfiguruj klasyfikacje wyścigu"
-      },
-      "load": {
-        "button": "Załaduj"
-      },
-      "form": {
-        "name": {
-          "label": "Nazwa",
-          "placeholder": "Wpisz nazwę"
-        }
-      }
-    },
-    "timingPoints": {
-      "accessUrls": {
-        "grid": {
-          "columns": {
-            "keyName": "Klucz",
-            "expiresAt": "Wygasa",
-            "code": "Kod",
-            "supervisor": "Kierownik",
-            "token": "Token",
-            "url": "URL"
-          }
-        },
-        "edit": {
-          "button": "Edytuj"
-        },
-        "create": {
-          "title": "Stwórz klucz dostępu"
-        },
-        "delete": {
-          "confirmation": {
-            "title": "Usuń URL punktu pomiarowego",
-            "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?"
-          }
-        },
-        "header": {
-          "title": "URL Dostępu",
-          "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów"
-        },
-        "form": {
-          "name": {
-            "placeholder": "Wpisz nazwę dostępowego Url",
-            "label": "Nazwa Dostępowego Url"
-          },
-          "canAccessOthers": {
-            "label": "Może edytować inne"
-          },
-          "code": {
-            "name": "Kod (opcjonalny)",
-            "placeholder": "Wpisz Kod"
-          }
-        }
-      },
-      "create": {
-        "title": "Stwórz nowy punkt pomiarowy",
-        "button": "Dodaj punkt pomiarowy"
-      },
-      "edit": {
-        "title": "Edytuj punkt pomiarowy"
-      },
-      "delete": {
-        "confirmation": {
-          "title": "Usuń punkt pomiarowy",
-          "text": "Próbujesz usunąć Punkt Pomiarowy {name}. Czy chcesz kontynuować?"
-        }
-      },
-      "header": {
-        "title": "Punkty Pomiarowe",
-        "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze"
-      },
-      "form": {
-        "name": {
-          "label": "Nazwa Punktu Pomiarowego",
-          "placeholder": "Wpisz nazwę Punktu Pomiarowego"
-        },
-        "description": {
-          "label": "Opis",
-          "placeholder": "Opisz punkt pomiarowy"
-        },
-        "shortName": {
-          "label": "Nazwa skrócona",
-          "placeholder": "Wpisz nazwę skróconą"
-        }
-      }
-    },
-    "splitTimes": {
-      "grid": {
-        "columns": {
           "bibNumber": "Numer",
-          "playerName": "Imię",
-          "playerLastName": "Nazwisko"
+          "birthDate": "Data Urodzenia",
+          "city": "Miasto",
+          "classification": "Klasyfikacja",
+          "country": "Kraj",
+          "email": "E-mail",
+          "gender": "Płeć",
+          "icePhoneNumber": "Numer ICE",
+          "lastName": "Nazwisko",
+          "name": "Imię",
+          "phoneNumber": "Numer Telefonu",
+          "startTime": "Czas Startu",
+          "team": "Drużyna"
         },
         "search": {
-          "placeholder": "Szukaj czasów pomiarowych..."
-        }
-      },
-      "edit": {
-        "title": "Edytuj czas pomiaru"
-      },
-      "revert": {
-        "confirmation": {
-          "title": "Przywróć ręcznie zmieniony czas",
-          "text": "Próbujesz przywrócić ręcznie zmienione czasy pomiaru. Czy chcesz kontynuować?"
+          "placeholder": "Szukaj zawodników..."
         }
       },
       "header": {
-        "title": "Czasy Pomiaru",
-        "description": "Czasy mierzone przez stopery"
-      },
-      "form": {
-        "bibNumber": {
-          "label": "Numer startowy",
-          "placeholder": "Wpisz numer startowy"
-        },
-        "time": {
-          "label": "Czas"
-        },
-        "timingPoint": {
-          "label": "Punkt pomiarowy",
-          "placeholder": "Wybierz punkt pomiarowy"
-        }
-      }
-    },
-    "results": {
-      "grid": {
-        "columns": {
-          "bibNumber": "Numer",
-          "playerName": "Imię",
-          "playerLastName": "Nazwisko",
-          "start": "Start",
-          "finish": "Meta",
-          "result": "Wynik",
-          "actions": "Akcje",
-          "totalTimePenalty": "Kara czasowa"
-        },
-        "search": {
-          "placeholder": "Szukaj wyników..."
-        }
-      },
-      "header": {
-        "title": "Wyniki Wyścigu",
-        "description": "Wyniki mierzone przez stopery, każdy wynik może zostać zmieniony"
-      },
-      "applyTimePenalty": {
-        "confirmation": {
-          "title": "Zastosuj karę czasową",
-          "text": "Próbujesz zastosować karę czasową do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
-        },
-        "description": "Kara czasowa będzie dodana do wyniku zawodnika",
-        "title": "Zastosuj karę czasową"
-      },
-      "disqualify": {
-        "confirmation": {
-          "title": "Zdyskwalifikuj zawodnika",
-          "text": "Próbujesz zdyskwalifikować zawodnika {name} {lastName}. Czy chcesz kontynuować?  Możesz wycofać dyskwalifikację w każdej chwili."
-        },
-        "description": "Dyskwalifikacja może zostać później cofnięta",
-        "title": "Zdyskwalifikuj zawodnika"
-      },
-      "revertDisqualification": {
-        "confirmation": {
-          "title": "Cofnij dyskwalifikację",
-          "text": "Próbujesz wycofać dyskwalifikację zawodnika {name} {lastName}. Czy chcesz kontynuować?\""
-        },
-        "description": "Oryginalny wynik zawodnika zostanie przywrócony",
-        "title": "Wycofaj dyskwalifikację"
-      },
-      "manageTimePenalties": {
-        "grid": {
-          "columns": {
-            "reason": "Powód",
-            "time": "Czas",
-            "actions": "Akcje"
-          }
-        },
-        "confirmation": {
-          "title": "Kary czasowe",
-          "text": "Zarządzaj karami czasowymi zawodnika {name} {lastName}"
-        },
-        "revertTimePenalty": {
-          "title": "Wycofaj karę czasową",
-          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-          "confirmation": {
-            "title": "Wycofaj karę czasową",
-            "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?"
-          },
-          "button": "Usuń"
-        }
-      }
-    },
-    "settings": {
-      "apiKeys": {
-        "create": {
-          "title": "Stwórz klucz API",
-          "button": "Dodaj Klucz API"
-        },
-        "delete": {
-          "confirmation": {
-            "title": "Usuń Klucz API",
-            "text": "Próbujesz usunąć Klucz API {name}. Czy chcesz kontynuować?"
-          }
-        },
-        "edit": {
-          "title": "Edytuj Klucz API"
-        },
-        "form": {
-          "name": {
-            "label": "Nazwa klucza API",
-            "placeholder": "Wpisz nazwę klucza API"
-          }
-        }
-      },
-      "header": {
-        "title": "Ustawienia",
-        "description": "Klucze API mogą być skonfigurowane tutaj"
-      }
-    },
-    "admin": {
-      "header": {
-        "title": "Admin"
-      },
-      "accounts": {
-        "header": {
-          "title": "Konta"
-        }
-      },
-      "hello": {
-        "title": "Cześć"
-      },
-      "races": {
-        "title": "Wyścigi"
+        "description": "Zawodnicy dostępni w stoperze, ich czasy mogą być mierzone",
+        "title": "Zawodnicy"
       }
     },
     "race": {
       "statistics": {
+        "header": {
+          "title": "Statystyki"
+        },
         "widgets": {
           "registeredPlayers": "Zarejestrowani Zawodnicy",
           "registrationStatus": "Status Rejestracji"
-        },
-        "header": {
-          "title": "Statystyki"
         }
       }
     },
-    "tools": {
-      "header": {
-        "title": "Narzędzia",
-        "description": "Narzedzia przydatne w trakcie trwania wyścigu"
+    "races": {
+      "addRace": "Dodaj Wyścig",
+      "createRace": {
+        "title": "Stwórz nowy wyścig"
       },
-      "applications": {
-        "countdown": {
-          "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekran. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekund do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
-          "title": "Odliczanie (do zera)"
+      "deleteRacePopup": {
+        "confirmation": {
+          "text": "Próbujesz usunąć Wyścig {raceName}. Czy chcesz kontynuować?",
+          "title": "Usuń wyścig"
         },
-        "startList": {
-          "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa. Zoptymalizowana dla telefonów.",
-          "title": "Lista startowa"
+        "description": "Usuń wyścig",
+        "title": "Usuń"
+      },
+      "editRace": {
+        "description": "Uruchom okno edycji wyścigu",
+        "name": "Edytuj wyścig",
+        "title": "Edytuj wyścig"
+      },
+      "filter": {
+        "all": "Wszystkie",
+        "past": "Przeszłe",
+        "upcoming": "Nadchodzące"
+      },
+      "form": {
+        "date": {
+          "label": "Data",
+          "placeholder": "Data wyścigu"
         },
-        "stopwatch": {
-          "description": "Stoper odliczający czas od startu zawodów. W przypadku startów indywidualnych jest to czas od startu pierwszego zawodnika, w przypadku startu masowego jest to czas od startu wszystkich zawodników.",
-          "title": "Stoper"
+        "description": {
+          "label": "Opis",
+          "placeholder": "Opis wyścig"
         },
-        "buttons": {
-          "getQrCode": "Pobierz kod QR",
-          "open": "Otwórz"
+        "emailTemplate": {
+          "label": "Szablon email",
+          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji"
         },
-        "results": {
-          "title": "Wyniki Live",
-          "description": "Wyświetla wyniki na żywo. Rezultaty zawodników pojawiają się od razu po odznaczeniu ich w stoperze. Uwzględniany jest podział na kategorie. Strona dostosowana jest do wyświetlania na telefonie, odświeża się automatycznie."
+        "location": {
+          "label": "Lokalizacja",
+          "placeholder": "Podaj lokalizację"
+        },
+        "name": {
+          "label": "Nazwa",
+          "placeholder": "Wpisz nazwę wyścigu"
+        },
+        "playersLimit": {
+          "label": "Limit zawodników",
+          "placeholder": "Wpisz limit zawodników"
+        },
+        "registrationEnabled": {
+          "label": "Rejestracja uruchomiona"
+        },
+        "sportKind": {
+          "label": "Dyscyplina sportowa",
+          "placeholder": "Wybierz dyscyplinę sportową"
+        },
+        "terms": {
+          "label": "Regulamin",
+          "placeholder": "Link do regulaminu"
+        },
+        "useSampleData": {
+          "label": "Dodaj przykładowe dane"
         }
+      },
+      "grid": {
+        "columns": {
+          "actions": "Akcje",
+          "date": "Data",
+          "name": "Nazwa",
+          "registeredPlayers": "Zarejestrowani",
+          "registrationEnabled": "Rejestracja"
+        }
+      },
+      "list": {
+        "header": {
+          "description": "Zarządzaj wszystkimi wyścigami wyścigami",
+          "title": "Wyścigi ({number})"
+        }
+      },
+      "open": "Otwórz",
+      "registration": "Rejestracja",
+      "upcomingRaces": {
+        "header": {
+          "description": "Wyścigi które niedługo się odbędą",
+          "title": "Nadchodzące Wyścigi"
+        }
+      },
+      "wipeStopwatchPopup": {
+        "confirmation": {
+          "text": "Próbujesz wyczyścić dane Wyścigu {raceName}. Czy chcesz kontynuować?",
+          "title": "Wyczyść dane wyścigu"
+        },
+        "description": "Wyczyść wszystkie dane stopera",
+        "title": "Wyczyść stoper"
+      }
+    },
+    "registration": {
+      "turnOffPopup": {
+        "description": "Rejestracja online zostanie wyłączona",
+        "title": "Wyłącz rejestrację"
+      },
+      "turnOnPopup": {
+        "description": "Rejestracja online zostanie włączona",
+        "title": "Włącz rejestrację"
       }
     },
     "result": {
@@ -823,29 +659,276 @@
           }
         }
       }
+    },
+    "results": {
+      "applyTimePenalty": {
+        "confirmation": {
+          "text": "Próbujesz zastosować karę czasową do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?",
+          "title": "Zastosuj karę czasową"
+        },
+        "description": "Kara czasowa będzie dodana do wyniku zawodnika",
+        "title": "Zastosuj karę czasową"
+      },
+      "disqualify": {
+        "confirmation": {
+          "text": "Próbujesz zdyskwalifikować zawodnika {name} {lastName}. Czy chcesz kontynuować?  Możesz wycofać dyskwalifikację w każdej chwili.",
+          "title": "Zdyskwalifikuj zawodnika"
+        },
+        "description": "Dyskwalifikacja może zostać później cofnięta",
+        "title": "Zdyskwalifikuj zawodnika"
+      },
+      "grid": {
+        "columns": {
+          "actions": "Akcje",
+          "bibNumber": "Numer",
+          "finish": "Meta",
+          "playerLastName": "Nazwisko",
+          "playerName": "Imię",
+          "result": "Wynik",
+          "start": "Start",
+          "totalTimePenalty": "Kara czasowa"
+        },
+        "search": {
+          "placeholder": "Szukaj wyników..."
+        }
+      },
+      "header": {
+        "description": "Wyniki mierzone przez stopery, każdy wynik może zostać zmieniony",
+        "title": "Wyniki Wyścigu"
+      },
+      "manageTimePenalties": {
+        "confirmation": {
+          "text": "Zarządzaj karami czasowymi zawodnika {name} {lastName}",
+          "title": "Kary czasowe"
+        },
+        "grid": {
+          "columns": {
+            "actions": "Akcje",
+            "reason": "Powód",
+            "time": "Czas"
+          }
+        },
+        "revertTimePenalty": {
+          "button": "Usuń",
+          "confirmation": {
+            "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?",
+            "title": "Wycofaj karę czasową"
+          },
+          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+          "title": "Wycofaj karę czasową"
+        }
+      },
+      "revertDisqualification": {
+        "confirmation": {
+          "text": "Próbujesz wycofać dyskwalifikację zawodnika {name} {lastName}. Czy chcesz kontynuować?\"",
+          "title": "Cofnij dyskwalifikację"
+        },
+        "description": "Oryginalny wynik zawodnika zostanie przywrócony",
+        "title": "Wycofaj dyskwalifikację"
+      }
+    },
+    "settings": {
+      "apiKeys": {
+        "create": {
+          "button": "Dodaj Klucz API",
+          "title": "Stwórz klucz API"
+        },
+        "delete": {
+          "confirmation": {
+            "text": "Próbujesz usunąć Klucz API {name}. Czy chcesz kontynuować?",
+            "title": "Usuń Klucz API"
+          }
+        },
+        "edit": {
+          "title": "Edytuj Klucz API"
+        },
+        "form": {
+          "name": {
+            "label": "Nazwa klucza API",
+            "placeholder": "Wpisz nazwę klucza API"
+          }
+        }
+      },
+      "header": {
+        "description": "Klucze API mogą być skonfigurowane tutaj",
+        "title": "Ustawienia"
+      }
+    },
+    "splitTimes": {
+      "edit": {
+        "title": "Edytuj czas pomiaru"
+      },
+      "form": {
+        "bibNumber": {
+          "label": "Numer startowy",
+          "placeholder": "Wpisz numer startowy"
+        },
+        "time": {
+          "label": "Czas"
+        },
+        "timingPoint": {
+          "label": "Punkt pomiarowy",
+          "placeholder": "Wybierz punkt pomiarowy"
+        }
+      },
+      "grid": {
+        "columns": {
+          "bibNumber": "Numer",
+          "playerLastName": "Nazwisko",
+          "playerName": "Imię"
+        },
+        "search": {
+          "placeholder": "Szukaj czasów pomiarowych..."
+        }
+      },
+      "header": {
+        "description": "Czasy mierzone przez stopery",
+        "title": "Czasy Pomiaru"
+      },
+      "revert": {
+        "confirmation": {
+          "text": "Próbujesz przywrócić ręcznie zmienione czasy pomiaru. Czy chcesz kontynuować?",
+          "title": "Przywróć ręcznie zmieniony czas"
+        }
+      }
+    },
+    "timingPoints": {
+      "accessUrls": {
+        "create": {
+          "title": "Stwórz klucz dostępu"
+        },
+        "delete": {
+          "confirmation": {
+            "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
+            "title": "Usuń URL punktu pomiarowego"
+          }
+        },
+        "edit": {
+          "button": "Edytuj"
+        },
+        "form": {
+          "canAccessOthers": {
+            "label": "Może edytować inne"
+          },
+          "code": {
+            "name": "Kod (opcjonalny)",
+            "placeholder": "Wpisz Kod"
+          },
+          "name": {
+            "label": "Nazwa Dostępowego Url",
+            "placeholder": "Wpisz nazwę dostępowego Url"
+          }
+        },
+        "grid": {
+          "columns": {
+            "code": "Kod",
+            "expiresAt": "Wygasa",
+            "keyName": "Klucz",
+            "supervisor": "Kierownik",
+            "token": "Token",
+            "url": "URL"
+          }
+        },
+        "header": {
+          "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów",
+          "title": "URL Dostępu"
+        }
+      },
+      "create": {
+        "button": "Dodaj punkt pomiarowy",
+        "title": "Stwórz nowy punkt pomiarowy"
+      },
+      "delete": {
+        "confirmation": {
+          "text": "Próbujesz usunąć Punkt Pomiarowy {name}. Czy chcesz kontynuować?",
+          "title": "Usuń punkt pomiarowy"
+        }
+      },
+      "edit": {
+        "title": "Edytuj punkt pomiarowy"
+      },
+      "form": {
+        "description": {
+          "label": "Opis",
+          "placeholder": "Opisz punkt pomiarowy"
+        },
+        "name": {
+          "label": "Nazwa Punktu Pomiarowego",
+          "placeholder": "Wpisz nazwę Punktu Pomiarowego"
+        },
+        "shortName": {
+          "label": "Nazwa skrócona",
+          "placeholder": "Wpisz nazwę skróconą"
+        }
+      },
+      "header": {
+        "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze",
+        "title": "Punkty Pomiarowe"
+      }
+    },
+    "tools": {
+      "applications": {
+        "buttons": {
+          "getQrCode": "Pobierz kod QR",
+          "open": "Otwórz"
+        },
+        "countdown": {
+          "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekran. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekund do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
+          "title": "Odliczanie (do zera)"
+        },
+        "results": {
+          "description": "Wyświetla wyniki na żywo. Rezultaty zawodników pojawiają się od razu po odznaczeniu ich w stoperze. Uwzględniany jest podział na kategorie. Strona dostosowana jest do wyświetlania na telefonie, odświeża się automatycznie.",
+          "title": "Wyniki Live"
+        },
+        "startList": {
+          "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa. Zoptymalizowana dla telefonów.",
+          "title": "Lista startowa"
+        },
+        "stopwatch": {
+          "description": "Stoper odliczający czas od startu zawodów. W przypadku startów indywidualnych jest to czas od startu pierwszego zawodnika, w przypadku startu masowego jest to czas od startu wszystkich zawodników.",
+          "title": "Stoper"
+        }
+      },
+      "header": {
+        "description": "Narzedzia przydatne w trakcie trwania wyścigu",
+        "title": "Narzędzia"
+      }
+    }
+  },
+  "playersManagement": {
+    "player": {
+      "errors": {
+        "bibNumberAlreadyTaken": "Numer startowy jest już przypisany.",
+        "classificationNotFound": "Wybrana klasyfikacja nie została znaleziona.",
+        "playerWithoutStartTimeExists": "Istnieje gracz bez zdefiniowanej godziny startu.",
+        "registrationAlreadyPromoted": "Rejestracja jest już awansowana na zawodnika.",
+        "startTimeAlreadyTaken": "Godzina startu jest już przypisana."
+      }
+    },
+    "playerRegistration": {
+      "errors": {
+        "exceededNumberOfRegistrations": "Osiągnięto limit rejestracji.",
+        "registrationDisabled": "Rejestracja do tych zawodów została zamknięta.",
+        "registrationPromotedToPlayer": "Rejestracja została awansowana na zawodnika. Musisz usunąć zawodnika zanim usuniesz rejestrację."
+      }
+    }
+  },
+  "raceManagement": {
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
+      }
     }
   },
   "registration": {
+    "buttons": {
+      "pending": "Rejestracja oczekuje",
+      "register": "Zarejestruj"
+    },
     "fields": {
-      "gender": {
-        "placeholder": "Wybierz płeć",
-        "label": "Płeć"
-      },
       "birthDate": {
         "label": "Data Urodzenia",
         "placeholder": "Twoja data urodzenia"
-      },
-      "name": {
-        "label": "Imię",
-        "placeholder": "Twoje imię"
-      },
-      "lastName": {
-        "label": "Nazwisko",
-        "placeholder": "Twoje nazwisko"
-      },
-      "team": {
-        "label": "Drużyna (opcjonalnie)",
-        "placeholder": "Twoja drużyna"
       },
       "city": {
         "label": "Miasto",
@@ -859,22 +942,38 @@
         "label": "E-mail",
         "placeholder": "Twój adres e-mail"
       },
-      "phoneNumber": {
-        "label": "Numer telefonu",
-        "placeholder": "Twój numer telefonu"
+      "gender": {
+        "label": "Płeć",
+        "placeholder": "Wybierz płeć"
       },
       "icePhoneNumber": {
         "label": "Numer telefonu ICE (opcjonalnie)",
         "placeholder": "Numer telefonu w razie nagłego wypadku"
       },
+      "lastName": {
+        "label": "Nazwisko",
+        "placeholder": "Twoje nazwisko"
+      },
+      "name": {
+        "label": "Imię",
+        "placeholder": "Twoje imię"
+      },
+      "phoneNumber": {
+        "label": "Numer telefonu",
+        "placeholder": "Twój numer telefonu"
+      },
+      "team": {
+        "label": "Drużyna (opcjonalnie)",
+        "placeholder": "Twoja drużyna"
+      },
       "terms": {
-        "termsAndConditions": "Regulamin",
-        "agree": "Zgadzam się z"
+        "agree": "Zgadzam się z",
+        "termsAndConditions": "Regulamin"
       }
     },
-    "buttons": {
-      "pending": "Rejestracja oczekuje",
-      "register": "Zarejestruj"
+    "header": {
+      "description": "Zarejestruj nowego uczestnika",
+      "title": "Rejestracja"
     },
     "result": {
       "failed": {
@@ -890,485 +989,368 @@
       "availableSpots": "Dostępne miejsca",
       "closed": "Rejestracja zamknięta.",
       "noSpotsLeft": "Brak dostępnych miejsc. Rejestracja zamknięta."
-    },
-    "header": {
-      "title": "Rejestracja",
-      "description": "Zarejestruj nowego uczestnika"
     }
   },
   "results": {
+    "abbreviations": {
+      "dnf": "Nie ukończył(a)",
+      "dns": "Nie wystartował(a)",
+      "dsq": "Zdyskwalifikowany(a)"
+    },
+    "grid": {
+      "columns": {
+        "bibNumber": "Nr",
+        "category": "Kat",
+        "disqualifiaction": "Dyskwalifikacja:",
+        "finish": "Meta",
+        "gap": "Strata",
+        "open": "Open",
+        "penalties": "Kary:",
+        "place": "Msc",
+        "player": "Zawodnik",
+        "result": "Wynik",
+        "start": "Start",
+        "team": "Drużyna",
+        "yearOfBirth": "YoB"
+      }
+    },
     "header": {
       "title": "Wyniki"
     },
     "refresh": {
       "message": "Wyniki odświeżają się automatycznie co 10 sekund."
-    },
-    "abbreviations": {
-      "dns": "Nie wystartował(a)",
-      "dnf": "Nie ukończył(a)",
-      "dsq": "Zdyskwalifikowany(a)"
-    },
-    "grid": {
-      "columns": {
-        "yearOfBirth": "YoB",
-        "place": "Msc",
-        "player": "Zawodnik",
-        "team": "Drużyna",
-        "bibNumber": "Nr",
-        "open": "Open",
-        "category": "Kat",
-        "result": "Wynik",
-        "start": "Start",
-        "finish": "Meta",
-        "gap": "Strata",
-        "penalties": "Kary:",
-        "disqualifiaction": "Dyskwalifikacja:"
-      }
-    }
-  },
-  "errorCodes": {
-    "shared": {
-      "required": "Wymagane",
-      "minLength": "Zbyt krótkie",
-      "email": "Nieprawidłowy adres email",
-      "passwordMatch": "Hasła nie są takie same"
-    },
-    "timingPoint": {
-      "description": {
-        "length": "Opis nie może zawierać więcej niż 100 znaków"
-      },
-      "shortName": {
-        "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
-      }
-    },
-    "bibNumber": {
-      "endNumber": {
-        "higherThanStartNumber": "Ostatni number musi być wyższy niż pierwszy"
-      }
     }
   },
   "shared": {
-    "unauthorized": "Nieautoryzowany",
     "cancel": "Anuluj",
-    "save": "Zapisz",
-    "status": {
-      "disabled": "Wyłączone",
-      "enabled": "Włączone"
-    },
+    "close": "Zamknij",
     "countryCodes": {
-      "AF": "Afganistan",
-      "AL": "Albania",
-      "DZ": "Algieria",
       "AD": "Andora",
-      "AO": "Angola",
-      "AI": "Anguilla",
-      "AQ": "Antarktyka",
+      "AE": "Zjednoczone Emiraty Arabskie",
+      "AF": "Afganistan",
       "AG": "Antigua i Barbuda",
-      "SA": "Arabia Saudyjska",
-      "AR": "Argentyna",
+      "AI": "Anguilla",
+      "AL": "Albania",
       "AM": "Armenia",
-      "AW": "Aruba",
-      "AU": "Australia",
+      "AO": "Angola",
+      "AQ": "Antarktyka",
+      "AR": "Argentyna",
+      "AS": "Samoa Amerykańskie",
       "AT": "Austria",
+      "AU": "Australia",
+      "AW": "Aruba",
+      "AX": "Wyspy Alandzkie",
       "AZ": "Azerbejdżan",
-      "BS": "Bahamy",
-      "BH": "Bahrajn",
-      "BD": "Bangladesz",
+      "BA": "Bośnia i Hercegowina",
       "BB": "Barbados",
+      "BD": "Bangladesz",
       "BE": "Belgia",
-      "BZ": "Belize",
+      "BF": "Burkina Faso",
+      "BG": "Bułgaria",
+      "BH": "Bahrajn",
+      "BI": "Burundi",
       "BJ": "Benin",
+      "BL": "Saint-Barthélemy",
       "BM": "Bermudy",
-      "BT": "Bhutan",
-      "BY": "Białoruś",
+      "BN": "Brunei",
       "BO": "Boliwia",
       "BQ": "Bonaire, Sint Eustatius i Saba",
-      "BA": "Bośnia i Hercegowina",
-      "BW": "Botswana",
       "BR": "Brazylia",
-      "BN": "Brunei",
-      "IO": "Brytyjskie Terytorium Oceanu Indyjskiego",
-      "VG": "Brytyjskie Wyspy Dziewicze",
-      "BG": "Bułgaria",
-      "BF": "Burkina Faso",
-      "BI": "Burundi",
-      "CL": "Chile",
-      "CN": "Chiny",
-      "HR": "Chorwacja",
-      "CW": "Curaçao",
-      "CY": "Cypr",
-      "TD": "Czad",
-      "ME": "Czarnogóra",
-      "CZ": "Czechy",
-      "UM": "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
-      "DK": "Dania",
-      "CD": "Demokratyczna Republika Konga",
-      "DM": "Dominika",
-      "DO": "Dominikana",
-      "DJ": "Dżibuti",
-      "EG": "Egipt",
-      "EC": "Ekwador",
-      "ER": "Erytrea",
-      "EE": "Estonia",
-      "ET": "Etiopia",
-      "FK": "Falklandy",
-      "FJ": "Fidżi",
-      "PH": "Filipiny",
-      "FI": "Finlandia",
-      "FR": "Francja",
-      "TF": "Francuskie Terytoria Południowe i Antarktyczne",
-      "GA": "Gabon",
-      "GM": "Gambia",
-      "GS": "Georgia Południowa i Sandwich Południowy",
-      "GH": "Ghana",
-      "GI": "Gibraltar",
-      "GR": "Grecja",
-      "GD": "Grenada",
-      "GL": "Grenlandia",
-      "GE": "Gruzja",
-      "GU": "Guam",
-      "GG": "Guernsey",
-      "GF": "Gujana Francuska",
-      "GY": "Gujana",
-      "GP": "Gwadelupa",
-      "GT": "Gwatemala",
-      "GW": "Gwinea Bissau",
-      "GQ": "Gwinea Równikowa",
-      "GN": "Gwinea",
-      "HT": "Haiti",
-      "ES": "Hiszpania",
-      "NL": "Holandia",
-      "HN": "Honduras",
-      "HK": "Hongkong",
-      "IN": "Indie",
-      "ID": "Indonezja",
-      "IQ": "Irak",
-      "IR": "Iran",
-      "IE": "Irlandia",
-      "IS": "Islandia",
-      "IL": "Izrael",
-      "JM": "Jamajka",
-      "JP": "Japonia",
-      "YE": "Jemen",
-      "JE": "Jersey",
-      "JO": "Jordania",
-      "KY": "Kajmany",
-      "KH": "Kambodża",
-      "CM": "Kamerun",
+      "BS": "Bahamy",
+      "BT": "Bhutan",
+      "BV": "Wyspa Bouveta",
+      "BW": "Botswana",
+      "BY": "Białoruś",
+      "BZ": "Belize",
       "CA": "Kanada",
-      "QA": "Katar",
-      "KZ": "Kazachstan",
-      "KE": "Kenia",
-      "KG": "Kirgistan",
-      "KI": "Kiribati",
-      "CO": "Kolumbia",
-      "KM": "Komory",
+      "CC": "Wyspy Kokosowe",
+      "CD": "Demokratyczna Republika Konga",
+      "CF": "Republika Środkowoafrykańska",
       "CG": "Kongo",
-      "KR": "Korea Południowa",
-      "KP": "Korea Północna",
+      "CH": "Szwajcaria",
+      "CI": "Wybrzeże Kości Słoniowej",
+      "CK": "Wyspy Cooka",
+      "CL": "Chile",
+      "CM": "Kamerun",
+      "CN": "Chiny",
+      "CO": "Kolumbia",
       "CR": "Kostaryka",
       "CU": "Kuba",
+      "CV": "Republika Zielonego Przylądka",
+      "CW": "Curaçao",
+      "CX": "Wyspa Bożego Narodzenia",
+      "CY": "Cypr",
+      "CZ": "Czechy",
+      "DE": "Niemcy",
+      "DJ": "Dżibuti",
+      "DK": "Dania",
+      "DM": "Dominika",
+      "DO": "Dominikana",
+      "DZ": "Algieria",
+      "EC": "Ekwador",
+      "EE": "Estonia",
+      "EG": "Egipt",
+      "EH": "Sahara Zachodnia",
+      "ER": "Erytrea",
+      "ES": "Hiszpania",
+      "ET": "Etiopia",
+      "FI": "Finlandia",
+      "FJ": "Fidżi",
+      "FK": "Falklandy",
+      "FM": "Mikronezja",
+      "FO": "Wyspy Owcze",
+      "FR": "Francja",
+      "GA": "Gabon",
+      "GB": "Wielka Brytania",
+      "GD": "Grenada",
+      "GE": "Gruzja",
+      "GF": "Gujana Francuska",
+      "GG": "Guernsey",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GL": "Grenlandia",
+      "GM": "Gambia",
+      "GN": "Gwinea",
+      "GP": "Gwadelupa",
+      "GQ": "Gwinea Równikowa",
+      "GR": "Grecja",
+      "GS": "Georgia Południowa i Sandwich Południowy",
+      "GT": "Gwatemala",
+      "GU": "Guam",
+      "GW": "Gwinea Bissau",
+      "GY": "Gujana",
+      "HK": "Hongkong",
+      "HM": "Wyspy Heard i McDonalda",
+      "HN": "Honduras",
+      "HR": "Chorwacja",
+      "HT": "Haiti",
+      "HU": "Węgry",
+      "ID": "Indonezja",
+      "IE": "Irlandia",
+      "IL": "Izrael",
+      "IM": "Wyspa Man",
+      "IN": "Indie",
+      "IO": "Brytyjskie Terytorium Oceanu Indyjskiego",
+      "IQ": "Irak",
+      "IR": "Iran",
+      "IS": "Islandia",
+      "IT": "Włochy",
+      "JE": "Jersey",
+      "JM": "Jamajka",
+      "JO": "Jordania",
+      "JP": "Japonia",
+      "KE": "Kenia",
+      "KG": "Kirgistan",
+      "KH": "Kambodża",
+      "KI": "Kiribati",
+      "KM": "Komory",
+      "KN": "Saint Kitts i Nevis",
+      "KP": "Korea Północna",
+      "KR": "Korea Południowa",
       "KW": "Kuwejt",
+      "KY": "Kajmany",
+      "KZ": "Kazachstan",
       "LA": "Laos",
-      "LS": "Lesotho",
       "LB": "Liban",
-      "LR": "Liberia",
-      "LY": "Libia",
+      "LC": "Saint Lucia",
       "LI": "Liechtenstein",
+      "LK": "Sri Lanka",
+      "LR": "Liberia",
+      "LS": "Lesotho",
       "LT": "Litwa",
       "LU": "Luksemburg",
       "LV": "Łotwa",
-      "MK": "Macedonia",
-      "MG": "Madagaskar",
-      "YT": "Majotta",
-      "MO": "Makau",
-      "MW": "Malawi",
-      "MV": "Malediwy",
-      "MY": "Malezja",
-      "ML": "Mali",
-      "MT": "Malta",
-      "MP": "Mariany Północne",
+      "LY": "Libia",
       "MA": "Maroko",
+      "MC": "Monako",
+      "MD": "Mołdawia",
+      "ME": "Czarnogóra",
+      "MF": "Saint-Martin",
+      "MG": "Madagaskar",
+      "MH": "Wyspy Marshalla",
+      "MK": "Macedonia",
+      "ML": "Mali",
+      "MM": "Mjanma",
+      "MN": "Mongolia",
+      "MO": "Makau",
+      "MP": "Mariany Północne",
       "MQ": "Martynika",
       "MR": "Mauretania",
-      "MU": "Mauritius",
-      "MX": "Meksyk",
-      "FM": "Mikronezja",
-      "MM": "Mjanma",
-      "MD": "Mołdawia",
-      "MC": "Monako",
-      "MN": "Mongolia",
       "MS": "Montserrat",
+      "MT": "Malta",
+      "MU": "Mauritius",
+      "MV": "Malediwy",
+      "MW": "Malawi",
+      "MX": "Meksyk",
+      "MY": "Malezja",
       "MZ": "Mozambik",
       "NA": "Namibia",
-      "NR": "Nauru",
-      "NP": "Nepal",
-      "DE": "Niemcy",
+      "NC": "Nowa Kaledonia",
       "NE": "Niger",
+      "NF": "Norfolk",
       "NG": "Nigeria",
       "NI": "Nikaragua",
-      "NU": "Niue",
-      "NF": "Norfolk",
+      "NL": "Holandia",
       "NO": "Norwegia",
-      "NC": "Nowa Kaledonia",
+      "NP": "Nepal",
+      "NR": "Nauru",
+      "NU": "Niue",
       "NZ": "Nowa Zelandia",
       "OM": "Oman",
-      "PK": "Pakistan",
-      "PW": "Palau",
-      "PS": "Palestyna",
       "PA": "Panama",
-      "PG": "Papua-Nowa Gwinea",
-      "PY": "Paragwaj",
       "PE": "Peru",
-      "PN": "Pitcairn",
       "PF": "Polinezja Francuska",
+      "PG": "Papua-Nowa Gwinea",
+      "PH": "Filipiny",
+      "PK": "Pakistan",
       "PL": "Polska",
-      "PR": "Portoryko",
-      "PT": "Portugalia",
-      "ZA": "Republika Południowej Afryki",
-      "CF": "Republika Środkowoafrykańska",
-      "CV": "Republika Zielonego Przylądka",
-      "RE": "Reunion",
-      "RU": "Rosja",
-      "RO": "Rumunia",
-      "RW": "Rwanda",
-      "EH": "Sahara Zachodnia",
-      "KN": "Saint Kitts i Nevis",
-      "LC": "Saint Lucia",
-      "VC": "Saint Vincent i Grenadyny",
-      "BL": "Saint-Barthélemy",
-      "MF": "Saint-Martin",
       "PM": "Saint-Pierre i Miquelon",
-      "SV": "Salwador",
-      "AS": "Samoa Amerykańskie",
-      "WS": "Samoa",
+      "PN": "Pitcairn",
+      "PR": "Portoryko",
+      "PS": "Palestyna",
+      "PT": "Portugalia",
+      "PW": "Palau",
+      "PY": "Paragwaj",
+      "QA": "Katar",
+      "RE": "Reunion",
+      "RO": "Rumunia",
+      "RS": "Serbia",
+      "RU": "Rosja",
+      "RW": "Rwanda",
+      "SA": "Arabia Saudyjska",
+      "SB": "Wyspy Salomona",
+      "SC": "Seszele",
+      "SD": "Sudan",
+      "SE": "Szwecja",
+      "SG": "Singapur",
+      "SH": "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
+      "SI": "Słowenia",
+      "SJ": "Svalbard i Jan Mayen",
+      "SK": "Słowacja",
+      "SL": "Sierra Leone",
       "SM": "San Marino",
       "SN": "Senegal",
-      "RS": "Serbia",
-      "SC": "Seszele",
-      "SL": "Sierra Leone",
-      "SG": "Singapur",
-      "SX": "Sint Maarten",
-      "SK": "Słowacja",
-      "SI": "Słowenia",
       "SO": "Somalia",
-      "LK": "Sri Lanka",
-      "US": "Stany Zjednoczone",
-      "SZ": "Suazi",
-      "SD": "Sudan",
-      "SS": "Sudan Południowy",
       "SR": "Surinam",
-      "SJ": "Svalbard i Jan Mayen",
+      "SS": "Sudan Południowy",
+      "ST": "Wyspy Świętego Tomasza i Książęca",
+      "SV": "Salwador",
+      "SX": "Sint Maarten",
       "SY": "Syria",
-      "CH": "Szwajcaria",
-      "SE": "Szwecja",
-      "TJ": "Tadżykistan",
+      "SZ": "Suazi",
+      "TC": "Turks i Caicos",
+      "TD": "Czad",
+      "TF": "Francuskie Terytoria Południowe i Antarktyczne",
+      "TG": "Togo",
       "TH": "Tajlandia",
+      "TJ": "Tadżykistan",
+      "TK": "Tokelau",
+      "TL": "Timor Wschodni",
+      "TM": "Turkmenistan",
+      "TN": "Tunezja",
+      "TO": "Tonga",
+      "TR": "Turcja",
+      "TT": "Trynidad i Tobago",
+      "TV": "Tuvalu",
       "TW": "Tajwan",
       "TZ": "Tanzania",
-      "TL": "Timor Wschodni",
-      "TG": "Togo",
-      "TK": "Tokelau",
-      "TO": "Tonga",
-      "TT": "Trynidad i Tobago",
-      "TN": "Tunezja",
-      "TR": "Turcja",
-      "TM": "Turkmenistan",
-      "TC": "Turks i Caicos",
-      "TV": "Tuvalu",
-      "UG": "Uganda",
       "UA": "Ukraina",
+      "UG": "Uganda",
+      "UM": "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
+      "US": "Stany Zjednoczone",
       "UY": "Urugwaj",
       "UZ": "Uzbekistan",
+      "VA": "Watykan",
+      "VC": "Saint Vincent i Grenadyny",
+      "VE": "Wenezuela",
+      "VG": "Brytyjskie Wyspy Dziewicze",
+      "VI": "Wyspy Dziewicze Stanów Zjednoczonych",
+      "VN": "Wietnam",
       "VU": "Vanuatu",
       "WF": "Wallis i Futuna",
-      "VA": "Watykan",
-      "VE": "Wenezuela",
-      "HU": "Węgry",
-      "GB": "Wielka Brytania",
-      "VN": "Wietnam",
-      "IT": "Włochy",
-      "CI": "Wybrzeże Kości Słoniowej",
-      "BV": "Wyspa Bouveta",
-      "CX": "Wyspa Bożego Narodzenia",
-      "IM": "Wyspa Man",
-      "SH": "Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha",
-      "AX": "Wyspy Alandzkie",
-      "CK": "Wyspy Cooka",
-      "VI": "Wyspy Dziewicze Stanów Zjednoczonych",
-      "HM": "Wyspy Heard i McDonalda",
-      "CC": "Wyspy Kokosowe",
-      "MH": "Wyspy Marshalla",
-      "FO": "Wyspy Owcze",
-      "SB": "Wyspy Salomona",
-      "ST": "Wyspy Świętego Tomasza i Książęca",
+      "WS": "Samoa",
+      "YE": "Jemen",
+      "YT": "Majotta",
+      "ZA": "Republika Południowej Afryki",
       "ZM": "Zambia",
-      "ZW": "Zimbabwe",
-      "AE": "Zjednoczone Emiraty Arabskie"
+      "ZW": "Zimbabwe"
     },
+    "dataTable": {
+      "columns": "Kolumny",
+      "noRowsToShow": "Brak wierszy do wyświetlenia. Tabela prezentuje się minimalistycznie!",
+      "paging": {
+        "currentPage": "Strona {currentPage} z {totalPages}",
+        "rowsPerPage": "Wierszy na stronę:"
+      },
+      "search": {
+        "placeholder": "Szukaj..."
+      }
+    },
+    "errorOccured": "Wystąpił błąd",
     "genders": {
       "female": "Kobieta",
       "male": "Mężczyzna"
     },
-    "sportKinds": {
-      "road-cycling": "Kolarstwo szosowe",
-      "mtb-cycling": "Kolarstwo górskie",
-      "gravel-cycling": "Gravel",
-      "canoeing": "Kajakarstwo",
-      "bobsleigh": "Bobsleje",
-      "swimming": "Pływanie",
-      "running": "Bieganie",
-      "hiking": "Turystyna piesza"
-    },
-    "dataTable": {
-      "columns": "Kolumny",
-      "search": {
-        "placeholder": "Szukaj..."
-      },
-      "paging": {
-        "rowsPerPage": "Wierszy na stronę:",
-        "currentPage": "Strona {currentPage} z {totalPages}"
-      },
-      "noRowsToShow": "Brak wierszy do wyświetlenia. Tabela prezentuje się minimalistycznie!"
-    },
-    "close": "Zamknij",
+    "generalError": "Ups! Coś poszło nie tak po naszej stronie. Nasz zespół został powiadomiony i pracujemy nad naprawą. Prosimy spróbować ponownie później. Jeśli problem będzie się utrzymywał, prosimy o kontakt z pomocą techniczną. Przepraszamy za wszelkie niedogodności.",
     "ok": "OK",
-    "errorOccured": "Wystąpił błąd",
-    "generalError": "Ups! Coś poszło nie tak po naszej stronie. Nasz zespół został powiadomiony i pracujemy nad naprawą. Prosimy spróbować ponownie później. Jeśli problem będzie się utrzymywał, prosimy o kontakt z pomocą techniczną. Przepraszamy za wszelkie niedogodności."
+    "save": "Zapisz",
+    "sportKinds": {
+      "bobsleigh": "Bobsleje",
+      "canoeing": "Kajakarstwo",
+      "gravel-cycling": "Gravel",
+      "hiking": "Turystyna piesza",
+      "mtb-cycling": "Kolarstwo górskie",
+      "road-cycling": "Kolarstwo szosowe",
+      "running": "Bieganie",
+      "swimming": "Pływanie"
+    },
+    "status": {
+      "disabled": "Wyłączone",
+      "enabled": "Włączone"
+    },
+    "unauthorized": "Nieautoryzowany"
   },
   "startList": {
+    "headerStartTime": "Czas startu: ",
     "nextPlayer": "Następny zawodnik",
     "noPlayersLeft": "Brak oczekujących zawodników",
-    "startTime": "Start",
-    "headerStartTime": "Czas startu: "
-  },
-  "auth": {
-    "login": {
-      "header": "Witaj!",
-      "form": {
-        "email": {
-          "label": "Email*",
-          "placeholder": "Wpisz twój adres email"
-        },
-        "password": {
-          "label": "Hasło*",
-          "placeholder": "Wpisz poprawne hasło"
-        },
-        "submit": "Zaloguj"
-      },
-      "registration": {
-        "question": "Nie posiadasz konta?",
-        "button": "Utwórz konto"
-      }
-    },
-    "rights": "Ravelo. Wszelkie prawa zastrzeżone.",
-    "register": {
-      "header": "Utwórz konto!"
-    },
-    "registration": {
-      "form": {
-        "name": {
-          "label": "Nazwa*",
-          "placeholder": "Wpisz nazwę użytkownika"
-        },
-        "email": {
-          "label": "Adres email*",
-          "placeholder": "Wpisz twój adres email"
-        },
-        "password": {
-          "label": "Hasło*",
-          "placeholder": "Wpisz swoje hasło"
-        },
-        "confirmPassword": {
-          "label": "Potwierdzenie hasła*",
-          "placeholder": "Potwierdź swoje hasło"
-        },
-        "submit": "Utwórz konto"
-      },
-      "login": {
-        "question": "Masz już konto?",
-        "button": "Zaloguj się"
-      }
-    }
-  },
-  "playersManagement": {
-    "playerRegistration": {
-      "errors": {
-        "exceededNumberOfRegistrations": "Osiągnięto limit rejestracji.",
-        "registrationPromotedToPlayer": "Rejestracja została awansowana na zawodnika. Musisz usunąć zawodnika zanim usuniesz rejestrację.",
-        "registrationDisabled": "Rejestracja do tych zawodów została zamknięta."
-      }
-    },
-    "player": {
-      "errors": {
-        "bibNumberAlreadyTaken": "Numer startowy jest już przypisany.",
-        "classificationNotFound": "Wybrana klasyfikacja nie została znaleziona.",
-        "playerWithoutStartTimeExists": "Istnieje gracz bez zdefiniowanej godziny startu.",
-        "registrationAlreadyPromoted": "Rejestracja jest już awansowana na zawodnika.",
-        "startTimeAlreadyTaken": "Godzina startu jest już przypisana."
-      }
-    }
-  },
-  "raceManagement": {
-    "race": {
-      "errors": {
-        "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
-      }
-    }
+    "startTime": "Start"
   },
   "timeMeasurement": {
-    "timingPoint": {
-      "errors": {
-        "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
-      }
-    },
     "penalties": {
-      "page": {
-        "export": {
-          "button": "Eksportuj kary"
+      "disqualification": {
+        "disqualificationReasons": {
+          "courseCutting": "Skracanie trasy",
+          "disorderlyConduct": "Zakłócanie porządku",
+          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
+          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
+          "failureToFollowCourse": "Nie podążanie za trasą",
+          "falseStart": "False start",
+          "illegalSubstanceUse": "Użycie nielegalnych substancji",
+          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)",
+          "incompleteGear": "Niekompletne wyposażenie",
+          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
+          "littering": "Śmiecenie",
+          "missedCheckpoints": "Pominięcie punktów kontrolnych",
+          "noVisibleBib": "Brak widocznego numeru startowego",
+          "outsideAssistance": "Zewnętrzna pomoc",
+          "ruleViolations": "Naruszenie zasad",
+          "unauthorizedAssistance": "Nieautoryzowana pomoc",
+          "unsportsmanlikeConduct": "Niesportowe zachowanie"
         },
-        "grid": {
-          "columns": {
-            "actions": "Akcje",
-            "bibNumber": "Numer",
-            "time": "Czas",
-            "reason": "Powód",
-            "player": "Zawodnik"
+        "form": {
+          "bibNumber": {
+            "label": "Numer startowy",
+            "placeholder": "Wprowadź numer startowy"
           },
-          "search": {
-            "placeholder": "Szukaj kar..."
+          "reason": {
+            "label": "Powód",
+            "placeholder": "Uzasadnij dyskwalifikację"
           }
-        },
-        "header": {
-          "description": "Kary czasowe zaaplikowane dla zawodnika",
-          "title": "Kary czasowe"
-        },
+        }
+      },
+      "page": {
         "disqualification": {
-          "grid": {
-            "columns": {
-              "bibNumber": "Numer",
-              "reason": "Powód",
-              "player": "Zawodnik"
-            },
-            "search": {
-              "placeholder": "Szukaj dyskwalifikacji..."
-            }
-          },
-          "header": {
-            "title": "Dyskwalifikacje",
-            "description": "Zdyskwalifikowani zawodnicy"
-          },
-          "export": {
-            "button": "Eksportuj dyskwalifikacje"
-          },
-          "revert": {
-            "name": "Wycofaj dyskwalifikację",
-            "description": "Oryginalny wynik zawodnika zostanie przywrócony",
-            "confirmation": {
-              "title": "Cofnij dyskwalifikację",
-              "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\""
-            }
-          },
           "create": {
             "button": "Zdyskwalifikuj zawodnika",
             "confirmation": {
@@ -1383,17 +1365,53 @@
             },
             "description": "Zmień szczegóły dyskwalifikacji",
             "name": "Edytuj dyskwalifikację"
-          }
-        },
-        "timePenalty": {
-          "revert": {
-            "name": "Wycofaj karę czasową",
-            "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-            "confirmation": {
-              "title": "Wycofaj karę czasową",
-              "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?"
+          },
+          "export": {
+            "button": "Eksportuj dyskwalifikacje"
+          },
+          "grid": {
+            "columns": {
+              "bibNumber": "Numer",
+              "player": "Zawodnik",
+              "reason": "Powód"
+            },
+            "search": {
+              "placeholder": "Szukaj dyskwalifikacji..."
             }
           },
+          "header": {
+            "description": "Zdyskwalifikowani zawodnicy",
+            "title": "Dyskwalifikacje"
+          },
+          "revert": {
+            "confirmation": {
+              "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\"",
+              "title": "Cofnij dyskwalifikację"
+            },
+            "description": "Oryginalny wynik zawodnika zostanie przywrócony",
+            "name": "Wycofaj dyskwalifikację"
+          }
+        },
+        "export": {
+          "button": "Eksportuj kary"
+        },
+        "grid": {
+          "columns": {
+            "actions": "Akcje",
+            "bibNumber": "Numer",
+            "player": "Zawodnik",
+            "reason": "Powód",
+            "time": "Czas"
+          },
+          "search": {
+            "placeholder": "Szukaj kar..."
+          }
+        },
+        "header": {
+          "description": "Kary czasowe zaaplikowane dla zawodnika",
+          "title": "Kary czasowe"
+        },
+        "timePenalty": {
           "edit": {
             "confirmation": {
               "description": "Zmień szczegóły kary czasowej",
@@ -1401,60 +1419,18 @@
             },
             "description": "Zmień szczegóły kary czasowej",
             "name": "Edytuj karę czasową"
-          }
-        }
-      },
-      "disqualification": {
-        "disqualificationReasons": {
-          "illegalSubstanceUse": "Użycie nielegalnych substancji",
-          "ruleViolations": "Naruszenie zasad",
-          "incompleteGear": "Niekompletne wyposażenie",
-          "outsideAssistance": "Zewnętrzna pomoc",
-          "failureToFollowCourse": "Nie podążanie za trasą",
-          "falseStart": "False start",
-          "disorderlyConduct": "Zakłócanie porządku",
-          "missedCheckpoints": "Pominięcie punktów kontrolnych",
-          "courseCutting": "Skracanie trasy",
-          "noVisibleBib": "Brak widocznego numeru startowego",
-          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
-          "unsportsmanlikeConduct": "Niesportowe zachowanie",
-          "littering": "Śmiecenie",
-          "unauthorizedAssistance": "Nieautoryzowana pomoc",
-          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
-          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
-          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)"
-        },
-        "form": {
-          "bibNumber": {
-            "label": "Numer startowy",
-            "placeholder": "Wprowadź numer startowy"
           },
-          "reason": {
-            "label": "Powód",
-            "placeholder": "Uzasadnij dyskwalifikację"
+          "revert": {
+            "confirmation": {
+              "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?",
+              "title": "Wycofaj karę czasową"
+            },
+            "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+            "name": "Wycofaj karę czasową"
           }
         }
       },
       "timePenalty": {
-        "timePenaltyReasons": {
-          "illegalSubstanceUse": "Użycie nielegalnych substancji",
-          "ruleViolations": "Naruszenie zasad",
-          "incompleteGear": "Niekompletne wyposażenie",
-          "outsideAssistance": "Zewnętrzna pomoc",
-          "failureToFollowCourse": "Nie podążanie za trasą",
-          "falseStart": "False start",
-          "disorderlyConduct": "Zakłócanie porządku",
-          "missedCheckpoints": "Pominięcie punktów kontrolnych",
-          "courseCutting": "Skracanie trasy",
-          "noVisibleBib": "Brak widocznego numeru startowego",
-          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
-          "unsportsmanlikeConduct": "Niesportowe zachowanie",
-          "littering": "Śmiecenie",
-          "unauthorizedAssistance": "Nieautoryzowana pomoc",
-          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
-          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
-          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)"
-        },
         "create": {
           "button": "Zaaplikuj karę czasową",
           "confirmation": {
@@ -1475,7 +1451,31 @@
             "label": "Czas",
             "placeholder": "Wpisz czas"
           }
+        },
+        "timePenaltyReasons": {
+          "courseCutting": "Skracanie trasy",
+          "disorderlyConduct": "Zakłócanie porządku",
+          "equipmentViolations": "Naruszenie zasad dotyczących sprzętu",
+          "failureToFinishInTime": "Nieukończenie w wyznaczonym czasie",
+          "failureToFollowCourse": "Nie podążanie za trasą",
+          "falseStart": "False start",
+          "illegalSubstanceUse": "Użycie nielegalnych substancji",
+          "inadequateLightingNightRaces": "Niewystarczające oświetlenie (wyścigi nocne)",
+          "incompleteGear": "Niekompletne wyposażenie",
+          "invalidBibPlacement": "Nieprawidłowe umieszczenie numeru startowego",
+          "littering": "Śmiecenie",
+          "missedCheckpoints": "Pominięcie punktów kontrolnych",
+          "noVisibleBib": "Brak widocznego numeru startowego",
+          "outsideAssistance": "Zewnętrzna pomoc",
+          "ruleViolations": "Naruszenie zasad",
+          "unauthorizedAssistance": "Nieautoryzowana pomoc",
+          "unsportsmanlikeConduct": "Niesportowe zachowanie"
         }
+      }
+    },
+    "timingPoint": {
+      "errors": {
+        "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
     }
   }
