@@ -522,7 +522,7 @@
         "title": "Players"
       }
     },
-    "race": {
+    "basicInfo": {
       "statistics": {
         "header": {
           "title": "Statistics"
@@ -531,6 +531,10 @@
           "registeredPlayers": "Registered players",
           "registrationStatus": "Registration status"
         }
+      },
+      "header": {
+        "title": "Basic info",
+        "description": "Basic informations about the race"
       }
     },
     "races": {
