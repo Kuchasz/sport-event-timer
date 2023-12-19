@@ -19,9 +19,9 @@ import { PoorCheckbox } from "components/poor-checkbox";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
 
-const FormCard = ({ children }: { children: React.ReactNode }) => (
+const FormCard = ({ children, title }: { children: React.ReactNode; title: string }) => (
     <div className="flex flex-col rounded-md border p-4 shadow-sm">
-        <h4 className="pb-4 font-bold">Title for section</h4>
+        <h4 className="pb-4 font-bold">{title}</h4>
         {children}
     </div>
 );
@@ -56,7 +56,7 @@ export const BasicInfo = () => {
                             </div>
                             <Form<Race> initialValues={initialRace} validationSchema={raceSchema} onSubmit={console.log}>
                                 <div className="flex flex-col">
-                                    <FormCard>
+                                    <FormCard title={t("pages.basicInfo.sections.base.title")}>
                                         <div className="flex">
                                             <FormInput<Race, "name">
                                                 label={t("pages.races.form.name.label")}
@@ -156,7 +156,7 @@ export const BasicInfo = () => {
                                     <div className="p-2"></div>
 
                                     <div className="p-2"></div>
-                                    <FormCard>
+                                    <FormCard title={t("pages.basicInfo.sections.terms.title")}>
                                         <div className="flex">
                                             <FormInput<Race, "termsUrl">
                                                 label={t("pages.races.form.terms.label")}
@@ -173,7 +173,7 @@ export const BasicInfo = () => {
                                         </div>
                                     </FormCard>
                                     <div className="p-2"></div>
-                                    <FormCard>
+                                    <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
                                         <div className="flex">
                                             <FormInput<Race, "emailTemplate">
                                                 label={t("pages.races.form.emailTemplate.label")}
