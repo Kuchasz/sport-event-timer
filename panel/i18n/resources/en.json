@@ -535,6 +535,15 @@
       "header": {
         "title": "Basic info",
         "description": "Basic informations about the race"
+      },
+      "sections": {
+        "terms": {
+          "emailTemplate": "Registration confirmation template",
+          "title": "Upload regulations"
+        },
+        "base": {
+          "title": "Basic data"
+        }
       }
     },
     "races": {

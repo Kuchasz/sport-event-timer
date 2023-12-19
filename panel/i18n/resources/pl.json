@@ -535,6 +535,15 @@
       "header": {
         "title": "Podstawowe informacje",
         "description": "Podstawowe informacje o wyścigu"
+      },
+      "sections": {
+        "terms": {
+          "emailTemplate": "Szablon potwierdzenia rejestracji",
+          "title": "Prześlij regulamin"
+        },
+        "base": {
+          "title": "Dane podstawowe"
+        }
       }
     },
     "races": {
