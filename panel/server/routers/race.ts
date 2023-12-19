@@ -64,7 +64,9 @@ export const raceRouter = router({
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const id = input.raceId;
-            return await ctx.db.race.findUnique({ where: { id } });
+            const race = await ctx.db.race.findUniqueOrThrow({ where: { id } });
+
+            return { ...race, sportKind: race?.sportKind as SportKind };
         }),
     raceRaport: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
