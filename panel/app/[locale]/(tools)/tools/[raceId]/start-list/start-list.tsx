@@ -199,7 +199,7 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     }, [systemTime, players]);
 
     const nextStartPlayer = players?.find(p => p.absoluteStartTime - globalTime > 0);
-    const maxBibNumber = players?.slice(-1)[0]?.bibNumber?.toString().length;
+    const maxBibNumber = Math.max(...players?.map(p => p?.bibNumber?.toString().length ?? 0));
     const nextStartPlayerIndex = nextStartPlayer ? players?.indexOf(nextStartPlayer) : players?.length;
 
     return (
