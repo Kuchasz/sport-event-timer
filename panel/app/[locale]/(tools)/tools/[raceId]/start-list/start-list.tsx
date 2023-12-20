@@ -27,8 +27,10 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const PlayerBibNumber = ({ maxBibNumber, bibNumber }: { maxBibNumber: number; bibNumber: string }) => {
-    const bibText = maxBibNumber ? ".".repeat(maxBibNumber - bibNumber.toString().length) + bibNumber : bibNumber.toString() || "";
+const PlayerBibNumber = ({ maxBibNumberLength, bibNumber }: { maxBibNumberLength: number; bibNumber: string }) => {
+    const bibText = maxBibNumberLength
+        ? ".".repeat(maxBibNumberLength - bibNumber.toString().length) + bibNumber
+        : bibNumber.toString() || "";
 
     return (
         <div className="mx-2 flex flex-col rounded-md bg-gray-100 p-1">
@@ -41,13 +43,13 @@ const PlayerBibNumber = ({ maxBibNumber, bibNumber }: { maxBibNumber: number; bi
 };
 
 const StartListPlayer = ({
-    maxBibNumber,
+    maxBibNumberLength,
     isNext,
     hasPassed,
     showTime,
     player,
 }: {
-    maxBibNumber?: number;
+    maxBibNumberLength?: number;
     hasPassed?: boolean;
     isNext: boolean;
     showTime?: boolean;
@@ -69,7 +71,7 @@ const StartListPlayer = ({
                 })}
                 size={0.7}
                 path={mdiCheckBold}></Icon>
-            <PlayerBibNumber bibNumber={player.bibNumber} maxBibNumber={maxBibNumber!} />
+            <PlayerBibNumber bibNumber={player.bibNumber} maxBibNumberLength={maxBibNumberLength!} />
             <span
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
@@ -99,9 +101,9 @@ const StartList = ({
     players,
     nextStartPlayer,
     nextStartPlayerIndex,
-    maxBibNumber,
+    maxBibNumberLength,
 }: {
-    maxBibNumber?: number;
+    maxBibNumberLength?: number;
     nextStartPlayer?: StartListPlayer;
     nextStartPlayerIndex: number;
     clockState: { players: { size: number } };
@@ -116,7 +118,7 @@ const StartList = ({
             <div className="flex w-full flex-col justify-between">
                 {players.map((p, index) => (
                     <StartListPlayer
-                        maxBibNumber={maxBibNumber}
+                        maxBibNumberLength={maxBibNumberLength}
                         isNext={p.bibNumber === nextStartPlayer?.bibNumber}
                         hasPassed={index < nextStartPlayerIndex}
                         showTime={true}
@@ -199,7 +201,7 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     }, [systemTime, players]);
 
     const nextStartPlayer = players?.find(p => p.absoluteStartTime - globalTime > 0);
-    const maxBibNumber = Math.max(...players?.map(p => p?.bibNumber?.toString().length ?? 0));
+    const maxBibNumberLength = Math.max(...players?.map(p => p?.bibNumber?.toString().length ?? 0));
     const nextStartPlayerIndex = nextStartPlayer ? players?.indexOf(nextStartPlayer) : players?.length;
 
     return (
@@ -212,7 +214,7 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                         </div>
                         <NextPlayer nextStartPlayer={nextStartPlayer} />
                         <StartList
-                            maxBibNumber={maxBibNumber}
+                            maxBibNumberLength={maxBibNumberLength}
                             nextStartPlayer={nextStartPlayer}
                             nextStartPlayerIndex={nextStartPlayerIndex}
                             players={players}
