@@ -32,6 +32,7 @@ type Options = {
     date?: Date;
     registrationEnabled?: boolean;
     termsUrl?: string | null;
+    websiteUrl?: string | null;
     emailTemplate?: string | null;
     playersLimit?: number | null;
 };
@@ -101,6 +102,7 @@ const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Om
         location: faker.location.city(),
         registrationEnabled: false,
         termsUrl: "",
+        websiteUrl: "",
         emailTemplate: "",
         playersLimit: faker.number.int({ min: 100, max: 1000 }),
         ...options,

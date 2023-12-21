@@ -610,6 +610,10 @@
         },
         "useSampleData": {
           "label": "Add sample data"
+        },
+        "websiteUrl": {
+          "label": "Official website",
+          "placeholder": "Enter official website url"
         }
       },
       "grid": {

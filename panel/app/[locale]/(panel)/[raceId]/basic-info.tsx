@@ -130,6 +130,21 @@ export const BasicInfo = () => {
                                                 name="description"
                                             />
                                         </div>
+                                        <div className="p-2"></div>
+                                        <div className="flex">
+                                            <FormInput<Race, "websiteUrl">
+                                                label={t("pages.races.form.websiteUrl.label")}
+                                                className="flex-1"
+                                                render={({ value, onChange }) => (
+                                                    <PoorInput
+                                                        placeholder={t("pages.races.form.websiteUrl.placeholder")}
+                                                        value={value}
+                                                        onChange={onChange}
+                                                    />
+                                                )}
+                                                name="websiteUrl"
+                                            />
+                                        </div>
                                     </FormCard>
                                     <div className="p-2"></div>
                                     <div className="p-2"></div>
