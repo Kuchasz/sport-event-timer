@@ -2,7 +2,7 @@ import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
 import type { AppRouterInputs } from "trpc";
 import { PoorCheckbox } from "../../poor-checkbox";
-import { Form, FormInput } from "form";
+import { Form, FormInput, FormInputInline } from "form";
 import { timingPointAccessUrlSchema } from "modules/timing-point/models";
 import { useTranslations } from "next-intl";
 
@@ -49,11 +49,16 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
                     )}
                     name="code"
                 />
-            </div>
-            <div className="flex">
-                <FormInput<TimingPointAccessUrl, "canAccessOthers">
+                <div className="p-2"></div>
+                <FormInputInline<TimingPointAccessUrl, "canAccessOthers">
                     label={t("pages.timingPoints.accessUrls.form.canAccessOthers.label")}
-                    render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
+                    render={({ value, onChange }) => (
+                        <PoorCheckbox
+                            label={t("pages.timingPoints.accessUrls.form.canAccessOthers.label")}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    )}
                     name="canAccessOthers"
                 />
             </div>

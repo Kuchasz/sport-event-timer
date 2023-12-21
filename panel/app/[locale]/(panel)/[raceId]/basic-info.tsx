@@ -5,7 +5,7 @@ import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "components/page-header";
-import { Form, FormInput } from "form";
+import { Form, FormInput, FormInputInline } from "form";
 import { PoorUTCDatepicker } from "components/poor-datepicker";
 import { PoorNumberInput } from "components/poor-number-input";
 import { PoorInput } from "components/poor-input";
@@ -54,6 +54,11 @@ export const BasicInfo = () => {
                                     title={t("pages.basicInfo.statistics.widgets.registrationStatus")}
                                 />
                             </div>
+                            {/* <label>
+                                Potwierdzam 100% nieznajomość regulaminu. Kto ma czas na czytanie regulaminów
+                                <input type="checkbox"></input>
+                            </label> */}
+
                             <Form<Race> initialValues={initialRace} validationSchema={raceSchema} onSubmit={console.log}>
                                 <div className="flex flex-col">
                                     <FormCard title={t("pages.basicInfo.sections.base.title")}>
@@ -163,10 +168,16 @@ export const BasicInfo = () => {
                                                 name="playersLimit"
                                             />
                                             <div className="p-2"></div>
-                                            <FormInput<Race, "registrationEnabled">
+                                            <FormInputInline<Race, "registrationEnabled">
                                                 label={t("pages.races.form.registrationEnabled.label")}
                                                 className="flex flex-1 items-start"
-                                                render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
+                                                render={({ value, onChange }) => (
+                                                    <PoorCheckbox
+                                                        label={t("pages.races.form.registrationEnabled.label")}
+                                                        value={value}
+                                                        onChange={onChange}
+                                                    />
+                                                )}
                                                 name="registrationEnabled"
                                             />
                                         </div>

@@ -76,10 +76,38 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
                     <Label>
                         {label}
                         {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                        <div className="text-right text-xs font-medium text-red-600 opacity-75">
+                            {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
+                        </div>
                     </Label>
-                    <div className="text-right text-xs font-medium text-red-600 opacity-75">
-                        {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
-                    </div>
+                </div>
+            )}
+        </FormContext.Consumer>
+    );
+};
+export const FormInputInline = <TItem, TKey extends keyof TItem>({
+    label,
+    name,
+    render,
+    className,
+}: {
+    label: string;
+    name: TKey;
+    className?: string;
+    render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
+}) => {
+    const t = useTranslations();
+    return (
+        <FormContext.Consumer>
+            {({ formValues, formErrors, handleChange }) => (
+                <div className={`flex flex-col ${className ?? ""}`}>
+                    <Label>
+                        &nbsp;
+                        {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                        <div className="text-right text-xs font-medium text-red-600 opacity-75">
+                            {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
+                        </div>
+                    </Label>
                 </div>
             )}
         </FormContext.Consumer>
