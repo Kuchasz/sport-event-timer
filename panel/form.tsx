@@ -57,12 +57,6 @@ type InputProps<TItem, TKey extends keyof TItem> = {
     value: TItem[TKey];
 };
 
-// type FormInputProps<TItem, TKey extends keyof TItem> = {
-//     label: string;
-//     name: TKey;
-//     render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
-// };
-
 export const FormInput = <TItem, TKey extends keyof TItem>({
     label,
     name,
@@ -79,8 +73,10 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
                 <div className={`flex flex-col ${className ?? ""}`}>
-                    <Label>{label}</Label>
-                    {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                    <Label>
+                        {label}
+                        {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                    </Label>
                     <div className="text-right text-xs font-medium text-red-600 opacity-75">
                         {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
                     </div>
