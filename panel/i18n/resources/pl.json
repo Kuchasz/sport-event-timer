@@ -610,6 +610,10 @@
         },
         "useSampleData": {
           "label": "Dodaj przykładowe dane"
+        },
+        "websiteUrl": {
+          "label": "Oficjalna strona internetowa",
+          "placeholder": "Wpisz oficjalną stronę wydarzenia"
         }
       },
       "grid": {

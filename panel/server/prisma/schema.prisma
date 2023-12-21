@@ -34,6 +34,7 @@ model Race {
     sportKind            String
     date                 DateTime
     termsUrl             String?
+    websiteUrl           String?
     emailTemplate        String?
     playersLimit         Int?
     registrationEnabled  Boolean

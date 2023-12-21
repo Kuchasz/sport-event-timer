@@ -29,6 +29,7 @@ export const raceRouter = router({
             date: r.date,
             emailTemplate: r.emailTemplate,
             termsUrl: r.termsUrl,
+            websiteUrl: r.websiteUrl,
             playersLimit: r.playersLimit,
             registrationEnabled: r.registrationEnabled,
             registeredPlayers: r.playerRegistration.length,
