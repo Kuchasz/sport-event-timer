@@ -140,7 +140,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                 {c.sortable ? (
                                     <div
                                         onClick={() => handleSortClick(c, sortColumn)}
-                                        className="m-2 flex cursor-pointer items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors hover:bg-gray-100">
+                                        className="m-2 flex cursor-pointer select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors hover:bg-gray-100">
                                         <span className="mr-2">{c.headerName}</span>
                                         {c.field === sortColumn?.field ? (
                                             sortColumn.order === "asc" ? (
@@ -153,7 +153,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                         )}
                                     </div>
                                 ) : (
-                                    <div className="m-2 flex cursor-default items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
+                                    <div className="m-2 flex cursor-default select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
                                         <span>{c.headerName}</span>
                                     </div>
                                 )}

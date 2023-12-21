@@ -55,7 +55,7 @@ const TimingPointCard = ({
             <div>
                 <Link href={`/${timingPoint.raceId}/timing-points/${timingPoint.id}` as Route}>
                     <div className="my-1 w-full cursor-pointer rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4] p-1">
-                        <div className={classNames("flex rounded-lg bg-white px-6 py-4")}>
+                        <div className={classNames("flex rounded-lg bg-white px-6 py-4 hover:bg-gray-100")}>
                             <div
                                 className={classNames(`mr-4 self-center rounded-full bg-gray-100 p-2 text-gray-500`, {
                                     ["rotate-90"]: !isLast,
