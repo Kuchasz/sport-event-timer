@@ -11,6 +11,17 @@ export const timingPointRouter = router({
             const raceId = input.raceId;
             return await ctx.db.timingPoint.findMany({ where: { raceId } });
         }),
+    timingPoint: protectedProcedure
+        .input(
+            z.object({
+                timingPointId: z.number({ required_error: "timingPointId is required" }),
+                raceId: z.number({ required_error: "raceId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, timingPointId } = input;
+            return await ctx.db.timingPoint.findFirstOrThrow({ where: { raceId, id: timingPointId } });
+        }),
     timingPointsOrder: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
