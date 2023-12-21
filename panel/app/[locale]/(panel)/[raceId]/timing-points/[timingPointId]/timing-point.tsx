@@ -110,7 +110,7 @@ export const TimingPoint = ({ timingPoint }: { timingPoint: TimingPoint }) => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
                 <div className="flex">
-                    <div className="ml-8 mt-1 w-full flex-grow">
+                    <div className="mt-1 w-full flex-grow">
                         <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
                             <div className="flex-grow">
                                 <h3 className="text-xl font-semibold">{timingPoint.name}</h3>
