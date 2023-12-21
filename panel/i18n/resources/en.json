@@ -543,6 +543,9 @@
         },
         "base": {
           "title": "Basic data"
+        },
+        "registration": {
+          "title": "Registration"
         }
       }
     },

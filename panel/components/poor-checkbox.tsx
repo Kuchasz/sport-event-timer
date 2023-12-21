@@ -9,6 +9,7 @@ export const PoorCheckbox = ({
 }) => (
     <Input
         type="checkbox"
+        height="auto"
         checked={value!}
         onChange={() => {
             onChange({ target: { value: !value } });

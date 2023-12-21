@@ -117,28 +117,6 @@ export const BasicInfo = () => {
                                         </div>
                                         <div className="p-2"></div>
                                         <div className="flex">
-                                            <FormInput<Race, "playersLimit">
-                                                label={t("pages.races.form.playersLimit.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorNumberInput
-                                                        placeholder={t("pages.races.form.playersLimit.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="playersLimit"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInput<Race, "registrationEnabled">
-                                                label={t("pages.races.form.registrationEnabled.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
-                                                name="registrationEnabled"
-                                            />
-                                        </div>
-                                        <div className="p-2"></div>
-                                        <div className="flex">
                                             <FormInput<Race, "description">
                                                 label={t("pages.races.form.description.label")}
                                                 className="flex-1"
@@ -154,7 +132,30 @@ export const BasicInfo = () => {
                                         </div>
                                     </FormCard>
                                     <div className="p-2"></div>
-
+                                    <div className="p-2"></div>
+                                    <FormCard title={t("pages.basicInfo.sections.registration.title")}>
+                                        <div className="flex">
+                                            <FormInput<Race, "playersLimit">
+                                                label={t("pages.races.form.playersLimit.label")}
+                                                className="flex-1"
+                                                render={({ value, onChange }) => (
+                                                    <PoorNumberInput
+                                                        placeholder={t("pages.races.form.playersLimit.placeholder")}
+                                                        value={value}
+                                                        onChange={onChange}
+                                                    />
+                                                )}
+                                                name="playersLimit"
+                                            />
+                                            <div className="p-2"></div>
+                                            <FormInput<Race, "registrationEnabled">
+                                                label={t("pages.races.form.registrationEnabled.label")}
+                                                className="flex flex-1 items-start"
+                                                render={({ value, onChange }) => <PoorCheckbox value={value} onChange={onChange} />}
+                                                name="registrationEnabled"
+                                            />
+                                        </div>
+                                    </FormCard>
                                     <div className="p-2"></div>
                                     <FormCard title={t("pages.basicInfo.sections.terms.title")}>
                                         <div className="flex">
