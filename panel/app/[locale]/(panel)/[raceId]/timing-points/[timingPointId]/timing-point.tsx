@@ -15,22 +15,30 @@ import { useCurrentRaceId } from "../../../../../../hooks";
 import { trpc } from "../../../../../../trpc-core";
 import { Button } from "components/button";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
+import { TimingPointAccessUrlEdit } from "components/panel/timing-point/timing-point-access-url-edit-form";
+import { toast } from "components/use-toast";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 type AccessKey = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"][0];
 
-const generateAccessUrl = async () => {
-    const { csrfToken } = await fetch("/api/auth/csrf").then(r => r.json());
-
-    await fetch("/api/auth/signin/email", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify({
-            csrfToken,
-            email: "@",
-        }),
+const generateAccessUrl = () => {
+    toast({
+        title: "not implemented",
+        description: "timing point url generation does not work",
+        variant: "destructive",
     });
+
+    // const { csrfToken } = await fetch("/api/auth/csrf").then(r => r.json());
+
+    // await fetch("/api/auth/signin/email", {
+    //     headers: { "Content-Type": "application/json" },
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //         csrfToken,
+    //         email: "@",
+    //     }),
+    // });
 };
 
 export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: TimingPoint }) => {
@@ -71,6 +79,22 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
             sortable: false,
             cellRenderer: d => (
                 <PoorActions>
+                    <PoorModal
+                        onResolve={() => refetchAccessKeys()}
+                        title={t("pages.timingPoints.accessUrls.edit.confirmation.title")}
+                        component={TimingPointAccessUrlEdit}
+                        componentProps={{
+                            editedTimingPointAccessKey: d,
+                            timingPointId: timingPoint.id,
+                            raceId: timingPoint.raceId,
+                            onReject: () => {},
+                        }}>
+                        <NewPoorActionsItem
+                            onClick={generateAccessUrl}
+                            name={t("pages.timingPoints.accessUrls.edit.title")}
+                            description={t("pages.timingPoints.accessUrls.edit.description")}
+                            iconPath={mdiPencilOutline}></NewPoorActionsItem>
+                    </PoorModal>
                     <PoorConfirmation
                         onAccept={() => deleteAccessKey(d)}
                         title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
@@ -80,7 +104,6 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
                             description={t("pages.timingPoints.accessUrls.delete.description")}
                             iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
                     </PoorConfirmation>
-
                     <NewPoorActionsItem
                         onClick={generateAccessUrl}
                         name={t("pages.timingPoints.accessUrls.copy.title")}
@@ -164,7 +187,13 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
                                 </Button>
                             </PoorModal>
                             <div className="p-2"></div>
-                            <PoorDataTable columns={cols} getRowId={d => d.id} gridName="timing-point-access-keys" data={accessKeys} />
+                            <PoorDataTable
+                                columns={cols}
+                                hideColumnsChooser
+                                getRowId={d => d.id}
+                                gridName="timing-point-access-keys"
+                                data={accessKeys}
+                            />
                         </div>
                     </div>
                 </div>

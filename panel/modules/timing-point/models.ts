@@ -14,6 +14,7 @@ export const timingPointSchema = z.object({
 });
 
 export const timingPointAccessUrlSchema = z.object({
+    id: z.number().min(1).nullish(),
     raceId: z.number({ required_error: sharedErrorCodes.required }),
     timingPointId: z.number({ required_error: sharedErrorCodes.required }),
     code: z.string().nullable(),
