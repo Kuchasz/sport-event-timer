@@ -815,13 +815,16 @@
     "timingPoints": {
       "accessUrls": {
         "create": {
-          "title": "Stwórz klucz dostępu"
+          "title": "Stwórz klucz dostępu",
+          "button": "Dodaj url dostępu"
         },
         "delete": {
           "confirmation": {
             "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
             "title": "Usuń URL punktu pomiarowego"
-          }
+          },
+          "title": "Usuń url dostępu",
+          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy"
         },
         "edit": {
           "button": "Edytuj"
@@ -841,17 +844,19 @@
         },
         "grid": {
           "columns": {
-            "code": "Kod",
             "expiresAt": "Wygasa",
             "keyName": "Klucz",
             "supervisor": "Kierownik",
-            "token": "Token",
-            "url": "URL"
+            "actions": "Akcje"
           }
         },
         "header": {
           "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów",
           "title": "URL Dostępu"
+        },
+        "copy": {
+          "title": "Kupiuj url dostępowy",
+          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru"
         }
       },
       "create": {
@@ -912,6 +917,12 @@
       "header": {
         "description": "Narzedzia przydatne w trakcie trwania wyścigu",
         "title": "Narzędzia"
+      }
+    },
+    "timingPoint": {
+      "header": {
+        "title": "Punkt pomiarowy",
+        "description": "Zarządzaj punktem pomiarowym"
       }
     }
   },
