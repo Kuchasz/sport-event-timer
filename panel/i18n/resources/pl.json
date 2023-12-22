@@ -928,6 +928,11 @@
       "header": {
         "title": "Punkt pomiarowy",
         "description": "Zarządzaj punktem pomiarowym"
+      },
+      "sections": {
+        "base": {
+          "title": "Dane podstawowe"
+        }
       }
     }
   },

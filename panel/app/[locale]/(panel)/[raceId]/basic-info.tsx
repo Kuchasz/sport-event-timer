@@ -1,30 +1,22 @@
 "use client";
 
-import { DashboardCard } from "components/dashboard-card";
-import { trpc } from "trpc-core";
-import { useCurrentRaceId } from "hooks";
-import { useTranslations } from "next-intl";
-import { PageHeader } from "components/page-header";
-import { Form, FormInput, FormInputInline } from "form";
-import { PoorUTCDatepicker } from "components/poor-datepicker";
-import { PoorNumberInput } from "components/poor-number-input";
-import { PoorInput } from "components/poor-input";
-import { PoorSelect } from "components/poor-select";
-import { PoorTextArea } from "components/poor-text-area";
-import { type AppRouterInputs } from "trpc";
-import { raceSchema } from "modules/race/models";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { Button } from "components/button";
+import { PageHeader } from "components/page-header";
 import { PoorCheckbox } from "components/poor-checkbox";
+import { PoorUTCDatepicker } from "components/poor-datepicker";
+import { PoorInput } from "components/poor-input";
+import { PoorNumberInput } from "components/poor-number-input";
+import { PoorSelect } from "components/poor-select";
+import { PoorTextArea } from "components/poor-text-area";
+import { Form, FormCard, FormInput, FormInputInline } from "form";
+import { useCurrentRaceId } from "hooks";
+import { raceSchema } from "modules/race/models";
+import { useTranslations } from "next-intl";
+import { type AppRouterInputs } from "trpc";
+import { trpc } from "trpc-core";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
-
-const FormCard = ({ children, title }: { children: React.ReactNode; title: string }) => (
-    <div className="flex flex-col rounded-md border p-4 shadow-sm">
-        <h4 className="pb-4 font-bold">{title}</h4>
-        {children}
-    </div>
-);
 
 export const BasicInfo = () => {
     const raceId = useCurrentRaceId();
@@ -41,8 +33,8 @@ export const BasicInfo = () => {
                 <div>
                     <div>
                         <PageHeader title={t("pages.basicInfo.header.title")} description={t("pages.basicInfo.header.description")} />
-                        <div className="mb-4 mt-8">
-                            <div className="mx-3 text-xl font-semibold">{t("pages.basicInfo.statistics.header.title")}</div>
+                        <div className="mb-4 mt-6">
+                            {/* <div className="mx-3 text-xl font-semibold">{t("pages.basicInfo.statistics.header.title")}</div>
                             <div className="flex">
                                 <DashboardCard.Range
                                     min={raceRaceport.registeredPlayers}
@@ -53,7 +45,7 @@ export const BasicInfo = () => {
                                     enabled={raceRaceport.registrationEnabled}
                                     title={t("pages.basicInfo.statistics.widgets.registrationStatus")}
                                 />
-                            </div>
+                            </div> */}
                             {/* <label>
                                 Potwierdzam 100% nieznajomość regulaminu. Kto ma czas na czytanie regulaminów
                                 <input type="checkbox"></input>

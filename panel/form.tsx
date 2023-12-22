@@ -114,6 +114,13 @@ export const FormInputInline = <TItem, TKey extends keyof TItem>({
     );
 };
 
+export const FormCard = ({ children, title }: { children: React.ReactNode; title: string }) => (
+    <div className="flex flex-col rounded-md border p-4 shadow-sm">
+        <h4 className="pb-4 font-bold">{title}</h4>
+        {children}
+    </div>
+);
+
 export function Form<TItem extends object>({
     children,
     initialValues,
