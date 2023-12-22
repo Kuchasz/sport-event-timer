@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 type TimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 type TimingPointFormProps = {
-    onReject: () => void;
+    onReject?: () => void;
     onResolve: (timingPoint: TimingPoint) => void;
     initialTimingPoint: TimingPoint;
     isLoading: boolean;
@@ -49,9 +49,13 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
                 />
             </div>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
-                    {t("shared.cancel")}
-                </Button>
+                {onReject ? (
+                    <Button onClick={onReject} outline>
+                        {t("shared.cancel")}
+                    </Button>
+                ) : (
+                    <div></div>
+                )}
                 <Button loading={isLoading} type="submit">
                     {t("shared.save")}
                 </Button>

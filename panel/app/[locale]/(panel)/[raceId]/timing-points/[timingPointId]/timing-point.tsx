@@ -15,13 +15,14 @@ import { toast } from "components/use-toast";
 import { FormCard } from "form";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
-import type { AppRouterOutputs } from "trpc";
+import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { trpc } from "../../../../../../trpc-core";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 type AccessKey = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"][0];
+type EditTimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 const generateAccessUrl = () => {
     toast({
@@ -50,6 +51,7 @@ export const TimingPoint = ({
     initialTimingPointUrls: AccessKeys;
 }) => {
     const raceId = useCurrentRaceId();
+    const updateTimingPointMutation = trpc.timingPoint.update.useMutation();
 
     const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessUrls.useQuery(
         { raceId: raceId, timingPointId: initialTimingPoint.id },
@@ -60,6 +62,11 @@ export const TimingPoint = ({
         { raceId: raceId, timingPointId: initialTimingPoint.id },
         { initialData: initialTimingPoint },
     );
+
+    const timingPointEdited = async (editedTimingPoint: EditTimingPoint) => {
+        await updateTimingPointMutation.mutateAsync(editedTimingPoint);
+        void refetchTimingPoint();
+    };
 
     const t = useTranslations();
 
@@ -146,9 +153,8 @@ export const TimingPoint = ({
                         <FormCard title={t("pages.timingPoint.sections.base.title")}>
                             <TimingPointForm
                                 initialTimingPoint={timingPoint}
-                                isLoading={false}
-                                onResolve={console.log}
-                                onReject={refetchTimingPoint}></TimingPointForm>
+                                isLoading={updateTimingPointMutation.isLoading}
+                                onResolve={timingPointEdited}></TimingPointForm>
                         </FormCard>
                         {/* <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
                             <div className="flex-grow">
