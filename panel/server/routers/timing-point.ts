@@ -44,6 +44,11 @@ export const timingPointRouter = router({
 
         return timingPointAccessUrl;
     }),
+    editTimingPointAccessUrl: protectedProcedure.input(timingPointAccessUrlSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...data } = input;
+
+        return await ctx.db.timingPointAccessUrl.update({ where: { id: id! }, data });
+    }),
     timingPointAccessUrls: protectedProcedure
         .input(
             z.object({
