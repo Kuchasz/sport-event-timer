@@ -1,3 +1,4 @@
+"use client";
 import { mdiArrowDown, mdiArrowUp, mdiChevronLeft, mdiChevronRight, mdiMagnify, mdiUnfoldMoreHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import { clamp } from "@set/utils/dist/number";

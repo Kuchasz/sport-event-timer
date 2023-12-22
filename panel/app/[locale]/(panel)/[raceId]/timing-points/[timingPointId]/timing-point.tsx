@@ -6,17 +6,18 @@ import { PageHeader } from "components/page-header";
 import { TimingPointAccessUrlCreate } from "components/panel/timing-point/timing-point-access-url-create-form";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
 
-import { TimingPointEdit } from "components/panel/timing-point/timing-point-edit";
+import { Button } from "components/button";
+import { TimingPointAccessUrlEdit } from "components/panel/timing-point/timing-point-access-url-edit-form";
+import { TimingPointForm } from "components/panel/timing-point/timing-point-form";
+import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { toast } from "components/use-toast";
+import { FormCard } from "form";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterOutputs } from "trpc";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { trpc } from "../../../../../../trpc-core";
-import { Button } from "components/button";
-import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
-import { TimingPointAccessUrlEdit } from "components/panel/timing-point/timing-point-access-url-edit-form";
-import { toast } from "components/use-toast";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
@@ -41,12 +42,18 @@ const generateAccessUrl = () => {
     // });
 };
 
-export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: TimingPoint }) => {
+export const TimingPoint = ({
+    initialTimingPoint,
+    initialTimingPointUrls,
+}: {
+    initialTimingPoint: TimingPoint;
+    initialTimingPointUrls: AccessKeys;
+}) => {
     const raceId = useCurrentRaceId();
 
     const { data: accessKeys, refetch: refetchAccessKeys } = trpc.timingPoint.timingPointAccessUrls.useQuery(
         { raceId: raceId, timingPointId: initialTimingPoint.id },
-        { initialData: [] },
+        { initialData: initialTimingPointUrls },
     );
 
     const { data: timingPoint, refetch: refetchTimingPoint } = trpc.timingPoint.timingPoint.useQuery(
@@ -56,7 +63,7 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
 
     const t = useTranslations();
 
-    const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
+    // const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const cols: PoorDataTableColumn<AccessKey>[] = [
@@ -90,7 +97,7 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
                             onReject: () => {},
                         }}>
                         <NewPoorActionsItem
-                            onClick={generateAccessUrl}
+                            onClick={() => generateAccessUrl()}
                             name={t("pages.timingPoints.accessUrls.edit.title")}
                             description={t("pages.timingPoints.accessUrls.edit.description")}
                             iconPath={mdiPencilOutline}></NewPoorActionsItem>
@@ -114,12 +121,12 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
         },
     ];
 
-    const deleteTimingPoint = async (timingPoint: TimingPoint) => {
-        await deleteTimingPointMutation.mutateAsync(timingPoint);
+    // const deleteTimingPoint = async (timingPoint: TimingPoint) => {
+    //     await deleteTimingPointMutation.mutateAsync(timingPoint);
 
-        // void refetchOrder();
-        // void refetchTimingPoints();
-    };
+    //     // void refetchOrder();
+    //     // void refetchTimingPoints();
+    // };
 
     const deleteAccessKey = async (timingPointAccessKey: AccessKeys[0]) => {
         await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessUrlId: timingPointAccessKey.id });
@@ -136,7 +143,14 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
                 <PageHeader title={t("pages.timingPoint.header.title")} description={t("pages.timingPoint.header.description")} />
                 <div className="flex">
                     <div className="mt-1 w-full flex-grow">
-                        <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
+                        <FormCard title={t("pages.timingPoint.sections.base.title")}>
+                            <TimingPointForm
+                                initialTimingPoint={timingPoint}
+                                isLoading={false}
+                                onResolve={console.log}
+                                onReject={refetchTimingPoint}></TimingPointForm>
+                        </FormCard>
+                        {/* <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
                             <div className="flex-grow">
                                 <h3 className="text-xl font-semibold">{timingPoint.name}</h3>
                                 <div>{timingPoint.description}</div>
@@ -162,8 +176,8 @@ export const TimingPoint = ({ initialTimingPoint }: { initialTimingPoint: Timing
                                         <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                     </button>
                                 </PoorConfirmation>
-                            </div>
-                        </div>
+                            </div> */}
+                        {/* </div> */}
                         <div className="mt-8">
                             <div className="flex items-center">
                                 <PageHeader

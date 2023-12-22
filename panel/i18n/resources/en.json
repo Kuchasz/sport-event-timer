@@ -928,6 +928,11 @@
       "header": {
         "title": "Timing Point",
         "description": "Manage the timing point"
+      },
+      "sections": {
+        "base": {
+          "title": "Basic data"
+        }
       }
     }
   },
