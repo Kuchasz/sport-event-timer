@@ -143,13 +143,21 @@
           "title": "Delete bibNumber"
         },
         "description": "You may delete the bib number",
-        "name": "Delete bib number"
+        "name": "Delete bib number",
+        "success": {
+          "title": "Bib number deleted",
+          "description": "Bib number successfully deleted"
+        }
       },
       "deleteAll": {
         "button": "Remove all",
         "confirmation": {
           "text": "You are trying to delete all Bib Numbers. Do you want to proceed?",
           "title": "Delete bibNumber"
+        },
+        "success": {
+          "title": "All bib numbers deleted",
+          "description": "There is no more bib numbers defined"
         }
       },
       "edit": {
