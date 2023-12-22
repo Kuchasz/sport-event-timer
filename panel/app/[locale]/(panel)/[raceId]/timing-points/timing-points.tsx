@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { PageHeader } from "components/page-header";
@@ -53,24 +53,28 @@ const TimingPointCard = ({
             )}
 
             <div>
-                <Link href={`/${timingPoint.raceId}/timing-points/${timingPoint.id}` as Route}>
-                    <div className="my-1 w-full cursor-pointer rounded-xl bg-gradient-to-r from-[#c2e59c] to-[#64b3f4] p-1">
-                        <div className={classNames("flex rounded-lg bg-white px-6 py-4 hover:bg-gray-100")}>
-                            <div
-                                className={classNames(`mr-4 self-center rounded-full bg-gray-100 p-2 text-gray-500`, {
-                                    ["rotate-90"]: !isLast,
-                                })}>
-                                <Icon path={getTimingPointIcon(isFirst, isLast)} size={0.8} />
-                            </div>
-                            <div className="flex flex-col">
-                                <h4 className={classNames("text-md font-bold")}>{timingPoint.name}</h4>
-                                <span className={classNames("text-sm text-gray-500")}>
-                                    {timingPoint.description ?? "Timing point where time should be registered"}
-                                </span>
-                            </div>
+                <div className="my-1 flex w-full items-center rounded-3xl bg-gray-100 p-1">
+                    <div className={classNames("flex rounded-lg px-6 py-4")}>
+                        <div
+                            className={classNames(`mr-4 self-center rounded-2xl bg-gray-300 p-3 text-white`, {
+                                ["rotate-90"]: !isLast,
+                            })}>
+                            <Icon path={getTimingPointIcon(isFirst, isLast)} size={0.8} />
+                        </div>
+                        <div className="flex flex-col">
+                            <h4 className={classNames("text-md font-bold")}>{timingPoint.name}</h4>
+                            <span className={classNames("text-sm text-gray-400")}>
+                                {timingPoint.description ?? "Timing point where time should be registered"}
+                            </span>
                         </div>
                     </div>
-                </Link>
+                    <div className="flex-grow"></div>
+                    <Link
+                        className="mr-4 rounded-full p-1 hover:bg-white"
+                        href={`/${timingPoint.raceId}/timing-points/${timingPoint.id}` as Route}>
+                        <Icon path={mdiChevronRight} size={1}></Icon>
+                    </Link>
+                </div>
             </div>
         </div>
     );
