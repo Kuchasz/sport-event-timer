@@ -31,19 +31,16 @@ export const MenuButton = (n: {
 }) => (
     <Link href={n.to}>
         <div
-            className={classNames(
-                "mx-3 my-1.5 flex cursor-pointer items-center rounded-md py-2.5 pl-3 text-sm font-medium transition-all",
-                {
-                    [n.bg]: n.isActive,
-                    ["text-gray-700 hover:bg-gray-100"]: !n.isActive,
-                    [n.color]: n.isActive,
-                },
-            )}>
+            className={classNames("my-1.5 flex cursor-pointer items-center py-3 pl-6 pr-3 text-sm font-medium transition-all", {
+                [n.bg]: n.isActive,
+                ["text-gray-700 hover:bg-gray-100"]: !n.isActive,
+                [n.color]: n.isActive,
+            })}>
             <Icon className={classNames("transition-opacity", { ["opacity-75"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
             <span className="ml-2.5">{n.text}</span>
             <span className="flex-grow"></span>
             {n.badgeCount != null && (
-                <span className="text-2xs mx-2 rounded-full bg-gray-300 p-1 font-bold text-white">{n.badgeCount}</span>
+                <span className="text-2xs w-[2.5rem] rounded-full bg-blue-500 p-1 text-center text-white">{n.badgeCount}</span>
             )}
         </div>
     </Link>
