@@ -815,13 +815,16 @@
     "timingPoints": {
       "accessUrls": {
         "create": {
-          "title": "Create access key"
+          "title": "Create access key",
+          "button": "Create access url"
         },
         "delete": {
           "confirmation": {
             "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
             "title": "Delete timing point access url"
-          }
+          },
+          "title": "Delete access url",
+          "description": "Stopwatch access using this aceess url won't be possible"
         },
         "edit": {
           "button": "Edit"
@@ -841,17 +844,19 @@
         },
         "grid": {
           "columns": {
-            "code": "Code",
             "expiresAt": "Expires At",
             "keyName": "Key name",
             "supervisor": "Supervisor",
-            "token": "Token",
-            "url": "URL"
+            "actions": "Actions"
           }
         },
         "header": {
           "description": "Copy access URLs and send them to the timekeepers",
           "title": "Access URLs"
+        },
+        "copy": {
+          "title": "Copy access url",
+          "description": "Send that to the timekeeper to handle that timing point measurements"
         }
       },
       "create": {
@@ -912,6 +917,12 @@
       "header": {
         "description": "Tools useful during the race",
         "title": "Tools"
+      }
+    },
+    "timingPoint": {
+      "header": {
+        "title": "Timing Point",
+        "description": "Manage the timing point"
       }
     }
   },
