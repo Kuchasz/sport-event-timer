@@ -143,13 +143,21 @@
           "title": "Usuń numer startowy"
         },
         "description": "Możesz usunąć numer startowy",
-        "name": "Usuń number startowy"
+        "name": "Usuń number startowy",
+        "success": {
+          "title": "Numer startowy usunięty",
+          "description": "Numer startowy usunięty pomyślnie"
+        }
       },
       "deleteAll": {
         "button": "Usuń wszystkie",
         "confirmation": {
           "text": "Próbujesz usunąć wszystkie Numery Startowe. Czy chcesz kontynuować?",
           "title": "Usuń numery startowe"
+        },
+        "success": {
+          "title": "Usunięto wszystkie numery startowe",
+          "description": "Nie pozostał żaden numer startowy"
         }
       },
       "edit": {

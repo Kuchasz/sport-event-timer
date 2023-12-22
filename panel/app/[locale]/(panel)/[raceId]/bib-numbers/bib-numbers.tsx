@@ -15,11 +15,19 @@ import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
 import type { AppRouterOutputs } from "../../../../../trpc";
 import { trpc } from "../../../../../trpc-core";
+import { toast } from "components/use-toast";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 
 const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
-    const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
+    const deletebibNumberMutation = trpc.bibNumber.delete.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.bibNumbers.delete.success.title"),
+                description: t("pages.bibNumbers.delete.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
 
     const deletebibNumber = async () => {
@@ -59,7 +67,14 @@ export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId }, { initialData: [] });
 
-    const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
+    const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.bibNumbers.deleteAll.success.title"),
+                description: t("pages.bibNumbers.deleteAll.success.description"),
+                variant: "positive",
+            }),
+    });
 
     const t = useTranslations();
 
