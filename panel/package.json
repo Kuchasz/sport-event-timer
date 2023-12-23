@@ -55,7 +55,7 @@
     "fastq": "1.15.0",
     "fuzzysort": "2.0.4",
     "jotai": "2.4.2",
-    "next": "14.0.3",
+    "next": "14.0.4",
     "next-intl": "3.0.0-rc.9",
     "node-fetch": "2.6.6",
     "node-html-parser": "6.1.10",
