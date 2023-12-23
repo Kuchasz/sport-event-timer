@@ -124,7 +124,8 @@ export const MyRaces = () => {
                     <PoorConfirmation
                         title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                         message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: data.name })}
-                        onAccept={() => wipeRaceData(data)}>
+                        onAccept={() => wipeRaceData(data)}
+                        isLoading={wipeRaceMutation.isLoading}>
                         <NewPoorActionsItem
                             name={t("pages.races.wipeStopwatchPopup.title")}
                             description={t("pages.races.wipeStopwatchPopup.description")}
@@ -133,7 +134,8 @@ export const MyRaces = () => {
                     <PoorConfirmation
                         title={t("pages.races.deleteRacePopup.confirmation.title")}
                         message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: data.name })}
-                        onAccept={() => deleteRace(data)}>
+                        onAccept={() => deleteRace(data)}
+                        isLoading={deleteRaceMutation.isLoading}>
                         <NewPoorActionsItem
                             name={t("pages.races.deleteRacePopup.title")}
                             description={t("pages.races.deleteRacePopup.description")}

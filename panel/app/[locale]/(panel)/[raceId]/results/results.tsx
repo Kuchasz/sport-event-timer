@@ -147,7 +147,8 @@ export const Results = () => {
                             message={t("pages.results.revertDisqualification.confirmation.text", {
                                 name: data.name,
                                 lastName: data.lastName,
-                            })}>
+                            })}
+                            isLoading={revertDisqualificationMutation.isLoading}>
                             <NewPoorActionsItem
                                 name={t("pages.results.revertDisqualification.title")}
                                 description={t("pages.results.revertDisqualification.description")}

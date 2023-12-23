@@ -312,7 +312,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <PoorConfirmation
                                             title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                                             message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: r.obj.name })}
-                                            onAccept={() => wipeRaceData(r.obj)}>
+                                            onAccept={() => wipeRaceData(r.obj)}
+                                            isLoading={wipeRaceMutation.isLoading}>
                                             <NewPoorActionsItem
                                                 name={t("pages.races.wipeStopwatchPopup.title")}
                                                 description={t("pages.races.wipeStopwatchPopup.description")}
@@ -321,7 +322,8 @@ export const Races = ({ initialData }: RacesProps) => {
                                         <PoorConfirmation
                                             title={t("pages.races.deleteRacePopup.confirmation.title")}
                                             message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: r.obj.name })}
-                                            onAccept={() => deleteRace(r.obj)}>
+                                            onAccept={() => deleteRace(r.obj)}
+                                            isLoading={deleteRaceMutation.isLoading}>
                                             <NewPoorActionsItem
                                                 name={t("pages.races.deleteRacePopup.title")}
                                                 description={t("pages.races.deleteRacePopup.description")}

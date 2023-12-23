@@ -18,6 +18,7 @@ type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
 
 type SplitTimeResultTypes = {
     openResetDialog: (params: RevertedSplitTime) => Promise<void>;
+    isLoading: boolean;
     splitTimeResult: {
         times: Record<number, { time: number; manual: boolean }>;
         bibNumber: string | null;
@@ -27,7 +28,15 @@ type SplitTimeResultTypes = {
     raceDate: Date;
     timingPointId: number;
 };
-const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTimeResult, timingPointId }: SplitTimeResultTypes) => {
+const SplitTimeResult = ({
+    refetch,
+    isLoading,
+    raceId,
+    raceDate,
+    openResetDialog,
+    splitTimeResult,
+    timingPointId,
+}: SplitTimeResultTypes) => {
     const result = splitTimeResult.times[timingPointId];
     const t = useTranslations();
     return (
@@ -88,7 +97,8 @@ const SplitTimeResult = ({ refetch, raceId, raceDate, openResetDialog, splitTime
                             time: result?.time,
                             timingPointId: timingPointId,
                         } as any)
-                    }>
+                    }
+                    isLoading={isLoading}>
                     <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiReload} />
                     </span>
@@ -142,6 +152,7 @@ export const SplitTimes = () => {
                         openResetDialog={revertManualSplitTime}
                         splitTimeResult={data}
                         timingPointId={tp.id}
+                        isLoading={revertSplitTimeMutation.isLoading}
                     />
                 ),
             })),

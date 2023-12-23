@@ -112,7 +112,8 @@ export const TimingPoint = ({
                     <PoorConfirmation
                         onAccept={() => deleteAccessKey(d)}
                         title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
-                        message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}>
+                        message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}
+                        isLoading={deleteTimingPointAccessKeyMutation.isLoading}>
                         <NewPoorActionsItem
                             name={t("pages.timingPoints.accessUrls.delete.title")}
                             description={t("pages.timingPoints.accessUrls.delete.description")}

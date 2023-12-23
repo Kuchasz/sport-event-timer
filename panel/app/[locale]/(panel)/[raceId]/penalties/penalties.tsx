@@ -49,7 +49,8 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
                 message={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.text", {
                     player: penalty.player,
                 })}
-                onAccept={revertTimePenalty}>
+                onAccept={revertTimePenalty}
+                isLoading={revertTimePenaltyMutation.isLoading}>
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.timePenalty.revert.name")}
                     description={t("timeMeasurement.penalties.page.timePenalty.revert.description")}
@@ -62,7 +63,7 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
 const DisqualificationActions = ({ disqualification, refetch }: { disqualification: Disqualification; refetch: () => void }) => {
     const revertDisqualificationMutation = trpc.disqualification.revert.useMutation();
     const t = useTranslations();
-    const revertTimePenalty = async () => {
+    const revertDisqualification = async () => {
         await revertDisqualificationMutation.mutateAsync({ id: disqualification.id });
         refetch();
     };
@@ -88,7 +89,8 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
                 message={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.text", {
                     player: disqualification.player,
                 })}
-                onAccept={revertTimePenalty}>
+                onAccept={revertDisqualification}
+                isLoading={revertDisqualificationMutation.isLoading}>
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.disqualification.revert.name")}
                     description={t("timeMeasurement.penalties.page.disqualification.revert.description")}
