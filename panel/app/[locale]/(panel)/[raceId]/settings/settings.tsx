@@ -71,7 +71,8 @@ export const Settings = () => {
                             <PoorConfirmation
                                 title={t("pages.settings.apiKeys.delete.confirmation.title")}
                                 message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
-                                onAccept={() => deleteApiKey(key)}>
+                                onAccept={() => deleteApiKey(key)}
+                                isLoading={deleteApiKeyMutation.isLoading}>
                                 <Button>
                                     <Icon size={0.8} path={mdiTrashCanOutline} />
                                 </Button>

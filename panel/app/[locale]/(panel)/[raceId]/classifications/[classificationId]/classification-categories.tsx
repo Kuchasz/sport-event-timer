@@ -66,7 +66,8 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
             <PoorConfirmation
                 onAccept={deleteCategory}
                 message={t("pages.classifications.categories.delete.confirmation.text", { name: category.name })}
-                title={t("pages.classifications.categories.delete.confirmation.title")}>
+                title={t("pages.classifications.categories.delete.confirmation.title")}
+                isLoading={removeCategoryMutation.isLoading}>
                 <NewPoorActionsItem
                     name={t("pages.classifications.categories.delete.name")}
                     description={t("pages.classifications.categories.delete.description")}

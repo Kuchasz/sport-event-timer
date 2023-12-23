@@ -10,12 +10,13 @@ import { mdiWindowClose } from "@mdi/js";
 type PoorConfirmationProps = {
     title: string;
     description?: string;
+    isLoading: boolean;
     message: string;
-    onAccept: () => void;
+    onAccept: () => Promise<void>;
     children: React.ReactElement;
 };
 
-export const PoorConfirmation = ({ onAccept, title, description, message, children }: PoorConfirmationProps) => {
+export const PoorConfirmation = ({ onAccept, isLoading, title, description, message, children }: PoorConfirmationProps) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const t = useTranslations();
 
@@ -69,8 +70,9 @@ export const PoorConfirmation = ({ onAccept, title, description, message, childr
                                                     {t("shared.cancel")}
                                                 </Button>
                                                 <Button
-                                                    onClick={() => {
-                                                        onAccept();
+                                                    loading={isLoading}
+                                                    onClick={async () => {
+                                                        await onAccept();
                                                         setModalOpen(false);
                                                     }}>
                                                     {t("shared.ok")}

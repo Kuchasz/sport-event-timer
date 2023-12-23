@@ -137,7 +137,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                     }}>
                     <div className="contents text-xs font-bold">
                         {visibleColumns.map(c => (
-                            <div className="sticky top-0 z-[10000] flex border-b bg-white" key={c.headerName}>
+                            <div className="sticky top-0 z-[9] flex border-b bg-white" key={c.headerName}>
                                 {c.sortable ? (
                                     <div
                                         onClick={() => handleSortClick(c, sortColumn)}

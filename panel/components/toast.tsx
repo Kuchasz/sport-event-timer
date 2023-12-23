@@ -56,7 +56,7 @@ const Toast = React.forwardRef<
             )}
             {...props}>
             <div className="flex">
-                <div className={classnames("mr-4 min-h-full w-2 text-transparent", getColorFromVariant(props.variant ?? "default"))}></div>
+                <div className={classnames("mr-4 min-h-full w-1 text-transparent", getColorFromVariant(props.variant ?? "default"))}></div>
                 <div className="py-4">{children}</div>
             </div>
         </ToastPrimitives.Root>

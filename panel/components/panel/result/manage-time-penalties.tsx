@@ -48,7 +48,8 @@ const TimePenaltyActions = ({
                 lastName: lastName,
             })}
             title={t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.title")}
-            onAccept={() => revertTimePenalty()}>
+            onAccept={() => revertTimePenalty()}
+            isLoading={revertTimePenaltyMutation.isLoading}>
             <span className="flex cursor-pointer items-center hover:text-red-600">
                 <Icon size={0.8} path={mdiTrashCanOutline} />
                 {t("pages.results.manageTimePenalties.revertTimePenalty.button")}
