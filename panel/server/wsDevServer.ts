@@ -7,12 +7,11 @@ import("../env");
 import { env } from "../env";
 
 if (!global.fetch) {
-    console.log('path.resolve(".env")');
     (global as any).fetch = fetch;
 }
 
 const wss = new WebSocketServer({
-    port: env.NEXT_PUBLIC_APP_WS_PORT,
+    port: env.NEXT_PUBLIC_API_PORT,
 });
 
 const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContextWs });
@@ -24,7 +23,7 @@ wss.on("connection", ws => {
     });
 });
 
-console.log(`✅ WebSocket Server listening on ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_WS_PORT}`);
+console.log(`✅ WebSocket Server listening on ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_API_PORT}`);
 
 process.on("SIGTERM", () => {
     console.log("SIGTERM");
