@@ -74,7 +74,7 @@ export const getTimingPointIcon = (isFirst: boolean, isLast: boolean) => {
 
 export const buildApplicationPath = (
     path: string,
-    protocol = env.NEXT_PUBLIC_APP_PROTOCOL,
+    protocol = env.NEXT_PUBLIC_NODE_ENV === "development" ? "http" : "https",
     appUrl = env.NEXT_PUBLIC_APP_URL,
-    port = env.NEXT_PUBLIC_APP_HTTP_PORT,
+    port = env.NEXT_PUBLIC_APP_PORT,
 ) => (port === 80 ? `${protocol}://${appUrl}${path}` : `${protocol}://${appUrl}:${port}${path}`) as Route;

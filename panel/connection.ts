@@ -5,15 +5,15 @@ import { type AppRouter } from "server/routers/app";
 import superjson from "superjson";
 import { env } from "./env";
 
-const url =
+const httpUrl =
     env.NEXT_PUBLIC_NODE_ENV === "production"
-        ? `https://${env.NEXT_PUBLIC_APP_URL}`
-        : `http://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_HTTP_PORT}`;
+        ? `https://${env.NEXT_PUBLIC_API_URL}`
+        : `http://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`;
 
 const wsUrl =
     env.NEXT_PUBLIC_NODE_ENV === "production"
-        ? `wss://${env.NEXT_PUBLIC_APP_URL}`
-        : `ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_APP_WS_PORT}`;
+        ? `wss://${env.NEXT_PUBLIC_API_URL}`
+        : `ws://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`;
 
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));
@@ -76,11 +76,20 @@ export const connectionConfig = (enableSubscriptions: boolean): CreateTRPCClient
                       client: getWsClient()!,
                   }),
                   false: httpBatchLink({
-                      url: `${url}/api/trpc`,
+                      url: httpUrl,
+                      fetch(url, options) {
+                          return fetch(url, { ...options, credentials: "include" });
+                      },
+                      //   url: `${httpUrl}/api/trpc`,
                   }),
               })
             : httpBatchLink({
-                  url: `${url}/api/trpc`,
+                  url: httpUrl,
+                  fetch(url, options) {
+                      return fetch(url, { ...options, credentials: "include" });
+                  },
+                  //   credentials: "include",
+                  //   url: `${httpUrl}/api/trpc`,
               }),
     ],
 });

@@ -9,6 +9,7 @@ import superjson from "superjson";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
 import { db } from "./db";
+import { type CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -30,19 +31,48 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
     const session = await getUserSession(cookies);
 
     if (session.accessToken) {
-        // && session.refreshToken) {
-        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Secure; HttpOnly; Path=/; Max-Age=15`);
-        // opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=${secondsInWeek}`);
+        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
     }
-    // else {
-    //     opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; HttpOnly Max-Age=0`);
-    //     opts.resHeaders.append("Set-Cookie", `refreshToken=${session.refreshToken}; HttpOnly Max-Age=0`);
-    // }
 
     return {
         session: session.payload,
         db,
         resHeaders: opts.resHeaders,
+    };
+};
+
+export const createContextStandalone = async (opts: CreateHTTPContextOptions) => {
+    const cookies = parseCookies(opts.req.headers.cookie ?? "");
+
+    const session = await getUserSession(cookies);
+
+    if (session.accessToken) {
+        opts.res.setHeader("Set-Cookie", `accessToken=${session.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
+    }
+
+    return {
+        session: session.payload,
+        db,
+        resHeaders: {
+            append: (header: string, headerValue: string) => {
+                const existingHeaders = opts.res.getHeader(header);
+
+                if (!existingHeaders) {
+                    opts.res.setHeader(header, headerValue);
+                    return;
+                }
+
+                if (Array.isArray(existingHeaders)) {
+                    opts.res.setHeader(header, [...existingHeaders, headerValue]);
+                    return;
+                }
+
+                if (typeof existingHeaders === "string") {
+                    opts.res.setHeader(header, [existingHeaders, headerValue]);
+                    return;
+                }
+            },
+        } as Headers,
     };
 };
 

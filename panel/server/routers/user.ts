@@ -12,8 +12,11 @@ export const userRouter = router({
         const tokens = await login({ email: input.email, password: input.password });
 
         if (tokens) {
-            ctx.resHeaders.append("Set-Cookie", `accessToken=${tokens.accessToken}; Secure; HttpOnly; Path=/; Max-Age=15`);
-            ctx.resHeaders.append("Set-Cookie", `refreshToken=${tokens.refreshToken}; Secure; HttpOnly; Path=/; Max-Age=${secondsInWeek}`);
+            ctx.resHeaders.append("Set-Cookie", `accessToken=${tokens.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
+            ctx.resHeaders.append(
+                "Set-Cookie",
+                `refreshToken=${tokens.refreshToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=${secondsInWeek}`,
+            );
 
             return { status: "Success" as ResultStatus };
         }
@@ -26,8 +29,8 @@ export const userRouter = router({
     logout: protectedProcedure.mutation(async ({ ctx }) => {
         await ctx.db.session.delete({ where: { id: ctx.session.sessionId } });
 
-        ctx.resHeaders.append("Set-Cookie", `accessToken=; Secure; HttpOnly; Path=/; Max-Age=0`);
-        ctx.resHeaders.append("Set-Cookie", `refreshToken=; Secure; HttpOnly; Path=/; Max-Age=0`);
+        ctx.resHeaders.append("Set-Cookie", `accessToken=; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=0`);
+        ctx.resHeaders.append("Set-Cookie", `refreshToken=; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=0`);
 
         return { status: "Success" };
     }),

@@ -14,7 +14,13 @@ export const withAuth: MiddlewareFactory = next => async (request: NextRequest, 
 
         if (response instanceof NextResponse) {
             if (session.accessToken) {
-                response.cookies.set("accessToken", session.accessToken, { httpOnly: true, secure: true, maxAge: 15, path: "/" });
+                response.cookies.set("accessToken", session.accessToken, {
+                    httpOnly: true,
+                    secure: true,
+                    domain: "localhost",
+                    maxAge: 15,
+                    path: "/",
+                });
             }
         }
 
