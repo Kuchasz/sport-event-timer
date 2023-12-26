@@ -22,7 +22,7 @@ const { server, listen } = createHTTPServer({
     //     origin: `${protocol}://${env.NEXT_PUBLIC_APP_URL}:${appPort}`,
     // }),
     middleware: cors({
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:3000", "http://localhost:3001"],
         credentials: true,
     }),
     router: appRouter,
