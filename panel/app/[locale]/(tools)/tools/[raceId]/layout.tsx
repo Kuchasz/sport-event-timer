@@ -38,6 +38,5 @@ export function generateMetadata({ params }: { params: { locale: string; raceId:
     return {
         title: "Timer",
         manifest: `/api/manifest/${params.raceId}/timer`,
-        themeColor: "#000000",
     };
 }

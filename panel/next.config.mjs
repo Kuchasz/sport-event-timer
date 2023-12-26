@@ -19,6 +19,7 @@ function defineNextConfig(config) {
 }
 
 // await import("./env.js");
+// import { env } from "env";
 
 import NextIntlPlugin from "next-intl/plugin";
 
@@ -42,6 +43,13 @@ export default withNextIntl(
         // }
         eslint: {
             ignoreDuringBuilds: true,
+        },
+
+        rewrites() {
+            return [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }];
+            // return env.NEXT_PUBLIC_NODE_ENV === "production"
+            //     ? [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }]
+            //     : [];
         },
 
         // experimental: {

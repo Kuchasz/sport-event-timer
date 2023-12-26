@@ -20,6 +20,5 @@ export function generateMetadata({ params }: { params: { locale: string; raceId:
     return {
         title: "Stopwatch",
         manifest: `/api/manifest/${params.raceId}/stopwatch`,
-        themeColor: "#000000",
     };
 }
