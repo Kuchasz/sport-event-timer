@@ -1,32 +1,45 @@
-import { createContextWs } from "./trpc";
-import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import fetch from "node-fetch";
+import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import * as dotenv from "dotenv";
+import { env } from "env";
+import * as path from "path";
+import { type AppRouter, appRouter } from "./routers/app";
+import { createContextStandalone, createContextWs } from "./trpc";
 import { WebSocketServer } from "ws";
-import { appRouter } from "./routers/app";
-import("../env");
-import { env } from "../env";
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
+import { logger } from "utils";
+import cors from "cors";
 
-if (!global.fetch) {
-    (global as any).fetch = fetch;
-}
+dotenv.config({ path: path.resolve(".env") });
 
-const wss = new WebSocketServer({
-    port: env.NEXT_PUBLIC_API_PORT,
+const port = env.NEXT_PUBLIC_API_PORT;
+// const appPort = env.NEXT_PUBLIC_APP_PORT;
+const dev = process.env.NODE_ENV !== "production";
+
+const protocol = dev ? "http" : "https";
+
+const { server, listen } = createHTTPServer({
+    // middleware: cors({
+    //     origin: `${protocol}://${env.NEXT_PUBLIC_APP_URL}:${appPort}`,
+    // }),
+    middleware: cors({
+        origin: ["http://localhost:3000", "http://localhost:3001"],
+        credentials: true,
+    }),
+    router: appRouter,
+    createContext: createContextStandalone,
 });
 
-const handler = applyWSSHandler({ wss, router: appRouter, createContext: createContextWs });
-
-wss.on("connection", ws => {
-    console.log(`➕➕ Connection (${wss.clients.size})`);
-    ws.once("close", () => {
-        console.log(`➖➖ Connection (${wss.clients.size})`);
-    });
+const wss = new WebSocketServer({ server });
+const handler = applyWSSHandler<AppRouter>({
+    wss,
+    router: appRouter,
+    createContext: createContextWs,
 });
-
-console.log(`✅ WebSocket Server listening on ws://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_API_PORT}`);
 
 process.on("SIGTERM", () => {
-    console.log("SIGTERM");
+    logger.log("SIGTERM");
     handler.broadcastReconnectNotification();
-    wss.close();
 });
+
+listen(port);
+logger.log(`> Server listening at ${protocol}://${env.NEXT_PUBLIC_API_URL}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
