@@ -43,6 +43,12 @@ jobs:
                   bun run generate-prisma
 
             - name: Build Application
+              env:
+                  NEXT_PUBLIC_NODE_ENV: ${{ secrets.NEXT_PUBLIC_NODE_ENV }}
+                  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+                  NEXT_PUBLIC_APP_PORT: ${{ secrets.NEXT_PUBLIC_APP_PORT }}
+                  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+                  NEXT_PUBLIC_API_PORT: ${{ secrets.NEXT_PUBLIC_API_PORT }}
               run: |
                   cd ./panel
                   bun next telemetry disable
