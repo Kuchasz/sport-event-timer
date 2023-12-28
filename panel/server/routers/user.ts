@@ -1,6 +1,8 @@
 import { loginSchema, registrationSchema } from "../../modules/user/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { login, register, secondsInWeek } from "../../auth";
+import { env } from "process";
+import { userErrors } from "modules/user/errors";
 
 type ResultStatus = "Error" | "Success";
 
@@ -24,6 +26,8 @@ export const userRouter = router({
         return { status: "Error" as ResultStatus, message: "INVALID_USER_OR_PASSWORD" };
     }),
     register: publicProcedure.input(registrationSchema).mutation(async ({ input }) => {
+        if (!env.USER_REGISTRATION_ENABLED) throw userErrors.REGISTRATION_SYSTEM_DISABLED;
+
         return register(input);
     }),
     logout: protectedProcedure.mutation(async ({ ctx }) => {

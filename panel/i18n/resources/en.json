@@ -69,6 +69,13 @@
       }
     }
   },
+  "identity": {
+    "user": {
+      "errors": {
+        "registrationSystemDisabled": "Registration system is disabled temporarily, registration is impossible"
+      }
+    }
+  },
   "menuOptions": {
     "admin": {
       "accounts": "Accounts",
@@ -115,6 +122,33 @@
         "title": "races"
       }
     },
+    "basicInfo": {
+      "header": {
+        "description": "Basic informations about the race",
+        "title": "Basic info"
+      },
+      "sections": {
+        "base": {
+          "title": "Basic data"
+        },
+        "registration": {
+          "title": "Registration"
+        },
+        "terms": {
+          "emailTemplate": "Registration confirmation template",
+          "title": "Upload regulations"
+        }
+      },
+      "statistics": {
+        "header": {
+          "title": "Statistics"
+        },
+        "widgets": {
+          "registeredPlayers": "Registered players",
+          "registrationStatus": "Registration status"
+        }
+      }
+    },
     "bibNumbers": {
       "create": {
         "button": "Add Bib Number",
@@ -145,8 +179,8 @@
         "description": "You may delete the bib number",
         "name": "Delete bib number",
         "success": {
-          "title": "Bib number deleted",
-          "description": "Bib number successfully deleted"
+          "description": "Bib number successfully deleted",
+          "title": "Bib number deleted"
         }
       },
       "deleteAll": {
@@ -156,8 +190,8 @@
           "title": "Delete bibNumber"
         },
         "success": {
-          "title": "All bib numbers deleted",
-          "description": "There is no more bib numbers defined"
+          "description": "There is no more bib numbers defined",
+          "title": "All bib numbers deleted"
         }
       },
       "edit": {
@@ -530,33 +564,6 @@
         "title": "Players"
       }
     },
-    "basicInfo": {
-      "statistics": {
-        "header": {
-          "title": "Statistics"
-        },
-        "widgets": {
-          "registeredPlayers": "Registered players",
-          "registrationStatus": "Registration status"
-        }
-      },
-      "header": {
-        "title": "Basic info",
-        "description": "Basic informations about the race"
-      },
-      "sections": {
-        "terms": {
-          "emailTemplate": "Registration confirmation template",
-          "title": "Upload regulations"
-        },
-        "base": {
-          "title": "Basic data"
-        },
-        "registration": {
-          "title": "Registration"
-        }
-      }
-    },
     "races": {
       "addRace": "Add Race",
       "createRace": {
@@ -820,27 +827,42 @@
         }
       }
     },
+    "timingPoint": {
+      "header": {
+        "description": "Manage the timing point",
+        "title": "Timing Point"
+      },
+      "sections": {
+        "base": {
+          "title": "Basic data"
+        }
+      }
+    },
     "timingPoints": {
       "accessUrls": {
+        "copy": {
+          "description": "Send that to the timekeeper to handle that timing point measurements",
+          "title": "Copy access url"
+        },
         "create": {
-          "title": "Create access key",
-          "button": "Create access url"
+          "button": "Create access url",
+          "title": "Create access key"
         },
         "delete": {
           "confirmation": {
             "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
             "title": "Delete timing point access url"
           },
-          "title": "Delete access url",
-          "description": "Stopwatch access using this aceess url won't be possible"
+          "description": "Stopwatch access using this aceess url won't be possible",
+          "title": "Delete access url"
         },
         "edit": {
           "button": "Edit",
           "confirmation": {
             "title": "Edit access url"
           },
-          "title": "Edit access url",
-          "description": "Change timing point access url details"
+          "description": "Change timing point access url details",
+          "title": "Edit access url"
         },
         "form": {
           "canAccessOthers": {
@@ -857,19 +879,15 @@
         },
         "grid": {
           "columns": {
+            "actions": "Actions",
             "expiresAt": "Expires At",
             "keyName": "Key name",
-            "supervisor": "Supervisor",
-            "actions": "Actions"
+            "supervisor": "Supervisor"
           }
         },
         "header": {
           "description": "Copy access URLs and send them to the timekeepers",
           "title": "Access URLs"
-        },
-        "copy": {
-          "title": "Copy access url",
-          "description": "Send that to the timekeeper to handle that timing point measurements"
         }
       },
       "create": {
@@ -930,17 +948,6 @@
       "header": {
         "description": "Tools useful during the race",
         "title": "Tools"
-      }
-    },
-    "timingPoint": {
-      "header": {
-        "title": "Timing Point",
-        "description": "Manage the timing point"
-      },
-      "sections": {
-        "base": {
-          "title": "Basic data"
-        }
       }
     }
   },

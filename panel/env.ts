@@ -30,6 +30,7 @@ export const env = createEnv({
         NOTIFICATIONS_SERVER_AUTH_PASS: z.string(),
         NOTIFICATIONS_MESSAGE_FROM: z.string(),
         NOTIFICATIONS_MESSAGE_TARGET: z.string(),
+        USER_REGISTRATION_ENABLED: z.boolean(),
     },
     client: {
         NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
@@ -39,7 +40,6 @@ export const env = createEnv({
         NEXT_PUBLIC_API_PORT: z.number(),
     },
     runtimeEnv: {
-        // NODE_ENV: process.env.NODE_ENV,
         DATABASE_URL: process.env.DATABASE_URL,
         PORT: process.env.PORT,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
@@ -61,6 +61,7 @@ export const env = createEnv({
         NEXT_PUBLIC_APP_PORT: Number(process.env.NEXT_PUBLIC_APP_PORT),
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
         NEXT_PUBLIC_API_PORT: Number(process.env.NEXT_PUBLIC_API_PORT),
+        USER_REGISTRATION_ENABLED: process.env.USER_REGISTRATION_ENABLED === "true",
     },
     emptyStringAsUndefined: true,
 });

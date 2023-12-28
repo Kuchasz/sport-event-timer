@@ -69,6 +69,13 @@
       }
     }
   },
+  "identity": {
+    "user": {
+      "errors": {
+        "registrationSystemDisabled": "System rejestracji jest tymczasowo wyłączony, rejestracja jest niemożliwa"
+      }
+    }
+  },
   "menuOptions": {
     "admin": {
       "accounts": "Konta",
@@ -115,6 +122,33 @@
         "title": "Wyścigi"
       }
     },
+    "basicInfo": {
+      "header": {
+        "description": "Podstawowe informacje o wyścigu",
+        "title": "Podstawowe informacje"
+      },
+      "sections": {
+        "base": {
+          "title": "Dane podstawowe"
+        },
+        "registration": {
+          "title": "Rejestracja"
+        },
+        "terms": {
+          "emailTemplate": "Szablon potwierdzenia rejestracji",
+          "title": "Prześlij regulamin"
+        }
+      },
+      "statistics": {
+        "header": {
+          "title": "Statystyki"
+        },
+        "widgets": {
+          "registeredPlayers": "Zarejestrowani Zawodnicy",
+          "registrationStatus": "Status Rejestracji"
+        }
+      }
+    },
     "bibNumbers": {
       "create": {
         "button": "Dodaj Numer Startowy",
@@ -145,8 +179,8 @@
         "description": "Możesz usunąć numer startowy",
         "name": "Usuń number startowy",
         "success": {
-          "title": "Numer startowy usunięty",
-          "description": "Numer startowy usunięty pomyślnie"
+          "description": "Numer startowy usunięty pomyślnie",
+          "title": "Numer startowy usunięty"
         }
       },
       "deleteAll": {
@@ -156,8 +190,8 @@
           "title": "Usuń numery startowe"
         },
         "success": {
-          "title": "Usunięto wszystkie numery startowe",
-          "description": "Nie pozostał żaden numer startowy"
+          "description": "Nie pozostał żaden numer startowy",
+          "title": "Usunięto wszystkie numery startowe"
         }
       },
       "edit": {
@@ -530,33 +564,6 @@
         "title": "Zawodnicy"
       }
     },
-    "basicInfo": {
-      "statistics": {
-        "header": {
-          "title": "Statystyki"
-        },
-        "widgets": {
-          "registeredPlayers": "Zarejestrowani Zawodnicy",
-          "registrationStatus": "Status Rejestracji"
-        }
-      },
-      "header": {
-        "title": "Podstawowe informacje",
-        "description": "Podstawowe informacje o wyścigu"
-      },
-      "sections": {
-        "terms": {
-          "emailTemplate": "Szablon potwierdzenia rejestracji",
-          "title": "Prześlij regulamin"
-        },
-        "base": {
-          "title": "Dane podstawowe"
-        },
-        "registration": {
-          "title": "Rejestracja"
-        }
-      }
-    },
     "races": {
       "addRace": "Dodaj Wyścig",
       "createRace": {
@@ -820,27 +827,42 @@
         }
       }
     },
+    "timingPoint": {
+      "header": {
+        "description": "Zarządzaj punktem pomiarowym",
+        "title": "Punkt pomiarowy"
+      },
+      "sections": {
+        "base": {
+          "title": "Dane podstawowe"
+        }
+      }
+    },
     "timingPoints": {
       "accessUrls": {
+        "copy": {
+          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru",
+          "title": "Kupiuj url dostępowy"
+        },
         "create": {
-          "title": "Stwórz klucz dostępu",
-          "button": "Dodaj url dostępu"
+          "button": "Dodaj url dostępu",
+          "title": "Stwórz klucz dostępu"
         },
         "delete": {
           "confirmation": {
             "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
             "title": "Usuń URL punktu pomiarowego"
           },
-          "title": "Usuń url dostępu",
-          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy"
+          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy",
+          "title": "Usuń url dostępu"
         },
         "edit": {
           "button": "Edytuj",
           "confirmation": {
             "title": "Edytuj url dostępowy"
           },
-          "title": "Edytuj url dostępowy",
-          "description": "Edytuj szczegóły url dostępowego"
+          "description": "Edytuj szczegóły url dostępowego",
+          "title": "Edytuj url dostępowy"
         },
         "form": {
           "canAccessOthers": {
@@ -857,19 +879,15 @@
         },
         "grid": {
           "columns": {
+            "actions": "Akcje",
             "expiresAt": "Wygasa",
             "keyName": "Klucz",
-            "supervisor": "Kierownik",
-            "actions": "Akcje"
+            "supervisor": "Kierownik"
           }
         },
         "header": {
           "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów",
           "title": "URL Dostępu"
-        },
-        "copy": {
-          "title": "Kupiuj url dostępowy",
-          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru"
         }
       },
       "create": {
@@ -930,17 +948,6 @@
       "header": {
         "description": "Narzedzia przydatne w trakcie trwania wyścigu",
         "title": "Narzędzia"
-      }
-    },
-    "timingPoint": {
-      "header": {
-        "title": "Punkt pomiarowy",
-        "description": "Zarządzaj punktem pomiarowym"
-      },
-      "sections": {
-        "base": {
-          "title": "Dane podstawowe"
-        }
       }
     }
   },
