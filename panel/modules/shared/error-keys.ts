@@ -3,6 +3,7 @@ import { playerRegistrationErrorKeys } from "../player-registration/errors";
 import { playerErrorKeys } from "../player/errors";
 import { sharedErrorKeys } from "./errors";
 import { timingPointErrorKeys } from "../timing-point/errors";
+import { userErrorKeys } from "../user/errors";
 
 export const errorKeys = {
     ...sharedErrorKeys,
@@ -10,4 +11,5 @@ export const errorKeys = {
     ...playerRegistrationErrorKeys,
     ...raceErrorKeys,
     ...timingPointErrorKeys,
+    ...userErrorKeys,
 };

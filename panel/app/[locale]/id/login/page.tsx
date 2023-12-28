@@ -7,7 +7,9 @@ import { loginSchema, type UserLogin } from "modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { use } from "react";
 import { trpc } from "trpc-core";
+import { RegistrationStateContext } from "../registration-state-provider";
 
 export default function ({ searchParams }: { searchParams: { email?: string } }) {
     const t = useTranslations();
@@ -18,6 +20,8 @@ export default function ({ searchParams }: { searchParams: { email?: string } })
         email: searchParams?.email ?? "",
         password: "",
     };
+
+    const registrationEnabled = use(RegistrationStateContext);
 
     const onResolve = async (data: UserLogin) => {
         const result = await loginMutation.mutateAsync({ ...data });
@@ -48,12 +52,14 @@ export default function ({ searchParams }: { searchParams: { email?: string } })
                     </Button>
                 </div>
             </Form>
-            <div className="self-center text-sm">
-                <span>{t("auth.login.registration.question")}</span>{" "}
-                <Link className="font-bold transition-colors hover:text-blue-500" href="/id/register">
-                    {t("auth.login.registration.button")}
-                </Link>
-            </div>
+            {registrationEnabled && (
+                <div className="self-center text-sm">
+                    <span>{t("auth.login.registration.question")}</span>{" "}
+                    <Link className="font-bold transition-colors hover:text-blue-500" href="/id/register">
+                        {t("auth.login.registration.button")}
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }
