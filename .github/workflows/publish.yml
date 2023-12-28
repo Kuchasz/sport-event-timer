@@ -48,4 +48,5 @@ jobs:
                       bun prisma generate
                       bun prisma migrate deploy
                       chmod -R 777 server/prisma
-                      pm2 restart app.rura.cc
+                      pm2 restart app.rura.cc/app
+                      pm2 restart app.rura.cc/api
