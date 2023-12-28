@@ -9,7 +9,7 @@ import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { logger } from "utils";
 import cors from "cors";
 
-dotenv.config({ path: path.resolve("../.env") });
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 const port = env.NEXT_PUBLIC_API_PORT;
 // const appPort = env.NEXT_PUBLIC_APP_PORT;
