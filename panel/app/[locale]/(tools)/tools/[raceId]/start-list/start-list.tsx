@@ -170,6 +170,7 @@ const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) 
 
 export const RaceStartList = ({ players: initialData, renderTime }: { players: StartListPlayer[]; renderTime: number }) => {
     const [globalTime, setGlobalTime] = useState<number>(renderTime);
+    const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams<{ raceId: string }>()!;
 
@@ -188,6 +189,12 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
         const tickTime = () => {
             const globalTime = Date.now() + systemTime.timeOffset;
 
+            const nextPlayers = players.filter(p => p.absoluteStartTime - globalTime > 0);
+            const nextPlayer = nextPlayers[0];
+            const nextPlayerTimeToStart = nextPlayer?.absoluteStartTime - globalTime;
+            const secondsToNextStart = Math.floor(nextPlayerTimeToStart / 1_000);
+
+            setSecondsToNextPlayer(secondsToNextStart);
             setGlobalTime(globalTime);
 
             tickInterval = requestAnimationFrame(tickTime);
@@ -210,7 +217,8 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                 <div className="flex h-full w-full flex-col items-center">
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                         <div className="bg-yellow-300">
-                            <Clock fontSize={3} time={globalTime} />
+                            <Clock fontSize={1} time={globalTime} />
+                            {secondsToNextPlayer}
                         </div>
                         <NextPlayer nextStartPlayer={nextStartPlayer} />
                         <StartList
