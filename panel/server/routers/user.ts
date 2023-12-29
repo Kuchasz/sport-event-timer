@@ -12,12 +12,16 @@ export const userRouter = router({
     }),
     login: publicProcedure.input(loginSchema).mutation(async ({ ctx, input }) => {
         const tokens = await login({ email: input.email, password: input.password });
+        const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
 
         if (tokens) {
-            ctx.resHeaders.append("Set-Cookie", `accessToken=${tokens.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
             ctx.resHeaders.append(
                 "Set-Cookie",
-                `refreshToken=${tokens.refreshToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=${secondsInWeek}`,
+                `accessToken=${tokens.accessToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=15`,
+            );
+            ctx.resHeaders.append(
+                "Set-Cookie",
+                `refreshToken=${tokens.refreshToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=${secondsInWeek}`,
             );
 
             return { status: "Success" as ResultStatus };
@@ -33,8 +37,10 @@ export const userRouter = router({
     logout: protectedProcedure.mutation(async ({ ctx }) => {
         await ctx.db.session.delete({ where: { id: ctx.session.sessionId } });
 
-        ctx.resHeaders.append("Set-Cookie", `accessToken=; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=0`);
-        ctx.resHeaders.append("Set-Cookie", `refreshToken=; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=0`);
+        const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
+
+        ctx.resHeaders.append("Set-Cookie", `accessToken=; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=0`);
+        ctx.resHeaders.append("Set-Cookie", `refreshToken=; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=0`);
 
         return { status: "Success" };
     }),
