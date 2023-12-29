@@ -1,6 +1,6 @@
 import superjson from "superjson";
 import { type AppRouter } from "./server/routers/app";
-import { createTRPCProxyClient, unstable_httpBatchStreamLink } from "@trpc/client";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 // import { env } from "env";
 import { headers } from "next/headers";
 
@@ -16,7 +16,7 @@ export const trpcRSC = createTRPCProxyClient<AppRouter>({
         // loggerLink({
         //     enabled: op => process.env.NODE_ENV === "development" || (op.direction === "down" && op.result instanceof Error),
         // }),
-        unstable_httpBatchStreamLink({
+        httpBatchLink({
             // url: `${url}/api/trpc`,
             url,
             headers() {
