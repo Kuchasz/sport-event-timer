@@ -20,7 +20,6 @@ export const trpcRSC = createTRPCProxyClient<AppRouter>({
             // url: `${url}/api/trpc`,
             url,
             headers() {
-                console.log(headers());
                 return Object.fromEntries(new Map(headers()));
             },
         }),
