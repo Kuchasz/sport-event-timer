@@ -205,8 +205,8 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     const nextStartPlayerIndex = nextStartPlayer ? players?.indexOf(nextStartPlayer) : players?.length;
 
     return (
-        <>
-            <div className="relative h-full w-full select-none overflow-hidden bg-white text-black">
+        <div className="flex w-full flex-col items-center overflow-hidden">
+            <div className="relative h-full w-full select-none overflow-hidden bg-white text-black lg:max-w-lg">
                 <div className="flex h-full w-full flex-col items-center">
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                         <div className="bg-yellow-300">
@@ -223,6 +223,6 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
