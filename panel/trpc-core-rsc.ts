@@ -2,7 +2,7 @@ import superjson from "superjson";
 import { type AppRouter } from "./server/routers/app";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 // import { env } from "env";
-// import { headers } from "next/headers";
+import { headers } from "next/headers";
 
 const url =
     // env.NEXT_PUBLIC_NODE_ENV === "production"
@@ -19,9 +19,9 @@ export const trpcRSC = createTRPCProxyClient<AppRouter>({
         httpBatchLink({
             // url: `${url}/api/trpc`,
             url,
-            // headers() {
-            //     return Object.fromEntries(new Map(headers()));
-            // },
+            headers() {
+                return Object.fromEntries(new Map(headers()));
+            },
         }),
     ],
 });
