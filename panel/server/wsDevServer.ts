@@ -11,7 +11,7 @@ import cors from "cors";
 
 dotenv.config({ path: path.resolve(".env") });
 
-const port = env.NEXT_PUBLIC_API_PORT;
+const port = env.API_PORT;
 // const appPort = env.NEXT_PUBLIC_APP_PORT;
 const dev = process.env.NODE_ENV !== "production";
 
@@ -42,4 +42,4 @@ process.on("SIGTERM", () => {
 });
 
 listen(port);
-logger.log(`> Server listening at ${protocol}://${env.NEXT_PUBLIC_API_URL}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
+logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
