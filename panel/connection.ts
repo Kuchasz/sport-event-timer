@@ -5,17 +5,8 @@ import { type AppRouter } from "server/routers/app";
 import superjson from "superjson";
 import { env } from "./env";
 
-const httpUrl =
-    env.NEXT_PUBLIC_NODE_ENV === "production"
-        ? `https://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`
-        : `http://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`;
-// "http://localhost:3000/api/trpc";
-
-const wsUrl =
-    env.NEXT_PUBLIC_NODE_ENV === "production"
-        ? `wss://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`
-        : `ws://${env.NEXT_PUBLIC_API_URL}:${env.NEXT_PUBLIC_API_PORT}`;
-// "ws://localhost:3000/api/trpc";
+const httpUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://${env.NEXT_PUBLIC_API_URL}` : `http://${env.NEXT_PUBLIC_API_URL}`;
+const wsUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://${env.NEXT_PUBLIC_API_URL}` : `ws://${env.NEXT_PUBLIC_API_URL}`;
 
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));

@@ -11,8 +11,7 @@ import cors from "cors";
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 const env = {
-    NEXT_PUBLIC_API_PORT: 3002,
-    NEXT_PUBLIC_API_URL: "app.rura.cc",
+    NEXT_PUBLIC_API_PORT: 3001,
 };
 
 const port = env.NEXT_PUBLIC_API_PORT;
@@ -26,7 +25,7 @@ const { server, listen } = createHTTPServer({
     //     origin: `${protocol}://${env.NEXT_PUBLIC_APP_URL}:${appPort}`,
     // }),
     middleware: cors({
-        origin: ["http://localhost:3000", "https://app.rura.cc", "https://app.rura.cc:3000", "https://app.rura.cc:3001"],
+        origin: ["https://app.rura.cc"],
         credentials: true,
     }),
     router: appRouter,
@@ -46,7 +45,7 @@ process.on("SIGTERM", () => {
 });
 
 listen(port);
-logger.log(`> Server listening at ${protocol}://${env.NEXT_PUBLIC_API_URL}:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
+logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
 
 // const app = next({ dev });
 // const handle = app.getRequestHandler();
