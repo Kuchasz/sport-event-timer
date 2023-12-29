@@ -123,7 +123,7 @@ export const getUserSession = async (
     }
 
     const session = useFetch
-        ? await fetchJson("http://localhost:3002/api/session", { sessionId: refresh.sessionId })
+        ? await fetchJson("http://localhost:3000/api/session", { sessionId: refresh.sessionId })
         : await getSession(refresh.sessionId);
 
     if (!session) {
