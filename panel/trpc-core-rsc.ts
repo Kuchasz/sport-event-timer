@@ -8,7 +8,7 @@ const url =
     // env.NEXT_PUBLIC_NODE_ENV === "production"
     //     ? `https://${env.NEXT_PUBLIC_APP_URL}`
     //     : `http://${env.NEXT_PUBLIC_APP_URL}:${env.NEXT_PUBLIC_API_PORT}`;
-    "http://localhost:3002";
+    "http://127.0.0.1:3002";
 
 export const trpcRSC = createTRPCProxyClient<AppRouter>({
     transformer: superjson,
