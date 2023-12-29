@@ -81,6 +81,7 @@ Application for making time measurements
 | 15/12/2023 | Templating engine for registration email message                     | todo :date:                                |
 | 19/12/2023 | Terms document upload                                                | todo :date:                                |
 | 24/12/2023 | Separate APP from API                                                | todo :date:                                |
+| 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                       | todo :date:                                |
 
 ## TODO
 

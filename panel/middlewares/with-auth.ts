@@ -15,7 +15,7 @@ export const withAuth: MiddlewareFactory = next => async (request: NextRequest, 
 
         if (response instanceof NextResponse) {
             if (session.accessToken) {
-                const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "rura.cc;" : "";
+                const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "rura.cc" : "";
                 response.cookies.set("accessToken", session.accessToken, {
                     httpOnly: true,
                     secure: true,
