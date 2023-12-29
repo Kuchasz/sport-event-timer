@@ -38,6 +38,7 @@ export const env = createEnv({
         NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
         NEXT_PUBLIC_APP_URL: z.string(),
         NEXT_PUBLIC_API_URL: z.string(),
+        NEXT_PUBLIC_APP_PORT: z.number(),
     },
     runtimeEnv: {
         DATABASE_URL: process.env.DATABASE_URL,
@@ -58,8 +59,9 @@ export const env = createEnv({
         NOTIFICATIONS_MESSAGE_TARGET: process.env.NOTIFICATIONS_MESSAGE_TARGET,
         NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
         NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-        APP_PORT: Number(process.env.APP_PORT),
         NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+        NEXT_PUBLIC_APP_PORT: Number(process.env.NEXT_PUBLIC_APP_PORT),
+        APP_PORT: Number(process.env.APP_PORT),
         API_PORT: Number(process.env.API_PORT),
         USER_REGISTRATION_ENABLED: process.env.USER_REGISTRATION_ENABLED === "true",
     },
