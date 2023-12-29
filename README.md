@@ -82,6 +82,7 @@ Application for making time measurements
 | 19/12/2023 | Terms document upload                                                | todo :date:                                |
 | 24/12/2023 | Separate APP from API                                                | todo :date:                                |
 | 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                       | todo :date:                                |
+| 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                      | todo :date:                                |
 
 ## TODO
 
