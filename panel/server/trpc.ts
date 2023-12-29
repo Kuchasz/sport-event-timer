@@ -10,6 +10,7 @@ import type ws from "ws";
 import { getUserSession } from "../auth/index";
 import { db } from "./db";
 import { type CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
+import { env } from "env";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
@@ -30,8 +31,13 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
 
     const session = await getUserSession(cookies);
 
+    const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
+
     if (session.accessToken) {
-        opts.resHeaders.append("Set-Cookie", `accessToken=${session.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
+        opts.resHeaders.append(
+            "Set-Cookie",
+            `accessToken=${session.accessToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=15`,
+        );
     }
 
     return {
@@ -46,8 +52,13 @@ export const createContextStandalone = async (opts: CreateHTTPContextOptions) =>
 
     const session = await getUserSession(cookies);
 
+    const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
+
     if (session.accessToken) {
-        opts.res.setHeader("Set-Cookie", `accessToken=${session.accessToken}; Secure; SameSite=None; HttpOnly; Path=/; Max-Age=15`);
+        opts.res.setHeader(
+            "Set-Cookie",
+            `accessToken=${session.accessToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=15`,
+        );
     }
 
     return {
