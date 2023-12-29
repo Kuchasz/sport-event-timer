@@ -11,7 +11,7 @@ import cors from "cors";
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 const env = {
-    NEXT_PUBLIC_API_PORT: 3001,
+    NEXT_PUBLIC_API_PORT: 3002,
     NEXT_PUBLIC_API_URL: "app.rura.cc",
 };
 
