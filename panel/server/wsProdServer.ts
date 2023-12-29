@@ -1,15 +1,15 @@
 import * as dotenv from "dotenv";
 import * as path from "path";
-dotenv.config({ path: path.join(__dirname, ".env") });
-
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-// import { env } from "env";
 import { type AppRouter, appRouter } from "./routers/app";
 import { createContextStandalone, createContextWs } from "./trpc";
 import { WebSocketServer } from "ws";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { logger } from "utils";
 import cors from "cors";
+
+dotenv.config({ path: path.join(__dirname, ".env") });
+
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
     NEXT_PUBLIC_API_URL: "app.rura.cc",
