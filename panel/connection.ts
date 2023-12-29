@@ -5,8 +5,11 @@ import { type AppRouter } from "server/routers/app";
 import superjson from "superjson";
 import { env } from "./env";
 
-const httpUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `https://${env.NEXT_PUBLIC_API_URL}` : `http://${env.NEXT_PUBLIC_API_URL}`;
-const wsUrl = env.NEXT_PUBLIC_NODE_ENV === "production" ? `wss://${env.NEXT_PUBLIC_API_URL}` : `ws://${env.NEXT_PUBLIC_API_URL}`;
+const httpProto = env.NEXT_PUBLIC_NODE_ENV === "production" ? "https" : "http";
+const wsProto = env.NEXT_PUBLIC_NODE_ENV === "production" ? "wss" : "ws";
+
+const httpUrl = `${httpProto}://${env.NEXT_PUBLIC_API_URL}`;
+const wsUrl = `${wsProto}://${env.NEXT_PUBLIC_API_URL}`;
 
 const runStateChangedHandlers = (s: ConnectionState) => {
     onStateChangedHandlers.forEach(x => x(s));
