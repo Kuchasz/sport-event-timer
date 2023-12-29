@@ -16,8 +16,8 @@ export const trpcRSC = createTRPCProxyClient<AppRouter>({
             // url: `${url}/api/trpc`,
             url,
             headers() {
-                const { connection: _, ...allHeaders } = Object.fromEntries(new Map(headers()));
-                return allHeaders;
+                const { cookie, ..._other } = Object.fromEntries(new Map(headers()));
+                return { cookie };
             },
         }),
     ],
