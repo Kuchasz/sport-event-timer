@@ -9,5 +9,6 @@ export function generateMetadata({ params }: { params: { locale: string; raceId:
     return {
         title: "Start List",
         manifest: `/api/manifest/${params.raceId}/start-list`,
+        themeColor: "#ffbb51",
     };
 }
