@@ -1367,10 +1367,11 @@
     "unauthorized": "Unauthorized"
   },
   "startList": {
-    "headerStartTime": "Starts at: ",
+    "headerStartTime": "Start",
     "nextPlayer": "Next player",
     "noPlayersLeft": "No pending players left",
-    "startTime": "Starts at"
+    "startTime": "Starts at",
+    "startsIn": "starts in"
   },
   "timeMeasurement": {
     "penalties": {

@@ -1367,10 +1367,11 @@
     "unauthorized": "Nieautoryzowany"
   },
   "startList": {
-    "headerStartTime": "Godzina startu: ",
+    "headerStartTime": "Start",
     "nextPlayer": "Następny zawodnik",
     "noPlayersLeft": "Brak oczekujących zawodników",
-    "startTime": "Start"
+    "startTime": "Start",
+    "startsIn": "start za"
   },
   "timeMeasurement": {
     "penalties": {
