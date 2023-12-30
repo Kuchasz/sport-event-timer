@@ -14,7 +14,7 @@ export const Clock = ({
     fontSize,
     full = false,
 }: {
-    className: string;
+    className?: string;
     time: number;
     fontSize?: number;
     full?: boolean;
