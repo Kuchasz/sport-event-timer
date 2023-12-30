@@ -138,7 +138,7 @@ const NextPlayer = ({ nextStartPlayer, globalTime }: { nextStartPlayer?: StartLi
         <div className="flex w-full flex-col">
             <div className="flex w-full justify-between text-xs font-bold uppercase text-yellow-500">
                 <div className="rounded-sm bg-white px-1 py-0.5">{t("startList.nextPlayer")}</div>
-                <Clock className="m-0 p-0 font-sans text-sm text-white" time={globalTime} />
+                <Clock className="font-sans text-sm text-white" time={globalTime} style={{ margin: "0px", padding: "0px" }} />
             </div>
             <div className="mt-2 flex items-center text-xl">
                 <span className="mr-2 rounded-md bg-white px-2 py-1 font-bold text-yellow-500">{nextStartPlayer?.bibNumber}</span>
