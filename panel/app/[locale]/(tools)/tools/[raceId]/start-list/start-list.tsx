@@ -77,7 +77,7 @@ const StartListPlayer = ({
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
                     {
-                        ["bg-yellow-300"]: isNext,
+                        ["bg-gradient-to-b from-yellow-400 to-yellow-500 text-white"]: isNext,
                         ["opacity-50"]: hasPassed,
                     },
                 )}>
@@ -88,7 +88,7 @@ const StartListPlayer = ({
 
                 {showTime && (
                     <div className="flex flex-col items-end">
-                        <div className="text-2xs font-bold uppercase opacity-40">{t("startList.startTime")}</div>
+                        <div className="text-2xs font-bold uppercase opacity-50">{t("startList.startTime")}</div>
                         <div className="mt-1">{timeOnlyFormatTimeNoSec(player.absoluteStartTime)}</div>
                     </div>
                 )}
@@ -215,7 +215,7 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
             <div className="relative h-full w-full select-none overflow-hidden bg-white text-black lg:max-w-lg">
                 <div className="flex h-full w-full flex-col items-center">
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                        <div className="rounded-b-xl bg-gradient-to-b from-[#ffbb51] to-[#ffa00d] p-4 text-white">
+                        <div className="rounded-b-xl bg-gradient-to-b from-yellow-400 to-yellow-500 p-4 text-white">
                             <NextPlayer globalTime={globalTime} nextStartPlayer={nextStartPlayer} />
                             <div className="flex">
                                 <div className="flex-grow basis-0"></div>
