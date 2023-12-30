@@ -148,11 +148,12 @@ const NextPlayer = ({ nextStartPlayer, globalTime }: { nextStartPlayer?: StartLi
                 <span className="mr-2 font-bold">{nextStartPlayer?.lastName}</span>
                 <span>{nextStartPlayer?.name}</span>
                 <span className="flex-grow"></span>
-                <a
-                    onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
-                    className="m-1 cursor-pointer rounded-full p-1 hover:bg-white hover:bg-opacity-25">
-                    <Icon size={1} path={mdiDebugStepInto} />
-                </a>
+                <div className="relative flex flex-grow basis-0 flex-col items-end justify-center">
+                    <div className="flex flex-col items-end leading-none">
+                        <div className="text-2xs font-bold uppercase opacity-50">{t("startList.startTime")}</div>
+                        <div className="font-semibold">{timeOnlyFormatTimeNoSec(nextStartPlayer.absoluteStartTime)}</div>
+                    </div>
+                </div>
             </div>
         </div>
     ) : (
@@ -229,10 +230,11 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                                     </div>
                                 </div>
                                 <div className="relative flex flex-grow basis-0 flex-col items-end justify-center">
-                                    <div className="absolute flex flex-col items-center leading-none">
-                                        <div className="font-bold">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
-                                        <div className="text-2xs font-semibold uppercase opacity-75">{t("startList.headerStartTime")}</div>
-                                    </div>
+                                    <a
+                                        onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
+                                        className="absolute m-1 cursor-pointer rounded-full p-1 hover:bg-white hover:bg-opacity-25">
+                                        <Icon size={1} path={mdiDebugStepInto} />
+                                    </a>
                                 </div>
                             </div>
                             <div className="relative flex h-2 w-full justify-end overflow-hidden rounded-full">
