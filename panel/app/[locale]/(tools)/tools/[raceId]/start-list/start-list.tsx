@@ -28,7 +28,15 @@ export type TextActions = {
     toggle: () => void;
 };
 
-const PlayerBibNumber = ({ maxBibNumberLength, bibNumber }: { maxBibNumberLength: number; bibNumber: string }) => {
+const PlayerBibNumber = ({
+    hasPassed,
+    maxBibNumberLength,
+    bibNumber,
+}: {
+    hasPassed?: boolean;
+    maxBibNumberLength: number;
+    bibNumber: string;
+}) => {
     const bibText = maxBibNumberLength
         ? ".".repeat(maxBibNumberLength - bibNumber.toString().length) + bibNumber
         : bibNumber.toString() || "";
@@ -37,7 +45,7 @@ const PlayerBibNumber = ({ maxBibNumberLength, bibNumber }: { maxBibNumberLength
         <div className="mx-2 flex flex-col rounded-md bg-gray-100 p-1">
             <div className="relative flex items-center justify-center rounded-xl text-lg font-bold">
                 <span className="font-mono opacity-0">{bibText}</span>
-                <span className="absolute">{bibNumber}</span>
+                <span className={classNames("absolute", { ["opacity-50"]: hasPassed })}>{bibNumber}</span>
             </div>
         </div>
     );
@@ -66,13 +74,13 @@ const StartListPlayer = ({
                 })}
                 size={1}
                 path={mdiChevronDoubleRight}></Icon>
-            <Icon
+            {/* <Icon
                 className={classNames("absolute ml-1 opacity-0 transition-opacity duration-500", {
                     ["opacity-100"]: hasPassed,
                 })}
                 size={0.7}
-                path={mdiCheckBold}></Icon>
-            <PlayerBibNumber bibNumber={player.bibNumber} maxBibNumberLength={maxBibNumberLength!} />
+                path={mdiCheckBold}></Icon> */}
+            <PlayerBibNumber hasPassed={hasPassed} bibNumber={player.bibNumber} maxBibNumberLength={maxBibNumberLength!} />
             <span
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
