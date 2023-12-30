@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiCheckBold, mdiChevronDoubleRight, mdiDebugStepInto } from "@mdi/js";
+import { mdiChevronDoubleRight, mdiDebugStepInto } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -42,7 +42,7 @@ const PlayerBibNumber = ({
         : bibNumber.toString() || "";
 
     return (
-        <div className="mx-2 flex flex-col rounded-md bg-gray-100 p-1">
+        <div className="mr-3 flex flex-col rounded-md">
             <div className="relative flex items-center justify-center rounded-xl text-lg font-bold">
                 <span className="font-mono opacity-0">{bibText}</span>
                 <span className={classNames("absolute", { ["opacity-50"]: hasPassed })}>{bibNumber}</span>
@@ -68,19 +68,13 @@ const StartListPlayer = ({
     return (
         <div id={isNext ? "next" : undefined} className="relative flex items-center">
             <Icon
-                className={classNames("transition-opacity duration-500", {
+                className={classNames("transition-opacity duration-500 mr-2", {
                     ["opacity-20"]: !hasPassed && !isNext,
                     ["opacity-0"]: hasPassed,
                 })}
                 size={1}
                 path={mdiChevronDoubleRight}></Icon>
-            {/* <Icon
-                className={classNames("absolute ml-1 opacity-0 transition-opacity duration-500", {
-                    ["opacity-100"]: hasPassed,
-                })}
-                size={0.7}
-                path={mdiCheckBold}></Icon> */}
-            <PlayerBibNumber hasPassed={hasPassed} bibNumber={player.bibNumber} maxBibNumberLength={maxBibNumberLength!} />
+
             <span
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
@@ -89,6 +83,7 @@ const StartListPlayer = ({
                         ["opacity-50"]: hasPassed,
                     },
                 )}>
+                <PlayerBibNumber hasPassed={hasPassed} bibNumber={player.bibNumber} maxBibNumberLength={maxBibNumberLength!} />
                 <div className="flex-grow">
                     <div className="font-normal">{player.name}</div>
                     <div className="mt-1.5 font-bold">{player.lastName}</div>
