@@ -4,8 +4,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     const { raceId } = req.query;
 
     const manifest = {
-        name: "Stopwatch",
-        short_name: "Stopwatch",
+        name: "Start List",
+        short_name: "Start List",
         icons: [
             {
                 src: "/favicon/icon-192x192.png",
@@ -28,10 +28,10 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 type: "image/png",
             },
         ],
-        theme_color: "#000000",
-        background_color: "#000000",
+        theme_color: "#ffbb51",
+        background_color: "#ffbb51",
         display: "standalone",
-        start_url: `/tools/${raceId}/stopwatch`,
+        start_url: `/tools/${raceId}/start-list#next`,
     };
 
     res.status(200).json(manifest);
