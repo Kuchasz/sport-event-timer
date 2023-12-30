@@ -68,7 +68,7 @@ const StartListPlayer = ({
     return (
         <div id={isNext ? "next" : undefined} className="relative flex items-center">
             <Icon
-                className={classNames("transition-opacity duration-500 mr-2", {
+                className={classNames("mr-2 transition-opacity duration-500", {
                     ["opacity-20"]: !hasPassed && !isNext,
                     ["opacity-0"]: hasPassed,
                 })}
