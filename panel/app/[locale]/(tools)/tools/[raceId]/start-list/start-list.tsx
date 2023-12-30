@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
+import { formatSecondsToTimeSpan } from "utils";
 
 type StartListPlayer = AppRouterOutputs["player"]["startList"][0];
 
@@ -131,25 +132,26 @@ const StartList = ({
     );
 };
 
-const NextPlayer = ({ nextStartPlayer }: { nextStartPlayer?: StartListPlayer }) => {
+const NextPlayer = ({ nextStartPlayer, globalTime }: { nextStartPlayer?: StartListPlayer; globalTime: number }) => {
     const t = useTranslations();
     return nextStartPlayer ? (
-        <div className="flex w-full flex-col bg-yellow-300 px-4 pb-4 pt-2">
-            <div className="flex w-full justify-between bg-black px-1 py-0.5 text-xs font-bold uppercase text-yellow-300">
-                <div>{t("startList.nextPlayer")}</div>
-                <div className="ml-2">
-                    {t("startList.headerStartTime")}
-                    {timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}
-                </div>
+        <div className="flex w-full flex-col">
+            <div className="flex w-full justify-between text-xs font-bold uppercase text-yellow-500">
+                <div className="rounded-sm bg-white px-1 py-0.5">{t("startList.nextPlayer")}</div>
+                <Clock className="m-0 p-0 font-sans text-sm text-white" time={globalTime} />
             </div>
             <div className="mt-2 flex items-center text-xl">
-                <span className="mr-2 rounded-md bg-white px-2 py-1 font-bold">{nextStartPlayer?.bibNumber}</span>
+                <span className="mr-2 rounded-md bg-white px-2 py-1 font-bold text-yellow-500">{nextStartPlayer?.bibNumber}</span>
                 <span className="mr-2 font-bold">{nextStartPlayer?.lastName}</span>
                 <span>{nextStartPlayer?.name}</span>
                 <span className="flex-grow"></span>
+                <div className="flex flex-col items-center leading-none">
+                    <div className="font-bold">{timeOnlyFormatTimeNoSec(nextStartPlayer?.absoluteStartTime)}</div>
+                    <div className="text-2xs font-semibold uppercase opacity-75">{t("startList.headerStartTime")}</div>
+                </div>
                 <a
                     onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
-                    className="cursor-pointer rounded-full p-2 hover:bg-yellow-200">
+                    className="m-1 cursor-pointer rounded-full p-1 hover:bg-white hover:bg-opacity-25">
                     <Icon size={1} path={mdiDebugStepInto} />
                 </a>
             </div>
@@ -173,6 +175,7 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams<{ raceId: string }>()!;
+    const t = useTranslations();
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },
@@ -216,11 +219,24 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
             <div className="relative h-full w-full select-none overflow-hidden bg-white text-black lg:max-w-lg">
                 <div className="flex h-full w-full flex-col items-center">
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
-                        <div className="bg-yellow-300">
-                            <Clock fontSize={1} time={globalTime} />
-                            {secondsToNextPlayer}
+                        <div className="rounded-b-xl bg-gradient-to-b from-[#ffbb51] to-[#ffa00d] p-4 text-white">
+                            <NextPlayer globalTime={globalTime} nextStartPlayer={nextStartPlayer} />
+                            <div className="flex flex-col items-center">
+                                <div className="mb-2 flex flex-col items-center">
+                                    <div className="font-mono text-4xl font-bold">{formatSecondsToTimeSpan(secondsToNextPlayer)}</div>
+                                    <div className="text-xs font-semibold uppercase opacity-75">{t("startList.startsIn")}</div>
+                                </div>
+                                <div className="relative flex h-2 w-full justify-end overflow-hidden rounded-full">
+                                    <div
+                                        style={{
+                                            width: secondsToNextPlayer > 60 ? "100%" : `${(secondsToNextPlayer / 60) * 100}%`,
+                                        }}
+                                        className={classNames("absolute h-full rounded-full bg-white transition-all")}></div>
+                                    <div className="h-full w-full bg-white opacity-25"></div>
+                                </div>
+                            </div>
                         </div>
-                        <NextPlayer nextStartPlayer={nextStartPlayer} />
+
                         <StartList
                             maxBibNumberLength={maxBibNumberLength}
                             nextStartPlayer={nextStartPlayer}
