@@ -67,14 +67,13 @@ const StartListPlayer = ({
     const t = useTranslations();
     return (
         <div id={isNext ? "next" : undefined} className="relative flex items-center">
-            <Icon
-                className={classNames("mr-2 transition-opacity duration-500", {
+            <div
+                className={classNames("mr-2 w-5 overflow-hidden transition-all duration-500", {
                     ["opacity-20"]: !hasPassed && !isNext,
-                    ["opacity-0"]: hasPassed,
-                })}
-                size={1}
-                path={mdiChevronDoubleRight}></Icon>
-
+                    ["w-0"]: hasPassed,
+                })}>
+                <Icon size={1} path={mdiChevronDoubleRight}></Icon>
+            </div>
             <span
                 className={classNames(
                     "my-1 flex flex-1 flex-grow items-center rounded-xl bg-gray-100 px-4 py-3 font-semibold transition-colors duration-500",
