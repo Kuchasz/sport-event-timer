@@ -70,7 +70,7 @@ const StartListPlayer = ({
             <div
                 className={classNames("mr-2 w-5 overflow-hidden transition-all duration-500", {
                     ["opacity-20"]: !hasPassed && !isNext,
-                    ["w-0"]: hasPassed,
+                    ["hidden"]: hasPassed,
                 })}>
                 <Icon size={1} path={mdiChevronDoubleRight}></Icon>
             </div>
