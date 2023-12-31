@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronDoubleRight, mdiDebugStepInto } from "@mdi/js";
+import { mdiAccountOffOutline, mdiChevronDoubleRight, mdiDebugStepInto } from "@mdi/js";
 import Icon from "@mdi/react";
 import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec } from "@set/utils/dist/datetime";
@@ -112,6 +112,7 @@ const StartList = ({
     clockState: { players: { size: number } };
     players: StartListPlayer[];
 }) => {
+    const t = useTranslations();
     return (
         <div
             style={{
@@ -129,6 +130,14 @@ const StartList = ({
                         player={p}
                     />
                 ))}
+                {players.length === 0 && (
+                    <div className="my-1 flex flex-1 flex-grow flex-col items-center  rounded-xl bg-gray-100 px-4 py-6 text-xs font-semibold transition-colors duration-500">
+                        <div className="rounded-sm bg-white p-1 text-gray-300">
+                            <Icon path={mdiAccountOffOutline} size={1} />
+                        </div>
+                        <div className="mt-3 rounded-sm bg-white px-2 py-1 uppercase text-gray-300">{t("startList.empty")}</div>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -156,16 +165,44 @@ const NextPlayer = ({ nextStartPlayer, globalTime }: { nextStartPlayer?: StartLi
             </div>
         </div>
     ) : (
-        <div className="flex w-full flex-col items-center justify-center bg-yellow-300 px-4 pb-4 pt-2">
-            <div className="flex w-full bg-black px-1 py-0.5 text-xs font-bold text-yellow-300">
-                <div className="uppercase">{t("startList.noPlayersLeft")}</div>
-                <div className="ml-2 opacity-0">...</div>
-            </div>
-            <div className="mt-2 text-xl opacity-0">
-                <span className="mr-2 rounded-md bg-yellow-300 px-2 font-bold">...</span>
-                <span className="ml-2">...</span>
+        <div className="flex w-full flex-col">
+            <div className="flex w-full justify-between text-xs font-bold uppercase text-yellow-500">
+                <div className="rounded-sm bg-white px-1 py-0.5">{t("startList.noPlayersLeft")}</div>
+                <Clock className="text-sm text-white" time={globalTime} style={{ margin: "0px", padding: "0px" }} />
             </div>
         </div>
+    );
+};
+
+const NextPlayerStartInfo = ({ secondsToNextPlayer }: { secondsToNextPlayer: number }) => {
+    const t = useTranslations();
+    return (
+        <>
+            <div className="flex">
+                <div className="flex-grow basis-0"></div>
+                <div className="flex flex-col items-center">
+                    <div className="mb-2 flex flex-col items-center">
+                        <div className="font-mono text-4xl font-bold">{formatSecondsToTimeSpan(secondsToNextPlayer)}</div>
+                        <div className="text-xs font-semibold opacity-75">{t("startList.startsIn")}</div>
+                    </div>
+                </div>
+                <div className="relative flex flex-grow basis-0 flex-col items-end justify-center">
+                    <a
+                        onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
+                        className="absolute m-1 cursor-pointer rounded-full p-1 hover:bg-white hover:bg-opacity-25">
+                        <Icon size={1} path={mdiDebugStepInto} />
+                    </a>
+                </div>
+            </div>
+            <div className="relative flex h-2 w-full justify-end overflow-hidden rounded-full">
+                <div
+                    style={{
+                        width: secondsToNextPlayer > 60 ? "100%" : `${(secondsToNextPlayer / 60) * 100}%`,
+                    }}
+                    className={classNames("absolute h-full rounded-full bg-white transition-all duration-1000 ease-linear")}></div>
+                <div className="h-full w-full bg-white opacity-25"></div>
+            </div>
+        </>
     );
 };
 
@@ -174,7 +211,6 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
     const { raceId } = useParams<{ raceId: string }>()!;
-    const t = useTranslations();
 
     const { data: players } = trpc.player.startList.useQuery(
         { raceId: Number.parseInt(raceId) },
@@ -220,34 +256,8 @@ export const RaceStartList = ({ players: initialData, renderTime }: { players: S
                     <div className="flex w-full flex-grow flex-col overflow-y-hidden">
                         <div className="rounded-b-xl bg-gradient-to-b from-yellow-400 to-yellow-500 p-4 text-white">
                             <NextPlayer globalTime={globalTime} nextStartPlayer={nextStartPlayer} />
-                            <div className="flex">
-                                <div className="flex-grow basis-0"></div>
-                                <div className="flex flex-col items-center">
-                                    <div className="mb-2 flex flex-col items-center">
-                                        <div className="font-mono text-4xl font-bold">{formatSecondsToTimeSpan(secondsToNextPlayer)}</div>
-                                        <div className="text-xs font-semibold opacity-75">{t("startList.startsIn")}</div>
-                                    </div>
-                                </div>
-                                <div className="relative flex flex-grow basis-0 flex-col items-end justify-center">
-                                    <a
-                                        onClick={() => document.querySelector("#next")?.scrollIntoView({ behavior: "smooth" })}
-                                        className="absolute m-1 cursor-pointer rounded-full p-1 hover:bg-white hover:bg-opacity-25">
-                                        <Icon size={1} path={mdiDebugStepInto} />
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="relative flex h-2 w-full justify-end overflow-hidden rounded-full">
-                                <div
-                                    style={{
-                                        width: secondsToNextPlayer > 60 ? "100%" : `${(secondsToNextPlayer / 60) * 100}%`,
-                                    }}
-                                    className={classNames(
-                                        "absolute h-full rounded-full bg-white transition-all duration-1000 ease-linear",
-                                    )}></div>
-                                <div className="h-full w-full bg-white opacity-25"></div>
-                            </div>
+                            {nextStartPlayer && <NextPlayerStartInfo secondsToNextPlayer={secondsToNextPlayer} />}
                         </div>
-
                         <StartList
                             maxBibNumberLength={maxBibNumberLength}
                             nextStartPlayer={nextStartPlayer}
