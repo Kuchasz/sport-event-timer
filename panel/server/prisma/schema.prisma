@@ -38,6 +38,7 @@ model Race {
     emailTemplate        String?
     playersLimit         Int?
     registrationEnabled  Boolean
+    registrationCutoff   DateTime?
     classifications      Classification[]
     timeKeeper           TimingPoint[]
     player               Player[]

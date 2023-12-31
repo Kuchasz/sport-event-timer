@@ -87,6 +87,15 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         name="sportKind"
                     />
                     <div className="p-2"></div>
+                    <FormInput<Race, "registrationCutoff">
+                        label={t("pages.races.form.date.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorUTCDatepicker placeholder={t("pages.races.form.date.placeholder")} value={value} onChange={onChange} />
+                        )}
+                        name="registrationCutoff"
+                    />
+                    <div className="p-2"></div>
                     <FormInputInline<Race, "registrationEnabled">
                         label={t("pages.races.form.registrationEnabled.label")}
                         className="flex-1"

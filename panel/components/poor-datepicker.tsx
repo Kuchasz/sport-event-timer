@@ -41,7 +41,7 @@ export const PoorUTCDatepicker = ({
     onChange,
     placeholder,
 }: {
-    value?: Date;
+    value?: Date | null;
     onChange: (event: { target: { value: Date } }) => void;
     placeholder?: string;
 }) => {
