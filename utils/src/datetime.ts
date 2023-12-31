@@ -146,3 +146,9 @@ export const stripSeconds = (date: Date) => {
     d.setMilliseconds(0);
     return d;
 };
+
+export const subtractDaysFromDate = (originalDate: Date, daysToSubtract: number) => {
+    const newDate = new Date(originalDate);
+    newDate.setDate(originalDate.getDate() - daysToSubtract);
+    return newDate;
+};

@@ -14,7 +14,7 @@ import type {
     TimingPointOrder,
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
-import { daysFromNow, stripSeconds } from "@set/utils/dist/datetime";
+import { daysFromNow, stripSeconds, subtractDaysFromDate } from "@set/utils/dist/datetime";
 import type { Locales } from "../i18n";
 import { db } from "./db";
 
@@ -94,19 +94,24 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
 };
 
 const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
-    fillArray(numberOfRaces).map(() => ({
-        date: stripSeconds(faker.date.future({ years: 1 })),
-        name: faker.company.name(),
-        description: faker.lorem.words({ min: 5, max: 15 }),
-        sportKind: faker.helpers.arrayElement(sportKinds),
-        location: faker.location.city(),
-        registrationEnabled: false,
-        termsUrl: "",
-        websiteUrl: "",
-        emailTemplate: "",
-        playersLimit: faker.number.int({ min: 100, max: 1000 }),
-        ...options,
-    }));
+    fillArray(numberOfRaces).map(() => {
+        const raceDate = stripSeconds(faker.date.future({ years: 1 }));
+        const registrationCutoff = subtractDaysFromDate(raceDate, faker.number.int({ min: 1, max: 7 }));
+        return {
+            date: raceDate,
+            name: faker.company.name(),
+            description: faker.lorem.words({ min: 5, max: 15 }),
+            sportKind: faker.helpers.arrayElement(sportKinds),
+            location: faker.location.city(),
+            registrationEnabled: false,
+            registrationCutoff: registrationCutoff,
+            termsUrl: "",
+            websiteUrl: "",
+            emailTemplate: "",
+            playersLimit: faker.number.int({ min: 100, max: 1000 }),
+            ...options,
+        };
+    });
 
 const createClassifications = (faker: Faker, raceIds: number[]): Omit<Classification, "id">[] =>
     raceIds.flatMap(r =>

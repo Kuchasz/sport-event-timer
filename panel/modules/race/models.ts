@@ -16,6 +16,7 @@ export const raceSchema = z.object({
     emailTemplate: z.string().nullish(),
     playersLimit: z.number().int().positive().nullish(),
     registrationEnabled: z.boolean(),
+    registrationCutoff: z.date().nullish(),
     useSampleData: z.boolean().nullish(),
 });
 
