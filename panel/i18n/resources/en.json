@@ -1371,7 +1371,8 @@
     "nextPlayer": "Next player",
     "noPlayersLeft": "No pending players left",
     "startTime": "Starts at",
-    "startsIn": "time to start"
+    "startsIn": "time to start",
+    "empty": "Start list is empty"
   },
   "timeMeasurement": {
     "penalties": {

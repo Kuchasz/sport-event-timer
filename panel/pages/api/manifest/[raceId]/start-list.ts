@@ -28,8 +28,8 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
                 type: "image/png",
             },
         ],
-        theme_color: "#ffbb51",
-        background_color: "#ffbb51",
+        theme_color: "#fbbf24",
+        background_color: "#fbbf24",
         display: "standalone",
         start_url: `/tools/${raceId}/start-list#next`,
     };

@@ -1371,7 +1371,8 @@
     "nextPlayer": "Następny zawodnik",
     "noPlayersLeft": "Brak oczekujących zawodników",
     "startTime": "Start",
-    "startsIn": "czas do startu"
+    "startsIn": "czas do startu",
+    "empty": "Lista startowa jest pusta"
   },
   "timeMeasurement": {
     "penalties": {
