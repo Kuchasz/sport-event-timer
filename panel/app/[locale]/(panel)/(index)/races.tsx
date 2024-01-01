@@ -31,6 +31,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../trpc-core";
+import { toast } from "components/use-toast";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 
@@ -106,9 +107,30 @@ type RacesProps = {
 
 export const Races = ({ initialData }: RacesProps) => {
     const { data: races, refetch } = trpc.race.races.useQuery(undefined, { initialData });
-    const wipeRaceMutation = trpc.action.wipe.useMutation();
-    const deleteRaceMutation = trpc.race.delete.useMutation();
-    const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation();
+    const wipeRaceMutation = trpc.action.wipe.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.races.wipeStopwatchPopup.success.title"),
+                description: t("pages.races.wipeStopwatchPopup.success.description"),
+                variant: "positive",
+            }),
+    });
+    const deleteRaceMutation = trpc.race.delete.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.races.deleteRacePopup.success.title"),
+                description: t("pages.races.deleteRacePopup.success.description"),
+                variant: "positive",
+            }),
+    });
+    const setRegistrationStatusMutation = trpc.race.setRegistrationStatus.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.registration.statusChange.success.title"),
+                description: t("pages.registration.statusChange.success.description"),
+                variant: "positive",
+            }),
+    });
     const locale = useLocale();
 
     const sportKindTranslations = useTranslations("shared.sportKinds");

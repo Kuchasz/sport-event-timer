@@ -580,7 +580,11 @@
           "title": "Delete race"
         },
         "description": "Delete race",
-        "title": "Delete"
+        "title": "Delete",
+        "success": {
+          "title": "Race deleted successfully",
+          "description": "Race will be no longer available "
+        }
       },
       "editRace": {
         "description": "Open edit race popup",
@@ -669,7 +673,11 @@
           "title": "Wipe race data"
         },
         "description": "Wipe all stopwatch data",
-        "title": "Wipe stopwatch"
+        "title": "Wipe stopwatch",
+        "success": {
+          "title": "Stopwatch date wiped",
+          "description": "No stopwatch data left, you can start measure the time from scratch"
+        }
       }
     },
     "registration": {
@@ -680,6 +688,12 @@
       "turnOnPopup": {
         "description": "Online registration will be turned on",
         "title": "Turn on registration"
+      },
+      "statusChange": {
+        "success": {
+          "title": "Registration status changed",
+          "description": "Affects the availability of the registration system"
+        }
       }
     },
     "result": {

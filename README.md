@@ -25,7 +25,7 @@ Application for making time measurements
 | 17/10/2023 | Sport discipline specification                                       | :heavy_check_mark: <sup>(24/10/2023)</sup> |
 | 19/10/2023 | Fix many jumping stuff on home page                                  | :heavy_check_mark: <sup>(21/10/2023)</sup> |
 | 20/10/2023 | Remove hard-coded application urls and ports                         | :heavy_check_mark: <sup>(29/10/2023)</sup> |
-| 20/10/2023 | Dates should use locale formats                                      | todo :date:                                |
+| 20/10/2023 | Dates should use locale formats (use intl formatter)                 | todo :date:                                |
 | 20/10/2023 | Configure linter + CI/CD pipeline                                    | :heavy_check_mark: <sup>(23/10/2023)</sup> |
 | 23/10/2023 | Simple website with registration, start list and results             | todo :date:                                |
 | 23/10/2023 | Improve login page look                                              | :heavy_check_mark: <sup>(20/11/2023)</sup> |
@@ -80,7 +80,7 @@ Application for making time measurements
 | 12/12/2023 | Specify timezone for race                                            | todo :date:                                |
 | 15/12/2023 | Templating engine for registration email message                     | todo :date:                                |
 | 19/12/2023 | Terms document upload                                                | todo :date:                                |
-| 24/12/2023 | Separate APP and API to separate environments                        | todo :date:                                |
+| 24/12/2023 | Separate APP and API to separate environments                        | :heavy_check_mark: <sup>(30/12/2023)</sup> |
 | 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                       | todo :date:                                |
 | 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                      | todo :date:                                |
 | 01/01/2023 | Add change sets to home page                                         | todo :date:                                |
