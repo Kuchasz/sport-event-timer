@@ -580,7 +580,11 @@
           "title": "Usuń wyścig"
         },
         "description": "Usuń wyścig",
-        "title": "Usuń"
+        "title": "Usuń",
+        "success": {
+          "title": "Wyścig usunięty pomyślnie",
+          "description": "Wyścig nie będzie już dostępny"
+        }
       },
       "editRace": {
         "description": "Uruchom okno edycji wyścigu",
@@ -669,7 +673,11 @@
           "title": "Wyczyść dane wyścigu"
         },
         "description": "Wyczyść wszystkie dane stopera",
-        "title": "Wyczyść stoper"
+        "title": "Wyczyść stoper",
+        "success": {
+          "title": "Dane stopera wyzerowane",
+          "description": "Wszystkie dane stopera zostały usunięte, możesz zacząć mierzyć czas od początku"
+        }
       }
     },
     "registration": {
@@ -680,6 +688,12 @@
       "turnOnPopup": {
         "description": "Rejestracja online zostanie włączona",
         "title": "Włącz rejestrację"
+      },
+      "statusChange": {
+        "success": {
+          "title": "Zmieniono status rejestracji",
+          "description": "Wpływa na dostępność systemu rejestracji"
+        }
       }
     },
     "result": {
