@@ -125,13 +125,7 @@ export const playerRegistrationRouter = router({
             });
         }),
     add: protectedProcedure.input(racePlayerRegistrationSchema).mutation(async ({ input, ctx }) => {
-        const race = await ctx.db.race.findFirstOrThrow({ where: { id: input.raceId }, include: { playerRegistration: true } });
-
-        const raceRegistrationsCount = race.playerRegistration.length;
-
-        if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            throw playerRegistrationErrors.EXCEEDED_NUMBER_OF_REGISTRATIONS;
-        }
+        // admin may add registration without registation system state verification
 
         const profile = await ctx.db.playerProfile.create({
             data: {
