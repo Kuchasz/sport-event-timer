@@ -28,6 +28,7 @@ export const PoorDatepicker = ({
 
 const toDateStringUTC = (date: Date) => date.toLocaleDateString("en-CA");
 const toDateUTC = (dateString: string) => {
+    if (!dateString) return null;
     const date = new Date(dateString);
     const dateOffset = date.getTimezoneOffset();
 
@@ -37,22 +38,32 @@ const toDateUTC = (dateString: string) => {
 };
 
 export const PoorUTCDatepicker = ({
+    required,
     value: initialValue,
     onChange,
     placeholder,
-}: {
-    value?: Date | null;
-    onChange: (event: { target: { value: Date } }) => void;
-    placeholder?: string;
-}) => {
+}:
+    | {
+          required: true;
+          value?: Date | null;
+          onChange: (event: { target: { value: Date } }) => void;
+          placeholder?: string;
+      }
+    | {
+          required?: false;
+          value?: Date | null;
+          onChange: (event: { target: { value: Date | null } }) => void;
+          placeholder?: string;
+      }) => {
     const value = initialValue ? toDateStringUTC(initialValue) : undefined;
 
     return (
         <Input
+            required={required}
             placeholder={placeholder}
             defaultValue={value}
             onChange={e => {
-                onChange({ target: { value: toDateUTC(e.currentTarget.value) } });
+                onChange({ target: { value: toDateUTC(e.currentTarget.value)! } });
             }}
             type="date"
         />

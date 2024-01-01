@@ -5,8 +5,7 @@ import { env } from "../../env";
 import type { CountryCode } from "../../modules/player-registration/models";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
-
-type RegistrationStatus = "enabled" | "disabled" | "limit-reached";
+import { getRegistrationState } from "modules/race/models";
 
 export const playerRegistrationRouter = router({
     registrations: protectedProcedure
@@ -48,13 +47,7 @@ export const playerRegistrationRouter = router({
                 raceName: race.name,
                 raceDate: race.date,
                 termsUrl: race.termsUrl,
-                status: (!race.registrationEnabled
-                    ? "disabled"
-                    : race.playersLimit
-                    ? registeredPlayers >= race.playersLimit
-                        ? "limit-reached"
-                        : "enabled"
-                    : "enabled") as RegistrationStatus,
+                state: getRegistrationState(race, registeredPlayers),
             };
         }),
     register: publicProcedure.input(racePlayerRegistrationSchema).mutation(async ({ input, ctx }) => {
@@ -62,13 +55,13 @@ export const playerRegistrationRouter = router({
 
         const raceRegistrationsCount = race.playerRegistration.length;
 
-        if (!race.registrationEnabled) {
-            throw playerRegistrationErrors.REGISTRATION_DISABLED;
-        }
+        const state = getRegistrationState(race, raceRegistrationsCount);
 
-        if (race.playersLimit && race.playersLimit <= raceRegistrationsCount) {
-            throw playerRegistrationErrors.EXCEEDED_NUMBER_OF_REGISTRATIONS;
-        }
+        if (state === "disabled") throw playerRegistrationErrors.REGISTRATION_DISABLED;
+
+        if (state === "limit-reached") throw playerRegistrationErrors.REGISTRATION_LIMIT_REACHED;
+
+        if (state === "cutoff") throw playerRegistrationErrors.REGISTRATION_CUTOFF;
 
         const profile = await ctx.db.playerProfile.create({
             data: {

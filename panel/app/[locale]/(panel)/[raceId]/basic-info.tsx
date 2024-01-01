@@ -73,6 +73,7 @@ export const BasicInfo = () => {
                                                 className="flex-1"
                                                 render={({ value, onChange }) => (
                                                     <PoorUTCDatepicker
+                                                        required
                                                         placeholder={t("pages.races.form.date.placeholder")}
                                                         value={value}
                                                         onChange={onChange}
