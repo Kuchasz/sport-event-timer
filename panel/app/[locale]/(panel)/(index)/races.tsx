@@ -4,6 +4,7 @@ import {
     mdiCalendarEditOutline,
     mdiCalendarOutline,
     mdiFlagOutline,
+    mdiLockClock,
     mdiLockOpenVariantOutline,
     mdiLockOutline,
     mdiMapMarkerOutline,
@@ -38,9 +39,19 @@ const RegistrationEnabled = ({ race }: { race: Race }) => {
         <span
             className={classNames("flex h-full items-center", {
                 ["font-semibold text-green-600"]: race.registrationEnabled,
-                ["text-red-600"]: !race.registrationEnabled,
+                ["text-red-600"]: !race.registrationEnabled || race.registrationCutoff,
             })}>
-            {race.registrationEnabled ? <Icon size={1} path={mdiLockOpenVariantOutline} /> : <Icon size={1} path={mdiLockOutline} />}
+            {race.registrationEnabled ? (
+                <Icon size={1} path={mdiLockOpenVariantOutline} />
+            ) : race.registrationCutoff ? (
+                isPast(race.registrationCutoff) ? (
+                    <Icon size={1} path={mdiLockClock} />
+                ) : (
+                    <Icon size={1} path={mdiLockOpenVariantOutline} />
+                )
+            ) : (
+                <Icon size={1} path={mdiLockOutline} />
+            )}
         </span>
     );
 };

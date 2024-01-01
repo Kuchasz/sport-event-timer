@@ -32,6 +32,7 @@ export const raceRouter = router({
             websiteUrl: r.websiteUrl,
             playersLimit: r.playersLimit,
             registrationEnabled: r.registrationEnabled,
+            registrationCutoff: r.registrationCutoff,
             registeredPlayers: r.playerRegistration.length,
         }));
     }),

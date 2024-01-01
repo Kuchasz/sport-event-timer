@@ -42,33 +42,14 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         label={t("pages.races.form.date.label")}
                         className="flex-1"
                         render={({ value, onChange }) => (
-                            <PoorUTCDatepicker placeholder={t("pages.races.form.date.placeholder")} value={value} onChange={onChange} />
-                        )}
-                        name="date"
-                    />
-                    <div className="p-2"></div>
-                    <FormInput<Race, "playersLimit">
-                        label={t("pages.races.form.playersLimit.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorNumberInput
-                                placeholder={t("pages.races.form.playersLimit.placeholder")}
+                            <PoorUTCDatepicker
+                                required
+                                placeholder={t("pages.races.form.date.placeholder")}
                                 value={value}
                                 onChange={onChange}
                             />
                         )}
-                        name="playersLimit"
-                    />
-                </div>
-                <div className="p-2"></div>
-                <div className="flex">
-                    <FormInput<Race, "location">
-                        label={t("pages.races.form.location.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorInput placeholder={t("pages.races.form.location.placeholder")} value={value} onChange={onChange} />
-                        )}
-                        name="location"
+                        name="date"
                     />
                     <div className="p-2"></div>
                     <FormInput<Race, "sportKind">
@@ -87,11 +68,40 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         name="sportKind"
                     />
                     <div className="p-2"></div>
-                    <FormInput<Race, "registrationCutoff">
-                        label={t("pages.races.form.date.label")}
+                    <FormInput<Race, "location">
+                        label={t("pages.races.form.location.label")}
                         className="flex-1"
                         render={({ value, onChange }) => (
-                            <PoorUTCDatepicker placeholder={t("pages.races.form.date.placeholder")} value={value} onChange={onChange} />
+                            <PoorInput placeholder={t("pages.races.form.location.placeholder")} value={value} onChange={onChange} />
+                        )}
+                        name="location"
+                    />
+                </div>
+                <div className="p-2"></div>
+                <div className="flex">
+                    <FormInput<Race, "playersLimit">
+                        label={t("pages.races.form.playersLimit.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorNumberInput
+                                placeholder={t("pages.races.form.playersLimit.placeholder")}
+                                value={value}
+                                onChange={onChange}
+                            />
+                        )}
+                        name="playersLimit"
+                    />
+                    <div className="p-2"></div>
+
+                    <FormInput<Race, "registrationCutoff">
+                        label={t("pages.races.form.registrationCutoff.label")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorUTCDatepicker
+                                placeholder={t("pages.races.form.registrationCutoff.placeholder")}
+                                value={value}
+                                onChange={onChange}
+                            />
                         )}
                         name="registrationCutoff"
                     />

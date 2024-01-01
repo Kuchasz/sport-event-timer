@@ -67,6 +67,11 @@
       "shortName": {
         "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
       }
+    },
+    "race": {
+      "registrationCutoff": {
+        "higherThanDate": "Koniec rejestracji powinien nastąpić przed rozpoczęciem wyścigu"
+      }
     }
   },
   "identity": {
@@ -629,6 +634,10 @@
         "websiteUrl": {
           "label": "Oficjalna strona internetowa",
           "placeholder": "Wpisz oficjalną stronę wydarzenia"
+        },
+        "registrationCutoff": {
+          "label": "Wyłączenie rejestracji",
+          "placeholder": "Data wyłączenia rejestracji"
         }
       },
       "grid": {
@@ -963,7 +972,8 @@
     },
     "playerRegistration": {
       "errors": {
-        "exceededNumberOfRegistrations": "Osiągnięto limit rejestracji.",
+        "registrationLimitReached": "Osiągnięto limit rejestracji.",
+        "registrationCutoff": "Termin rejestracji minął.",
         "registrationDisabled": "Rejestracja do tych zawodów została zamknięta.",
         "registrationPromotedToPlayer": "Rejestracja została awansowana na zawodnika. Musisz usunąć zawodnika zanim usuniesz rejestrację."
       }
