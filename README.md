@@ -64,7 +64,7 @@ Application for making time measurements
 | 21/11/2023 | Salt passwords                                                       | :heavy_check_mark: <sup>(22/11/2023)</sup> |
 | 22/11/2023 | Support for sort over dates                                          | todo :date:                                |
 | 22/11/2023 | Highlight search phrase in Data table results                        | :heavy_check_mark: <sup>(23/11/2023)</sup> |
-| 23/11/2023 | Optional race registration expire time                               | todo :date:                                |
+| 23/11/2023 | Optional race registration expire time                               | :heavy_check_mark: <sup>(01/01/2024)</sup> |
 | 24/11/2023 | Add no data message to Data Table                                    | :heavy_check_mark: <sup>(14/12/2023)</sup> |
 | 27/11/2023 | Full page penalties view                                             | :heavy_check_mark: <sup>(15/12/2023)</sup> |
 | 27/11/2023 | Fix nested dialogs/modals disappearing issue                         | :heavy_check_mark: <sup>(01/12/2023)</sup> |
@@ -83,6 +83,7 @@ Application for making time measurements
 | 24/12/2023 | Separate APP and API to separate environments                        | todo :date:                                |
 | 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                       | todo :date:                                |
 | 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                      | todo :date:                                |
+| 01/01/2023 | Add change sets to home page                                         | todo :date:                                |
 
 ## TODO
 
