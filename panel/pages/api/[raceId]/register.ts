@@ -4,6 +4,8 @@ import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
 import { genderEnum } from "../../../models";
+import { getRegistrationState } from "modules/race/models";
+import { playerRegistrationErrorKeys } from "modules/player-registration/errors";
 
 const stripNonNumbers = (string: string) => string.replace(/\D/g, "");
 
@@ -44,9 +46,17 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
     }
 
-    //validate race registration state
+    const race = await db.race.findUniqueOrThrow({ where: { id: Number(raceId) }, include: { playerRegistration: true } });
+    const raceRegistrationsCount = race.playerRegistration.length;
 
-    // const race = await db.race.findFirstOrThrow({ where: { id: parseInt(raceId as string) } });
+    const registrationState = getRegistrationState(race, raceRegistrationsCount);
+
+    if (registrationState === "disabled")
+        return res.status(200).send({ status: "error", errorCode: playerRegistrationErrorKeys.REGISTRATION_DISABLED });
+    if (registrationState === "limit-reached")
+        return res.status(200).send({ status: "error", errorCode: playerRegistrationErrorKeys.REGISTRATION_LIMIT_REACHED });
+    if (registrationState === "cutoff")
+        return res.status(200).send({ status: "error", errorCode: playerRegistrationErrorKeys.REGISTRATION_CUTOFF });
 
     const profile = await db.playerProfile.create({
         data: {
@@ -64,7 +74,7 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
         },
     });
 
-    const id = await db.playerRegistration.create({
+    await db.playerRegistration.create({
         data: {
             raceId: parseInt(raceId as string),
             playerProfileId: profile.id,
@@ -82,7 +92,9 @@ const registerPlayer = async (req: NextApiRequest, res: NextApiResponse) => {
     //     ]
     // })
 
-    res.json(id);
+    res.status(200).json({
+        status: "success",
+    });
 };
 
 export default withRaceApiKey(withExceptionHandling(registerPlayer));

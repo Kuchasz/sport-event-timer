@@ -263,7 +263,7 @@ export const Registration = () => {
                                 />
                             )}
 
-                            {registrationSystemStatus.status === "enabled" || registrationStatus !== "pending" ? (
+                            {registrationSystemStatus.state === "enabled" || registrationStatus !== "pending" ? (
                                 ["pending", "progress"].includes(registrationStatus) ? (
                                     <RegistrationFormComponent
                                         disabled={registrationStatus !== "pending"}
@@ -277,8 +277,10 @@ export const Registration = () => {
                                 ) : (
                                     <RegistrationSuccessful />
                                 )
-                            ) : registrationSystemStatus.status === "disabled" ? (
+                            ) : registrationSystemStatus.state === "disabled" ? (
                                 <span>{t("registration.status.closed")}</span>
+                            ) : registrationSystemStatus.state === "cutoff" ? (
+                                <span>{t("registration.status.cutoffPassed")}</span>
                             ) : (
                                 <span>{t("registration.status.noSpotsLeft")}</span>
                             )}

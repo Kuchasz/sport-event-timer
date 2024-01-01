@@ -1054,7 +1054,8 @@
     "status": {
       "availableSpots": "Available spots",
       "closed": "Registration is closed.",
-      "noSpotsLeft": "No available spots. Registration is closed."
+      "noSpotsLeft": "No available spots. Registration is closed.",
+      "cutoffPassed": "Registration cutoff has passed"
     }
   },
   "results": {
