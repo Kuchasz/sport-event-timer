@@ -15,11 +15,19 @@ import type { AppRouterOutputs } from "trpc";
 import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { toast } from "components/use-toast";
 
 type Player = AppRouterOutputs["player"]["players"][0];
 
 const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => void }) => {
-    const deletePlayerMutation = trpc.player.delete.useMutation();
+    const deletePlayerMutation = trpc.player.delete.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.players.delete.success.title"),
+                description: t("pages.players.delete.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
     const deletePlayer = async () => {
         await deletePlayerMutation.mutateAsync({ playerId: player.id });

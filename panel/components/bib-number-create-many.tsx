@@ -6,6 +6,7 @@ import { addRangeBibNumberSchema } from "modules/bib-number/models";
 import { Form, FormInput, FormInputInline } from "form";
 import { useTranslations } from "next-intl";
 import { trpc } from "trpc-core";
+import { toast } from "./use-toast";
 
 type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
@@ -16,7 +17,14 @@ type BibNumberFormProps = {
 };
 
 export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: BibNumberFormProps) => {
-    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
+    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.bibNumbers.createMany.success.title"),
+                description: t("pages.bibNumbers.createMany.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
 
     const saveChanges = async (createManyBibNumbers: CreateManyBibNumbers) => {

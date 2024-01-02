@@ -84,6 +84,7 @@ Application for making time measurements
 | 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                       | todo :date:                                |
 | 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                      | todo :date:                                |
 | 01/01/2023 | Add change sets to home page                                         | todo :date:                                |
+| 02/01/2023 | Fix toaster on home page                                             | todo :date:                                |
 
 ## TODO
 
