@@ -9,6 +9,7 @@ import { Meta } from "../../../../components/meta";
 import "../../../../globals.scss";
 import { SessionProvider } from "auth/provider";
 import { getServerSession } from "auth";
+import { Toaster } from "components/toaster";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
@@ -20,6 +21,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
                         <main className="flex h-full grow flex-col items-center overflow-y-auto">
                             <IndexStatus />
                             <div className="flex w-full flex-grow flex-col">{children}</div>
+                            <Toaster />
                         </main>
                     </div>
                 </div>

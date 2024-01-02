@@ -12,6 +12,7 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { toast } from "components/use-toast";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -120,7 +121,14 @@ export const SplitTimes = () => {
     const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: raceId }, { initialData: [] });
     const { data: race } = trpc.race.race.useQuery({ raceId: raceId });
 
-    const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
+    const revertSplitTimeMutation = trpc.splitTime.revert.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.splitTimes.revert.success.title"),
+                description: t("pages.splitTimes.revert.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
 
     const cols: PoorDataTableColumn<SplitTime>[] = [

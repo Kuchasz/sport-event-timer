@@ -16,6 +16,7 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
+import { toast } from "components/use-toast";
 
 export const useCurrentClassificationId = () => {
     const { classificationId } = useParams<{ classificationId: string }>()!;
@@ -40,7 +41,14 @@ const CategoryIsSpecial = ({ category }: { category: Category }) => {
 };
 
 const CategoryActions = ({ category, refetch }: { category: Category; refetch: () => void }) => {
-    const removeCategoryMutation = trpc.classification.removeCategory.useMutation();
+    const removeCategoryMutation = trpc.classification.removeCategory.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.classifications.categories.delete.success.title"),
+                description: t("pages.classifications.categories.delete.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
 
     const deleteCategory = async () => {

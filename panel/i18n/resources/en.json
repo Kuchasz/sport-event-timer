@@ -174,7 +174,11 @@
             "placeholder": "Enter range start number"
           }
         },
-        "title": "Create many bib numbers"
+        "title": "Create many bib numbers",
+        "success": {
+          "title": "Many bib numbers created",
+          "description": "Created bib numbers will be able to be assigned to players"
+        }
       },
       "delete": {
         "confirmation": {
@@ -237,7 +241,11 @@
             "title": "Delete category"
           },
           "description": "You may delete the category",
-          "name": "Delete category"
+          "name": "Delete category",
+          "success": {
+            "title": "Category removed successfully",
+            "description": "Player won't be assigned to removed category"
+          }
         },
         "edit": {
           "description": "You may modify the category",
@@ -480,7 +488,11 @@
           "title": "Delete player"
         },
         "description": "You may delete the player",
-        "name": "Delete player"
+        "name": "Delete player",
+        "success": {
+          "title": "Player deleted successfully",
+          "description": "The player will not be available in the timing system"
+        }
       },
       "edit": {
         "description": "You may modify the player",
@@ -795,6 +807,10 @@
           "confirmation": {
             "text": "You are trying to delete the ApiKey {name}. Do you want to proceed?",
             "title": "Delete ApiKey"
+          },
+          "success": {
+            "title": "API Key deleted",
+            "description": "No one will be able to use this key to connect to the api"
           }
         },
         "edit": {
@@ -847,6 +863,10 @@
         "confirmation": {
           "text": "You are trying to revert manual split time changes. Do you want to proceed?",
           "title": "Revert manual split time"
+        },
+        "success": {
+          "title": "Manual split time reverted",
+          "description": "The result on the measuring point returned to the previous state"
         }
       }
     },
@@ -1472,7 +1492,11 @@
               "title": "Revert disqualification"
             },
             "description": "The original score of the player will be restored",
-            "name": "Revert disqualification"
+            "name": "Revert disqualification",
+            "success": {
+              "title": "Disqualification reverted",
+              "description": "The player's result will be displayed in the result list"
+            }
           }
         },
         "export": {
@@ -1509,7 +1533,11 @@
               "title": "Revert time penalty"
             },
             "description": "The result achieved by the player will be restored",
-            "name": "Revert time penalty"
+            "name": "Revert time penalty",
+            "success": {
+              "title": "Time penalty reverted",
+              "description": "The competitor's score was restored to the state before the penalty was applied"
+            }
           }
         }
       },

@@ -16,12 +16,20 @@ import type { AppRouterOutputs } from "trpc";
 import { PoorConfirmation, PoorModal } from "../../../../../components/poor-modal";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { toast } from "components/use-toast";
 
 type TimePenalty = AppRouterOutputs["timePenalty"]["allPenalties"][0];
 type Disqualification = AppRouterOutputs["disqualification"]["allDisqualifications"][0];
 
 const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetch: () => void }) => {
-    const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation();
+    const revertTimePenaltyMutation = trpc.timePenalty.revert.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("timeMeasurement.penalties.page.timePenalty.revert.success.title"),
+                description: t("timeMeasurement.penalties.page.timePenalty.revert.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
     const revertTimePenalty = async () => {
         await revertTimePenaltyMutation.mutateAsync({ id: penalty.id });
@@ -61,7 +69,14 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
 };
 
 const DisqualificationActions = ({ disqualification, refetch }: { disqualification: Disqualification; refetch: () => void }) => {
-    const revertDisqualificationMutation = trpc.disqualification.revert.useMutation();
+    const revertDisqualificationMutation = trpc.disqualification.revert.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("timeMeasurement.penalties.page.disqualification.revert.success.title"),
+                description: t("timeMeasurement.penalties.page.disqualification.revert.success.description"),
+                variant: "positive",
+            }),
+    });
     const t = useTranslations();
     const revertDisqualification = async () => {
         await revertDisqualificationMutation.mutateAsync({ id: disqualification.id });

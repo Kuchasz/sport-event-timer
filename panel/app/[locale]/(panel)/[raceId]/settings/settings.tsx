@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
+import { toast } from "components/use-toast";
 
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
 
@@ -18,7 +19,14 @@ export const Settings = () => {
     const raceId = useCurrentRaceId();
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId });
-    const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
+    const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation({
+        onSuccess: () =>
+            toast({
+                title: t("pages.settings.apiKeys.delete.success.title"),
+                description: t("pages.settings.apiKeys.delete.success.description"),
+                variant: "positive",
+            }),
+    });
 
     const t = useTranslations();
 
