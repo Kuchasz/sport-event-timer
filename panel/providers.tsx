@@ -33,7 +33,15 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscript
                             });
                     },
                     onSuccess: (_, __, ___, mutation) => {
-                        console.log(mutation.options.mutationKey?.concat("."));
+                        if (mutation.options.mutationKey?.length !== 1) return;
+                        const key = mutation.options.mutationKey[0] as string[];
+                        const mutationKey = key.join(".");
+
+                        toast({
+                            title: t(`mutations.${mutationKey}.title` as any),
+                            description: t(`mutations.${mutationKey}.description` as any),
+                            variant: "positive",
+                        });
                     },
                 }),
                 queryCache: new QueryCache({
