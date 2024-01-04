@@ -174,11 +174,7 @@
             "placeholder": "Wpisz początkowy numer"
           }
         },
-        "title": "Stwórz wiele numerów startowych",
-        "success": {
-          "title": "Utworzono wiele numerów startowych",
-          "description": "Utworzone numery startowe będą mogły być przypisane do zawodników"
-        }
+        "title": "Stwórz wiele numerów startowych"
       },
       "delete": {
         "confirmation": {
@@ -186,21 +182,13 @@
           "title": "Usuń numer startowy"
         },
         "description": "Możesz usunąć numer startowy",
-        "name": "Usuń number startowy",
-        "success": {
-          "description": "Numer startowy usunięty pomyślnie",
-          "title": "Numer startowy usunięty"
-        }
+        "name": "Usuń number startowy"
       },
       "deleteAll": {
         "button": "Usuń wszystkie",
         "confirmation": {
           "text": "Próbujesz usunąć wszystkie Numery Startowe. Czy chcesz kontynuować?",
           "title": "Usuń numery startowe"
-        },
-        "success": {
-          "description": "Nie pozostał żaden numer startowy",
-          "title": "Usunięto wszystkie numery startowe"
         }
       },
       "edit": {
@@ -241,11 +229,7 @@
             "title": "Usuń kategorię"
           },
           "description": "Możesz usunąć kategorię",
-          "name": "Usuń kategorię",
-          "success": {
-            "title": "Kategoria usunięta pomyślnie",
-            "description": "Zawodnicy nie będą przypisywani do tej kategorii"
-          }
+          "name": "Usuń kategorię"
         },
         "edit": {
           "description": "Możesz modyfikować kategorię",
@@ -488,11 +472,7 @@
           "title": "Usuń zawodnika"
         },
         "description": "Możesz usunąć zawodnika",
-        "name": "Usuń zawodnika",
-        "success": {
-          "title": "Zawodnik usunięty pomyślnie",
-          "description": "Zawodnik nie będzie dostępny w systemie pomiaru czasu"
-        }
+        "name": "Usuń zawodnika"
       },
       "edit": {
         "description": "Możesz modyfikować zawodnika",
@@ -592,11 +572,7 @@
           "title": "Usuń wyścig"
         },
         "description": "Usuń wyścig",
-        "title": "Usuń",
-        "success": {
-          "title": "Wyścig usunięty pomyślnie",
-          "description": "Wyścig nie będzie już dostępny"
-        }
+        "title": "Usuń"
       },
       "editRace": {
         "description": "Uruchom okno edycji wyścigu",
@@ -685,11 +661,7 @@
           "title": "Wyczyść dane wyścigu"
         },
         "description": "Wyczyść wszystkie dane stopera",
-        "title": "Wyczyść stoper",
-        "success": {
-          "title": "Dane stopera wyzerowane",
-          "description": "Wszystkie dane stopera zostały usunięte, możesz zacząć mierzyć czas od początku"
-        }
+        "title": "Wyczyść stoper"
       }
     },
     "registration": {
@@ -700,12 +672,6 @@
       "turnOnPopup": {
         "description": "Rejestracja online zostanie włączona",
         "title": "Włącz rejestrację"
-      },
-      "statusChange": {
-        "success": {
-          "title": "Zmieniono status rejestracji",
-          "description": "Wpływa na dostępność systemu rejestracji"
-        }
       }
     },
     "result": {
@@ -807,10 +773,6 @@
           "confirmation": {
             "text": "Próbujesz usunąć Klucz API {name}. Czy chcesz kontynuować?",
             "title": "Usuń Klucz API"
-          },
-          "success": {
-            "title": "Klucz api został usunięty",
-            "description": "Nikt nie będzie w stanie użyć tego klucza do połączenia z api"
           }
         },
         "edit": {
@@ -863,10 +825,6 @@
         "confirmation": {
           "text": "Próbujesz przywrócić ręcznie zmienione czasy pomiaru. Czy chcesz kontynuować?",
           "title": "Przywróć ręcznie zmieniony czas"
-        },
-        "success": {
-          "title": "Cofniętą ręczną manipulację czasu",
-          "description": "Wynik na punkcie pomiarowym powrócił do poprzedniego stanu"
         }
       }
     },
@@ -1492,11 +1450,7 @@
               "title": "Cofnij dyskwalifikację"
             },
             "description": "Oryginalny wynik zawodnika zostanie przywrócony",
-            "name": "Wycofaj dyskwalifikację",
-            "success": {
-              "title": "Dyskwalifikacja została cofnięta",
-              "description": "Rezultat zawodnika będzie wyświetlany na liście wyników"
-            }
+            "name": "Wycofaj dyskwalifikację"
           }
         },
         "export": {
@@ -1533,11 +1487,7 @@
               "title": "Wycofaj karę czasową"
             },
             "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
-            "name": "Wycofaj karę czasową",
-            "success": {
-              "title": "Kara czasowa cofnięta",
-              "description": "Wynik zawodnika został przywrócony do stanu z przed zaaplikowania kary"
-            }
+            "name": "Wycofaj karę czasową"
           }
         }
       },

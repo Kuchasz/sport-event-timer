@@ -2,16 +2,15 @@
 import { mdiPen, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
-import { toast } from "components/use-toast";
 
 type ApiKey = AppRouterOutputs["apiKey"]["list"][0];
 
@@ -19,14 +18,7 @@ export const Settings = () => {
     const raceId = useCurrentRaceId();
 
     const { data: apiKeys, refetch } = trpc.apiKey.list.useQuery({ raceId: raceId });
-    const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation({
-        onSuccess: () =>
-            toast({
-                title: t("pages.settings.apiKeys.delete.success.title"),
-                description: t("pages.settings.apiKeys.delete.success.description"),
-                variant: "positive",
-            }),
-    });
+    const deleteApiKeyMutation = trpc.apiKey.removeApiKey.useMutation();
 
     const t = useTranslations();
 
