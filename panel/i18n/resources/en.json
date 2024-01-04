@@ -1589,5 +1589,363 @@
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
     }
+  },
+  "mutations": {
+    "result": {
+      "results": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "classification": {
+      "classifications": {
+        "title": "",
+        "description": ""
+      },
+      "categories": {
+        "title": "",
+        "description": ""
+      },
+      "addCategory": {
+        "title": "",
+        "description": ""
+      },
+      "removeCategory": {
+        "title": "",
+        "description": ""
+      },
+      "updateCategory": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "add": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "race": {
+      "basicInfo": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "add": {
+        "title": "",
+        "description": ""
+      },
+      "race": {
+        "title": "",
+        "description": ""
+      },
+      "delete": {
+        "title": "",
+        "description": ""
+      },
+      "races": {
+        "title": "",
+        "description": ""
+      },
+      "raport": {
+        "title": "",
+        "description": ""
+      },
+      "myRaces": {
+        "title": "",
+        "description": ""
+      },
+      "raceRaport": {
+        "title": "",
+        "description": ""
+      },
+      "setRegistrationStatus": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "bibNumber": {
+      "numbers": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "add": {
+        "title": "",
+        "description": ""
+      },
+      "delete": {
+        "title": "",
+        "description": ""
+      },
+      "playersNumbers": {
+        "title": "",
+        "description": ""
+      },
+      "nonDisqualifiedPlayerNumbers": {
+        "title": "",
+        "description": ""
+      },
+      "availableNumbers": {
+        "title": "",
+        "description": ""
+      },
+      "deleteAll": {
+        "title": "",
+        "description": ""
+      },
+      "addRange": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "player": {
+      "players": {
+        "title": "",
+        "description": ""
+      },
+      "delete": {
+        "title": "",
+        "description": ""
+      },
+      "lastAvailableStartTime": {
+        "title": "",
+        "description": ""
+      },
+      "lastAvailableBibNumber": {
+        "title": "",
+        "description": ""
+      },
+      "stopwatchPlayers": {
+        "title": "",
+        "description": ""
+      },
+      "startList": {
+        "title": "",
+        "description": ""
+      },
+      "promoteRegistration": {
+        "title": "",
+        "description": ""
+      },
+      "edit": {
+        "title": "",
+        "description": ""
+      },
+      "totalPlayers": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "splitTime": {
+      "splitTimes": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "revert": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "playerRegistration": {
+      "registrations": {
+        "title": "",
+        "description": ""
+      },
+      "add": {
+        "title": "",
+        "description": ""
+      },
+      "delete": {
+        "title": "",
+        "description": ""
+      },
+      "edit": {
+        "title": "",
+        "description": ""
+      },
+      "teams": {
+        "title": "",
+        "description": ""
+      },
+      "registrationStatus": {
+        "title": "",
+        "description": ""
+      },
+      "register": {
+        "title": "",
+        "description": ""
+      },
+      "setPaymentStatus": {
+        "title": "",
+        "description": ""
+      },
+      "totalRegistrations": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "apiKey": {
+      "list": {
+        "title": "",
+        "description": ""
+      },
+      "addApiKey": {
+        "title": "",
+        "description": ""
+      },
+      "editApiKey": {
+        "title": "",
+        "description": ""
+      },
+      "removeApiKey": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "user": {
+      "accounts": {
+        "title": "",
+        "description": ""
+      },
+      "register": {
+        "title": "",
+        "description": ""
+      },
+      "login": {
+        "title": "",
+        "description": ""
+      },
+      "logout": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "timingPoint": {
+      "timingPoints": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "add": {
+        "title": "",
+        "description": ""
+      },
+      "delete": {
+        "title": "",
+        "description": ""
+      },
+      "timingPoint": {
+        "title": "",
+        "description": ""
+      },
+      "timingPointsOrder": {
+        "title": "",
+        "description": ""
+      },
+      "addTimingPointAccessUrl": {
+        "title": "",
+        "description": ""
+      },
+      "editTimingPointAccessUrl": {
+        "title": "",
+        "description": ""
+      },
+      "timingPointAccessUrls": {
+        "title": "",
+        "description": ""
+      },
+      "deleteTimingPointAccessUrl": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "action": {
+      "dispatch": {
+        "title": "",
+        "description": ""
+      },
+      "state": {
+        "title": "",
+        "description": ""
+      },
+      "actionDispatched": {
+        "title": "",
+        "description": ""
+      },
+      "wipe": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "ntp": {
+      "sync": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "disqualification": {
+      "allDisqualifications": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "revert": {
+        "title": "",
+        "description": ""
+      },
+      "disqualifications": {
+        "title": "",
+        "description": ""
+      },
+      "disqualify": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "timePenalty": {
+      "allPenalties": {
+        "title": "",
+        "description": ""
+      },
+      "update": {
+        "title": "",
+        "description": ""
+      },
+      "revert": {
+        "title": "",
+        "description": ""
+      },
+      "penalties": {
+        "title": "",
+        "description": ""
+      },
+      "playerPenalties": {
+        "title": "",
+        "description": ""
+      },
+      "applyPenalty": {
+        "title": "",
+        "description": ""
+      }
+    }
   }
 }
