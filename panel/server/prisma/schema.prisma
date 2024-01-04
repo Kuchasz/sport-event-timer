@@ -115,6 +115,7 @@ model Player {
 
     @@unique([raceId, playerRegistrationId])
     @@unique([raceId, bibNumber])
+    @@unique([raceId, startTime])
 }
 
 model TimingPoint {
