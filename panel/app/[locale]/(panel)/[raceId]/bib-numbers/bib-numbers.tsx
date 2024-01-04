@@ -4,30 +4,22 @@ import { mdiNumeric, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
-import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
-import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
+import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
 import type { AppRouterOutputs } from "../../../../../trpc";
 import { trpc } from "../../../../../trpc-core";
-import { toast } from "components/use-toast";
 
 type BibNumber = AppRouterOutputs["bibNumber"]["numbers"][0];
 
 const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumber: BibNumber }) => {
-    const deletebibNumberMutation = trpc.bibNumber.delete.useMutation({
-        onSuccess: () =>
-            toast({
-                title: t("pages.bibNumbers.delete.success.title"),
-                description: t("pages.bibNumbers.delete.success.description"),
-                variant: "positive",
-            }),
-    });
+    const deletebibNumberMutation = trpc.bibNumber.delete.useMutation();
     const t = useTranslations();
 
     const deletebibNumber = async () => {
@@ -68,14 +60,7 @@ export const BibNumbers = () => {
     const raceId = useCurrentRaceId();
     const { data: bibNubers, refetch } = trpc.bibNumber.numbers.useQuery({ raceId: raceId }, { initialData: [] });
 
-    const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation({
-        onSuccess: () =>
-            toast({
-                title: t("pages.bibNumbers.deleteAll.success.title"),
-                description: t("pages.bibNumbers.deleteAll.success.description"),
-                variant: "positive",
-            }),
-    });
+    const deleteAllMutation = trpc.bibNumber.deleteAll.useMutation();
 
     const t = useTranslations();
 

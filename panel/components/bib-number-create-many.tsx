@@ -1,12 +1,11 @@
-import { Button } from "./button";
-import type { AppRouterInputs } from "trpc";
-import { PoorNumberInput } from "./poor-number-input";
-import { PoorCheckbox } from "./poor-checkbox";
-import { addRangeBibNumberSchema } from "modules/bib-number/models";
 import { Form, FormInput, FormInputInline } from "form";
+import { addRangeBibNumberSchema } from "modules/bib-number/models";
 import { useTranslations } from "next-intl";
+import type { AppRouterInputs } from "trpc";
 import { trpc } from "trpc-core";
-import { toast } from "./use-toast";
+import { Button } from "./button";
+import { PoorCheckbox } from "./poor-checkbox";
+import { PoorNumberInput } from "./poor-number-input";
 
 type CreateManyBibNumbers = AppRouterInputs["bibNumber"]["addRange"];
 
@@ -17,14 +16,7 @@ type BibNumberFormProps = {
 };
 
 export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: BibNumberFormProps) => {
-    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation({
-        onSuccess: () =>
-            toast({
-                title: t("pages.bibNumbers.createMany.success.title"),
-                description: t("pages.bibNumbers.createMany.success.description"),
-                variant: "positive",
-            }),
-    });
+    const addRangeBibNumberMutation = trpc.bibNumber.addRange.useMutation();
     const t = useTranslations();
 
     const saveChanges = async (createManyBibNumbers: CreateManyBibNumbers) => {

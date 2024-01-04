@@ -174,11 +174,7 @@
             "placeholder": "Enter range start number"
           }
         },
-        "title": "Create many bib numbers",
-        "success": {
-          "title": "Many bib numbers created",
-          "description": "Created bib numbers will be able to be assigned to players"
-        }
+        "title": "Create many bib numbers"
       },
       "delete": {
         "confirmation": {
@@ -186,21 +182,13 @@
           "title": "Delete bibNumber"
         },
         "description": "You may delete the bib number",
-        "name": "Delete bib number",
-        "success": {
-          "description": "Bib number successfully deleted",
-          "title": "Bib number deleted"
-        }
+        "name": "Delete bib number"
       },
       "deleteAll": {
         "button": "Remove all",
         "confirmation": {
           "text": "You are trying to delete all Bib Numbers. Do you want to proceed?",
           "title": "Delete bibNumber"
-        },
-        "success": {
-          "description": "There is no more bib numbers defined",
-          "title": "All bib numbers deleted"
         }
       },
       "edit": {
@@ -241,11 +229,7 @@
             "title": "Delete category"
           },
           "description": "You may delete the category",
-          "name": "Delete category",
-          "success": {
-            "title": "Category removed successfully",
-            "description": "Player won't be assigned to removed category"
-          }
+          "name": "Delete category"
         },
         "edit": {
           "description": "You may modify the category",
@@ -488,11 +472,7 @@
           "title": "Delete player"
         },
         "description": "You may delete the player",
-        "name": "Delete player",
-        "success": {
-          "title": "Player deleted successfully",
-          "description": "The player will not be available in the timing system"
-        }
+        "name": "Delete player"
       },
       "edit": {
         "description": "You may modify the player",
@@ -592,11 +572,7 @@
           "title": "Delete race"
         },
         "description": "Delete race",
-        "title": "Delete",
-        "success": {
-          "title": "Race deleted successfully",
-          "description": "Race will be no longer available "
-        }
+        "title": "Delete"
       },
       "editRace": {
         "description": "Open edit race popup",
@@ -685,11 +661,7 @@
           "title": "Wipe race data"
         },
         "description": "Wipe all stopwatch data",
-        "title": "Wipe stopwatch",
-        "success": {
-          "title": "Stopwatch date wiped",
-          "description": "No stopwatch data left, you can start measure the time from scratch"
-        }
+        "title": "Wipe stopwatch"
       }
     },
     "registration": {
@@ -700,12 +672,6 @@
       "turnOnPopup": {
         "description": "Online registration will be turned on",
         "title": "Turn on registration"
-      },
-      "statusChange": {
-        "success": {
-          "title": "Registration status changed",
-          "description": "Affects the availability of the registration system"
-        }
       }
     },
     "result": {
@@ -807,10 +773,6 @@
           "confirmation": {
             "text": "You are trying to delete the ApiKey {name}. Do you want to proceed?",
             "title": "Delete ApiKey"
-          },
-          "success": {
-            "title": "API Key deleted",
-            "description": "No one will be able to use this key to connect to the api"
           }
         },
         "edit": {
@@ -863,10 +825,6 @@
         "confirmation": {
           "text": "You are trying to revert manual split time changes. Do you want to proceed?",
           "title": "Revert manual split time"
-        },
-        "success": {
-          "title": "Manual split time reverted",
-          "description": "The result on the measuring point returned to the previous state"
         }
       }
     },
@@ -1492,11 +1450,7 @@
               "title": "Revert disqualification"
             },
             "description": "The original score of the player will be restored",
-            "name": "Revert disqualification",
-            "success": {
-              "title": "Disqualification reverted",
-              "description": "The player's result will be displayed in the result list"
-            }
+            "name": "Revert disqualification"
           }
         },
         "export": {
@@ -1533,11 +1487,7 @@
               "title": "Revert time penalty"
             },
             "description": "The result achieved by the player will be restored",
-            "name": "Revert time penalty",
-            "success": {
-              "title": "Time penalty reverted",
-              "description": "The competitor's score was restored to the state before the penalty was applied"
-            }
+            "name": "Revert time penalty"
           }
         }
       },
