@@ -3,16 +3,15 @@
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { toast } from "components/use-toast";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
