@@ -1589,5 +1589,363 @@
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
     }
+  },
+  "mutations": {
+    "result": {
+      "results": {
+        "title": "Wyniki Potwierdzone",
+        "description": "Wyniki wydarzenia zostały pomyślnie potwierdzone."
+      }
+    },
+    "classification": {
+      "classifications": {
+        "title": "Klasyfikacje Potwierdzone",
+        "description": "Klasyfikacje wydarzenia zostały pomyślnie potwierdzone."
+      },
+      "categories": {
+        "title": "Kategorie Potwierdzone",
+        "description": "Kategorie wydarzenia zostały pomyślnie potwierdzone."
+      },
+      "addCategory": {
+        "title": "Dodano Kategorię",
+        "description": "Nowa kategoria została pomyślnie dodana do wydarzenia."
+      },
+      "removeCategory": {
+        "title": "Usunięto Kategorię",
+        "description": "Określona kategoria została pomyślnie usunięta z wydarzenia."
+      },
+      "updateCategory": {
+        "title": "Zaktualizowano Kategorię",
+        "description": "Szczegóły określonej kategorii zostały pomyślnie zaktualizowane."
+      },
+      "update": {
+        "title": "Zaktualizowano Wydarzenie",
+        "description": "Dane wydarzenia zostały pomyślnie zaktualizowane."
+      },
+      "add": {
+        "title": "Dodano Klasyfikację/Kategorię",
+        "description": "Nowa klasyfikacja lub kategoria została pomyślnie dodana do wydarzenia."
+      }
+    },
+    "race": {
+      "basicInfo": {
+        "title": "Podstawowe Informacje Potwierdzone",
+        "description": "Podstawowe informacje o wyścigu zostały pomyślnie potwierdzone."
+      },
+      "update": {
+        "title": "Zaktualizowano Wyścig",
+        "description": "Szczegóły określonego wyścigu zostały pomyślnie zaktualizowane."
+      },
+      "add": {
+        "title": "Dodano Wyścig",
+        "description": "Nowy wyścig został pomyślnie dodany do wydarzenia."
+      },
+      "race": {
+        "title": "Potwierdzono Szczegóły Wyścigu",
+        "description": "Szczegóły określonego wyścigu zostały pomyślnie potwierdzone."
+      },
+      "delete": {
+        "title": "Usunięto Wyścig",
+        "description": "Określony wyścig został pomyślnie usunięty z wydarzenia."
+      },
+      "races": {
+        "title": "Potwierdzono Listę Wyścigów",
+        "description": "Lista wszystkich wyścigów w wydarzeniu została pomyślnie potwierdzona."
+      },
+      "raport": {
+        "title": "Potwierdzono Raport z Wyścigu",
+        "description": "Raport z wyścigu został pomyślnie potwierdzony."
+      },
+      "myRaces": {
+        "title": "Potwierdzono Moje Wyścigi",
+        "description": "Lista twoich wyścigów została pomyślnie potwierdzona."
+      },
+      "raceRaport": {
+        "title": "Potwierdzono Raport z Wyścigu",
+        "description": "Raport z wyścigu został pomyślnie potwierdzony."
+      },
+      "setRegistrationStatus": {
+        "title": "Ustawiono Status Rejestracji",
+        "description": "Status rejestracji został pomyślnie ustawiony."
+      }
+    },
+    "bibNumber": {
+      "numbers": {
+        "title": "Numery Startowe Potwierdzone",
+        "description": "Lista numerów startowych została pomyślnie potwierdzona."
+      },
+      "update": {
+        "title": "Zaktualizowano Numer Startowy",
+        "description": "Określony numer startowy został pomyślnie zaktualizowany."
+      },
+      "add": {
+        "title": "Dodano Numer Startowy",
+        "description": "Nowy numer startowy został pomyślnie dodany do wydarzenia."
+      },
+      "delete": {
+        "title": "Usunięto Numer Startowy",
+        "description": "Określony numer startowy został pomyślnie usunięty."
+      },
+      "playersNumbers": {
+        "title": "Potwierdzono Numery Startowe Zawodników",
+        "description": "Lista numerów startowych zawodników została pomyślnie potwierdzona."
+      },
+      "nonDisqualifiedPlayerNumbers": {
+        "title": "Potwierdzono Numery Startowe Niezdyskwalifikowanych Zawodników",
+        "description": "Lista numerów startowych niezdyskwalifikowanych zawodników została pomyślnie potwierdzona."
+      },
+      "availableNumbers": {
+        "title": "Potwierdzono Dostępne Numery Startowe",
+        "description": "Lista dostępnych numerów startowych została pomyślnie potwierdzona."
+      },
+      "deleteAll": {
+        "title": "Usunięto Wszystkie Numery Startowe",
+        "description": "Wszystkie numery startowe zostały pomyślnie usunięte z wydarzenia."
+      },
+      "addRange": {
+        "title": "Dodano Zakres Numerów Startowych",
+        "description": "Zakres numerów startowych został pomyślnie dodany do wydarzenia."
+      }
+    },
+    "player": {
+      "players": {
+        "title": "Zawodnicy Potwierdzeni",
+        "description": "Lista zawodników została pomyślnie potwierdzona."
+      },
+      "delete": {
+        "title": "Usunięto Zawodnika",
+        "description": "Określony zawodnik został pomyślnie usunięty z wydarzenia."
+      },
+      "lastAvailableStartTime": {
+        "title": "Potwierdzono Ostatnią Dostępną Godzinę Startu",
+        "description": "Ostatnia dostępna godzina startu została pomyślnie potwierdzona."
+      },
+      "lastAvailableBibNumber": {
+        "title": "Potwierdzono Ostatni Numer Startowy",
+        "description": "Ostatni dostępny numer startowy został pomyślnie potwierdzony."
+      },
+      "stopwatchPlayers": {
+        "title": "Potwierdzono Zawodników Zegarowych",
+        "description": "Lista zawodników zegarowych została pomyślnie potwierdzona."
+      },
+      "startList": {
+        "title": "Potwierdzono Listę Startową",
+        "description": "Lista startowa została pomyślnie potwierdzona."
+      },
+      "promoteRegistration": {
+        "title": "Potwierdzono Promocję Rejestracji",
+        "description": "Promocja rejestracji zawodnika została pomyślnie potwierdzona."
+      },
+      "edit": {
+        "title": "Zaktualizowano Szczegóły Zawodnika",
+        "description": "Szczegóły określonego zawodnika zostały pomyślnie zaktualizowane."
+      },
+      "totalPlayers": {
+        "title": "Potwierdzono Liczbę Zawodników",
+        "description": "Całkowita liczba zawodników została pomyślnie potwierdzona."
+      }
+    },
+    "splitTime": {
+      "splitTimes": {
+        "title": "Potwierdzono Czasy Pomiarów Pośrednich",
+        "description": "Lista czasów pomiarów pośrednich została pomyślnie potwierdzona."
+      },
+      "update": {
+        "title": "Zaktualizowano Czas Pomiaru Pośredniego",
+        "description": "Określony czas pomiaru pośredniego został pomyślnie zaktualizowany."
+      },
+      "revert": {
+        "title": "Czas Pomiaru Pośredniego Przywrócony",
+        "description": "Określony czas pomiaru pośredniego został pomyślnie przywrócony."
+      }
+    },
+    "playerRegistration": {
+      "registrations": {
+        "title": "Potwierdzono Rejestracje",
+        "description": "Lista rejestracji została pomyślnie potwierdzona."
+      },
+      "add": {
+        "title": "Dodano Rejestrację",
+        "description": "Nowa rejestracja została pomyślnie dodana."
+      },
+      "delete": {
+        "title": "Usunięto Rejestrację",
+        "description": "Określona rejestracja została pomyślnie usunięta."
+      },
+      "edit": {
+        "title": "Zaktualizowano Szczegóły Rejestracji",
+        "description": "Szczegóły określonej rejestracji zostały pomyślnie zaktualizowane."
+      },
+      "teams": {
+        "title": "Potwierdzono Drużyny",
+        "description": "Lista drużyn została pomyślnie potwierdzona."
+      },
+      "registrationStatus": {
+        "title": "Potwierdzono Status Rejestracji",
+        "description": "Status rejestracji został pomyślnie potwierdzony."
+      },
+      "register": {
+        "title": "Potwierdzono Rejestrację",
+        "description": "Rejestracja została pomyślnie potwierdzona."
+      },
+      "setPaymentStatus": {
+        "title": "Ustawiono Status Płatności",
+        "description": "Status płatności został pomyślnie ustawiony."
+      },
+      "totalRegistrations": {
+        "title": "Potwierdzono Łączną Liczbę Rejestracji",
+        "description": "Całkowita liczba rejestracji została pomyślnie potwierdzona."
+      }
+    },
+    "apiKey": {
+      "list": {
+        "title": "Wylistowano Klucze API",
+        "description": "Lista kluczy API została pomyślnie wylistowana."
+      },
+      "addApiKey": {
+        "title": "Dodano Klucz API",
+        "description": "Nowy klucz API został pomyślnie dodany."
+      },
+      "editApiKey": {
+        "title": "Zaktualizowano Klucz API",
+        "description": "Określony klucz API został pomyślnie zaktualizowany."
+      },
+      "removeApiKey": {
+        "title": "Usunięto Klucz API",
+        "description": "Określony klucz API został pomyślnie usunięty."
+      }
+    },
+    "user": {
+      "accounts": {
+        "title": "Potwierdzono Konta Użytkowników",
+        "description": "Lista kont użytkowników została pomyślnie potwierdzona."
+      },
+      "register": {
+        "title": "Zarejestrowano Użytkownika",
+        "description": "Nowy użytkownik został pomyślnie zarejestrowany."
+      },
+      "login": {
+        "title": "Zalogowano Użytkownika",
+        "description": "Użytkownik został pomyślnie zalogowany."
+      },
+      "logout": {
+        "title": "Wylogowano Użytkownika",
+        "description": "Użytkownik został pomyślnie wylogowany."
+      }
+    },
+    "timingPoint": {
+      "timingPoints": {
+        "title": "Potwierdzone Punkty Czasowe",
+        "description": "Lista punktów czasowych została pomyślnie potwierdzona."
+      },
+      "update": {
+        "title": "Zaktualizowano Punkt Czasowy",
+        "description": "Określony punkt czasowy został pomyślnie zaktualizowany."
+      },
+      "add": {
+        "title": "Dodano Punkt Czasowy",
+        "description": "Nowy punkt czasowy został pomyślnie dodany."
+      },
+      "delete": {
+        "title": "Usunięto Punkt Czasowy",
+        "description": "Określony punkt czasowy został pomyślnie usunięty."
+      },
+      "timingPoint": {
+        "title": "Potwierdzone Szczegóły Punktów Czasowych",
+        "description": "Szczegóły określonego punktu czasowego zostały pomyślnie potwierdzone."
+      },
+      "timingPointsOrder": {
+        "title": "Potwierdzone Kolejność Punktów Czasowych",
+        "description": "Kolejność punktów czasowych została pomyślnie potwierdzona."
+      },
+      "addTimingPointAccessUrl": {
+        "title": "Dodano URL Dostępu",
+        "description": "Nowy URL dostępu do punktu czasowego został pomyślnie dodany."
+      },
+      "editTimingPointAccessUrl": {
+        "title": "Zaktualizowano URL Dostępu",
+        "description": "URL dostępu do punktu czasowego został pomyślnie zaktualizowany."
+      },
+      "timingPointAccessUrls": {
+        "title": "Potwierdzone URL-e Dostępu",
+        "description": "Lista URL-i dostępu do punktu czasowego została pomyślnie potwierdzona."
+      },
+      "deleteTimingPointAccessUrl": {
+        "title": "Usunięto URL Dostępu",
+        "description": "Określony URL dostępu do punktu czasowego został pomyślnie usunięty."
+      }
+    },
+    "action": {
+      "dispatch": {
+        "title": "Akcja Wysłana",
+        "description": "Określona akcja została pomyślnie wysłana."
+      },
+      "state": {
+        "title": "Potwierdzony Stan",
+        "description": "Stan został pomyślnie potwierdzony."
+      },
+      "actionDispatched": {
+        "title": "Akcja Wysłana",
+        "description": "Określona akcja została pomyślnie wysłana."
+      },
+      "wipe": {
+        "title": "Dane Wyczyszczone",
+        "description": "Wszystkie dane zostały pomyślnie wyczyszczone."
+      }
+    },
+    "ntp": {
+      "sync": {
+        "title": "Potwierdzona Synchronizacja z NTP",
+        "description": "Synchronizacja z serwerem NTP została pomyślnie potwierdzona."
+      }
+    },
+    "disqualification": {
+      "allDisqualifications": {
+        "title": "Potwierdzone Wszystkie Dyskwalifikacje",
+        "description": "Wszystkie dyskwalifikacje zostały pomyślnie potwierdzone."
+      },
+      "update": {
+        "title": "Zaktualizowano Dyskwalifikację",
+        "description": "Określona dyskwalifikacja została pomyślnie zaktualizowana."
+      },
+      "revert": {
+        "title": "Cofnięto Dyskwalifikację",
+        "description": "Określona dyskwalifikacja została pomyślnie cofnięta."
+      },
+      "disqualifications": {
+        "title": "Potwierdzone Dyskwalifikacje",
+        "description": "Lista dyskwalifikacji została pomyślnie potwierdzona."
+      },
+      "disqualify": {
+        "title": "Potwierdzono Dyskwalifikację",
+        "description": "Określona dyskwalifikacja została pomyślnie potwierdzona."
+      }
+    },
+    "timePenalty": {
+      "allPenalties": {
+        "title": "Potwierdzone Wszystkie Kary",
+        "description": "Wszystkie kary zostały pomyślnie potwierdzone."
+      },
+      "update": {
+        "title": "Zaktualizowano Karę",
+        "description": "Określona kara została pomyślnie zaktualizowana."
+      },
+      "revert": {
+        "title": "Cofnięto Karę",
+        "description": "Określona kara została pomyślnie cofnięta."
+      },
+      "penalties": {
+        "title": "Potwierdzone Kary",
+        "description": "Lista kar została pomyślnie potwierdzona."
+      },
+      "playerPenalties": {
+        "title": "Potwierdzone Kary Dla Gracza",
+        "description": "Lista kar dla gracza została pomyślnie potwierdzona."
+      },
+      "applyPenalty": {
+        "title": "Zastosowano Karę",
+        "description": "Określona kara została pomyślnie zastosowana."
+      }
+    }
   }
 }
