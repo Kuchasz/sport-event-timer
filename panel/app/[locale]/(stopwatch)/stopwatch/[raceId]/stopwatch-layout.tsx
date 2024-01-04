@@ -78,7 +78,7 @@ export function StopwatchLayout({ children, session }: { children: ReactNode; se
 
     return (
         <SessionProvider session={session}>
-            <TrpcProvider enableSubscriptions={true}>
+            <TrpcProvider toastConfirmations={false} enableSubscriptions={true}>
                 <ReduxStoreProvider store={store}>
                     <ExternalsExposer />
                     <ServerConnectionHandler dispatch={store.dispatch} raceId={parseInt(raceId)} clientId={clientId}>

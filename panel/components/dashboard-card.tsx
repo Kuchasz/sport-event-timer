@@ -41,9 +41,9 @@ const Discrete = ({ title, enabled }: { title: string; enabled: boolean }) => {
 
 const Info = ({ title, text }: { title: string; text: string }) => (
     <Card value={text} title={title}>
+        <div></div>
         {/* <div
-            className={classNames("relative w-1/2 rounded h-2 bg-gray-100", { ["bg-red-500"]: !enabled, ["bg-green-500"]: enabled })}
-        ></div> */}
+            className={classNames("relative h-2 w-1/2 rounded bg-gray-100", { ["bg-red-500"]: !enabled, ["bg-green-500"]: enabled })}></div> */}
     </Card>
 );
 

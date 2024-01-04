@@ -10,7 +10,7 @@ import { type TRPCClientError } from "@trpc/client";
 import { type AppRouter } from "server/routers/app";
 import { useTranslations } from "next-intl";
 
-export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean }> = p => {
+export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean; toastConfirmations: boolean }> = p => {
     const t = useTranslations();
     const [queryClient] = useState(
         () =>
@@ -33,7 +33,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscript
                             });
                     },
                     onSuccess: (_, __, ___, mutation) => {
-                        if (mutation.options.mutationKey?.length !== 1) return;
+                        if (!p.toastConfirmations || mutation.options.mutationKey?.length !== 1) return;
                         const key = mutation.options.mutationKey[0] as string[];
                         const mutationKey = key.join(".");
 
