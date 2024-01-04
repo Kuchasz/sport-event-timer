@@ -10,17 +10,6 @@ import { type TRPCClientError } from "@trpc/client";
 import { type AppRouter } from "server/routers/app";
 import { useTranslations } from "next-intl";
 
-//eslint-disable-next-line
-type TrpcNode = Record<string, Function>;
-
-type Join<K, P> = K extends string | number ? (P extends string | number ? `${K}.${P}` : never) : never;
-
-type SubKeys<T> = T extends TrpcNode
-    ? never
-    : {
-          [K in keyof T]: T[K] extends TrpcNode ? K : Join<K, SubKeys<T[K]>>;
-      }[keyof T];
-
 export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean }> = p => {
     const t = useTranslations();
     const [queryClient] = useState(
@@ -45,10 +34,6 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscript
                     },
                     onSuccess: (_, __, ___, mutation) => {
                         console.log(mutation.options.mutationKey?.concat("."));
-
-                        type TrpcClientKeys = SubKeys<typeof trpc>;
-
-                        type MutationMessagesKeys = Record<`mutations.${TrpcClientKeys}`, { title: string; description: string }>;
                     },
                 }),
                 queryCache: new QueryCache({

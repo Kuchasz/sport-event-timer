@@ -4,13 +4,13 @@ import { initTRPC } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
-import { DomainError, sharedErrors } from "modules/shared/errors";
+import { DomainError, sharedErrors } from "../modules/shared/errors";
 import superjson from "superjson";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
 import { db } from "./db";
 import { type CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
-import { env } from "env";
+import { env } from "../env";
 
 export const createContextWs = async (opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>) => {
     const cookies = parseCookies(opts.req.headers.cookie ?? "");
