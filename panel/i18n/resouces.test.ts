@@ -17,19 +17,7 @@ describe("Errors translations", () => {
         const translations = await import(`./resources/${locale}.json`);
         const englishTranslations = await import("./resources/en.json");
 
-        const translationsEquality = hasEqualStructure(translations, englishTranslations);
-
-        expect(translationsEquality).toBeTruthy();
+        const notTranslatedErrorKeys = excludeItems(getAllPropertyNames(englishTranslations), getAllPropertyNames(translations));
+        expect(notTranslatedErrorKeys).toHaveLength(0);
     });
 });
-
-const hasEqualStructure = (obj1: Record<string, unknown>, obj2: Record<string, unknown>): boolean =>
-    Object.keys(obj1).every(key => {
-        const v = obj1[key];
-
-        if (typeof v === "object" && v !== null) {
-            return hasEqualStructure(v as Record<string, unknown>, obj2[key] as Record<string, unknown>);
-        }
-
-        return obj2.hasOwnProperty(key);
-    });
