@@ -27,7 +27,9 @@ export default async function RegistrationLayout({ children, params }: { childre
         <html className="h-full w-full" lang={locale}>
             <body className="flex h-full w-full flex-col justify-center text-zinc-900">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
-                    <TrpcProvider enableSubscriptions={false}>{children}</TrpcProvider>
+                    <TrpcProvider toastConfirmations={false} enableSubscriptions={false}>
+                        {children}
+                    </TrpcProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
