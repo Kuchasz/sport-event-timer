@@ -19,65 +19,19 @@ type SubKeys<T> = T extends TrpcNode
           [K in keyof T]: T[K] extends TrpcNode ? K : Join<K, SubKeys<T[K]>>;
       }[keyof T];
 
-type FlattenKeys<T> = T extends object ? { [K in keyof T]: `${K & string}.${FlattenKeys<T[K]>}` }[keyof T] : "";
-
-// type Omitf<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+type FlattenObjectKeys<T extends Record<string, unknown>, Key = keyof T> = Key extends string
+    ? T[Key] extends Record<string, unknown>
+        ? `${Key}.${FlattenObjectKeys<T[Key]>}`
+        : `${Key}`
+    : never;
 
 type TrpcClientKeys = `mutations.${SubKeys<typeof trpc>}.title` | `mutations.${SubKeys<typeof trpc>}.description`;
-type TranslationKeys = FlattenKeys<typeof enTranslations>;
+type TranslationKeys = FlattenObjectKeys<typeof enTranslations>;
+type ExcludedKeys = Exclude<TrpcClientKeys, TranslationKeys>;
 
-type EEE = Exclude<TrpcClientKeys, keyof TranslationKeys>;
+type PotentialMissingTranslations = ExcludedKeys extends never ? "" : ExcludedKeys;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const aawad: EEE = "";
-
-// type MutationMessagesKeys = Record<`mutations.${TrpcClientKeys}`, { title: string; description: string }>;
-
-// export const possiblyInvalidEnTranslations: MutationMessagesKeys = enTranslations;
-
-// type LeafNode = { title: string; description: string };
-
-// type NonFunctionLeafNodes<T> = {
-//     // [K in keyof T]: T[K] extends (...args: any[]) => any ? never : T[K] extends TrpcNode ? NonFunctionLeafNodes<T[K]> : LeafNode;
-//     [K in keyof T]: T[K] extends TrpcNode ? LeafNode : NonFunctionLeafNodes<T[K]>;
-// };
-
-// type MutationMessagesKeys = NonFunctionLeafNodes<typeof trpc>;
-
-// export const possiblyInvalidEnTranslations: MutationMessagesKeys = enTranslations;
-
-// type DeepPick<T, K extends string> = K extends keyof T
-//     ? { [P in K]: T[P] }
-//     : K extends `${infer First}.${infer Rest}`
-//     ? First extends keyof T
-//         ? { [P in First]: DeepPick<T[First], Rest> }
-//         : never
-//     : never;
-
-// type DeepReplace<T, Replacement> = T extends object ? { [K in keyof T]: DeepReplace<T[K], Replacement> } : Replacement;
-
-// type DeepReplacePick<T, K extends string, Replacement> = K extends keyof T
-//     ? { [P in K]: Replacement }
-//     : K extends `${infer First}.${infer Rest}`
-//     ? First extends keyof T
-//         ? { [P in First]: DeepReplacePick<T[First], Rest, Replacement> }
-//         : never
-//     : never;
-
-// // Example usage:
-// type ExampleType = {
-//     prop1: {
-//         subProp1: string;
-//         subProp2: number;
-//     };
-//     prop2: boolean;
-//     prop3: string[];
-// };
-
-// Pick a nested property using dot notation
-// type PickedProp = { mutations: DeepReplacePick<typeof trpc, TrpcClientKeys, { title: string; description: string }> };
-
-// export const possiblyInvalidEnTranslations: PickedProp = enTranslations;
+export const potentialInvalidMissingTranslation: PotentialMissingTranslations = "";
 
 export const locales = ["en", "pl"] as const;
 export type Locales = (typeof locales)[number];
