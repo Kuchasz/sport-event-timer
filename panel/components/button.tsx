@@ -1,3 +1,5 @@
+"use client";
+
 import { useDeferredValue } from "hooks";
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 

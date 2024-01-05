@@ -6,6 +6,7 @@ import { Status } from "components/status";
 import { trpcRSC } from "trpc-core-rsc";
 import { ConciseRaceIcon } from "components/race-icon";
 import { Toaster } from "components/toaster";
+import { notFound } from "next/navigation";
 
 type Props = {
     raceId: string;
@@ -13,8 +14,20 @@ type Props = {
     children: React.ReactNode;
 };
 
+const tryCatch = async <T,>(promise: Promise<T>) => {
+    try {
+        const result = await promise;
+        return { type: "success", result } as const;
+    } catch (err) {
+        return { type: "failure" } as const;
+    }
+};
+
 export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
-    const race = await trpcRSC.race.race.query({ raceId: Number(raceId) });
+    const race = await tryCatch(trpcRSC.race.race.query({ raceId: Number(raceId) }));
+
+    if (race.type !== "success") notFound();
+
     const totalPlayers = await trpcRSC.player.totalPlayers.query({ raceId: Number(raceId) });
     const totalRegistrations = await trpcRSC.playerRegistration.totalRegistrations.query({ raceId: Number(raceId) });
 
@@ -30,7 +43,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                                     <img src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
-                            <ConciseRaceIcon r={race} />
+                            <ConciseRaceIcon r={race.result} />
                             <RaceMenu raceId={raceId} totalPlayers={totalPlayers} totalRegistrations={totalRegistrations} />
                         </nav>
                         <main className="flex h-full grow flex-col overflow-y-auto">
