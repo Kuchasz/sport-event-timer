@@ -1,5 +1,5 @@
-import { Button } from "components/button";
-import "../../globals.scss";
+import { Button } from "../components/button";
+import "../globals.scss";
 
 export default function Error({ error: _err }: { error: Error & { digest?: string }; reset: () => void }) {
     return (
