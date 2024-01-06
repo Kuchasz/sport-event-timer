@@ -7,6 +7,7 @@ import { trpcRSC } from "trpc-core-rsc";
 import { ConciseRaceIcon } from "components/race-icon";
 import { Toaster } from "components/toaster";
 import { notFound } from "next/navigation";
+import { Task } from "@set/utils/dist/task";
 
 type Props = {
     raceId: string;
@@ -14,17 +15,8 @@ type Props = {
     children: React.ReactNode;
 };
 
-const tryCatch = async <T,>(promise: Promise<T>) => {
-    try {
-        const result = await promise;
-        return { type: "success", result } as const;
-    } catch (err) {
-        return { type: "failure" } as const;
-    }
-};
-
 export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
-    const race = await tryCatch(trpcRSC.race.race.query({ raceId: Number(raceId) }));
+    const race = await Task.tryCatch(trpcRSC.race.race.query({ raceId: Number(raceId) }));
 
     if (race.type !== "success") notFound();
 
