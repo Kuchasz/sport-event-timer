@@ -44,7 +44,7 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     );
 };
 
-export const RaceStopwatch = () => {
+export const RaceClock = () => {
     const [globalTime, setGlobalTime] = useState<number>();
     const ntpMutation = trpc.ntp.sync.useMutation();
 

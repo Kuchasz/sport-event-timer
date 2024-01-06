@@ -1299,9 +1299,13 @@
           "description": "The app is useful for all athletes. They can check their starting time. See who has already started, who will start next and how many competitors are left. The entire start list is included. Optimized for mobile phones.",
           "title": "Start list"
         },
-        "stopwatch": {
-          "description": "A countdown timer from the start of the competition. In the case of individual starts it is the time from the start of the first competitor, in the case of a mass start it is the time from the start of all competitors.",
-          "title": "Stopwatch"
+        "clock": {
+          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start.",
+          "title": "Clock"
+        },
+        "preciseClock": {
+          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start. Displays the current time with higher accuracy.",
+          "title": "Precise Clock"
         }
       },
       "header": {
