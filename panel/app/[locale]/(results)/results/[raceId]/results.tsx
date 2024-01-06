@@ -6,7 +6,6 @@ import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@s
 import classNames from "classnames";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
@@ -14,13 +13,9 @@ import { trpc } from "trpc-core";
 type Results = AppRouterOutputs["result"]["results"];
 type Race = AppRouterOutputs["race"]["basicInfo"];
 
-export const Results = ({ initialResults, initialRace }: { initialResults: Results; initialRace: Race }) => {
-    const { raceId } = useParams<{ raceId: string }>()!;
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) }, { enabled: !!raceId, initialData: initialRace });
-    const { data: results } = trpc.result.results.useQuery(
-        { raceId: parseInt(raceId) },
-        { enabled: !!raceId, refetchInterval: 10_000, initialData: initialResults },
-    );
+export const Results = ({ raceId, initialResults, initialRace }: { raceId: number; initialResults: Results; initialRace: Race }) => {
+    const { data: race } = trpc.race.basicInfo.useQuery({ raceId }, { initialData: initialRace });
+    const { data: results } = trpc.result.results.useQuery({ raceId }, { refetchInterval: 10_000, initialData: initialResults });
     const [rowIds, setRowIds] = useState<number[]>([]);
 
     const abbreviations = useTranslations("results.abbreviations");

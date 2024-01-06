@@ -44,8 +44,8 @@ const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     );
 };
 
-export const RaceClock = () => {
-    const [globalTime, setGlobalTime] = useState<number>();
+export const RaceClock = ({ renderTime }: { renderTime: number }) => {
+    const [globalTime, setGlobalTime] = useState<number>(renderTime);
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
@@ -73,13 +73,9 @@ export const RaceClock = () => {
     return (
         <>
             <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
-                {globalTime === undefined ? (
-                    <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
-                ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center">
-                        <Time stopped={false} time={globalTime} />
-                    </div>
-                )}
+                <div className="flex h-full w-full flex-col items-center justify-center">
+                    <Time stopped={false} time={globalTime} />
+                </div>
             </div>
         </>
     );

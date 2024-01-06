@@ -40,7 +40,7 @@ export const usePreviousValue = <T,>(value: T) => {
     return ref.current;
 };
 
-export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartTime: number) => Promise<number>) => {
+export const useSystemTime = (_allowedLatency: number, getServerTime: (loadStartTime: number) => Promise<number>) => {
     const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
 
     useEffect(() => {
@@ -56,13 +56,14 @@ export const useSystemTime = (allowedLatency: number, getServerTime: (loadStartT
 
             const timeOffset = -(loadEndTime - Math.floor(serverTime + latency / 2));
 
-            if (systemTime === undefined || latency < systemTime.latency)
+            if (systemTime === undefined || latency < systemTime.latency) {
                 setSystemTime({
                     timeOffset,
                     latency,
                 });
-
-            if (latency > allowedLatency || syncTries < 5) timeout = setTimeout(requestTimeSync, 250);
+            } else {
+                if (syncTries < 5) timeout = setTimeout(requestTimeSync, 250);
+            }
         };
 
         void requestTimeSync();

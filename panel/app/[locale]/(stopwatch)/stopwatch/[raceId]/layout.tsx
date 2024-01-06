@@ -7,12 +7,17 @@ import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
 import { type Locales, locales } from "i18n";
 import { NextIntlClientProvider } from "next-intl";
+import { Task } from "@set/utils/dist/task";
+import { trpcRSC } from "trpc-core-rsc";
 
-export default async function ({ children, params }: { children: ReactNode; params: { locale: string } }) {
+export default async function ({ children, params }: { children: ReactNode; params: { locale: string; raceId: string } }) {
     await authenticate();
     const isValidLocale = locales.includes(params.locale as Locales);
     const session = await getServerSession();
     if (!isValidLocale) notFound();
+
+    const race = await Task.tryCatch(trpcRSC.race.race.query({ raceId: Number(params.raceId) }));
+    if (race.type !== "success") notFound();
 
     const { locale } = params;
 
