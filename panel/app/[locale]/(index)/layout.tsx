@@ -4,9 +4,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
-import { IndexStatus } from "../../../../components/index-status";
-import { Meta } from "../../../../components/meta";
-import "../../../../globals.scss";
+import { Status } from "../../../components/index/status";
+import { Meta } from "../../../components/meta";
+import "../../../globals.scss";
 import { SessionProvider } from "auth/provider";
 import { getServerSession } from "auth";
 import { Toaster } from "components/toaster";
@@ -19,7 +19,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
                 <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <main className="flex h-full grow flex-col items-center overflow-y-auto">
-                            <IndexStatus />
+                            <Status />
                             <div className="flex w-full flex-grow flex-col">{children}</div>
                             <Toaster />
                         </main>
@@ -42,8 +42,8 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../../i18n/resources/en.json`)).default;
+        const localeMessages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
 
         messages = deepmerge(defaultMessages, localeMessages) as any;
     } catch (error) {

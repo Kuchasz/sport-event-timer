@@ -1,4 +1,4 @@
-import { authenticate } from "../../../../../auth";
+import { authenticate } from "../../../../auth";
 import { MyRaces } from "./my-races";
 
 export default async function () {

@@ -11,7 +11,7 @@ import { PoorActions, NewPoorActionsItem } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { useTranslations } from "next-intl";
 import type { AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../trpc-core";
+import { trpc } from "../../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 

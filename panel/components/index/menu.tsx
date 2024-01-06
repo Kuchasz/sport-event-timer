@@ -1,6 +1,6 @@
 import { mdiHomeOutline, mdiViewDashboardEditOutline, mdiBikeFast, mdiBriefcaseOutline, mdiTimetable, mdiAccount } from "@mdi/js";
 import { useTranslations } from "next-intl";
-import { Menu } from "./menu";
+import { Menu } from "../menu";
 
 export const IndexMenu = () => {
     const t = useTranslations();
