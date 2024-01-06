@@ -9,7 +9,6 @@ import { Clock } from "components/timer/clock";
 import { allowedLatency } from "connection";
 import { useSystemTime } from "hooks";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
@@ -206,15 +205,22 @@ const NextPlayerStartInfo = ({ secondsToNextPlayer }: { secondsToNextPlayer: num
     );
 };
 
-export const RaceStartList = ({ players: initialData, renderTime }: { players: StartListPlayer[]; renderTime: number }) => {
+export const RaceStartList = ({
+    raceId,
+    players: initialData,
+    renderTime,
+}: {
+    raceId: number;
+    players: StartListPlayer[];
+    renderTime: number;
+}) => {
     const [globalTime, setGlobalTime] = useState<number>(renderTime);
     const [secondsToNextPlayer, setSecondsToNextPlayer] = useState<number>(0);
     const ntpMutation = trpc.ntp.sync.useMutation();
-    const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: players } = trpc.player.startList.useQuery(
-        { raceId: Number.parseInt(raceId) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime), initialData },
+        { raceId },
+        { select: data => sort(data, d => d.absoluteStartTime), initialData },
     );
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);

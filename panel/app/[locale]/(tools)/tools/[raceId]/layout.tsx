@@ -4,6 +4,8 @@ import TimerLayout from "./timer-layout";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
+import { Task } from "@set/utils/dist/task";
+import { trpcRSC } from "trpc-core-rsc";
 
 export default async function (props: { children: ReactNode; params: { locale: string; raceId: string } }) {
     const locale = useLocale();
@@ -11,6 +13,9 @@ export default async function (props: { children: ReactNode; params: { locale: s
     if (props?.params?.locale !== locale) {
         notFound();
     }
+
+    const race = await Task.tryCatch(trpcRSC.race.race.query({ raceId: Number(props.params.raceId) }));
+    if (race.type !== "success") notFound();
 
     let messages;
 

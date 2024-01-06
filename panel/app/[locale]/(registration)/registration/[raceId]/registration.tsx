@@ -12,12 +12,12 @@ import { trpc } from "trpc-core";
 import { countryCodes } from "contry-codes";
 import { Form, FormInput } from "form";
 import Head from "next/head";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
 import type { PlayerRegistration } from "modules/player-registration/models";
 import { playerRegistrationSchema } from "modules/player-registration/models";
+import { type AppRouterOutputs } from "trpc";
 
 const initialRegistration = () =>
     ({
@@ -211,17 +211,27 @@ const AvailableSpots = ({ limit, registeredPlayers }: { limit: number; registere
     );
 };
 
-export const Registration = () => {
-    const { raceId } = useParams<{ raceId: string }>()!;
+type RegistrationSystemStatus = AppRouterOutputs["playerRegistration"]["registrationStatus"];
+type Teams = AppRouterOutputs["playerRegistration"]["teams"];
+
+export const Registration = ({
+    raceId,
+    initialRegistrationSystemStatus,
+    initialTeams,
+}: {
+    raceId: number;
+    initialRegistrationSystemStatus: RegistrationSystemStatus;
+    initialTeams: Teams;
+}) => {
     const [registrationStatus, setRegistrationStatus] = useState<RegistrationStatuses>("pending");
     const t = useTranslations();
 
     const { data: registrationSystemStatus, refetch: refetchSystemStatus } = trpc.playerRegistration.registrationStatus.useQuery(
-        { raceId: Number(raceId) },
-        { enabled: !!raceId },
+        { raceId },
+        { initialData: initialRegistrationSystemStatus },
     );
 
-    const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
+    const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId }, { initialData: initialTeams });
 
     const registerMutation = trpc.playerRegistration.register.useMutation();
 

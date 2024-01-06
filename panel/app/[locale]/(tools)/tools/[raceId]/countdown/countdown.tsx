@@ -11,7 +11,6 @@ import { sort } from "@set/utils/dist/array";
 import { timeOnlyFormatTimeNoSec, getCountdownTime } from "@set/utils/dist/datetime";
 import { mdiChevronDoubleRight, mdiCog, mdiInformationOutline, mdiVolumeHigh, mdiVolumeOff } from "@mdi/js";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { useAtom } from "jotai";
 import type { TimerSettings } from "states/timer-states";
 import { timerSettingsAtom } from "states/timer-states";
@@ -131,18 +130,20 @@ const Players = ({ globalTime, clockState, players }: { globalTime: number; cloc
     );
 };
 
-export const RaceCountdown = () => {
-    const [globalTime, setGlobalTime] = useState<number>();
+type Players = AppRouterOutputs["player"]["startList"];
+
+export const RaceCountdown = ({ renderTime, raceId, initialPlayers }: { renderTime: number; raceId: number; initialPlayers: Players }) => {
+    const [globalTime, setGlobalTime] = useState<number>(renderTime);
     const [clockState, setClockState] = useAtom(timerSettingsAtom);
     const [beep, setBeep] = useState<BeepFunction | undefined>(undefined);
-    const { raceId } = useParams<{ raceId: string }>()!;
+
     const ntpMutation = trpc.ntp.sync.useMutation();
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
     const { data: players } = trpc.player.startList.useQuery(
-        { raceId: Number.parseInt(raceId) },
-        { enabled: !!raceId, select: data => sort(data, d => d.absoluteStartTime) },
+        { raceId },
+        { initialData: initialPlayers, select: data => sort(data, d => d.absoluteStartTime) },
     );
 
     const [nextPlayers, setNextPlayers] = useState<StartListPlayer[]>([]);
@@ -192,46 +193,42 @@ export const RaceCountdown = () => {
     return (
         <>
             <div className="relative h-full w-full select-none overflow-hidden bg-black text-white">
-                {globalTime === undefined || players === undefined ? (
-                    <div className="min-w-screen flex min-h-screen items-center justify-center font-semibold">Smarujemy łańcuch...</div>
-                ) : (
-                    <div className="flex h-full w-full flex-col items-center">
-                        <div className="flex w-full justify-between">
-                            <div className="flex items-center self-start">
-                                <div onClick={toggleMenu} className="cursor-pointer p-4">
-                                    <Icon size={1.5} path={mdiCog} />
-                                </div>
-                                <div onClick={toggleSoundEnabled} className="cursor-pointer p-4">
-                                    <Icon size={1.5} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
-                                </div>
-                                {systemTime && <Latency latency={systemTime.latency} />}
+                <div className="flex h-full w-full flex-col items-center">
+                    <div className="flex w-full justify-between">
+                        <div className="flex items-center self-start">
+                            <div onClick={toggleMenu} className="cursor-pointer p-4">
+                                <Icon size={1.5} path={mdiCog} />
                             </div>
-                            {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime} />}
-                        </div>
-
-                        <div className="flex w-full flex-grow overflow-y-hidden">
-                            <div className="flex flex-grow flex-col items-center">
-                                {clockState.countdown.enabled && (
-                                    <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
-                                )}
-                                {clockState.currentPlayer.enabled && nextPlayers.length > 0 && (
-                                    <div
-                                        className="transition-all"
-                                        style={{
-                                            fontSize: `${clockState.currentPlayer.size}px`,
-                                        }}>
-                                        <NextPlayer isNext={true} player={nextPlayers[0]} />
-                                    </div>
-                                )}
-                                {clockState.nextPlayers.enabled && <NextPlayers players={nextPlayers} clockState={clockState} />}
+                            <div onClick={toggleSoundEnabled} className="cursor-pointer p-4">
+                                <Icon size={1.5} path={beep !== undefined ? mdiVolumeHigh : mdiVolumeOff} />
                             </div>
-                            {clockState.players.enabled && <Players globalTime={globalTime} players={players} clockState={clockState} />}
+                            {systemTime && <Latency latency={systemTime.latency} />}
                         </div>
-                        {clockState.showSettings && (
-                            <ConfigMenu clockState={clockState} toggleMenu={toggleMenu} setClockState={setClockState} />
-                        )}
+                        {clockState.clock.enabled && <Clock fontSize={clockState.clock.size} time={globalTime} />}
                     </div>
-                )}
+
+                    <div className="flex w-full flex-grow overflow-y-hidden">
+                        <div className="flex flex-grow flex-col items-center">
+                            {clockState.countdown.enabled && (
+                                <Countdown beep={beep} fontSize={clockState.countdown.size} seconds={secondsToNextPlayer} />
+                            )}
+                            {clockState.currentPlayer.enabled && nextPlayers.length > 0 && (
+                                <div
+                                    className="transition-all"
+                                    style={{
+                                        fontSize: `${clockState.currentPlayer.size}px`,
+                                    }}>
+                                    <NextPlayer isNext={true} player={nextPlayers[0]} />
+                                </div>
+                            )}
+                            {clockState.nextPlayers.enabled && <NextPlayers players={nextPlayers} clockState={clockState} />}
+                        </div>
+                        {clockState.players.enabled && <Players globalTime={globalTime} players={players} clockState={clockState} />}
+                    </div>
+                    {clockState.showSettings && (
+                        <ConfigMenu clockState={clockState} toggleMenu={toggleMenu} setClockState={setClockState} />
+                    )}
+                </div>
             </div>
         </>
     );
