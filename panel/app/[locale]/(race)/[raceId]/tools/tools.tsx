@@ -4,7 +4,7 @@ import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "components/page-header";
-import { mdiFlagCheckered, mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10, mdiTimerOutline } from "@mdi/js";
+import { mdiClockFast, mdiClockOutline, mdiFlagCheckered, mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
 import { Button } from "components/button";
@@ -40,9 +40,9 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
             <Link
                 href={href}
                 target="_blank"
-                className="mx-5 flex h-32 w-48 shrink-0 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm">
-                <Icon path={icon} size={3} />
-                <span>{name}</span>
+                className="mx-5 flex h-32 w-48 shrink-0  flex-col items-center justify-center self-start overflow-clip rounded-md border border-gray-100 p-4 text-gray-700 shadow-sm hover:bg-gray-50">
+                <Icon path={icon} size={2} />
+                <span className="mt-2 text-sm font-medium">{name}</span>
             </Link>
             <div className="flex max-w-xl flex-col justify-between">
                 <div className="text-sm">{description}</div>
@@ -75,6 +75,13 @@ export const Tools = () => {
                         <div className="mb-4 mt-8">
                             <div className="flex flex-col">
                                 <ApplicationCard
+                                    href={buildApplicationPath(`/results/${raceId}`)}
+                                    qrFileName={`qr-results-${sanitizeFileName(race.name)}.png`}
+                                    name={t("pages.tools.applications.results.title")}
+                                    description={t("pages.tools.applications.results.description")}
+                                    icon={mdiFlagCheckered}
+                                />
+                                <ApplicationCard
                                     href={buildApplicationPath(`/tools/${raceId}/countdown`)}
                                     qrFileName={`qr-countdown-${sanitizeFileName(race.name)}.png`}
                                     name={t("pages.tools.applications.countdown.title")}
@@ -89,18 +96,18 @@ export const Tools = () => {
                                     icon={mdiPlaylistPlay}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/timer/${raceId}/stopwatch`)}
-                                    qrFileName={`qr-stopwatch-${sanitizeFileName(race.name)}.png`}
-                                    name={t("pages.tools.applications.stopwatch.title")}
-                                    description={t("pages.tools.applications.stopwatch.description")}
-                                    icon={mdiTimerOutline}
+                                    href={buildApplicationPath(`/tools/${raceId}/clock`)}
+                                    qrFileName={`qr-clock-${sanitizeFileName(race.name)}.png`}
+                                    name={t("pages.tools.applications.clock.title")}
+                                    description={t("pages.tools.applications.clock.description")}
+                                    icon={mdiClockOutline}
                                 />
                                 <ApplicationCard
-                                    href={buildApplicationPath(`/results/${raceId}`)}
-                                    qrFileName={`qr-results-${sanitizeFileName(race.name)}.png`}
-                                    name={t("pages.tools.applications.results.title")}
-                                    description={t("pages.tools.applications.results.description")}
-                                    icon={mdiFlagCheckered}
+                                    href={buildApplicationPath(`/tools/${raceId}/precise-clock`)}
+                                    qrFileName={`qr-precise-clock-${sanitizeFileName(race.name)}.png`}
+                                    name={t("pages.tools.applications.preciseClock.title")}
+                                    description={t("pages.tools.applications.preciseClock.description")}
+                                    icon={mdiClockFast}
                                 />
                             </div>
                         </div>

@@ -1288,7 +1288,7 @@
           "open": "Otwórz"
         },
         "countdown": {
-          "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekran. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekund do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
+          "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekranie. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekundy do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
           "title": "Odliczanie (do zera)"
         },
         "results": {
@@ -1299,9 +1299,13 @@
           "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa. Zoptymalizowana dla telefonów.",
           "title": "Lista startowa"
         },
-        "stopwatch": {
-          "description": "Stoper odliczający czas od startu zawodów. W przypadku startów indywidualnych jest to czas od startu pierwszego zawodnika, w przypadku startu masowego jest to czas od startu wszystkich zawodników.",
-          "title": "Stoper"
+        "clock": {
+          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie.",
+          "title": "Zegar"
+        },
+        "preciseClock": {
+          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie. Wyświetla aktualny czas z wyższą dokładością.",
+          "title": "Precyzyjny Zegar"
         }
       },
       "header": {
