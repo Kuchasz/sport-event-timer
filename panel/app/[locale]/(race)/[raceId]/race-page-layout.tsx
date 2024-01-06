@@ -40,7 +40,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                         <nav className="z-10 flex h-full w-60 shrink-0 flex-col overflow-hidden shadow-lg">
                             <Link href={"/" as Route}>
                                 <div className="mb-6 ml-3 flex cursor-pointer flex-col items-center px-4 py-4 text-center transition-opacity">
-                                    <img src="/assets/logo_ravelo_black.png"></img>
+                                    <img className="h-8" src="/assets/logo_ravelo_black.png"></img>
                                 </div>
                             </Link>
                             <ConciseRaceIcon r={race.result} />

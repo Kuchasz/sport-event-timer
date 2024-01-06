@@ -3,7 +3,7 @@
 import { PageHeader } from "components/page-header";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import type { AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../../../trpc-core";
+import { trpc } from "../../../../../trpc-core";
 
 type Account = AppRouterOutputs["user"]["accounts"][0];
 

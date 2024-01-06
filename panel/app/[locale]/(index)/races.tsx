@@ -30,7 +30,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
-import { trpc } from "../../../../trpc-core";
+import { trpc } from "../../../trpc-core";
 
 type Race = AppRouterOutputs["race"]["races"][0];
 

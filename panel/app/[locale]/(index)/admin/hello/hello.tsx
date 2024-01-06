@@ -1,6 +1,6 @@
 "use client";
 import { PageHeader } from "components/page-header";
-import { trpc } from "../../../../../../trpc-core";
+import { trpc } from "../../../../../trpc-core";
 
 export const Hello = () => {
     const { data } = trpc.classification.classifications.useQuery({ raceId: 0 });

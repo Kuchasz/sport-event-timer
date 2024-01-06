@@ -8,7 +8,7 @@ export const Status = async ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
     // const races = await db.race.findMany({ orderBy: { id: "desc" } })
 
     return (
-        <div className="min flex h-20 cursor-default items-center bg-gray-50 px-8 py-6">
+        <div className="flex cursor-default items-center bg-gray-50 px-8 py-4">
             {breadcrumbs}
             <div className="grow"></div>
             {session && (
