@@ -54,6 +54,11 @@
         "higherThanStartNumber": "End number must be higher than Start number"
       }
     },
+    "race": {
+      "registrationCutoff": {
+        "higherThanDate": "Regisration cutoff should become before race has started"
+      }
+    },
     "shared": {
       "email": "Invalid email address",
       "minLength": "Too short",
@@ -66,11 +71,6 @@
       },
       "shortName": {
         "length": "Short name should not be longer than 3 characters"
-      }
-    },
-    "race": {
-      "registrationCutoff": {
-        "higherThanDate": "Regisration cutoff should become before race has started"
       }
     }
   },
@@ -108,6 +108,364 @@
       "timingPoints": "Timing Points",
       "title": "Time measurement",
       "tools": "Tools"
+    }
+  },
+  "mutations": {
+    "action": {
+      "actionDispatched": {
+        "description": "The specified action has been successfully dispatched.",
+        "title": "Action Dispatched"
+      },
+      "dispatch": {
+        "description": "The specified action has been successfully dispatched.",
+        "title": "Action Dispatched"
+      },
+      "state": {
+        "description": "The state has been successfully confirmed.",
+        "title": "State Confirmed"
+      },
+      "wipe": {
+        "description": "All data has been successfully wiped.",
+        "title": "Data Wiped"
+      }
+    },
+    "apiKey": {
+      "addApiKey": {
+        "description": "A new API key has been successfully added.",
+        "title": "API Key Added"
+      },
+      "editApiKey": {
+        "description": "The specified API key has been successfully updated.",
+        "title": "API Key Updated"
+      },
+      "list": {
+        "description": "The list of API keys has been successfully listed.",
+        "title": "API Keys Listed"
+      },
+      "removeApiKey": {
+        "description": "The specified API key has been successfully removed.",
+        "title": "API Key Removed"
+      }
+    },
+    "bibNumber": {
+      "add": {
+        "description": "A new bib number has been successfully added to the event.",
+        "title": "Bib Number Added"
+      },
+      "addRange": {
+        "description": "A range of bib numbers has been successfully added to the event.",
+        "title": "Bib Number Range Added"
+      },
+      "availableNumbers": {
+        "description": "The list of available bib numbers has been successfully confirmed.",
+        "title": "Available Bib Numbers Confirmed"
+      },
+      "delete": {
+        "description": "The specified bib number has been successfully deleted.",
+        "title": "Bib Number Deleted"
+      },
+      "deleteAll": {
+        "description": "All bib numbers have been successfully deleted from the event.",
+        "title": "All Bib Numbers Deleted"
+      },
+      "nonDisqualifiedPlayerNumbers": {
+        "description": "The list of non-disqualified player bib numbers has been successfully confirmed.",
+        "title": "Non-Disqualified Player Bib Numbers Confirmed"
+      },
+      "numbers": {
+        "description": "The list of bib numbers has been successfully confirmed.",
+        "title": "Bib Numbers Confirmed"
+      },
+      "playersNumbers": {
+        "description": "The list of player bib numbers has been successfully confirmed.",
+        "title": "Player Bib Numbers Confirmed"
+      },
+      "update": {
+        "description": "The specified bib number has been successfully updated.",
+        "title": "Bib Number Updated"
+      }
+    },
+    "classification": {
+      "add": {
+        "description": "A new classification or category has been successfully added to the event.",
+        "title": "Classification/Category Added"
+      },
+      "addCategory": {
+        "description": "A new category has been successfully added to the event.",
+        "title": "Category Added"
+      },
+      "categories": {
+        "description": "Event categories have been successfully confirmed.",
+        "title": "Categories Confirmed"
+      },
+      "classifications": {
+        "description": "Event classifications have been successfully confirmed.",
+        "title": "Classifications Confirmed"
+      },
+      "removeCategory": {
+        "description": "The specified category has been successfully removed from the event.",
+        "title": "Category Removed"
+      },
+      "update": {
+        "description": "Event details have been successfully updated.",
+        "title": "Event Updated"
+      },
+      "updateCategory": {
+        "description": "The details of the specified category have been successfully updated.",
+        "title": "Category Updated"
+      }
+    },
+    "disqualification": {
+      "allDisqualifications": {
+        "description": "All disqualifications have been successfully confirmed.",
+        "title": "All Disqualifications Confirmed"
+      },
+      "disqualifications": {
+        "description": "The list of disqualifications has been successfully confirmed.",
+        "title": "Disqualifications Confirmed"
+      },
+      "disqualify": {
+        "description": "The specified disqualification has been successfully confirmed.",
+        "title": "Disqualification Confirmed"
+      },
+      "revert": {
+        "description": "The specified disqualification has been successfully reverted.",
+        "title": "Disqualification Reverted"
+      },
+      "update": {
+        "description": "The specified disqualification has been successfully updated.",
+        "title": "Disqualification Updated"
+      }
+    },
+    "ntp": {
+      "sync": {
+        "description": "The synchronization with NTP server has been successfully confirmed.",
+        "title": "NTP Sync Confirmed"
+      }
+    },
+    "player": {
+      "delete": {
+        "description": "The specified player has been successfully deleted from the event.",
+        "title": "Player Deleted"
+      },
+      "edit": {
+        "description": "Details of the specified player have been successfully updated.",
+        "title": "Player Details Updated"
+      },
+      "lastAvailableBibNumber": {
+        "description": "The last available bib number has been successfully confirmed.",
+        "title": "Last Available Bib Number Confirmed"
+      },
+      "lastAvailableStartTime": {
+        "description": "The last available start time has been successfully confirmed.",
+        "title": "Last Available Start Time Confirmed"
+      },
+      "players": {
+        "description": "The list of players has been successfully confirmed.",
+        "title": "Players Confirmed"
+      },
+      "promoteRegistration": {
+        "description": "The promotion of player registration has been successfully confirmed.",
+        "title": "Registration Promotion Confirmed"
+      },
+      "startList": {
+        "description": "The start list has been successfully confirmed.",
+        "title": "Start List Confirmed"
+      },
+      "stopwatchPlayers": {
+        "description": "The list of stopwatch players has been successfully confirmed.",
+        "title": "Stopwatch Players Confirmed"
+      },
+      "totalPlayers": {
+        "description": "The total number of players has been successfully confirmed.",
+        "title": "Total Players Confirmed"
+      }
+    },
+    "playerRegistration": {
+      "add": {
+        "description": "A new registration has been successfully added.",
+        "title": "Registration Added"
+      },
+      "delete": {
+        "description": "The specified registration has been successfully deleted.",
+        "title": "Registration Deleted"
+      },
+      "edit": {
+        "description": "Details of the specified registration have been successfully updated.",
+        "title": "Registration Details Updated"
+      },
+      "register": {
+        "description": "The registration has been successfully confirmed.",
+        "title": "Registration Confirmed"
+      },
+      "registrations": {
+        "description": "The list of registrations has been successfully confirmed.",
+        "title": "Registrations Confirmed"
+      },
+      "registrationStatus": {
+        "description": "The registration status has been successfully confirmed.",
+        "title": "Registration Status Confirmed"
+      },
+      "setPaymentStatus": {
+        "description": "The payment status has been successfully set.",
+        "title": "Payment Status Set"
+      },
+      "teams": {
+        "description": "The list of teams has been successfully confirmed.",
+        "title": "Teams Confirmed"
+      },
+      "totalRegistrations": {
+        "description": "The total number of registrations has been successfully confirmed.",
+        "title": "Total Registrations Confirmed"
+      }
+    },
+    "race": {
+      "add": {
+        "description": "A new race has been successfully added to the event.",
+        "title": "Race Added"
+      },
+      "basicInfo": {
+        "description": "Basic race information has been successfully confirmed.",
+        "title": "Basic Information Confirmed"
+      },
+      "delete": {
+        "description": "The specified race has been successfully deleted from the event.",
+        "title": "Race Deleted"
+      },
+      "myRaces": {
+        "description": "The list of your races has been successfully confirmed.",
+        "title": "My Races Confirmed"
+      },
+      "race": {
+        "description": "Details of the specified race have been successfully confirmed.",
+        "title": "Race Details Confirmed"
+      },
+      "raceRaport": {
+        "description": "The race report has been successfully confirmed.",
+        "title": "Race Report Confirmed"
+      },
+      "races": {
+        "description": "The list of all races in the event has been successfully confirmed.",
+        "title": "List of Races Confirmed"
+      },
+      "raport": {
+        "description": "The race report has been successfully confirmed.",
+        "title": "Race Report Confirmed"
+      },
+      "setRegistrationStatus": {
+        "description": "The registration status has been successfully set.",
+        "title": "Registration Status Set"
+      },
+      "update": {
+        "description": "Details of the specified race have been successfully updated.",
+        "title": "Race Updated"
+      }
+    },
+    "result": {
+      "results": {
+        "description": "Event results have been successfully confirmed.",
+        "title": "Results Confirmed"
+      }
+    },
+    "splitTime": {
+      "revert": {
+        "description": "The specified split time has been successfully reverted.",
+        "title": "Split Time Reverted"
+      },
+      "splitTimes": {
+        "description": "The list of split times has been successfully confirmed.",
+        "title": "Split Times Confirmed"
+      },
+      "update": {
+        "description": "The specified split time has been successfully updated.",
+        "title": "Split Time Updated"
+      }
+    },
+    "timePenalty": {
+      "allPenalties": {
+        "description": "All penalties have been successfully confirmed.",
+        "title": "All Penalties Confirmed"
+      },
+      "applyPenalty": {
+        "description": "The specified penalty has been successfully applied.",
+        "title": "Penalty Applied"
+      },
+      "penalties": {
+        "description": "The list of penalties has been successfully confirmed.",
+        "title": "Penalties Confirmed"
+      },
+      "playerPenalties": {
+        "description": "The list of player penalties has been successfully confirmed.",
+        "title": "Player Penalties Confirmed"
+      },
+      "revert": {
+        "description": "The specified penalty has been successfully reverted.",
+        "title": "Penalty Reverted"
+      },
+      "update": {
+        "description": "The specified penalty has been successfully updated.",
+        "title": "Penalty Updated"
+      }
+    },
+    "timingPoint": {
+      "add": {
+        "description": "A new timing point has been successfully added.",
+        "title": "Timing Point Added"
+      },
+      "addTimingPointAccessUrl": {
+        "description": "A new access URL for the timing point has been successfully added.",
+        "title": "Access URL Added"
+      },
+      "delete": {
+        "description": "The specified timing point has been successfully deleted.",
+        "title": "Timing Point Deleted"
+      },
+      "deleteTimingPointAccessUrl": {
+        "description": "The specified access URL for the timing point has been successfully deleted.",
+        "title": "Access URL Deleted"
+      },
+      "editTimingPointAccessUrl": {
+        "description": "The access URL for the timing point has been successfully updated.",
+        "title": "Access URL Updated"
+      },
+      "timingPoint": {
+        "description": "Details of the specified timing point have been successfully confirmed.",
+        "title": "Timing Point Details Confirmed"
+      },
+      "timingPointAccessUrls": {
+        "description": "The list of access URLs for the timing point has been successfully confirmed.",
+        "title": "Access URLs Confirmed"
+      },
+      "timingPoints": {
+        "description": "The list of timing points has been successfully confirmed.",
+        "title": "Timing Points Confirmed"
+      },
+      "timingPointsOrder": {
+        "description": "The order of timing points has been successfully confirmed.",
+        "title": "Timing Points Order Confirmed"
+      },
+      "update": {
+        "description": "The specified timing point has been successfully updated.",
+        "title": "Timing Point Updated"
+      }
+    },
+    "user": {
+      "accounts": {
+        "description": "The list of user accounts has been successfully confirmed.",
+        "title": "User Accounts Confirmed"
+      },
+      "login": {
+        "description": "The user has been successfully logged in.",
+        "title": "User Logged In"
+      },
+      "logout": {
+        "description": "The user has been successfully logged out.",
+        "title": "User Logged Out"
+      },
+      "register": {
+        "description": "A new user has been successfully registered.",
+        "title": "User Registered"
+      }
     }
   },
   "pages": {
@@ -609,6 +967,10 @@
           "label": "Players limit",
           "placeholder": "Enter limit of players"
         },
+        "registrationCutoff": {
+          "label": "Registration cutoff",
+          "placeholder": "Date of the registration cutoff"
+        },
         "registrationEnabled": {
           "label": "Registration enabled"
         },
@@ -626,10 +988,6 @@
         "websiteUrl": {
           "label": "Official website",
           "placeholder": "Enter official website url"
-        },
-        "registrationCutoff": {
-          "label": "Registration cutoff",
-          "placeholder": "Date of the registration cutoff"
         }
       },
       "grid": {
@@ -964,9 +1322,9 @@
     },
     "playerRegistration": {
       "errors": {
-        "registrationLimitReached": "Maximum number of registrations reached.",
         "registrationCutoff": "Registration cutoff has passed.",
         "registrationDisabled": "Registration for this race is disabled.",
+        "registrationLimitReached": "Maximum number of registrations reached.",
         "registrationPromotedToPlayer": "Registration is promoted to player. You must delete the Player first."
       }
     }
@@ -1046,8 +1404,8 @@
     "status": {
       "availableSpots": "Available spots",
       "closed": "Registration is closed.",
-      "noSpotsLeft": "No available spots. Registration is closed.",
-      "cutoffPassed": "Registration cutoff has passed"
+      "cutoffPassed": "Registration cutoff has passed",
+      "noSpotsLeft": "No available spots. Registration is closed."
     }
   },
   "results": {
@@ -1367,15 +1725,24 @@
       "disabled": "Disabled",
       "enabled": "Enabled"
     },
-    "unauthorized": "Unauthorized"
+    "unauthorized": "Unauthorized",
+    "errors": {
+      "notFound": {
+        "code": "Error 404",
+        "title": "Page not found",
+        "description": "Sorry, the page you are looking for cannot be found"
+      },
+      "goBack": "Go back",
+      "goHome": "Back to start"
+    }
   },
   "startList": {
+    "empty": "Start list is empty",
     "headerStartTime": "Start",
     "nextPlayer": "Next player",
     "noPlayersLeft": "No pending players left",
-    "startTime": "Starts at",
     "startsIn": "time to start",
-    "empty": "Start list is empty"
+    "startTime": "Starts at"
   },
   "timeMeasurement": {
     "penalties": {
@@ -1537,364 +1904,6 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
-      }
-    }
-  },
-  "mutations": {
-    "result": {
-      "results": {
-        "title": "Results Confirmed",
-        "description": "Event results have been successfully confirmed."
-      }
-    },
-    "classification": {
-      "classifications": {
-        "title": "Classifications Confirmed",
-        "description": "Event classifications have been successfully confirmed."
-      },
-      "categories": {
-        "title": "Categories Confirmed",
-        "description": "Event categories have been successfully confirmed."
-      },
-      "addCategory": {
-        "title": "Category Added",
-        "description": "A new category has been successfully added to the event."
-      },
-      "removeCategory": {
-        "title": "Category Removed",
-        "description": "The specified category has been successfully removed from the event."
-      },
-      "updateCategory": {
-        "title": "Category Updated",
-        "description": "The details of the specified category have been successfully updated."
-      },
-      "update": {
-        "title": "Event Updated",
-        "description": "Event details have been successfully updated."
-      },
-      "add": {
-        "title": "Classification/Category Added",
-        "description": "A new classification or category has been successfully added to the event."
-      }
-    },
-    "race": {
-      "basicInfo": {
-        "title": "Basic Information Confirmed",
-        "description": "Basic race information has been successfully confirmed."
-      },
-      "update": {
-        "title": "Race Updated",
-        "description": "Details of the specified race have been successfully updated."
-      },
-      "add": {
-        "title": "Race Added",
-        "description": "A new race has been successfully added to the event."
-      },
-      "race": {
-        "title": "Race Details Confirmed",
-        "description": "Details of the specified race have been successfully confirmed."
-      },
-      "delete": {
-        "title": "Race Deleted",
-        "description": "The specified race has been successfully deleted from the event."
-      },
-      "races": {
-        "title": "List of Races Confirmed",
-        "description": "The list of all races in the event has been successfully confirmed."
-      },
-      "raport": {
-        "title": "Race Report Confirmed",
-        "description": "The race report has been successfully confirmed."
-      },
-      "myRaces": {
-        "title": "My Races Confirmed",
-        "description": "The list of your races has been successfully confirmed."
-      },
-      "raceRaport": {
-        "title": "Race Report Confirmed",
-        "description": "The race report has been successfully confirmed."
-      },
-      "setRegistrationStatus": {
-        "title": "Registration Status Set",
-        "description": "The registration status has been successfully set."
-      }
-    },
-    "bibNumber": {
-      "numbers": {
-        "title": "Bib Numbers Confirmed",
-        "description": "The list of bib numbers has been successfully confirmed."
-      },
-      "update": {
-        "title": "Bib Number Updated",
-        "description": "The specified bib number has been successfully updated."
-      },
-      "add": {
-        "title": "Bib Number Added",
-        "description": "A new bib number has been successfully added to the event."
-      },
-      "delete": {
-        "title": "Bib Number Deleted",
-        "description": "The specified bib number has been successfully deleted."
-      },
-      "playersNumbers": {
-        "title": "Player Bib Numbers Confirmed",
-        "description": "The list of player bib numbers has been successfully confirmed."
-      },
-      "nonDisqualifiedPlayerNumbers": {
-        "title": "Non-Disqualified Player Bib Numbers Confirmed",
-        "description": "The list of non-disqualified player bib numbers has been successfully confirmed."
-      },
-      "availableNumbers": {
-        "title": "Available Bib Numbers Confirmed",
-        "description": "The list of available bib numbers has been successfully confirmed."
-      },
-      "deleteAll": {
-        "title": "All Bib Numbers Deleted",
-        "description": "All bib numbers have been successfully deleted from the event."
-      },
-      "addRange": {
-        "title": "Bib Number Range Added",
-        "description": "A range of bib numbers has been successfully added to the event."
-      }
-    },
-    "player": {
-      "players": {
-        "title": "Players Confirmed",
-        "description": "The list of players has been successfully confirmed."
-      },
-      "delete": {
-        "title": "Player Deleted",
-        "description": "The specified player has been successfully deleted from the event."
-      },
-      "lastAvailableStartTime": {
-        "title": "Last Available Start Time Confirmed",
-        "description": "The last available start time has been successfully confirmed."
-      },
-      "lastAvailableBibNumber": {
-        "title": "Last Available Bib Number Confirmed",
-        "description": "The last available bib number has been successfully confirmed."
-      },
-      "stopwatchPlayers": {
-        "title": "Stopwatch Players Confirmed",
-        "description": "The list of stopwatch players has been successfully confirmed."
-      },
-      "startList": {
-        "title": "Start List Confirmed",
-        "description": "The start list has been successfully confirmed."
-      },
-      "promoteRegistration": {
-        "title": "Registration Promotion Confirmed",
-        "description": "The promotion of player registration has been successfully confirmed."
-      },
-      "edit": {
-        "title": "Player Details Updated",
-        "description": "Details of the specified player have been successfully updated."
-      },
-      "totalPlayers": {
-        "title": "Total Players Confirmed",
-        "description": "The total number of players has been successfully confirmed."
-      }
-    },
-    "splitTime": {
-      "splitTimes": {
-        "title": "Split Times Confirmed",
-        "description": "The list of split times has been successfully confirmed."
-      },
-      "update": {
-        "title": "Split Time Updated",
-        "description": "The specified split time has been successfully updated."
-      },
-      "revert": {
-        "title": "Split Time Reverted",
-        "description": "The specified split time has been successfully reverted."
-      }
-    },
-    "playerRegistration": {
-      "registrations": {
-        "title": "Registrations Confirmed",
-        "description": "The list of registrations has been successfully confirmed."
-      },
-      "add": {
-        "title": "Registration Added",
-        "description": "A new registration has been successfully added."
-      },
-      "delete": {
-        "title": "Registration Deleted",
-        "description": "The specified registration has been successfully deleted."
-      },
-      "edit": {
-        "title": "Registration Details Updated",
-        "description": "Details of the specified registration have been successfully updated."
-      },
-      "teams": {
-        "title": "Teams Confirmed",
-        "description": "The list of teams has been successfully confirmed."
-      },
-      "registrationStatus": {
-        "title": "Registration Status Confirmed",
-        "description": "The registration status has been successfully confirmed."
-      },
-      "register": {
-        "title": "Registration Confirmed",
-        "description": "The registration has been successfully confirmed."
-      },
-      "setPaymentStatus": {
-        "title": "Payment Status Set",
-        "description": "The payment status has been successfully set."
-      },
-      "totalRegistrations": {
-        "title": "Total Registrations Confirmed",
-        "description": "The total number of registrations has been successfully confirmed."
-      }
-    },
-    "apiKey": {
-      "list": {
-        "title": "API Keys Listed",
-        "description": "The list of API keys has been successfully listed."
-      },
-      "addApiKey": {
-        "title": "API Key Added",
-        "description": "A new API key has been successfully added."
-      },
-      "editApiKey": {
-        "title": "API Key Updated",
-        "description": "The specified API key has been successfully updated."
-      },
-      "removeApiKey": {
-        "title": "API Key Removed",
-        "description": "The specified API key has been successfully removed."
-      }
-    },
-    "user": {
-      "accounts": {
-        "title": "User Accounts Confirmed",
-        "description": "The list of user accounts has been successfully confirmed."
-      },
-      "register": {
-        "title": "User Registered",
-        "description": "A new user has been successfully registered."
-      },
-      "login": {
-        "title": "User Logged In",
-        "description": "The user has been successfully logged in."
-      },
-      "logout": {
-        "title": "User Logged Out",
-        "description": "The user has been successfully logged out."
-      }
-    },
-    "timingPoint": {
-      "timingPoints": {
-        "title": "Timing Points Confirmed",
-        "description": "The list of timing points has been successfully confirmed."
-      },
-      "update": {
-        "title": "Timing Point Updated",
-        "description": "The specified timing point has been successfully updated."
-      },
-      "add": {
-        "title": "Timing Point Added",
-        "description": "A new timing point has been successfully added."
-      },
-      "delete": {
-        "title": "Timing Point Deleted",
-        "description": "The specified timing point has been successfully deleted."
-      },
-      "timingPoint": {
-        "title": "Timing Point Details Confirmed",
-        "description": "Details of the specified timing point have been successfully confirmed."
-      },
-      "timingPointsOrder": {
-        "title": "Timing Points Order Confirmed",
-        "description": "The order of timing points has been successfully confirmed."
-      },
-      "addTimingPointAccessUrl": {
-        "title": "Access URL Added",
-        "description": "A new access URL for the timing point has been successfully added."
-      },
-      "editTimingPointAccessUrl": {
-        "title": "Access URL Updated",
-        "description": "The access URL for the timing point has been successfully updated."
-      },
-      "timingPointAccessUrls": {
-        "title": "Access URLs Confirmed",
-        "description": "The list of access URLs for the timing point has been successfully confirmed."
-      },
-      "deleteTimingPointAccessUrl": {
-        "title": "Access URL Deleted",
-        "description": "The specified access URL for the timing point has been successfully deleted."
-      }
-    },
-    "action": {
-      "dispatch": {
-        "title": "Action Dispatched",
-        "description": "The specified action has been successfully dispatched."
-      },
-      "state": {
-        "title": "State Confirmed",
-        "description": "The state has been successfully confirmed."
-      },
-      "actionDispatched": {
-        "title": "Action Dispatched",
-        "description": "The specified action has been successfully dispatched."
-      },
-      "wipe": {
-        "title": "Data Wiped",
-        "description": "All data has been successfully wiped."
-      }
-    },
-    "ntp": {
-      "sync": {
-        "title": "NTP Sync Confirmed",
-        "description": "The synchronization with NTP server has been successfully confirmed."
-      }
-    },
-    "disqualification": {
-      "allDisqualifications": {
-        "title": "All Disqualifications Confirmed",
-        "description": "All disqualifications have been successfully confirmed."
-      },
-      "update": {
-        "title": "Disqualification Updated",
-        "description": "The specified disqualification has been successfully updated."
-      },
-      "revert": {
-        "title": "Disqualification Reverted",
-        "description": "The specified disqualification has been successfully reverted."
-      },
-      "disqualifications": {
-        "title": "Disqualifications Confirmed",
-        "description": "The list of disqualifications has been successfully confirmed."
-      },
-      "disqualify": {
-        "title": "Disqualification Confirmed",
-        "description": "The specified disqualification has been successfully confirmed."
-      }
-    },
-    "timePenalty": {
-      "allPenalties": {
-        "title": "All Penalties Confirmed",
-        "description": "All penalties have been successfully confirmed."
-      },
-      "update": {
-        "title": "Penalty Updated",
-        "description": "The specified penalty has been successfully updated."
-      },
-      "revert": {
-        "title": "Penalty Reverted",
-        "description": "The specified penalty has been successfully reverted."
-      },
-      "penalties": {
-        "title": "Penalties Confirmed",
-        "description": "The list of penalties has been successfully confirmed."
-      },
-      "playerPenalties": {
-        "title": "Player Penalties Confirmed",
-        "description": "The list of player penalties has been successfully confirmed."
-      },
-      "applyPenalty": {
-        "title": "Penalty Applied",
-        "description": "The specified penalty has been successfully applied."
       }
     }
   }
