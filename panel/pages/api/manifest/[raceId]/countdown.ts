@@ -31,7 +31,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
         theme_color: "#000000",
         background_color: "#000000",
         display: "standalone",
-        start_url: `/tools/${raceId}/timer`,
+        start_url: `/tools/${raceId}/countdown`,
     };
 
     res.status(200).json(manifest);
