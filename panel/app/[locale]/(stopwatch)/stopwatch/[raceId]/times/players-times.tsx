@@ -2,7 +2,7 @@
 
 import { ActionButton, PrimaryActionButton } from "../../../../../../components/stopwatch/action-button";
 import { Icon } from "@mdi/react";
-import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiPlus, mdiWrenchOutline } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiClockPlusOutline, mdiDeleteOutline, mdiPlus, mdiWrenchOutline } from "@mdi/js";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
@@ -185,8 +185,9 @@ export const PlayersTimes = () => {
             <div className="my-2 flex flex-col px-2">
                 <button
                     onPointerDown={onAddTime}
-                    className="active:animate-pushInLittle flex w-full justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center outline-none">
-                    <Icon color="white" size={5} path={mdiPlus} />
+                    className="active:animate-pushInLittle flex w-full flex-col items-center justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center text-white outline-none">
+                    <Icon size={3} path={mdiClockPlusOutline} />
+                    <span className="mt-2 font-semibold">Register time stamp</span>
                 </button>
             </div>
             <div ref={parentRef} className="h-full flex-grow overflow-x-hidden px-2">
