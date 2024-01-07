@@ -9,6 +9,8 @@ import { type Locales, locales } from "i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { Task } from "@set/utils/dist/task";
 import { trpcRSC } from "trpc-core-rsc";
+import { SessionProvider } from "auth/provider";
+import { TrpcProvider } from "providers";
 
 export default async function ({ children, params }: { children: ReactNode; params: { locale: string; raceId: string } }) {
     await authenticate();
@@ -36,7 +38,11 @@ export default async function ({ children, params }: { children: ReactNode; para
         <html className="h-full w-full" lang="en">
             <body className="flex h-full w-full flex-col text-zinc-900">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
-                    <StopwatchLayout session={session!}>{children}</StopwatchLayout>
+                    <SessionProvider session={session!}>
+                        <TrpcProvider toastConfirmations={false} enableSubscriptions={true}>
+                            <StopwatchLayout>{children}</StopwatchLayout>
+                        </TrpcProvider>
+                    </SessionProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

@@ -1274,6 +1274,10 @@
         "shortName": {
           "label": "Nazwa skrócona",
           "placeholder": "Wpisz nazwę skróconą"
+        },
+        "laps": {
+          "placeholder": "Podaj ilość okrążeń",
+          "label": "Ilość okrążeń"
         }
       },
       "header": {

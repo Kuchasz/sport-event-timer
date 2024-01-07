@@ -1,15 +1,15 @@
 "use client";
 
-import { trpc } from "../../trpc-core";
+import { mdiAutorenew, mdiCloudOffOutline, mdiCogOutline, mdiWeatherCloudyAlert } from "@mdi/js";
 import { Icon } from "@mdi/react";
-import { mdiAutorenew, mdiCloudOffOutline, mdiCog, mdiWeatherCloudyAlert } from "@mdi/js";
-import { TimingPointIcon } from "./timing-point-icon";
-import { useAtom } from "jotai";
-import Link from "next/link";
-import { connectionStateAtom, timingPointIdAtom, timeOffsetAtom } from "states/stopwatch-states";
 import classNames from "classnames";
 import type { ConnectionState } from "connection";
+import { useAtom } from "jotai";
+import Link from "next/link";
+import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom } from "states/stopwatch-states";
+import { trpc } from "../../trpc-core";
 import { Timer } from "./timer";
+import { TimingPointIcon } from "./timing-point-icon";
 
 const SelectedTimingPoint = ({
     timingPoints,
@@ -20,17 +20,15 @@ const SelectedTimingPoint = ({
     timingPointId: number;
     timingPointName: string | undefined;
 }) => (
-    <span className="flex cursor-pointer rounded-xl bg-zinc-800 px-4 py-1 text-zinc-300 transition-colors hover:bg-zinc-700">
+    <span className="flex cursor-pointer items-center rounded-xl px-2 text-zinc-300 transition-colors hover:bg-zinc-700">
         <TimingPointIcon isFirst={timingPoints[0] === timingPointId} isLast={timingPoints[timingPoints.length - 1] === timingPointId} />
-
         <span className="ml-2">{timingPointName ?? "SELECT TIMING POINT"}</span>
     </span>
 );
 
-const WarningMessage = ({ icon, contents }: { icon?: string; contents: string }) => (
-    <span className="flex cursor-pointer items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 text-white">
-        {icon && <Icon className="mr-1" path={icon} size={0.7} />}
-        <span>{contents}</span>
+const ConfigCog = () => (
+    <span className="flex cursor-pointer items-center rounded-xl bg-zinc-800 px-2 py-1 text-zinc-300 transition-colors hover:bg-zinc-700">
+        <Icon size={1} path={mdiCogOutline} />
     </span>
 );
 
@@ -92,6 +90,8 @@ export const Status = ({ raceId }: { raceId: string }) => {
     const timingPointName = allTimingPoints.find(tk => tk.id === timingPointId)?.name;
     const sortedTimingPoints = timingPointOrder;
 
+    const timingPointMissing = !timingPointId || timingPointOrder.includes(timingPointId);
+
     return (
         <div>
             <StatusBar
@@ -118,24 +118,19 @@ export const Status = ({ raceId }: { raceId: string }) => {
             />
             <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between rounded-b-lg bg-black px-4 py-2 font-semibold text-white">
                 <Timer offset={offset} />
-                <Link href={`/stopwatch/${raceId}/config`}>
-                    <span>
-                        {sortedTimingPoints.length === 0 ? (
-                            <WarningMessage contents="NO TIMING POINTS" />
-                        ) : timingPointId === undefined ||
-                          timingPointId === null ||
-                          timingPointId === 0 ||
-                          !sortedTimingPoints.includes(timingPointId) ? (
-                            <WarningMessage icon={mdiCog} contents="CONFIG" />
-                        ) : (
-                            <SelectedTimingPoint
-                                timingPointId={timingPointId}
-                                timingPointName={timingPointName}
-                                timingPoints={sortedTimingPoints}
-                            />
-                        )}
-                    </span>
-                </Link>
+
+                <span className="flex">
+                    {!timingPointMissing && (
+                        <SelectedTimingPoint
+                            timingPointId={timingPointId}
+                            timingPointName={timingPointName}
+                            timingPoints={sortedTimingPoints}
+                        />
+                    )}
+                    <Link href={`/stopwatch/${raceId}/config`}>
+                        <ConfigCog />
+                    </Link>
+                </span>
             </div>
         </div>
     );
