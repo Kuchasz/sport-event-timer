@@ -42,6 +42,6 @@ export default async function (props: { children: ReactNode; params: { locale: s
 export function generateMetadata({ params }: { params: { locale: string; raceId: number } }): Metadata {
     return {
         title: "Timer",
-        manifest: `/api/manifest/${params.raceId}/timer`,
+        manifest: `/api/manifest/${params.raceId}/countdown`,
     };
 }
