@@ -1,11 +1,8 @@
 import { Icon } from "@mdi/react";
 import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
-// import { connectionStateAtom, StopWatchMode } from "../../states/stopwatch-states";
 import type { StopWatchMode } from "../../states/stopwatch-states";
-// import { ConnectionState } from "@set/timer/dist/model";
 import classNames from "classnames";
-// import { useAtom } from "jotai";
 
 type PathTypes = StopWatchMode | "config" | "history";
 type Paths = `${string}/${PathTypes}`;
@@ -44,29 +41,12 @@ export const BottomMenu = ({
     timingPointMissing: boolean;
 }) => {
     const mode = pathname as Paths;
-    // const [connectionState, setConnectionState] = useAtom(connectionStateAtom);
 
     return (
         <div
-            className={classNames("flex select-none justify-around rounded-t-lg bg-white py-3 transition-transform ease-out", {
+            className={classNames("flex select-none justify-around rounded-t-xl bg-white py-3 transition-transform ease-out", {
                 ["translate-y-full"]: isOffline || timingPointMissing,
             })}>
-            {/* <button
-                className="absolute bg-orange-500 text-white font-bold px-4 shadow-md rounded-full py-1 -translate-y-24"
-                onClick={() => {
-                    if (connectionState === "connected") {
-                        setConnectionState("error");
-                    } else if (connectionState === "error") {
-                        setConnectionState("disconnected");
-                    } else if (connectionState === "disconnected") {
-                        setConnectionState("connecting");
-                    } else {
-                        setConnectionState("connected");
-                    }
-                }}
-            >
-                FAKE STATE
-            </button> */}
             <BottomMenuButton path={raceId + "/list"} text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/pad"} text="Pad" icon={mdiDialpad} chosenPath={mode} />
             <BottomMenuButton path={raceId + "/times"} text="Times" icon={mdiTimetable} chosenPath={mode} />

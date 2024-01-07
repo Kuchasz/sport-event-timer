@@ -102,7 +102,7 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
     const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const isOffline = connectionState !== "connected";
-    const timingPointMissing = !timingPointId || timingPointOrder.includes(timingPointId);
+    const timingPointMissing = !timingPointId || !timingPointOrder.includes(timingPointId);
 
     return (
         <ReduxStoreProvider store={store}>
