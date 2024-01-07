@@ -1274,6 +1274,10 @@
         "shortName": {
           "label": "Short name",
           "placeholder": "Enter short name"
+        },
+        "laps": {
+          "placeholder": "Enter number of laps",
+          "label": "Number of laps"
         }
       },
       "header": {

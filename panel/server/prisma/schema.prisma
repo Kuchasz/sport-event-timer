@@ -123,6 +123,7 @@ model TimingPoint {
     name                 String
     shortName            String
     description          String?
+    laps                 Int?
     race                 Race                   @relation(fields: [raceId], references: [id])
     raceId               Int
     splitTime            SplitTime[]
