@@ -1914,5 +1914,13 @@
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
       }
     }
+  },
+  "stopwatch": {
+    "config": {
+      "selectTimingPoint": {
+        "header": "Wybierz punkt pomiarowy",
+        "description": "Wybór punktu dla którego prowadzony będzie pomiar czasu."
+      }
+    }
   }
 }

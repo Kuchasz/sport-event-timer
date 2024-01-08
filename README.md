@@ -89,6 +89,7 @@ Application for making time measurements
 | 07/01/2023 | Ability to turn on/off autostart                                      | todo :date:                                |
 | 07/01/2023 | Stopwatch translations                                                | todo :date:                                |
 | 07/01/2023 | Proper PWA manifests for all tools                                    | todo :date:                                |
+| 07/01/2023 | Investigate and fix onmousedown issues in stopwatch                   | todo :date:                                |
 
 ## TODO
 
