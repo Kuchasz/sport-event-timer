@@ -1914,5 +1914,13 @@
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
       }
     }
+  },
+  "stopwatch": {
+    "config": {
+      "selectTimingPoint": {
+        "header": "Select timing point",
+        "description": "The selection of a point for which time measurement will be conducted."
+      }
+    }
   }
 }
