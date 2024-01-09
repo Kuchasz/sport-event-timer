@@ -40,16 +40,16 @@ export const Settings = () => {
         <div className="flex h-full w-full flex-col items-center">
             <div className="flex h-full w-full flex-grow flex-col p-4">
                 <div className="font-semibold">{t("stopwatch.settings.selectTimingPoint.header")}</div>
-                <div className="text-xs">{t("stopwatch.settings.selectTimingPoint.description")}</div>
+                <div className="mb-2 text-xs">{t("stopwatch.settings.selectTimingPoint.description")}</div>
                 {sortedTimingPoints.map((timingPoint, id) => (
                     <button
                         onClick={() => setTimingPointId(timingPoint.id)}
-                        className="relative my-2 flex w-full items-center px-3 py-2"
+                        className="relative my-2 flex w-full items-center rounded-lg bg-white px-5 py-3 shadow-sm"
                         key={timingPoint.id}>
                         <TimingPointIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />
                         <div className="mx-4 flex flex-grow flex-col items-start">
-                            <div className="font-semibold">{timingPoint.name}</div>
-                            <div className="text-xs opacity-75">{timingPoint.description}</div>
+                            <div className="">{timingPoint.name}</div>
+                            <div className="text-xs leading-none opacity-75">{timingPoint.description}</div>
                         </div>
                         <div className="flex h-6 w-6 items-center justify-center">
                             <div

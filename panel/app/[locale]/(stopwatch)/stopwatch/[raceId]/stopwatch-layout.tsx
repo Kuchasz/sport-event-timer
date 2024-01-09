@@ -108,7 +108,7 @@ export function StopwatchLayout({ children, title }: { children: ReactNode; titl
         <ReduxStoreProvider store={store}>
             <ExternalsExposer />
             <ServerConnectionHandler dispatch={store.dispatch} raceId={parseInt(raceId)} clientId={clientId}>
-                <div id="app-holder" className="flex h-full w-screen flex-col overflow-hidden bg-zinc-200 text-zinc-700">
+                <div id="app-holder" className="flex h-full w-screen flex-col overflow-hidden bg-zinc-100 text-zinc-700">
                     <Status raceId={raceId} />
                     {title}
                     <div id="module-holder" className="relative h-full flex-1 flex-col overflow-y-auto">
