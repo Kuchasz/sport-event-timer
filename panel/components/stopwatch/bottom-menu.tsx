@@ -46,7 +46,7 @@ export const BottomMenu = ({
 
     return (
         <div
-            className={classNames("flex select-none justify-around rounded-t-xl bg-white py-3 transition-transform ease-out", {
+            className={classNames("flex select-none justify-around bg-white py-3 transition-transform ease-out", {
                 ["translate-y-full"]: isOffline || timingPointMissing,
             })}>
             <BottomMenuButton
