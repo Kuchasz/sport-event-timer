@@ -1938,7 +1938,8 @@
     "list": {
       "title": {
         "text": "Lista zawodników"
-      }
+      },
+      "absent": "nieobecny"
     },
     "pad": {
       "title": {
@@ -1948,7 +1949,8 @@
     "times": {
       "title": {
         "text": "Zarejestrowane międzyczasy"
-      }
+      },
+      "registerSplitTime": "Zarejestruj międzyczas"
     },
     "tweak": {
       "title": {
@@ -1959,6 +1961,12 @@
       "title": {
         "text": "Ponownie przypisz międzyczas"
       }
+    },
+    "menuItems": {
+      "players": "Zawodnicy",
+      "pad": "Klawiatura",
+      "times": "Międzyczasy",
+      "history": "Historia"
     }
   }
 }

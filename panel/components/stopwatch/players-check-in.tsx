@@ -62,7 +62,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
 
     return (
         <div className="flex h-full flex-col">
-            <div className="mx-12 mt-2 flex h-3/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
+            <div className="mx-12 mt-2 flex h-2/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
                 {availablePlayers.map(p => (
                     <CheckInPlayer
                         key={p.bibNumber}

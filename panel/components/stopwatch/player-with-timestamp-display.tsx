@@ -3,6 +3,7 @@ import { formatNumber } from "@set/utils/dist/number";
 import type { Absence, Player, TimeStamp } from "@set/timer/dist/model";
 import classNames from "classnames";
 import { usePreviousValue } from "hooks";
+import { useTranslations } from "next-intl";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -18,6 +19,8 @@ export const PlayerWithTimeStampDisplay = ({
 }) => {
     const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
+
+    const t = useTranslations();
 
     return (
         <span className="flex h-12 grow items-center">
@@ -44,7 +47,9 @@ export const PlayerWithTimeStampDisplay = ({
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.absent == null,
                         ["max-h-8 opacity-100"]: playerWithTimeStamp.absent,
                     })}>
-                    <span>{playerWithTimeStamp.absent ? "ABSENT" : previousAbsentState ? "ABSENT" : null}</span>
+                    <span className="uppercase">
+                        {playerWithTimeStamp.absent ? t("stopwatch.list.absent") : previousAbsentState ? t("stopwatch.list.absent") : null}
+                    </span>
                 </div>
                 <div className="text-sm opacity-50">
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
