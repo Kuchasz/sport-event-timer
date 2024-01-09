@@ -14,9 +14,10 @@ type TypedPlayerProps = {
     playerNumber: string;
     bestGuess?: string;
     onPlayerCheckIn: (bibNumber: string) => void;
+    reset: () => void;
 };
 
-export const TypedPlayer = ({ onPlayerCheckIn, playerNumber, bestGuess }: TypedPlayerProps) => (
+export const TypedPlayer = ({ onPlayerCheckIn, reset, playerNumber, bestGuess }: TypedPlayerProps) => (
     <div className="flex h-16 items-center px-8 py-2">
         <div className={classNames({ ["invisible"]: playerNumber !== bestGuess })} onClick={() => onPlayerCheckIn(playerNumber)}>
             <Icon size={1} path={mdiPlus}></Icon>
@@ -25,7 +26,9 @@ export const TypedPlayer = ({ onPlayerCheckIn, playerNumber, bestGuess }: TypedP
             <div className="text-orange-500">{playerNumber}</div>
             <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
         </div>
-        <Icon className={classNames("opacity-60", { ["invisible"]: !bestGuess })} size={0.8} path={mdiClose}></Icon>
+        <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !bestGuess })}>
+            <Icon size={0.8} path={mdiClose}></Icon>
+        </div>
     </div>
 );
 
@@ -91,6 +94,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
                     onPlayerCheckIn(bibNumber);
                     setPlayerNumber("");
                 }}
+                reset={() => setPlayerNumber("")}
                 playerNumber={playerNumber}
                 bestGuess={availablePlayers[0]?.bibNumber?.toString()}
             />
