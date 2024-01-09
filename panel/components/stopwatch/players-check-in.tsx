@@ -37,12 +37,14 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ typeahead, player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className="flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400">
-        <div className={classNames("text-gray-500", { ["font-semibold text-orange-500"]: typeahead === player.bibNumber.toString() })}>
+        className={classNames("flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400", {
+            ["font-semibold text-orange-500"]: typeahead === player.bibNumber.toString(),
+        })}>
+        <div>
             {player.name} {player.lastName}
         </div>
         <div className="flex-grow"></div>
-        <div className="font-mono font-semibold">
+        <div className="">
             <span className="text-orange-500">{typeahead}</span>
             {player.bibNumber.toString().slice(typeahead.length)}
         </div>
