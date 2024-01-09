@@ -22,7 +22,6 @@ export const PlayerAssignTime = () => {
                 dispatch(assignTimeStamp({ bibNumber, id: parseInt(timeStampId) }));
                 back();
             }}
-            title="Assign time to player"
             timingPointId={timingPointId}
         />
     );

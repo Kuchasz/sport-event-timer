@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { trpc } from "trpc-core";
 import { useTranslations } from "next-intl";
 
-export const Config = () => {
+export const Settings = () => {
     const [timingPointId, chooseTimingPoint] = useAtom(timingPointIdAtom);
     const { raceId } = useParams<{ raceId: string }>()!;
 
@@ -38,9 +38,9 @@ export const Config = () => {
 
     return (
         <div className="flex h-full w-full flex-col items-center">
-            <div className="flex h-full w-full flex-grow flex-col justify-center px-4">
-                <div className="font-semibold">{t("stopwatch.config.selectTimingPoint.header")}</div>
-                <div className="text-xs">{t("stopwatch.config.selectTimingPoint.description")}</div>
+            <div className="flex h-full w-full flex-grow flex-col p-4">
+                <div className="font-semibold">{t("stopwatch.settings.selectTimingPoint.header")}</div>
+                <div className="text-xs">{t("stopwatch.settings.selectTimingPoint.description")}</div>
                 {sortedTimingPoints.map((timingPoint, id) => (
                     <button
                         onClick={() => setTimingPointId(timingPoint.id)}
@@ -63,11 +63,6 @@ export const Config = () => {
                                 />
                             </div>
                         </div>
-                        {/* <Icon
-                            className={classNames("transition-all", { ["ml-3"]: timingPoint.id === timingPointId })}
-                            size={timingPoint.id === timingPointId ? 1 : 0}
-                            path={mdiCheck}
-                        /> */}
                     </button>
                 ))}
             </div>

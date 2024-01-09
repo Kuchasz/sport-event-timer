@@ -58,7 +58,7 @@ declare namespace __next_route_internal_types__ {
         | `/auth/${SafeSlug<T>}`
         | `/stopwatch/${SafeSlug<T>}`
         | `/stopwatch/${SafeSlug<T>}/assign/${SafeSlug<T>}`
-        | `/stopwatch/${SafeSlug<T>}/config`
+        | `/stopwatch/${SafeSlug<T>}/settings`
         | `/stopwatch/${SafeSlug<T>}/history`
         | `/stopwatch/${SafeSlug<T>}/list`
         | `/stopwatch/${SafeSlug<T>}/pad`

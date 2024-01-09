@@ -1,7 +1,7 @@
 import { authenticate } from "auth";
-import { Config } from "./config";
+import { Settings } from "./settings";
 
 export default async function () {
     await authenticate();
-    return <Config />;
+    return <Settings />;
 }
