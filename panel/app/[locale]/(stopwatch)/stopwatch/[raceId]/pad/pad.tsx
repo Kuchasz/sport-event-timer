@@ -21,7 +21,7 @@ export const PlayersDialPad = () => {
             onPlayerCheckIn={bibNumber => {
                 dispatch(
                     add({
-                        bibNumber,
+                        bibNumber: parseInt(bibNumber),
                         timingPointId,
                         time: getCurrentTime(offset, race!.date),
                     }),

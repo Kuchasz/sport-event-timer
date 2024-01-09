@@ -1967,6 +1967,12 @@
       "pad": "Klawiatura",
       "times": "Międzyczasy",
       "history": "Historia"
+    },
+    "checkIn": {
+      "suggestion": {
+        "player": "Zawodnik",
+        "bibNumber": "Numer startowy"
+      }
     }
   }
 }

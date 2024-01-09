@@ -1967,6 +1967,12 @@
       "pad": "Keyboard",
       "times": "Split times",
       "history": "History"
+    },
+    "checkIn": {
+      "suggestion": {
+        "player": "Player",
+        "bibNumber": "Bib number"
+      }
     }
   }
 }

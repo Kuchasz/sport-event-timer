@@ -19,7 +19,7 @@ export const PlayerAssignTime = () => {
     return (
         <PlayersCheckIn
             onPlayerCheckIn={bibNumber => {
-                dispatch(assignTimeStamp({ bibNumber, id: parseInt(timeStampId) }));
+                dispatch(assignTimeStamp({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
                 back();
             }}
             timingPointId={timingPointId}
