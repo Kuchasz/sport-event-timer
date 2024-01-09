@@ -93,7 +93,7 @@ const ErrorPage = ({
     </div>
 );
 
-export function StopwatchLayout({ children }: { children: ReactNode }) {
+export function StopwatchLayout({ children, title }: { children: ReactNode; title: ReactNode }) {
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
     const { raceId } = useParams<{ raceId: string }>()!;
@@ -110,6 +110,7 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
             <ServerConnectionHandler dispatch={store.dispatch} raceId={parseInt(raceId)} clientId={clientId}>
                 <div id="app-holder" className="flex h-full w-screen flex-col overflow-hidden bg-zinc-200 text-zinc-700">
                     <Status raceId={raceId} />
+                    {title}
                     <div id="module-holder" className="relative h-full flex-1 flex-col overflow-y-auto">
                         {isOffline ? (
                             <ErrorPage
@@ -122,10 +123,10 @@ export function StopwatchLayout({ children }: { children: ReactNode }) {
                         ) : timingPointMissing && !pathname.includes("config") ? (
                             <ErrorPage
                                 icon={mdiCogOutline}
-                                title="Config required"
+                                title="Timing point required"
                                 anchorText="Choose timing point first"
                                 description="Stopwatch has to measure the time at a specific timing point. Choose a timing point in the configuration to make the measurements."
-                                anchorHref={`/stopwatch/${raceId}/config` as Route}
+                                anchorHref={`/stopwatch/${raceId}/settings` as Route}
                             />
                         ) : (
                             children

@@ -35,11 +35,10 @@ export const CheckInPlayer = ({ player, onPlayerCheckIn }: CheckInPlayerProps) =
 
 type PlayersDialPadProps = {
     onPlayerCheckIn: (bibNumber: number) => void;
-    title?: string;
     timingPointId?: number;
 };
 
-export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: PlayersDialPadProps) => {
+export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPadProps) => {
     const [playerNumber, setPlayerNumber] = useState("");
 
     const { raceId } = useParams<{ raceId: string }>()!;
@@ -63,7 +62,6 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, title, timingPointId }: Player
 
     return (
         <div className="flex h-full flex-col">
-            {title && <h1 className="py-4 text-center text-2xl">{title}</h1>}
             <div className="mx-12 mt-2 flex h-3/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
                 {availablePlayers.map(p => (
                     <CheckInPlayer

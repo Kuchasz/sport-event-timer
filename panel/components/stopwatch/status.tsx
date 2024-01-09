@@ -17,7 +17,7 @@ const SelectedTimingPoint = ({ timingPointName }: { timingPointName: string }) =
     </span>
 );
 
-const ConfigCog = () => (
+const SettingsCog = () => (
     <span className="flex cursor-pointer items-center rounded-xl bg-zinc-800 px-2 py-1 text-zinc-300 transition-colors hover:bg-zinc-700">
         <Icon size={1} path={mdiCogOutline} />
     </span>
@@ -106,14 +106,14 @@ export const Status = ({ raceId }: { raceId: string }) => {
                 text="OFF-LINE"
                 connectionState={connectionState}
             />
-            <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between rounded-b-xl bg-black px-4 py-2 font-semibold text-white">
+            <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between bg-black px-4 py-2 font-semibold text-white">
                 <Timer offset={offset} />
 
                 <span className="flex w-full">
                     {!timingPointMissing && <SelectedTimingPoint timingPointName={timingPoint.name} />}
                     <div className="flex-grow"></div>
-                    <Link href={`/stopwatch/${raceId}/config`}>
-                        <ConfigCog />
+                    <Link href={`/stopwatch/${raceId}/settings`}>
+                        <SettingsCog />
                     </Link>
                 </span>
             </div>

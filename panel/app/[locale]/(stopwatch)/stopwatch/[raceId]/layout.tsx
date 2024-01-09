@@ -12,7 +12,15 @@ import { trpcRSC } from "trpc-core-rsc";
 import { SessionProvider } from "auth/provider";
 import { TrpcProvider } from "providers";
 
-export default async function ({ children, params }: { children: ReactNode; params: { locale: string; raceId: string } }) {
+export default async function ({
+    children,
+    params,
+    title,
+}: {
+    children: ReactNode;
+    params: { locale: string; raceId: string };
+    title: ReactNode;
+}) {
     await authenticate();
     const isValidLocale = locales.includes(params.locale as Locales);
     const session = await getServerSession();
@@ -40,7 +48,7 @@ export default async function ({ children, params }: { children: ReactNode; para
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                     <SessionProvider session={session!}>
                         <TrpcProvider toastConfirmations={false} enableSubscriptions={true}>
-                            <StopwatchLayout>{children}</StopwatchLayout>
+                            <StopwatchLayout title={title}>{children}</StopwatchLayout>
                         </TrpcProvider>
                     </SessionProvider>
                 </NextIntlClientProvider>

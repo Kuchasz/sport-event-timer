@@ -1916,10 +1916,48 @@
     }
   },
   "stopwatch": {
-    "config": {
+    "settings": {
       "selectTimingPoint": {
         "header": "Wybierz punkt pomiarowy",
         "description": "Wybór punktu dla którego prowadzony będzie pomiar czasu."
+      },
+      "title": {
+        "text": "Ustawienia"
+      }
+    },
+    "history": {
+      "title": {
+        "text": "Historia"
+      }
+    },
+    "assign": {
+      "title": {
+        "text": "Przypisz międzyczas"
+      }
+    },
+    "list": {
+      "title": {
+        "text": "Lista zawodników"
+      }
+    },
+    "pad": {
+      "title": {
+        "text": "Wybierz numer zawodnika"
+      }
+    },
+    "times": {
+      "title": {
+        "text": "Zarejestrowane międzyczasy"
+      }
+    },
+    "tweak": {
+      "title": {
+        "text": "Popraw międzyczas"
+      }
+    },
+    "reassign": {
+      "title": {
+        "text": "Ponownie przypisz międzyczas"
       }
     }
   }

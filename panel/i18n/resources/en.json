@@ -1916,10 +1916,48 @@
     }
   },
   "stopwatch": {
-    "config": {
+    "settings": {
       "selectTimingPoint": {
         "header": "Select timing point",
         "description": "The selection of a point for which time measurement will be conducted."
+      },
+      "title": {
+        "text": "Settings"
+      }
+    },
+    "history": {
+      "title": {
+        "text": "History"
+      }
+    },
+    "assign": {
+      "title": {
+        "text": "Assign split time"
+      }
+    },
+    "list": {
+      "title": {
+        "text": "Players list"
+      }
+    },
+    "pad": {
+      "title": {
+        "text": "Dial player number"
+      }
+    },
+    "times": {
+      "title": {
+        "text": "Registered split times"
+      }
+    },
+    "tweak": {
+      "title": {
+        "text": "Tweak split time"
+      }
+    },
+    "reassign": {
+      "title": {
+        "text": "Reassign split time"
       }
     }
   }
