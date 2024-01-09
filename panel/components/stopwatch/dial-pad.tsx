@@ -39,9 +39,9 @@ const PadButton = ({ char, desc, padClick, enabled, alwaysEnabled }: PadButtonPr
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl leading-none transition-opacity disabled:opacity-20">
+        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl font-semibold transition-opacity disabled:opacity-20">
         <div>{char}</div>
-        <div className={classNames("text-xs uppercase text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
+        <div className={classNames("text-2xs uppercase leading-none text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
     </button>
 );
 
