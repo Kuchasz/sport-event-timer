@@ -1,5 +1,8 @@
+import classNames from "classnames";
+
 type Button = {
     char: string;
+    desc?: string;
     changeNumber: (number: string) => string;
     alwaysEnabled?: boolean;
 };
@@ -12,14 +15,14 @@ const padActions = {
 
 const buttons: Button[] = [
     { char: "1", changeNumber: padActions.addDigit("1") },
-    { char: "2", changeNumber: padActions.addDigit("2") },
-    { char: "3", changeNumber: padActions.addDigit("3") },
-    { char: "4", changeNumber: padActions.addDigit("4") },
-    { char: "5", changeNumber: padActions.addDigit("5") },
-    { char: "6", changeNumber: padActions.addDigit("6") },
-    { char: "7", changeNumber: padActions.addDigit("7") },
-    { char: "8", changeNumber: padActions.addDigit("8") },
-    { char: "9", changeNumber: padActions.addDigit("9") },
+    { char: "2", desc: "abc", changeNumber: padActions.addDigit("2") },
+    { char: "3", desc: "def", changeNumber: padActions.addDigit("3") },
+    { char: "4", desc: "ghi", changeNumber: padActions.addDigit("4") },
+    { char: "5", desc: "jkl", changeNumber: padActions.addDigit("5") },
+    { char: "6", desc: "mno", changeNumber: padActions.addDigit("6") },
+    { char: "7", desc: "pqrs", changeNumber: padActions.addDigit("7") },
+    { char: "8", desc: "tuv", changeNumber: padActions.addDigit("8") },
+    { char: "9", desc: "wxyz", changeNumber: padActions.addDigit("9") },
     { char: "↺", changeNumber: padActions.reset, alwaysEnabled: true },
     { char: "0", changeNumber: padActions.addDigit("0") },
     { char: "←", changeNumber: padActions.back, alwaysEnabled: true },
@@ -28,15 +31,17 @@ const buttons: Button[] = [
 type PadButtonProps = {
     padClick: () => void;
     char: string;
+    desc?: string;
     enabled: boolean;
     alwaysEnabled?: boolean;
 };
-const PadButton = ({ char, padClick, enabled, alwaysEnabled }: PadButtonProps) => (
+const PadButton = ({ char, desc, padClick, enabled, alwaysEnabled }: PadButtonProps) => (
     <button
         onClick={padClick}
         disabled={!alwaysEnabled && !enabled}
-        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl transition-opacity disabled:opacity-20 ">
-        {char}
+        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl leading-none transition-opacity disabled:opacity-20">
+        <div>{char}</div>
+        <div className={classNames("text-xs uppercase text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
     </button>
 );
 
@@ -52,13 +57,14 @@ export const DialPad = (props: DialPadProps) => {
     };
 
     return (
-        <div className="grid h-2/5 w-5/6 grid-cols-3 grid-rows-4 self-center py-2 sm:w-1/3 xl:w-1/5">
+        <div className="grid h-3/5 w-5/6 grid-cols-3 grid-rows-4 self-center py-2 sm:w-1/3 xl:w-1/5">
             {buttons.map(b => (
                 <PadButton
                     alwaysEnabled={b.alwaysEnabled}
                     enabled={props.availableDigits.includes(b.char)}
                     padClick={() => onPadButtonClick(b)}
                     char={b.char}
+                    desc={b.desc}
                     key={b.char}
                 />
             ))}

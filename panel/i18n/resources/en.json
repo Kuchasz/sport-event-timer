@@ -1938,7 +1938,8 @@
     "list": {
       "title": {
         "text": "Players list"
-      }
+      },
+      "absent": "absent"
     },
     "pad": {
       "title": {
@@ -1948,7 +1949,8 @@
     "times": {
       "title": {
         "text": "Registered split times"
-      }
+      },
+      "registerSplitTime": "Register split time"
     },
     "tweak": {
       "title": {
@@ -1959,6 +1961,12 @@
       "title": {
         "text": "Reassign split time"
       }
+    },
+    "menuItems": {
+      "players": "Players",
+      "pad": "Keyboard",
+      "times": "Split times",
+      "history": "History"
     }
   }
 }

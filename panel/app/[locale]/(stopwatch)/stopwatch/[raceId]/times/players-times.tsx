@@ -17,6 +17,7 @@ import { trpc } from "trpc-core";
 import { ActionButton, PrimaryActionButton } from "../../../../../../components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
+import { useTranslations } from "next-intl";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -143,6 +144,7 @@ export const PlayersTimes = () => {
     const [offset] = useAtom(timeOffsetAtom);
 
     const dispatch = useTimerDispatch();
+    const t = useTranslations();
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { push } = useRouter();
 
@@ -187,7 +189,7 @@ export const PlayersTimes = () => {
                     onPointerDown={onAddTime}
                     className="active:animate-pushInLittle flex w-full flex-col items-center justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center text-white outline-none">
                     <Icon size={3} path={mdiClockPlusOutline} />
-                    <span className="mt-2 font-semibold">Register split time</span>
+                    <span className="mt-2 font-semibold">{t('stopwatch.times.registerSplitTime')}</span>
                 </button>
             </div>
             <div ref={parentRef} className="h-full flex-grow overflow-x-hidden px-2">

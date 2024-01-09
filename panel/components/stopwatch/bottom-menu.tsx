@@ -3,6 +3,7 @@ import Link from "next/link";
 import { mdiDialpad, mdiFormatListNumberedRtl, mdiHistory, mdiTimetable } from "@mdi/js";
 import type { StopWatchMode } from "../../states/stopwatch-states";
 import classNames from "classnames";
+import { useTranslations } from "next-intl";
 
 type PathTypes = StopWatchMode | "config" | "history";
 type Paths = `${string}/${PathTypes}`;
@@ -41,16 +42,22 @@ export const BottomMenu = ({
     timingPointMissing: boolean;
 }) => {
     const mode = pathname as Paths;
+    const t = useTranslations();
 
     return (
         <div
             className={classNames("flex select-none justify-around rounded-t-xl bg-white py-3 transition-transform ease-out", {
                 ["translate-y-full"]: isOffline || timingPointMissing,
             })}>
-            <BottomMenuButton path={raceId + "/list"} text="Players" icon={mdiFormatListNumberedRtl} chosenPath={mode} />
-            <BottomMenuButton path={raceId + "/pad"} text="Pad" icon={mdiDialpad} chosenPath={mode} />
-            <BottomMenuButton path={raceId + "/times"} text="Times" icon={mdiTimetable} chosenPath={mode} />
-            <BottomMenuButton path={raceId + "/history"} text="History" icon={mdiHistory} chosenPath={mode} />
+            <BottomMenuButton
+                path={raceId + "/list"}
+                text={t("stopwatch.menuItems.players")}
+                icon={mdiFormatListNumberedRtl}
+                chosenPath={mode}
+            />
+            <BottomMenuButton path={raceId + "/pad"} text={t("stopwatch.menuItems.pad")} icon={mdiDialpad} chosenPath={mode} />
+            <BottomMenuButton path={raceId + "/times"} text={t("stopwatch.menuItems.times")} icon={mdiTimetable} chosenPath={mode} />
+            <BottomMenuButton path={raceId + "/history"} text={t("stopwatch.menuItems.history")} icon={mdiHistory} chosenPath={mode} />
         </div>
     );
 };
