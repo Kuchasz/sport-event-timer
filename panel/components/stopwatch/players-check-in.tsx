@@ -8,15 +8,19 @@ import { useState } from "react";
 import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
+import { useTranslations } from "next-intl";
 
 type TypedPlayerProps = {
     playerNumber: string;
     bestGuess?: string;
+    onPlayerCheckIn: (bibNumber: string) => void;
 };
 
-export const TypedPlayer = ({ playerNumber, bestGuess }: TypedPlayerProps) => (
+export const TypedPlayer = ({ onPlayerCheckIn, playerNumber, bestGuess }: TypedPlayerProps) => (
     <div className="flex h-16 items-center px-8 py-2">
-        <Icon className={classNames({ ["invisible"]: playerNumber !== bestGuess })} size={1} path={mdiPlus}></Icon>
+        <div className={classNames({ ["invisible"]: playerNumber !== bestGuess })} onClick={() => onPlayerCheckIn(playerNumber)}>
+            <Icon size={1} path={mdiPlus}></Icon>
+        </div>
         <div className="flex flex-grow justify-center text-center text-4xl">
             <div className="text-orange-500">{playerNumber}</div>
             <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
@@ -57,6 +61,8 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
 
     const { raceId } = useParams<{ raceId: string }>()!;
 
+    const t = useTranslations();
+
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
@@ -80,18 +86,26 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
 
     return (
         <div className="flex h-full flex-col">
-            <TypedPlayer playerNumber={playerNumber} bestGuess={availablePlayers[0]?.bibNumber?.toString()} />
-            <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
-                <div className="uppercase">Player</div>
-                <div>Bib number</div>
-            </div>
+            <TypedPlayer
+                onPlayerCheckIn={bibNumber => {
+                    onPlayerCheckIn(bibNumber);
+                    setPlayerNumber("");
+                }}
+                playerNumber={playerNumber}
+                bestGuess={availablePlayers[0]?.bibNumber?.toString()}
+            />
+            {!!sortedAvailablePlayers?.length && (
+                <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
+                    <div className="uppercase">{t("stopwatch.checkIn.suggestion.player")}</div>
+                    <div>{t("stopwatch.checkIn.suggestion.bibNumber")}</div>
+                </div>
+            )}
             <div className="mx-12 mt-2 flex h-2/5 flex-auto flex-col items-stretch overflow-y-auto text-white">
                 {sortedAvailablePlayers.map(p => (
                     <CheckInPlayer
                         key={p.obj.bibNumber}
                         onPlayerCheckIn={bibNumber => {
-                            onPlayerCheckIn(bibNumber);
-                            setPlayerNumber("");
+                            setPlayerNumber(bibNumber);
                         }}
                         typeahead={playerNumber}
                         player={p.obj}
