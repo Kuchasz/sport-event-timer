@@ -1,6 +1,6 @@
 import * as Arr from "fp-ts/Array";
-import * as S from "fp-ts/string";
 import { flow, pipe } from "fp-ts/function";
+import * as S from "fp-ts/string";
 
 export const sliceFrom = (start: number) => (string: string) => string.slice(start);
 
