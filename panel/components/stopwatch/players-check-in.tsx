@@ -20,12 +20,8 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ timeCritical, onPlayerCheckIn, reset, playerNumber, bestGuess }: TypedPlayerProps) => {
-    const t = useTranslations();
     return (
         <div className="flex flex-col items-center px-12">
-            <div className="mt-2 rounded-full bg-gray-300 px-2 py-0.5 text-xs font-semibold text-white">
-                {t("stopwatch.checkIn.tapToRecord")}
-            </div>
             <div className="my-4 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>

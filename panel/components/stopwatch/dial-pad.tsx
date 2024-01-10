@@ -14,13 +14,14 @@ type PadButtonProps = {
     char: string;
     desc?: string;
     enabled: boolean;
-    alwaysEnabled?: boolean;
 };
-const PadButton = ({ char, desc, padClick, enabled, alwaysEnabled }: PadButtonProps) => (
+const PadButton = ({ char, desc, padClick, enabled }: PadButtonProps) => (
     <button
         onClick={padClick}
-        disabled={!alwaysEnabled && !enabled}
-        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl font-semibold transition-opacity disabled:opacity-20">
+        className={classNames(
+            "active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl font-semibold transition-opacity",
+            { ["pointer-events-none opacity-20"]: !enabled },
+        )}>
         <div>{char}</div>
         <div className={classNames("text-2xs uppercase leading-none text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
     </button>
@@ -34,8 +35,10 @@ type PadButton2Props = {
 const PadButton2 = ({ children, padClick, enabled }: PadButton2Props) => (
     <button
         onClick={padClick}
-        disabled={!enabled}
-        className="active:animate-pushIn m-1.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity disabled:opacity-20">
+        className={classNames(
+            "active:animate-pushIn m-1.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity",
+            { ["pointer-events-none opacity-20"]: !enabled },
+        )}>
         {children}
     </button>
 );
