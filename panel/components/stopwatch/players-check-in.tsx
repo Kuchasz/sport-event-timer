@@ -138,7 +138,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                 </div>
             )}
             <div className="mx-12 mt-2 flex h-2/5 flex-auto flex-col items-stretch overflow-y-auto text-white">
-                {sortedAvailablePlayers.slice(0, 10).map(p => (
+                {sortedAvailablePlayers.map(p => (
                     <PlayerSuggestion
                         timeCritical={timeCritical}
                         key={p.obj.bibNumber}
