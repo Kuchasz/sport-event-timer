@@ -4,7 +4,7 @@ type Button = {
     char: string;
     desc?: string;
     changeNumber: (number: string) => string;
-    alwaysEnabled?: boolean;
+    shouldBeEnabled?: (number: string) => boolean;
 };
 
 const padActions = {
@@ -23,9 +23,9 @@ const buttons: Button[] = [
     { char: "7", desc: "pqrs", changeNumber: padActions.addDigit("7") },
     { char: "8", desc: "tuv", changeNumber: padActions.addDigit("8") },
     { char: "9", desc: "wxyz", changeNumber: padActions.addDigit("9") },
-    { char: "↺", changeNumber: padActions.reset, alwaysEnabled: true },
+    { char: "↺", changeNumber: padActions.reset, shouldBeEnabled: () => true },
     { char: "0", changeNumber: padActions.addDigit("0") },
-    { char: "←", changeNumber: padActions.back, alwaysEnabled: true },
+    { char: "←", changeNumber: padActions.back, shouldBeEnabled: number => number.length > 0 },
 ];
 
 type PadButtonProps = {
@@ -60,7 +60,7 @@ export const DialPad = (props: DialPadProps) => {
         <div className="mb-2 mt-6 grid h-full w-5/6 grid-cols-3 grid-rows-4 self-center sm:w-1/3 xl:w-1/5">
             {buttons.map(b => (
                 <PadButton
-                    alwaysEnabled={b.alwaysEnabled}
+                    alwaysEnabled={b.shouldBeEnabled?.(props.number)}
                     enabled={props.availableDigits.includes(b.char)}
                     padClick={() => onPadButtonClick(b)}
                     char={b.char}
