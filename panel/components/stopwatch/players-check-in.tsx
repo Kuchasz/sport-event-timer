@@ -118,6 +118,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     );
 
     const sortedAvailablePlayers = fuzzysort.go(playerNumber, availablePlayers, { all: true, keys: ["bibNumber"] });
+    const bestGuess = sortedAvailablePlayers[0]?.obj?.bibNumber;
 
     return (
         <div className="flex h-full flex-col">
@@ -129,7 +130,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                 }}
                 reset={() => setPlayerNumber("")}
                 playerNumber={playerNumber}
-                bestGuess={sortedAvailablePlayers[0]?.obj?.bibNumber}
+                bestGuess={bestGuess}
             />
             {!!sortedAvailablePlayers?.length && (
                 <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
@@ -156,6 +157,11 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                     availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                     number={playerNumber}
                     onNumberChange={setPlayerNumber}
+                    canRecord={bestGuess === playerNumber}
+                    onRecord={() => {
+                        onPlayerCheckIn(bestGuess);
+                        setPlayerNumber("");
+                    }}
                 />
             </div>
         </div>
