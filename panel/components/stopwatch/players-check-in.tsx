@@ -12,24 +12,19 @@ import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
 
 type TypedPlayerProps = {
-    timeCritical: boolean;
     playerNumber: string;
     bestGuess?: string;
-    onPlayerCheckIn: (bibNumber: string) => void;
     reset: () => void;
 };
 
-export const TypedPlayer = ({ timeCritical, onPlayerCheckIn, reset, playerNumber, bestGuess }: TypedPlayerProps) => {
+export const TypedPlayer = ({ reset, playerNumber, bestGuess }: TypedPlayerProps) => {
     return (
         <div className="flex flex-col items-center px-12">
             <div className="my-4 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
-                <div
-                    onPointerDown={timeCritical ? () => playerNumber && onPlayerCheckIn(bestGuess ?? playerNumber) : undefined}
-                    onClick={!timeCritical ? () => playerNumber && onPlayerCheckIn(bestGuess ?? playerNumber) : undefined}
-                    className="flex flex-grow justify-center text-center text-4xl">
+                <div className="flex flex-grow justify-center text-center text-4xl">
                     <div className="text-orange-500">{playerNumber}</div>
                     <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
                 </div>
@@ -118,16 +113,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
 
     return (
         <div className="flex h-full flex-col">
-            <TypedPlayer
-                timeCritical={timeCritical}
-                onPlayerCheckIn={bibNumber => {
-                    onPlayerCheckIn(bibNumber);
-                    setPlayerNumber("");
-                }}
-                reset={() => setPlayerNumber("")}
-                playerNumber={playerNumber}
-                bestGuess={bestGuess}
-            />
+            <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} bestGuess={bestGuess} />
             {!!sortedAvailablePlayers?.length && (
                 <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
                     <div className="uppercase">{t("stopwatch.checkIn.suggestion.player")}</div>
@@ -150,6 +136,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
             </div>
             <div className="flex flex-col items-center bg-white">
                 <DialPad
+                    timeCritical={timeCritical}
                     availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                     number={playerNumber}
                     onNumberChange={setPlayerNumber}
