@@ -1,7 +1,7 @@
 import { mdiBackspaceOutline, mdiTimerPlusOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 const padActions = {
     addDigit: (digit: string) => (player: string) => player.concat(digit),
@@ -33,17 +33,26 @@ type IconButtonProps = {
     enabled: boolean;
     children: ReactNode;
 };
-const IconButton = ({ timeCritical, children, buttonClick, enabled }: IconButtonProps) => (
-    <button
-        onPointerDown={timeCritical ? buttonClick : undefined}
-        onClick={!timeCritical ? buttonClick : undefined}
-        className={classNames(
-            "active:animate-pushIn m-1.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity",
-            { ["pointer-events-none opacity-20"]: !enabled },
-        )}>
-        {children}
-    </button>
-);
+const IconButton = ({ timeCritical, children, buttonClick, enabled }: IconButtonProps) => {
+    const [animation, setAnimation] = useState(false);
+    const handleClick = () => {
+        setAnimation(true);
+        buttonClick();
+    };
+    return (
+        <button
+            onPointerDown={timeCritical ? handleClick : undefined}
+            onClick={!timeCritical ? handleClick : undefined}
+            onAnimationEnd={() => setAnimation(false)}
+            className={classNames(
+                "m-1.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity",
+                { ["animate-pushIn"]: animation },
+                { ["pointer-events-none opacity-20"]: !enabled },
+            )}>
+            {children}
+        </button>
+    );
+};
 
 type DialPadProps = {
     onNumberChange: (number: string) => void;

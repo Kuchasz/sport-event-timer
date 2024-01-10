@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiClockPlusOutline, mdiDeleteOutline, mdiWrenchOutline } from "@mdi/js";
+import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiTimerPlusOutline, mdiWrenchOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
@@ -9,6 +9,7 @@ import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useAtom } from "jotai";
 import type { Route } from "next";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import { useRef } from "react";
@@ -17,7 +18,6 @@ import { trpc } from "trpc-core";
 import { ActionButton, PrimaryActionButton } from "../../../../../../components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
-import { useTranslations } from "next-intl";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -188,7 +188,7 @@ export const PlayersTimes = () => {
                 <button
                     onPointerDown={onAddTime}
                     className="active:animate-pushInLittle flex w-full flex-col items-center justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center text-white outline-none">
-                    <Icon size={3} path={mdiClockPlusOutline} />
+                    <Icon size={3} path={mdiTimerPlusOutline} />
                     <span className="mt-2 font-semibold">{t("stopwatch.times.registerSplitTime")}</span>
                 </button>
             </div>
