@@ -18,6 +18,7 @@ export const PlayersDialPad = () => {
 
     return (
         <PlayersCheckIn
+            timeCritical
             onPlayerCheckIn={bibNumber => {
                 dispatch(
                     add({

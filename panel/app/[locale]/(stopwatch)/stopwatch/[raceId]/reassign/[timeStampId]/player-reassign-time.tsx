@@ -18,6 +18,7 @@ export const PlayerReassignTime = () => {
 
     return (
         <PlayersCheckIn
+            timeCritical={false}
             onPlayerCheckIn={bibNumber => {
                 dispatch(reassignTimeStamp({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
                 back();
