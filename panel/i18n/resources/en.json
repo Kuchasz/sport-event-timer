@@ -1943,7 +1943,7 @@
     },
     "pad": {
       "title": {
-        "text": "Dial player number"
+        "text": "Record split time for player"
       }
     },
     "times": {
@@ -1973,6 +1973,9 @@
         "player": "Player",
         "bibNumber": "Bib number"
       }
+    },
+    "status": {
+      "timingPoint": "Timing point"
     }
   }
 }

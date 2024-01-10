@@ -1943,7 +1943,7 @@
     },
     "pad": {
       "title": {
-        "text": "Wybierz numer zawodnika"
+        "text": "Zarejestruj międzyczas dla zawodnika"
       }
     },
     "times": {
@@ -1973,6 +1973,9 @@
         "player": "Zawodnik",
         "bibNumber": "Numer startowy"
       }
+    },
+    "status": {
+      "timingPoint": "Punkt pomiarowy"
     }
   }
 }
