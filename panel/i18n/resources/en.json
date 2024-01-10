@@ -1972,8 +1972,7 @@
       "suggestion": {
         "player": "Player",
         "bibNumber": "Bib number"
-      },
-      "tapToRecord": "Tap number to record time"
+      }
     },
     "status": {
       "timingPoint": "Timing point"

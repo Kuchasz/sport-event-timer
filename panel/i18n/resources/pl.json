@@ -1972,8 +1972,7 @@
       "suggestion": {
         "player": "Zawodnik",
         "bibNumber": "Numer startowy"
-      },
-      "tapToRecord": "Dotknięcie numeru zarejestruje czas"
+      }
     },
     "status": {
       "timingPoint": "Punkt pomiarowy"
