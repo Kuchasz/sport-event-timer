@@ -1,14 +1,15 @@
 import { mdiClose, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
-import { getAvailableDigits, getAvailableNumbers } from "@set/utils/dist/string";
+import { getAvailableDigits } from "@set/utils/dist/string";
 import classNames from "classnames";
 import fuzzysort from "fuzzysort";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
-import { useTranslations } from "next-intl";
+import { sort } from "@set/utils/dist/array";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -18,9 +19,11 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ onPlayerCheckIn, reset, playerNumber, bestGuess }: TypedPlayerProps) => (
-    <div className="flex h-16 items-center px-8 py-2">
-        <div className={classNames({ ["invisible"]: playerNumber !== bestGuess })} onClick={() => onPlayerCheckIn(playerNumber)}>
-            <Icon size={1} path={mdiPlus}></Icon>
+    <div className="my-8 flex h-16 items-center px-12">
+        <div
+            className={classNames("opacity-80", { ["invisible"]: playerNumber !== bestGuess })}
+            onClick={() => onPlayerCheckIn(playerNumber)}>
+            <Icon size={0.8} path={mdiPlus}></Icon>
         </div>
         <div className="flex flex-grow justify-center text-center text-4xl">
             <div className="text-orange-500">{playerNumber}</div>
@@ -32,12 +35,20 @@ export const TypedPlayer = ({ onPlayerCheckIn, reset, playerNumber, bestGuess }:
     </div>
 );
 
+type Result = { score: number; target: string };
+type CheckInPlayer = { bibNumber: string; name: string; lastName: string };
+interface CheckinResult extends ReadonlyArray<Result> {
+    readonly score: number;
+    readonly obj: CheckInPlayer;
+}
+
 type CheckInPlayerProps = {
     player: { bibNumber: string; name: string; lastName: string };
     typeahead: string;
     onPlayerCheckIn: (bibNumber: string) => void;
+    result: CheckinResult;
 };
-export const CheckInPlayer = ({ typeahead, player, onPlayerCheckIn }: CheckInPlayerProps) => (
+export const CheckInPlayer = ({ result, typeahead, player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
         className={classNames("flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400", {
@@ -48,8 +59,13 @@ export const CheckInPlayer = ({ typeahead, player, onPlayerCheckIn }: CheckInPla
         </div>
         <div className="flex-grow"></div>
         <div className="">
-            <span className="text-orange-500">{typeahead}</span>
-            {player.bibNumber.slice(typeahead.length)}
+            {typeahead
+                ? fuzzysort.highlight(result[0], (m, i) => (
+                      <mark className="bg-transparent font-semibold text-orange-500" key={i}>
+                          {m}
+                      </mark>
+                  ))
+                : player.bibNumber}
         </div>
     </button>
 );
@@ -80,10 +96,10 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
     const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(x => x.timeStamp === undefined && x.absent === undefined);
     const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map(x => x.bibNumber);
 
-    const availableNumbers = getAvailableNumbers(playerNumber, playersNumbersWithoutTimeStamps);
-    const availablePlayers = nonAbsentPlayersWithoutTimeStamps
-        .filter(p => availableNumbers.includes(p.bibNumber))
-        .map(a => ({ ...a, bibNumber: a.bibNumber.toString() }));
+    const availablePlayers = sort(
+        nonAbsentPlayersWithoutTimeStamps.map(a => ({ ...a, bibNumber: a.bibNumber.toString() })),
+        p => parseInt(p.bibNumber),
+    );
 
     const sortedAvailablePlayers = fuzzysort.go(playerNumber, availablePlayers, { all: true, keys: ["bibNumber"] });
 
@@ -96,7 +112,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
                 }}
                 reset={() => setPlayerNumber("")}
                 playerNumber={playerNumber}
-                bestGuess={availablePlayers[0]?.bibNumber?.toString()}
+                bestGuess={sortedAvailablePlayers[0]?.obj?.bibNumber?.toString()}
             />
             {!!sortedAvailablePlayers?.length && (
                 <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
@@ -111,6 +127,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
                         onPlayerCheckIn={bibNumber => {
                             setPlayerNumber(bibNumber);
                         }}
+                        result={p}
                         typeahead={playerNumber}
                         player={p.obj}
                     />
