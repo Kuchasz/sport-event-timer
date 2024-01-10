@@ -1,5 +1,6 @@
-import { mdiClose, mdiPlus } from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
+import { sort } from "@set/utils/dist/array";
 import { getAvailableDigits } from "@set/utils/dist/string";
 import classNames from "classnames";
 import fuzzysort from "fuzzysort";
@@ -9,7 +10,6 @@ import { useState } from "react";
 import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
-import { sort } from "@set/utils/dist/array";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -19,18 +19,19 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ onPlayerCheckIn, reset, playerNumber, bestGuess }: TypedPlayerProps) => (
-    <div className="my-8 flex h-16 items-center px-12">
-        <div
-            className={classNames("opacity-80", { ["invisible"]: playerNumber !== bestGuess })}
-            onClick={() => onPlayerCheckIn(playerNumber)}>
-            <Icon size={0.8} path={mdiPlus}></Icon>
-        </div>
-        <div className="flex flex-grow justify-center text-center text-4xl">
-            <div className="text-orange-500">{playerNumber}</div>
-            <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
-        </div>
-        <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !bestGuess })}>
-            <Icon size={0.8} path={mdiClose}></Icon>
+    <div className="flex flex-col items-center px-12">
+        <div className="mt-2 rounded-full bg-gray-300 px-2 py-0.5 text-xs font-semibold text-white">Tap numer to record time</div>
+        <div className="my-4 flex w-full items-center justify-between">
+            <div className="invisible">
+                <Icon size={0.8} path={mdiClose}></Icon>
+            </div>
+            <div onPointerDown={() => onPlayerCheckIn(playerNumber)} className="flex flex-grow justify-center text-center text-4xl">
+                <div className="text-orange-500">{playerNumber}</div>
+                <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
+            </div>
+            <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !bestGuess })}>
+                <Icon size={0.8} path={mdiClose}></Icon>
+            </div>
         </div>
     </div>
 );
@@ -51,8 +52,8 @@ type CheckInPlayerProps = {
 export const CheckInPlayer = ({ result, typeahead, player, onPlayerCheckIn }: CheckInPlayerProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className={classNames("flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400", {
-            ["font-semibold text-orange-500"]: typeahead === player.bibNumber,
+        className={classNames("flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-400", {
+            ["bg-orange-500 font-semibold text-white"]: typeahead === player.bibNumber,
         })}>
         <div>
             {player.name} {player.lastName}
@@ -61,7 +62,11 @@ export const CheckInPlayer = ({ result, typeahead, player, onPlayerCheckIn }: Ch
         <div className="">
             {typeahead
                 ? fuzzysort.highlight(result[0], (m, i) => (
-                      <mark className="bg-transparent font-semibold text-orange-500" key={i}>
+                      <mark
+                          className={classNames("bg-transparent font-semibold text-orange-500", {
+                              ["text-white"]: typeahead === player.bibNumber,
+                          })}
+                          key={i}>
                           {m}
                       </mark>
                   ))
@@ -112,7 +117,7 @@ export const PlayersCheckIn = ({ onPlayerCheckIn, timingPointId }: PlayersDialPa
                 }}
                 reset={() => setPlayerNumber("")}
                 playerNumber={playerNumber}
-                bestGuess={sortedAvailablePlayers[0]?.obj?.bibNumber?.toString()}
+                bestGuess={sortedAvailablePlayers[0]?.obj?.bibNumber}
             />
             {!!sortedAvailablePlayers?.length && (
                 <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">

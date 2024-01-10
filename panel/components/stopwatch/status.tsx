@@ -9,13 +9,17 @@ import Link from "next/link";
 import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom } from "states/stopwatch-states";
 import { trpc } from "../../trpc-core";
 import { Timer } from "./timer";
+import { useTranslations } from "next-intl";
 
-const SelectedTimingPoint = ({ timingPointName }: { timingPointName: string }) => (
-    <span className="flex cursor-pointer flex-col items-start rounded-xl pl-4 pr-2 text-zinc-300 transition-colors hover:bg-zinc-700">
-        <span className="text-2xs text-zinc-600">Timing point</span>
-        <span className="">{timingPointName}</span>
-    </span>
-);
+const SelectedTimingPoint = ({ timingPointName }: { timingPointName: string }) => {
+    const t = useTranslations();
+    return (
+        <span className="flex cursor-pointer flex-col items-start rounded-xl pl-4 pr-2 text-zinc-300 transition-colors hover:bg-zinc-700">
+            <span className="text-2xs text-zinc-600">{t("stopwatch.status.timingPoint")}</span>
+            <span className="">{timingPointName}</span>
+        </span>
+    );
+};
 
 const SettingsCog = () => (
     <span className="flex cursor-pointer items-center rounded-xl bg-zinc-800 px-2 py-1 text-zinc-300 transition-colors hover:bg-zinc-700">
