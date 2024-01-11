@@ -15,13 +15,10 @@ type DigitButtonProps = {
     desc?: string;
     enabled: boolean;
 };
-const DigitButton = ({ char, desc, padClick, enabled }: DigitButtonProps) => (
+const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => (
     <button
         onClick={padClick}
-        className={classNames(
-            "active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl font-semibold transition-opacity",
-            { ["pointer-events-none opacity-20"]: !enabled },
-        )}>
+        className="active:animate-pushIn m-1.5 cursor-pointer select-none rounded-md text-2xl font-semibold transition-opacity">
         <div>{char}</div>
         <div className={classNames("text-2xs uppercase leading-none text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
     </button>

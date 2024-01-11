@@ -25,8 +25,7 @@ export const TypedPlayer = ({ reset, playerNumber, bestGuess }: TypedPlayerProps
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
                 <div className="flex flex-grow justify-center text-center text-4xl">
-                    <div className="text-orange-500">{playerNumber}</div>
-                    <span className="text-gray-300">{bestGuess?.slice(playerNumber.length)}</span>
+                    <div className="font-mono text-orange-500">{playerNumber}</div>
                 </div>
                 <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !bestGuess })}>
                     <Icon size={0.8} path={mdiClose}></Icon>
