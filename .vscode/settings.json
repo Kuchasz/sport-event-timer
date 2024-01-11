@@ -20,6 +20,5 @@
     },
     "eslint.options": {
         "rulePaths": ["eslint-rules"]
-    },
-    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace"
+    }
 }

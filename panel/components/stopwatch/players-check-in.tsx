@@ -10,6 +10,7 @@ import { useState } from "react";
 import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
+import { Transition } from "@headlessui/react";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -17,7 +18,7 @@ type TypedPlayerProps = {
     reset: () => void;
 };
 
-export const TypedPlayer = ({ reset, playerNumber, bestGuess }: TypedPlayerProps) => {
+export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
     return (
         <div className="flex flex-col items-center px-12">
             <div className="my-4 flex w-full items-center justify-between">
@@ -25,9 +26,19 @@ export const TypedPlayer = ({ reset, playerNumber, bestGuess }: TypedPlayerProps
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
                 <div className="flex flex-grow justify-center text-center text-4xl">
-                    <div className="font-mono text-orange-500">{playerNumber}</div>
+                    {[...playerNumber].map((d, i) => (
+                        <Transition
+                            enter="transition-all ease-out duration-250 origin-bottom"
+                            enterFrom="w-[0px] opacity-y-0 scale-0"
+                            enterTo="w-[1.5rem] opacity-100 scale-y-1"
+                            show
+                            appear
+                            key={`${d}${i}`}>
+                            <div className="text-orange-500">{d}</div>
+                        </Transition>
+                    ))}
                 </div>
-                <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !bestGuess })}>
+                <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !playerNumber })}>
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
             </div>
