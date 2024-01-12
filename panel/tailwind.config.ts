@@ -1,5 +1,6 @@
-const colors = require("tailwindcss/colors");
-const defaultTheme = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 module.exports = {
     mode: "jit",
@@ -105,8 +106,6 @@ module.exports = {
             },
             fontSize: {
                 "2xs": [".65rem", { lineHeight: "0.75rem" }],
-                "full-w": ["100vw"],
-                "full-h": ["100vh"],
             },
             height: {
                 128: "32rem",
@@ -132,4 +131,4 @@ module.exports = {
             },
         },
     },
-};
+} satisfies Config;
