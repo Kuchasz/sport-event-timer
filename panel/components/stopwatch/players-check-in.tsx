@@ -31,13 +31,14 @@ const getDigitForIndex = (idx: number, value: string) => {
 
 export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
     const playerNumberDigits = [...playerNumber];
+    const t = useTranslations();
     return (
         <div className="flex flex-col items-center px-12">
             <div className="my-4 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
-                <div className="flex h-[2.5rem] flex-grow justify-center text-center text-4xl">
+                <div className="relative flex h-[2.5rem] flex-grow items-center justify-center text-center text-4xl">
                     {typedNumberDigits.map(d => (
                         <Transition
                             enter="transition-all ease-out duration-250 origin-bottom-left"
@@ -51,6 +52,12 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
                             <div className="text-orange-500">{getDigitForIndex(d, playerNumberDigits[d])}</div>
                         </Transition>
                     ))}
+                    <div
+                        className={classNames("absolute flex items-center text-sm text-gray-300 opacity-0 transition-opacity", {
+                            ["opacity-100"]: !playerNumber,
+                        })}>
+                        <span>{t("stopwatch.checkIn.typeBibNumber")}</span>
+                    </div>
                 </div>
                 <div className={classNames("opacity-0 transition-opacity", { ["opacity-60"]: !!playerNumber })} onClick={reset}>
                     <Icon size={0.8} path={mdiClose}></Icon>

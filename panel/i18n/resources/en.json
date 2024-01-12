@@ -1943,7 +1943,7 @@
     },
     "pad": {
       "title": {
-        "text": "Record split time for player"
+        "text": "Record split time"
       }
     },
     "times": {
@@ -1972,7 +1972,8 @@
       "suggestion": {
         "player": "Player",
         "bibNumber": "Bib number"
-      }
+      },
+      "typeBibNumber": "Type player's bib number"
     },
     "status": {
       "timingPoint": "Timing point"

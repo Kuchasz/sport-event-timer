@@ -1,4 +1,4 @@
-import { mdiBackspaceOutline, mdiTimerPlusOutline } from "@mdi/js";
+import { mdiBackspaceOutline, mdiCheck, mdiTimerPlusOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { useState, type ReactNode } from "react";
@@ -117,7 +117,7 @@ export const DialPad = (props: DialPadProps) => {
             />
             <IconButton enabled={props.canRecord} timeCritical={props.timeCritical} buttonClick={props.onRecord}>
                 <div className="rounded-full bg-orange-500 p-4 text-white">
-                    <Icon size={1} path={mdiTimerPlusOutline}></Icon>
+                    <Icon size={1} path={props.timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
                 </div>
             </IconButton>
             <DigitButton
