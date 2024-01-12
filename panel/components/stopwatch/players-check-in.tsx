@@ -1,6 +1,7 @@
+import { Transition } from "@headlessui/react";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { sort } from "@set/utils/dist/array";
+import { createRange, sort } from "@set/utils/dist/array";
 import { getAvailableDigits } from "@set/utils/dist/string";
 import classNames from "classnames";
 import fuzzysort from "fuzzysort";
@@ -10,7 +11,6 @@ import { useState } from "react";
 import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
-import { Transition } from "@headlessui/react";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -18,27 +18,41 @@ type TypedPlayerProps = {
     reset: () => void;
 };
 
+const typedNumberDigits = createRange({ from: 0, to: 9 });
+
+const storedDigits: Record<number, string> = {};
+const getDigitForIndex = (idx: number, value: string) => {
+    if (value !== undefined) {
+        storedDigits[idx] = value;
+    }
+
+    return storedDigits[idx];
+};
+
 export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
+    const playerNumberDigits = [...playerNumber];
     return (
         <div className="flex flex-col items-center px-12">
             <div className="my-4 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
-                <div className="flex flex-grow justify-center text-center text-4xl">
-                    {[...playerNumber].map((d, i) => (
+                <div className="flex h-[2.5rem] flex-grow justify-center text-center text-4xl">
+                    {typedNumberDigits.map(d => (
                         <Transition
-                            enter="transition-all ease-out duration-250 origin-bottom"
+                            enter="transition-all ease-out duration-250 origin-bottom-left"
                             enterFrom="w-[0px] opacity-y-0 scale-0"
                             enterTo="w-[1.5rem] opacity-100 scale-y-1"
-                            show
-                            appear
-                            key={`${d}${i}`}>
-                            <div className="text-orange-500">{d}</div>
+                            leave="transition-all ease-out duration-250 origin-bottom-left"
+                            leaveTo="w-[0px] opacity-y-0 scale-0"
+                            leaveFrom="w-[1.5rem] opacity-100 scale-y-1"
+                            show={playerNumberDigits[d] !== undefined}
+                            key={d}>
+                            <div className="text-orange-500">{getDigitForIndex(d, playerNumberDigits[d])}</div>
                         </Transition>
                     ))}
                 </div>
-                <div onClick={reset} className={classNames("opacity-60", { ["invisible"]: !playerNumber })}>
+                <div className={classNames("opacity-0 transition-opacity", { ["opacity-60"]: !!playerNumber })} onClick={reset}>
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
             </div>
