@@ -6,7 +6,7 @@ export type ActionsHistoryState = m.HistoricAction[];
 
 const initialState: ActionsHistoryState = [];
 
-interface IssuedAction extends Action {
+export interface IssuedAction extends Action {
     __issuer: string;
     __issuedAt: number;
     meta: {

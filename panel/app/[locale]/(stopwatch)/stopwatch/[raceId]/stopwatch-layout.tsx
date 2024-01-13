@@ -20,6 +20,7 @@ import { ServerConnectionHandler } from "../../../../../server-connection-handle
 import { trpc } from "../../../../../trpc-core";
 import Link from "next/link";
 import { type Route } from "next";
+import type { IssuedAction } from "@set/timer/dist/slices/actions-history";
 
 const clientId = uuidv4();
 
@@ -35,16 +36,20 @@ const postActionsMiddleware: Middleware<object, TimerState, TimerDispatch> = _ =
 
     const socket = getConnection();
 
-    //eslint-disable-next-line @typescript-eslint/no-floating-promises
-    if (!action.meta?.remote && socket?.OPEN) externals.trpc?.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
+    const issuedAction = action as IssuedAction;
+
+    if (!issuedAction.meta?.remote && socket?.OPEN)
+        void externals.trpc?.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
 
     next(action);
 };
 
 const addIssuerMiddleware: Middleware<object, TimerState, TimerDispatch> = _ => next => action => {
-    if (!action.meta?.remote) {
-        action.__issuer = externals.user;
-        action.__issuedAt = Date.now() + (externals.timeOffset || 0);
+    const issuedAction = action as IssuedAction;
+
+    if (!issuedAction.meta?.remote) {
+        issuedAction.__issuer = externals.user!;
+        issuedAction.__issuedAt = Date.now() + (externals.timeOffset || 0);
     }
 
     next(action);
