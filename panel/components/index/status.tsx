@@ -17,7 +17,7 @@ export const Status = async () => {
             <div className="grow"></div>
             {session && (
                 <div className="mr-4 flex items-center">
-                    <Avatar size={32} colors={["#7dd3fc", "#0ea5e9", "#9ca3af"]}></Avatar>
+                    <Avatar name={session.name} size={32} colors={["#7dd3fc", "#0ea5e9", "#9ca3af"]}></Avatar>
                     <div className="ml-4 flex flex-col">
                         <div className="text-sm font-semibold text-gray-600">{session.name}</div>
                         <div className="text-2xs text-gray-500">Organizer</div>
