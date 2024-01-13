@@ -1,8 +1,8 @@
 import actionsHistory from "./slices/actions-history";
 import timeStamps from "./slices/time-stamps";
 import absences from "./slices/absences";
-import type { AnyAction, Middleware } from "@reduxjs/toolkit";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import type { Middleware, UnknownAction } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, createAction } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
     timeStamps,
@@ -10,13 +10,13 @@ const reducer = combineReducers({
     absences,
 });
 
-const resettableRootReducer = (state: TimerState, action: AnyAction) => {
-    if (action.type === "REPLACE_STATE") {
+const resettableRootReducer = (state: TimerState, action: UnknownAction) => {
+    if (replaceState.match(action))
         return {
-            ...action.state,
+            ...action.payload,
         } as TimerState;
-    }
-    return reducer(state, action) as TimerState;
+
+    return reducer(state, action);
 };
 
 export const createStore = (middlewares: Middleware<object, TimerState, TimerDispatch>[], preloadedState?: Partial<TimerState>) =>
@@ -30,6 +30,13 @@ export const createStore = (middlewares: Middleware<object, TimerState, TimerDis
 const store = configureStore({
     reducer,
 });
+
+export const replaceState = createAction("root.replaceState", (state: TimerState) => ({
+    payload: state,
+    meta: {
+        remote: true,
+    },
+}));
 
 // Infer the `TimerState` and `TimerDispatch` types from the store itself
 export type TimerState = ReturnType<typeof store.getState>;

@@ -19,6 +19,7 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
             <div className="text-xs">
                 {historicAction.action.type.split("/").map((n, i, { length }) => (
                     <span
+                        key={`${n}${i}`}
                         className={classNames(
                             "mx-1 rounded-md px-2 py-1",
                             i === length - 1 ? "bg-gray-100 font-semibold uppercase" : null,

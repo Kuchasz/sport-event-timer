@@ -7,7 +7,7 @@
         "test:watch": "jest --watch"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "1.9.7",
+        "@reduxjs/toolkit": "2.0.1",
         "fp-ts": "2.16.1",
         "typescript": "5.2.2"
     },

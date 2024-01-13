@@ -36,13 +36,13 @@ const postActionsMiddleware: Middleware<object, TimerState, TimerDispatch> = _ =
     const socket = getConnection();
 
     //eslint-disable-next-line @typescript-eslint/no-floating-promises
-    if (!action.__remote && socket?.OPEN) externals.trpc?.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
+    if (!action.meta?.remote && socket?.OPEN) externals.trpc?.action.dispatch.mutate({ raceId: externals.raceId!, clientId, action });
 
     next(action);
 };
 
 const addIssuerMiddleware: Middleware<object, TimerState, TimerDispatch> = _ => next => action => {
-    if (!action.__remote) {
+    if (!action.meta?.remote) {
         action.__issuer = externals.user;
         action.__issuedAt = Date.now() + (externals.timeOffset || 0);
     }

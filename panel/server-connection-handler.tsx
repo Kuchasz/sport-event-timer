@@ -6,6 +6,7 @@ import { useSetAtom } from "jotai";
 import { connectionStateAtom, timeOffsetAtom } from "states/stopwatch-states";
 import { logger } from "utils";
 import { useSystemTime } from "hooks";
+import { replaceState } from "@set/timer/dist/store";
 
 export const ServerConnectionHandler = ({
     dispatch,
@@ -23,7 +24,7 @@ export const ServerConnectionHandler = ({
         {
             onData: action => {
                 logger.log(action);
-                dispatch({ ...action, __remote: true });
+                dispatch({ ...action, meta: { remote: true } });
             },
             onError: console.error,
         },
@@ -37,7 +38,7 @@ export const ServerConnectionHandler = ({
         { raceId },
         {
             enabled: false,
-            onSuccess: (state: any) => dispatch({ type: "REPLACE_STATE", state, __remote: true }),
+            onSuccess: state => dispatch(replaceState(state)),
         },
     );
 
