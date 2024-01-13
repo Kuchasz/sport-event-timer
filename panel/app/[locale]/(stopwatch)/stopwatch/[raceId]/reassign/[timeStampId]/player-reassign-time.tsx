@@ -1,7 +1,7 @@
 "use client";
 
 import { PlayersCheckIn } from "../../../../../../../components/stopwatch/players-check-in";
-import { reassignTimeStamp } from "@set/timer/dist/slices/time-stamps";
+import { reassign } from "@set/timer/dist/slices/time-stamps";
 import { useTimerDispatch } from "../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
 import { useAtom } from "jotai";
@@ -20,7 +20,7 @@ export const PlayerReassignTime = () => {
         <PlayersCheckIn
             timeCritical={false}
             onPlayerCheckIn={bibNumber => {
-                dispatch(reassignTimeStamp({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
+                dispatch(reassign({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
                 back();
             }}
             timingPointId={timingPointId}

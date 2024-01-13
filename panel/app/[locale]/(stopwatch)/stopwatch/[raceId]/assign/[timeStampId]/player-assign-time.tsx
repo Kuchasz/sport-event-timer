@@ -1,6 +1,6 @@
 "use client";
 
-import { assignTimeStamp } from "@set/timer/dist/slices/time-stamps";
+import { assign } from "@set/timer/dist/slices/time-stamps";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { timingPointIdAtom } from "states/stopwatch-states";
@@ -20,7 +20,7 @@ export const PlayerAssignTime = () => {
         <PlayersCheckIn
             timeCritical={false}
             onPlayerCheckIn={bibNumber => {
-                dispatch(assignTimeStamp({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
+                dispatch(assign({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
                 back();
             }}
             timingPointId={timingPointId}
