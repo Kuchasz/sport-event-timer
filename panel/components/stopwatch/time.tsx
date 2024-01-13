@@ -12,7 +12,7 @@ export const Time = ({ time, stopped }: { time: number; stopped: boolean }) => {
     return (
         <div>
             <div className="text-2xs text-zinc-600">{t("stopwatch.status.systemTime")}</div>
-            <div className={classNames("flex items-end text-2xl leading-none text-zinc-300", { ["animate-pulse"]: stopped })}>
+            <div className={classNames("-ml-0.5 flex items-end text-2xl leading-none text-zinc-300", { ["animate-pulse"]: stopped })}>
                 <div className="flex flex-col items-center">
                     <div className="w-8 text-center font-mono font-normal">{splits.hours}</div>
                 </div>

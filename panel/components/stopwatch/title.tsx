@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export const Title = ({ text }: { text: string }) => {
     const router = useRouter() as unknown as { back: () => void };
     return (
-        <div className="relative z-10 flex w-full items-center bg-white px-1 py-4 shadow-sm will-change-transform">
+        <div className="relative z-10 flex w-full items-center bg-white px-1 py-2 shadow-sm will-change-transform">
             <div onClick={router.back} className="absolute">
                 <Icon size={1.2} path={mdiChevronLeft}></Icon>
             </div>
