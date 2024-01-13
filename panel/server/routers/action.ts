@@ -1,11 +1,10 @@
 import { createStore } from "@set/timer/dist/store";
-import { protectedProcedure, router } from "../trpc";
-import { z } from "zod";
 import type { Observer } from "@trpc/server/observable";
 import { observable } from "@trpc/server/observable";
+import { z } from "zod";
 import { stopwatchStateProvider } from "../db";
 import { updateSplitTimesQueue } from "../queue";
-import { logger } from "../../utils";
+import { protectedProcedure, router } from "../trpc";
 
 type Action = any;
 
@@ -24,10 +23,7 @@ type Client = {
 let clients: Client[] = [];
 
 export const dispatchAction = async (raceId: number, clientId: string, action: any) => {
-    logger.log("dispatch action!!");
     const messageRecipents = clients.filter(c => c.raceId === raceId && c.clientId !== clientId);
-
-    logger.log(messageRecipents.length, raceId, clientId, action);
 
     messageRecipents.forEach(c => c.emit.next(action));
 
