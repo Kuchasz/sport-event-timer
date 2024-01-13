@@ -1976,7 +1976,8 @@
       "typeBibNumber": "Wpisz numer startowy zawodnika"
     },
     "status": {
-      "timingPoint": "Punkt pomiarowy"
+      "timingPoint": "Punkt pomiarowy",
+      "systemTime": "Czas systemowy"
     }
   }
 }

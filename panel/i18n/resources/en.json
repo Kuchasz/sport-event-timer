@@ -1976,7 +1976,8 @@
       "typeBibNumber": "Type player's bib number"
     },
     "status": {
-      "timingPoint": "Timing point"
+      "timingPoint": "Timing point",
+      "systemTime": "System time"
     }
   }
 }

@@ -113,12 +113,14 @@ export const Status = ({ raceId }: { raceId: string }) => {
             <div className="z-10 flex w-screen flex-shrink-0 items-center justify-between bg-black px-4 py-2 font-semibold text-white">
                 <Timer offset={offset} />
 
-                <span className="flex w-full">
+                <span className="flex w-full justify-between">
                     {!timingPointMissing && <SelectedTimingPoint timingPointName={timingPoint.name} />}
-                    <div className="flex-grow"></div>
-                    <Link href={`/stopwatch/${raceId}/settings`}>
-                        <SettingsCog />
-                    </Link>
+
+                    <div className="flex items-center justify-end">
+                        <Link href={`/stopwatch/${raceId}/settings`}>
+                            <SettingsCog />
+                        </Link>
+                    </div>
                 </span>
             </div>
         </div>
