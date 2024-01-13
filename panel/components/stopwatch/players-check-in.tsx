@@ -53,9 +53,13 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
                         </Transition>
                     ))}
                     <div
-                        className={classNames("absolute flex items-center text-sm text-gray-300 opacity-0 transition-opacity", {
-                            ["opacity-100"]: !playerNumber,
-                        })}>
+                        className={classNames(
+                            "absolute flex items-center text-sm text-gray-300 opacity-0 transition-all",
+                            {
+                                ["opacity-100"]: !playerNumber,
+                            },
+                            playerNumber ? "translate-y-full" : "translate-y-0",
+                        )}>
                         <span>{t("stopwatch.checkIn.typeBibNumber")}</span>
                     </div>
                 </div>
