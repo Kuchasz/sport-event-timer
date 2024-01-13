@@ -23,9 +23,9 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     const actualBibNumbers = new Set(existingPlayers.map(p => p.bibNumber));
     const stopwatchState = await stopwatchStateProvider.get(raceId);
 
-    const actualSplitTimes = stopwatchState.timeStamps!.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
+    const actualSplitTimes = stopwatchState.timeStamps.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
     const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
-    const actualAbsences = stopwatchState.absences!.filter(a => a.bibNumber && actualBibNumbers.has(a.bibNumber.toString()));
+    const actualAbsences = stopwatchState.absences.filter(a => a.bibNumber && actualBibNumbers.has(a.bibNumber.toString()));
     const actualAbsencesMap = new Map(actualAbsences.map(a => [a.id, a]));
 
     const splitTimes_existing = new Set(existingSplitTimes.map(e => e.id));
