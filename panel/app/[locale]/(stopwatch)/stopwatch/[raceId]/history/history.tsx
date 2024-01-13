@@ -4,6 +4,7 @@ import { formatTime } from "@set/utils/dist/datetime";
 import { sortDesc } from "@set/utils/dist/array";
 import type { HistoricAction } from "@set/timer/dist/model";
 import { useTimerSelector } from "../../../../../../hooks";
+import classNames from "classnames";
 
 const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) => {
     return (
@@ -12,7 +13,13 @@ const ActionDisplay = ({ historicAction }: { historicAction: HistoricAction }) =
                 <div>{formatTime(new Date(historicAction.issuedAt))}</div>
                 <div>{historicAction.issuer}</div>
             </div>
-            <div>{historicAction.action.type.replaceAll("/", ".")}</div>
+            <div className="text-xs">
+                {historicAction.action.type.split("/").map((n, i, { length }) => (
+                    <span className={classNames("mx-1 rounded-md bg-gray-100 px-2 py-1", i === length - 1 ? "font-semibold" : null)}>
+                        {n}
+                    </span>
+                ))}
+            </div>
         </div>
     );
 };
