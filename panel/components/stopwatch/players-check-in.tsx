@@ -34,7 +34,7 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
     const t = useTranslations();
     return (
         <div className="flex flex-col items-center px-12">
-            <div className="my-4 flex w-full items-center justify-between">
+            <div className="my-6 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>

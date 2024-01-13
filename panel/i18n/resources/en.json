@@ -1948,9 +1948,10 @@
     },
     "times": {
       "title": {
-        "text": "Registered split times"
+        "text": "Split times"
       },
-      "registerSplitTime": "Register split time"
+      "registerSplitTime": "Register split time",
+      "registeredSplitTimes": "Registered split times"
     },
     "tweak": {
       "title": {

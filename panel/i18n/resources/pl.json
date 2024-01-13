@@ -1948,9 +1948,10 @@
     },
     "times": {
       "title": {
-        "text": "Zarejestrowane międzyczasy"
+        "text": "Międzyczasy"
       },
-      "registerSplitTime": "Zarejestruj międzyczas"
+      "registerSplitTime": "Zarejestruj międzyczas",
+      "registeredSplitTimes": "Zarejestrowane międzyczasy"
     },
     "tweak": {
       "title": {

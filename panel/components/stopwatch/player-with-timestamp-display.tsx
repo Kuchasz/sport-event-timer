@@ -25,7 +25,7 @@ export const PlayerWithTimeStampDisplay = ({
     return (
         <span className="flex h-12 grow items-center">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="mr-4 font-mono text-3xl">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
+                <span className="mr-4 font-mono text-3xl leading-none">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
             ) : null}
 
             <span className="grow">
@@ -51,7 +51,7 @@ export const PlayerWithTimeStampDisplay = ({
                         {playerWithTimeStamp.absent ? t("stopwatch.list.absent") : previousAbsentState ? t("stopwatch.list.absent") : null}
                     </span>
                 </div>
-                <div className="text-sm opacity-50">
+                <div className="text-xs font-semibold text-gray-400 opacity-75">
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>
             </span>

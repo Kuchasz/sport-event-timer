@@ -86,9 +86,9 @@ const Item = <T extends string>({
 
     return (
         <Transition appear show enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100">
-            <div style={style} className="t-0 absolute left-0 w-full py-0.5">
+            <div style={style} className="t-0 absolute left-0 w-full">
                 <div
-                    className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow"
+                    className="relative flex items-center rounded-xl px-3 py-1"
                     ref={targetElement}
                     onTouchStart={e => {
                         startMoveElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
@@ -180,21 +180,22 @@ export const PlayersTimes = () => {
     const rowVirtualizer = useVirtualizer({
         count: times.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 64 + 4,
+        estimateSize: () => 56 + 0,
     });
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 
     return (
         <div className="flex h-full flex-col">
-            <div className="my-2 flex flex-col px-2">
+            <div className="my-3 flex flex-col px-5">
+                <span className="mb-2 font-semibold">{t("stopwatch.times.registerSplitTime")}</span>
                 <button
                     onPointerDown={onAddTime}
-                    className="active:animate-pushInLittle flex w-full flex-col items-center justify-center self-end rounded-md border-0 bg-gradient-to-r from-orange-500 to-red-500 py-8 text-center text-white outline-none">
+                    className="active:animate-pushInLittle flex w-full flex-col items-center justify-center self-end rounded-md border-0 bg-gradient-to-b from-orange-500 to-red-500 py-8 text-center text-white shadow-md outline-none">
                     <Icon size={3} path={mdiTimerPlusOutline} />
-                    <span className="mt-2 font-semibold">{t("stopwatch.times.registerSplitTime")}</span>
                 </button>
             </div>
+            <span className="px-5 font-semibold">{t("stopwatch.times.registeredSplitTimes")}</span>
             <div ref={parentRef} className="h-full flex-grow overflow-x-hidden px-2">
                 <div
                     style={{
