@@ -46,9 +46,12 @@ export const BottomMenu = ({
 
     return (
         <div
-            className={classNames("flex select-none justify-around bg-white py-3 transition-transform ease-out", {
-                ["translate-y-full"]: isOffline || timingPointMissing,
-            })}>
+            className={classNames(
+                "z-10 flex select-none justify-around bg-white py-3 shadow-2xl transition-transform ease-out will-change-transform",
+                {
+                    ["translate-y-full"]: isOffline || timingPointMissing,
+                },
+            )}>
             <BottomMenuButton
                 path={raceId + "/list"}
                 text={t("stopwatch.menuItems.players")}
