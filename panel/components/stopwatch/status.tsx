@@ -115,7 +115,6 @@ export const Status = ({ raceId }: { raceId: string }) => {
 
                 <span className={classNames("flex w-full", !timingPointMissing ? "justify-between" : "justify-end")}>
                     {!timingPointMissing && <SelectedTimingPoint timingPointName={timingPoint.name} />}
-
                     <div className="flex items-center justify-end">
                         <Link href={`/stopwatch/${raceId}/settings`}>
                             <SettingsCog />

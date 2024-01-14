@@ -1,4 +1,4 @@
-import type { Action } from "@reduxjs/toolkit";
+import type { Action, UnknownAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import * as m from "../model";
 
@@ -15,12 +15,16 @@ export interface IssuedAction extends Action {
     payload: any;
 }
 
+function isIssuedAction(action: UnknownAction) {
+    return typeof action?.__issuer === "string" && typeof action?.__issuedAt === "number";
+}
+
 export const actionsHistorySlice = createSlice({
     name: "actionsHistory",
     initialState,
     reducers: {},
     extraReducers: builder =>
-        builder.addDefaultCase((state, action) => {
+        builder.addMatcher(isIssuedAction, (state, action) => {
             const issuedAction = action as IssuedAction;
             return m.addHistoricAction(state, {
                 action: { type: issuedAction.type, payload: issuedAction.payload },
