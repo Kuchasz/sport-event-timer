@@ -1,12 +1,14 @@
 "use client";
 
-import { mdiAccountAlertOutline, mdiAccountSupervisor, mdiDeleteOutline, mdiTimerPlusOutline, mdiWrenchOutline } from "@mdi/js";
+import { Transition } from "@headlessui/react";
+import { mdiDeleteOutline, mdiTimerPlusOutline, mdiWrenchOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
 import { sortDesc } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import classNames from "classnames";
 import { useAtom } from "jotai";
 import type { Route } from "next";
 import { useTranslations } from "next-intl";
@@ -15,11 +17,9 @@ import type { CSSProperties } from "react";
 import { useRef } from "react";
 import { timeOffsetAtom, timingPointIdAtom } from "states/stopwatch-states";
 import { trpc } from "trpc-core";
-import { ActionButton, PrimaryActionButton } from "../../../../../../components/stopwatch/action-button";
+import { ActionButton } from "../../../../../../components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
-import { Transition } from "@headlessui/react";
-import classNames from "classnames";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -111,22 +111,12 @@ const Item = <T extends string>({
                             lastName: t.player?.lastName,
                         }}
                         padBibNumber={padBibNumber}
+                        onAssign={() =>
+                            !t.player
+                                ? navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route)
+                                : navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route)
+                        }
                     />
-                    {!t.player ? (
-                        <PrimaryActionButton
-                            onClick={() => {
-                                navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route);
-                            }}
-                            icon={mdiAccountAlertOutline}
-                        />
-                    ) : (
-                        <ActionButton
-                            icon={mdiAccountSupervisor}
-                            onClick={() => {
-                                navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route);
-                            }}
-                        />
-                    )}
                     <ActionButton
                         icon={mdiWrenchOutline}
                         onClick={() => {

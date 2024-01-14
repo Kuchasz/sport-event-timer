@@ -4,6 +4,8 @@ import type { Absence, Player, TimeStamp } from "@set/timer/dist/model";
 import classNames from "classnames";
 import { usePreviousValue } from "hooks";
 import { useTranslations } from "next-intl";
+import Icon from "@mdi/react";
+import { mdiAccountAlertOutline } from "@mdi/js";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp?: TimeStamp;
@@ -13,9 +15,11 @@ type PlayerWithTimeStamp = Player & {
 export const PlayerWithTimeStampDisplay = ({
     padBibNumber,
     playerWithTimeStamp,
+    onAssign,
 }: {
     padBibNumber: number;
     playerWithTimeStamp: Partial<PlayerWithTimeStamp>;
+    onAssign?: () => void;
 }) => {
     const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
@@ -25,10 +29,18 @@ export const PlayerWithTimeStampDisplay = ({
     return (
         <span className="flex h-10 grow items-center">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="text-md mr-4 rounded-full bg-zinc-100 p-2 font-mono font-semibold leading-none text-zinc-600 ">
+                <span
+                    onClick={onAssign}
+                    className="text-md mr-4 rounded-full bg-zinc-100 p-2 font-mono font-semibold leading-none text-zinc-600 ">
                     {formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}
                 </span>
-            ) : null}
+            ) : (
+                <span
+                    onClick={onAssign}
+                    className="text-md mr-4 rounded-full bg-orange-100 p-2 font-mono font-semibold leading-none text-orange-600 ">
+                    <Icon size={0.8} path={mdiAccountAlertOutline}></Icon>
+                </span>
+            )}
 
             <span className="grow text-xs">
                 <div
