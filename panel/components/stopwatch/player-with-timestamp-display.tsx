@@ -25,14 +25,14 @@ export const PlayerWithTimeStampDisplay = ({
     return (
         <span className="flex h-10 grow items-center">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="mr-4 rounded-lg bg-zinc-100 p-2 font-mono text-xl font-medium leading-none ">
+                <span className="text-md mr-4 rounded-full bg-zinc-100 p-2 font-mono font-semibold leading-none text-zinc-600 ">
                     {formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}
                 </span>
             ) : null}
 
             <span className="grow text-xs">
                 <div
-                    className={classNames("overflow-hidden font-semibold text-black transition-all duration-300", {
+                    className={classNames("overflow-hidden text-sm font-semibold text-black transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.timeStamp == null,
                         ["max-h-[18px] opacity-100"]: playerWithTimeStamp.timeStamp,
                     })}>
@@ -45,7 +45,7 @@ export const PlayerWithTimeStampDisplay = ({
                     </span>
                 </div>
                 <div
-                    className={classNames("overflow-hidden font-semibold text-black transition-all duration-300", {
+                    className={classNames("overflow-hidden text-sm font-semibold text-black transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.absent == null,
                         ["max-h-[18px] opacity-100"]: playerWithTimeStamp.absent,
                     })}>
@@ -53,7 +53,11 @@ export const PlayerWithTimeStampDisplay = ({
                         {playerWithTimeStamp.absent ? t("stopwatch.list.absent") : previousAbsentState ? t("stopwatch.list.absent") : null}
                     </span>
                 </div>
-                <div className="font-medium text-zinc-400">
+                <div
+                    className={classNames(
+                        "font-medium text-zinc-400 transition-all",
+                        playerWithTimeStamp.timeStamp || playerWithTimeStamp.absent ? "text-2xs" : "text-sm",
+                    )}>
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>
             </span>

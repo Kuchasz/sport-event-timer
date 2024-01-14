@@ -19,6 +19,7 @@ import { ActionButton, PrimaryActionButton } from "../../../../../../components/
 import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
 import { Transition } from "@headlessui/react";
+import classNames from "classnames";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
@@ -31,6 +32,7 @@ const Item = <T extends string>({
     raceId,
     style,
     padBibNumber,
+    isLast,
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: Route<T> | URL) => void;
@@ -38,6 +40,7 @@ const Item = <T extends string>({
     raceId: number;
     style: CSSProperties;
     padBibNumber: number;
+    isLast: boolean;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -88,7 +91,7 @@ const Item = <T extends string>({
         <Transition appear show enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100">
             <div style={style} className="t-0 absolute left-0 w-full">
                 <div
-                    className="relative flex items-center rounded-xl px-3 py-1"
+                    className={classNames("relative mx-3 flex items-center py-2", { ["border-b border-zinc-100"]: !isLast })}
                     ref={targetElement}
                     onTouchStart={e => {
                         startMoveElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
@@ -180,7 +183,7 @@ export const PlayersTimes = () => {
     const rowVirtualizer = useVirtualizer({
         count: times.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 40 + 8,
+        estimateSize: () => 40 + 16,
     });
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
@@ -203,7 +206,7 @@ export const PlayersTimes = () => {
                         width: "100%",
                         position: "relative",
                     }}>
-                    {rowVirtualizer.getVirtualItems().map(virtualRow => (
+                    {rowVirtualizer.getVirtualItems().map((virtualRow, index, arr) => (
                         <Item
                             style={{ transform: `translateY(${virtualRow.start}px)` }}
                             key={times[virtualRow.index].id}
@@ -212,6 +215,7 @@ export const PlayersTimes = () => {
                             t={times[virtualRow.index]}
                             raceId={parseInt(raceId)}
                             padBibNumber={highestBibNumber.toString().length}
+                            isLast={index === arr.length - 1}
                         />
                     ))}
                 </div>
