@@ -180,7 +180,7 @@ export const PlayersTimes = () => {
     const rowVirtualizer = useVirtualizer({
         count: times.length,
         getScrollElement: () => parentRef.current!,
-        estimateSize: () => 56 + 0,
+        estimateSize: () => 40 + 8,
     });
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
@@ -195,7 +195,7 @@ export const PlayersTimes = () => {
                     <Icon size={3} path={mdiTimerPlusOutline} />
                 </button>
             </div>
-            <span className="px-5 font-semibold">{t("stopwatch.times.registeredSplitTimes")}</span>
+            <span className="px-5 py-2 font-semibold">{t("stopwatch.times.registeredSplitTimes")}</span>
             <div ref={parentRef} className="h-full flex-grow overflow-x-hidden px-2">
                 <div
                     style={{

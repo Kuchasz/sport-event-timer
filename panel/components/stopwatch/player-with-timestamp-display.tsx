@@ -23,16 +23,18 @@ export const PlayerWithTimeStampDisplay = ({
     const t = useTranslations();
 
     return (
-        <span className="flex h-12 grow items-center">
+        <span className="flex h-10 grow items-center">
             {playerWithTimeStamp.bibNumber !== undefined ? (
-                <span className="mr-4 font-mono text-3xl leading-none">{formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}</span>
+                <span className="mr-4 rounded-lg bg-zinc-100 p-2 font-mono text-xl font-medium leading-none ">
+                    {formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}
+                </span>
             ) : null}
 
-            <span className="grow">
+            <span className="grow text-xs">
                 <div
-                    className={classNames("overflow-hidden font-semibold transition-all duration-300", {
+                    className={classNames("overflow-hidden font-semibold text-black transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.timeStamp == null,
-                        ["max-h-8 opacity-100"]: playerWithTimeStamp.timeStamp,
+                        ["max-h-[18px] opacity-100"]: playerWithTimeStamp.timeStamp,
                     })}>
                     <span>
                         {playerWithTimeStamp.timeStamp
@@ -43,15 +45,15 @@ export const PlayerWithTimeStampDisplay = ({
                     </span>
                 </div>
                 <div
-                    className={classNames("overflow-hidden font-semibold transition-all duration-300", {
+                    className={classNames("overflow-hidden font-semibold text-black transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithTimeStamp.absent == null,
-                        ["max-h-8 opacity-100"]: playerWithTimeStamp.absent,
+                        ["max-h-[18px] opacity-100"]: playerWithTimeStamp.absent,
                     })}>
                     <span className="uppercase">
                         {playerWithTimeStamp.absent ? t("stopwatch.list.absent") : previousAbsentState ? t("stopwatch.list.absent") : null}
                     </span>
                 </div>
-                <div className="text-xs font-semibold text-gray-400 opacity-75">
+                <div className="font-medium text-zinc-400">
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>
             </span>

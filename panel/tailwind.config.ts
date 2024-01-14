@@ -102,7 +102,8 @@ module.exports = {
                 "w-2xl": "0 2px 10px rgba(255, 255, 255, 0.2)",
             },
             fontFamily: {
-                sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+                sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
+                mono: ['"Fira code"', ...defaultTheme.fontFamily.mono],
             },
             fontSize: {
                 "2xs": [".65rem", { lineHeight: "0.75rem" }],

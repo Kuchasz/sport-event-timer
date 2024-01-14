@@ -18,7 +18,7 @@ const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProp
     const classes =
         `/stopwatch/${path}` === chosenPath
             ? "opacity-100 pointer-events-none bg-orange-100 text-orange-600"
-            : "opacity-40 hover:opacity-80 cursor-pointer background-transparent";
+            : "opacity-60 hover:opacity-80 cursor-pointer background-transparent";
     const classesText = `/stopwatch/${path}` === chosenPath ? "ml-2 max-w-xs text-orange-600" : "ml-0 max-w-0 text-transparent";
     return (
         <Link href={`/stopwatch/${path}`}>
@@ -47,7 +47,7 @@ export const BottomMenu = ({
     return (
         <div
             className={classNames(
-                "z-10 flex select-none justify-around bg-white py-3 shadow-2xl transition-transform ease-out will-change-transform",
+                "z-10 flex select-none justify-around border-t border-gray-100 bg-white py-3 transition-transform ease-out will-change-transform",
                 {
                     ["translate-y-full"]: isOffline || timingPointMissing,
                 },
