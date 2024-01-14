@@ -21,6 +21,7 @@ import { trpc } from "../../../../../trpc-core";
 import Link from "next/link";
 import { type Route } from "next";
 import type { IssuedAction } from "@set/timer/dist/slices/actions-history";
+import { useTranslations } from "next-intl";
 
 const clientId = uuidv4();
 
@@ -86,9 +87,9 @@ const ErrorPage = ({
 }) => (
     <div className="flex h-full w-full items-center justify-center px-4">
         <div className="flex flex-col items-center">
-            <div className="flex items-center">
+            <div className="flex flex-col items-center">
                 <Icon path={icon} size={1}></Icon>
-                <div className="ml-2 text-xl font-bold">{title}</div>
+                <div className="ml-2 text-center text-xl font-bold">{title}</div>
             </div>
             <div className="my-4 text-center text-sm font-medium text-gray-500">{description}</div>
             <Link href={anchorHref} className="mt-8 rounded-2xl bg-white px-4 py-1 text-sm font-medium">
@@ -109,6 +110,8 @@ export function StopwatchLayout({ children, title }: { children: ReactNode; titl
     const isOffline = connectionState !== "connected";
     const timingPointMissing = !timingPointId || !timingPointOrder.includes(timingPointId);
 
+    const t = useTranslations();
+
     return (
         <ReduxStoreProvider store={store}>
             <ExternalsExposer />
@@ -120,17 +123,17 @@ export function StopwatchLayout({ children, title }: { children: ReactNode; titl
                         {isOffline ? (
                             <ErrorPage
                                 icon={mdiCloudOffOutline}
-                                title="Disconnected"
-                                anchorText="Stable internet connection required"
-                                description="Wait for the auto-reconnect or restart the app by yourself."
+                                title={t("stopwatch.error.disconnected.title")}
+                                anchorText={t("stopwatch.error.disconnected.anchorText")}
+                                description={t("stopwatch.error.disconnected.description")}
                                 anchorHref={`/stopwatch/${raceId}` as Route}
                             />
-                        ) : timingPointMissing && !pathname.includes("config") ? (
+                        ) : timingPointMissing && !pathname.includes("settings") ? (
                             <ErrorPage
                                 icon={mdiCogOutline}
-                                title="Timing point required"
-                                anchorText="Choose timing point first"
-                                description="Stopwatch has to measure the time at a specific timing point. Choose a timing point in the configuration to make the measurements."
+                                title={t("stopwatch.error.noTimingPoint.title")}
+                                anchorText={t("stopwatch.error.noTimingPoint.anchorText")}
+                                description={t("stopwatch.error.noTimingPoint.description")}
                                 anchorHref={`/stopwatch/${raceId}/settings` as Route}
                             />
                         ) : (
