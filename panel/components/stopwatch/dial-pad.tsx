@@ -116,7 +116,7 @@ export const DialPad = (props: DialPadProps) => {
                 desc="wxyz"
             />
             <IconButton enabled={props.canRecord} timeCritical={props.timeCritical} buttonClick={props.onRecord}>
-                <div className="rounded-full bg-orange-500 p-4 text-white">
+                <div className={classNames("rounded-full bg-orange-500 p-4 text-white", props.canRecord ? "animate-wave" : null)}>
                     <Icon size={1} path={props.timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
                 </div>
             </IconButton>

@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { mdiClose } from "@mdi/js";
+import { mdiChevronRight, mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange, sort } from "@set/utils/dist/array";
 import { getAvailableDigits } from "@set/utils/dist/string";
@@ -34,7 +34,7 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
     const t = useTranslations();
     return (
         <div className="flex flex-col items-center px-12">
-            <div className="my-6 flex w-full items-center justify-between">
+            <div className="mt-6 flex w-full items-center justify-between">
                 <div className="invisible">
                     <Icon size={0.8} path={mdiClose}></Icon>
                 </div>
@@ -88,8 +88,9 @@ type PlayerSuggestionProps = {
 export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }: PlayerSuggestionProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className={classNames("flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400", {
-            ["bg-orange-500 px-2 font-semibold text-white"]: typeahead === player.bibNumber,
+        className={classNames("my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500", {
+            ["bg-orange-500 font-semibold text-white"]: typeahead === player.bibNumber,
+            ["bg-zinc-50"]: typeahead !== player.bibNumber,
         })}>
         <div>
             {player.name} {player.lastName}
@@ -100,13 +101,16 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }:
                 ? fuzzysort.highlight(result[0], (m, i) => (
                       <mark
                           className={classNames("bg-transparent font-semibold text-orange-500", {
-                              ["text-white"]: typeahead === player.bibNumber,
+                              ["font-semibold text-white"]: typeahead === player.bibNumber,
                           })}
                           key={i}>
                           {m}
                       </mark>
                   ))
                 : player.bibNumber}
+        </div>
+        <div className={classNames("ml-2 rounded-full", typeahead === player.bibNumber ? "text-white" : "")}>
+            <Icon size={1} path={mdiChevronRight}></Icon>
         </div>
     </button>
 );
@@ -121,8 +125,6 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const [playerNumber, setPlayerNumber] = useState("");
 
     const { raceId } = useParams<{ raceId: string }>()!;
-
-    const t = useTranslations();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
@@ -148,14 +150,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
 
     return (
         <div className="flex h-full flex-col">
-            <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} bestGuess={bestGuess} />
-            {!!sortedAvailablePlayers?.length && (
-                <div className="text-2xs flex w-full justify-between px-12 font-semibold text-gray-400">
-                    <div className="uppercase">{t("stopwatch.checkIn.suggestion.player")}</div>
-                    <div>{t("stopwatch.checkIn.suggestion.bibNumber")}</div>
-                </div>
-            )}
-            <div className="mx-12 mt-2 flex h-2/5 flex-auto flex-col items-stretch overflow-y-auto text-white">
+            <div className="mx-12 mt-6 flex h-2/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
                 {sortedAvailablePlayers.map(p => (
                     <PlayerSuggestion
                         timeCritical={timeCritical}
@@ -169,6 +164,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                     />
                 ))}
             </div>
+            <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} bestGuess={bestGuess} />
             <div className="flex flex-col items-center bg-white">
                 <DialPad
                     timeCritical={timeCritical}

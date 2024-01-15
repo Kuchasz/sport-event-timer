@@ -1970,10 +1970,6 @@
       "history": "History"
     },
     "checkIn": {
-      "suggestion": {
-        "player": "Player",
-        "bibNumber": "Bib number"
-      },
       "typeBibNumber": "Type player's bib number"
     },
     "status": {

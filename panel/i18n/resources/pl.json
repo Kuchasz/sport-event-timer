@@ -1970,10 +1970,6 @@
       "history": "Historia"
     },
     "checkIn": {
-      "suggestion": {
-        "player": "Zawodnik",
-        "bibNumber": "Numer startowy"
-      },
       "typeBibNumber": "Wpisz numer startowy zawodnika"
     },
     "status": {

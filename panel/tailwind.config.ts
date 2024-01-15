@@ -52,10 +52,11 @@ module.exports = {
         },
         extend: {
             animation: {
-                pushIn: "pushIn 0.2s ease-out",
+                pushIn: "pushIn 0.3s ease-out",
                 pushInLittle: "pushInLittle 0.2s ease-out",
                 fadeIn: "fadeIn 0.2s",
                 fadeOut: "fadeOut 0.2s",
+                wave: "wave 2s infinite",
             },
             borderRadius: {
                 lg: `var(--radius)`,
@@ -113,9 +114,8 @@ module.exports = {
             },
             keyframes: {
                 pushIn: {
-                    "0%": { transform: "scale(1)" },
-                    "30%": { transform: "scale(0.8)" },
-                    "100%": { transfrm: "scale(0.9)" },
+                    "0%": { transform: "scale(0.8)" },
+                    "100%": { transfrm: "scale(1)" },
                 },
                 pushInLittle: {
                     "0%": { transform: "scale(0.95)" },
@@ -126,6 +126,17 @@ module.exports = {
                     "100%": { opacity: "100" },
                 },
                 fadeOut: { "0%": { opacity: "100" }, "100%": { opacity: "0" } },
+                wave: {
+                    "0%": { transform: "scale(1)" },
+                    "5%": { transform: "scale(0.9)" },
+                    "20%": { transform: "scale(1)" },
+                    "10%": {
+                        boxShadow: "0 0 0 0px rgba(249, 115, 22, 0.2)",
+                    },
+                    "100%": {
+                        boxShadow: "0 0 0 20px rgba(249, 115, 22, 0)",
+                    },
+                },
             },
             zIndex: {
                 "-1": "-1",
