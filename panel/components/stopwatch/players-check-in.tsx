@@ -88,8 +88,8 @@ type PlayerSuggestionProps = {
 export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }: PlayerSuggestionProps) => (
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className={classNames("flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-400", {
-            ["bg-orange-500 font-semibold text-white"]: typeahead === player.bibNumber,
+        className={classNames("flex w-full select-none items-center rounded-md py-1 text-sm text-gray-400", {
+            ["bg-orange-500 px-2 font-semibold text-white"]: typeahead === player.bibNumber,
         })}>
         <div>
             {player.name} {player.lastName}

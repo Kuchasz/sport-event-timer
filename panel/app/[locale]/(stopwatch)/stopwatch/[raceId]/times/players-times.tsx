@@ -1,7 +1,7 @@
 "use client";
 
 import { Transition } from "@headlessui/react";
-import { mdiDeleteOutline, mdiTimerPlusOutline, mdiWrenchOutline } from "@mdi/js";
+import { mdiDeleteOutline, mdiTimerEditOutline, mdiTimerPlusOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
@@ -118,7 +118,7 @@ const Item = <T extends string>({
                         }
                     />
                     <ActionButton
-                        icon={mdiWrenchOutline}
+                        icon={mdiTimerEditOutline}
                         onClick={() => {
                             navigate(`/stopwatch/${raceId}/times/${t.id}/tweak` as Route);
                         }}
