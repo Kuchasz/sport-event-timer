@@ -1,12 +1,12 @@
 "use client";
 
-import { ActionButton, PrimaryActionButton } from "../../../../../../../components/stopwatch/action-button";
+import { ActionButton, PrimaryActionButton } from "../../../../../../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/utils/dist/number";
 import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
-import { PlayerWithTimeStampDisplay } from "../../../../../../../components/stopwatch/player-with-timestamp-display";
+import { PlayerWithTimeStampDisplay } from "../../../../../../../../components/stopwatch/player-with-timestamp-display";
 import type { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
-import { useTimerDispatch, useTimerSelector } from "../../../../../../../hooks";
+import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { trpc } from "trpc-core";

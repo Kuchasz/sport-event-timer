@@ -1,13 +1,13 @@
 "use client";
 
-import { PlayersCheckIn } from "../../../../../../../components/stopwatch/players-check-in";
-import { reassign } from "@set/timer/dist/slices/time-stamps";
-import { useTimerDispatch } from "../../../../../../../hooks";
-import { useParams, useRouter } from "next/navigation";
+import { assign } from "@set/timer/dist/slices/time-stamps";
 import { useAtom } from "jotai";
+import { useParams, useRouter } from "next/navigation";
 import { timingPointIdAtom } from "states/stopwatch-states";
+import { PlayersCheckIn } from "../../../../../../../../components/stopwatch/players-check-in";
+import { useTimerDispatch } from "../../../../../../../../hooks";
 
-export const PlayerReassignTime = () => {
+export const PlayerAssignTime = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
     const dispatch = useTimerDispatch();
 
@@ -20,7 +20,7 @@ export const PlayerReassignTime = () => {
         <PlayersCheckIn
             timeCritical={false}
             onPlayerCheckIn={bibNumber => {
-                dispatch(reassign({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
+                dispatch(assign({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
                 back();
             }}
             timingPointId={timingPointId}

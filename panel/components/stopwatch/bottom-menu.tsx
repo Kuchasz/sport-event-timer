@@ -15,11 +15,12 @@ type BottomMenuButtonProps = {
 };
 
 const BottomMenuButton = ({ text, path, icon, chosenPath }: BottomMenuButtonProps) => {
-    const classes =
-        `/stopwatch/${path}` === chosenPath
-            ? "opacity-100 pointer-events-none bg-orange-100 text-orange-600"
-            : "opacity-60 hover:opacity-80 cursor-pointer background-transparent";
-    const classesText = `/stopwatch/${path}` === chosenPath ? "ml-2 max-w-xs text-orange-600" : "ml-0 max-w-0 text-transparent";
+    const classes = String(chosenPath).startsWith(`/stopwatch/${path}`)
+        ? "opacity-100 pointer-events-none bg-orange-100 text-orange-600"
+        : "opacity-60 hover:opacity-80 cursor-pointer background-transparent";
+    const classesText = String(chosenPath).startsWith(`/stopwatch/${path}`)
+        ? "ml-2 max-w-xs text-orange-600"
+        : "ml-0 max-w-0 text-transparent";
     return (
         <Link href={`/stopwatch/${path}`}>
             <span className={`${classes} flex items-center rounded-full px-4 py-1.5 transition-all duration-500`}>

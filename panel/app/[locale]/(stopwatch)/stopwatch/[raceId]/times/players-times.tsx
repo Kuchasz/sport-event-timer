@@ -113,14 +113,14 @@ const Item = <T extends string>({
                         padBibNumber={padBibNumber}
                         onAssign={() =>
                             !t.player
-                                ? navigate(`/stopwatch/${raceId}/assign/${t.id}` as Route)
-                                : navigate(`/stopwatch/${raceId}/reassign/${t.id}` as Route)
+                                ? navigate(`/stopwatch/${raceId}/times/${t.id}/assign` as Route)
+                                : navigate(`/stopwatch/${raceId}/times/${t.id}/reassign` as Route)
                         }
                     />
                     <ActionButton
                         icon={mdiWrenchOutline}
                         onClick={() => {
-                            navigate(`/stopwatch/${raceId}/tweak/${t.id}` as Route);
+                            navigate(`/stopwatch/${raceId}/times/${t.id}/tweak` as Route);
                         }}
                     />
                     {/* <ActionButton
