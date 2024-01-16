@@ -1,4 +1,4 @@
-name: Prod.Publish
+name: Prod/delivery
 
 on:
     workflow_dispatch:

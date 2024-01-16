@@ -1,4 +1,4 @@
-name: Prod.Build_Lint
+name: Prod/integration
 
 on:
     push:

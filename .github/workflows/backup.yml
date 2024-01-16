@@ -1,4 +1,4 @@
-name: Prod.DB-Backup
+name: Prod/backup
 
 on:
     workflow_dispatch:
