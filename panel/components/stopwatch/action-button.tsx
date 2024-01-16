@@ -35,7 +35,7 @@ export const ActionButton = ({
     <button
         onClick={onClick}
         className={classNames("active:animate-pushIn mx-0.5 flex items-center rounded-xl px-3 py-2", {
-            ["bg-red-600 text-white"]: alert,
+            ["bg-red-500 text-white"]: alert,
             ["bg-zinc-100"]: !alert,
         })}>
         {icon && <Icon path={icon} size={0.8} />}

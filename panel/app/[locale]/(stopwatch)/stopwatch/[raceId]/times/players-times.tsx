@@ -110,7 +110,7 @@ const Item = <T extends string>({
                             name: t.player?.name,
                             lastName: t.player?.lastName,
                         }}
-                        padBibNumber={padBibNumber}
+                        padLeftBibNumber={padBibNumber}
                         onAssign={() =>
                             !t.player
                                 ? navigate(`/stopwatch/${raceId}/times/${t.id}/assign` as Route)

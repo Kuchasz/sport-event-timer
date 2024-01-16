@@ -13,16 +13,20 @@ type PlayerWithTimeStamp = Player & {
 };
 
 export const PlayerWithTimeStampDisplay = ({
-    padBibNumber,
+    padLeftBibNumber,
     playerWithTimeStamp,
     onAssign,
 }: {
-    padBibNumber: number;
+    padLeftBibNumber: number;
     playerWithTimeStamp: Partial<PlayerWithTimeStamp>;
     onAssign?: () => void;
 }) => {
     const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
+
+    const bibText = padLeftBibNumber
+        ? ".".repeat(padLeftBibNumber - padLeftBibNumber.toString().length) + padLeftBibNumber
+        : playerWithTimeStamp.bibNumber?.toString() ?? "";
 
     const t = useTranslations();
 
@@ -32,13 +36,14 @@ export const PlayerWithTimeStampDisplay = ({
                 <span
                     onClick={onAssign}
                     className="text-md mr-4 rounded-full bg-zinc-100 p-2 font-mono font-semibold leading-none text-zinc-600 ">
-                    {formatNumber(playerWithTimeStamp.bibNumber, padBibNumber)}
+                    {formatNumber(playerWithTimeStamp.bibNumber, padLeftBibNumber)}
                 </span>
             ) : (
                 <span
                     onClick={onAssign}
-                    className="text-md mr-4 rounded-full bg-orange-100 p-2 font-mono font-semibold leading-none text-orange-600 ">
-                    <Icon size={0.8} path={mdiAccountAlertOutline}></Icon>
+                    className="text-md relative mr-4 flex flex-col items-center justify-center rounded-full bg-red-500 p-2 font-mono font-semibold leading-none text-white">
+                    <span className="font-mono opacity-0">{bibText}</span>
+                    <Icon className="absolute" size={0.8} path={mdiAccountAlertOutline}></Icon>
                 </span>
             )}
 

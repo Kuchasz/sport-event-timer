@@ -74,7 +74,7 @@ export const PlayersList = () => {
                         style={{ transform: `translateY(${virtualRow.start}px)` }}>
                         <div className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow">
                             <PlayerWithTimeStampDisplay
-                                padBibNumber={highestBibNumber.toString().length}
+                                padLeftBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}
                             />
                             {!players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (

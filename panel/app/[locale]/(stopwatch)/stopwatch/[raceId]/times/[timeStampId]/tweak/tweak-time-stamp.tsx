@@ -67,7 +67,7 @@ export const TweakTimeStamp = () => {
         <div className="flex h-full flex-col items-center">
             <div className="flex grow flex-col items-center justify-center">
                 <div>
-                    <PlayerWithTimeStampDisplay padBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
+                    <PlayerWithTimeStampDisplay padLeftBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
                 </div>
                 <div className="mt-10 flex items-center">
                     <div className="flex flex-col items-center">
