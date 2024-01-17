@@ -11,7 +11,7 @@ jobs:
             - name: Download Application Package
               uses: dawidd6/action-download-artifact@v2
               with:
-                  workflow: build-lint.yml
+                  workflow: integration.yml
                   workflow_conclusion: success
 
             - name: Upload Artifact
