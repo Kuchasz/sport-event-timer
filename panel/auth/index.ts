@@ -190,12 +190,12 @@ export const withRaceApiKey =
         await next(req, res);
     };
 
+export const loginPageUrl = "/id/login";
+
 export async function authenticate() {
     const session = await getServerSession();
 
-    const callbackUrl = `/id/login`;
-
     if (!session) {
-        redirect(callbackUrl);
+        redirect(loginPageUrl);
     }
 }

@@ -73,7 +73,7 @@ export const PlayerWithTimeStampDisplay = ({
                 <div
                     className={classNames(
                         "font-medium text-zinc-400 transition-all",
-                        playerWithTimeStamp.timeStamp || playerWithTimeStamp.absent ? "text-2xs" : "text-sm",
+                        playerWithTimeStamp.timeStamp || playerWithTimeStamp.absent ? "text-xs" : "text-sm",
                     )}>
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>
