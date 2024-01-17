@@ -92,6 +92,7 @@ Application for making time measurements
 | 07/01/2023 | Investigate and fix onmousedown issues in stopwatch                   | todo :date:                                |
 | 14/01/2023 | Keyboard support on stopwatch pad                                     | todo :date:                                |
 | 17/01/2023 | Countdown change background on remaining time                         | todo :date:                                |
+| 18/01/2023 | Master/details view on players page                                   | todo :date:                                |
 
 ## TODO
 
