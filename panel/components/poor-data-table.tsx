@@ -102,14 +102,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="mb-4 flex justify-between">
+            <div className="mb-4 flex">
                 {searchFields?.length && (
-                    <PoorInput
-                        className="flex-grow"
-                        value={searchQuery}
-                        onChange={e => setSearchQuery(e.target.value)}
-                        placeholder={searchPlaceholder ?? t("shared.dataTable.search.placeholder")}
-                    />
+                    <div className="flex-grow">
+                        <PoorInput
+                            className="flex-grow"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            placeholder={searchPlaceholder ?? t("shared.dataTable.search.placeholder")}
+                        />
+                    </div>
                 )}
                 <div className="flex-grow"></div>
                 {!props.hideColumnsChooser && (
