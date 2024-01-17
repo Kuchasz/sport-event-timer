@@ -109,7 +109,7 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }:
                   ))
                 : player.bibNumber}
         </div>
-        <div className={classNames("ml-2 rounded-full", typeahead === player.bibNumber ? "text-white" : "")}>
+        <div className={classNames("ml-2 rounded-full", typeahead === player.bibNumber ? "opacity-0" : "")}>
             <Icon size={1} path={mdiChevronRight}></Icon>
         </div>
     </button>
