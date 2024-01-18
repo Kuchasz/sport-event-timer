@@ -93,6 +93,7 @@ Application for making time measurements
 | 14/01/2023 | Keyboard support on stopwatch pad                                     | todo :date:                                |
 | 17/01/2023 | Countdown change background on remaining time                         | todo :date:                                |
 | 18/01/2023 | Master/details view on players page                                   | todo :date:                                |
+| 18/01/2023 | Add longer, more self explanatory descriptions to page headers        | todo :date:                                |
 
 ## TODO
 

@@ -643,6 +643,14 @@
         "button": "Dodaj Klasyfikację",
         "title": "Stwórz nową klasyfikację"
       },
+      "delete": {
+        "confirmation": {
+          "text": "Próbujesz usunąć Klasyfikację {name}. Czy chcesz kontynuować?",
+          "title": "Usuń klasyfikację"
+        },
+        "description": "Możesz usunąć klasyfikację",
+        "name": "Usuń klasyfikację"
+      },
       "edit": {
         "confirmation": {
           "title": "Edytujesz klasyfikację"
@@ -676,14 +684,6 @@
       "manageCategories": {
         "description": "Możesz zdefiniować kategorie dla klasyfikacji",
         "name": "Zarządzaj kategoriami"
-      },
-      "delete": {
-        "confirmation": {
-          "text": "Próbujesz usunąć Klasyfikację {name}. Czy chcesz kontynuować?",
-          "title": "Usuń klasyfikację"
-        },
-        "name": "Usuń klasyfikację",
-        "description": "Możesz usunąć klasyfikację"
       }
     },
     "general": {
@@ -1279,6 +1279,10 @@
           "label": "Opis",
           "placeholder": "Opisz punkt pomiarowy"
         },
+        "laps": {
+          "label": "Ilość okrążeń",
+          "placeholder": "Podaj ilość okrążeń"
+        },
         "name": {
           "label": "Nazwa Punktu Pomiarowego",
           "placeholder": "Wpisz nazwę Punktu Pomiarowego"
@@ -1286,10 +1290,6 @@
         "shortName": {
           "label": "Nazwa skrócona",
           "placeholder": "Wpisz nazwę skróconą"
-        },
-        "laps": {
-          "placeholder": "Podaj ilość okrążeń",
-          "label": "Ilość okrążeń"
         }
       },
       "header": {
@@ -1303,9 +1303,17 @@
           "getQrCode": "Pobierz kod QR",
           "open": "Otwórz"
         },
+        "clock": {
+          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie.",
+          "title": "Zegar"
+        },
         "countdown": {
           "description": "Przydatny w miejscu startu. Można go wyświetlić na telefonie, tablecie lub dowolnym większym ekranie. Wyświetla numer startowy i nazwisko następnego zawodnika. Odlicza sekundy do jego startu. Umożliwia także włączenie sygnałów dźwiękowych.",
           "title": "Odliczanie (do zera)"
+        },
+        "preciseClock": {
+          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie. Wyświetla aktualny czas z wyższą dokładością.",
+          "title": "Precyzyjny Zegar"
         },
         "results": {
           "description": "Wyświetla wyniki na żywo. Rezultaty zawodników pojawiają się od razu po odznaczeniu ich w stoperze. Uwzględniany jest podział na kategorie. Strona dostosowana jest do wyświetlania na telefonie, odświeża się automatycznie.",
@@ -1314,14 +1322,6 @@
         "startList": {
           "description": "Aplikacja przydatna wszystkim zawodnikom. Mogą sprawdzić swoją godzinę startu. Zobaczyć kto już wystartował, kto wystartuje jako następny oraz ilu zawodników zostało do końca. Uwzględniona jest cała lista startowa. Zoptymalizowana dla telefonów.",
           "title": "Lista startowa"
-        },
-        "clock": {
-          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie.",
-          "title": "Zegar"
-        },
-        "preciseClock": {
-          "description": "Zegar pokazujący aktualną godzinę zsynchronizowaną z zegarem systemu pomiaru czasu. Przydatne to wyświetlenia na mecie i starcie. Wyświetla aktualny czas z wyższą dokładością.",
-          "title": "Precyzyjny Zegar"
         }
       },
       "header": {
@@ -1350,14 +1350,14 @@
     }
   },
   "raceManagement": {
-    "race": {
-      "errors": {
-        "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
-      }
-    },
     "classification": {
       "errors": {
         "atLeastOneClassificationRequired": "Wyścig musi posiadać conajmniej jedną klasyfikację"
+      }
+    },
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
       }
     }
   },
@@ -1729,6 +1729,15 @@
       }
     },
     "errorOccured": "Wystąpił błąd",
+    "errors": {
+      "goBack": "Wróć",
+      "goHome": "Powrót na start",
+      "notFound": {
+        "code": "Błąd 404",
+        "description": "Przepraszamy, nie można znaleźć strony, którą szukasz",
+        "title": "Strona nie znaleziona"
+      }
+    },
     "genders": {
       "female": "Kobieta",
       "male": "Mężczyzna"
@@ -1750,16 +1759,7 @@
       "disabled": "Wyłączone",
       "enabled": "Włączone"
     },
-    "unauthorized": "Nieautoryzowany",
-    "errors": {
-      "notFound": {
-        "code": "Błąd 404",
-        "title": "Strona nie znaleziona",
-        "description": "Przepraszamy, nie można znaleźć strony, którą szukasz"
-      },
-      "goBack": "Wróć",
-      "goHome": "Powrót na start"
-    }
+    "unauthorized": "Nieautoryzowany"
   },
   "startList": {
     "empty": "Lista startowa jest pusta",
@@ -1768,6 +1768,80 @@
     "noPlayersLeft": "Brak oczekujących zawodników",
     "startsIn": "czas do startu",
     "startTime": "Start"
+  },
+  "stopwatch": {
+    "assign": {
+      "title": {
+        "text": "Przypisz międzyczas"
+      }
+    },
+    "checkIn": {
+      "typeBibNumber": "Wpisz numer startowy zawodnika"
+    },
+    "error": {
+      "disconnected": {
+        "anchorText": "Stabilne połączenie z internetem jest wymagane",
+        "description": "Poczekaj na automatyczne ponowne połączenie lub uruchom aplikację ponownie samodzielnie.",
+        "title": "Nie połączono"
+      },
+      "noTimingPoint": {
+        "anchorText": "Wybierz punkt pomiarowy",
+        "description": "Stoper musi mierzyć czas w określonym punkcie pomiaru czasu. Wybierz punkt pomiaru czasu w konfiguracji, aby wykonać pomiary.",
+        "title": "Brak konfiguracji punktu pomiarowego"
+      }
+    },
+    "history": {
+      "title": {
+        "text": "Historia"
+      }
+    },
+    "list": {
+      "absent": "nieobecny",
+      "title": {
+        "text": "Lista zawodników"
+      }
+    },
+    "menuItems": {
+      "history": "Historia",
+      "pad": "Klawiatura",
+      "players": "Zawodnicy",
+      "times": "Międzyczasy"
+    },
+    "pad": {
+      "title": {
+        "text": "Zarejestruj międzyczas"
+      }
+    },
+    "reassign": {
+      "title": {
+        "text": "Ponownie przypisz międzyczas"
+      }
+    },
+    "settings": {
+      "selectTimingPoint": {
+        "description": "Wybór punktu dla którego prowadzony będzie pomiar czasu.",
+        "header": "Wybierz punkt pomiarowy"
+      },
+      "title": {
+        "text": "Ustawienia"
+      }
+    },
+    "status": {
+      "systemTime": "Czas systemowy",
+      "timingPoint": "Punkt pomiarowy"
+    },
+    "times": {
+      "registeredSplitTimes": "Zarejestrowane międzyczasy",
+      "registerSplitTime": "Zarejestruj międzyczas",
+      "title": {
+        "text": "Międzyczasy"
+      }
+    },
+    "tweak": {
+      "title": {
+        "text": "Popraw międzyczas"
+      }
+    }
   },
   "timeMeasurement": {
     "penalties": {
@@ -1929,80 +2003,6 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
-      }
-    }
-  },
-  "stopwatch": {
-    "settings": {
-      "selectTimingPoint": {
-        "header": "Wybierz punkt pomiarowy",
-        "description": "Wybór punktu dla którego prowadzony będzie pomiar czasu."
-      },
-      "title": {
-        "text": "Ustawienia"
-      }
-    },
-    "history": {
-      "title": {
-        "text": "Historia"
-      }
-    },
-    "assign": {
-      "title": {
-        "text": "Przypisz międzyczas"
-      }
-    },
-    "list": {
-      "title": {
-        "text": "Lista zawodników"
-      },
-      "absent": "nieobecny"
-    },
-    "pad": {
-      "title": {
-        "text": "Zarejestruj międzyczas"
-      }
-    },
-    "times": {
-      "title": {
-        "text": "Międzyczasy"
-      },
-      "registerSplitTime": "Zarejestruj międzyczas",
-      "registeredSplitTimes": "Zarejestrowane międzyczasy"
-    },
-    "tweak": {
-      "title": {
-        "text": "Popraw międzyczas"
-      }
-    },
-    "reassign": {
-      "title": {
-        "text": "Ponownie przypisz międzyczas"
-      }
-    },
-    "menuItems": {
-      "players": "Zawodnicy",
-      "pad": "Klawiatura",
-      "times": "Międzyczasy",
-      "history": "Historia"
-    },
-    "checkIn": {
-      "typeBibNumber": "Wpisz numer startowy zawodnika"
-    },
-    "status": {
-      "timingPoint": "Punkt pomiarowy",
-      "systemTime": "Czas systemowy"
-    },
-    "error": {
-      "disconnected": {
-        "title": "Nie połączono",
-        "anchorText": "Stabilne połączenie z internetem jest wymagane",
-        "description": "Poczekaj na automatyczne ponowne połączenie lub uruchom aplikację ponownie samodzielnie."
-      },
-      "noTimingPoint": {
-        "title": "Brak konfiguracji punktu pomiarowego",
-        "anchorText": "Wybierz punkt pomiarowy",
-        "description": "Stoper musi mierzyć czas w określonym punkcie pomiaru czasu. Wybierz punkt pomiaru czasu w konfiguracji, aby wykonać pomiary."
       }
     }
   }

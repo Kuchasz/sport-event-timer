@@ -115,8 +115,8 @@ export const FormInputInline = <TItem, TKey extends keyof TItem>({
 };
 
 export const FormCard = ({ children, title }: { children: React.ReactNode; title: string }) => (
-    <div className="flex flex-col rounded-md border p-4 shadow-sm">
-        <h4 className="pb-4 font-bold">{title}</h4>
+    <div className="flex flex-col rounded-md border border-zinc-100 px-6 py-4 shadow-sm">
+        <h4 className="mb-2 font-bold">{title}</h4>
         {children}
     </div>
 );

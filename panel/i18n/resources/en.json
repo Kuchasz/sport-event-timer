@@ -643,6 +643,14 @@
         "button": "Add Classification",
         "title": "Create new classification"
       },
+      "delete": {
+        "confirmation": {
+          "text": "You are trying to delete the Classification {name}. Do you want to proceed?",
+          "title": "Delete classification"
+        },
+        "description": "You may delete classification",
+        "name": "Delete classification"
+      },
       "edit": {
         "confirmation": {
           "title": "Edit the classification"
@@ -676,14 +684,6 @@
       "manageCategories": {
         "description": "You can define categories within the classification",
         "name": "Manage categories"
-      },
-      "delete": {
-        "confirmation": {
-          "text": "You are trying to delete the Classification {name}. Do you want to proceed?",
-          "title": "Delete classification"
-        },
-        "name": "Delete classification",
-        "description": "You may delete classification"
       }
     },
     "general": {
@@ -1279,6 +1279,10 @@
           "label": "Description",
           "placeholder": "Describe the timing point"
         },
+        "laps": {
+          "label": "Number of laps",
+          "placeholder": "Enter number of laps"
+        },
         "name": {
           "label": "Timing Point Name",
           "placeholder": "Type Timing Point Name"
@@ -1286,10 +1290,6 @@
         "shortName": {
           "label": "Short name",
           "placeholder": "Enter short name"
-        },
-        "laps": {
-          "placeholder": "Enter number of laps",
-          "label": "Number of laps"
         }
       },
       "header": {
@@ -1303,9 +1303,17 @@
           "getQrCode": "Get QR code",
           "open": "Open"
         },
+        "clock": {
+          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start.",
+          "title": "Clock"
+        },
         "countdown": {
           "description": "Useful at the launch site. Can be displayed on a phone, tablet or any larger screen. Displays the start number and the name of the next competitor. Counts down the number of seconds until his start. It also allows you to trigger a sound signal.",
           "title": "Countdown (to zero)"
+        },
+        "preciseClock": {
+          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start. Displays the current time with higher accuracy.",
+          "title": "Precise Clock"
         },
         "results": {
           "description": "Displays live results. The results of the athletes appear as soon as you uncheck them in the stopwatch. A breakdown by category is included. The site is adapted for display on a phone, refreshes automatically.",
@@ -1314,14 +1322,6 @@
         "startList": {
           "description": "The app is useful for all athletes. They can check their starting time. See who has already started, who will start next and how many competitors are left. The entire start list is included. Optimized for mobile phones.",
           "title": "Start list"
-        },
-        "clock": {
-          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start.",
-          "title": "Clock"
-        },
-        "preciseClock": {
-          "description": "A clock showing the current time synchronized with the timekeeping system clock. Useful to display at the finish and start. Displays the current time with higher accuracy.",
-          "title": "Precise Clock"
         }
       },
       "header": {
@@ -1350,14 +1350,14 @@
     }
   },
   "raceManagement": {
-    "race": {
-      "errors": {
-        "atLeastOneRaceRequired": "You must have at least one race"
-      }
-    },
     "classification": {
       "errors": {
         "atLeastOneClassificationRequired": "Race must have at least one classification"
+      }
+    },
+    "race": {
+      "errors": {
+        "atLeastOneRaceRequired": "You must have at least one race"
       }
     }
   },
@@ -1729,6 +1729,15 @@
       }
     },
     "errorOccured": "Error occured",
+    "errors": {
+      "goBack": "Go back",
+      "goHome": "Back to start",
+      "notFound": {
+        "code": "Error 404",
+        "description": "Sorry, the page you are looking for cannot be found",
+        "title": "Page not found"
+      }
+    },
     "genders": {
       "female": "Female",
       "male": "Male"
@@ -1750,16 +1759,7 @@
       "disabled": "Disabled",
       "enabled": "Enabled"
     },
-    "unauthorized": "Unauthorized",
-    "errors": {
-      "notFound": {
-        "code": "Error 404",
-        "title": "Page not found",
-        "description": "Sorry, the page you are looking for cannot be found"
-      },
-      "goBack": "Go back",
-      "goHome": "Back to start"
-    }
+    "unauthorized": "Unauthorized"
   },
   "startList": {
     "empty": "Start list is empty",
@@ -1768,6 +1768,80 @@
     "noPlayersLeft": "No pending players left",
     "startsIn": "time to start",
     "startTime": "Starts at"
+  },
+  "stopwatch": {
+    "assign": {
+      "title": {
+        "text": "Assign split time"
+      }
+    },
+    "checkIn": {
+      "typeBibNumber": "Type player's bib number"
+    },
+    "error": {
+      "disconnected": {
+        "anchorText": "Stable internet connection required",
+        "description": "Wait for the auto-reconnect or restart the app by yourself.",
+        "title": "Disconnected"
+      },
+      "noTimingPoint": {
+        "anchorText": "Choose timing point first",
+        "description": "Stopwatch has to measure the time at a specific timing point. Choose a timing point in the configuration to make the measurements.",
+        "title": "No timing point configuration"
+      }
+    },
+    "history": {
+      "title": {
+        "text": "History"
+      }
+    },
+    "list": {
+      "absent": "absent",
+      "title": {
+        "text": "Players list"
+      }
+    },
+    "menuItems": {
+      "history": "History",
+      "pad": "Keyboard",
+      "players": "Players",
+      "times": "Split times"
+    },
+    "pad": {
+      "title": {
+        "text": "Record split time"
+      }
+    },
+    "reassign": {
+      "title": {
+        "text": "Reassign split time"
+      }
+    },
+    "settings": {
+      "selectTimingPoint": {
+        "description": "The selection of a point for which time measurement will be conducted.",
+        "header": "Select timing point"
+      },
+      "title": {
+        "text": "Settings"
+      }
+    },
+    "status": {
+      "systemTime": "System time",
+      "timingPoint": "Timing point"
+    },
+    "times": {
+      "registeredSplitTimes": "Registered split times",
+      "registerSplitTime": "Register split time",
+      "title": {
+        "text": "Split times"
+      }
+    },
+    "tweak": {
+      "title": {
+        "text": "Tweak split time"
+      }
+    }
   },
   "timeMeasurement": {
     "penalties": {
@@ -1929,80 +2003,6 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
-      }
-    }
-  },
-  "stopwatch": {
-    "settings": {
-      "selectTimingPoint": {
-        "header": "Select timing point",
-        "description": "The selection of a point for which time measurement will be conducted."
-      },
-      "title": {
-        "text": "Settings"
-      }
-    },
-    "history": {
-      "title": {
-        "text": "History"
-      }
-    },
-    "assign": {
-      "title": {
-        "text": "Assign split time"
-      }
-    },
-    "list": {
-      "title": {
-        "text": "Players list"
-      },
-      "absent": "absent"
-    },
-    "pad": {
-      "title": {
-        "text": "Record split time"
-      }
-    },
-    "times": {
-      "title": {
-        "text": "Split times"
-      },
-      "registerSplitTime": "Register split time",
-      "registeredSplitTimes": "Registered split times"
-    },
-    "tweak": {
-      "title": {
-        "text": "Tweak split time"
-      }
-    },
-    "reassign": {
-      "title": {
-        "text": "Reassign split time"
-      }
-    },
-    "menuItems": {
-      "players": "Players",
-      "pad": "Keyboard",
-      "times": "Split times",
-      "history": "History"
-    },
-    "checkIn": {
-      "typeBibNumber": "Type player's bib number"
-    },
-    "status": {
-      "timingPoint": "Timing point",
-      "systemTime": "System time"
-    },
-    "error": {
-      "noTimingPoint": {
-        "title": "No timing point configuration",
-        "anchorText": "Choose timing point first",
-        "description": "Stopwatch has to measure the time at a specific timing point. Choose a timing point in the configuration to make the measurements."
-      },
-      "disconnected": {
-        "title": "Disconnected",
-        "anchorText": "Stable internet connection required",
-        "description": "Wait for the auto-reconnect or restart the app by yourself."
       }
     }
   }
