@@ -4,6 +4,7 @@ import { playerErrorKeys } from "../player/errors";
 import { sharedErrorKeys } from "./errors";
 import { timingPointErrorKeys } from "../timing-point/errors";
 import { userErrorKeys } from "../user/errors";
+import { classificationErrorKeys } from "../classification/errors";
 
 export const errorKeys = {
     ...sharedErrorKeys,
@@ -12,4 +13,5 @@ export const errorKeys = {
     ...raceErrorKeys,
     ...timingPointErrorKeys,
     ...userErrorKeys,
+    ...classificationErrorKeys,
 };

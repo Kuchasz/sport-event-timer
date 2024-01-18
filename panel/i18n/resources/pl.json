@@ -202,6 +202,10 @@
         "description": "Klasyfikacje wydarzenia zostały pomyślnie potwierdzone.",
         "title": "Klasyfikacje Potwierdzone"
       },
+      "delete": {
+        "description": "Określona klasyfikacja została pomyślnie usunięta.",
+        "title": "Usunięto Klasyfikację"
+      },
       "removeCategory": {
         "description": "Określona kategoria została pomyślnie usunięta z wydarzenia.",
         "title": "Usunięto Kategorię"
@@ -672,6 +676,14 @@
       "manageCategories": {
         "description": "Możesz zdefiniować kategorie dla klasyfikacji",
         "name": "Zarządzaj kategoriami"
+      },
+      "delete": {
+        "confirmation": {
+          "text": "Próbujesz usunąć Klasyfikację {name}. Czy chcesz kontynuować?",
+          "title": "Usuń klasyfikację"
+        },
+        "name": "Usuń klasyfikację",
+        "description": "Możesz usunąć klasyfikację"
       }
     },
     "general": {
@@ -1341,6 +1353,11 @@
     "race": {
       "errors": {
         "atLeastOneRaceRequired": "Musisz mieć co najmniej jeden wyścig"
+      }
+    },
+    "classification": {
+      "errors": {
+        "atLeastOneClassificationRequired": "Wyścig musi posiadać conajmniej jedną klasyfikację"
       }
     }
   },

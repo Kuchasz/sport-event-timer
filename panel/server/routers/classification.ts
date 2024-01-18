@@ -2,6 +2,7 @@ import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
 import type { Gender } from "@set/timer/dist/model";
 import { categorySchema, classificationSchema } from "../../modules/classification/models";
+import { classificationErrorKeys } from "modules/classification/errors";
 
 const classificationsSchema = z.object({
     id: z.number(),
@@ -96,6 +97,14 @@ export const classificationRouter = router({
                 ...data,
             },
         });
+    }),
+    delete: protectedProcedure.input(z.object({ classificationId: z.number() })).mutation(async ({ input, ctx }) => {
+        const numberOfClassifications = await ctx.db.classification.count();
+        if (numberOfClassifications <= 1) throw classificationErrorKeys.AT_LEAST_ONE_CLASSIFICATION_REQUIRED;
+
+        await ctx.db.category.deleteMany({ where: { classificationId: input.classificationId } });
+
+        return await ctx.db.classification.delete({ where: { id: input.classificationId } });
     }),
 });
 

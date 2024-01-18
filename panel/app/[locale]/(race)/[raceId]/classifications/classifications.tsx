@@ -1,8 +1,8 @@
 "use client";
-import { mdiAccountEditOutline, mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus } from "@mdi/js";
+import { mdiAccountEditOutline, mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { PoorModal } from "components/poor-modal";
+import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { PageHeader } from "components/page-header";
 import { ClassificationCreate } from "components/panel/classification/classification-create";
 import { ClassificationEdit } from "components/panel/classification/classification-edit";
@@ -18,7 +18,14 @@ import { type Route } from "next";
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 
 const ClassificationActions = ({ classification, refetch }: { classification: Classification; refetch: () => void }) => {
+    const deleteClassificationMutation = trpc.classification.delete.useMutation();
     const t = useTranslations();
+
+    const deleteClassification = async () => {
+        await deleteClassificationMutation.mutateAsync({ classificationId: classification.id });
+        refetch();
+    };
+
     return (
         <PoorActions>
             <PoorModal
@@ -39,6 +46,16 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
                 description={t("pages.classifications.manageCategories.description")}
                 iconPath={mdiAccountMultiple}
                 href={`/${classification.raceId}/classifications/${classification.id}` as Route}></NewPoorActionsItem>
+            <PoorConfirmation
+                onAccept={deleteClassification}
+                message={t("pages.classifications.delete.confirmation.text", { name: classification.name })}
+                title={t("pages.classifications.delete.confirmation.title")}
+                isLoading={deleteClassificationMutation.isLoading}>
+                <NewPoorActionsItem
+                    name={t("pages.classifications.delete.name")}
+                    description={t("pages.classifications.delete.description")}
+                    iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+            </PoorConfirmation>
         </PoorActions>
     );
 };
