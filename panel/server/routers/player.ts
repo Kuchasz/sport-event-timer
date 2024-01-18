@@ -151,15 +151,6 @@ export const playerRouter = router({
 
         const session = await ctx.db.session.findUniqueOrThrow({ where: { id: ctx.session.sessionId } });
 
-        console.log({
-            ...player,
-            raceId: registration.raceId,
-            playerProfileId: registration.playerProfileId,
-            classificationId: classification.id,
-            promotedByUserId: session.userId,
-            playerRegistrationId: registration.id,
-        });
-
         return await ctx.db.player.create({
             data: {
                 ...player,
@@ -179,26 +170,32 @@ export const playerRouter = router({
             include: { race: true },
         });
 
-        const playerWithTheSameTime = player.startTime
+        const otherPlayerWithTheSameTime = player.startTime
             ? await ctx.db.player.findFirst({
                   where: {
                       raceId: input.raceId,
                       OR: [{ startTime: player.startTime }, { bibNumber: player.bibNumber }],
+                      NOT: {
+                          id: player.id!,
+                      },
                   },
               })
             : null;
 
-        const playerWithTheSameBibNumber = player.bibNumber
+        const otherPlayerWithTheSameBibNumber = player.bibNumber
             ? await ctx.db.player.findFirst({
                   where: {
                       raceId: input.raceId,
                       bibNumber: player.bibNumber,
+                      NOT: {
+                          id: player.id!,
+                      },
                   },
               })
             : null;
 
-        if (playerWithTheSameBibNumber) throw playerErrors.BIB_NUMBER_ALREADY_TAKEN;
-        if (playerWithTheSameTime) throw playerErrors.START_TIME_ALREADY_TAKEN;
+        if (otherPlayerWithTheSameBibNumber) throw playerErrors.BIB_NUMBER_ALREADY_TAKEN;
+        if (otherPlayerWithTheSameTime) throw playerErrors.START_TIME_ALREADY_TAKEN;
 
         return await ctx.db.player.update({
             where: { id: player.id! },
