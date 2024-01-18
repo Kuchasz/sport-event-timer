@@ -81,7 +81,7 @@ Application for making time measurements
 | 15/12/2023 | Templating engine for registration email message                      | todo :date:                                |
 | 19/12/2023 | Terms document upload                                                 | todo :date:                                |
 | 24/12/2023 | Separate APP and API to separate environments                         | :heavy_check_mark: <sup>(30/12/2023)</sup> |
-| 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                        | todo :date:                                |
+| 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                        | :heavy_check_mark: <sup>(18/01/2023)</sup> |
 | 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                       | todo :date:                                |
 | 01/01/2023 | Add change sets to home page                                          | todo :date:                                |
 | 02/01/2023 | Fix toaster on home page                                              | todo :date:                                |

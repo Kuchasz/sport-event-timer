@@ -33,6 +33,7 @@
     "@radix-ui/react-scroll-area": "1.0.5",
     "@radix-ui/react-toast": "1.1.5",
     "@react-hook/resize-observer": "1.2.6",
+    "@react-input/mask": "^1.0.20",
     "@set/timer": "workspace:*",
     "@set/utils": "workspace:*",
     "@t3-oss/env-nextjs": "0.7.1",
