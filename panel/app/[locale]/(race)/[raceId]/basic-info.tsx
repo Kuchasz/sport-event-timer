@@ -144,8 +144,7 @@ export const BasicInfo = () => {
                                             />
                                         </div>
                                     </FormCard>
-                                    <div className="p-2"></div>
-                                    <div className="p-2"></div>
+                                    <div className="p-4"></div>
                                     <FormCard title={t("pages.basicInfo.sections.registration.title")}>
                                         <div className="flex">
                                             <FormInput<Race, "playersLimit">
@@ -175,7 +174,7 @@ export const BasicInfo = () => {
                                             />
                                         </div>
                                     </FormCard>
-                                    <div className="p-2"></div>
+                                    <div className="p-4"></div>
                                     <FormCard title={t("pages.basicInfo.sections.terms.title")}>
                                         <div className="flex">
                                             <FormInput<Race, "termsUrl">
@@ -192,7 +191,7 @@ export const BasicInfo = () => {
                                             />
                                         </div>
                                     </FormCard>
-                                    <div className="p-2"></div>
+                                    <div className="p-4"></div>
                                     <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
                                         <div className="flex">
                                             <FormInput<Race, "emailTemplate">
