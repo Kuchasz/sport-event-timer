@@ -94,6 +94,7 @@ Application for making time measurements
 | 17/01/2023 | Countdown change background on remaining time                         | todo :date:                                |
 | 18/01/2023 | Master/details view on players page                                   | todo :date:                                |
 | 18/01/2023 | Add longer, more self explanatory descriptions to page headers        | todo :date:                                |
+| 20/01/2023 | Replace 'Race' word with 'Competition'                                | todo :date:                                |
 
 ## TODO
 
