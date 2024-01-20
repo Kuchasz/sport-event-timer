@@ -14,7 +14,7 @@ export const PlayersDialPad = () => {
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
     const { raceId } = useParams<{ raceId: string }>()!;
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) });
+    const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
 
     return (
         <PlayersCheckIn

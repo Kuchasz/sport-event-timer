@@ -332,6 +332,10 @@
         "description": "Podstawowe informacje o wyścigu zostały pomyślnie potwierdzone.",
         "title": "Podstawowe Informacje Potwierdzone"
       },
+      "updateRaceInformation": {
+        "description": "Dane podstawowe zostały pomyślnie aktualizowane.",
+        "title": "Dane podstawowe Zaktualizowane"
+      },
       "delete": {
         "description": "Określony wyścig został pomyślnie usunięty z wydarzenia.",
         "title": "Usunięto Wyścig"

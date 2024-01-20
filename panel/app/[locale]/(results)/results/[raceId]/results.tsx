@@ -11,10 +11,10 @@ import type { AppRouterOutputs } from "trpc";
 import { trpc } from "trpc-core";
 
 type Results = AppRouterOutputs["result"]["results"];
-type Race = AppRouterOutputs["race"]["basicInfo"];
+type Race = AppRouterOutputs["race"]["raceInformation"];
 
 export const Results = ({ raceId, initialResults, initialRace }: { raceId: number; initialResults: Results; initialRace: Race }) => {
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId }, { initialData: initialRace });
+    const { data: race } = trpc.race.raceInformation.useQuery({ raceId }, { initialData: initialRace });
     const { data: results } = trpc.result.results.useQuery({ raceId }, { refetchInterval: 10_000, initialData: initialResults });
     const [rowIds, setRowIds] = useState<number[]>([]);
 

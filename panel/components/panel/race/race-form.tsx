@@ -92,7 +92,6 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         name="playersLimit"
                     />
                     <div className="p-2"></div>
-
                     <FormInput<Race, "registrationCutoff">
                         label={t("pages.races.form.registrationCutoff.label")}
                         className="flex-1"

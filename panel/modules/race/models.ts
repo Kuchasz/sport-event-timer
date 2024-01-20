@@ -9,16 +9,19 @@ export const registrationStatesEnum = z.enum(["enabled", "disabled", "limit-reac
     required_error: sharedErrorCodes.required,
 });
 
-export const raceSchema = z
-    .object({
-        id: z.number().min(1).nullish(),
-        name: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
-        description: z.string({ required_error: sharedErrorCodes.required }),
-        location: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
-        sportKind: sportKindEnum,
-        date: z.date({ required_error: sharedErrorCodes.required }),
+export const raceInformationSchema = z.object({
+    id: z.number().min(1).nullish(),
+    name: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
+    description: z.string({ required_error: sharedErrorCodes.required }),
+    location: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
+    sportKind: sportKindEnum,
+    date: z.date({ required_error: sharedErrorCodes.required }),
+    websiteUrl: z.string().url().nullish(),
+});
+
+export const raceSchema = raceInformationSchema
+    .extend({
         termsUrl: z.string().nullish(),
-        websiteUrl: z.string().url().nullish(),
         emailTemplate: z.string().nullish(),
         playersLimit: z.number().int().positive().nullish(),
         registrationEnabled: z.boolean(),

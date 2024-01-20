@@ -328,6 +328,10 @@
         "description": "A new race has been successfully added to the event.",
         "title": "Race Added"
       },
+      "updateRaceInformation": {
+        "description": "Race basic information has been successfully updated.",
+        "title": "Race information Updated"
+      },
       "basicInfo": {
         "description": "Basic race information has been successfully confirmed.",
         "title": "Basic Information Confirmed"

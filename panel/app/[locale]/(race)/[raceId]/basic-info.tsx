@@ -3,29 +3,33 @@
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { Button } from "components/button";
 import { PageHeader } from "components/page-header";
-import { PoorCheckbox } from "components/poor-checkbox";
 import { PoorUTCDatepicker } from "components/poor-datepicker";
 import { PoorInput } from "components/poor-input";
-import { PoorNumberInput } from "components/poor-number-input";
 import { PoorSelect } from "components/poor-select";
 import { PoorTextArea } from "components/poor-text-area";
-import { Form, FormCard, FormInput, FormInputInline } from "form";
+import { Form, FormCard, FormInput } from "form";
 import { useCurrentRaceId } from "hooks";
-import { raceSchema } from "modules/race/models";
+import { raceInformationSchema } from "modules/race/models";
 import { useTranslations } from "next-intl";
 import { type AppRouterInputs } from "trpc";
 import { trpc } from "trpc-core";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
+type RaceInformation = AppRouterInputs["race"]["updateRaceInformation"];
 
 export const BasicInfo = () => {
     const raceId = useCurrentRaceId();
     const { data: raceRaceport } = trpc.race.raceRaport.useQuery({ raceId: raceId }, { enabled: !!raceId });
     const { data: initialRace } = trpc.race.race.useQuery({ raceId: raceId }, { enabled: !!raceId });
+    const updateRaceInformationMutation = trpc.race.updateRaceInformation.useMutation();
 
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
     const sportKindsOptions = sportKinds.map(sk => ({ name: sportKindTranslations(sk), value: sk }));
+
+    const updateRaceInformation = async (raceInformation: RaceInformation) => {
+        await updateRaceInformationMutation.mutateAsync({ ...raceInformation });
+    };
 
     return (
         <>
@@ -51,8 +55,12 @@ export const BasicInfo = () => {
                                 <input type="checkbox"></input>
                             </label> */}
 
-                            <Form<Race> initialValues={initialRace} validationSchema={raceSchema} onSubmit={console.log}>
-                                <div className="flex flex-col">
+                            {/* <Form<Race> initialValues={initialRace} validationSchema={raceSchema} onSubmit={console.log}> */}
+                            <div className="flex flex-col">
+                                <Form<Race>
+                                    initialValues={initialRace}
+                                    validationSchema={raceInformationSchema}
+                                    onSubmit={updateRaceInformation}>
                                     <FormCard title={t("pages.basicInfo.sections.base.title")}>
                                         <div className="flex">
                                             <FormInput<Race, "name">
@@ -143,81 +151,92 @@ export const BasicInfo = () => {
                                                 name="websiteUrl"
                                             />
                                         </div>
-                                    </FormCard>
-                                    <div className="p-4"></div>
-                                    <FormCard title={t("pages.basicInfo.sections.registration.title")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "playersLimit">
-                                                label={t("pages.races.form.playersLimit.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorNumberInput
-                                                        placeholder={t("pages.races.form.playersLimit.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="playersLimit"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInputInline<Race, "registrationEnabled">
-                                                label={t("pages.races.form.registrationEnabled.label")}
-                                                className="flex flex-1 items-start"
-                                                render={({ value, onChange }) => (
-                                                    <PoorCheckbox
-                                                        label={t("pages.races.form.registrationEnabled.label")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="registrationEnabled"
-                                            />
+                                        <div className="mt-4 flex justify-between">
+                                            <Button loading={updateRaceInformationMutation.isLoading} type="submit">
+                                                {t("shared.save")}
+                                            </Button>
                                         </div>
                                     </FormCard>
-                                    <div className="p-4"></div>
-                                    <FormCard title={t("pages.basicInfo.sections.terms.title")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "termsUrl">
-                                                label={t("pages.races.form.terms.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorInput
-                                                        placeholder={t("pages.races.form.terms.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="termsUrl"
-                                            />
-                                        </div>
-                                    </FormCard>
-                                    <div className="p-4"></div>
-                                    <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "emailTemplate">
-                                                label={t("pages.races.form.emailTemplate.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorTextArea
-                                                        placeholder={t("pages.races.form.emailTemplate.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="emailTemplate"
-                                            />
-                                        </div>
-                                    </FormCard>
-                                    <div className="mt-4 flex justify-between">
-                                        <Button onClick={console.log} outline>
-                                            {t("shared.cancel")}
-                                        </Button>
-                                        <Button loading={false} type="submit">
-                                            {t("shared.save")}
-                                        </Button>
+                                </Form>
+                                <div className="p-4"></div>
+                                {/* <FormCard title={t("pages.basicInfo.sections.registration.title")}>
+                                    <div className="flex">
+                                        <FormInput<Race, "playersLimit">
+                                            label={t("pages.races.form.playersLimit.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorNumberInput
+                                                    placeholder={t("pages.races.form.playersLimit.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="playersLimit"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "registrationCutoff">
+                                            label={t("pages.races.form.registrationCutoff.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorUTCDatepicker
+                                                    placeholder={t("pages.races.form.registrationCutoff.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="registrationCutoff"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInputInline<Race, "registrationEnabled">
+                                            label={t("pages.races.form.registrationEnabled.label")}
+                                            className="flex flex-1 items-start"
+                                            render={({ value, onChange }) => (
+                                                <PoorCheckbox
+                                                    label={t("pages.races.form.registrationEnabled.label")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="registrationEnabled"
+                                        />
                                     </div>
-                                </div>
-                            </Form>
+                                </FormCard>
+                                <div className="p-4"></div>
+                                <FormCard title={t("pages.basicInfo.sections.terms.title")}>
+                                    <div className="flex">
+                                        <FormInput<Race, "termsUrl">
+                                            label={t("pages.races.form.terms.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorInput
+                                                    placeholder={t("pages.races.form.terms.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="termsUrl"
+                                        />
+                                    </div>
+                                </FormCard>
+                                <div className="p-4"></div>
+                                <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
+                                    <div className="flex">
+                                        <FormInput<Race, "emailTemplate">
+                                            label={t("pages.races.form.emailTemplate.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorTextArea
+                                                    placeholder={t("pages.races.form.emailTemplate.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="emailTemplate"
+                                        />
+                                    </div>
+                                </FormCard> */}
+                            </div>
+                            {/* </Form> */}
                         </div>
                     </div>
                 </div>

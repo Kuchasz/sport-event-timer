@@ -4,7 +4,7 @@ import { Task } from "@set/utils/dist/task";
 import { notFound } from "next/navigation";
 
 export default async function ({ params: { raceId } }: { params: { raceId: string } }) {
-    const race = await Task.tryCatch(trpcRSC.race.basicInfo.query({ raceId: parseInt(raceId) }));
+    const race = await Task.tryCatch(trpcRSC.race.raceInformation.query({ raceId: parseInt(raceId) }));
     if (race.type !== "success") notFound();
 
     const results = await trpcRSC.result.results.query({ raceId: parseInt(raceId) });

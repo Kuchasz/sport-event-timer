@@ -2,7 +2,7 @@ import { daysFromNow } from "@set/utils/dist/datetime";
 import { raceErrors } from "modules/race/errors";
 import { z } from "zod";
 import { locales } from "../../i18n";
-import { raceSchema, type SportKind } from "../../modules/race/models";
+import { raceInformationSchema, raceSchema, type SportKind } from "../../modules/race/models";
 import { createExampleRaces } from "../example-races";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
@@ -12,12 +12,17 @@ const createRaceSchema = z.object({
 });
 
 export const raceRouter = router({
-    basicInfo: publicProcedure
+    raceInformation: publicProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const id = input.raceId;
             return await ctx.db.race.findUnique({ where: { id }, select: { name: true, date: true } });
         }),
+    updateRaceInformation: protectedProcedure.input(raceInformationSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...data } = input;
+
+        return await ctx.db.race.update({ where: { id: id! }, data });
+    }),
     races: protectedProcedure.query(async ({ ctx }) => {
         const racesWithRegistrations = await ctx.db.race.findMany({ include: { playerRegistration: true } });
         return racesWithRegistrations.map(r => ({

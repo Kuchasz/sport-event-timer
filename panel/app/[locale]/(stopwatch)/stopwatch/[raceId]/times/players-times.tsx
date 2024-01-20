@@ -148,7 +148,7 @@ export const PlayersTimes = () => {
     const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
-    const { data: race } = trpc.race.basicInfo.useQuery({ raceId: parseInt(raceId) });
+    const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
 
     const times = sortDesc(
         allTimeStamps
