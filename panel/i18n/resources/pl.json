@@ -328,7 +328,7 @@
         "description": "Nowy wyścig został pomyślnie dodany do wydarzenia.",
         "title": "Dodano Wyścig"
       },
-      "basicInfo": {
+      "raceInformation": {
         "description": "Podstawowe informacje o wyścigu zostały pomyślnie potwierdzone.",
         "title": "Podstawowe Informacje Potwierdzone"
       },

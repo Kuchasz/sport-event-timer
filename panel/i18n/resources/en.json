@@ -344,7 +344,7 @@
         "description": "Race confirmation email template has been successfully updated.",
         "title": "Race confirmation email updated"
       },
-      "basicInfo": {
+      "raceInformation": {
         "description": "Basic race information has been successfully confirmed.",
         "title": "Basic Information Confirmed"
       },
