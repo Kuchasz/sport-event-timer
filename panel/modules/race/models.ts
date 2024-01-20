@@ -19,13 +19,28 @@ export const raceInformationSchema = z.object({
     websiteUrl: z.string().url().nullish(),
 });
 
+export const raceRegistrationSchema = z.object({
+    id: z.number().min(1).nullish(),
+    playersLimit: z.number().int().positive().nullish(),
+    registrationEnabled: z.boolean(),
+    registrationCutoff: z.date().nullish(),
+});
+
+export const raceRegulationsSchema = z.object({
+    id: z.number().min(1).nullish(),
+    termsUrl: z.string().nullish(),
+});
+
+export const raceConfirmationEmailTemplateSchema = z.object({
+    id: z.number().min(1).nullish(),
+    emailTemplate: z.string().nullish(),
+});
+
 export const raceSchema = raceInformationSchema
+    .merge(raceRegistrationSchema)
+    .merge(raceRegulationsSchema)
+    .merge(raceConfirmationEmailTemplateSchema)
     .extend({
-        termsUrl: z.string().nullish(),
-        emailTemplate: z.string().nullish(),
-        playersLimit: z.number().int().positive().nullish(),
-        registrationEnabled: z.boolean(),
-        registrationCutoff: z.date().nullish(),
         useSampleData: z.boolean().nullish(),
     })
     .refine(data => !data.registrationCutoff || data.date > data.registrationCutoff, {

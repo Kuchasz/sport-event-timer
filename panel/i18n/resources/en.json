@@ -332,6 +332,18 @@
         "description": "Race basic information has been successfully updated.",
         "title": "Race information Updated"
       },
+      "updateRaceRegistration": {
+        "description": "Race registration settings has been successfully updated.",
+        "title": "Registration settings updated"
+      },
+      "updateRaceRegulations": {
+        "description": "Race regulations has been successfully updated.",
+        "title": "Race regulations updated"
+      },
+      "updateRaceConfirmationEmailTemplate": {
+        "description": "Race confirmation email template has been successfully updated.",
+        "title": "Race confirmation email updated"
+      },
       "basicInfo": {
         "description": "Basic race information has been successfully confirmed.",
         "title": "Basic Information Confirmed"

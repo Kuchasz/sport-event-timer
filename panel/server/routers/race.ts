@@ -2,7 +2,14 @@ import { daysFromNow } from "@set/utils/dist/datetime";
 import { raceErrors } from "modules/race/errors";
 import { z } from "zod";
 import { locales } from "../../i18n";
-import { raceInformationSchema, raceSchema, type SportKind } from "../../modules/race/models";
+import {
+    raceConfirmationEmailTemplateSchema,
+    raceInformationSchema,
+    raceRegistrationSchema,
+    raceRegulationsSchema,
+    raceSchema,
+    type SportKind,
+} from "../../modules/race/models";
 import { createExampleRaces } from "../example-races";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
@@ -137,6 +144,18 @@ export const raceRouter = router({
             const { id, ...data } = input;
             return await ctx.db.race.update({ where: { id: id }, data: { registrationEnabled: data.registrationEnabled } });
         }),
+    updateRaceRegistration: protectedProcedure.input(raceRegistrationSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...data } = input;
+        return await ctx.db.race.update({ where: { id: id! }, data });
+    }),
+    updateRaceRegulations: protectedProcedure.input(raceRegulationsSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...data } = input;
+        return await ctx.db.race.update({ where: { id: id! }, data });
+    }),
+    updateRaceConfirmationEmailTemplate: protectedProcedure.input(raceConfirmationEmailTemplateSchema).mutation(async ({ input, ctx }) => {
+        const { id, ...data } = input;
+        return await ctx.db.race.update({ where: { id: id! }, data });
+    }),
     add: protectedProcedure.input(createRaceSchema).mutation(async ({ input, ctx }) => {
         const { locale, race } = input;
         const { id: _id, useSampleData, ...data } = race;

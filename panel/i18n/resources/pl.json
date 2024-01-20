@@ -336,6 +336,18 @@
         "description": "Dane podstawowe zostały pomyślnie aktualizowane.",
         "title": "Dane podstawowe Zaktualizowane"
       },
+      "updateRaceRegistration": {
+        "description": "Ustawienia rejestracji zostały pomyślnie aktualizowane.",
+        "title": "Ustawienia rejestracji zaktualizowane"
+      },
+      "updateRaceRegulations": {
+        "description": "Regulamin zawodów został pomyślnie zaktualizowany.",
+        "title": "Regulamin zawodów zaktualizowany"
+      },
+      "updateRaceConfirmationEmailTemplate": {
+        "description": "Szablon wiadomości potwierdzającej rejestrację został pomyślnie zaktualizowany.",
+        "title": "Powierdzenie rejestracji zaktualizowane"
+      },
       "delete": {
         "description": "Określony wyścig został pomyślnie usunięty z wydarzenia.",
         "title": "Usunięto Wyścig"
