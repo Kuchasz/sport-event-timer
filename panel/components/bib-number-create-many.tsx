@@ -1,4 +1,4 @@
-import { Form, FormInput } from "form";
+import { Form, FormInput, SmallFormInput } from "form";
 import { addRangeBibNumberSchema } from "modules/bib-number/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "trpc";
@@ -27,8 +27,9 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
     return (
         <Form<CreateManyBibNumbers> initialValues={initialConfig} validationSchema={addRangeBibNumberSchema} onSubmit={saveChanges}>
             <div className="flex">
-                <FormInput<CreateManyBibNumbers, "startNumber">
+                <SmallFormInput<CreateManyBibNumbers, "startNumber">
                     label={t("pages.bibNumbers.createMany.form.startNumber.label")}
+                    className="flex-grow"
                     render={({ value, onChange }) => (
                         <PoorNumberInput
                             placeholder={t("pages.bibNumbers.createMany.form.startNumber.placeholder")}
@@ -38,10 +39,10 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                     )}
                     name="startNumber"
                 />
-
                 <div className="p-2"></div>
-                <FormInput<CreateManyBibNumbers, "endNumber">
+                <SmallFormInput<CreateManyBibNumbers, "endNumber">
                     label={t("pages.bibNumbers.createMany.form.endNumber.label")}
+                    className="flex-grow"
                     render={({ value, onChange }) => (
                         <PoorNumberInput
                             placeholder={t("pages.bibNumbers.createMany.form.endNumber.placeholder")}
@@ -51,19 +52,17 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                     )}
                     name="endNumber"
                 />
-                <div className="p-2"></div>
-                <FormInput<CreateManyBibNumbers, "omitDuplicates">
-                    label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")}
-                    render={({ value, onChange }) => (
-                        <PoorCheckbox
-                            label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")}
-                            value={value}
-                            onChange={onChange}
-                        />
-                    )}
-                    name="omitDuplicates"
-                />
             </div>
+            <div className="p-2"></div>
+            <FormInput<CreateManyBibNumbers, "omitDuplicates">
+                label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")}
+                description={t("pages.bibNumbers.createMany.form.omitDuplicates.description")}
+                render={({ value, onChange }) => (
+                    <PoorCheckbox label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")} value={value} onChange={onChange} />
+                )}
+                name="omitDuplicates"
+            />
+
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}

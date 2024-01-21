@@ -545,7 +545,8 @@
             "placeholder": "Wpisz końcowy numer"
           },
           "omitDuplicates": {
-            "label": "Pomijaj duplikaty"
+            "label": "Pomijaj duplikaty",
+            "description": "Jeżeli zdefiniowany zakres zawiera numer startowy który został już zdefiniowany to zostanie on pominięty. Inaczej zostanie wyświetlony monit o błędzie."
           },
           "startNumber": {
             "label": "Początkowy numer",

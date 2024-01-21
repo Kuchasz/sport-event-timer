@@ -545,7 +545,8 @@
             "placeholder": "Enter range end number"
           },
           "omitDuplicates": {
-            "label": "Omit duplicates"
+            "label": "Omit duplicates",
+            "description": "If the defined range contains a bib number that has already been defined then it will be skipped. Otherwise an error prompt will be displayed."
           },
           "startNumber": {
             "label": "Start number",
