@@ -10,7 +10,7 @@ import { PoorInput } from "components/poor-input";
 import { PoorSelect } from "components/poor-select";
 import { trpc } from "trpc-core";
 import { countryCodes } from "contry-codes";
-import { Form, FormInput } from "form";
+import { Form, SmallFormInput } from "form";
 import Head from "next/head";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
@@ -55,28 +55,28 @@ const RegistrationFormComponent = ({
                 onSubmit={r => onResolve(r)}
                 initialValues={initialRegistration()}
                 validationSchema={playerRegistrationSchema}>
-                <FormInput<PlayerRegistration, "name">
+                <SmallFormInput<PlayerRegistration, "name">
                     label={t("registration.fields.name.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.name.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="name"
                 />
-                <FormInput<PlayerRegistration, "lastName">
+                <SmallFormInput<PlayerRegistration, "lastName">
                     label={t("registration.fields.lastName.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.lastName.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="lastName"
                 />
-                <FormInput<PlayerRegistration, "birthDate">
+                <SmallFormInput<PlayerRegistration, "birthDate">
                     label={t("registration.fields.birthDate.label")}
                     render={({ value, onChange }) => (
                         <PoorDatepicker placeholder={t("registration.fields.birthDate.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="birthDate"
                 />
-                <FormInput<PlayerRegistration, "gender">
+                <SmallFormInput<PlayerRegistration, "gender">
                     label={t("registration.fields.gender.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
@@ -90,7 +90,7 @@ const RegistrationFormComponent = ({
                     )}
                     name="gender"
                 />
-                <FormInput<PlayerRegistration, "team">
+                <SmallFormInput<PlayerRegistration, "team">
                     label={t("registration.fields.team.label")}
                     render={({ value, onChange }) => (
                         <PoorCombo
@@ -102,14 +102,14 @@ const RegistrationFormComponent = ({
                     )}
                     name="team"
                 />
-                <FormInput<PlayerRegistration, "city">
+                <SmallFormInput<PlayerRegistration, "city">
                     label={t("registration.fields.city.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.city.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="city"
                 />
-                <FormInput<PlayerRegistration, "country">
+                <SmallFormInput<PlayerRegistration, "country">
                     label={t("registration.fields.country.label")}
                     render={({ value, onChange }) => (
                         <PoorSelect
@@ -123,21 +123,21 @@ const RegistrationFormComponent = ({
                     )}
                     name="country"
                 />
-                <FormInput<PlayerRegistration, "email">
+                <SmallFormInput<PlayerRegistration, "email">
                     label={t("registration.fields.email.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.email.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="email"
                 />
-                <FormInput<PlayerRegistration, "phoneNumber">
+                <SmallFormInput<PlayerRegistration, "phoneNumber">
                     label={t("registration.fields.phoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.phoneNumber.placeholder")} value={value} onChange={onChange} />
                     )}
                     name="phoneNumber"
                 />
-                <FormInput<PlayerRegistration, "icePhoneNumber">
+                <SmallFormInput<PlayerRegistration, "icePhoneNumber">
                     label={t("registration.fields.icePhoneNumber.label")}
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("registration.fields.icePhoneNumber.placeholder")} value={value} onChange={onChange} />

@@ -1253,15 +1253,18 @@
         },
         "form": {
           "canAccessOthers": {
-            "label": "Może edytować inne"
+            "label": "Może edytować inne",
+            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach."
           },
           "code": {
-            "name": "Kod (opcjonalny)",
-            "placeholder": "Wpisz Kod"
+            "label": "Kod (opcjonalny)",
+            "placeholder": "Wpisz Kod",
+            "description": "Opcjonalny kod/hasło do podania przy logowaniu się do stopera."
           },
           "name": {
             "label": "Nazwa Dostępowego Url",
-            "placeholder": "Wpisz nazwę dostępowego Url"
+            "placeholder": "Wpisz nazwę dostępowego Url",
+            "description": "Użyj nazwy która pozwoli Ci na odróżnienie tego URL od innych, może to być np. imię sędziego."
           }
         },
         "grid": {

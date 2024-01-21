@@ -1253,15 +1253,18 @@
         },
         "form": {
           "canAccessOthers": {
-            "label": "Can access others"
+            "label": "Can access others",
+            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations."
           },
           "code": {
-            "name": "Code (optional)",
-            "placeholder": "Type Passcode"
+            "label": "Code (optional)",
+            "placeholder": "Type Passcode",
+            "description": "Optional code/password to enter when logging into the stopwatch."
           },
           "name": {
             "label": "Access Url name",
-            "placeholder": "Type Access Url name"
+            "placeholder": "Type Access Url name",
+            "description": "Use a name that will allow you to distinguish this URL from others, it can be, for example, the name of the timekeeper."
           }
         },
         "grid": {

@@ -1,6 +1,6 @@
-import { Label } from "components/label";
+import classNames from "classnames";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import type { HTMLProps, ReactNode } from "react";
 import React, { createContext } from "react";
 import type { ZodEffects, ZodObject, ZodType } from "zod";
 
@@ -57,13 +57,25 @@ type InputProps<TItem, TKey extends keyof TItem> = {
     value: TItem[TKey];
 };
 
+type LabelProps = HTMLProps<HTMLLabelElement>;
+
+export const Label = ({ children, className, ...props }: LabelProps) => {
+    return (
+        <label {...props} className={classNames("block w-full flex-1 text-xs font-medium leading-loose text-gray-700", className)}>
+            {children}
+        </label>
+    );
+};
+
 export const FormInput = <TItem, TKey extends keyof TItem>({
     label,
+    description,
     name,
     render,
     className,
 }: {
     label: string;
+    description: string;
     name: TKey;
     className?: string;
     render: ({ ...agrs }: InputProps<TItem, TKey>) => React.ReactNode;
@@ -72,7 +84,7 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
-                <div className={`flex flex-col ${className ?? ""}`}>
+                <div className={`flex items-center ${className ?? ""}`}>
                     <Label>
                         {label}
                         {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
@@ -80,12 +92,14 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
                             {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
                         </div>
                     </Label>
+                    <p className="mx-4 flex-1 text-xs font-medium text-zinc-400">{description}</p>
                 </div>
             )}
         </FormContext.Consumer>
     );
 };
-export const FormInputInline = <TItem, TKey extends keyof TItem>({
+
+export const SmallFormInput = <TItem, TKey extends keyof TItem>({
     label,
     name,
     render,
@@ -100,9 +114,9 @@ export const FormInputInline = <TItem, TKey extends keyof TItem>({
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
-                <div className={`flex flex-col ${className ?? ""}`}>
+                <div className={`flex items-center ${className ?? ""}`}>
                     <Label>
-                        &nbsp;
+                        {label}
                         {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
                         <div className="text-right text-xs font-medium text-red-600 opacity-75">
                             {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;

@@ -1,4 +1,4 @@
-import { Form, FormInput, FormInputInline } from "form";
+import { Form, FormInput } from "form";
 import { addRangeBibNumberSchema } from "modules/bib-number/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "trpc";
@@ -52,7 +52,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                     name="endNumber"
                 />
                 <div className="p-2"></div>
-                <FormInputInline<CreateManyBibNumbers, "omitDuplicates">
+                <FormInput<CreateManyBibNumbers, "omitDuplicates">
                     label={t("pages.bibNumbers.createMany.form.omitDuplicates.label")}
                     render={({ value, onChange }) => (
                         <PoorCheckbox

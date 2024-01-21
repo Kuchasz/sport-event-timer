@@ -9,7 +9,7 @@ import { PoorInput } from "components/poor-input";
 import { PoorNumberInput } from "components/poor-number-input";
 import { PoorSelect } from "components/poor-select";
 import { PoorTextArea } from "components/poor-text-area";
-import { Form, FormCard, FormInput, FormInputInline } from "form";
+import { Form, FormCard, FormInput } from "form";
 import { useCurrentRaceId } from "hooks";
 import {
     raceConfirmationEmailTemplateSchema,
@@ -85,95 +85,87 @@ export const BasicInfo = () => {
                                     validationSchema={raceInformationSchema}
                                     onSubmit={updateRaceInformation}>
                                     <FormCard title={t("pages.basicInfo.sections.base.title")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "name">
-                                                label={t("pages.races.form.name.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorInput
-                                                        placeholder={t("pages.races.form.name.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="name"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInput<Race, "date">
-                                                label={t("pages.races.form.date.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorUTCDatepicker
-                                                        required
-                                                        placeholder={t("pages.races.form.date.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="date"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "name">
+                                            label={t("pages.races.form.name.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorInput
+                                                    placeholder={t("pages.races.form.name.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="name"
+                                        />
                                         <div className="p-2"></div>
-                                        <div className="flex">
-                                            <FormInput<Race, "location">
-                                                label={t("pages.races.form.location.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorInput
-                                                        placeholder={t("pages.races.form.location.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="location"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInput<Race, "sportKind">
-                                                label={t("pages.races.form.sportKind.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorSelect
-                                                        initialValue={value}
-                                                        items={sportKindsOptions}
-                                                        placeholder={t("pages.races.form.sportKind.placeholder")}
-                                                        nameKey="name"
-                                                        valueKey="value"
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="sportKind"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "date">
+                                            label={t("pages.races.form.date.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorUTCDatepicker
+                                                    required
+                                                    placeholder={t("pages.races.form.date.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="date"
+                                        />
                                         <div className="p-2"></div>
-                                        <div className="flex">
-                                            <FormInput<Race, "description">
-                                                label={t("pages.races.form.description.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorTextArea
-                                                        placeholder={t("pages.races.form.description.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="description"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "location">
+                                            label={t("pages.races.form.location.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorInput
+                                                    placeholder={t("pages.races.form.location.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="location"
+                                        />
                                         <div className="p-2"></div>
-                                        <div className="flex">
-                                            <FormInput<Race, "websiteUrl">
-                                                label={t("pages.races.form.websiteUrl.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorInput
-                                                        placeholder={t("pages.races.form.websiteUrl.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="websiteUrl"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "sportKind">
+                                            label={t("pages.races.form.sportKind.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorSelect
+                                                    initialValue={value}
+                                                    items={sportKindsOptions}
+                                                    placeholder={t("pages.races.form.sportKind.placeholder")}
+                                                    nameKey="name"
+                                                    valueKey="value"
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="sportKind"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "description">
+                                            label={t("pages.races.form.description.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorTextArea
+                                                    placeholder={t("pages.races.form.description.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="description"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "websiteUrl">
+                                            label={t("pages.races.form.websiteUrl.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorInput
+                                                    placeholder={t("pages.races.form.websiteUrl.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="websiteUrl"
+                                        />
                                         <div className="mt-4 flex justify-between">
                                             <Button loading={updateRaceInformationMutation.isLoading} type="submit">
                                                 {t("shared.save")}
@@ -187,46 +179,44 @@ export const BasicInfo = () => {
                                     initialValues={initialRace}
                                     onSubmit={updateRaceRegistration}>
                                     <FormCard title={t("pages.basicInfo.sections.registration.title")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "playersLimit">
-                                                label={t("pages.races.form.playersLimit.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorNumberInput
-                                                        placeholder={t("pages.races.form.playersLimit.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="playersLimit"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInput<Race, "registrationCutoff">
-                                                label={t("pages.races.form.registrationCutoff.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorUTCDatepicker
-                                                        placeholder={t("pages.races.form.registrationCutoff.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="registrationCutoff"
-                                            />
-                                            <div className="p-2"></div>
-                                            <FormInputInline<Race, "registrationEnabled">
-                                                label={t("pages.races.form.registrationEnabled.label")}
-                                                className="flex flex-1 items-start"
-                                                render={({ value, onChange }) => (
-                                                    <PoorCheckbox
-                                                        label={t("pages.races.form.registrationEnabled.label")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="registrationEnabled"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "playersLimit">
+                                            label={t("pages.races.form.playersLimit.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorNumberInput
+                                                    placeholder={t("pages.races.form.playersLimit.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="playersLimit"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "registrationCutoff">
+                                            label={t("pages.races.form.registrationCutoff.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorUTCDatepicker
+                                                    placeholder={t("pages.races.form.registrationCutoff.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="registrationCutoff"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "registrationEnabled">
+                                            label={t("pages.races.form.registrationEnabled.label")}
+                                            className="flex flex-1 items-start"
+                                            render={({ value, onChange }) => (
+                                                <PoorCheckbox
+                                                    label={t("pages.races.form.registrationEnabled.label")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="registrationEnabled"
+                                        />
                                         <div className="mt-4 flex justify-between">
                                             <Button loading={updateRaceRegistrationMutation.isLoading} type="submit">
                                                 {t("shared.save")}
@@ -234,24 +224,21 @@ export const BasicInfo = () => {
                                         </div>
                                     </FormCard>
                                 </Form>
-
                                 <div className="p-4"></div>
                                 <Form initialValues={initialRace} validationSchema={raceRegulationsSchema} onSubmit={updateRaceRegulations}>
                                     <FormCard title={t("pages.basicInfo.sections.terms.title")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "termsUrl">
-                                                label={t("pages.races.form.terms.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorInput
-                                                        placeholder={t("pages.races.form.terms.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="termsUrl"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "termsUrl">
+                                            label={t("pages.races.form.terms.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorInput
+                                                    placeholder={t("pages.races.form.terms.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="termsUrl"
+                                        />
                                         <div className="mt-4 flex justify-between">
                                             <Button loading={updateRaceRegulationsMutation.isLoading} type="submit">
                                                 {t("shared.save")}
@@ -265,20 +252,18 @@ export const BasicInfo = () => {
                                     validationSchema={raceConfirmationEmailTemplateSchema}
                                     onSubmit={updateRaceConfirmationEmailTemplate}>
                                     <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
-                                        <div className="flex">
-                                            <FormInput<Race, "emailTemplate">
-                                                label={t("pages.races.form.emailTemplate.label")}
-                                                className="flex-1"
-                                                render={({ value, onChange }) => (
-                                                    <PoorTextArea
-                                                        placeholder={t("pages.races.form.emailTemplate.placeholder")}
-                                                        value={value}
-                                                        onChange={onChange}
-                                                    />
-                                                )}
-                                                name="emailTemplate"
-                                            />
-                                        </div>
+                                        <FormInput<Race, "emailTemplate">
+                                            label={t("pages.races.form.emailTemplate.label")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorTextArea
+                                                    placeholder={t("pages.races.form.emailTemplate.placeholder")}
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                            name="emailTemplate"
+                                        />
                                         <div className="mt-4 flex justify-between">
                                             <Button loading={updateRaceConfirmationEmailTemplateMutation.isLoading} type="submit">
                                                 {t("shared.save")}

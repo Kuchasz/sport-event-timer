@@ -8,7 +8,7 @@ import { PoorTextArea } from "../../poor-text-area";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { PoorSelect } from "components/poor-select";
 import { useTranslations } from "next-intl";
-import { Form, FormInput, FormInputInline } from "form";
+import { Form, FormInput } from "form";
 import { raceSchema } from "modules/race/models";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
@@ -105,7 +105,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         name="registrationCutoff"
                     />
                     <div className="p-2"></div>
-                    <FormInputInline<Race, "registrationEnabled">
+                    <FormInput<Race, "registrationEnabled">
                         label={t("pages.races.form.registrationEnabled.label")}
                         className="flex-1"
                         render={({ value, onChange }) => (
@@ -116,7 +116,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                     {!initialRace.id && (
                         <>
                             <div className="p-2"></div>
-                            <FormInputInline<Race, "useSampleData">
+                            <FormInput<Race, "useSampleData">
                                 label={t("pages.races.form.useSampleData.label")}
                                 className="flex-1"
                                 render={({ value, onChange }) => (
