@@ -973,49 +973,61 @@
       "form": {
         "date": {
           "label": "Data",
-          "placeholder": "Data wyścigu"
+          "placeholder": "Data wyścigu",
+          "description": "Data wyścigu wyświetlana w wielu miejscach oraz używana w systemie pomiaru czasu, np. do odliczania czasu do startu poszczególnych zawodników."
         },
         "description": {
           "label": "Opis",
-          "placeholder": "Opis wyścig"
+          "placeholder": "Opis wyścig",
+          "description": "Opis wyświetlany na stronie wyścigu."
         },
         "emailTemplate": {
           "label": "Szablon email",
-          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji"
+          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji",
+          "description": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np. podziękowanie za rejestrację i instrukcję opłaty wpisowego."
         },
         "location": {
           "label": "Lokalizacja",
-          "placeholder": "Podaj lokalizację"
+          "placeholder": "Podaj lokalizację",
+          "description": "Miejsce odbywania się zawodów. Może to być nazwa miejscowości, nazwa bazy startowej. Ułatw zawodnikom określenie gdzie Twój wyścig się odbędzie. Np. kryta pływalnia OSiR Kolna."
         },
         "name": {
           "label": "Nazwa",
-          "placeholder": "Wpisz nazwę wyścigu"
+          "placeholder": "Wpisz nazwę wyścigu",
+          "description": "Pełna nazwa wyścigu wyświetlana w wielu różnych miejscach, pozwala na odróżnienie Twojego wyścigu od innych."
         },
         "playersLimit": {
           "label": "Limit zawodników",
-          "placeholder": "Wpisz limit zawodników"
+          "placeholder": "Wpisz limit zawodników",
+          "description": "Opcjonalny limit ilości zawodników, którzy mogą się zarejestrować. Po osiągnięciu limitu zawodników rejestracja automatycznie zostanie zablokowana ze stosownym komunikatem."
         },
         "registrationCutoff": {
           "label": "Wyłączenie rejestracji",
-          "placeholder": "Data wyłączenia rejestracji"
+          "placeholder": "Data wyłączenia rejestracji",
+          "description": "Opcjonalna data wyłączenia systemu rejestracji. Po tym terminie rejestracja nowych zawodników zostanie zablokowana. Użytkownicy zobaczą stosowny komunikat."
         },
         "registrationEnabled": {
-          "label": "Rejestracja uruchomiona"
+          "label": "Rejestracja uruchomiona",
+          "description": "Możesz ręcznie zdefiniować czy system rejestracji powinien być wyłączony. Opcjonalne reguły automatycznego wyłączenia rejestracji mają priorytet nad tym ustawieniem."
         },
         "sportKind": {
           "label": "Dyscyplina sportowa",
-          "placeholder": "Wybierz dyscyplinę sportową"
+          "placeholder": "Wybierz dyscyplinę sportową",
+          "description": "Typ zawodów używany w celach statystycznych. Ułatwia odnalezienie Twojego wyścigu osobom zainteresowanym wybraną dyscypliną sportową."
         },
         "terms": {
           "label": "Regulamin",
-          "placeholder": "Link do regulaminu"
+          "placeholder": "Link do regulaminu",
+          "description": "Adres url do dokumentu zawierającego regulamin. Będzie dostępny do pobrania np. na stronie rejestracji do zawodów."
         },
         "useSampleData": {
-          "label": "Dodaj przykładowe dane"
+          "label": "Dodaj przykładowe dane",
+          "description": "Utwórz przykładowe dane w tym: zawodników, punkty pomiarowe, klasyfikacje, kategorie wiekowe, numery startowe i zmierzone międzyczasy."
         },
         "websiteUrl": {
           "label": "Oficjalna strona internetowa",
-          "placeholder": "Wpisz oficjalną stronę wydarzenia"
+          "placeholder": "Wpisz oficjalną stronę wydarzenia",
+          "description": "Adres strony internetowej Twojego wyścigu, wyświetlany na stronie wyścigu."
         }
       },
       "grid": {
@@ -1254,7 +1266,7 @@
         "form": {
           "canAccessOthers": {
             "label": "Może edytować inne",
-            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach."
+            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach. Na przykład między startem i metą."
           },
           "code": {
             "label": "Kod (opcjonalny)",

@@ -973,49 +973,61 @@
       "form": {
         "date": {
           "label": "Date",
-          "placeholder": "Date of the race"
+          "placeholder": "Date of the race",
+          "description": "The date of the race displayed in many places and used in the timing system, such as for counting down the time until the start of each player."
         },
         "description": {
           "label": "Description",
-          "placeholder": "Describe the race"
+          "placeholder": "Describe the race",
+          "description": "Description displayed on the race page."
         },
         "emailTemplate": {
           "label": "Email template",
-          "placeholder": "Enter your appendinx to the registration confirmation email"
+          "placeholder": "Enter your appendinx to the registration confirmation email",
+          "description": "Text attached at the end of the email with a summary of the competition registration. You can write in it, for example, a thank you for registering and instructions for paying the entry fee."
         },
         "location": {
           "label": "Location",
-          "placeholder": "Enter location"
+          "placeholder": "Enter location",
+          "description": "The place where the competition is held. This can be the name of the town, the name of the starting base. Make it easy for competitors to determine where your race will be held. E.g. OSiR Kolna indoor swimming pool."
         },
         "name": {
           "label": "Name",
-          "placeholder": "Enter race name"
+          "placeholder": "Enter race name",
+          "description": "With the full name of the race displayed in many different places, you can distinguish your race from others."
         },
         "playersLimit": {
           "label": "Players limit",
-          "placeholder": "Enter limit of players"
+          "placeholder": "Enter limit of players",
+          "description": "Optional limit on the number of players who can register. When the limit of players is reached, registration will automatically be blocked with an appropriate message."
         },
         "registrationCutoff": {
           "label": "Registration cutoff",
-          "placeholder": "Date of the registration cutoff"
+          "placeholder": "Date of the registration cutoff",
+          "description": "Optional date of shutdown of the registration system. After this date, registration of new players will be blocked. Users will see a corresponding message."
         },
         "registrationEnabled": {
-          "label": "Registration enabled"
+          "label": "Registration enabled",
+          "description": "You can manually define whether the registration system should be disabled. Optional rules for automatically disabling registration take priority over this setting."
         },
         "sportKind": {
           "label": "Sport kind",
-          "placeholder": "Choose the sport kind"
+          "placeholder": "Choose the sport kind",
+          "description": "The type of competition used for statistical purposes. Makes it easier for people interested in your chosen sport to find your race."
         },
         "terms": {
           "label": "Terms and conditions",
-          "placeholder": "Url to the terms and conditions"
+          "placeholder": "Url to the terms and conditions",
+          "description": "Url to the document containing the regulations. It will be available for download on the competition registration page, for example."
         },
         "useSampleData": {
-          "label": "Add sample data"
+          "label": "Add sample data",
+          "description": "Create sample data including: athletes, measuring points, classifications, age categories, starting numbers and measured split times."
         },
         "websiteUrl": {
           "label": "Official website",
-          "placeholder": "Enter official website url"
+          "placeholder": "Enter official website url",
+          "description": "Your race website address, displayed on the race page."
         }
       },
       "grid": {
@@ -1254,7 +1266,7 @@
         "form": {
           "canAccessOthers": {
             "label": "Can access others",
-            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations."
+            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations. For example, between the start and finish."
           },
           "code": {
             "label": "Code (optional)",

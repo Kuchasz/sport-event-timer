@@ -87,6 +87,7 @@ export const BasicInfo = () => {
                                     <FormCard title={t("pages.basicInfo.sections.base.title")}>
                                         <FormInput<Race, "name">
                                             label={t("pages.races.form.name.label")}
+                                            description={t("pages.races.form.name.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorInput
@@ -100,6 +101,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "date">
                                             label={t("pages.races.form.date.label")}
+                                            description={t("pages.races.form.date.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorUTCDatepicker
@@ -114,6 +116,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "location">
                                             label={t("pages.races.form.location.label")}
+                                            description={t("pages.races.form.location.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorInput
@@ -127,6 +130,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "sportKind">
                                             label={t("pages.races.form.sportKind.label")}
+                                            description={t("pages.races.form.sportKind.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorSelect
@@ -143,6 +147,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "description">
                                             label={t("pages.races.form.description.label")}
+                                            description={t("pages.races.form.description.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorTextArea
@@ -156,6 +161,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "websiteUrl">
                                             label={t("pages.races.form.websiteUrl.label")}
+                                            description={t("pages.races.form.websiteUrl.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorInput
@@ -181,6 +187,7 @@ export const BasicInfo = () => {
                                     <FormCard title={t("pages.basicInfo.sections.registration.title")}>
                                         <FormInput<Race, "playersLimit">
                                             label={t("pages.races.form.playersLimit.label")}
+                                            description={t("pages.races.form.playersLimit.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorNumberInput
@@ -194,6 +201,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "registrationCutoff">
                                             label={t("pages.races.form.registrationCutoff.label")}
+                                            description={t("pages.races.form.registrationCutoff.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorUTCDatepicker
@@ -207,6 +215,7 @@ export const BasicInfo = () => {
                                         <div className="p-2"></div>
                                         <FormInput<Race, "registrationEnabled">
                                             label={t("pages.races.form.registrationEnabled.label")}
+                                            description={t("pages.races.form.registrationEnabled.description")}
                                             className="flex flex-1 items-start"
                                             render={({ value, onChange }) => (
                                                 <PoorCheckbox
@@ -229,6 +238,7 @@ export const BasicInfo = () => {
                                     <FormCard title={t("pages.basicInfo.sections.terms.title")}>
                                         <FormInput<Race, "termsUrl">
                                             label={t("pages.races.form.terms.label")}
+                                            description={t("pages.races.form.terms.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorInput
@@ -254,6 +264,7 @@ export const BasicInfo = () => {
                                     <FormCard title={t("pages.basicInfo.sections.terms.emailTemplate")}>
                                         <FormInput<Race, "emailTemplate">
                                             label={t("pages.races.form.emailTemplate.label")}
+                                            description={t("pages.races.form.emailTemplate.description")}
                                             className="flex-1"
                                             render={({ value, onChange }) => (
                                                 <PoorTextArea
