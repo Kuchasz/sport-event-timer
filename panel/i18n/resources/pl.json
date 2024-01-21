@@ -983,7 +983,7 @@
         },
         "emailTemplate": {
           "label": "Szablon email",
-          "placeholder": "Uzupełnij szablon wysyłany z potwierdzeniem rejestracji",
+          "placeholder": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np podziękowanie za rejestrację i instrukcję opłaty wpisowego.",
           "description": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np. podziękowanie za rejestrację i instrukcję opłaty wpisowego."
         },
         "location": {
