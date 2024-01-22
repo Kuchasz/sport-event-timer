@@ -36,6 +36,7 @@ export const SplitTimeForm = ({
                 {timingPoints?.length && (
                     <FormInput<SplitTime, "timingPointId">
                         label={t("pages.splitTimes.form.timingPoint.label")}
+                        description={t("pages.splitTimes.form.timingPoint.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorSelect
@@ -54,6 +55,7 @@ export const SplitTimeForm = ({
                 <div className="flex">
                     <FormInput<SplitTime, "bibNumber">
                         label={t("pages.splitTimes.form.bibNumber.label")}
+                        description={t("pages.splitTimes.form.bibNumber.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorCombo
@@ -68,6 +70,7 @@ export const SplitTimeForm = ({
                     <div className="p-2"></div>
                     <FormInput<SplitTime, "time">
                         label={t("pages.splitTimes.form.time.label")}
+                        description={t("pages.splitTimes.form.time.description")}
                         className="flex-1"
                         render={({ value, onChange }) => <PoorFullTimepicker date={raceDate} value={value} onChange={onChange} />}
                         name="time"

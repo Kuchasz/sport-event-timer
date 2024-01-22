@@ -22,6 +22,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
             <div className="flex">
                 <FormInput<TimingPoint, "name">
                     label={t("pages.timingPoints.form.name.label")}
+                    description={t("pages.timingPoints.form.name.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("pages.timingPoints.form.name.placeholder")} value={value} onChange={onChange} />
@@ -32,6 +33,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
             <div className="flex">
                 <FormInput<TimingPoint, "shortName">
                     label={t("pages.timingPoints.form.shortName.label")}
+                    description={t("pages.timingPoints.form.shortName.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("pages.timingPoints.form.shortName.placeholder")} value={value} onChange={onChange} />
@@ -42,6 +44,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
             <div className="flex">
                 <FormInput<TimingPoint, "laps">
                     label={t("pages.timingPoints.form.laps.label")}
+                    description={t("pages.timingPoints.form.laps.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorNumberInput placeholder={t("pages.timingPoints.form.laps.placeholder")} value={value} onChange={onChange} />
@@ -52,6 +55,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
             <div className="flex">
                 <FormInput<TimingPoint, "description">
                     label={t("pages.timingPoints.form.description.label")}
+                    description={t("pages.timingPoints.form.description.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("pages.timingPoints.form.description.placeholder")} value={value} onChange={onChange} />

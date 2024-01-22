@@ -34,42 +34,36 @@ export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: App
 
     return (
         <Form<TimePenalty> initialValues={initialTimePenalty} validationSchema={timePenaltySchema} onSubmit={applyTimePenalty}>
-            <div className="flex flex-col">
-                <FormInput<TimePenalty, "time">
-                    label={t("pages.result.applyTimePenalty.form.time.label")}
-                    className="flex-1"
-                    render={({ value, onChange }) => (
-                        <PoorNumberInput
-                            value={value}
-                            placeholder={t("pages.result.applyTimePenalty.form.time.placeholder")}
-                            onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
-                        />
-                    )}
-                    name="time"
-                />
-                <div className="p-2"></div>
-                <div className="flex">
-                    <FormInput<TimePenalty, "reason">
-                        label={t("pages.result.applyTimePenalty.form.reason.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorInput
-                                value={value}
-                                placeholder={t("pages.result.applyTimePenalty.form.reason.placeholder")}
-                                onChange={onChange}
-                            />
-                        )}
-                        name="reason"
+            <FormInput<TimePenalty, "time">
+                label={t("pages.result.applyTimePenalty.form.time.label")}
+                description={t("pages.result.applyTimePenalty.form.time.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorNumberInput
+                        value={value}
+                        placeholder={t("pages.result.applyTimePenalty.form.time.placeholder")}
+                        onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
                     />
-                </div>
-                <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
-                        {t("shared.cancel")}
-                    </Button>
-                    <Button loading={applyTimePenaltyMutation.isLoading} type="submit">
-                        {t("shared.save")}
-                    </Button>
-                </div>
+                )}
+                name="time"
+            />
+            <div className="p-2"></div>
+            <FormInput<TimePenalty, "reason">
+                label={t("pages.result.applyTimePenalty.form.reason.label")}
+                description={t("pages.result.applyTimePenalty.form.reason.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorInput value={value} placeholder={t("pages.result.applyTimePenalty.form.reason.placeholder")} onChange={onChange} />
+                )}
+                name="reason"
+            />
+            <div className="mt-4 flex justify-between">
+                <Button onClick={onReject} outline>
+                    {t("shared.cancel")}
+                </Button>
+                <Button loading={applyTimePenaltyMutation.isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

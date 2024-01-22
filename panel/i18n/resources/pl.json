@@ -1089,11 +1089,13 @@
         "form": {
           "reason": {
             "label": "Powód",
-            "placeholder": "Wpisz powód zastosowania kary"
+            "placeholder": "Wpisz powód zastosowania kary",
+            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników."
           },
           "time": {
             "label": "Czas",
-            "placeholder": "Wpisz karę czasową"
+            "placeholder": "Wpisz karę czasową",
+            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika."
           }
         }
       },
@@ -1101,7 +1103,8 @@
         "form": {
           "reason": {
             "label": "Powód",
-            "placeholder": "Wpisz powód dyskwalifikacji"
+            "placeholder": "Wpisz powód dyskwalifikacji",
+            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników."
           }
         }
       }
@@ -1208,14 +1211,17 @@
       "form": {
         "bibNumber": {
           "label": "Numer startowy",
-          "placeholder": "Wpisz numer startowy"
+          "placeholder": "Wpisz numer startowy",
+          "description": "Numer startowy dla którego zarejestrowano czas."
         },
         "time": {
-          "label": "Czas"
+          "label": "Czas",
+          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym."
         },
         "timingPoint": {
           "label": "Punkt pomiarowy",
-          "placeholder": "Wybierz punkt pomiarowy"
+          "placeholder": "Wybierz punkt pomiarowy",
+          "description": "Punkt pomiarowy którego dotyczy zarejestrowany czas."
         }
       },
       "grid": {
@@ -1321,19 +1327,23 @@
       "form": {
         "description": {
           "label": "Opis",
-          "placeholder": "Opisz punkt pomiarowy"
+          "placeholder": "Opisz punkt pomiarowy",
+          "description": "Opcjonalny opis punktu pomiarowego wyświetlany w kilku miejscach w aplikacji."
         },
         "laps": {
           "label": "Ilość okrążeń",
-          "placeholder": "Podaj ilość okrążeń"
+          "placeholder": "Podaj ilość okrążeń",
+          "description": "Opcjonalna ilość okrążeń możliwych do zmierzenia w punkcie pomiarowym. Używaj tylko w wyścigach których trasa zakłada okrążenia."
         },
         "name": {
           "label": "Nazwa Punktu Pomiarowego",
-          "placeholder": "Wpisz nazwę Punktu Pomiarowego"
+          "placeholder": "Wpisz nazwę Punktu Pomiarowego",
+          "description": "Nazwa punktu pomiarowego wyświetlana w stoperze, liście czasów i liście wyników, np. start, meta, punkt kontrolny."
         },
         "shortName": {
           "label": "Nazwa skrócona",
-          "placeholder": "Wpisz nazwę skróconą"
+          "placeholder": "Wpisz nazwę skróconą",
+          "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków."
         }
       },
       "header": {

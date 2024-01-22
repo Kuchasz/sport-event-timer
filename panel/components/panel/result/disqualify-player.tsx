@@ -38,6 +38,7 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
             <div className="flex flex-col">
                 <FormInput<Disqualification, "reason">
                     label={t("pages.result.disqualify.form.reason.label")}
+                    description={t("pages.result.disqualify.form.reason.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput value={value} placeholder={t("pages.result.disqualify.form.reason.placeholder")} onChange={onChange} />

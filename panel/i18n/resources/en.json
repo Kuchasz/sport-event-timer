@@ -1089,11 +1089,13 @@
         "form": {
           "reason": {
             "label": "Reason",
-            "placeholder": "Type reason for penalty"
+            "placeholder": "Type reason for penalty",
+            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results."
           },
           "time": {
             "label": "Time",
-            "placeholder": "Enter time penalty"
+            "placeholder": "Enter time penalty",
+            "description": "The number of seconds that will be added to the player's score."
           }
         }
       },
@@ -1101,7 +1103,8 @@
         "form": {
           "reason": {
             "label": "Reason",
-            "placeholder": "Type reason for disqualification"
+            "placeholder": "Type reason for disqualification",
+            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results."
           }
         }
       }
@@ -1208,14 +1211,17 @@
       "form": {
         "bibNumber": {
           "label": "Bib number",
-          "placeholder": "Enter bib number"
+          "placeholder": "Enter bib number",
+          "description": "The bib number for which the split time was recorded."
         },
         "time": {
-          "label": "Time"
+          "label": "Time",
+          "description": "The exact time of the player's appearance at the timing point."
         },
         "timingPoint": {
           "label": "Timing Point",
-          "placeholder": "Choose timing point"
+          "placeholder": "Choose timing point",
+          "description": "Timing point related to the split time."
         }
       },
       "grid": {
@@ -1321,19 +1327,23 @@
       "form": {
         "description": {
           "label": "Description",
-          "placeholder": "Describe the timing point"
+          "placeholder": "Describe the timing point",
+          "description": "Optional description of the timing point displayed in several places in the application."
         },
         "laps": {
           "label": "Number of laps",
-          "placeholder": "Enter number of laps"
+          "placeholder": "Enter number of laps",
+          "description": "Optional number of laps that can be measured at the timing point. Use only in races whose route includes laps."
         },
         "name": {
           "label": "Timing Point Name",
-          "placeholder": "Type Timing Point Name"
+          "placeholder": "Type Timing Point Name",
+          "description": "The name of the timing point displayed in the stopwatch, times list and result list, such as start, finish, checkpoint."
         },
         "shortName": {
           "label": "Short name",
-          "placeholder": "Enter short name"
+          "placeholder": "Enter short name",
+          "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters."
         }
       },
       "header": {
