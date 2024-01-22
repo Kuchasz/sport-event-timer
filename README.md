@@ -59,7 +59,7 @@ Application for making time measurements
 | 09/11/2023 | Persist some grid settings in url                                     | todo :date:                                |
 | 09/11/2023 | Animate chevron on switching to next player <sup>(start list)</sup>   | :heavy_check_mark: <sup>(13/11/2023)</sup> |
 | 10/11/2023 | Enter to submit form                                                  | :heavy_check_mark: <sup>(13/11/2023)</sup> |
-| 12/11/2023 | Ability to edit basic race info from race panel                       | todo :date:                                |
+| 12/11/2023 | Ability to edit basic race info from race panel                       | :heavy_check_mark: <sup>(19/01/2024)</sup> |
 | 14/11/2023 | Replace NextAuth                                                      | :heavy_check_mark: <sup>(19/11/2023)</sup> |
 | 21/11/2023 | Salt passwords                                                        | :heavy_check_mark: <sup>(22/11/2023)</sup> |
 | 22/11/2023 | Support for sort over dates                                           | todo :date:                                |
@@ -81,7 +81,7 @@ Application for making time measurements
 | 15/12/2023 | Templating engine for registration email message                      | todo :date:                                |
 | 19/12/2023 | Terms document upload                                                 | todo :date:                                |
 | 24/12/2023 | Separate APP and API to separate environments                         | :heavy_check_mark: <sup>(30/12/2023)</sup> |
-| 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                        | :heavy_check_mark: <sup>(18/01/2023)</sup> |
+| 29/12/2023 | StartTime, TimeResult and TimeSpans input mask                        | :heavy_check_mark: <sup>(18/01/2024)</sup> |
 | 29/12/2023 | Alternative start intervals (15s, 30s, 2m, etc)                       | todo :date:                                |
 | 01/01/2023 | Add change sets to home page                                          | todo :date:                                |
 | 02/01/2023 | Fix toaster on home page                                              | todo :date:                                |
@@ -89,12 +89,13 @@ Application for making time measurements
 | 07/01/2023 | Ability to turn on/off autostart                                      | todo :date:                                |
 | 07/01/2023 | Stopwatch translations                                                | todo :date:                                |
 | 07/01/2023 | Proper PWA manifests for all tools                                    | todo :date:                                |
-| 07/01/2023 | Investigate and fix onmousedown issues in stopwatch                   | todo :date:                                |
+| 07/01/2023 | Investigate and fix onmousedown issues in stopwatch                   | :heavy_check_mark: <sup>(13/01/2024)</sup> |
 | 14/01/2023 | Keyboard support on stopwatch pad                                     | todo :date:                                |
 | 17/01/2023 | Countdown change background on remaining time                         | todo :date:                                |
 | 18/01/2023 | Master/details view on players page                                   | todo :date:                                |
 | 18/01/2023 | Add longer, more self explanatory descriptions to page headers        | todo :date:                                |
 | 20/01/2023 | Replace 'Race' word with 'Competition'                                | todo :date:                                |
+| 22/01/2023 | Grid loading state                                                    | todo :date:                                |
 
 ## TODO
 
