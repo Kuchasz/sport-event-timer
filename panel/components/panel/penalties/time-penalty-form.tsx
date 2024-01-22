@@ -29,63 +29,59 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
 
     return (
         <Form<TimePenalty> initialValues={initialTimePenalty} validationSchema={timePenaltySchema} onSubmit={onResolve}>
-            <div className="flex flex-col">
-                {bibNumbers.length && (
-                    <FormInput<TimePenalty, "bibNumber">
-                        label={t("timeMeasurement.penalties.timePenalty.form.bibNumber.label")}
-                        description={t("timeMeasurement.penalties.timePenalty.form.bibNumber.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorSelect
-                                initialValue={value}
-                                items={bibNumbersPositions}
-                                placeholder={t("timeMeasurement.penalties.timePenalty.form.bibNumber.placeholder")}
-                                nameKey="name"
-                                valueKey="id"
-                                onChange={onChange}
-                            />
-                        )}
-                        name="bibNumber"
+            {bibNumbers.length && (
+                <FormInput<TimePenalty, "bibNumber">
+                    label={t("timeMeasurement.penalties.timePenalty.form.bibNumber.label")}
+                    description={t("timeMeasurement.penalties.timePenalty.form.bibNumber.description")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorSelect
+                            initialValue={value}
+                            items={bibNumbersPositions}
+                            placeholder={t("timeMeasurement.penalties.timePenalty.form.bibNumber.placeholder")}
+                            nameKey="name"
+                            valueKey="id"
+                            onChange={onChange}
+                        />
+                    )}
+                    name="bibNumber"
+                />
+            )}
+            <FormInput<TimePenalty, "reason">
+                label={t("timeMeasurement.penalties.timePenalty.form.reason.label")}
+                description={t("timeMeasurement.penalties.timePenalty.form.reason.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCombo
+                        initialValue={value}
+                        placeholder={t("timeMeasurement.penalties.timePenalty.form.reason.placeholder")}
+                        items={reasons}
+                        onChange={onChange}
                     />
                 )}
-                <div className="flex">
-                    <FormInput<TimePenalty, "reason">
-                        label={t("timeMeasurement.penalties.timePenalty.form.reason.label")}
-                        description={t("timeMeasurement.penalties.timePenalty.form.reason.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorCombo
-                                initialValue={value}
-                                placeholder={t("timeMeasurement.penalties.timePenalty.form.reason.placeholder")}
-                                items={reasons}
-                                onChange={onChange}
-                            />
-                        )}
-                        name="reason"
+                name="reason"
+            />
+            <div className="p-2"></div>
+            <FormInput<TimePenalty, "time">
+                label={t("timeMeasurement.penalties.timePenalty.form.time.label")}
+                description={t("timeMeasurement.penalties.timePenalty.form.time.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorNumberInput
+                        value={value}
+                        placeholder={t("timeMeasurement.penalties.timePenalty.form.time.placeholder")}
+                        onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
                     />
-                    <div className="p-2"></div>
-                    <FormInput<TimePenalty, "time">
-                        label={t("timeMeasurement.penalties.timePenalty.form.time.label")}
-                        description={t("timeMeasurement.penalties.timePenalty.form.time.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorNumberInput
-                                value={value}
-                                placeholder={t("timeMeasurement.penalties.timePenalty.form.time.placeholder")}
-                                onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
-                            />
-                        )}
-                        name="time"
-                    />
-                </div>
-                <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
-                        {t("shared.cancel")}
-                    </Button>
-                    <Button loading={isLoading} type="submit">
-                        {t("shared.save")}
-                    </Button>
-                </div>
+                )}
+                name="time"
+            />
+            <div className="mt-4 flex justify-between">
+                <Button onClick={onReject} outline>
+                    {t("shared.cancel")}
+                </Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

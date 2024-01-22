@@ -149,7 +149,7 @@ export const PoorModal = <T, P>({ onResolve, title, description, children, compo
                                             <Icon size={0.8} path={mdiWindowClose} />
                                         </span>
                                     </Dialog.Title>
-                                    <Dialog.Description className="text-sm text-gray-500">{description}</Dialog.Description>
+                                    <Dialog.Description className="mb-4 text-sm text-gray-500">{description}</Dialog.Description>
                                     <div className="mt-2">
                                         <Content {...componentProps} onResolve={resolveInternal} onReject={rejectInternal} />
                                     </div>

@@ -104,7 +104,6 @@ export const TimingPoint = ({
                             onReject: () => {},
                         }}>
                         <NewPoorActionsItem
-                            onClick={() => generateAccessUrl()}
                             name={t("pages.timingPoints.accessUrls.edit.title")}
                             description={t("pages.timingPoints.accessUrls.edit.description")}
                             iconPath={mdiPencilOutline}></NewPoorActionsItem>
