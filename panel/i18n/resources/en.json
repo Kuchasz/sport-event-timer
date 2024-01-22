@@ -622,19 +622,23 @@
               "female": "Female",
               "male": "Male"
             },
-            "label": "Gender"
+            "label": "Gender",
+            "description": "Gender required for the player to be included in the category."
           },
           "maxAge": {
             "label": "Max age",
-            "placeholder": "Enter maximum age"
+            "placeholder": "Enter maximum age",
+            "description": "The maximum age required for the player to be included in the category."
           },
           "minAge": {
             "label": "Min age",
-            "placeholder": "Enter minimum age"
+            "placeholder": "Enter minimum age",
+            "description": "The minimum age required for the player to be included in the category."
           },
           "name": {
             "label": "Name",
-            "placeholder": "Enter category name"
+            "placeholder": "Enter category name",
+            "description": "Name displayed in many places like results list."
           }
         },
         "grid": {
@@ -678,7 +682,8 @@
       "form": {
         "name": {
           "label": "Name",
-          "placeholder": "Enter the name"
+          "placeholder": "Enter the name",
+          "description": "The name displayed in many places like the results and registration system."
         }
       },
       "grid": {
@@ -829,14 +834,17 @@
         "form": {
           "bibNumber": {
             "label": "Bib number",
-            "placeholder": "Enter bib number"
+            "placeholder": "Enter bib number",
+            "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it."
           },
           "classification": {
             "label": "Classification",
-            "placeholder": "Select classification"
+            "placeholder": "Select classification",
+            "description": "Each player must be assigned to a classification."
           },
           "startTime": {
-            "label": "Start time"
+            "label": "Start time",
+            "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing."
           }
         },
         "title": "Promote to Player"
@@ -872,7 +880,8 @@
       "form": {
         "bibNumber": {
           "label": "Bib Number",
-          "placeholder": "bib number"
+          "placeholder": "bib number",
+          "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it."
         },
         "birthDate": {
           "placeholder": "Birth Date"
@@ -883,7 +892,8 @@
         },
         "classification": {
           "label": "Classification",
-          "placeholder": "Choose classification"
+          "placeholder": "Choose classification",
+          "description": "Each player must be assigned to a classification."
         },
         "country": {
           "label": "Country",
@@ -915,7 +925,8 @@
         },
         "startTime": {
           "label": "Start Time",
-          "placeholder": "eg. 11:11"
+          "placeholder": "eg. 11:11",
+          "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing."
         },
         "team": {
           "label": "Team",
@@ -1180,7 +1191,8 @@
         "form": {
           "name": {
             "label": "API Key Name",
-            "placeholder": "Type API Key Name"
+            "placeholder": "Type API Key Name",
+            "description": "The name for the API key, allows you to distinguish the different keys from each other."
           }
         }
       },
@@ -1900,11 +1912,13 @@
         "form": {
           "bibNumber": {
             "label": "Bib Number",
-            "placeholder": "Enter bib number"
+            "placeholder": "Enter bib number",
+            "description": "The bib number of the player who will be disqualified."
           },
           "reason": {
             "label": "Reason",
-            "placeholder": "Reason the disqualification"
+            "placeholder": "Reason the disqualification",
+            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results."
           }
         }
       },
@@ -2000,15 +2014,18 @@
         "form": {
           "bibNumber": {
             "label": "Bib Number",
-            "placeholder": "Enter bib number"
+            "placeholder": "Enter bib number",
+            "description": "The bib number of the player who will be penalized."
           },
           "reason": {
             "label": "Reason",
-            "placeholder": "Reason the time penalty"
+            "placeholder": "Reason the time penalty",
+            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results."
           },
           "time": {
             "label": "Time",
-            "placeholder": "Enter time"
+            "placeholder": "Enter time",
+            "description": "The number of seconds that will be added to the player's score."
           }
         },
         "timePenaltyReasons": {

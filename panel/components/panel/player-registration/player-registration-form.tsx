@@ -1,16 +1,16 @@
-import { Button } from "../../button";
-import type { AppRouterInputs } from "trpc";
-import { PoorDatepicker } from "../../poor-datepicker";
-import { PoorInput } from "../../poor-input";
-import { countryCodes } from "contry-codes";
-import { PoorSelect } from "../../poor-select";
-import { useCurrentRaceId } from "hooks";
 import { genders } from "@set/utils/dist/gender";
-import { Form, FormInput } from "form";
-import { PoorCombo } from "../../poor-combo";
-import { trpc } from "trpc-core";
+import { countryCodes } from "contry-codes";
+import { Form, SmallFormInput } from "form";
+import { useCurrentRaceId } from "hooks";
 import { playerRegistrationSchema } from "modules/player-registration/models";
 import { useTranslations } from "next-intl";
+import type { AppRouterInputs } from "trpc";
+import { trpc } from "trpc-core";
+import { Button } from "../../button";
+import { PoorCombo } from "../../poor-combo";
+import { PoorDatepicker } from "../../poor-datepicker";
+import { PoorInput } from "../../poor-input";
+import { PoorSelect } from "../../poor-select";
 
 type PlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
@@ -34,7 +34,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
             validationSchema={playerRegistrationSchema}
             onSubmit={onResolve}>
             <div className="flex">
-                <FormInput<PlayerRegistration, "name">
+                <SmallFormInput<PlayerRegistration, "name">
                     label={t("pages.playerRegistrations.form.name.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -43,7 +43,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="name"
                 />
                 <div className="p-2"></div>
-                <FormInput<PlayerRegistration, "lastName">
+                <SmallFormInput<PlayerRegistration, "lastName">
                     label={t("pages.playerRegistrations.form.lastName.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -57,7 +57,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 />
             </div>
             <div className="flex">
-                <FormInput<PlayerRegistration, "gender">
+                <SmallFormInput<PlayerRegistration, "gender">
                     label={t("pages.playerRegistrations.form.gender.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -73,7 +73,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="gender"
                 />
                 <div className="p-2"></div>
-                <FormInput<PlayerRegistration, "birthDate">
+                <SmallFormInput<PlayerRegistration, "birthDate">
                     label={t("pages.playerRegistrations.form.birthDate.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -87,7 +87,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 />
             </div>
             <div>
-                <FormInput<PlayerRegistration, "team">
+                <SmallFormInput<PlayerRegistration, "team">
                     label={t("pages.playerRegistrations.form.team.label")}
                     render={({ value, onChange }) => (
                         <PoorCombo
@@ -101,7 +101,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 />
             </div>
             <div className="flex">
-                <FormInput<PlayerRegistration, "country">
+                <SmallFormInput<PlayerRegistration, "country">
                     label={t("pages.playerRegistrations.form.country.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -117,7 +117,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="country"
                 />
                 <div className="p-2"></div>
-                <FormInput<PlayerRegistration, "city">
+                <SmallFormInput<PlayerRegistration, "city">
                     label={t("pages.playerRegistrations.form.city.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -127,7 +127,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 />
             </div>
             <div className="flex">
-                <FormInput<PlayerRegistration, "email">
+                <SmallFormInput<PlayerRegistration, "email">
                     label={t("pages.playerRegistrations.form.email.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -136,7 +136,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="email"
                 />
                 <div className="p-2"></div>
-                <FormInput<PlayerRegistration, "phoneNumber">
+                <SmallFormInput<PlayerRegistration, "phoneNumber">
                     label={t("pages.playerRegistrations.form.phoneNumber.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (
@@ -149,7 +149,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                     name="phoneNumber"
                 />
                 <div className="p-2"></div>
-                <FormInput<PlayerRegistration, "icePhoneNumber">
+                <SmallFormInput<PlayerRegistration, "icePhoneNumber">
                     label={t("pages.playerRegistrations.form.icePhoneNumber.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (

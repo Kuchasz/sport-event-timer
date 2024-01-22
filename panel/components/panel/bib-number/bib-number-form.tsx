@@ -1,9 +1,9 @@
-import { Button } from "../../button";
-import type { AppRouterInputs } from "trpc";
-import { PoorInput } from "../../poor-input";
-import { Form, FormInput } from "form";
+import { Form, SmallFormInput } from "form";
 import { bibNumberSchema } from "modules/bib-number/models";
 import { useTranslations } from "next-intl";
+import type { AppRouterInputs } from "trpc";
+import { Button } from "../../button";
+import { PoorInput } from "../../poor-input";
 
 type BibNumber = AppRouterInputs["bibNumber"]["add"];
 
@@ -19,7 +19,7 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber, isLoading
     return (
         <Form<BibNumber> validationSchema={bibNumberSchema} initialValues={initialBibNumber} onSubmit={onResolve}>
             <div className="flex">
-                <FormInput<BibNumber, "number">
+                <SmallFormInput<BibNumber, "number">
                     label={t("pages.bibNumbers.form.number.label")}
                     className="flex-1"
                     render={({ value, onChange }) => (

@@ -33,6 +33,7 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                 {bibNumbers.length && (
                     <FormInput<TimePenalty, "bibNumber">
                         label={t("timeMeasurement.penalties.timePenalty.form.bibNumber.label")}
+                        description={t("timeMeasurement.penalties.timePenalty.form.bibNumber.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorSelect
@@ -50,6 +51,7 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                 <div className="flex">
                     <FormInput<TimePenalty, "reason">
                         label={t("timeMeasurement.penalties.timePenalty.form.reason.label")}
+                        description={t("timeMeasurement.penalties.timePenalty.form.reason.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorCombo
@@ -64,6 +66,7 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                     <div className="p-2"></div>
                     <FormInput<TimePenalty, "time">
                         label={t("timeMeasurement.penalties.timePenalty.form.time.label")}
+                        description={t("timeMeasurement.penalties.timePenalty.form.time.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorNumberInput

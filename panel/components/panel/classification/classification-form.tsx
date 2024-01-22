@@ -21,6 +21,7 @@ export const ClassificationForm = ({ onReject, onResolve, initialClassification,
             <div className="flex flex-col">
                 <FormInput<Classification, "name">
                     label={t("pages.classifications.form.name.label")}
+                    description={t("pages.classifications.form.name.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("pages.classifications.form.name.placeholder")} value={value} onChange={onChange} />

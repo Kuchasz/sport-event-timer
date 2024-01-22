@@ -23,46 +23,46 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
 
     return (
         <Form<Player> initialValues={initialPlayer} validationSchema={playerSchema} onSubmit={onResolve}>
-            <div className="flex">
-                <FormInput<Player, "classificationId">
-                    label={t("pages.players.form.classification.label")}
-                    className="flex-1"
-                    render={({ value, onChange }) => (
-                        <PoorSelect
-                            initialValue={value}
-                            items={classifications}
-                            placeholder={t("pages.players.form.classification.placeholder")}
-                            nameKey="name"
-                            valueKey="id"
-                            onChange={onChange}></PoorSelect>
-                    )}
-                    name="classificationId"
-                />
-                <div className="p-2"></div>
-                <FormInput<Player, "bibNumber">
-                    label={t("pages.players.form.bibNumber.label")}
-                    className="flex-1"
-                    render={({ value, onChange }) => (
-                        <PoorCombo
-                            initialValue={value}
-                            placeholder={t("pages.players.form.bibNumber.placeholder")}
-                            items={bibNumbers}
-                            onChange={onChange}
-                        />
-                    )}
-                    name="bibNumber"
-                />
-            </div>
-            <div className="flex">
-                <FormInput<Player, "startTime">
-                    label={t("pages.players.form.startTime.label")}
-                    className="flex-1"
-                    render={({ value, onChange }) => (
-                        <PoorTimepicker placeholder={t("pages.players.form.startTime.placeholder")} value={value} onChange={onChange} />
-                    )}
-                    name="startTime"
-                />
-            </div>
+            <FormInput<Player, "classificationId">
+                label={t("pages.players.form.classification.label")}
+                description={t("pages.players.form.classification.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorSelect
+                        initialValue={value}
+                        items={classifications}
+                        placeholder={t("pages.players.form.classification.placeholder")}
+                        nameKey="name"
+                        valueKey="id"
+                        onChange={onChange}></PoorSelect>
+                )}
+                name="classificationId"
+            />
+            <div className="p-2"></div>
+            <FormInput<Player, "bibNumber">
+                label={t("pages.players.form.bibNumber.label")}
+                description={t("pages.players.form.bibNumber.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCombo
+                        initialValue={value}
+                        placeholder={t("pages.players.form.bibNumber.placeholder")}
+                        items={bibNumbers}
+                        onChange={onChange}
+                    />
+                )}
+                name="bibNumber"
+            />
+            <div className="p-2"></div>
+            <FormInput<Player, "startTime">
+                label={t("pages.players.form.startTime.label")}
+                description={t("pages.players.form.startTime.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorTimepicker placeholder={t("pages.players.form.startTime.placeholder")} value={value} onChange={onChange} />
+                )}
+                name="startTime"
+            />
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}

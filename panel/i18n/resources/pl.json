@@ -622,19 +622,23 @@
               "female": "Kobieta",
               "male": "Mężczyzna"
             },
-            "label": "Płeć"
+            "label": "Płeć",
+            "description": "Płeć wymagana do tego, żeby dany zawodnik został uwzględniony w danej kategorii."
           },
           "maxAge": {
             "label": "Max wiek",
-            "placeholder": "Wpisz maksymalny wiek"
+            "placeholder": "Wpisz maksymalny wiek",
+            "description": "Maksymalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii."
           },
           "minAge": {
             "label": "Min wiek",
-            "placeholder": "Wpisz minimalny wiek"
+            "placeholder": "Wpisz minimalny wiek",
+            "description": "Minimalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii."
           },
           "name": {
             "label": "Nazwa",
-            "placeholder": "Wpisz nazwę kategorii"
+            "placeholder": "Wpisz nazwę kategorii",
+            "description": "Nazwa wyświetlana między innymi na liście wyników."
           }
         },
         "grid": {
@@ -678,7 +682,8 @@
       "form": {
         "name": {
           "label": "Nazwa",
-          "placeholder": "Wpisz nazwę"
+          "placeholder": "Wpisz nazwę",
+          "description": "Nazwa wyświetlana między innymi na liście wyników i systemie rejestracji."
         }
       },
       "grid": {
@@ -829,14 +834,17 @@
         "form": {
           "bibNumber": {
             "label": "Numer startowy",
-            "placeholder": "Wpisz numer startowy"
+            "placeholder": "Wpisz numer startowy",
+            "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu."
           },
           "classification": {
             "label": "Klasyfikacja",
-            "placeholder": "Wybierz klasyfikację"
+            "placeholder": "Wybierz klasyfikację",
+            "description": "Każdy zawodnik musi być przypisany do klasyfikacji."
           },
           "startTime": {
-            "label": "Czas startu"
+            "label": "Czas startu",
+            "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu."
           }
         },
         "title": "Awansuj na Zawodnika"
@@ -872,7 +880,8 @@
       "form": {
         "bibNumber": {
           "label": "Numer startowy",
-          "placeholder": "Numer startowy"
+          "placeholder": "Numer startowy",
+          "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu."
         },
         "birthDate": {
           "placeholder": "Data urodzenia"
@@ -883,7 +892,8 @@
         },
         "classification": {
           "label": "Klasyfikacja",
-          "placeholder": "Wybierz klasyfikację"
+          "placeholder": "Wybierz klasyfikację",
+          "description": "Każdy zawodnik musi być przypisany do klasyfikacji."
         },
         "country": {
           "label": "Kraj",
@@ -915,7 +925,8 @@
         },
         "startTime": {
           "label": "Godzina rozpoczęcia",
-          "placeholder": "np. 11:11"
+          "placeholder": "np. 11:11",
+          "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu."
         },
         "team": {
           "label": "Drużyna",
@@ -1180,7 +1191,8 @@
         "form": {
           "name": {
             "label": "Nazwa klucza API",
-            "placeholder": "Wpisz nazwę klucza API"
+            "placeholder": "Wpisz nazwę klucza API",
+            "description": "Nazwa dla klucza API, pozwala na odróżnianie od siebie poszczególnych kluczy."
           }
         }
       },
@@ -1900,11 +1912,13 @@
         "form": {
           "bibNumber": {
             "label": "Numer startowy",
-            "placeholder": "Wprowadź numer startowy"
+            "placeholder": "Wprowadź numer startowy",
+            "description": "Numer startowy zawodnika który zostanie zdyskwalifikowany."
           },
           "reason": {
             "label": "Powód",
-            "placeholder": "Uzasadnij dyskwalifikację"
+            "placeholder": "Uzasadnij dyskwalifikację",
+            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników."
           }
         }
       },
@@ -2000,15 +2014,18 @@
         "form": {
           "bibNumber": {
             "label": "Numer startowy",
-            "placeholder": "Wprowadź numer startowy"
+            "placeholder": "Wprowadź numer startowy",
+            "description": "Numer startowy zawodnika który zostanie ukarany."
           },
           "reason": {
             "label": "Powód",
-            "placeholder": "Uzasadnij karę czasową"
+            "placeholder": "Uzasadnij karę czasową",
+            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników."
           },
           "time": {
             "label": "Czas",
-            "placeholder": "Wpisz czas"
+            "placeholder": "Wpisz czas",
+            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika."
           }
         },
         "timePenaltyReasons": {

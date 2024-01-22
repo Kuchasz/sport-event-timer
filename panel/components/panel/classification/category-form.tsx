@@ -26,6 +26,7 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                 <div className="flex">
                     <FormInput<Category, "name">
                         label={t("pages.classifications.categories.form.name.label")}
+                        description={t("pages.classifications.categories.form.name.description")}
                         render={({ value, onChange }) => (
                             <PoorInput
                                 placeholder={t("pages.classifications.categories.form.name.placeholder")}
@@ -39,6 +40,7 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     <FormInput<Category, "minAge">
                         className="grow basis-full"
                         label={t("pages.classifications.categories.form.minAge.label")}
+                        description={t("pages.classifications.categories.form.minAge.description")}
                         render={({ value, onChange }) => (
                             <PoorNumberInput
                                 placeholder={t("pages.classifications.categories.form.minAge.placeholder")}
@@ -52,6 +54,7 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     <FormInput<Category, "maxAge">
                         className="grow basis-full"
                         label={t("pages.classifications.categories.form.maxAge.label")}
+                        description={t("pages.classifications.categories.form.maxAge.description")}
                         render={({ value, onChange }) => (
                             <PoorNumberInput
                                 placeholder={t("pages.classifications.categories.form.maxAge.placeholder")}
@@ -65,6 +68,7 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     <FormInput<Category, "gender">
                         className="grow basis-full"
                         label={t("pages.classifications.categories.form.gender.label")}
+                        description={t("pages.classifications.categories.form.gender.description")}
                         render={({ value, onChange }) => (
                             <RadioGroup value={value} onChange={e => onChange({ target: { value: e } })}>
                                 <RadioGroup.Option value={null}>

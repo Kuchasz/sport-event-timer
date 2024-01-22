@@ -21,6 +21,7 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey, isLoading }: Ap
             <div className="flex">
                 <FormInput<ApiKey, "name">
                     label={t("pages.settings.apiKeys.form.name.label")}
+                    description={t("pages.settings.apiKeys.form.name.description")}
                     className="grow"
                     render={({ value, onChange }) => (
                         <PoorInput placeholder={t("pages.settings.apiKeys.form.name.placeholder")} value={value} onChange={onChange} />

@@ -2,7 +2,7 @@
 
 import { Button } from "components/button";
 import { PoorInput } from "components/poor-input";
-import { Form, FormInput } from "form";
+import { Form, SmallFormInput } from "form";
 import { registrationSchema, type UserRegistration } from "modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -34,21 +34,21 @@ export function RegisterPage() {
             <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-900">{t("auth.register.header")}</h1>
             <Form<UserRegistration> initialValues={initialForm} validationSchema={registrationSchema} onSubmit={onResolve}>
                 <div className="flex flex-col">
-                    <FormInput<UserRegistration, "name">
+                    <SmallFormInput<UserRegistration, "name">
                         label={t("auth.registration.form.name.label")}
                         render={({ value, onChange }) => (
                             <PoorInput placeholder={t("auth.registration.form.name.placeholder")} value={value} onChange={onChange} />
                         )}
                         name="name"
                     />
-                    <FormInput<UserRegistration, "email">
+                    <SmallFormInput<UserRegistration, "email">
                         label={t("auth.registration.form.email.label")}
                         render={({ value, onChange }) => (
                             <PoorInput placeholder={t("auth.registration.form.email.placeholder")} value={value} onChange={onChange} />
                         )}
                         name="email"
                     />
-                    <FormInput<UserRegistration, "password">
+                    <SmallFormInput<UserRegistration, "password">
                         label={t("auth.registration.form.password.label")}
                         render={({ value, onChange }) => (
                             <PoorInput
@@ -60,7 +60,7 @@ export function RegisterPage() {
                         )}
                         name="password"
                     />
-                    <FormInput<UserRegistration, "confirmPassword">
+                    <SmallFormInput<UserRegistration, "confirmPassword">
                         label={t("auth.registration.form.confirmPassword.label")}
                         render={({ value, onChange }) => (
                             <PoorInput

@@ -36,6 +36,7 @@ export const DisqualificationForm = ({
                 {bibNumbersPositions.length && (
                     <FormInput<Disqualification, "bibNumber">
                         label={t("timeMeasurement.penalties.disqualification.form.bibNumber.label")}
+                        description={t("timeMeasurement.penalties.disqualification.form.bibNumber.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorSelect
@@ -53,6 +54,7 @@ export const DisqualificationForm = ({
                 <div className="flex">
                     <FormInput<Disqualification, "reason">
                         label={t("timeMeasurement.penalties.disqualification.form.reason.label")}
+                        description={t("timeMeasurement.penalties.disqualification.form.reason.description")}
                         className="flex-1"
                         render={({ value, onChange }) => (
                             <PoorCombo

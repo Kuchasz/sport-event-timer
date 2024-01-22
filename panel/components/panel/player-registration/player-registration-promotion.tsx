@@ -31,54 +31,53 @@ const PlayerRegistrationPromotionForm = ({
 
     return (
         <Form<PlayerPromotion> initialValues={initialPlayerPromotion} validationSchema={playerPromotionSchema} onSubmit={onResolve}>
-            <div className="flex flex-col">
-                <div className="flex">
-                    <FormInput<PlayerPromotion, "classificationId">
-                        label={t("pages.playerRegistrations.promoteToPlayer.form.classification.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorSelect
-                                initialValue={value}
-                                placeholder={t("pages.playerRegistrations.promoteToPlayer.form.classification.placeholder")}
-                                items={classifications}
-                                nameKey="name"
-                                valueKey="id"
-                                onChange={onChange}
-                            />
-                        )}
-                        name="classificationId"
+            <FormInput<PlayerPromotion, "classificationId">
+                label={t("pages.playerRegistrations.promoteToPlayer.form.classification.label")}
+                description={t("pages.playerRegistrations.promoteToPlayer.form.classification.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorSelect
+                        initialValue={value}
+                        placeholder={t("pages.playerRegistrations.promoteToPlayer.form.classification.placeholder")}
+                        items={classifications}
+                        nameKey="name"
+                        valueKey="id"
+                        onChange={onChange}
                     />
-                    <div className="p-2"></div>
-                    <FormInput<PlayerPromotion, "bibNumber">
-                        label={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorCombo
-                                initialValue={value}
-                                placeholder={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.placeholder")}
-                                items={bibNumbers}
-                                onChange={onChange}
-                            />
-                        )}
-                        name="bibNumber"
+                )}
+                name="classificationId"
+            />
+            <div className="p-2"></div>
+            <FormInput<PlayerPromotion, "bibNumber">
+                label={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.label")}
+                description={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCombo
+                        initialValue={value}
+                        placeholder={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.placeholder")}
+                        items={bibNumbers}
+                        onChange={onChange}
                     />
-                </div>
-                <div className="flex">
-                    <FormInput<PlayerPromotion, "startTime">
-                        label={t("pages.playerRegistrations.promoteToPlayer.form.startTime.label")}
-                        className="flex-1"
-                        render={({ value, onChange }) => <PoorTimepicker value={value} onChange={onChange} />}
-                        name="startTime"
-                    />
-                </div>
-                <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
-                        {t("shared.cancel")}
-                    </Button>
-                    <Button loading={isLoading} type="submit">
-                        {t("shared.save")}
-                    </Button>
-                </div>
+                )}
+                name="bibNumber"
+            />
+            <div className="p-2"></div>
+            <FormInput<PlayerPromotion, "startTime">
+                label={t("pages.playerRegistrations.promoteToPlayer.form.startTime.label")}
+                description={t("pages.playerRegistrations.promoteToPlayer.form.startTime.description")}
+                className="flex-1"
+                render={({ value, onChange }) => <PoorTimepicker value={value} onChange={onChange} />}
+                name="startTime"
+            />
+
+            <div className="mt-4 flex justify-between">
+                <Button onClick={onReject} outline>
+                    {t("shared.cancel")}
+                </Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

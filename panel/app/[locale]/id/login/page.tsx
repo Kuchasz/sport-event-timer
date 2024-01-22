@@ -2,7 +2,7 @@
 
 import { Button } from "components/button";
 import { PoorInput } from "components/poor-input";
-import { Form, FormInput } from "form";
+import { Form, SmallFormInput } from "form";
 import { loginSchema, type UserLogin } from "modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -33,14 +33,14 @@ export default function ({ searchParams }: { searchParams: { email?: string } })
             <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-900">{t("auth.login.header")}</h1>
             <Form<UserLogin> initialValues={initialForm} validationSchema={loginSchema} onSubmit={onResolve}>
                 <div className="flex flex-col">
-                    <FormInput<UserLogin, "email">
+                    <SmallFormInput<UserLogin, "email">
                         label={t("auth.login.form.email.label")}
                         render={({ value, onChange }) => (
                             <PoorInput placeholder={t("auth.login.form.email.placeholder")} value={value} onChange={onChange} />
                         )}
                         name="email"
                     />
-                    <FormInput<UserLogin, "password">
+                    <SmallFormInput<UserLogin, "password">
                         label={t("auth.login.form.password.label")}
                         render={({ value, onChange }) => (
                             <PoorInput placeholder={t("auth.login.form.password.placeholder")} value={value} onChange={onChange} password />
