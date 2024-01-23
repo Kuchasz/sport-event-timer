@@ -122,6 +122,8 @@ model TimingPoint {
     id                   Int                    @id @default(autoincrement())
     name                 String
     shortName            String
+    isStart              Boolean
+    isFinish             Boolean
     description          String?
     laps                 Int?
     race                 Race                   @relation(fields: [raceId], references: [id])

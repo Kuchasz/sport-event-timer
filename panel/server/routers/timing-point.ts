@@ -97,6 +97,8 @@ export const timingPointRouter = router({
         .mutation(async ({ input, ctx }) => {
             const newTimingPoint = await ctx.db.timingPoint.create({
                 data: {
+                    isFinish: false,
+                    isStart: false,
                     name: input.timingPoint.name,
                     shortName: input.timingPoint.shortName,
                     description: input.timingPoint.description,

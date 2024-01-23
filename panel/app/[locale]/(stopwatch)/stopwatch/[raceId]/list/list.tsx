@@ -19,6 +19,7 @@ export const PlayersList = () => {
     const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
+    const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
 
     const onResetAbsence = (id: number) => dispatch(resetAbsence({ id }));
     const onRecordAbsence = (bibNumber: number) =>
@@ -59,6 +60,8 @@ export const PlayersList = () => {
 
     const highestBibNumber = Math.max(...players.map(p => p.bibNumber));
 
+    const allowAbsences = timingPoint?.isFinish || timingPoint?.isStart;
+
     return (
         <div ref={parentRef} className="h-full w-full overflow-auto px-2 py-2">
             <div
@@ -77,7 +80,8 @@ export const PlayersList = () => {
                                 padLeftBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}
                             />
-                            {!players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
+
+                            {allowAbsences && !players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
@@ -85,7 +89,7 @@ export const PlayersList = () => {
                                     }}
                                 />
                             )}
-                            {!players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {
@@ -94,6 +98,7 @@ export const PlayersList = () => {
                                     alert={true}
                                 />
                             )}
+
                             {/* {players[virtualRow.index].timeStamp ? (
                                 <PrimaryActionButton
                                     icon={mdiAlarmOff}
