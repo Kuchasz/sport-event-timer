@@ -1216,7 +1216,7 @@
         },
         "time": {
           "label": "Czas",
-          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym."
+          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany."
         },
         "timingPoint": {
           "label": "Punkt pomiarowy",

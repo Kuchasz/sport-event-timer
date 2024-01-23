@@ -32,58 +32,54 @@ export const SplitTimeForm = ({
 
     return (
         <Form<SplitTime> initialValues={initialSplitTime} validationSchema={splitTimeSchema} onSubmit={onResolve}>
-            <div className="flex flex-col">
-                {timingPoints?.length && (
-                    <FormInput<SplitTime, "timingPointId">
-                        label={t("pages.splitTimes.form.timingPoint.label")}
-                        description={t("pages.splitTimes.form.timingPoint.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorSelect
-                                initialValue={value}
-                                items={timingPoints}
-                                placeholder={t("pages.splitTimes.form.timingPoint.placeholder")}
-                                nameKey="name"
-                                valueKey="id"
-                                onChange={onChange}
-                            />
-                        )}
-                        name="timingPointId"
+            {timingPoints?.length && (
+                <FormInput<SplitTime, "timingPointId">
+                    label={t("pages.splitTimes.form.timingPoint.label")}
+                    description={t("pages.splitTimes.form.timingPoint.description")}
+                    className="flex-1"
+                    render={({ value, onChange }) => (
+                        <PoorSelect
+                            initialValue={value}
+                            items={timingPoints}
+                            placeholder={t("pages.splitTimes.form.timingPoint.placeholder")}
+                            nameKey="name"
+                            valueKey="id"
+                            onChange={onChange}
+                        />
+                    )}
+                    name="timingPointId"
+                />
+            )}
+            <div className="p-2"></div>
+            <FormInput<SplitTime, "bibNumber">
+                label={t("pages.splitTimes.form.bibNumber.label")}
+                description={t("pages.splitTimes.form.bibNumber.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCombo
+                        initialValue={value}
+                        placeholder={t("pages.splitTimes.form.bibNumber.placeholder")}
+                        items={bibNumbers}
+                        onChange={onChange}
                     />
                 )}
-                <div className="p-2"></div>
-                <div className="flex">
-                    <FormInput<SplitTime, "bibNumber">
-                        label={t("pages.splitTimes.form.bibNumber.label")}
-                        description={t("pages.splitTimes.form.bibNumber.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorCombo
-                                initialValue={value}
-                                placeholder={t("pages.splitTimes.form.bibNumber.placeholder")}
-                                items={bibNumbers}
-                                onChange={onChange}
-                            />
-                        )}
-                        name="bibNumber"
-                    />
-                    <div className="p-2"></div>
-                    <FormInput<SplitTime, "time">
-                        label={t("pages.splitTimes.form.time.label")}
-                        description={t("pages.splitTimes.form.time.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => <PoorFullTimepicker date={raceDate} value={value} onChange={onChange} />}
-                        name="time"
-                    />
-                </div>
-                <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
-                        {t("shared.cancel")}
-                    </Button>
-                    <Button loading={isLoading} type="submit">
-                        {t("shared.save")}
-                    </Button>
-                </div>
+                name="bibNumber"
+            />
+            <div className="p-2"></div>
+            <FormInput<SplitTime, "time">
+                label={t("pages.splitTimes.form.time.label")}
+                description={t("pages.splitTimes.form.time.description")}
+                className="flex-1"
+                render={({ value, onChange }) => <PoorFullTimepicker date={raceDate} value={value} onChange={onChange} />}
+                name="time"
+            />
+            <div className="mt-4 flex justify-between">
+                <Button onClick={onReject} outline>
+                    {t("shared.cancel")}
+                </Button>
+                <Button loading={isLoading} type="submit">
+                    {t("shared.save")}
+                </Button>
             </div>
         </Form>
     );

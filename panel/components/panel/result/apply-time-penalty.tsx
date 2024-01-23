@@ -1,11 +1,12 @@
-import type { AppRouterInputs } from "trpc";
-import { Form, FormInput } from "form";
-import { useTranslations } from "next-intl";
 import { Button } from "components/button";
-import { trpc } from "trpc-core";
-import { timePenaltySchema } from "modules/time-penalty/models";
+import { PoorCombo } from "components/poor-combo";
 import { PoorNumberInput } from "components/poor-number-input";
-import { PoorInput } from "components/poor-input";
+import { Form, FormInput } from "form";
+import { disqualificationReasons } from "modules/disqualification/models";
+import { timePenaltySchema } from "modules/time-penalty/models";
+import { useTranslations } from "next-intl";
+import type { AppRouterInputs } from "trpc";
+import { trpc } from "trpc-core";
 
 type TimePenalty = AppRouterInputs["timePenalty"]["applyPenalty"];
 
@@ -18,6 +19,9 @@ type ApplyTimePenaltyProps = {
 
 export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: ApplyTimePenaltyProps) => {
     const applyTimePenaltyMutation = trpc.timePenalty.applyPenalty.useMutation();
+    const reasonsTranslations = useTranslations("timeMeasurement.penalties.timePenalty.timePenaltyReasons");
+    const reasons = disqualificationReasons.map(r => reasonsTranslations(r));
+
     const t = useTranslations();
 
     const initialTimePenalty: TimePenalty = {
@@ -53,7 +57,12 @@ export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: App
                 description={t("pages.result.applyTimePenalty.form.reason.description")}
                 className="flex-1"
                 render={({ value, onChange }) => (
-                    <PoorInput value={value} placeholder={t("pages.result.applyTimePenalty.form.reason.placeholder")} onChange={onChange} />
+                    <PoorCombo
+                        initialValue={value}
+                        placeholder={t("pages.result.applyTimePenalty.form.reason.placeholder")}
+                        items={reasons}
+                        onChange={onChange}
+                    />
                 )}
                 name="reason"
             />

@@ -1216,7 +1216,7 @@
         },
         "time": {
           "label": "Time",
-          "description": "The exact time of the player's appearance at the timing point."
+          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified."
         },
         "timingPoint": {
           "label": "Timing Point",

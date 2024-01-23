@@ -1,10 +1,10 @@
-import type { AppRouterInputs } from "trpc";
-import { Form, FormInput } from "form";
-import { useTranslations } from "next-intl";
 import { Button } from "components/button";
+import { PoorCombo } from "components/poor-combo";
+import { Form, FormInput } from "form";
+import { disqualificationReasons, disqualificationSchema } from "modules/disqualification/models";
+import { useTranslations } from "next-intl";
+import type { AppRouterInputs } from "trpc";
 import { trpc } from "trpc-core";
-import { PoorInput } from "components/poor-input";
-import { disqualificationSchema } from "modules/disqualification/models";
 
 type Disqualification = AppRouterInputs["disqualification"]["disqualify"];
 
@@ -17,6 +17,9 @@ type ApplyDisqualificationProps = {
 
 export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: ApplyDisqualificationProps) => {
     const disqualifyMutation = trpc.disqualification.disqualify.useMutation();
+    const reasonsTranslations = useTranslations("timeMeasurement.penalties.disqualification.disqualificationReasons");
+    const reasons = disqualificationReasons.map(r => reasonsTranslations(r));
+
     const t = useTranslations();
 
     const initialDisqualification: Disqualification = {
@@ -41,7 +44,12 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
                     description={t("pages.result.disqualify.form.reason.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput value={value} placeholder={t("pages.result.disqualify.form.reason.placeholder")} onChange={onChange} />
+                        <PoorCombo
+                            initialValue={value}
+                            placeholder={t("pages.result.disqualify.form.reason.placeholder")}
+                            items={reasons}
+                            onChange={onChange}
+                        />
                     )}
                     name="reason"
                 />

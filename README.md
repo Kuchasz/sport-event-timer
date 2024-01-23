@@ -96,7 +96,7 @@ Application for making time measurements
 | 18/01/2023 | Add longer, more self explanatory descriptions to page headers        | todo :date:                                |
 | 20/01/2023 | Replace 'Race' word with 'Competition'                                | todo :date:                                |
 | 22/01/2023 | Grid loading state                                                    | todo :date:                                |
-| 23/01/2023 | Apply penalty/dsq reasons combobox                                    | todo :date:                                |
+| 23/01/2023 | Apply penalty/dsq reasons combobox                                    | :heavy_check_mark: <sup>(23/01/2024)</sup> |
 
 ## TODO
 
