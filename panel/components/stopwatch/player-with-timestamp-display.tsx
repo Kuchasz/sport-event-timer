@@ -8,7 +8,7 @@ import Icon from "@mdi/react";
 import { mdiAccountAlertOutline } from "@mdi/js";
 
 type PlayerWithTimeStamp = Player & {
-    timeStamp?: TimeStamp;
+    timeStamps: TimeStamp[];
     absent?: Absence;
 };
 
@@ -16,13 +16,17 @@ export const PlayerWithTimeStampDisplay = ({
     padLeftBibNumber,
     playerWithTimeStamp,
     onAssign,
+    displayLaps,
 }: {
     padLeftBibNumber: number;
     playerWithTimeStamp: Partial<PlayerWithTimeStamp>;
     onAssign?: () => void;
+    displayLaps?: boolean;
 }) => {
-    const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
+    const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamps!.at(-1)?.time);
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
+
+    const lastTimeStamp = playerWithTimeStamp.timeStamps!.at(-1);
 
     const bibText = padLeftBibNumber
         ? ".".repeat(padLeftBibNumber - padLeftBibNumber.toString().length) + padLeftBibNumber
@@ -50,12 +54,13 @@ export const PlayerWithTimeStampDisplay = ({
             <span className="grow text-xs">
                 <div
                     className={classNames("overflow-hidden text-sm font-semibold text-black transition-all duration-300", {
-                        ["max-h-0 opacity-0"]: playerWithTimeStamp.timeStamp == null,
-                        ["max-h-[18px] opacity-100"]: playerWithTimeStamp.timeStamp,
+                        ["max-h-0 opacity-0"]: lastTimeStamp == null,
+                        ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
+                    {displayLaps && <span className="mr-2">LAP#{playerWithTimeStamp.timeStamps?.length}</span>}
                     <span>
-                        {playerWithTimeStamp.timeStamp
-                            ? formatTime(new Date(playerWithTimeStamp.timeStamp.time))
+                        {lastTimeStamp
+                            ? formatTime(new Date(lastTimeStamp.time))
                             : previousTimeStamp
                             ? formatTime(new Date(previousTimeStamp))
                             : null}
@@ -73,7 +78,7 @@ export const PlayerWithTimeStampDisplay = ({
                 <div
                     className={classNames(
                         "font-medium text-zinc-400 transition-all",
-                        playerWithTimeStamp.timeStamp || playerWithTimeStamp.absent ? "text-xs" : "text-sm",
+                        lastTimeStamp || playerWithTimeStamp.absent ? "text-xs" : "text-sm",
                     )}>
                     <span className="text-ellipsis">{playerWithTimeStamp.name}</span> {playerWithTimeStamp.lastName}
                 </div>

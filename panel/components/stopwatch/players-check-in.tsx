@@ -127,17 +127,25 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
+    const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery(
+        { raceId: parseInt(raceId), timingPointId: timingPointId! },
+        { enabled: timingPointId !== undefined },
+    );
 
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const allAbsences = useTimerSelector(x => x.absences);
 
+    const maxSplitTimes = (timingPoint?.laps ?? 0) + 1;
+
     const playersWithTimeStamps = allPlayers.map(x => ({
         ...x,
-        timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+        timeStamps: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
         absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
     }));
 
-    const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(x => x.timeStamp === undefined && x.absent === undefined);
+    const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(
+        x => x.timeStamps.length <= maxSplitTimes && x.absent === undefined,
+    );
     const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map(x => x.bibNumber);
 
     const availablePlayers = sort(

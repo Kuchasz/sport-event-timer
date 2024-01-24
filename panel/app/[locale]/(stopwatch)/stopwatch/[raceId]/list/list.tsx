@@ -39,7 +39,7 @@ export const PlayersList = () => {
     const players = sort(
         allPlayers.map(x => ({
             ...x,
-            timeStamp: allTimeStamps.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            timeStamps: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             onReset: onResetAbsence,
             onRecord: onRecordAbsence,
@@ -79,9 +79,10 @@ export const PlayersList = () => {
                             <PlayerWithTimeStampDisplay
                                 padLeftBibNumber={highestBibNumber.toString().length}
                                 playerWithTimeStamp={players[virtualRow.index]}
+                                displayLaps={(timingPoint?.laps || 0) > 0}
                             />
 
-                            {allowAbsences && !players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].timeStamps.length && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
@@ -89,7 +90,7 @@ export const PlayersList = () => {
                                     }}
                                 />
                             )}
-                            {allowAbsences && !players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].timeStamps.length && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {
