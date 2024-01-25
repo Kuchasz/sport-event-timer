@@ -105,7 +105,7 @@ const Item = <T extends string>({
                     </div>
                     <PlayerWithTimeStampDisplay
                         playerWithTimeStamp={{
-                            timeStamp: t,
+                            timeStamps: [t],
                             bibNumber: t.player?.bibNumber,
                             name: t.player?.name,
                             lastName: t.player?.lastName,

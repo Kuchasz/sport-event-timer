@@ -81,7 +81,6 @@ export const PlayersList = () => {
                                 playerWithTimeStamp={players[virtualRow.index]}
                                 displayLaps={(timingPoint?.laps || 0) > 0}
                             />
-
                             {allowAbsences && !players[virtualRow.index].timeStamps.length && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}

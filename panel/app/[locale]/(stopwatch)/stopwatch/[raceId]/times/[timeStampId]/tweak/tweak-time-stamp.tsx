@@ -52,14 +52,14 @@ export const TweakTimeStamp = () => {
     const dispatch = useTimerDispatch();
     const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));
 
-    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId));
+    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId))!;
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
-    const [currentTime, setCurrentTime] = useState<number>(timeStamp!.time);
+    const [currentTime, setCurrentTime] = useState<number>(timeStamp.time);
 
     const time = new Date(currentTime);
 
-    const p = player ? { ...player, timeStamp } : { timeStamp };
+    const p = player ? { ...player, timeStamps: [timeStamp] } : { timeStamps: [timeStamp] };
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 
@@ -67,6 +67,7 @@ export const TweakTimeStamp = () => {
         <div className="flex h-full flex-col items-center">
             <div className="flex grow flex-col items-center justify-center">
                 <div>
+                    {/* TODO: we should display edited timestamp not all of them */}
                     <PlayerWithTimeStampDisplay padLeftBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
                 </div>
                 <div className="mt-10 flex items-center">
@@ -97,15 +98,15 @@ export const TweakTimeStamp = () => {
                 <div className="mt-6 flex">
                     <PrimaryActionButton
                         onClick={() => {
-                            onSave({ ...timeStamp!, time: currentTime });
+                            onSave({ ...timeStamp, time: currentTime });
                             back();
                         }}
                         icon={mdiFloppy}
                     />
                     <PrimaryActionButton
-                        disabled={timeStamp!.time === currentTime}
+                        disabled={timeStamp.time === currentTime}
                         onClick={() => {
-                            setCurrentTime(timeStamp!.time);
+                            setCurrentTime(timeStamp.time);
                         }}
                         icon={mdiRestart}
                     />
