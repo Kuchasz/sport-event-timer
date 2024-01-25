@@ -60,7 +60,7 @@ export const PlayersList = () => {
 
     const highestBibNumber = Math.max(...players.map(p => p.bibNumber));
 
-    const allowAbsences = timingPoint?.isFinish || timingPoint?.isStart;
+    const allowAbsences = timingPoint?.type === "start" || timingPoint?.type === "finish";
 
     return (
         <div ref={parentRef} className="h-full w-full overflow-auto px-2 py-2">

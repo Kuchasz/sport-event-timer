@@ -169,12 +169,14 @@ export const raceRouter = router({
             const timingPointsToCreate = [
                 {
                     name: "Start",
+                    type: "start",
                     shortName: "ST",
                     description: "Where the players start",
                     raceId: race.id,
                 },
                 {
                     name: "Finish",
+                    type: "finish",
                     shortName: "MT",
                     description: "Where the players finish",
                     raceId: race.id,
