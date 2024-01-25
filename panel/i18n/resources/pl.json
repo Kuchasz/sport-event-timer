@@ -1853,7 +1853,8 @@
       "absent": "nieobecny",
       "title": {
         "text": "Lista zawodników"
-      }
+      },
+      "lap": "LAP#"
     },
     "menuItems": {
       "history": "Historia",

@@ -1853,7 +1853,8 @@
       "absent": "absent",
       "title": {
         "text": "Players list"
-      }
+      },
+      "lap": "LAP#"
     },
     "menuItems": {
       "history": "History",

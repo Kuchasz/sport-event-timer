@@ -178,7 +178,6 @@ model SplitTime {
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@id([id, raceId])
-    @@unique([timingPointId, bibNumber])
 }
 
 model Absence {

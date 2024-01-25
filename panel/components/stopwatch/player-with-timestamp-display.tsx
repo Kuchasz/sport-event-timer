@@ -57,7 +57,12 @@ export const PlayerWithTimeStampDisplay = ({
                         ["max-h-0 opacity-0"]: lastTimeStamp == null,
                         ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
-                    {displayLaps && <span className="mr-2">LAP#{playerWithTimeStamp.timeStamps?.length}</span>}
+                    {displayLaps && (
+                        <span className="mr-2">
+                            {t("stopwatch.list.lap")}
+                            {playerWithTimeStamp.timeStamps?.length}
+                        </span>
+                    )}
                     <span>
                         {lastTimeStamp
                             ? formatTime(new Date(lastTimeStamp.time))

@@ -18,6 +18,7 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
         raceId,
         name: "",
         shortName: "",
+        laps: 0,
     };
 
     const timingPointCreated = async (timingPoint: CreateTimingPoint) => {
