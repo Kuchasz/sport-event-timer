@@ -1830,7 +1830,8 @@
       }
     },
     "checkIn": {
-      "typeBibNumber": "Wpisz numer startowy zawodnika"
+      "typeBibNumber": "Wpisz numer startowy zawodnika",
+      "lap": "LAP#"
     },
     "error": {
       "disconnected": {

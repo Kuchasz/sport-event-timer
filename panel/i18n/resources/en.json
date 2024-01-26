@@ -1830,7 +1830,8 @@
       }
     },
     "checkIn": {
-      "typeBibNumber": "Type player's bib number"
+      "typeBibNumber": "Type player's bib number",
+      "lap": "LAP#"
     },
     "error": {
       "disconnected": {

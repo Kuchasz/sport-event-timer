@@ -12,12 +12,6 @@ import { trpc } from "trpc-core";
 import { useTimerSelector } from "../../hooks";
 import { DialPad } from "./dial-pad";
 
-type TypedPlayerProps = {
-    playerNumber: string;
-    bestGuess?: string;
-    reset: () => void;
-};
-
 const typedNumberDigits = createRange({ from: 0, to: 9 });
 
 const storedDigits: Record<number, string> = {};
@@ -27,6 +21,11 @@ const getDigitForIndex = (idx: number, value: string) => {
     }
 
     return storedDigits[idx];
+};
+
+type TypedPlayerProps = {
+    playerNumber: string;
+    reset: () => void;
 };
 
 export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
@@ -73,17 +72,18 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
 
 type Result = { score: number; target: string };
 type CheckInPlayer = { bibNumber: string; name: string; lastName: string };
-interface CheckinResult extends ReadonlyArray<Result> {
+interface CheckInResult extends ReadonlyArray<Result> {
     readonly score: number;
     readonly obj: CheckInPlayer;
 }
 
 type PlayerSuggestionProps = {
     timeCritical: boolean;
-    player: { bibNumber: string; name: string; lastName: string };
+    player: { bibNumber: string; name: string; timeStampsNumber: number; lastName: string };
     typeahead: string;
     onPlayerCheckIn: (bibNumber: string) => void;
-    result: CheckinResult;
+    result: CheckInResult;
+    displayLaps: boolean;
 };
 export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }: PlayerSuggestionProps) => (
     <button
@@ -92,6 +92,9 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }:
             ["bg-orange-500 font-semibold text-white"]: typeahead === player.bibNumber,
             ["bg-zinc-50"]: typeahead !== player.bibNumber,
         })}>
+        <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "opacity-0" : "")}>
+            <Icon size={0.8} path={mdiChevronRight}></Icon>
+        </div>
         <div>
             {player.name} {player.lastName}
         </div>
@@ -109,9 +112,6 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }:
                   ))
                 : player.bibNumber}
         </div>
-        <div className={classNames("ml-2 rounded-full", typeahead === player.bibNumber ? "opacity-0" : "")}>
-            <Icon size={1} path={mdiChevronRight}></Icon>
-        </div>
     </button>
 );
 
@@ -125,6 +125,8 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const [playerNumber, setPlayerNumber] = useState("");
 
     const { raceId } = useParams<{ raceId: string }>()!;
+
+    const t = useTranslations();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery(
@@ -144,17 +146,17 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     }));
 
     const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(
-        x => x.timeStamps.length <= maxSplitTimes && x.absent === undefined,
+        x => x.timeStamps.length < maxSplitTimes && x.absent === undefined,
     );
     const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map(x => x.bibNumber);
 
     const availablePlayers = sort(
-        nonAbsentPlayersWithoutTimeStamps.map(a => ({ ...a, bibNumber: a.bibNumber.toString() })),
+        nonAbsentPlayersWithoutTimeStamps.map(a => ({ ...a, timeStampsNumber: a.timeStamps.length, bibNumber: a.bibNumber.toString() })),
         p => parseInt(p.bibNumber),
     );
 
     const sortedAvailablePlayers = fuzzysort.go(playerNumber, availablePlayers, { all: true, keys: ["bibNumber"] });
-    const bestGuess = sortedAvailablePlayers[0]?.obj?.bibNumber;
+    const bestGuess = sortedAvailablePlayers[0]?.obj;
 
     return (
         <div className="flex h-full flex-col">
@@ -169,19 +171,27 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                         result={p}
                         typeahead={playerNumber}
                         player={p.obj}
+                        displayLaps={(timingPoint?.laps || 0) > 0}
                     />
                 ))}
             </div>
-            <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} bestGuess={bestGuess} />
+            {timingPoint?.laps && bestGuess?.bibNumber === playerNumber && (
+                <div className="flex w-full justify-center">
+                    <div className="absolute text-sm font-medium text-gray-400">
+                        {t("stopwatch.checkIn.lap")} {bestGuess.timeStamps.length + 1}
+                    </div>
+                </div>
+            )}
+            <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} />
             <div className="flex flex-col items-center bg-white">
                 <DialPad
                     timeCritical={timeCritical}
                     availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                     number={playerNumber}
                     onNumberChange={setPlayerNumber}
-                    canRecord={bestGuess === playerNumber}
+                    canRecord={bestGuess?.bibNumber === playerNumber}
                     onRecord={() => {
-                        onPlayerCheckIn(bestGuess);
+                        onPlayerCheckIn(bestGuess.bibNumber);
                         setPlayerNumber("");
                     }}
                 />
