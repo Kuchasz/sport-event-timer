@@ -97,7 +97,7 @@ Application for making time measurements
 | 20/01/2023 | Replace 'Race' word with 'Competition'                                | todo :date:                                |
 | 22/01/2023 | Grid loading state                                                    | todo :date:                                |
 | 23/01/2023 | Apply penalty/dsq reasons combobox                                    | :heavy_check_mark: <sup>(23/01/2024)</sup> |
-
+| 27/01/2024 | Dont define laps of start and finish | todo |
 ## TODO
 
 -   reassign clock out time to different player :heavy_check_mark:
