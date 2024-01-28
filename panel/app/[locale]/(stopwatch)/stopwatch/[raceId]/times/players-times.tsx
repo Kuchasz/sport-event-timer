@@ -33,6 +33,7 @@ const Item = <T extends string>({
     style,
     padBibNumber,
     isLast,
+    displayLaps,
 }: {
     t: TimeStampWithPlayer;
     navigate: (path: Route<T> | URL) => void;
@@ -41,6 +42,7 @@ const Item = <T extends string>({
     style: CSSProperties;
     padBibNumber: number;
     isLast: boolean;
+    displayLaps: boolean;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -111,6 +113,7 @@ const Item = <T extends string>({
                             lastName: t.player?.lastName,
                         }}
                         padLeftBibNumber={padBibNumber}
+                        displayLaps={displayLaps}
                         onAssign={() =>
                             !t.player
                                 ? navigate(`/stopwatch/${raceId}/times/${t.id}/assign` as Route)
@@ -149,6 +152,7 @@ export const PlayersTimes = () => {
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
+    const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
 
     const times = sortDesc(
         allTimeStamps
@@ -206,6 +210,7 @@ export const PlayersTimes = () => {
                             raceId={parseInt(raceId)}
                             padBibNumber={highestBibNumber.toString().length}
                             isLast={index === arr.length - 1}
+                            displayLaps={(timingPoint?.laps || 0) > 0}
                         />
                     ))}
                 </div>
