@@ -1,7 +1,5 @@
 "use client";
 
-import type { Gender } from "@set/utils/dist/gender";
-
 import classNames from "classnames";
 import { Button } from "components/button";
 import { PoorCombo } from "components/poor-combo";
@@ -17,7 +15,7 @@ import { useTranslations } from "next-intl";
 import type { PlayerRegistration } from "modules/player-registration/models";
 import { countryCodeEnum, playerRegistrationSchema } from "modules/player-registration/models";
 import { type AppRouterOutputs } from "trpc";
-import { genderEnum } from "modules/shared/models";
+import { type Gender, genderEnum } from "modules/shared/models";
 
 const initialRegistration = () =>
     ({

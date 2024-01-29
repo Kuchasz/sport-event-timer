@@ -1,7 +1,6 @@
 "use client";
 import { mdiAccountEditOutline, mdiCheck, mdiClose, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import type { Gender } from "@set/utils/dist/gender";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
@@ -11,6 +10,7 @@ import { CategoryEdit } from "components/panel/classification/category-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
+import { type Gender } from "modules/shared/models";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useParams } from "next/navigation";
