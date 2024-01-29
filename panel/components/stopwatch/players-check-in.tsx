@@ -155,7 +155,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
         p => parseInt(p.bibNumber),
     );
 
-    const sortedAvailablePlayers = fuzzysort.go(playerNumber, availablePlayers, { all: true, keys: ["bibNumber"] });
+    const sortedAvailablePlayers = fuzzysort.go(playerNumber, playerNumber ? availablePlayers : [], { all: true, keys: ["bibNumber"] });
     const bestGuess = sortedAvailablePlayers[0]?.obj;
 
     return (
