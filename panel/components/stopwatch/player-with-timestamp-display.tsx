@@ -9,7 +9,7 @@ import { mdiAccountAlertOutline } from "@mdi/js";
 
 type PlayerWithTimeStamp = Player & {
     timeStamp: TimeStamp;
-    numberOfTimes: number;
+    timeStamps: Record<number, number>;
     absent?: Absence;
 };
 
@@ -58,10 +58,10 @@ export const PlayerWithTimeStampDisplay = ({
                         ["max-h-0 opacity-0"]: lastTimeStamp == null,
                         ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
-                    {displayLaps && (
+                    {displayLaps && playerWithTimeStamp.timeStamps && playerWithTimeStamp.timeStamp && (
                         <span className="mr-2">
                             {t("stopwatch.list.lap")}
-                            {playerWithTimeStamp.numberOfTimes}
+                            {playerWithTimeStamp.timeStamps[playerWithTimeStamp.timeStamp.id] + 1}
                         </span>
                     )}
                     <span>

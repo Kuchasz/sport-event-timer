@@ -10,7 +10,7 @@ import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hook
 import { useParams, useRouter } from "next/navigation";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { trpc } from "trpc-core";
-import { countItemsById } from "@set/utils/dist/array";
+import { getIndexById } from "@set/utils/dist/array";
 import { timingPointIdAtom } from "states/stopwatch-states";
 import { useAtom } from "jotai";
 
@@ -60,13 +60,17 @@ export const TweakTimeStamp = () => {
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
     const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
-    const playersNumbersTime = countItemsById(timingPointTimeStamps, s => s.bibNumber!);
+    const playersTimeStamps = getIndexById(
+        timingPointTimeStamps,
+        s => s.bibNumber!,
+        s => s.id,
+    );
 
     const [currentTime, setCurrentTime] = useState<number>(timeStamp.time);
 
     const time = new Date(currentTime);
 
-    const p = player ? { ...player, timeStamp, numberOfTimes: playersNumbersTime.get(player.bibNumber) } : { timeStamp: timeStamp };
+    const p = player ? { ...player, timeStamp, timeStamps: playersTimeStamps.get(player.bibNumber) } : { timeStamp: timeStamp };
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 

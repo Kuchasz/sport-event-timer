@@ -1,7 +1,7 @@
 "use client";
 
 import { mdiAccount, mdiAccountOff } from "@mdi/js";
-import { countItemsById, sort } from "@set/utils/dist/array";
+import { getIndexById, sort } from "@set/utils/dist/array";
 import { add as addAbsence, reset as resetAbsence } from "@set/timer/dist/slices/absences";
 import { ActionButton } from "components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-timestamp-display";
@@ -37,14 +37,18 @@ export const PlayersList = () => {
     const allAbsences = useTimerSelector(x => x.absences);
 
     const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
-    const playersNumbersTime = countItemsById(timingPointTimeStamps, s => s.bibNumber!);
+    const playersTimeStamps = getIndexById(
+        timingPointTimeStamps,
+        s => s.bibNumber!,
+        s => s.id,
+    );
 
     const players = sort(
         allPlayers.map(x => ({
             ...x,
             timeStamp: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId).at(-1),
+            timeStamps: playersTimeStamps.get(x.bibNumber),
             absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
-            numberOfTimes: playersNumbersTime.get(x.bibNumber),
             onReset: onResetAbsence,
             onRecord: onRecordAbsence,
             push,

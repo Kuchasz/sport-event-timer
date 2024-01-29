@@ -23,12 +23,32 @@ export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
     return i.sort((a, b) => func(b) - func(a));
 };
 
-export const countItemsById = <T>(items: T[], selector: (item: T) => number): Map<number, number> => {
+export const countById = <T>(items: T[], selector: (item: T) => number): Map<number, number> => {
     return items.reduce((idCountMap, item) => {
         const id = selector(item);
         idCountMap.set(id, (idCountMap.get(id) || 0) + 1);
         return idCountMap;
     }, new Map<number, number>());
+};
+
+export const getIndexById = <T>(
+    items: T[],
+    selector: (item: T) => number,
+    value: (item: T) => number,
+): Map<number, Record<number, number>> => {
+    return items.reduce((idTimesMap, item) => {
+        const key = selector(item);
+        const val = value(item);
+
+        if (!idTimesMap.has(key)) {
+            idTimesMap.set(key, {});
+        }
+
+        const timeIndexMap = idTimesMap.get(key)!;
+        timeIndexMap[val] = Object.keys(timeIndexMap).length;
+
+        return idTimesMap;
+    }, new Map<number, Record<number, number>>());
 };
 
 export const sortNumber = <T>(items: T[], order: "desc" | "asc", func: (item: T) => number): T[] => {
