@@ -10,7 +10,7 @@ import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hook
 import { useParams, useRouter } from "next/navigation";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { trpc } from "trpc-core";
-import { getIndexById } from "@set/utils/dist/array";
+import { getIndexById, sort } from "@set/utils/dist/array";
 import { timingPointIdAtom } from "states/stopwatch-states";
 import { useAtom } from "jotai";
 
@@ -59,7 +59,10 @@ export const TweakTimeStamp = () => {
     const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId))!;
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
-    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+    const timingPointTimeStamps = sort(
+        allTimeStamps.filter(s => s.timingPointId === timingPointId),
+        t => t.time,
+    );
     const playersTimeStamps = getIndexById(
         timingPointTimeStamps,
         s => s.bibNumber!,

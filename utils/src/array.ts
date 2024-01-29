@@ -31,21 +31,19 @@ export const countById = <T>(items: T[], selector: (item: T) => number): Map<num
     }, new Map<number, number>());
 };
 
-export const getIndexById = <T>(
-    items: T[],
-    selector: (item: T) => number,
-    value: (item: T) => number,
-): Map<number, Record<number, number>> => {
+export const getIndexById = <T>(items: T[], groupId: (item: T) => number, id: (item: T) => number): Map<number, Record<number, number>> => {
     return items.reduce((idTimesMap, item) => {
-        const key = selector(item);
-        const val = value(item);
+        const groupKey = groupId(item);
+        const key = id(item);
 
-        if (!idTimesMap.has(key)) {
-            idTimesMap.set(key, {});
+        if (!idTimesMap.has(groupKey)) {
+            idTimesMap.set(groupKey, {});
         }
 
-        const timeIndexMap = idTimesMap.get(key)!;
-        timeIndexMap[val] = Object.keys(timeIndexMap).length;
+        // timestamp with higher id may have lower time than those with lower ids , times may be edited!
+
+        const timeIndexMap = idTimesMap.get(groupKey)!;
+        timeIndexMap[key] = Object.keys(timeIndexMap).length;
 
         return idTimesMap;
     }, new Map<number, Record<number, number>>());

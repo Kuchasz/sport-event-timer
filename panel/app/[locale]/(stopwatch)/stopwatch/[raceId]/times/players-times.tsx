@@ -5,7 +5,7 @@ import { mdiDeleteOutline, mdiTimerEditOutline, mdiTimerPlusOutline } from "@mdi
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
-import { getIndexById, sortDesc } from "@set/utils/dist/array";
+import { getIndexById, sortDesc, sort } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import classNames from "classnames";
@@ -156,7 +156,10 @@ export const PlayersTimes = () => {
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
 
-    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+    const timingPointTimeStamps = sort(
+        allTimeStamps.filter(s => s.timingPointId === timingPointId),
+        t => t.time,
+    );
     const playersTimeStamps = getIndexById(
         timingPointTimeStamps,
         s => s.bibNumber!,

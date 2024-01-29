@@ -36,7 +36,11 @@ export const PlayersList = () => {
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const allAbsences = useTimerSelector(x => x.absences);
 
-    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+    const timingPointTimeStamps = sort(
+        allTimeStamps.filter(s => s.timingPointId === timingPointId),
+        t => t.time,
+    );
+
     const playersTimeStamps = getIndexById(
         timingPointTimeStamps,
         s => s.bibNumber!,
