@@ -1,8 +1,7 @@
 import { Transition } from "@headlessui/react";
-import { mdiChevronRight, mdiClose } from "@mdi/js";
+import { mdiCheck, mdiChevronRight, mdiClose, mdiTimerPlusOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange, sort } from "@set/utils/dist/array";
-import { getAvailableDigits } from "@set/utils/dist/string";
 import classNames from "classnames";
 import fuzzysort from "fuzzysort";
 import { useTranslations } from "next-intl";
@@ -148,7 +147,6 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const nonAbsentPlayersWithoutTimeStamps = playersWithTimeStamps.filter(
         x => x.timeStamps.length < maxSplitTimes && x.absent === undefined,
     );
-    const playersNumbersWithoutTimeStamps = nonAbsentPlayersWithoutTimeStamps.map(x => x.bibNumber);
 
     const availablePlayers = sort(
         nonAbsentPlayersWithoutTimeStamps.map(a => ({ ...a, timeStampsNumber: a.timeStamps.length, bibNumber: a.bibNumber.toString() })),
@@ -158,9 +156,15 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const sortedAvailablePlayers = fuzzysort.go(playerNumber, playerNumber ? availablePlayers : [], { all: true, keys: ["bibNumber"] });
     const bestGuess = sortedAvailablePlayers[0]?.obj;
 
+    const canRecord = bestGuess?.bibNumber === playerNumber;
+    const onRecord = () => {
+        onPlayerCheckIn(bestGuess.bibNumber);
+        setPlayerNumber("");
+    };
+
     return (
         <div className="flex h-full flex-col">
-            <div className="mx-12 mt-6 flex h-2/5 flex-auto flex-col-reverse items-stretch overflow-y-auto text-white">
+            <div className="mx-12 mt-6 flex flex-1 flex-col-reverse items-stretch overflow-y-auto text-white">
                 {sortedAvailablePlayers.map(p => (
                     <PlayerSuggestion
                         timeCritical={timeCritical}
@@ -183,18 +187,23 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                 </div>
             )}
             <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} />
-            <div className="flex flex-col items-center bg-white">
+            <div className="flex basis-64 flex-col items-center bg-white">
                 <DialPad
                     timeCritical={timeCritical}
-                    availableDigits={getAvailableDigits(playerNumber, playersNumbersWithoutTimeStamps)}
                     number={playerNumber}
                     onNumberChange={setPlayerNumber}
-                    canRecord={bestGuess?.bibNumber === playerNumber}
-                    onRecord={() => {
-                        onPlayerCheckIn(bestGuess.bibNumber);
-                        setPlayerNumber("");
-                    }}
+                    canRecord={canRecord}
+                    onRecord={onRecord}
                 />
+            </div>
+            <div
+                onPointerDown={timeCritical ? onRecord : undefined}
+                onClick={!timeCritical ? onRecord : undefined}
+                className={classNames(
+                    "active:animate-pushInLittle flex justify-center bg-gradient-to-b from-orange-500 to-red-500 p-4 text-white transition-opacity",
+                    canRecord ? "animate-wave" : "pointer-events-none opacity-20",
+                )}>
+                <Icon size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
             </div>
         </div>
     );

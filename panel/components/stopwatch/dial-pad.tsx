@@ -1,4 +1,4 @@
-import { mdiBackspaceOutline, mdiCheck, mdiTimerPlusOutline } from "@mdi/js";
+import { mdiBackspaceOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { useState, type ReactNode } from "react";
@@ -13,7 +13,6 @@ type DigitButtonProps = {
     padClick: () => void;
     char: string;
     desc?: string;
-    enabled: boolean;
 };
 const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => (
     <button
@@ -53,7 +52,6 @@ const IconButton = ({ timeCritical, children, buttonClick, enabled }: IconButton
 
 type DialPadProps = {
     onNumberChange: (number: string) => void;
-    availableDigits: string[];
     number: string;
     canRecord: boolean;
     onRecord: () => void;
@@ -62,69 +60,17 @@ type DialPadProps = {
 export const DialPad = (props: DialPadProps) => {
     return (
         <div className="mt-6 grid h-full w-5/6 grid-cols-3 grid-rows-4 self-center sm:w-1/3 xl:w-1/5">
-            <DigitButton
-                enabled={props.availableDigits.includes("1")}
-                padClick={() => props.onNumberChange(padActions.addDigit("1")(props.number))}
-                char="1"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("2")}
-                padClick={() => props.onNumberChange(padActions.addDigit("2")(props.number))}
-                char="2"
-                desc="abc"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("3")}
-                padClick={() => props.onNumberChange(padActions.addDigit("3")(props.number))}
-                char="3"
-                desc="def"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("4")}
-                padClick={() => props.onNumberChange(padActions.addDigit("4")(props.number))}
-                char="4"
-                desc="ghi"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("5")}
-                padClick={() => props.onNumberChange(padActions.addDigit("5")(props.number))}
-                char="5"
-                desc="jkl"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("6")}
-                padClick={() => props.onNumberChange(padActions.addDigit("6")(props.number))}
-                char="6"
-                desc="mno"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("7")}
-                padClick={() => props.onNumberChange(padActions.addDigit("7")(props.number))}
-                char="7"
-                desc="pqrs"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("8")}
-                padClick={() => props.onNumberChange(padActions.addDigit("8")(props.number))}
-                char="8"
-                desc="tuv"
-            />
-            <DigitButton
-                enabled={props.availableDigits.includes("9")}
-                padClick={() => props.onNumberChange(padActions.addDigit("9")(props.number))}
-                char="9"
-                desc="wxyz"
-            />
-            <IconButton enabled={props.canRecord} timeCritical={props.timeCritical} buttonClick={props.onRecord}>
-                <div className={classNames("rounded-full bg-orange-500 p-4 text-white", props.canRecord ? "animate-wave" : null)}>
-                    <Icon size={1} path={props.timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
-                </div>
-            </IconButton>
-            <DigitButton
-                enabled={props.availableDigits.includes("0")}
-                padClick={() => props.onNumberChange(padActions.addDigit("0")(props.number))}
-                char="0"
-            />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("1")(props.number))} char="1" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("2")(props.number))} char="2" desc="abc" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("3")(props.number))} char="3" desc="def" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("4")(props.number))} char="4" desc="ghi" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("5")(props.number))} char="5" desc="jkl" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("6")(props.number))} char="6" desc="mno" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("7")(props.number))} char="7" desc="pqrs" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("8")(props.number))} char="8" desc="tuv" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("9")(props.number))} char="9" desc="wxyz" />
+            <DigitButton padClick={() => {}} char="" desc="" />
+            <DigitButton padClick={() => props.onNumberChange(padActions.addDigit("0")(props.number))} char="0" />
             <IconButton enabled={props.number.length > 0} buttonClick={() => props.onNumberChange(padActions.back(props.number))}>
                 <Icon size={1} path={mdiBackspaceOutline}></Icon>
             </IconButton>

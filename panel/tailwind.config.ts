@@ -56,7 +56,7 @@ module.exports = {
                 pushInLittle: "pushInLittle 0.2s ease-out",
                 fadeIn: "fadeIn 0.2s",
                 fadeOut: "fadeOut 0.2s",
-                wave: "wave 2s infinite",
+                wave: "wave 1s infinite",
             },
             borderRadius: {
                 lg: `var(--radius)`,
@@ -127,9 +127,6 @@ module.exports = {
                 },
                 fadeOut: { "0%": { opacity: "100" }, "100%": { opacity: "0" } },
                 wave: {
-                    "0%": { transform: "scale(1)" },
-                    "5%": { transform: "scale(0.9)" },
-                    "20%": { transform: "scale(1)" },
                     "10%": {
                         boxShadow: "0 0 0 0px rgba(249, 115, 22, 0.2)",
                     },
