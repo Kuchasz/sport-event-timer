@@ -187,7 +187,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                 </div>
             )}
             <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} />
-            <div className="flex basis-64 flex-col items-center bg-white">
+            <div className="flex basis-72 flex-col items-center bg-white">
                 <DialPad
                     timeCritical={timeCritical}
                     number={playerNumber}
