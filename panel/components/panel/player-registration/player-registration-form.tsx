@@ -1,8 +1,6 @@
-import { genders } from "@set/utils/dist/gender";
-import { countryCodes } from "contry-codes";
 import { Form, SmallFormInput } from "form";
 import { useCurrentRaceId } from "hooks";
-import { playerRegistrationSchema } from "modules/player-registration/models";
+import { countryCodeEnum, playerRegistrationSchema } from "modules/player-registration/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "trpc";
 import { trpc } from "trpc-core";
@@ -11,6 +9,7 @@ import { PoorCombo } from "../../poor-combo";
 import { PoorDatepicker } from "../../poor-datepicker";
 import { PoorInput } from "../../poor-input";
 import { PoorSelect } from "../../poor-select";
+import { genderEnum } from "modules/shared/models";
 
 type PlayerRegistration = AppRouterInputs["playerRegistration"]["add"]["player"];
 
@@ -25,8 +24,8 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
-    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
-    const genderOptions = genders.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
+    const countries = countryCodeEnum.options.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
+    const genderOptions = genderEnum.options.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
 
     return (
         <Form<PlayerRegistration>

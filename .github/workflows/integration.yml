@@ -130,3 +130,8 @@ jobs:
               run: |
                   cd ./panel
                   bun run test
+
+            - name: Run tests
+              run: |
+                  cd ./timer
+                  bun run test

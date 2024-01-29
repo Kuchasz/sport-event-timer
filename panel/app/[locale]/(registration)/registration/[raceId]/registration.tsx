@@ -1,7 +1,7 @@
 "use client";
 
 import type { Gender } from "@set/utils/dist/gender";
-import { genders } from "@set/utils/dist/gender";
+
 import classNames from "classnames";
 import { Button } from "components/button";
 import { PoorCombo } from "components/poor-combo";
@@ -9,15 +9,15 @@ import { PoorDatepicker } from "components/poor-datepicker";
 import { PoorInput } from "components/poor-input";
 import { PoorSelect } from "components/poor-select";
 import { trpc } from "trpc-core";
-import { countryCodes } from "contry-codes";
 import { Form, SmallFormInput } from "form";
 import Head from "next/head";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
 import type { PlayerRegistration } from "modules/player-registration/models";
-import { playerRegistrationSchema } from "modules/player-registration/models";
+import { countryCodeEnum, playerRegistrationSchema } from "modules/player-registration/models";
 import { type AppRouterOutputs } from "trpc";
+import { genderEnum } from "modules/shared/models";
 
 const initialRegistration = () =>
     ({
@@ -46,8 +46,8 @@ const RegistrationFormComponent = ({
     termsUrl: string | null;
 }) => {
     const t = useTranslations();
-    const countries = countryCodes.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
-    const genderOptions = genders.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
+    const countries = countryCodeEnum.options.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
+    const genderOptions = genderEnum.options.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
 
     return (
         <div className="space-y-4 md:space-y-6">
