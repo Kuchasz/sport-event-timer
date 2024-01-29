@@ -1,7 +1,7 @@
 "use client";
 
 import { mdiAccount, mdiAccountOff } from "@mdi/js";
-import { sort } from "@set/utils/dist/array";
+import { countItemsById, sort } from "@set/utils/dist/array";
 import { add as addAbsence, reset as resetAbsence } from "@set/timer/dist/slices/absences";
 import { ActionButton } from "components/stopwatch/action-button";
 import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-timestamp-display";
@@ -36,11 +36,15 @@ export const PlayersList = () => {
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
     const allAbsences = useTimerSelector(x => x.absences);
 
+    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+    const playersNumbersTime = countItemsById(timingPointTimeStamps, s => s.bibNumber!);
+
     const players = sort(
         allPlayers.map(x => ({
             ...x,
-            timeStamps: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            timeStamp: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId).at(-1),
             absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            numberOfTimes: playersNumbersTime.get(x.bibNumber),
             onReset: onResetAbsence,
             onRecord: onRecordAbsence,
             push,
@@ -81,7 +85,7 @@ export const PlayersList = () => {
                                 playerWithTimeStamp={players[virtualRow.index]}
                                 displayLaps={(timingPoint?.laps || 0) > 0}
                             />
-                            {allowAbsences && !players[virtualRow.index].timeStamps.length && !players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
@@ -89,7 +93,7 @@ export const PlayersList = () => {
                                     }}
                                 />
                             )}
-                            {allowAbsences && !players[virtualRow.index].timeStamps.length && players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {

@@ -10,6 +10,9 @@ import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hook
 import { useParams, useRouter } from "next/navigation";
 import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
 import { trpc } from "trpc-core";
+import { countItemsById } from "@set/utils/dist/array";
+import { timingPointIdAtom } from "states/stopwatch-states";
+import { useAtom } from "jotai";
 
 type TypedPlayerProps = {
     playerNumber: string;
@@ -45,6 +48,7 @@ export const TweakTimeStamp = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { back } = useRouter() as unknown as { back: () => void };
     const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const [timingPointId] = useAtom(timingPointIdAtom);
     const { raceId, timeStampId } = useParams<{ raceId: string; timeStampId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
@@ -55,11 +59,14 @@ export const TweakTimeStamp = () => {
     const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId))!;
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
 
+    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+    const playersNumbersTime = countItemsById(timingPointTimeStamps, s => s.bibNumber!);
+
     const [currentTime, setCurrentTime] = useState<number>(timeStamp.time);
 
     const time = new Date(currentTime);
 
-    const p = player ? { ...player, timeStamps: [timeStamp] } : { timeStamps: [timeStamp] };
+    const p = player ? { ...player, timeStamp, numberOfTimes: playersNumbersTime.get(player.bibNumber) } : { timeStamp: timeStamp };
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 

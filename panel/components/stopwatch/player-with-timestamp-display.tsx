@@ -8,7 +8,8 @@ import Icon from "@mdi/react";
 import { mdiAccountAlertOutline } from "@mdi/js";
 
 type PlayerWithTimeStamp = Player & {
-    timeStamps: TimeStamp[];
+    timeStamp: TimeStamp;
+    numberOfTimes: number;
     absent?: Absence;
 };
 
@@ -23,10 +24,10 @@ export const PlayerWithTimeStampDisplay = ({
     onAssign?: () => void;
     displayLaps?: boolean;
 }) => {
-    const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamps!.at(-1)?.time);
+    const previousTimeStamp = usePreviousValue(playerWithTimeStamp.timeStamp?.time);
     const previousAbsentState = usePreviousValue(playerWithTimeStamp.absent);
 
-    const lastTimeStamp = playerWithTimeStamp.timeStamps!.at(-1);
+    const lastTimeStamp = playerWithTimeStamp.timeStamp;
 
     const bibText = padLeftBibNumber
         ? ".".repeat(padLeftBibNumber - padLeftBibNumber.toString().length) + padLeftBibNumber
@@ -60,7 +61,7 @@ export const PlayerWithTimeStampDisplay = ({
                     {displayLaps && (
                         <span className="mr-2">
                             {t("stopwatch.list.lap")}
-                            {playerWithTimeStamp.timeStamps?.length}
+                            {playerWithTimeStamp.numberOfTimes}
                         </span>
                     )}
                     <span>

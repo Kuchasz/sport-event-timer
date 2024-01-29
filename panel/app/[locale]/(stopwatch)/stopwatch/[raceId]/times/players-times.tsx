@@ -5,7 +5,7 @@ import { mdiDeleteOutline, mdiTimerEditOutline, mdiTimerPlusOutline } from "@mdi
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/time-stamps";
-import { sortDesc } from "@set/utils/dist/array";
+import { countItemsById, sortDesc } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import classNames from "classnames";
@@ -23,6 +23,7 @@ import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
 
 type TimeStampWithPlayer = TimeStamp & {
     player?: Player;
+    numberOfTimes?: number;
 };
 
 const Item = <T extends string>({
@@ -107,10 +108,11 @@ const Item = <T extends string>({
                     </div>
                     <PlayerWithTimeStampDisplay
                         playerWithTimeStamp={{
-                            timeStamps: [t],
+                            timeStamp: t,
                             bibNumber: t.player?.bibNumber,
                             name: t.player?.name,
                             lastName: t.player?.lastName,
+                            numberOfTimes: t.numberOfTimes,
                         }}
                         padLeftBibNumber={padBibNumber}
                         displayLaps={displayLaps}
@@ -154,13 +156,16 @@ export const PlayersTimes = () => {
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
 
+    const timingPointTimeStamps = allTimeStamps.filter(s => s.timingPointId === timingPointId);
+
+    const playersNumbersTime = countItemsById(timingPointTimeStamps, s => s.bibNumber!);
+
     const times = sortDesc(
-        allTimeStamps
-            .filter(s => s.timingPointId === timingPointId)
-            .map(s => ({
-                ...s,
-                player: allPlayers.find(p => s.bibNumber === p.bibNumber),
-            })),
+        timingPointTimeStamps.map(s => ({
+            ...s,
+            numberOfTimes: playersNumbersTime.get(s.bibNumber!),
+            player: allPlayers.find(p => s.bibNumber === p.bibNumber),
+        })),
         t => t.id,
     );
 
