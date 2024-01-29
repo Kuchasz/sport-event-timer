@@ -1,4 +1,4 @@
-import { genderEnum } from "../../models";
+import { genderEnum } from "../shared/models";
 import { z } from "zod";
 import sharedErrorCodes from "../shared/error-codes";
 

@@ -2,6 +2,8 @@ import { z } from "zod";
 import sharedErrorCodes from "../shared/error-codes";
 import errorCodes from "./error-codes";
 
+export const timingPointTypeEnum = z.enum(["start", "finish", "checkpoint"]);
+
 export const timingPointSchema = z.object({
     id: z.number().min(1).nullish(),
     raceId: z.number({ required_error: sharedErrorCodes.required }).min(1),
@@ -22,3 +24,5 @@ export const timingPointAccessUrlSchema = z.object({
     name: z.string({ required_error: sharedErrorCodes.required }),
     canAccessOthers: z.boolean(),
 });
+
+export type TimingPointType = z.infer<typeof timingPointTypeEnum>;

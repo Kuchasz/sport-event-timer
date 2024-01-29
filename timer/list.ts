@@ -1,5 +1,4 @@
 import { areOverlapping, createRange } from "@set/utils/dist/array";
-import type { RegistrationPlayer } from "./model";
 
 export type ClassificationConfig = {
     id: string;
@@ -90,27 +89,4 @@ export const assignNumbersToPlayers = <T, Id>(
     );
 
     return { type: "Success", playersNumbers };
-};
-
-type UploadPlayer = Omit<RegistrationPlayer, "id">;
-
-export const transform = <T extends Record<string, string>>(
-    players: T[],
-    transformations: {
-        [key in keyof UploadPlayer]: {
-            name: string;
-            transformation: (value: string) => UploadPlayer[key];
-        };
-    },
-): UploadPlayer[] => {
-    const transformationKeys = Object.keys(transformations) as (keyof typeof transformations)[];
-
-    return players.map(player =>
-        Object.fromEntries(
-            transformationKeys.map(desiredKey => [
-                desiredKey,
-                transformations[desiredKey].transformation(player[transformations[desiredKey].name]),
-            ]),
-        ),
-    ) as UploadPlayer[];
 };

@@ -97,7 +97,7 @@ Application for making time measurements
 | 20/01/2023 | Replace 'Race' word with 'Competition'                                |                  :date:                   |
 | 22/01/2023 | Grid loading state                                                    |                  :date:                   |
 | 23/01/2023 | Apply penalty/dsq reasons combobox                                    | <sup>:heavy_check_mark:(23/01/2024)</sup> |
-| 27/01/2024 | Dont define laps of start and finish                                  |                  :date:                   |
+| 27/01/2024 | Disable laps on start and finish                                      | <sup>:heavy_check_mark:(29/01/2024)</sup> |
 | 29/01/2024 | Split time edit on flyout from the bottom                             |                  :date:                   |
 
 ## TODO

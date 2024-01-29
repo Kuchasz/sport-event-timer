@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "server/db";
 import { withExceptionHandling } from "exceptions";
 import { z } from "zod";
-import { genderEnum } from "../../../models";
+import { genderEnum } from "../../../modules/shared/models";
 import { getRegistrationState } from "modules/race/models";
 import { playerRegistrationErrorKeys } from "modules/player-registration/errors";
 

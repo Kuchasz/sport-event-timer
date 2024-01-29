@@ -32,6 +32,7 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
             onReject={onReject}
             onResolve={timingPointCreated}
             initialTimingPoint={timingPoint}
+            timingPointType="checkpoint"
         />
     );
 };

@@ -1,7 +1,7 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
 import { timingPointErrors } from "modules/timing-point/errors";
 import { z } from "zod";
-import { timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
+import { type TimingPointType, timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
 import { protectedProcedure, router } from "../trpc";
 
 export const timingPointRouter = router({
@@ -9,7 +9,9 @@ export const timingPointRouter = router({
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            return await ctx.db.timingPoint.findMany({ where: { raceId } });
+            const timingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+
+            return timingPoints.map(timingPoint => ({ ...timingPoint, type: timingPoint.type as TimingPointType }));
         }),
     timingPoint: protectedProcedure
         .input(
@@ -20,7 +22,8 @@ export const timingPointRouter = router({
         )
         .query(async ({ input, ctx }) => {
             const { raceId, timingPointId } = input;
-            return await ctx.db.timingPoint.findFirstOrThrow({ where: { raceId, id: timingPointId } });
+            const timingPoint = await ctx.db.timingPoint.findFirstOrThrow({ where: { raceId, id: timingPointId } });
+            return { ...timingPoint, type: timingPoint.type as TimingPointType };
         }),
     timingPointsOrder: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
@@ -70,6 +73,15 @@ export const timingPointRouter = router({
         }),
     update: protectedProcedure.input(timingPointSchema).mutation(async ({ input, ctx }) => {
         const { id, ...data } = input;
+
+        const timingPoint = await ctx.db.timingPoint.findFirstOrThrow({
+            where: {
+                id: id!,
+                raceId: data.raceId,
+            },
+        });
+
+        if (timingPoint.type !== "checkpoint" && data.laps) throw timingPointErrors.LAPS_ALLOWED_ONLY_ON_CHECKPOINT;
 
         return await ctx.db.timingPoint.update({ where: { id: id! }, data });
     }),

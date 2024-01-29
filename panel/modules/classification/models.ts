@@ -1,4 +1,4 @@
-import { genderEnum } from "../../models";
+import { genderEnum } from "../shared/models";
 import { z } from "zod";
 
 export const categorySchema = z.object({

@@ -2063,7 +2063,8 @@
     },
     "timingPoint": {
       "errors": {
-        "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)"
+        "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
+        "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints"
       }
     }
   }

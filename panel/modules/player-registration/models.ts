@@ -1,7 +1,7 @@
-import { genderEnum } from "../../models";
 import { z } from "zod";
 import sharedErrorCodes from "../shared/error-codes";
 import { countryCodes } from "../../contry-codes";
+import { genderEnum } from "../../modules/shared/models";
 
 const countryEnum = z.enum(countryCodes, { required_error: sharedErrorCodes.required });
 

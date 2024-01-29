@@ -1,7 +1,7 @@
 "use client";
 import { mdiExport, mdiHumanEdit, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import type { Gender } from "@set/timer/dist/model";
+import type { Gender } from "modules/shared/models";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";

@@ -4,71 +4,11 @@ import * as Option from "fp-ts/Option";
 import * as Ord from "fp-ts/Ord";
 import { flow, increment, pipe } from "fp-ts/function";
 
-export type Gender = "male" | "female";
-
-export type Classification = {
-    name: string;
-    id: string;
-};
-
-export type RegistrationPlayer = {
-    id: number;
-    // number?: number; // !!!!!!!!
-    // chipNumber: number; // !!!!!!!
-    classificationId: string;
-    // category: string; // !!!!!!!
-    name: string;
-    lastName: string;
-    gender: Gender;
-    // age: number; // !!!!!!!!
-    birthDate: Date;
-    country: string;
-    city: string;
-    team: string;
-    email: string;
-    phoneNumber: string;
-    icePhoneNumber: string;
-    //["Anonimowy"]: string;
-    // ["Kwota przelewu"]: string;
-    // ["Kwota za start"]: string;
-    // ["Kwota za sklep"]: string;
-    // ["Kwota za ubezpieczenie"]: string;
-    // ["Data przelewu"]: string;
-    // ["Numer transakcji"]: string;
-    // ["Status opłaty"]: string;
-    // ["Data rejestracji"]: string;
-    // ["Nr GPS"]: string;
-    //["Status zawodnika"]: string;
-    // ["Notatka"]: string;
-    // ["Pliki"]: string;
-};
-
 export type Player = {
-    // id: number;
     name: string;
     lastName: string;
     bibNumber: number;
-    // birthYear: number;
-    // gender: Gender;
-    // city: string;
-    // raceCategory: string;
-    // team: string;
-    // country: string;
     startTime?: number;
-};
-
-export type RaceCategory = {
-    id: number;
-    name: string;
-    minAge?: number;
-    maxAge?: number;
-    gender?: Gender;
-};
-
-export type TimeKeeper = {
-    id: number;
-    name: string;
-    order: number;
 };
 
 export type ConnectionState = "connected" | "connecting" | "disconnected" | "error";
@@ -137,17 +77,6 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
 
 export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) => updateBy(items, item, i => i.id === item.id);
 
-// export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: TimeKeeper): TimeKeeper[] =>
-//     pipe(timeKeepers, Arr.append({ ...newTimeKeeper }));
-
-// export const addTimeKeeper = (timeKeepers: TimeKeeper[], newTimeKeeper: Omit<TimeKeeper, "id">): TimeKeeper[] =>
-//     pipe(timeKeepers, Arr.append({ ...newTimeKeeper, id: getNextId(timeKeepers) }));
-
-// export const updateTimeKeeper = (timeKeepers: TimeKeeper[], modifiedTimeKeeper: Partial<TimeKeeper>): TimeKeeper[] =>
-//     updateItem(timeKeepers, modifiedTimeKeeper);
-
-// export const removeTimeKeeper = (timeKeepers: TimeKeeper[], id: number): TimeKeeper[] => removeById(timeKeepers, id);
-
 export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp, "id">): TimeStamp[] =>
     pipe(timeStamps, Arr.append({ ...timeStamp, id: getNextId(timeStamps) }));
 
@@ -163,11 +92,3 @@ export const addAbsence = (absences: Absence[], absence: Omit<Absence, "id">): A
     pipe(absences, Arr.append({ ...absence, id: getNextId(absences) }));
 
 export const resetAbsence = (absences: Absence[], id: number): Absence[] => removeById(absences, id);
-
-// export const addRaceCategory = (
-//     raceCategories: RaceCategory[],
-//     raceCategory: Omit<RaceCategory, "id">
-// ): RaceCategory[] => pipe(raceCategories, Arr.append({ ...raceCategory, id: getNextId(raceCategories) }));
-
-// export const removeRaceCategory = (raceCategories: RaceCategory[], id: number): RaceCategory[] =>
-//     removeById(raceCategories, id);

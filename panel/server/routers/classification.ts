@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
-import type { Gender } from "@set/timer/dist/model";
+import type { Gender } from "modules/shared/models";
 import { categorySchema, classificationSchema } from "../../modules/classification/models";
 import { classificationErrorKeys } from "modules/classification/errors";
 

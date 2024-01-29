@@ -6,6 +6,7 @@ import type { CountryCode } from "../../modules/player-registration/models";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { getRegistrationState } from "modules/race/models";
+import { type Gender } from "../../modules/shared/models";
 
 export const playerRegistrationRouter = router({
     registrations: protectedProcedure
@@ -20,6 +21,7 @@ export const playerRegistrationRouter = router({
             return registrations.map((r, index) => ({
                 ...r.profile,
                 ...r,
+                gender: r.profile.gender as Gender,
                 country: r.profile.country as CountryCode,
                 index: index + 1,
                 promotedToPlayer: r.player.length > 0,

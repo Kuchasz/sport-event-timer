@@ -2063,7 +2063,8 @@
     },
     "timingPoint": {
       "errors": {
-        "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)"
+        "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)",
+        "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych"
       }
     }
   }

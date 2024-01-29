@@ -1,7 +1,5 @@
 import type { ClassificationConfig } from "./list";
-import { assignNumbersToPlayers, transform } from "./list";
-import type { ToStartPlayer } from "./to-start";
-import { toStartPlayerTransform } from "./to-start";
+import { assignNumbersToPlayers } from "./list";
 
 const pro = (name: string, lastName: string) => ({ classificationId: "race_pro", name, lastName });
 const fun = (name: string, lastName: string) => ({ classificationId: "race_fun", name, lastName });
@@ -155,39 +153,4 @@ test("no classifications | empty", () => {
         type: "Success",
         playersNumbers: [],
     });
-});
-
-test("transformed properly | to start", () => {
-    const classifications = [{ name: "RnK PRO", id: "rnk_pro" }];
-    const tsPlayer: Partial<ToStartPlayer> = {
-        "Adres email": "A.brzozka@jbg2.pl",
-        "Data urodzenia": "09.07.1987",
-        "Nazwa klubu": "JBG2",
-        "Telefon ICE": "536225567",
-        Imię: "Adrian",
-        Klasyfikacja: "RnK PRO",
-        Miasto: "Ustroń",
-        Nazwisko: "Brzozka",
-        Państwo: "POL",
-        Płeć: "M",
-        Telefon: "536225567",
-    };
-
-    const result = transform([tsPlayer], toStartPlayerTransform(classifications));
-
-    expect(result).toStrictEqual([
-        {
-            birthDate: new Date("1987-07-09"),
-            city: "Ustroń",
-            classificationId: "rnk_pro",
-            country: "POL",
-            email: "A.brzozka@jbg2.pl",
-            gender: "male",
-            icePhoneNumber: "536225567",
-            lastName: "Brzozka",
-            name: "Adrian",
-            phoneNumber: "536225567",
-            team: "JBG2",
-        },
-    ]);
 });

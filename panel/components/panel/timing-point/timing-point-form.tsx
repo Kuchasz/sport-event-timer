@@ -2,7 +2,7 @@ import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
 import type { AppRouterInputs } from "trpc";
 import { Form, FormInput } from "form";
-import { timingPointSchema } from "modules/timing-point/models";
+import { type TimingPointType, timingPointSchema } from "modules/timing-point/models";
 import { useTranslations } from "next-intl";
 import { PoorNumberInput } from "components/poor-number-input";
 
@@ -13,9 +13,10 @@ type TimingPointFormProps = {
     onResolve: (timingPoint: TimingPoint) => void;
     initialTimingPoint: TimingPoint;
     isLoading: boolean;
+    timingPointType: TimingPointType;
 };
 
-export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoading }: TimingPointFormProps) => {
+export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoading, timingPointType }: TimingPointFormProps) => {
     const t = useTranslations();
     return (
         <Form<TimingPoint> initialValues={initialTimingPoint} onSubmit={onResolve} validationSchema={timingPointSchema}>
@@ -41,17 +42,23 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
                     name="shortName"
                 />
             </div>
-            <div className="flex">
-                <FormInput<TimingPoint, "laps">
-                    label={t("pages.timingPoints.form.laps.label")}
-                    description={t("pages.timingPoints.form.laps.description")}
-                    className="flex-1"
-                    render={({ value, onChange }) => (
-                        <PoorNumberInput placeholder={t("pages.timingPoints.form.laps.placeholder")} value={value} onChange={onChange} />
-                    )}
-                    name="laps"
-                />
-            </div>
+            {timingPointType === "checkpoint" && (
+                <div className="flex">
+                    <FormInput<TimingPoint, "laps">
+                        label={t("pages.timingPoints.form.laps.label")}
+                        description={t("pages.timingPoints.form.laps.description")}
+                        className="flex-1"
+                        render={({ value, onChange }) => (
+                            <PoorNumberInput
+                                placeholder={t("pages.timingPoints.form.laps.placeholder")}
+                                value={value}
+                                onChange={onChange}
+                            />
+                        )}
+                        name="laps"
+                    />
+                </div>
+            )}
             <div className="flex">
                 <FormInput<TimingPoint, "description">
                     label={t("pages.timingPoints.form.description.label")}
