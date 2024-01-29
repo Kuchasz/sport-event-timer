@@ -7,4 +7,11 @@ export const sportKinds = [
     "swimming",
     "running",
     "hiking",
+    "rowing",
+    "alpine-skiing",
+    "cross-country-skiing",
+    "snowboarding",
+    "luge",
+    "triathlon",
+    "motorsports",
 ] as const;

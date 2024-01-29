@@ -1803,11 +1803,18 @@
       "bobsleigh": "Bobsleje",
       "canoeing": "Kajakarstwo",
       "gravel-cycling": "Gravel",
-      "hiking": "Turystyna piesza",
+      "hiking": "Turystyka piesza",
       "mtb-cycling": "Kolarstwo górskie",
       "road-cycling": "Kolarstwo szosowe",
       "running": "Bieganie",
-      "swimming": "Pływanie"
+      "swimming": "Pływanie",
+      "rowing": "Wioślarstwo",
+      "alpine-skiing": "Narciastwo alpejskie",
+      "cross-country-skiing": "Biegi narciarskie",
+      "snowboarding": "Snowboarding",
+      "luge": "Saneczkarstwo",
+      "triathlon": "Triathlon",
+      "motorsports": "Sporty motorowe"
     },
     "status": {
       "disabled": "Wyłączone",

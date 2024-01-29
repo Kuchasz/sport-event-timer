@@ -1807,7 +1807,14 @@
       "mtb-cycling": "Mountain Biking",
       "road-cycling": "Road Cycling",
       "running": "Running",
-      "swimming": "Swimming"
+      "swimming": "Swimming",
+      "rowing": "Rowing",
+      "alpine-skiing": "Alpine skiing",
+      "cross-country-skiing": "Cross-country skiing",
+      "snowboarding": "Snowboarding",
+      "luge": "Luge",
+      "triathlon": "Triathlon",
+      "motorsports": "Motorsports"
     },
     "status": {
       "disabled": "Disabled",

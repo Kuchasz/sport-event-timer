@@ -61,7 +61,7 @@ const SplitTimeResult = ({
                         raceDate: raceDate.getTime(),
                         onReject: () => {},
                     }}>
-                    <span className="flex cursor-pointer items-center hover:text-red-600">
+                    <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiClockEditOutline} />
                     </span>
                 </PoorModal>
@@ -82,7 +82,7 @@ const SplitTimeResult = ({
                         raceDate: raceDate.getTime(),
                         onReject: () => {},
                     }}>
-                    <span className="flex cursor-pointer items-center hover:text-red-600">
+                    <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiClockPlusOutline} />
                     </span>
                 </PoorModal>
