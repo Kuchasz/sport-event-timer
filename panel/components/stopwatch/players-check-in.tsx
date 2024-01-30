@@ -88,22 +88,22 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }:
     <button
         onClick={() => onPlayerCheckIn(player.bibNumber)}
         className={classNames("my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500", {
-            ["bg-orange-500 font-semibold text-white"]: typeahead === player.bibNumber,
+            ["bg-orange-50 text-orange-500"]: typeahead === player.bibNumber,
             ["bg-zinc-50"]: typeahead !== player.bibNumber,
         })}>
-        <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "opacity-0" : "")}>
+        <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "text-orange-500" : "")}>
             <Icon size={0.8} path={mdiChevronRight}></Icon>
         </div>
-        <div>
-            {player.name} {player.lastName}
+        <div className="font-semibold">
+            {player.name[0]}. {player.lastName}
         </div>
         <div className="flex-grow"></div>
-        <div className="">
+        <div className="font-mono font-semibold">
             {typeahead
                 ? fuzzysort.highlight(result[0], (m, i) => (
                       <mark
-                          className={classNames("bg-transparent font-semibold text-orange-500", {
-                              ["font-semibold text-white"]: typeahead === player.bibNumber,
+                          className={classNames("bg-transparent text-orange-500", {
+                              [" "]: typeahead === player.bibNumber,
                           })}
                           key={i}>
                           {m}
