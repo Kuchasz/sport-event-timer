@@ -59,9 +59,8 @@ export const PlayerWithTimeStampDisplay = ({
                         ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
                     {displayLaps && playerWithTimeStamp.timeStamps && playerWithTimeStamp.timeStamp && (
-                        <span className="mr-2">
-                            {t("stopwatch.list.lap")}
-                            {playerWithTimeStamp.timeStamps[playerWithTimeStamp.timeStamp.id] + 1}
+                        <span className="mr-2 text-xs opacity-50">
+                            {t("stopwatch.list.lap")} {playerWithTimeStamp.timeStamps[playerWithTimeStamp.timeStamp.id] + 1}
                         </span>
                     )}
                     <span>

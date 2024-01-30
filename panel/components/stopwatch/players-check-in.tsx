@@ -128,6 +128,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const [playerNumber, setPlayerNumber] = useState("");
 
     const { raceId } = useParams<{ raceId: string }>()!;
+    const t = useTranslations();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery(
@@ -195,10 +196,17 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                 onPointerDown={timeCritical ? onRecord : undefined}
                 onClick={!timeCritical ? onRecord : undefined}
                 className={classNames(
-                    "active:animate-pushInLittle flex justify-center bg-gradient-to-b from-orange-500 to-red-500 p-4 text-white transition-opacity",
+                    "active:animate-pushInLittle flex items-center justify-center bg-gradient-to-b from-orange-500 to-red-500 p-4 font-semibold text-white transition-opacity",
                     canRecord ? "animate-wave" : "pointer-events-none opacity-20",
                 )}>
-                <Icon size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
+                {timingPoint?.laps && canRecord ? (
+                    <span>
+                        {t("stopwatch.checkIn.lap")} {bestGuess.timeStamps?.length + 1}
+                    </span>
+                ) : (
+                    <span>{t("stopwatch.checkIn.split")}</span>
+                )}
+                <Icon className="ml-4" size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
             </div>
         </div>
     );

@@ -1838,7 +1838,8 @@
     },
     "checkIn": {
       "typeBibNumber": "Wpisz numer startowy zawodnika",
-      "lap": "LAP#"
+      "lap": "LAP",
+      "split": "SPLIT"
     },
     "error": {
       "disconnected": {
@@ -1862,7 +1863,7 @@
       "title": {
         "text": "Lista zawodników"
       },
-      "lap": "LAP#"
+      "lap": "LAP"
     },
     "menuItems": {
       "history": "Historia",

@@ -1838,7 +1838,8 @@
     },
     "checkIn": {
       "typeBibNumber": "Type player's bib number",
-      "lap": "LAP#"
+      "lap": "LAP",
+      "split": "SPLIT"
     },
     "error": {
       "disconnected": {
@@ -1862,7 +1863,7 @@
       "title": {
         "text": "Players list"
       },
-      "lap": "LAP#"
+      "lap": "LAP"
     },
     "menuItems": {
       "history": "History",
