@@ -129,8 +129,6 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
 
     const { raceId } = useParams<{ raceId: string }>()!;
 
-    const t = useTranslations();
-
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery(
         { raceId: parseInt(raceId), timingPointId: timingPointId! },
