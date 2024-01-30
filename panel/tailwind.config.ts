@@ -52,7 +52,7 @@ module.exports = {
         },
         extend: {
             animation: {
-                pushIn: "pushIn 0.3s ease-out",
+                pushIn: "pushIn 0.4s ease-out",
                 pushInLittle: "pushInLittle 0.2s ease-out",
                 fadeIn: "fadeIn 0.2s",
                 fadeOut: "fadeOut 0.2s",
@@ -114,11 +114,12 @@ module.exports = {
             },
             keyframes: {
                 pushIn: {
-                    "0%": { transform: "scale(0.8)" },
+                    "0%": { transform: "scale(1)" },
+                    "25%": { transform: "scale(0.7)" },
                     "100%": { transfrm: "scale(1)" },
                 },
                 pushInLittle: {
-                    "0%": { transform: "scale(0.95)" },
+                    "0%": { transform: "scale(0.9)" },
                     "100%": { transfrm: "scale(1)" },
                 },
                 fadeIn: {

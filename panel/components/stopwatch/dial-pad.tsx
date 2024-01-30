@@ -14,12 +14,28 @@ type DigitButtonProps = {
     char: string;
     desc?: string;
 };
-const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => (
-    <button onClick={padClick} className="active:animate-pushIn cursor-pointer select-none p-1.5 text-2xl font-semibold transition-opacity">
-        <div>{char}</div>
-        <div className={classNames("text-2xs uppercase leading-none text-gray-400", { ["opacity-0"]: !desc })}>{desc ?? "&nbsp;"}</div>
-    </button>
-);
+const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => {
+    const [animation, setAnimation] = useState(false);
+    return (
+        <button
+            onPointerDown={() => {
+                setAnimation(true);
+                padClick();
+            }}
+            className="cursor-pointer select-none p-1.5 text-2xl font-semibold">
+            <div className={classNames(animation ? "animate-pushIn" : "")} onAnimationEnd={() => setAnimation(false)}>
+                {char}
+            </div>
+            <div
+                className={classNames("text-2xs uppercase leading-none text-gray-400", {
+                    ["opacity-0"]: !desc,
+                    ["animate-pushIn"]: animation,
+                })}>
+                {desc ?? "&nbsp;"}
+            </div>
+        </button>
+    );
+};
 
 type IconButtonProps = {
     timeCritical?: boolean;
