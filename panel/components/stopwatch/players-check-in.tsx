@@ -89,10 +89,13 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, d
     return (
         <button
             onClick={() => onPlayerCheckIn(player.bibNumber)}
-            className={classNames("my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500", {
-                ["bg-orange-50 text-orange-500"]: typeahead === player.bibNumber,
-                ["bg-zinc-50"]: typeahead !== player.bibNumber,
-            })}>
+            className={classNames(
+                "my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500 transition-colors",
+                {
+                    ["bg-orange-50 text-orange-500"]: typeahead === player.bibNumber,
+                    ["bg-zinc-50"]: typeahead !== player.bibNumber,
+                },
+            )}>
             <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "text-orange-500" : "")}>
                 <Icon size={0.8} path={mdiChevronRight}></Icon>
             </div>

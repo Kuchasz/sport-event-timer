@@ -69,7 +69,7 @@ const Item = <T extends string>({
             else deleteModeEnabled.current = false;
         }
 
-        const translation = dX > 30 && deleteModeEnabled.current ? dX : 0;
+        const translation = dX > 15 && deleteModeEnabled.current ? dX : 0;
 
         targetElement.current.style.transform = `translateX(${translation}px)`;
     };
@@ -83,7 +83,8 @@ const Item = <T extends string>({
             dispatch(reset({ id: t.id }));
         } else {
             targetElement.current.style.transition = "transform";
-            targetElement.current.style.transitionDuration = "0.2s";
+            targetElement.current.style.transitionDuration = "0.15s";
+            targetElement.current.style.transitionTimingFunction = "ease-out";
             targetElement.current.style.transform = `translateX(0px)`;
         }
 
@@ -103,7 +104,7 @@ const Item = <T extends string>({
                         deleteTargetElement(e.changedTouches[0].clientX);
                     }}
                     onTouchMove={e => moveTargetElement(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}>
-                    <div className="absolute -ml-[78px] flex h-[50px] w-[50px] items-center justify-center rounded-full bg-red-500 text-white">
+                    <div className="absolute -ml-[78px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-red-500 text-white">
                         <Icon size={0.8} path={mdiDeleteOutline} />
                     </div>
                     <PlayerWithTimeStampDisplay

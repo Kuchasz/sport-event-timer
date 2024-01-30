@@ -12,6 +12,7 @@ import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { createRange } from "@set/utils/dist/array";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -141,21 +142,23 @@ export const SplitTimes = () => {
         },
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
-            .map(tp => ({
-                field: tp.name as any,
-                headerName: tp.name,
-                cellRenderer: (data: SplitTime) => (
-                    <SplitTimeResult
-                        refetch={() => refetch()}
-                        raceId={raceId}
-                        raceDate={race?.date ?? new Date()}
-                        openResetDialog={revertManualSplitTime}
-                        splitTimeResult={data}
-                        timingPointId={tp.id}
-                        isLoading={revertSplitTimeMutation.isLoading}
-                    />
-                ),
-            })),
+            .flatMap(tp =>
+                createRange({ from: 0, to: tp.laps ?? 0 }).map((_, index) => ({
+                    field: tp.laps ? (`${tp.name}${index}` as any) : tp.name,
+                    headerName: tp.laps ? `${tp.name}(${index + 1})` : tp.name,
+                    cellRenderer: (data: SplitTime) => (
+                        <SplitTimeResult
+                            refetch={() => refetch()}
+                            raceId={raceId}
+                            raceDate={race?.date ?? new Date()}
+                            openResetDialog={revertManualSplitTime}
+                            splitTimeResult={data}
+                            timingPointId={tp.id}
+                            isLoading={revertSplitTimeMutation.isLoading}
+                        />
+                    ),
+                })),
+            ),
     ];
 
     const revertManualSplitTime = async (editedSplitTime: RevertedSplitTime) => {
