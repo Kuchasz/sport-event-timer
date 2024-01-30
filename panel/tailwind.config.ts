@@ -52,7 +52,7 @@ module.exports = {
         },
         extend: {
             animation: {
-                pushIn: "pushIn 0.4s ease-out",
+                pushIn: "pushIn 0.3s ease-out",
                 pushInLittle: "pushInLittle 0.2s ease-out",
                 fadeIn: "fadeIn 0.2s",
                 fadeOut: "fadeOut 0.2s",
