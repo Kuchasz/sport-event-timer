@@ -84,35 +84,39 @@ type PlayerSuggestionProps = {
     result: CheckInResult;
     displayLaps: boolean;
 };
-export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn }: PlayerSuggestionProps) => (
-    <button
-        onClick={() => onPlayerCheckIn(player.bibNumber)}
-        className={classNames("my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500", {
-            ["bg-orange-50 text-orange-500"]: typeahead === player.bibNumber,
-            ["bg-zinc-50"]: typeahead !== player.bibNumber,
-        })}>
-        <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "text-orange-500" : "")}>
-            <Icon size={0.8} path={mdiChevronRight}></Icon>
-        </div>
-        <div className="font-semibold">
-            {player.name[0]}. {player.lastName}
-        </div>
-        <div className="flex-grow"></div>
-        <div className="font-mono font-semibold">
-            {typeahead
-                ? fuzzysort.highlight(result[0], (m, i) => (
-                      <mark
-                          className={classNames("bg-transparent text-orange-500", {
-                              [" "]: typeahead === player.bibNumber,
-                          })}
-                          key={i}>
-                          {m}
-                      </mark>
-                  ))
-                : player.bibNumber}
-        </div>
-    </button>
-);
+export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, displayLaps }: PlayerSuggestionProps) => {
+    const t = useTranslations();
+    return (
+        <button
+            onClick={() => onPlayerCheckIn(player.bibNumber)}
+            className={classNames("my-1 flex w-full select-none items-center rounded-md px-2 py-1 text-sm text-gray-500", {
+                ["bg-orange-50 text-orange-500"]: typeahead === player.bibNumber,
+                ["bg-zinc-50"]: typeahead !== player.bibNumber,
+            })}>
+            <div className={classNames("mr-1 rounded-full", typeahead === player.bibNumber ? "text-orange-500" : "")}>
+                <Icon size={0.8} path={mdiChevronRight}></Icon>
+            </div>
+            <div className="font-semibold">
+                {player.name[0]}. {player.lastName}
+            </div>
+            <div className="flex-grow"></div>
+            <div className=" font-semibold">
+                {typeahead
+                    ? fuzzysort.highlight(result[0], (m, i) => (
+                          <mark className={classNames("bg-transparent text-orange-500")} key={i}>
+                              {m}
+                          </mark>
+                      ))
+                    : player.bibNumber}
+            </div>
+            {displayLaps && (
+                <div className={classNames("ml-2 text-xs font-medium", typeahead === player.bibNumber ? "" : "opacity-50")}>
+                    {t("stopwatch.checkIn.lap")} {player.timeStampsNumber + 1}
+                </div>
+            )}
+        </button>
+    );
+};
 
 type PlayersDialPadProps = {
     timeCritical: boolean;
@@ -179,13 +183,6 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                     />
                 ))}
             </div>
-            {timingPoint?.laps && bestGuess?.bibNumber === playerNumber && (
-                <div className="flex w-full justify-center">
-                    <div className="absolute text-sm font-medium text-gray-400">
-                        {t("stopwatch.checkIn.lap")} {bestGuess.timeStamps.length + 1}
-                    </div>
-                </div>
-            )}
             <TypedPlayer reset={() => setPlayerNumber("")} playerNumber={playerNumber} />
             <div className="flex basis-72 flex-col items-center bg-white">
                 <DialPad
