@@ -63,7 +63,7 @@ const IconButton = ({ timeCritical, children, buttonClick, enabled }: IconButton
             onClick={!timeCritical ? handleClick : undefined}
             onAnimationEnd={() => setAnimation(false)}
             className={classNames(
-                "m-1.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity",
+                "mb-2.5 flex cursor-pointer select-none items-center justify-center rounded-md text-2xl font-semibold transition-opacity",
                 { ["animate-pushIn"]: animation },
                 { ["pointer-events-none opacity-20"]: !enabled },
             )}>

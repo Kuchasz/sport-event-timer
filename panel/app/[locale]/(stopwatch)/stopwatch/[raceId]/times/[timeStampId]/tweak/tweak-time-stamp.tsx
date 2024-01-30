@@ -8,7 +8,7 @@ import type { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
-import { tweakTimeStamp } from "@set/timer/dist/slices/time-stamps";
+import { tweak } from "@set/timer/dist/slices/time-stamps";
 import { trpc } from "trpc-core";
 import { getIndexById, sort } from "@set/utils/dist/array";
 import { timingPointIdAtom } from "states/stopwatch-states";
@@ -54,7 +54,7 @@ export const TweakTimeStamp = () => {
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const dispatch = useTimerDispatch();
-    const onSave = (timeStamp: TimeStamp) => dispatch(tweakTimeStamp(timeStamp));
+    const onSave = (timeStamp: TimeStamp) => dispatch(tweak(timeStamp));
 
     const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId))!;
     const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
