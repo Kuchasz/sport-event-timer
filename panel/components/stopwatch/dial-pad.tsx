@@ -1,7 +1,7 @@
 import { mdiBackspaceOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { useState, type ReactNode, useRef } from "react";
+import { useState, type ReactNode } from "react";
 
 const padActions = {
     addDigit: (digit: string) => (player: string) => player.concat(digit),
@@ -16,18 +16,14 @@ type DigitButtonProps = {
 };
 const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => {
     const [animation, setAnimation] = useState(false);
-    const anim_char = useRef<HTMLDivElement>(null);
-    const anim_desc = useRef<HTMLDivElement>(null);
 
     return (
         <button
             onPointerDown={() => {
                 if (animation) {
-                    anim_char.current!.className = anim_char.current!.className.replace("animate-pushIn", "");
-                    anim_desc.current!.className = anim_desc.current!.className.replace("animate-pushIn", "");
+                    setAnimation(false);
                     setTimeout(() => {
-                        anim_char.current!.className += " animate-pushIn";
-                        anim_desc.current!.className += " animate-pushIn";
+                        setAnimation(true);
                     });
                 } else {
                     setAnimation(true);
@@ -35,11 +31,10 @@ const DigitButton = ({ char, desc, padClick }: DigitButtonProps) => {
                 padClick();
             }}
             className="cursor-pointer select-none p-1.5 text-2xl font-semibold">
-            <div ref={anim_char} className={classNames(animation ? "animate-pushIn" : "")} onAnimationEnd={() => setAnimation(false)}>
+            <div className={classNames(animation ? "animate-pushIn" : "")} onAnimationEnd={() => setAnimation(false)}>
                 {char}
             </div>
             <div
-                ref={anim_desc}
                 className={classNames("text-2xs uppercase leading-none text-gray-400", {
                     ["opacity-0"]: !desc,
                     ["animate-pushIn"]: animation,
