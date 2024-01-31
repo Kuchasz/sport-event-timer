@@ -195,21 +195,23 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                     onRecord={onRecord}
                 />
             </div>
-            <div
-                onPointerDown={timeCritical ? onRecord : undefined}
-                onClick={!timeCritical ? onRecord : undefined}
-                className={classNames(
-                    "active:animate-pushInLittle flex items-center justify-center bg-gradient-to-b from-orange-500 to-red-500 p-4 font-semibold text-white transition-opacity",
-                    canRecord ? "animate-wave" : "pointer-events-none opacity-20",
-                )}>
-                {timingPoint?.laps && canRecord ? (
-                    <span>
-                        {t("stopwatch.checkIn.lap")} {bestGuess.timeStamps?.length + 1}
-                    </span>
-                ) : (
-                    <span>{t("stopwatch.checkIn.split")}</span>
-                )}
-                <Icon className="ml-4" size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
+            <div className="my-3 flex flex-col px-5">
+                <div
+                    onPointerDown={timeCritical ? onRecord : undefined}
+                    onClick={!timeCritical ? onRecord : undefined}
+                    className={classNames(
+                        "active:animate-pushInLittle flex items-center justify-center rounded-md bg-gradient-to-b from-orange-500 to-red-500 p-4 font-semibold text-white shadow-md transition-opacity",
+                        canRecord ? "animate-wave" : "pointer-events-none opacity-20",
+                    )}>
+                    {timingPoint?.laps && canRecord ? (
+                        <span>
+                            {t("stopwatch.checkIn.lap")} {bestGuess.timeStamps?.length + 1}
+                        </span>
+                    ) : (
+                        <span>{t("stopwatch.checkIn.split")}</span>
+                    )}
+                    <Icon className="ml-4" size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
+                </div>
             </div>
         </div>
     );

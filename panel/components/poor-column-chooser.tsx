@@ -45,14 +45,14 @@ export const PoorColumnChooser = <T, TNameKey extends keyof T, TValueKey extends
                             <Listbox.Option
                                 key={personIdx}
                                 className={({ active }) =>
-                                    `relative w-auto cursor-default select-none py-2 pl-10 pr-4 ${
+                                    `relative w-auto cursor-pointer select-none py-2 pl-10 pr-4 ${
                                         active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                                     }`
                                 }
                                 value={item[valueKey]}>
                                 {({ selected }) => (
                                     <>
-                                        <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                                        <span className={`block truncate font-medium ${selected ? "" : "text-gray-300"}`}>
                                             {String(item[nameKey])}
                                         </span>
                                         {selected ? (
