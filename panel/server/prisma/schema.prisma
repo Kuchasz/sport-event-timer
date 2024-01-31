@@ -170,7 +170,7 @@ model TimingPointAccessUrl {
 model SplitTime {
     id            Int
     bibNumber     String
-    time          BigInt?
+    time          BigInt
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])

@@ -1,7 +1,7 @@
 "use client";
 
 import { PlayersCheckIn } from "../../../../../../../../components/stopwatch/players-check-in";
-import { reassign } from "@set/timer/dist/slices/time-stamps";
+import { reassign } from "@set/timer/dist/slices/split-times";
 import { useTimerDispatch } from "../../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
 import { useAtom } from "jotai";

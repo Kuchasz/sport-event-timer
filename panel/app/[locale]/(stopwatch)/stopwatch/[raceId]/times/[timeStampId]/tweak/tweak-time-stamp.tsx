@@ -8,7 +8,7 @@ import type { TimeStamp } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
-import { tweak } from "@set/timer/dist/slices/time-stamps";
+import { tweak } from "@set/timer/dist/slices/split-times";
 import { trpc } from "trpc-core";
 import { getIndexById, sort } from "@set/utils/dist/array";
 import { timingPointIdAtom } from "states/stopwatch-states";

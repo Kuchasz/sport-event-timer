@@ -1,5 +1,5 @@
 import actionsHistory from "./slices/actions-history";
-import timeStamps from "./slices/time-stamps";
+import timeStamps from "./slices/split-times";
 import absences from "./slices/absences";
 import type { Middleware, UnknownAction } from "@reduxjs/toolkit";
 import { combineReducers, configureStore, createAction } from "@reduxjs/toolkit";

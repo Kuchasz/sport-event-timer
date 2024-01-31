@@ -22,8 +22,8 @@ export const resultRouter = router({
                 d => ({ id: d.id, reason: d.reason }),
             );
 
-            const timePenalties = await toLookup(
-                ctx.db.timePenalty.findMany({ where: { raceId } }),
+            const timePenalties = toLookup(
+                await ctx.db.timePenalty.findMany({ where: { raceId } }),
                 p => p.bibNumber,
                 p => ({ time: p.time, reason: p.reason, id: p.id }),
             );

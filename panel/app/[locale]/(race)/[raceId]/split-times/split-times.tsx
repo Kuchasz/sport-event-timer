@@ -20,10 +20,8 @@ type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
 type SplitTimeResultTypes = {
     openResetDialog: (params: RevertedSplitTime) => Promise<void>;
     isLoading: boolean;
-    splitTimeResult: {
-        times: Record<number, { time: number; manual: boolean }>;
-        bibNumber: string | null;
-    };
+    splitTime?: { time: number; manual: boolean };
+    bibNumber: string;
     refetch: () => void;
     raceId: number;
     raceDate: Date;
@@ -35,26 +33,24 @@ const SplitTimeResult = ({
     raceId,
     raceDate,
     openResetDialog,
-    splitTimeResult,
+    splitTime,
+    bibNumber,
     timingPointId,
 }: SplitTimeResultTypes) => {
-    const result = splitTimeResult.times[timingPointId];
     const t = useTranslations();
     return (
         <div className="flex font-mono">
-            <span className={result?.manual ? "text-yellow-600" : ""}>
-                {formatTimeWithMilliSec(splitTimeResult.times[timingPointId]?.time)}
-            </span>
+            <span className={splitTime?.manual ? "text-yellow-600" : ""}>{formatTimeWithMilliSec(splitTime?.time)}</span>
             <div className="flex-grow"></div>
-            {result?.time > 0 && (
+            {splitTime && splitTime.time > 0 && (
                 <PoorModal
                     onResolve={refetch}
                     title={t("pages.splitTimes.edit.title")}
                     component={SplitTimeEdit}
                     componentProps={{
                         editedSplitTime: {
-                            bibNumber: splitTimeResult.bibNumber!,
-                            time: result?.time,
+                            bibNumber,
+                            time: splitTime?.time,
                             timingPointId: timingPointId,
                             raceId,
                         },
@@ -67,14 +63,14 @@ const SplitTimeResult = ({
                     </span>
                 </PoorModal>
             )}
-            {result == null && (
+            {splitTime == null && (
                 <PoorModal
                     onResolve={refetch}
                     title={t("pages.splitTimes.edit.title")}
                     component={SplitTimeEdit}
                     componentProps={{
                         editedSplitTime: {
-                            bibNumber: splitTimeResult.bibNumber!,
+                            bibNumber,
                             time: 0,
                             timingPointId: timingPointId,
                             raceId,
@@ -88,14 +84,14 @@ const SplitTimeResult = ({
                     </span>
                 </PoorModal>
             )}
-            {result?.manual == true && (
+            {splitTime?.manual == true && (
                 <PoorConfirmation
                     title={t("pages.splitTimes.revert.confirmation.title")}
                     message={t("pages.splitTimes.revert.confirmation.text")}
                     onAccept={() =>
                         openResetDialog({
-                            bibNumber: splitTimeResult.bibNumber,
-                            time: result?.time,
+                            bibNumber,
+                            time: splitTime?.time,
                             timingPointId: timingPointId,
                         } as any)
                     }
@@ -144,7 +140,7 @@ export const SplitTimes = () => {
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .flatMap(tp =>
                 createRange({ from: 0, to: tp.laps ?? 0 }).map((_, index) => ({
-                    field: tp.laps ? (`${tp.name}${index}` as any) : tp.name,
+                    field: `${tp.name}.${index}` as any,
                     headerName: tp.laps ? `${tp.name}(${index + 1})` : tp.name,
                     cellRenderer: (data: SplitTime) => (
                         <SplitTimeResult
@@ -152,7 +148,8 @@ export const SplitTimes = () => {
                             raceId={raceId}
                             raceDate={race?.date ?? new Date()}
                             openResetDialog={revertManualSplitTime}
-                            splitTimeResult={data}
+                            bibNumber={data.bibNumber}
+                            splitTime={data.times[tp.id]?.[index]}
                             timingPointId={tp.id}
                             isLoading={revertSplitTimeMutation.isLoading}
                         />

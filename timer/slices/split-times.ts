@@ -7,7 +7,7 @@ export type TimeStampsState = m.TimeStamp[];
 const initialState: TimeStampsState = [];
 
 export const timeStampsSlice = createSlice({
-    name: "timeStamps",
+    name: "split-times",
     initialState,
     reducers: {
         add: (state, action: PayloadAction<Omit<m.TimeStamp, "id">>) => m.addTimeStamp(state, action.payload),

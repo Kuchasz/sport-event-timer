@@ -1,6 +1,6 @@
 "use client";
 
-import { assign } from "@set/timer/dist/slices/time-stamps";
+import { assign } from "@set/timer/dist/slices/split-times";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { timingPointIdAtom } from "states/stopwatch-states";

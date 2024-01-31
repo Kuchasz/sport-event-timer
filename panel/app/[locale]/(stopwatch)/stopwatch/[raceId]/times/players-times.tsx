@@ -4,7 +4,7 @@ import { Transition } from "@headlessui/react";
 import { mdiDeleteOutline, mdiTimerEditOutline, mdiTimerPlusOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
 import type { Player, TimeStamp } from "@set/timer/dist/model";
-import { add, reset } from "@set/timer/dist/slices/time-stamps";
+import { add, reset } from "@set/timer/dist/slices/split-times";
 import { getIndexById, sortDesc, sort } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -173,7 +173,7 @@ export const PlayersTimes = () => {
             timeStamps: playersTimeStamps.get(s.bibNumber!),
             player: allPlayers.find(p => s.bibNumber === p.bibNumber),
         })),
-        t => t.id,
+        t => t.time,
     );
 
     const onAddTime = () =>

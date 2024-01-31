@@ -1,6 +1,9 @@
+import { sort, toLookup } from "@set/utils/dist/array";
+import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
-import { z } from "zod";
+
+type TimeResult = { time: number; manual: boolean };
 
 export const splitTimeRouter = router({
     splitTimes: protectedProcedure
@@ -26,10 +29,24 @@ export const splitTimeRouter = router({
                 name: p.profile.name,
                 lastName: p.profile.lastName,
                 times: {
-                    ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
-                    ...Object.fromEntries(p.splitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: false }])),
-                    ...Object.fromEntries(p.manualSplitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: true }])),
-                },
+                    ...Object.fromEntries([[startTimingPoint?.id, [{ time: raceDateStart + p.startTime!, manual: false }]]]),
+                    ...Object.fromEntries(
+                        Object.entries(
+                            toLookup(
+                                p.splitTime,
+                                s => s.timingPointId.toString(),
+                                s => s,
+                            ),
+                        ).map(([timingPointId, splitTimes], _) => [
+                            timingPointId,
+                            sort(
+                                splitTimes.map(st => ({ time: Number(st.time), manual: false })),
+                                st => st.time,
+                            ),
+                        ]),
+                    ),
+                    ...Object.fromEntries(p.manualSplitTime.map(st => [st.timingPointId, [{ time: Number(st.time), manual: true }]])),
+                } as Record<number, TimeResult[]>,
             }));
         }),
     update: protectedProcedure.input(manualSplitTimeSchema).mutation(async ({ input, ctx }) => {

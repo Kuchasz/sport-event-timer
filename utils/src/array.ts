@@ -69,8 +69,8 @@ export const toMap = async <T, U>(array: Promise<T[]>, keySelector: (obj: T) => 
     return Object.fromEntries(elements.map(r => [keySelector(r), valueSelector(r)]));
 };
 
-export const toLookup = async <T, TV>(array: Promise<T[]>, keySelector: (obj: T) => string, valueSelector: (obj: T) => TV) => {
-    const elements = await array;
+export const toLookup = <T, TV>(array: T[], keySelector: (obj: T) => string, valueSelector: (obj: T) => TV) => {
+    const elements = array;
 
     const foo = elements.map(r => ({ key: keySelector(r), ...valueSelector(r) }));
 

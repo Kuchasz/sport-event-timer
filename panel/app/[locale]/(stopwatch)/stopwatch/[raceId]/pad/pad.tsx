@@ -1,6 +1,6 @@
 "use client";
 
-import { add } from "@set/timer/dist/slices/time-stamps";
+import { add } from "@set/timer/dist/slices/split-times";
 import { getCurrentTime } from "@set/utils/dist/datetime";
 import { useTimerDispatch } from "../../../../../../hooks";
 import { PlayersCheckIn } from "components/stopwatch/players-check-in";

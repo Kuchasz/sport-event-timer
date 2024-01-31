@@ -20,7 +20,7 @@ function isIssuedAction(action: UnknownAction) {
 }
 
 export const actionsHistorySlice = createSlice({
-    name: "actionsHistory",
+    name: "actions-history",
     initialState,
     reducers: {},
     extraReducers: builder =>
