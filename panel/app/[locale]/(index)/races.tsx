@@ -18,7 +18,7 @@ import { sort, sortDesc } from "@set/utils/dist/array";
 import { isPast, isTodayOrLater } from "@set/utils/dist/datetime";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import classNames from "classnames";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { RaceCreate } from "components/panel/race/race-create";
 import { RaceEdit } from "components/panel/race/race-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";

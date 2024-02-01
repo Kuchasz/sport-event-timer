@@ -3,7 +3,7 @@ import { mdiExport, mdiPencil, mdiPlus, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import { Button } from "components/button";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { DisqualificationCreate } from "components/panel/penalties/disqualification-create";
 import { DisqualificationEdit } from "components/panel/penalties/disqualification-edit";
 import { TimePenaltyCreate } from "components/panel/penalties/time-penalty-create";

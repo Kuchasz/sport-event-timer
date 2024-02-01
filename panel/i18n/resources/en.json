@@ -507,7 +507,7 @@
     },
     "basicInfo": {
       "header": {
-        "description": "Basic informations about the race",
+        "description": "Basic informations about the race.",
         "title": "Basic info"
       },
       "sections": {
@@ -560,7 +560,7 @@
           "text": "You are trying to delete the Bib Number {bibNumber}. Do you want to proceed?",
           "title": "Delete bibNumber"
         },
-        "description": "You may delete the bib number",
+        "description": "You may delete the bib number.",
         "name": "Delete bib number"
       },
       "deleteAll": {
@@ -571,7 +571,7 @@
         }
       },
       "edit": {
-        "description": "You may edit the bib number",
+        "description": "You may edit the bib number.",
         "name": "Edit bib number",
         "title": "Edit BibNumber"
       },
@@ -592,7 +592,7 @@
         }
       },
       "header": {
-        "description": "Configure the bib numbers to easily assign them to players",
+        "description": "Configure the bib numbers to easily assign them to players.",
         "title": "Bib Numbers"
       }
     },
@@ -607,11 +607,11 @@
             "text": "You are trying to delete the Category {name}. Do you want to proceed?",
             "title": "Delete category"
           },
-          "description": "You may delete the category",
+          "description": "You may delete the category.",
           "name": "Delete category"
         },
         "edit": {
-          "description": "You may modify the category",
+          "description": "You may modify the category.",
           "name": "Edit category",
           "title": "Edit category"
         },
@@ -656,7 +656,7 @@
           }
         },
         "header": {
-          "description": "Configure categories for category",
+          "description": "Configure categories for category.",
           "title": "Categories"
         }
       },
@@ -669,14 +669,14 @@
           "text": "You are trying to delete the Classification {name}. Do you want to proceed?",
           "title": "Delete classification"
         },
-        "description": "You may delete classification",
+        "description": "You may delete classification.",
         "name": "Delete classification"
       },
       "edit": {
         "confirmation": {
           "title": "Edit the classification"
         },
-        "description": "You can change already existing classification",
+        "description": "You can change already existing classification.",
         "title": "Edit classification"
       },
       "form": {
@@ -697,21 +697,21 @@
         }
       },
       "header": {
-        "description": "Configure race classifications",
+        "description": "Configure race classifications.",
         "title": "Classifications"
       },
       "load": {
         "button": "Load"
       },
       "manageCategories": {
-        "description": "You can define categories within the classification",
+        "description": "You can define categories within the classification.",
         "name": "Manage categories"
       }
     },
     "general": {
       "dashboard": {
         "header": {
-          "description": "Monitor what is the most important",
+          "description": "Monitor what is the most important.",
           "title": "Dashboard"
         },
         "raceStatistics": {
@@ -742,11 +742,11 @@
           "text": "You are trying to delete the Player Registration {name} {lastName}. Do you want to proceed?",
           "title": "Delete player registration"
         },
-        "description": "It is permanent action",
+        "description": "It is permanent action.",
         "title": "Delete registered Player"
       },
       "edit": {
-        "description": "You can change the registration",
+        "description": "You can change the registration.",
         "name": "Edit registration",
         "title": "Edit player registration"
       },
@@ -817,7 +817,7 @@
         }
       },
       "header": {
-        "description": "Players registered for the race, may be promoted to players",
+        "description": "Players registered for the race, may be promoted to players.",
         "title": "Registered players"
       },
       "payment": {
@@ -830,7 +830,7 @@
         "confirmation": {
           "title": "Promote player registration to player"
         },
-        "description": "Promoted player will be available in stopwatch",
+        "description": "Promoted player will be available in stopwatch.",
         "form": {
           "bibNumber": {
             "label": "Bib number",
@@ -866,11 +866,11 @@
           "text": "You are trying to delete the Player {name} {lastName}. Do you want to proceed?",
           "title": "Delete player"
         },
-        "description": "You may delete the player",
+        "description": "You may delete the player.",
         "name": "Delete player"
       },
       "edit": {
-        "description": "You may modify the player",
+        "description": "You may modify the player.",
         "name": "Edit player",
         "title": "Edit player"
       },
@@ -955,7 +955,7 @@
         }
       },
       "header": {
-        "description": "Players available in the stopwatch, their times may be measured",
+        "description": "Players available in the stopwatch, their times may be measured.",
         "title": "Players"
       }
     },
@@ -969,11 +969,11 @@
           "text": "You are trying to delete the Race {raceName}. Do you want to proceed?",
           "title": "Delete race"
         },
-        "description": "Delete race",
+        "description": "Delete race.",
         "title": "Delete"
       },
       "editRace": {
-        "description": "Open edit race popup",
+        "description": "Open edit race popup.",
         "name": "Edit race",
         "title": "Edit race"
       },
@@ -1053,7 +1053,7 @@
       },
       "list": {
         "header": {
-          "description": "Manage all past and future races",
+          "description": "Manage all past and future races.",
           "title": "Races ({number})"
         }
       },
@@ -1061,7 +1061,7 @@
       "registration": "Registration",
       "upcomingRaces": {
         "header": {
-          "description": "Races that will happen soon",
+          "description": "Races that will happen soon.",
           "title": "Upcoming Races"
         }
       },
@@ -1070,17 +1070,17 @@
           "text": "You are trying to wipe the Race {raceName}. Do you want to proceed?",
           "title": "Wipe race data"
         },
-        "description": "Wipe all stopwatch data",
+        "description": "Wipe all stopwatch data.",
         "title": "Wipe stopwatch"
       }
     },
     "registration": {
       "turnOffPopup": {
-        "description": "Online registration will be turned off",
+        "description": "Online registration will be turned off.",
         "title": "Turn off registration"
       },
       "turnOnPopup": {
-        "description": "Online registration will be turned on",
+        "description": "Online registration will be turned on.",
         "title": "Turn on registration"
       }
     },
@@ -1115,7 +1115,7 @@
           "text": "You are trying to apply penalty the Player {name} {lastName} result. Do you want to proceed?",
           "title": "Apply time penalty"
         },
-        "description": "Penalty will be added to player's result",
+        "description": "Penalty will be added to player's result.",
         "title": "Apply time penalty"
       },
       "disqualify": {
@@ -1123,7 +1123,7 @@
           "text": "You are trying to disqualify the player {name} {lastName}. Do you want to continue?  You can revoke the disqualification at any time.",
           "title": "Disqualify player"
         },
-        "description": "Disqualification may be reverted later",
+        "description": "Disqualification may be reverted later.",
         "title": "Disqualify player"
       },
       "grid": {
@@ -1142,7 +1142,7 @@
         }
       },
       "header": {
-        "description": "Results measured by the stopwatch, each may be overriden",
+        "description": "Results measured by the stopwatch, each may be overriden.",
         "title": "Race Results"
       },
       "manageTimePenalties": {
@@ -1163,7 +1163,7 @@
             "text": "You are trying to revert the time penalty applied to the Player {name} {lastName}. Do you want to proceed?",
             "title": "Revert time penalty"
           },
-          "description": "The result achieved by the player will be restored",
+          "description": "The result achieved by the player will be restored.",
           "title": "Revert time penalty"
         }
       },
@@ -1172,7 +1172,7 @@
           "text": "You are trying to revert disqualification of the Player {name} {lastName}. Do you want to proceed?\"",
           "title": "Revert disqualification"
         },
-        "description": "The original score of the player will be restored",
+        "description": "The original score of the player will be restored.",
         "title": "Revert disqualification"
       }
     },
@@ -1200,7 +1200,7 @@
         }
       },
       "header": {
-        "description": "API Keys may be configured here",
+        "description": "API Keys may be configured here.",
         "title": "Settings"
       }
     },
@@ -1235,7 +1235,7 @@
         }
       },
       "header": {
-        "description": "Times measured by the stopwatches",
+        "description": "Times measured by the stopwatches.",
         "title": "Split times"
       },
       "revert": {
@@ -1247,7 +1247,7 @@
     },
     "timingPoint": {
       "header": {
-        "description": "Manage the timing point",
+        "description": "Manage the timing point.",
         "title": "Timing Point"
       },
       "sections": {
@@ -1259,7 +1259,7 @@
     "timingPoints": {
       "accessUrls": {
         "copy": {
-          "description": "Send that to the timekeeper to handle that timing point measurements",
+          "description": "Send that to the timekeeper to handle that timing point measurements.",
           "title": "Copy access url"
         },
         "create": {
@@ -1271,7 +1271,7 @@
             "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
             "title": "Delete timing point access url"
           },
-          "description": "Stopwatch access using this aceess url won't be possible",
+          "description": "Stopwatch access using this aceess url won't be possible.",
           "title": "Delete access url"
         },
         "edit": {
@@ -1279,7 +1279,7 @@
           "confirmation": {
             "title": "Edit access url"
           },
-          "description": "Change timing point access url details",
+          "description": "Change timing point access url details.",
           "title": "Edit access url"
         },
         "form": {
@@ -1307,7 +1307,7 @@
           }
         },
         "header": {
-          "description": "Copy access URLs and send them to the timekeepers",
+          "description": "Copy access URLs and send them to the timekeepers.",
           "title": "Access URLs"
         }
       },
@@ -1347,8 +1347,15 @@
         }
       },
       "header": {
-        "description": "Configure points where time will be measured, used in stopwatch",
+        "description": "Configure points where time will be measured, used in stopwatch.",
         "title": "Timing points"
+      },
+      "sections": {
+        "delete": {
+          "header": {
+            "title": "Delete timing point"
+          }
+        }
       }
     },
     "tools": {
@@ -1379,7 +1386,7 @@
         }
       },
       "header": {
-        "description": "Tools useful during the race",
+        "description": "Tools useful during the race.",
         "title": "Tools"
       }
     }
@@ -1467,7 +1474,7 @@
       }
     },
     "header": {
-      "description": "Register new participant",
+      "description": "Register new participant.",
       "title": "Registration"
     },
     "result": {
@@ -1788,7 +1795,7 @@
       "goHome": "Back to start",
       "notFound": {
         "code": "Error 404",
-        "description": "Sorry, the page you are looking for cannot be found",
+        "description": "Sorry, the page you are looking for cannot be found.",
         "title": "Page not found"
       }
     },
@@ -1953,10 +1960,10 @@
           },
           "edit": {
             "confirmation": {
-              "description": "Change disqualification details",
+              "description": "Change disqualification details.",
               "title": "Edit disqualification"
             },
-            "description": "Change disqualification details",
+            "description": "Change disqualification details.",
             "name": "Edit disqualification"
           },
           "export": {
@@ -1973,7 +1980,7 @@
             }
           },
           "header": {
-            "description": "Disqualified players",
+            "description": "Disqualified players.",
             "title": "Disqualifications"
           },
           "revert": {
@@ -1981,7 +1988,7 @@
               "text": "You are trying to revert disqualification of the Player {player}. Do you want to proceed?\"",
               "title": "Revert disqualification"
             },
-            "description": "The original score of the player will be restored",
+            "description": "The original score of the player will be restored.",
             "name": "Revert disqualification"
           }
         },
@@ -2001,16 +2008,16 @@
           }
         },
         "header": {
-          "description": "Time penalties applied to the players",
+          "description": "Time penalties applied to the players.",
           "title": "Time penalties"
         },
         "timePenalty": {
           "edit": {
             "confirmation": {
-              "description": "Change time penalty details",
+              "description": "Change time penalty details.",
               "title": "Edit time penalty"
             },
-            "description": "Change time penalty details",
+            "description": "Change time penalty details.",
             "name": "Change time penalty"
           },
           "revert": {
@@ -2018,7 +2025,7 @@
               "text": "You are trying to revert the time penalty applied to the Player {player}. Do you want to proceed?",
               "title": "Revert time penalty"
             },
-            "description": "The result achieved by the player will be restored",
+            "description": "The result achieved by the player will be restored.",
             "name": "Revert time penalty"
           }
         }
@@ -2074,6 +2081,17 @@
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
         "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints",
         "deleteNotAllowedWithSplitTimesRegistered": "It is not possible to delete a timing point when the players' split times have been measured on it. You must first delete the split times"
+      }
+    }
+  },
+  "ppages": {
+    "timingPoints": {
+      "sections": {
+        "delete": {
+          "header": {
+            "description": "Deletes the timing point permanently. This cannot be undone."
+          }
+        }
       }
     }
   }

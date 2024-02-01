@@ -5,7 +5,7 @@ import type { Gender } from "modules/shared/models";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { PlayerEdit } from "components/panel/player/player-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";

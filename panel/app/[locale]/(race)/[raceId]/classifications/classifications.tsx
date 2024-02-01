@@ -3,7 +3,7 @@ import { mdiAccountEditOutline, mdiAccountMultiple, mdiAccountMultiplePlusOutlin
 import Icon from "@mdi/react";
 import { Button } from "components/button";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { ClassificationCreate } from "components/panel/classification/classification-create";
 import { ClassificationEdit } from "components/panel/classification/classification-edit";
 import { PoorActions, NewPoorActionsItem } from "components/poor-actions";

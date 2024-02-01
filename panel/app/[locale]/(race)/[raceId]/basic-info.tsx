@@ -2,7 +2,7 @@
 
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { Button } from "components/button";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { PoorCheckbox } from "components/poor-checkbox";
 import { PoorUTCDatepicker } from "components/poor-datepicker";
 import { PoorInput } from "components/poor-input";

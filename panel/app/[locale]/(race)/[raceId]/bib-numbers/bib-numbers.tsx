@@ -4,7 +4,7 @@ import { mdiNumeric, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "components/bib-number-create-many";
 import { Button } from "components/button";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { BibNumberCreate } from "components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "components/panel/bib-number/bib-number-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";

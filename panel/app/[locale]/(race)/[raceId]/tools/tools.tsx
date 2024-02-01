@@ -3,7 +3,7 @@
 import { trpc } from "trpc-core";
 import { useCurrentRaceId } from "hooks";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { mdiClockFast, mdiClockOutline, mdiFlagCheckered, mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";

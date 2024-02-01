@@ -3,7 +3,7 @@
 import { mdiChevronRight, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { TimingPointCreate } from "components/panel/timing-point/timing-point-create";
 import { PoorModal } from "components/poor-modal";
 import { useTranslations } from "next-intl";

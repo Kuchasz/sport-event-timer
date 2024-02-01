@@ -2,7 +2,7 @@
 
 import { mdiClipboardFileOutline, mdiPencilOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { PageHeader } from "components/page-header";
+import { PageHeader, SectionHeader } from "components/page-headers";
 import { TimingPointAccessUrlCreate } from "components/panel/timing-point/timing-point-access-url-create-form";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
 
@@ -70,7 +70,7 @@ export const TimingPoint = ({
 
     const t = useTranslations();
 
-    // const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
+    const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const cols: PoorDataTableColumn<AccessKey>[] = [
@@ -128,12 +128,12 @@ export const TimingPoint = ({
         },
     ];
 
-    // const deleteTimingPoint = async (timingPoint: TimingPoint) => {
-    //     await deleteTimingPointMutation.mutateAsync(timingPoint);
+    const deleteTimingPoint = async (timingPoint: TimingPoint) => {
+        await deleteTimingPointMutation.mutateAsync(timingPoint);
 
-    //     // void refetchOrder();
-    //     // void refetchTimingPoints();
-    // };
+        // void refetchOrder();
+        // void refetchTimingPoints();
+    };
 
     const deleteAccessKey = async (timingPointAccessKey: AccessKeys[0]) => {
         await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessUrlId: timingPointAccessKey.id });
@@ -175,23 +175,28 @@ export const TimingPoint = ({
                                         <Icon path={mdiPencilOutline} size={0.8}></Icon>
                                     </button>
                                 </PoorModal>
-                                <PoorConfirmation
-                                    onAccept={() => deleteTimingPoint(timingPoint)}
-                                    title={t("pages.timingPoints.delete.confirmation.title")}
-                                    message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}>
-                                    <button className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100">
-                                        <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
-                                    </button>
-                                </PoorConfirmation>
                             </div> */}
                         {/* </div> */}
                         <div className="mt-8">
-                            <div className="flex items-center">
-                                <PageHeader
-                                    title={t("pages.timingPoints.accessUrls.header.title")}
-                                    description={t("pages.timingPoints.accessUrls.header.description")}
-                                />
-                            </div>
+                            <SectionHeader
+                                title={t("pages.timingPoints.sections.delete.header.title")}
+                                description={t("ppages.timingPoints.sections.delete.header.description")}
+                            />
+                            <PoorConfirmation
+                                onAccept={() => deleteTimingPoint(timingPoint)}
+                                title={t("pages.timingPoints.delete.confirmation.title")}
+                                message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
+                                isLoading={deleteTimingPointMutation.isLoading}>
+                                <button className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100">
+                                    <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
+                                </button>
+                            </PoorConfirmation>
+                        </div>
+                        <div className="mt-8">
+                            <SectionHeader
+                                title={t("pages.timingPoints.accessUrls.header.title")}
+                                description={t("pages.timingPoints.accessUrls.header.description")}
+                            />
                             <div className="p-2"></div>
                             <PoorModal
                                 onResolve={() => refetchAccessKeys()}

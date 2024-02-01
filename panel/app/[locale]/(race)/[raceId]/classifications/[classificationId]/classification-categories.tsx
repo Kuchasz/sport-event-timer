@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { CategoryCreate } from "components/panel/classification/category-create";
 import { CategoryEdit } from "components/panel/classification/category-edit";
 import { NewPoorActionsItem, PoorActions } from "components/poor-actions";

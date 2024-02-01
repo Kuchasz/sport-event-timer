@@ -1,5 +1,5 @@
 "use client";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { trpc } from "../../../../../trpc-core";
 
 export const Hello = () => {

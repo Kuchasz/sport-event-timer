@@ -7,7 +7,7 @@ import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { ApplyTimePenalty } from "components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "components/panel/result/manage-time-penalties";

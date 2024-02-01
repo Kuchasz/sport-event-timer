@@ -1,6 +1,6 @@
 "use client";
 import { DashboardCard } from "components/dashboard-card";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { useTranslations, useLocale } from "next-intl";
 
 import { trpc } from "trpc-core";

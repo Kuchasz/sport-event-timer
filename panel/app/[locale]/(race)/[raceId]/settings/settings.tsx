@@ -2,7 +2,7 @@
 import { mdiPen, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Button } from "components/button";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { ApiKeyCreate } from "components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "components/panel/api-key/api-key-edit";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";

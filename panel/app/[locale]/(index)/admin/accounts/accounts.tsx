@@ -1,6 +1,6 @@
 "use client";
 
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import type { AppRouterOutputs } from "trpc";
 import { trpc } from "../../../../../trpc-core";

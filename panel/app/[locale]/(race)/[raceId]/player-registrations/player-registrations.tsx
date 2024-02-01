@@ -15,7 +15,7 @@ import type { Gender } from "modules/shared/models";
 import classNames from "classnames";
 import { Button } from "components/button";
 import { GenderIcon } from "components/gender-icon";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { PlayerRegistrationCreate } from "components/panel/player-registration/player-registration-create";
 import { PlayerRegistrationEdit } from "components/panel/player-registration/player-registration-edit";
 import { PlayerRegistrationPromotion } from "components/panel/player-registration/player-registration-promotion";

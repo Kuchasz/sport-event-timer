@@ -3,7 +3,7 @@
 import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { PageHeader } from "components/page-header";
+import { PageHeader } from "components/page-headers";
 import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-table";
 import { PoorConfirmation, PoorModal } from "components/poor-modal";
 import { useTranslations } from "next-intl";

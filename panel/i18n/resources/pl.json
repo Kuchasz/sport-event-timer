@@ -507,7 +507,7 @@
     },
     "basicInfo": {
       "header": {
-        "description": "Podstawowe informacje o wyścigu",
+        "description": "Podstawowe informacje o wyścigu.",
         "title": "Podstawowe informacje"
       },
       "sections": {
@@ -560,7 +560,7 @@
           "text": "Próbujesz usunąć Numer Startowy {bibNumber}. Czy chcesz kontynuować?",
           "title": "Usuń numer startowy"
         },
-        "description": "Możesz usunąć numer startowy",
+        "description": "Możesz usunąć numer startowy.",
         "name": "Usuń number startowy"
       },
       "deleteAll": {
@@ -571,7 +571,7 @@
         }
       },
       "edit": {
-        "description": "Możesz edytować numer startowy",
+        "description": "Możesz edytować numer startowy.",
         "name": "Edytuj numer startowy",
         "title": "Edytuj Numer Startowy"
       },
@@ -592,7 +592,7 @@
         }
       },
       "header": {
-        "description": "Skonfiguruj numery startowe, aby łatwo przypisywać je zawodnikom",
+        "description": "Skonfiguruj numery startowe, aby łatwo przypisywać je zawodnikom.",
         "title": "Numery Startowe"
       }
     },
@@ -607,11 +607,11 @@
             "text": "Próbujesz usunąć Kategorię {name}. Czy chcesz kontynuować?",
             "title": "Usuń kategorię"
           },
-          "description": "Możesz usunąć kategorię",
+          "description": "Możesz usunąć kategorię.",
           "name": "Usuń kategorię"
         },
         "edit": {
-          "description": "Możesz modyfikować kategorię",
+          "description": "Możesz modyfikować kategorię.",
           "name": "Edytuj kategorię",
           "title": "Edytuj kategorię"
         },
@@ -656,7 +656,7 @@
           }
         },
         "header": {
-          "description": "Skonfiguruj kategorie dla klasyfikacji",
+          "description": "Skonfiguruj kategorie dla klasyfikacji.",
           "title": "Kategorie"
         }
       },
@@ -669,14 +669,14 @@
           "text": "Próbujesz usunąć Klasyfikację {name}. Czy chcesz kontynuować?",
           "title": "Usuń klasyfikację"
         },
-        "description": "Możesz usunąć klasyfikację",
+        "description": "Możesz usunąć klasyfikację.",
         "name": "Usuń klasyfikację"
       },
       "edit": {
         "confirmation": {
           "title": "Edytujesz klasyfikację"
         },
-        "description": "Możesz zmienić istniejącą klasyfikację",
+        "description": "Możesz zmienić istniejącą klasyfikację.",
         "title": "Edytuj klasyfikację"
       },
       "form": {
@@ -697,21 +697,21 @@
         }
       },
       "header": {
-        "description": "Skonfiguruj klasyfikacje wyścigu",
+        "description": "Skonfiguruj klasyfikacje wyścigu.",
         "title": "Klasyfikacje"
       },
       "load": {
         "button": "Załaduj"
       },
       "manageCategories": {
-        "description": "Możesz zdefiniować kategorie dla klasyfikacji",
+        "description": "Możesz zdefiniować kategorie dla klasyfikacji.",
         "name": "Zarządzaj kategoriami"
       }
     },
     "general": {
       "dashboard": {
         "header": {
-          "description": "Monitoruj to, co najważniejsze",
+          "description": "Monitoruj to, co najważniejsze.",
           "title": "Panel"
         },
         "raceStatistics": {
@@ -742,11 +742,11 @@
           "text": "Próbujesz usunąć Rejestrację Zawodnika {name} {lastName}. Czy chcesz kontynuować?",
           "title": "Usuń rejestrację zawodnika"
         },
-        "description": "To jest trwała akcja",
+        "description": "To jest trwała akcja.",
         "title": "Usuń zarejestrowanego zawodnika"
       },
       "edit": {
-        "description": "Możesz modyfikować rejestrację",
+        "description": "Możesz modyfikować rejestrację.",
         "name": "Edytuj rejestrację",
         "title": "Edytuj rejestrację zawodnika"
       },
@@ -817,7 +817,7 @@
         }
       },
       "header": {
-        "description": "Zawodnicy zarejestrowani na wyścig, mogą być awansowani na zawodników",
+        "description": "Zawodnicy zarejestrowani na wyścig, mogą być awansowani na zawodników.",
         "title": "Zarejestrowani zawodnicy"
       },
       "payment": {
@@ -830,7 +830,7 @@
         "confirmation": {
           "title": "Awansuj rejestrację na zawodnika"
         },
-        "description": "Awansowany zawodnik będzie dostępny w stoperze",
+        "description": "Awansowany zawodnik będzie dostępny w stoperze.",
         "form": {
           "bibNumber": {
             "label": "Numer startowy",
@@ -866,11 +866,11 @@
           "text": "Próbujesz usunąć Zawodnika {name} {lastName}. Czy chcesz kontynuować?",
           "title": "Usuń zawodnika"
         },
-        "description": "Możesz usunąć zawodnika",
+        "description": "Możesz usunąć zawodnika.",
         "name": "Usuń zawodnika"
       },
       "edit": {
-        "description": "Możesz modyfikować zawodnika",
+        "description": "Możesz modyfikować zawodnika.",
         "name": "Edytuj zawodnika",
         "title": "Edytuj zawodnika"
       },
@@ -955,7 +955,7 @@
         }
       },
       "header": {
-        "description": "Zawodnicy dostępni w stoperze, ich czasy mogą być mierzone",
+        "description": "Zawodnicy dostępni w stoperze, ich czasy mogą być mierzone.",
         "title": "Zawodnicy"
       }
     },
@@ -969,11 +969,11 @@
           "text": "Próbujesz usunąć Wyścig {raceName}. Czy chcesz kontynuować?",
           "title": "Usuń wyścig"
         },
-        "description": "Usuń wyścig",
+        "description": "Usuń wyścig.",
         "title": "Usuń"
       },
       "editRace": {
-        "description": "Uruchom okno edycji wyścigu",
+        "description": "Uruchom okno edycji wyścigu.",
         "name": "Edytuj wyścig",
         "title": "Edytuj wyścig"
       },
@@ -1053,7 +1053,7 @@
       },
       "list": {
         "header": {
-          "description": "Zarządzaj wszystkimi wyścigami wyścigami",
+          "description": "Zarządzaj wszystkimi wyścigami wyścigami.",
           "title": "Wyścigi ({number})"
         }
       },
@@ -1061,7 +1061,7 @@
       "registration": "Rejestracja",
       "upcomingRaces": {
         "header": {
-          "description": "Wyścigi które niedługo się odbędą",
+          "description": "Wyścigi które niedługo się odbędą.",
           "title": "Nadchodzące Wyścigi"
         }
       },
@@ -1070,17 +1070,17 @@
           "text": "Próbujesz wyczyścić dane Wyścigu {raceName}. Czy chcesz kontynuować?",
           "title": "Wyczyść dane wyścigu"
         },
-        "description": "Wyczyść wszystkie dane stopera",
+        "description": "Wyczyść wszystkie dane stopera.",
         "title": "Wyczyść stoper"
       }
     },
     "registration": {
       "turnOffPopup": {
-        "description": "Rejestracja online zostanie wyłączona",
+        "description": "Rejestracja online zostanie wyłączona.",
         "title": "Wyłącz rejestrację"
       },
       "turnOnPopup": {
-        "description": "Rejestracja online zostanie włączona",
+        "description": "Rejestracja online zostanie włączona.",
         "title": "Włącz rejestrację"
       }
     },
@@ -1115,7 +1115,7 @@
           "text": "Próbujesz zastosować karę czasową do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?",
           "title": "Zastosuj karę czasową"
         },
-        "description": "Kara czasowa będzie dodana do wyniku zawodnika",
+        "description": "Kara czasowa będzie dodana do wyniku zawodnika.",
         "title": "Zastosuj karę czasową"
       },
       "disqualify": {
@@ -1123,7 +1123,7 @@
           "text": "Próbujesz zdyskwalifikować zawodnika {name} {lastName}. Czy chcesz kontynuować?  Możesz wycofać dyskwalifikację w każdej chwili.",
           "title": "Zdyskwalifikuj zawodnika"
         },
-        "description": "Dyskwalifikacja może zostać później cofnięta",
+        "description": "Dyskwalifikacja może zostać później cofnięta.",
         "title": "Zdyskwalifikuj zawodnika"
       },
       "grid": {
@@ -1142,7 +1142,7 @@
         }
       },
       "header": {
-        "description": "Wyniki mierzone przez stopery, każdy wynik może zostać zmieniony",
+        "description": "Wyniki mierzone przez stopery, każdy wynik może zostać zmieniony.",
         "title": "Wyniki Wyścigu"
       },
       "manageTimePenalties": {
@@ -1163,7 +1163,7 @@
             "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {name} {lastName}. Czy chcesz kontynuować?",
             "title": "Wycofaj karę czasową"
           },
-          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+          "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony.",
           "title": "Wycofaj karę czasową"
         }
       },
@@ -1172,7 +1172,7 @@
           "text": "Próbujesz wycofać dyskwalifikację zawodnika {name} {lastName}. Czy chcesz kontynuować?\"",
           "title": "Cofnij dyskwalifikację"
         },
-        "description": "Oryginalny wynik zawodnika zostanie przywrócony",
+        "description": "Oryginalny wynik zawodnika zostanie przywrócony.",
         "title": "Wycofaj dyskwalifikację"
       }
     },
@@ -1200,7 +1200,7 @@
         }
       },
       "header": {
-        "description": "Klucze API mogą być skonfigurowane tutaj",
+        "description": "Klucze API mogą być skonfigurowane tutaj.",
         "title": "Ustawienia"
       }
     },
@@ -1235,7 +1235,7 @@
         }
       },
       "header": {
-        "description": "Czasy mierzone przez stopery",
+        "description": "Czasy mierzone przez stopery.",
         "title": "Czasy Pomiaru"
       },
       "revert": {
@@ -1247,7 +1247,7 @@
     },
     "timingPoint": {
       "header": {
-        "description": "Zarządzaj punktem pomiarowym",
+        "description": "Zarządzaj punktem pomiarowym.",
         "title": "Punkt pomiarowy"
       },
       "sections": {
@@ -1259,7 +1259,7 @@
     "timingPoints": {
       "accessUrls": {
         "copy": {
-          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru",
+          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru.",
           "title": "Kupiuj url dostępowy"
         },
         "create": {
@@ -1271,7 +1271,7 @@
             "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
             "title": "Usuń URL punktu pomiarowego"
           },
-          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy",
+          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy.",
           "title": "Usuń url dostępu"
         },
         "edit": {
@@ -1279,7 +1279,7 @@
           "confirmation": {
             "title": "Edytuj url dostępowy"
           },
-          "description": "Edytuj szczegóły url dostępowego",
+          "description": "Edytuj szczegóły url dostępowego.",
           "title": "Edytuj url dostępowy"
         },
         "form": {
@@ -1307,7 +1307,7 @@
           }
         },
         "header": {
-          "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów",
+          "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów.",
           "title": "URL Dostępu"
         }
       },
@@ -1347,8 +1347,15 @@
         }
       },
       "header": {
-        "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze",
+        "description": "Skonfiguruj punkty, w których czas będzie mierzony, używane w stoperze.",
         "title": "Punkty Pomiarowe"
+      },
+      "sections": {
+        "delete": {
+          "header": {
+            "title": "Usuń punkt pomiarowy"
+          }
+        }
       }
     },
     "tools": {
@@ -1379,7 +1386,7 @@
         }
       },
       "header": {
-        "description": "Narzedzia przydatne w trakcie trwania wyścigu",
+        "description": "Narzedzia przydatne w trakcie trwania wyścigu.",
         "title": "Narzędzia"
       }
     }
@@ -1467,7 +1474,7 @@
       }
     },
     "header": {
-      "description": "Zarejestruj nowego uczestnika",
+      "description": "Zarejestruj nowego uczestnika.",
       "title": "Rejestracja"
     },
     "result": {
@@ -1788,7 +1795,7 @@
       "goHome": "Powrót na start",
       "notFound": {
         "code": "Błąd 404",
-        "description": "Przepraszamy, nie można znaleźć strony, którą szukasz",
+        "description": "Przepraszamy, nie można znaleźć strony, którą szukasz.",
         "title": "Strona nie znaleziona"
       }
     },
@@ -1953,10 +1960,10 @@
           },
           "edit": {
             "confirmation": {
-              "description": "Zmień szczegóły dyskwalifikacji",
+              "description": "Zmień szczegóły dyskwalifikacji.",
               "title": "Edytuj dyskwalifikację"
             },
-            "description": "Zmień szczegóły dyskwalifikacji",
+            "description": "Zmień szczegóły dyskwalifikacji.",
             "name": "Edytuj dyskwalifikację"
           },
           "export": {
@@ -1973,7 +1980,7 @@
             }
           },
           "header": {
-            "description": "Zdyskwalifikowani zawodnicy",
+            "description": "Zdyskwalifikowani zawodnicy.",
             "title": "Dyskwalifikacje"
           },
           "revert": {
@@ -1981,7 +1988,7 @@
               "text": "Próbujesz wycofać dyskwalifikację zawodnika {player}. Czy chcesz kontynuować?\"",
               "title": "Cofnij dyskwalifikację"
             },
-            "description": "Oryginalny wynik zawodnika zostanie przywrócony",
+            "description": "Oryginalny wynik zawodnika zostanie przywrócony.",
             "name": "Wycofaj dyskwalifikację"
           }
         },
@@ -2001,16 +2008,16 @@
           }
         },
         "header": {
-          "description": "Kary czasowe zaaplikowane dla zawodnika",
+          "description": "Kary czasowe zaaplikowane dla zawodnika.",
           "title": "Kary czasowe"
         },
         "timePenalty": {
           "edit": {
             "confirmation": {
-              "description": "Zmień szczegóły kary czasowej",
+              "description": "Zmień szczegóły kary czasowej.",
               "title": "Edytuj karę czasową"
             },
-            "description": "Zmień szczegóły kary czasowej",
+            "description": "Zmień szczegóły kary czasowej.",
             "name": "Edytuj karę czasową"
           },
           "revert": {
@@ -2018,7 +2025,7 @@
               "text": "Próbujesz wycofać karę czasową zastosowaną do wyniku zawodnika {player}. Czy chcesz kontynuować?",
               "title": "Wycofaj karę czasową"
             },
-            "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony",
+            "description": "Wynik osiągnięty przez zawodnika zostanie przywrócony.",
             "name": "Wycofaj karę czasową"
           }
         }
@@ -2074,6 +2081,17 @@
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)",
         "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych",
         "deleteNotAllowedWithSplitTimesRegistered": "Nie można usunąć punktu pomiarowego gdy zmierzono na nim czasy zawodników. Należy najpierw usunąć zmierzone czasy"
+      }
+    }
+  },
+  "ppages": {
+    "timingPoints": {
+      "sections": {
+        "delete": {
+          "header": {
+            "description": "Permanentnie usuwa punkt pomiarowy. Ta akcja jest nieodwracalna."
+          }
+        }
       }
     }
   }
