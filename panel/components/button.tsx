@@ -3,14 +3,20 @@
 import { useDeferredValue } from "hooks";
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
-type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { loading?: boolean; outline?: boolean };
+type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
+    loading?: boolean;
+    outline?: boolean;
+    kind?: "delete";
+};
 
-export const Button = ({ outline, children, loading, className, ...props }: ButtonProps) => {
+export const Button = ({ outline, children, loading, className, kind, ...props }: ButtonProps) => {
     const isLoading = useDeferredValue(loading);
 
+    const color = kind === "delete" ? "red" : "blue";
+
     const visuals = outline
-        ? "bg-blue-100 text-blue-900 hover:bg-blue-200"
-        : "bg-blue-500 text-white focus-visible:ring-blue-500 hover:bg-blue-600";
+        ? `bg-${color}-100 text-${color}-900 hover:bg-${color}-200`
+        : `bg-${color}-500 text-white focus-visible:ring-${color}-500 hover:bg-${color}-600`;
 
     const pointerEvents = isLoading ? "pointer-events-none" : "";
 

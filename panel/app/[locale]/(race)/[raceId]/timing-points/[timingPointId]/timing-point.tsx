@@ -179,21 +179,6 @@ export const TimingPoint = ({
                         {/* </div> */}
                         <div className="mt-8">
                             <SectionHeader
-                                title={t("pages.timingPoints.sections.delete.header.title")}
-                                description={t("ppages.timingPoints.sections.delete.header.description")}
-                            />
-                            <PoorConfirmation
-                                onAccept={() => deleteTimingPoint(timingPoint)}
-                                title={t("pages.timingPoints.delete.confirmation.title")}
-                                message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
-                                isLoading={deleteTimingPointMutation.isLoading}>
-                                <button className="ml-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100">
-                                    <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
-                                </button>
-                            </PoorConfirmation>
-                        </div>
-                        <div className="mt-8">
-                            <SectionHeader
                                 title={t("pages.timingPoints.accessUrls.header.title")}
                                 description={t("pages.timingPoints.accessUrls.header.description")}
                             />
@@ -220,6 +205,22 @@ export const TimingPoint = ({
                                 gridName="timing-point-access-keys"
                                 data={accessKeys}
                             />
+                        </div>
+                        <div className="my-8">
+                            <SectionHeader
+                                title={t("pages.timingPoints.sections.delete.header.title")}
+                                description={t("ppages.timingPoints.sections.delete.header.description")}
+                            />
+                            <PoorConfirmation
+                                onAccept={() => deleteTimingPoint(timingPoint)}
+                                title={t("pages.timingPoints.delete.confirmation.title")}
+                                message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
+                                isLoading={deleteTimingPointMutation.isLoading}>
+                                <Button type="submit" kind="delete">
+                                    <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
+                                    <span className="ml-1">{t("shared.delete")}</span>
+                                </Button>
+                            </PoorConfirmation>
                         </div>
                     </div>
                 </div>

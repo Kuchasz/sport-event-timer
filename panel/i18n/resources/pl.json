@@ -1827,7 +1827,8 @@
       "disabled": "Wyłączone",
       "enabled": "Włączone"
     },
-    "unauthorized": "Nieautoryzowany"
+    "unauthorized": "Nieautoryzowany",
+    "delete": "Usuń"
   },
   "startList": {
     "empty": "Lista startowa jest pusta",

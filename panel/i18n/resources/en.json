@@ -1806,6 +1806,7 @@
     "generalError": "Oops! Something went wrong on our end. Our team has been notified, and we're working to fix it. Please try again later. If the problem persists, feel free to contact support. We apologize for any inconvenience.",
     "ok": "OK",
     "save": "Save",
+    "delete": "Delete",
     "sportKinds": {
       "bobsleigh": "Bobsleigh",
       "canoeing": "Canoeing",
