@@ -215,7 +215,7 @@ export const TimingPoint = ({
                                 title={t("pages.timingPoints.delete.confirmation.title")}
                                 message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
                                 isLoading={deleteTimingPointMutation.isLoading}>
-                                <Button type="submit" kind="delete">
+                                <Button className="self-start" type="submit" kind="delete">
                                     <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                     <span className="ml-1">{t("shared.delete")}</span>
                                 </Button>

@@ -87,12 +87,12 @@ const ErrorPage = ({
 }) => (
     <div className="flex h-full w-full items-center justify-center px-4">
         <div className="flex flex-col items-center">
-            <div className="flex flex-wrap items-center">
+            <div className="flex flex-col items-center">
                 <Icon path={icon} size={1}></Icon>
-                <div className="ml-2 text-center text-xl font-bold">{title}</div>
+                <div className="mt-2 text-center text-xl font-bold">{title}</div>
             </div>
             <div className="my-4 text-center text-sm font-medium text-gray-500">{description}</div>
-            <Link href={anchorHref} className="mt-8 rounded-2xl bg-white px-4 py-1 text-center text-sm font-medium">
+            <Link href={anchorHref} className="mt-8 rounded-2xl bg-gray-100 px-4 py-1 text-center text-sm font-medium">
                 {anchorText}
             </Link>
         </div>

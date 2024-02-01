@@ -26,7 +26,9 @@ export const PoorConfirmation = ({ onAccept, isLoading, title, description, mess
 
     return (
         <>
-            <span onClick={() => setModalOpen(!modalOpen)}>{children}</span>
+            <div className="w-0" onClick={() => setModalOpen(!modalOpen)}>
+                {children}
+            </div>
             <Transition appear show={modalOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-20" onClose={() => setModalOpen(false)}>
                     <Transition.Child
