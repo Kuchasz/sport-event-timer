@@ -18,6 +18,7 @@ import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "trpc";
 import { useCurrentRaceId } from "../../../../../../hooks";
 import { trpc } from "../../../../../../trpc-core";
+import { useRouter } from "next/navigation";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
@@ -62,7 +63,7 @@ export const TimingPoint = ({
         { raceId: raceId, timingPointId: initialTimingPoint.id },
         { initialData: initialTimingPoint },
     );
-
+    const router = useRouter();
     const timingPointEdited = async (editedTimingPoint: EditTimingPoint) => {
         await updateTimingPointMutation.mutateAsync(editedTimingPoint);
         void refetchTimingPoint();
@@ -130,9 +131,7 @@ export const TimingPoint = ({
 
     const deleteTimingPoint = async (timingPoint: TimingPoint) => {
         await deleteTimingPointMutation.mutateAsync(timingPoint);
-
-        // void refetchOrder();
-        // void refetchTimingPoints();
+        router.push(`/${raceId}/timing-points`);
     };
 
     const deleteAccessKey = async (timingPointAccessKey: AccessKeys[0]) => {

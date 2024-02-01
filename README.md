@@ -99,6 +99,7 @@ Application for making time measurements
 | 23/01/2023 | Apply penalty/dsq reasons combobox                                    | <sup>:heavy_check_mark:(23/01/2024)</sup> |
 | 27/01/2024 | Disable laps on start and finish                                      | <sup>:heavy_check_mark:(29/01/2024)</sup> |
 | 29/01/2024 | Split time edit on flyout from the bottom                             |                  :date:                   |
+| 02/02/2024 | Toast notification should be displayed on top of confirmationbackdrop |                  :date:                   |
 
 ## TODO
 
