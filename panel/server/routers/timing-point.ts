@@ -91,6 +91,12 @@ export const timingPointRouter = router({
         const numberOfTimingPoints = await ctx.db.timingPoint.count({ where: { raceId: input.raceId } });
         if (numberOfTimingPoints <= 2) throw timingPointErrors.AT_LEAST_TWO_TIMING_POINTS_REQUIRED;
 
+        const existsAnySplitTime = await ctx.db.splitTime.findFirst({ where: { raceId: input.raceId, id: id! } });
+        if (existsAnySplitTime) throw timingPointErrors.DELETE_NOT_ALLOWED_WITH_SPLIT_TIMES_REGISTERED;
+
+        const existsAnyManualSplitTime = await ctx.db.manualSplitTime.findFirst({ where: { raceId: input.raceId, id: id! } });
+        if (existsAnyManualSplitTime) throw timingPointErrors.DELETE_NOT_ALLOWED_WITH_SPLIT_TIMES_REGISTERED;
+
         const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } });
 
         const order = JSON.parse(timingPointOrder.order) as number[];

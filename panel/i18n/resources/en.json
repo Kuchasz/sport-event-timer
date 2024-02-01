@@ -2072,7 +2072,8 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
-        "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints"
+        "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints",
+        "deleteNotAllowedWithSplitTimesRegistered": "It is not possible to delete a timing point when the players' split times have been measured on it. You must first delete the split times"
       }
     }
   }

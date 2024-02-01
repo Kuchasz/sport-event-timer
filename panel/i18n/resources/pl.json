@@ -2072,7 +2072,8 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę)",
-        "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych"
+        "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych",
+        "deleteNotAllowedWithSplitTimesRegistered": "Nie można usunąć punktu pomiarowego gdy zmierzono na nim czasy zawodników. Należy najpierw usunąć zmierzone czasy"
       }
     }
   }
