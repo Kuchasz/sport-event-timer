@@ -93,7 +93,7 @@ export const timingPointRouter = router({
             });
 
             if (newLaps < (maxLapSplitTime?.lap ?? 0) || newLaps < (maxLapManualSplitTime?.lap ?? 0))
-                throw timingPointErrors.LAPS_ALLOWED_ONLY_ON_CHECKPOINT;
+                throw timingPointErrors.SPLIT_TIMES_FOR_LAPS_REGISTERED;
         }
 
         return await ctx.db.timingPoint.update({ where: { id: id! }, data });
