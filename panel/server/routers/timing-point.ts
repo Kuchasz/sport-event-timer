@@ -133,6 +133,7 @@ export const timingPointRouter = router({
                     shortName: input.timingPoint.shortName,
                     description: input.timingPoint.description,
                     raceId: input.timingPoint.raceId,
+                    laps: input.timingPoint.laps,
                 },
             });
 
