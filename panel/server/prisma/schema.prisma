@@ -124,7 +124,7 @@ model TimingPoint {
     shortName            String
     type                 String
     description          String?
-    laps                 Int?
+    laps                 Int
     race                 Race                   @relation(fields: [raceId], references: [id])
     raceId               Int
     splitTime            SplitTime[]
@@ -198,7 +198,7 @@ model Absence {
 model ManualSplitTime {
     id            Int         @id @default(autoincrement())
     bibNumber     String
-    time          BigInt?
+    time          BigInt
     race          Race        @relation(fields: [raceId], references: [id])
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])

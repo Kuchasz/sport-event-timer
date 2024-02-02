@@ -49,6 +49,30 @@ export const getIndexById = <T>(items: T[], groupId: (item: T) => number, id: (i
     }, new Map<number, Record<number, number>>());
 };
 
+export const isNotAscendingOrder = <T>(arr: T[], predicate: (item: T) => number): boolean => {
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (!(predicate(arr[i]) <= predicate(arr[i + 1]))) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export const customSort = <T>(items: T[], pred: (item: T) => string): T[] => {
+    return items.sort((a, b) => {
+        const [aBeforeDot, aAfterDot] = pred(a).split(".").map(Number);
+        const [bBeforeDot, bAfterDot] = pred(b).split(".").map(Number);
+
+        // First, compare by the number before the dot
+        if (aBeforeDot !== bBeforeDot) {
+            return aBeforeDot - bBeforeDot;
+        }
+
+        // If the number before the dot is the same, compare by the second number
+        return aAfterDot - bAfterDot;
+    });
+};
+
 export const sortNumber = <T>(items: T[], order: "desc" | "asc", func: (item: T) => number): T[] => {
     const i = [...items];
 

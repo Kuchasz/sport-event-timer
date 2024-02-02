@@ -4,7 +4,7 @@ import sharedErrorCodes from "../shared/error-codes";
 export const splitTimeSchema = z.object({
     id: z.number().min(1).nullish(),
     bibNumber: z.string({ required_error: sharedErrorCodes.required }),
-    time: z.number().optional(),
+    time: z.number(),
     timingPointId: z.number({ required_error: sharedErrorCodes.required }),
     lap: z.number({ required_error: sharedErrorCodes.required }),
 });

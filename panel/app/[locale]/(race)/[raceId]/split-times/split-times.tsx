@@ -13,6 +13,7 @@ import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 import { createRange } from "@set/utils/dist/array";
+import classNames from "classnames";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -23,6 +24,7 @@ type SplitTimeResultTypes = {
     splitTime?: { time: number; manual: boolean };
     bibNumber: string;
     refetch: () => void;
+    hasError: boolean;
     raceId: number;
     raceDate: Date;
     timingPointId: number;
@@ -30,6 +32,7 @@ type SplitTimeResultTypes = {
 };
 const SplitTimeResult = ({
     refetch,
+    hasError,
     isLoading,
     raceId,
     raceDate,
@@ -41,8 +44,8 @@ const SplitTimeResult = ({
 }: SplitTimeResultTypes) => {
     const t = useTranslations();
     return (
-        <div className="flex font-mono">
-            <span className={splitTime?.manual ? "text-yellow-600" : ""}>{formatTimeWithMilliSec(splitTime?.time)}</span>
+        <div className={classNames("flex font-mono", splitTime?.manual ? "text-yellow-600" : "")}>
+            <span className={hasError ? "bg-red-200" : ""}>{formatTimeWithMilliSec(splitTime?.time)}</span>
             <div className="flex-grow"></div>
             {splitTime && splitTime.time > 0 && (
                 <PoorModal
@@ -152,12 +155,13 @@ export const SplitTimes = () => {
                     headerName: tp.laps ? `${tp.name}(${lap + 1})` : tp.name,
                     cellRenderer: (data: SplitTime) => (
                         <SplitTimeResult
+                            hasError={data.hasError}
                             refetch={() => refetch()}
                             raceId={raceId}
                             raceDate={race?.date ?? new Date()}
                             openResetDialog={revertManualSplitTime}
                             bibNumber={data.bibNumber}
-                            splitTime={data.times[`${tp.id}.${lap}`]}
+                            splitTime={data.times[tp.id]?.[lap]}
                             timingPointId={tp.id}
                             isLoading={revertSplitTimeMutation.isLoading}
                             lap={lap}
