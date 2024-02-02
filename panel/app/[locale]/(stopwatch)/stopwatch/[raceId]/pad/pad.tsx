@@ -19,10 +19,11 @@ export const PlayersDialPad = () => {
     return (
         <PlayersCheckIn
             timeCritical
-            onPlayerCheckIn={bibNumber => {
+            onPlayerCheckIn={({ bibNumber, lap }) => {
                 dispatch(
                     add({
                         bibNumber: parseInt(bibNumber),
+                        lap,
                         timingPointId,
                         time: getCurrentTime(offset, race!.date),
                     }),

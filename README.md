@@ -111,8 +111,8 @@ Application for making time measurements
 -   DNF/DSQ support :heavy_check_mark:
 -   mobile friendly results list :heavy_check_mark:
 -   next and current player hint on watch :heavy_check_mark:
--   make it harder to remove the timestamps :heavy_check_mark:
--   option to re-activate removed timestamp
+-   make it harder to remove the splitTimes :heavy_check_mark:
+-   option to re-activate removed splittime
 -   fetch time from server :heavy_check_mark:
 -   disable pull to refresh :heavy_check_mark:
 -   persist selected timekeeper :heavy_check_mark:

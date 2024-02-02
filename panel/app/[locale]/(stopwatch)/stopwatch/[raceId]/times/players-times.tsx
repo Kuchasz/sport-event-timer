@@ -3,7 +3,7 @@
 import { Transition } from "@headlessui/react";
 import { mdiDeleteOutline, mdiTimerEditOutline, mdiTimerPlusOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
-import type { Player, TimeStamp } from "@set/timer/dist/model";
+import type { Player, SplitTime } from "@set/timer/dist/model";
 import { add, reset } from "@set/timer/dist/slices/split-times";
 import { getIndexById, sortDesc, sort } from "@set/utils/dist/array";
 import { getCurrentTime } from "@set/utils/dist/datetime";
@@ -18,12 +18,12 @@ import { useRef } from "react";
 import { timeOffsetAtom, timingPointIdAtom } from "states/stopwatch-states";
 import { trpc } from "trpc-core";
 import { ActionButton } from "../../../../../../components/stopwatch/action-button";
-import { PlayerWithTimeStampDisplay } from "../../../../../../components/stopwatch/player-with-timestamp-display";
+import { PlayerWithSplitTimeDisplay } from "../../../../../../components/stopwatch/player-with-split-time-display";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../hooks";
 
-type TimeStampWithPlayer = TimeStamp & {
+type SplitTimeWithPlayer = SplitTime & {
     player?: Player;
-    timeStamps?: Record<number, number>;
+    splitTimes?: Record<number, number>;
 };
 
 const Item = <T extends string>({
@@ -36,7 +36,7 @@ const Item = <T extends string>({
     isLast,
     displayLaps,
 }: {
-    t: TimeStampWithPlayer;
+    t: SplitTimeWithPlayer;
     navigate: (path: Route<T> | URL) => void;
     dispatch: ReturnType<typeof useTimerDispatch>;
     raceId: number;
@@ -107,10 +107,9 @@ const Item = <T extends string>({
                     <div className="absolute -ml-[78px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-red-500 text-white">
                         <Icon size={0.8} path={mdiDeleteOutline} />
                     </div>
-                    <PlayerWithTimeStampDisplay
-                        playerWithTimeStamp={{
-                            timeStamp: t,
-                            timeStamps: t.timeStamps,
+                    <PlayerWithSplitTimeDisplay
+                        playerWithSplitTime={{
+                            splitTime: t,
                             bibNumber: t.player?.bibNumber,
                             name: t.player?.name,
                             lastName: t.player?.lastName,
@@ -150,27 +149,27 @@ export const PlayersTimes = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { push } = useRouter();
 
-    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allSplitTimes = useTimerSelector(x => x.splitTimes);
     const { raceId } = useParams<{ raceId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
 
-    const timingPointTimeStamps = sort(
-        allTimeStamps.filter(s => s.timingPointId === timingPointId),
+    const timingPointSplitTimes = sort(
+        allSplitTimes.filter(s => s.timingPointId === timingPointId),
         t => t.time,
     );
-    const playersTimeStamps = getIndexById(
-        timingPointTimeStamps,
+    const playerssplitTimes = getIndexById(
+        timingPointSplitTimes,
         s => s.bibNumber!,
         s => s.id,
     );
 
     const times = sortDesc(
-        timingPointTimeStamps.map(s => ({
+        timingPointSplitTimes.map(s => ({
             ...s,
-            timeStamps: playersTimeStamps.get(s.bibNumber!),
+            splitTimes: playerssplitTimes.get(s.bibNumber!),
             player: allPlayers.find(p => s.bibNumber === p.bibNumber),
         })),
         t => t.time,

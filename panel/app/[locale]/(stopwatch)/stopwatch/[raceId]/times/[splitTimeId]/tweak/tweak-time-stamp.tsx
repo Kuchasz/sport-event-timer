@@ -3,8 +3,8 @@
 import { ActionButton, PrimaryActionButton } from "../../../../../../../../components/stopwatch/action-button";
 import { formatNumber } from "@set/utils/dist/number";
 import { mdiFloppy, mdiMinus, mdiPlus, mdiRestart } from "@mdi/js";
-import { PlayerWithTimeStampDisplay } from "../../../../../../../../components/stopwatch/player-with-timestamp-display";
-import type { TimeStamp } from "@set/timer/dist/model";
+import { PlayerWithSplitTimeDisplay } from "../../../../../../../../components/stopwatch/player-with-split-time-display";
+import type { SplitTime } from "@set/timer/dist/model";
 import { useState } from "react";
 import { useTimerDispatch, useTimerSelector } from "../../../../../../../../hooks";
 import { useParams, useRouter } from "next/navigation";
@@ -47,33 +47,33 @@ const Digit = ({ number }: { number: string }) => <div className="my-4 text-cent
 export const TweakTimeStamp = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { back } = useRouter() as unknown as { back: () => void };
-    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allSplitTimes = useTimerSelector(x => x.splitTimes);
     const [timingPointId] = useAtom(timingPointIdAtom);
-    const { raceId, timeStampId } = useParams<{ raceId: string; timeStampId: string }>()!;
+    const { raceId, splitTimeId } = useParams<{ raceId: string; splitTimeId: string }>()!;
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
 
     const dispatch = useTimerDispatch();
-    const onSave = (timeStamp: TimeStamp) => dispatch(tweak(timeStamp));
+    const onSave = (splitTime: SplitTime) => dispatch(tweak(splitTime));
 
-    const timeStamp = allTimeStamps.find(x => x.id === parseInt(timeStampId))!;
-    const player = allPlayers.find(x => x.bibNumber === timeStamp?.bibNumber);
+    const splitTime = allSplitTimes.find(x => x.id === parseInt(splitTimeId))!;
+    const player = allPlayers.find(x => x.bibNumber === splitTime?.bibNumber);
 
-    const timingPointTimeStamps = sort(
-        allTimeStamps.filter(s => s.timingPointId === timingPointId),
+    const timingPointSplitTimes = sort(
+        allSplitTimes.filter(s => s.timingPointId === timingPointId),
         t => t.time,
     );
-    const playersTimeStamps = getIndexById(
-        timingPointTimeStamps,
+    const playersSplitTimes = getIndexById(
+        timingPointSplitTimes,
         s => s.bibNumber!,
         s => s.id,
     );
 
-    const [currentTime, setCurrentTime] = useState<number>(timeStamp.time);
+    const [currentTime, setCurrentTime] = useState<number>(splitTime.time);
 
     const time = new Date(currentTime);
 
-    const p = player ? { ...player, timeStamp, timeStamps: playersTimeStamps.get(player.bibNumber) } : { timeStamp: timeStamp };
+    const p = player ? { ...player, splitTime, splitTimes: playersSplitTimes.get(player.bibNumber) } : { splitTime };
 
     const highestBibNumber = Math.max(...allPlayers.map(p => p.bibNumber));
 
@@ -81,8 +81,7 @@ export const TweakTimeStamp = () => {
         <div className="flex h-full flex-col items-center">
             <div className="flex grow flex-col items-center justify-center">
                 <div>
-                    {/* TODO: we should display edited timestamp not all of them */}
-                    <PlayerWithTimeStampDisplay padLeftBibNumber={highestBibNumber.toString().length} playerWithTimeStamp={p} />
+                    <PlayerWithSplitTimeDisplay padLeftBibNumber={highestBibNumber.toString().length} playerWithSplitTime={p} />
                 </div>
                 <div className="mt-10 flex items-center">
                     <div className="flex flex-col items-center">
@@ -112,15 +111,15 @@ export const TweakTimeStamp = () => {
                 <div className="mt-6 flex">
                     <PrimaryActionButton
                         onClick={() => {
-                            onSave({ ...timeStamp, time: currentTime });
+                            onSave({ ...splitTime, time: currentTime });
                             back();
                         }}
                         icon={mdiFloppy}
                     />
                     <PrimaryActionButton
-                        disabled={timeStamp.time === currentTime}
+                        disabled={splitTime.time === currentTime}
                         onClick={() => {
-                            setCurrentTime(timeStamp.time);
+                            setCurrentTime(splitTime.time);
                         }}
                         icon={mdiRestart}
                     />

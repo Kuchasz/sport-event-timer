@@ -19,9 +19,10 @@ export type HistoricAction = {
     action: { type: string; payload: any };
 };
 
-export type TimeStamp = {
+export type SplitTime = {
     id: number;
     bibNumber?: number;
+    lap?: number;
     timingPointId: number;
     time: number;
 };
@@ -33,12 +34,12 @@ export type Absence = {
 };
 
 export type State = {
-    timeStamps: TimeStamp[];
+    splitTimes: SplitTime[];
 };
 
 export type RaceResult = {
     player: Omit<Player, "id">;
-    timeStamps: Record<number, number>;
+    splitTimes: Record<number, number>;
 };
 
 export type RaceResults = RaceResult[];
@@ -77,16 +78,16 @@ export const updateBy = <T>(items: T[], item: Partial<T>, func: (item: Partial<T
 
 export const updateItem = <T extends { id: number }>(items: T[], item: Partial<T>) => updateBy(items, item, i => i.id === item.id);
 
-export const addTimeStamp = (timeStamps: TimeStamp[], timeStamp: Omit<TimeStamp, "id">): TimeStamp[] =>
-    pipe(timeStamps, Arr.append({ ...timeStamp, id: getNextId(timeStamps) }));
+export const addSplitTime = (splitTimes: SplitTime[], splitTime: Omit<SplitTime, "id">): SplitTime[] =>
+    pipe(splitTimes, Arr.append({ ...splitTime, id: getNextId(splitTimes) }));
 
 export const addHistoricAction = (historicActions: HistoricAction[], action: HistoricAction): HistoricAction[] =>
     pipe(historicActions, Arr.append({ ...action }));
 
-export const resetTimeStamp = (timeStamps: TimeStamp[], id: number): TimeStamp[] => removeById(timeStamps, id);
+export const resetSplitTime = (splitTimes: SplitTime[], id: number): SplitTime[] => removeById(splitTimes, id);
 
-export const updateTimeStamp = (timeStamps: TimeStamp[], modifiedTimeStamp: Partial<TimeStamp>): TimeStamp[] =>
-    updateItem(timeStamps, modifiedTimeStamp);
+export const updateSplitTime = (splitTimes: SplitTime[], modifiedSplitTime: Partial<SplitTime>): SplitTime[] =>
+    updateItem(splitTimes, modifiedSplitTime);
 
 export const addAbsence = (absences: Absence[], absence: Omit<Absence, "id">): Absence[] =>
     pipe(absences, Arr.append({ ...absence, id: getNextId(absences) }));

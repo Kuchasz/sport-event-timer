@@ -14,13 +14,13 @@ export const PlayerAssignTime = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { back } = useRouter() as unknown as { back: () => void };
 
-    const { timeStampId } = useParams<{ timeStampId: string }>()!;
+    const { splitTimeId } = useParams<{ splitTimeId: string }>()!;
 
     return (
         <PlayersCheckIn
             timeCritical={false}
-            onPlayerCheckIn={bibNumber => {
-                dispatch(assign({ bibNumber: parseInt(bibNumber), id: parseInt(timeStampId) }));
+            onPlayerCheckIn={player => {
+                dispatch(assign({ bibNumber: parseInt(player.bibNumber), lap: player.lap, id: parseInt(splitTimeId) }));
                 back();
             }}
             timingPointId={timingPointId}

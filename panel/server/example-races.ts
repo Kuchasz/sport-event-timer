@@ -263,7 +263,7 @@ const createStopwatches = (
 
         const ids = createRange({ from: 1, to: 9999 });
 
-        const timeStamps = createRange({ from: 0, to: chosenPlayersNumber })
+        const splitTimes = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
             .flatMap(p =>
                 timingPointsForRace.map((tp, i) => ({
@@ -279,7 +279,7 @@ const createStopwatches = (
                 })),
             );
 
-        const state = { timeStamps, actionsHistory: [], absences: [] } as TimerState;
+        const state = { splitTimes, actionsHistory: [], absences: [] } as TimerState;
 
         return { raceId: r.id, state: JSON.stringify(state) };
     });

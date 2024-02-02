@@ -2,22 +2,22 @@ import * as m from "../model";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export type TimeStampsState = m.TimeStamp[];
+export type SplitTimesState = m.SplitTime[];
 
-const initialState: TimeStampsState = [];
+const initialState: SplitTimesState = [];
 
-export const timeStampsSlice = createSlice({
+export const splitTimesSlice = createSlice({
     name: "split-times",
     initialState,
     reducers: {
-        add: (state, action: PayloadAction<Omit<m.TimeStamp, "id">>) => m.addTimeStamp(state, action.payload),
-        assign: (state, action: PayloadAction<Partial<m.TimeStamp>>) => m.updateTimeStamp(state, action.payload),
-        reassign: (state, action: PayloadAction<Partial<m.TimeStamp>>) => m.updateTimeStamp(state, action.payload),
-        tweak: (state, action: PayloadAction<m.TimeStamp>) => m.updateTimeStamp(state, action.payload),
-        reset: (state, action: PayloadAction<Pick<m.TimeStamp, "id">>) => m.resetTimeStamp(state, action.payload.id),
+        add: (state, action: PayloadAction<Omit<m.SplitTime, "id">>) => m.addSplitTime(state, action.payload),
+        assign: (state, action: PayloadAction<Partial<m.SplitTime>>) => m.updateSplitTime(state, action.payload),
+        reassign: (state, action: PayloadAction<Partial<m.SplitTime>>) => m.updateSplitTime(state, action.payload),
+        tweak: (state, action: PayloadAction<m.SplitTime>) => m.updateSplitTime(state, action.payload),
+        reset: (state, action: PayloadAction<Pick<m.SplitTime, "id">>) => m.resetSplitTime(state, action.payload.id),
     },
 });
 
-export const { add, reset, tweak, assign, reassign } = timeStampsSlice.actions;
+export const { add, reset, tweak, assign, reassign } = splitTimesSlice.actions;
 
-export default timeStampsSlice.reducer;
+export default splitTimesSlice.reducer;

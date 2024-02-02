@@ -1,8 +1,8 @@
 import { db, stopwatchStateProvider } from "./db";
 import * as fastq from "fastq";
 
-type ActualSplitTime = { id: number; bibNumber: number; time: number; timingPointId: number };
-type ExistingSplitTime = { id: number; bibNumber: string; time: bigint; timingPointId: number };
+type ActualSplitTime = { id: number; bibNumber: number; time: number; lap: number; timingPointId: number };
+type ExistingSplitTime = { id: number; bibNumber: string; time: bigint; lap: number; timingPointId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
     actual.bibNumber.toString() === existing.bibNumber &&
@@ -23,7 +23,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     const actualBibNumbers = new Set(existingPlayers.map(p => p.bibNumber));
     const stopwatchState = await stopwatchStateProvider.get(raceId);
 
-    const actualSplitTimes = stopwatchState.timeStamps.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
+    const actualSplitTimes = stopwatchState.splitTimes.filter(st => st.bibNumber && actualBibNumbers.has(st.bibNumber.toString()));
     const actualSplitTimesMap = new Map(actualSplitTimes.map(st => [st.id, st]));
     const actualAbsences = stopwatchState.absences.filter(a => a.bibNumber && actualBibNumbers.has(a.bibNumber.toString()));
     const actualAbsencesMap = new Map(actualAbsences.map(a => [a.id, a]));
@@ -45,6 +45,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             id,
             bibNumber: data!.bibNumber!.toString(),
             time: data!.time,
+            lap: data!.lap!,
             raceId,
             //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             timingPointId: data?.timingPointId!,
@@ -76,7 +77,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
         splitTimesToUpdate.map(data =>
             db.splitTime.update({
                 where: { id_raceId: { id: data.actual.id, raceId } },
-                data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() },
+                data: { ...data.actual, lap: data.actual.lap, bibNumber: data.actual.bibNumber.toString() },
             }),
         ),
     );

@@ -1,4 +1,3 @@
-import { sort, toLookup } from "@set/utils/dist/array";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
@@ -29,24 +28,14 @@ export const splitTimeRouter = router({
                 name: p.profile.name,
                 lastName: p.profile.lastName,
                 times: {
-                    ...Object.fromEntries([[startTimingPoint?.id, [{ time: raceDateStart + p.startTime!, manual: false }]]]),
+                    ...Object.fromEntries([[`${startTimingPoint!.id}.0`, { time: raceDateStart + p.startTime!, lap: 0, manual: false }]]),
                     ...Object.fromEntries(
-                        Object.entries(
-                            toLookup(
-                                p.splitTime,
-                                s => s.timingPointId.toString(),
-                                s => s,
-                            ),
-                        ).map(([timingPointId, splitTimes], _) => [
-                            timingPointId,
-                            sort(
-                                splitTimes.map(st => ({ time: Number(st.time), manual: false })),
-                                st => st.time,
-                            ),
-                        ]),
+                        p.splitTime.map(st => [`${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: false }]),
                     ),
-                    ...Object.fromEntries(p.manualSplitTime.map(st => [st.timingPointId, [{ time: Number(st.time), manual: true }]])),
-                } as Record<number, TimeResult[]>,
+                    ...Object.fromEntries(
+                        p.manualSplitTime.map(st => [`${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: true }]),
+                    ),
+                } as Record<string, TimeResult>,
             }));
         }),
     update: protectedProcedure.input(manualSplitTimeSchema).mutation(async ({ input, ctx }) => {
@@ -57,6 +46,7 @@ export const splitTimeRouter = router({
                 raceId: splitTime.raceId,
                 bibNumber: splitTime.bibNumber,
                 timingPointId: splitTime.timingPointId,
+                lap: splitTime.lap,
             },
         });
 
@@ -65,20 +55,23 @@ export const splitTimeRouter = router({
         } else
             await ctx.db.manualSplitTime.update({
                 where: {
-                    timingPointId_bibNumber: {
+                    timingPointId_lap_bibNumber: {
                         bibNumber: splitTime.bibNumber,
                         timingPointId: splitTime.timingPointId,
+                        lap: splitTime.lap,
                     },
                 },
                 data: splitTime,
             });
     }),
-    revert: protectedProcedure.input(z.object({ bibNumber: z.string(), timingPointId: z.number() })).mutation(async ({ input, ctx }) => {
-        const { ...data } = input;
-        return await ctx.db.manualSplitTime.delete({
-            where: { timingPointId_bibNumber: { bibNumber: data.bibNumber, timingPointId: data.timingPointId } },
-        });
-    }),
+    revert: protectedProcedure
+        .input(z.object({ bibNumber: z.string(), timingPointId: z.number(), lap: z.number() }))
+        .mutation(async ({ input, ctx }) => {
+            const { ...data } = input;
+            return await ctx.db.manualSplitTime.delete({
+                where: { timingPointId_lap_bibNumber: { bibNumber: data.bibNumber, timingPointId: data.timingPointId, lap: data.lap } },
+            });
+        }),
 });
 
 export type SplitTimeRouter = typeof splitTimeRouter;

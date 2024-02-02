@@ -26,6 +26,7 @@ type SplitTimeResultTypes = {
     raceId: number;
     raceDate: Date;
     timingPointId: number;
+    lap: number;
 };
 const SplitTimeResult = ({
     refetch,
@@ -35,6 +36,7 @@ const SplitTimeResult = ({
     openResetDialog,
     splitTime,
     bibNumber,
+    lap,
     timingPointId,
 }: SplitTimeResultTypes) => {
     const t = useTranslations();
@@ -51,6 +53,7 @@ const SplitTimeResult = ({
                         editedSplitTime: {
                             bibNumber,
                             time: splitTime?.time,
+                            lap,
                             timingPointId: timingPointId,
                             raceId,
                         },
@@ -73,6 +76,7 @@ const SplitTimeResult = ({
                             bibNumber,
                             time: 0,
                             timingPointId: timingPointId,
+                            lap,
                             raceId,
                         },
                         raceId,
@@ -84,22 +88,26 @@ const SplitTimeResult = ({
                     </span>
                 </PoorModal>
             )}
-            {splitTime?.manual == true && (
+            {splitTime?.manual == true ? (
                 <PoorConfirmation
                     title={t("pages.splitTimes.revert.confirmation.title")}
                     message={t("pages.splitTimes.revert.confirmation.text")}
                     onAccept={() =>
                         openResetDialog({
                             bibNumber,
-                            time: splitTime?.time,
+                            lap,
                             timingPointId: timingPointId,
-                        } as any)
+                        })
                     }
                     isLoading={isLoading}>
                     <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiReload} />
                     </span>
                 </PoorConfirmation>
+            ) : (
+                <span className="ml-2 flex opacity-10">
+                    <Icon size={0.75} path={mdiReload} />
+                </span>
             )}
         </div>
     );
@@ -139,9 +147,9 @@ export const SplitTimes = () => {
         ...timingPointsOrder
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .flatMap(tp =>
-                createRange({ from: 0, to: tp.laps ?? 0 }).map((_, index) => ({
-                    field: `${tp.name}.${index}` as any,
-                    headerName: tp.laps ? `${tp.name}(${index + 1})` : tp.name,
+                createRange({ from: 0, to: tp.laps ?? 0 }).map((_, lap) => ({
+                    field: `${tp.name}.${lap}` as any,
+                    headerName: tp.laps ? `${tp.name}(${lap + 1})` : tp.name,
                     cellRenderer: (data: SplitTime) => (
                         <SplitTimeResult
                             refetch={() => refetch()}
@@ -149,9 +157,10 @@ export const SplitTimes = () => {
                             raceDate={race?.date ?? new Date()}
                             openResetDialog={revertManualSplitTime}
                             bibNumber={data.bibNumber}
-                            splitTime={data.times[tp.id]?.[index]}
+                            splitTime={data.times[`${tp.id}.${lap}`]}
                             timingPointId={tp.id}
                             isLoading={revertSplitTimeMutation.isLoading}
+                            lap={lap}
                         />
                     ),
                 })),

@@ -1,16 +1,16 @@
 "use client";
 
 import { mdiAccount, mdiAccountOff } from "@mdi/js";
-import { getIndexById, sort } from "@set/utils/dist/array";
 import { add as addAbsence, reset as resetAbsence } from "@set/timer/dist/slices/absences";
+import { sort } from "@set/utils/dist/array";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { ActionButton } from "components/stopwatch/action-button";
-import { PlayerWithTimeStampDisplay } from "components/stopwatch/player-with-timestamp-display";
+import { PlayerWithSplitTimeDisplay } from "components/stopwatch/player-with-split-time-display";
 import { useTimerDispatch, useTimerSelector } from "hooks";
 import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
-import { timingPointIdAtom } from "states/stopwatch-states";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
+import { timingPointIdAtom } from "states/stopwatch-states";
 import { trpc } from "trpc-core";
 
 export const PlayersList = () => {
@@ -33,25 +33,16 @@ export const PlayersList = () => {
     //eslint-disable-next-line @typescript-eslint/unbound-method
     const { push } = useRouter();
 
-    const allTimeStamps = useTimerSelector(x => x.timeStamps);
+    const allSplitTimes = useTimerSelector(x => x.splitTimes);
     const allAbsences = useTimerSelector(x => x.absences);
-
-    const timingPointTimeStamps = sort(
-        allTimeStamps.filter(s => s.timingPointId === timingPointId),
-        t => t.time,
-    );
-
-    const playersTimeStamps = getIndexById(
-        timingPointTimeStamps,
-        s => s.bibNumber!,
-        s => s.id,
-    );
 
     const players = sort(
         allPlayers.map(x => ({
             ...x,
-            timeStamp: allTimeStamps.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId).at(-1),
-            timeStamps: playersTimeStamps.get(x.bibNumber),
+            splitTime: sort(
+                allSplitTimes.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+                t => t.lap!,
+            ).at(-1),
             absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             onReset: onResetAbsence,
             onRecord: onRecordAbsence,
@@ -88,12 +79,12 @@ export const PlayersList = () => {
                         className="t-0 absolute left-0 w-full py-0.5"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}>
                         <div className="relative flex items-center rounded-xl bg-white px-3 py-2 shadow">
-                            <PlayerWithTimeStampDisplay
+                            <PlayerWithSplitTimeDisplay
                                 padLeftBibNumber={highestBibNumber.toString().length}
-                                playerWithTimeStamp={players[virtualRow.index]}
+                                playerWithSplitTime={players[virtualRow.index]}
                                 displayLaps={(timingPoint?.laps || 0) > 0}
                             />
-                            {allowAbsences && !players[virtualRow.index].timeStamp && !players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].splitTime && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
@@ -101,7 +92,7 @@ export const PlayersList = () => {
                                     }}
                                 />
                             )}
-                            {allowAbsences && !players[virtualRow.index].timeStamp && players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].splitTime && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {
@@ -111,15 +102,15 @@ export const PlayersList = () => {
                                 />
                             )}
 
-                            {/* {players[virtualRow.index].timeStamp ? (
+                            {/* {players[virtualRow.index].splitTime ? (
                                 <PrimaryActionButton
                                     icon={mdiAlarmOff}
-                                    onMouseDown={() => onResetTimeStamp(players[virtualRow.index].timeStamp!.id)}
+                                    onMouseDown={() => onResetSplitTime(players[virtualRow.index].splitTime!.id)}
                                 />
                             ) : (
                                 <PrimaryActionButton
                                     icon={mdiAlarmCheck}
-                                    onMouseDown={() => onRecordTimeStamp(players[virtualRow.index].bibNumber)}
+                                    onMouseDown={() => onRecordSplitTime(players[virtualRow.index].bibNumber)}
                                 />
                             )} */}
                         </div>

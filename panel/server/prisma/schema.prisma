@@ -175,9 +175,11 @@ model SplitTime {
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
     timingPointId Int
+    lap           Int
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@id([id, raceId])
+    @@unique([timingPointId, lap, bibNumber])
 }
 
 model Absence {
@@ -201,9 +203,10 @@ model ManualSplitTime {
     raceId        Int
     timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
     timingPointId Int
+    lap           Int
     player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
-    @@unique([timingPointId, bibNumber])
+    @@unique([timingPointId, lap, bibNumber])
 }
 
 model TimePenalty {

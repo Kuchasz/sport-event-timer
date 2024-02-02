@@ -40,7 +40,7 @@ export const getIndexById = <T>(items: T[], groupId: (item: T) => number, id: (i
             idTimesMap.set(groupKey, {});
         }
 
-        // timestamp with higher id may have lower time than those with lower ids , times may be edited!
+        // splitTime with higher id may have lower time than those with lower ids , times may be edited!
 
         const timeIndexMap = idTimesMap.get(groupKey)!;
         timeIndexMap[key] = Object.keys(timeIndexMap).length;

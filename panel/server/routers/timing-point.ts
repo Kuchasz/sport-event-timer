@@ -83,6 +83,19 @@ export const timingPointRouter = router({
 
         if (timingPoint.type !== "checkpoint" && data.laps) throw timingPointErrors.LAPS_ALLOWED_ONLY_ON_CHECKPOINT;
 
+        const newLaps = data.laps ?? 0;
+
+        if (timingPoint.laps && timingPoint.laps > newLaps) {
+            const maxLapSplitTime = await ctx.db.splitTime.findFirst({ where: { timingPointId: id! }, orderBy: { lap: "desc" } });
+            const maxLapManualSplitTime = await ctx.db.manualSplitTime.findFirst({
+                where: { timingPointId: id! },
+                orderBy: { lap: "desc" },
+            });
+
+            if (newLaps < (maxLapSplitTime?.lap ?? 0) || newLaps < (maxLapManualSplitTime?.lap ?? 0))
+                throw timingPointErrors.LAPS_ALLOWED_ONLY_ON_CHECKPOINT;
+        }
+
         return await ctx.db.timingPoint.update({ where: { id: id! }, data });
     }),
     delete: protectedProcedure.input(timingPointSchema).mutation(async ({ input, ctx }) => {
