@@ -173,6 +173,7 @@ export const raceRouter = router({
                     shortName: "ST",
                     description: "Where the players start",
                     raceId: race.id,
+                    laps: 0,
                 },
                 {
                     name: "Finish",
@@ -180,6 +181,7 @@ export const raceRouter = router({
                     shortName: "MT",
                     description: "Where the players finish",
                     raceId: race.id,
+                    laps: 0,
                 },
             ].map(tp => ctx.db.timingPoint.create({ data: tp }));
 
