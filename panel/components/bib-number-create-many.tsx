@@ -34,7 +34,8 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                         <PoorNumberInput
                             placeholder={t("pages.bibNumbers.createMany.form.startNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value! } })}
+                            required
+                            onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="startNumber"
@@ -47,7 +48,8 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                         <PoorNumberInput
                             placeholder={t("pages.bibNumbers.createMany.form.endNumber.placeholder")}
                             value={value}
-                            onChange={e => onChange({ target: { value: e.target.value! } })}
+                            required
+                            onChange={e => onChange({ target: { value: e.target.value } })}
                         />
                     )}
                     name="endNumber"
