@@ -45,6 +45,7 @@ export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: App
                 render={({ value, onChange }) => (
                     <PoorNumberInput
                         value={value}
+                        required
                         placeholder={t("pages.result.applyTimePenalty.form.time.placeholder")}
                         onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
                     />
