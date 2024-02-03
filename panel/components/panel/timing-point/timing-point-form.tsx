@@ -52,6 +52,7 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
                             <PoorNumberInput
                                 placeholder={t("pages.timingPoints.form.laps.placeholder")}
                                 value={value}
+                                required
                                 onChange={onChange}
                             />
                         )}
