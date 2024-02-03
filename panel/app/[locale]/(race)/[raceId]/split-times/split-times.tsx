@@ -24,7 +24,6 @@ type SplitTimeResultTypes = {
     splitTime?: { time: number; manual: boolean };
     bibNumber: string;
     refetch: () => void;
-    hasError: boolean;
     raceId: number;
     raceDate: Date;
     timingPointId: number;
@@ -32,7 +31,6 @@ type SplitTimeResultTypes = {
 };
 const SplitTimeResult = ({
     refetch,
-    hasError,
     isLoading,
     raceId,
     raceDate,
@@ -44,8 +42,8 @@ const SplitTimeResult = ({
 }: SplitTimeResultTypes) => {
     const t = useTranslations();
     return (
-        <div className={classNames("flex font-mono", splitTime?.manual ? "text-yellow-600" : "")}>
-            <span className={hasError ? "bg-red-200" : ""}>{formatTimeWithMilliSec(splitTime?.time)}</span>
+        <div className={classNames("flex font-mono", splitTime?.manual ? "" : "")}>
+            <span>{formatTimeWithMilliSec(splitTime?.time)}</span>
             <div className="flex-grow"></div>
             {splitTime && splitTime.time > 0 && (
                 <PoorModal
@@ -155,7 +153,6 @@ export const SplitTimes = () => {
                     headerName: tp.laps ? `${tp.name}(${lap + 1})` : tp.name,
                     cellRenderer: (data: SplitTime) => (
                         <SplitTimeResult
-                            hasError={data.hasError}
                             refetch={() => refetch()}
                             raceId={raceId}
                             raceDate={race?.date ?? new Date()}
@@ -190,6 +187,7 @@ export const SplitTimes = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.splitTimes.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
+                            getHasError={item => item.hasError}
                             gridName="split-times"
                             searchFields={["name", "lastName", "bibNumber"]}
                         />

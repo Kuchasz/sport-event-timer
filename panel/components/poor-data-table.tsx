@@ -33,6 +33,7 @@ type PoorDataTableProps<T> = {
     searchPlaceholder?: string;
     hideColumnsChooser?: boolean;
     hidePaging?: boolean;
+    getHasError?: (row: T) => boolean;
 };
 
 type SortState<T> = { field: keyof T; order: "desc" | "asc" };
@@ -48,7 +49,7 @@ interface KeysResult<T> extends ReadonlyArray<Result> {
 }
 
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
-    const { gridName, data, columns, getRowId, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
+    const { gridName, data, columns, getRowId, getHasError, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
     const t = useTranslations();
 
     const [gridColumnVisibilityState, setGridColumnVisibilityState] = useAtom(
@@ -171,7 +172,12 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                     className="group contents text-sm"
                                     key={getRowId(d.obj)}>
                                     {visibleColumns.map(c => (
-                                        <div className="flex items-center border-b px-4 py-2 group-hover:bg-gray-50" key={c.headerName}>
+                                        <div
+                                            className={classNames(
+                                                "flex items-center border-b px-4 py-2",
+                                                getHasError && getHasError(d.obj) ? "bg-red-500 text-white" : "group-hover:bg-gray-50",
+                                            )}
+                                            key={c.headerName}>
                                             {c.cellRenderer ? (
                                                 <span className="whitespace-nowrap">{c.cellRenderer(d.obj)}</span>
                                             ) : (
