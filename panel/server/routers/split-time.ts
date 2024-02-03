@@ -2,29 +2,9 @@ import { createRange, hasUndefinedBetweenValues, isNotAscendingOrder } from "@se
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
+import { fromDeepEntries } from "@set/utils/dist/object";
 
-const combine = (nestedEntries: [string, { time: number; manual: boolean }][]) => {
-    const nestedObject = {} as any;
-
-    nestedEntries.forEach(([key, value]) => {
-        const keys = key.split(".");
-        let currentObject = nestedObject;
-
-        keys.forEach((nestedKey, index) => {
-            if (index === keys.length - 1) {
-                // Last key, set the value
-                currentObject[nestedKey] = value;
-            } else {
-                // Create nested objects if not exist
-                currentObject[nestedKey] = currentObject[nestedKey] || {};
-                // Move to the next level
-                currentObject = currentObject[nestedKey];
-            }
-        });
-    });
-
-    return nestedObject as Record<string, Record<number, Record<number, { time: number; manual: boolean }>>>;
-};
+type ResultEntry = [string, { time: number; manual: boolean }];
 
 export const splitTimeRouter = router({
     splitTimes: protectedProcedure
@@ -49,16 +29,16 @@ export const splitTimeRouter = router({
             const raceDateStart = race?.date.getTime();
 
             const splitTimesMap = splitTimes.map(
-                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: false }] as const,
+                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: false }] as ResultEntry,
             );
             const manualSplitTimesMap = manualSplitTimes.map(
-                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: true }] as const,
+                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: true }] as ResultEntry,
             );
             const startTimesMap = allPlayers.map(
-                p => [`${p.bibNumber}.${startTimingPoint.id}.0`, { time: raceDateStart + p.startTime!, manual: false }] as const,
+                p => [`${p.bibNumber}.${startTimingPoint.id}.0`, { time: raceDateStart + p.startTime!, manual: false }] as ResultEntry,
             );
 
-            const allTimesMap = combine([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap] as any);
+            const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
             const timesInOrder = timingPoints.flatMap(tp =>
                 createRange({ from: 0, to: tp.laps }).map(lap => ({ timingPointId: tp.id, lap })),

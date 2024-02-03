@@ -1413,7 +1413,8 @@
   "raceManagement": {
     "classification": {
       "errors": {
-        "atLeastOneClassificationRequired": "Wyścig musi posiadać conajmniej jedną klasyfikację"
+        "atLeastOneClassificationRequired": "Wyścig musi posiadać conajmniej jedną klasyfikację",
+        "playersAssignedToClassification": "Nie można usunąć klasyfikacji gdy przypisani są do niej zawodnicy."
       }
     },
     "race": {

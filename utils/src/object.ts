@@ -24,6 +24,29 @@ export const createNestedObject = (entries: [string, string][]): Record<string, 
     return result;
 };
 
+export const fromDeepEntries = <T>(nestedEntries: [string, T][]) => {
+    const nestedObject = {} as any;
+
+    nestedEntries.forEach(([key, value]) => {
+        const keys = key.split(".");
+        let currentObject = nestedObject;
+
+        keys.forEach((nestedKey, index) => {
+            if (index === keys.length - 1) {
+                // Last key, set the value
+                currentObject[nestedKey] = value;
+            } else {
+                // Create nested objects if not exist
+                currentObject[nestedKey] = currentObject[nestedKey] || {};
+                // Move to the next level
+                currentObject = currentObject[nestedKey];
+            }
+        });
+    });
+
+    return nestedObject as Record<string, Record<number, Record<number, T>>>;
+};
+
 type Path = string;
 
 export const getObjectSlice = (obj: Record<string, any>, paths: Path[]): Record<string, any> => {

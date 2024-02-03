@@ -2,6 +2,9 @@ import { publicProcedure, router } from "../trpc";
 import { groupBy, sort, toLookup, toMap } from "@set/utils/dist/array";
 import { z } from "zod";
 import { calculateAge } from "@set/utils/dist/datetime";
+import { fromDeepEntries } from "@set/utils/dist/object";
+
+type ResultEntry = [string, number];
 
 export const resultRouter = router({
     results: publicProcedure
@@ -11,8 +14,11 @@ export const resultRouter = router({
 
             const allPlayers = await ctx.db.player.findMany({
                 where: { raceId },
-                include: { splitTime: true, manualSplitTime: true, absence: true, profile: true },
+                include: { absence: true, profile: true },
             });
+
+            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId } });
+            const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId } });
 
             const disqualifications = await toMap(
                 ctx.db.disqualification.findMany({
@@ -30,15 +36,22 @@ export const resultRouter = router({
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
-            const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p));
+            const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
-
-            const startTimingPoint = timingPoints.at(0);
-            const endTimingPoint = timingPoints.at(-1);
-
-            if (!startTimingPoint || !endTimingPoint) return [];
-
             const raceDateStart = race?.date.getTime();
+
+            const startTimingPoint = timingPoints.at(0)!;
+            const endTimingPoint = timingPoints.at(-1)!;
+
+            const splitTimesMap = splitTimes.map(st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, Number(st.time)] as ResultEntry);
+            const manualSplitTimesMap = manualSplitTimes.map(
+                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, Number(st.time)] as ResultEntry,
+            );
+            const startTimesMap = allPlayers.map(
+                p => [`${p.bibNumber}.${startTimingPoint.id}.0`, raceDateStart + p.startTime!] as ResultEntry,
+            );
+
+            const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
             const playersWithTimes = allPlayers.map(p => ({
                 id: p.id,
@@ -50,14 +63,8 @@ export const resultRouter = router({
                 gender: p.profile.gender,
                 age: calculateAge(p.profile.birthDate),
                 yearOfBirth: p.profile.birthDate.getFullYear(),
-                times: {
-                    ...Object.fromEntries([[startTimingPoint?.id, { time: raceDateStart + p.startTime!, manual: false }]]),
-                    ...Object.fromEntries(p.splitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: false }])),
-                    ...Object.fromEntries(p.manualSplitTime.map(st => [st.timingPointId, { time: Number(st.time), manual: true }])),
-                },
-                absences: {
-                    ...Object.fromEntries(p.absence.map(a => [a.timingPointId, true])),
-                },
+                times: allTimesMap[p.bibNumber],
+                absences: Object.fromEntries(p.absence.map(a => [a.timingPointId, true])),
                 disqualification: disqualifications[p.bibNumber],
                 timePenalties: timePenalties[p.bibNumber] ?? [],
                 totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
@@ -90,12 +97,12 @@ export const resultRouter = router({
                 }));
 
             const results = times
-                .filter(t => t.times[startTimingPoint?.id] && t.times[endTimingPoint?.id])
+                .filter(t => t.times[startTimingPoint?.id]?.[0] && t.times[endTimingPoint?.id]?.[0])
                 .map(t => ({
                     ...t,
-                    start: t.times[startTimingPoint.id]?.time,
-                    finish: t.times[endTimingPoint.id]?.time,
-                    result: t.times[endTimingPoint.id]?.time - t.times[startTimingPoint.id]?.time + t.totalTimePenalty,
+                    start: t.times[startTimingPoint.id][0],
+                    finish: t.times[endTimingPoint.id][0],
+                    result: t.times[endTimingPoint.id][0] - t.times[startTimingPoint.id][0] + t.totalTimePenalty,
                     invalidState: undefined,
                 }));
 

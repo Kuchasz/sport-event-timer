@@ -102,6 +102,9 @@ export const classificationRouter = router({
         const numberOfClassifications = await ctx.db.classification.count();
         if (numberOfClassifications <= 1) throw classificationErrorKeys.AT_LEAST_ONE_CLASSIFICATION_REQUIRED;
 
+        const playersCount = await ctx.db.player.count({ where: { classificationId: input.classificationId } });
+        if (playersCount) throw classificationErrorKeys.PLAYERS_ASSIGNED_TO_CLASSIFICATION;
+
         await ctx.db.category.deleteMany({ where: { classificationId: input.classificationId } });
 
         return await ctx.db.classification.delete({ where: { id: input.classificationId } });
