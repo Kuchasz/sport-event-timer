@@ -1,4 +1,4 @@
-import { createRange, isNotAscendingOrder } from "@set/utils/dist/array";
+import { createRange, hasUndefinedBetweenValues, isNotAscendingOrder } from "@set/utils/dist/array";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
@@ -78,6 +78,10 @@ export const splitTimeRouter = router({
                             .filter(tio => t.times[tio.timingPointId]?.[tio.lap] !== undefined)
                             .map(tio => t.times[tio.timingPointId]?.[tio.lap]),
                         x => x.time,
+                    ),
+                    hasWarning: hasUndefinedBetweenValues(
+                        timesInOrder.map(tio => t.times[tio.timingPointId]?.[tio.lap]),
+                        x => x?.time,
                     ),
                 }));
 

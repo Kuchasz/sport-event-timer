@@ -33,7 +33,7 @@ type PoorDataTableProps<T> = {
     searchPlaceholder?: string;
     hideColumnsChooser?: boolean;
     hidePaging?: boolean;
-    getHasError?: (row: T) => boolean;
+    getRowStyle?: (row: T) => string;
 };
 
 type SortState<T> = { field: keyof T; order: "desc" | "asc" };
@@ -49,7 +49,7 @@ interface KeysResult<T> extends ReadonlyArray<Result> {
 }
 
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
-    const { gridName, data, columns, getRowId, getHasError, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
+    const { gridName, data, columns, getRowId, getRowStyle, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
     const t = useTranslations();
 
     const [gridColumnVisibilityState, setGridColumnVisibilityState] = useAtom(
@@ -175,7 +175,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                         <div
                                             className={classNames(
                                                 "flex items-center border-b px-4 py-2",
-                                                getHasError && getHasError(d.obj) ? "bg-red-500 text-white" : "group-hover:bg-gray-50",
+                                                getRowStyle ? getRowStyle(d.obj) : "",
                                             )}
                                             key={c.headerName}>
                                             {c.cellRenderer ? (

@@ -58,6 +58,22 @@ export const isNotAscendingOrder = <T>(arr: T[], predicate: (item: T) => number)
     return false;
 };
 
+export const hasUndefinedBetweenValues = <T>(items: T[], predicate: (item: T) => number | undefined) => {
+    let alreadyFoundUndefined = false;
+
+    for (const item of items) {
+        if (predicate(item) === undefined) {
+            alreadyFoundUndefined = true;
+        } else if (alreadyFoundUndefined) {
+            // If undefined occurred before a non-undefined value, return false
+            return true;
+        }
+    }
+
+    // If the loop completes without issues, return true
+    return false;
+};
+
 export const customSort = <T>(items: T[], pred: (item: T) => string): T[] => {
     return items.sort((a, b) => {
         const [aBeforeDot, aAfterDot] = pred(a).split(".").map(Number);

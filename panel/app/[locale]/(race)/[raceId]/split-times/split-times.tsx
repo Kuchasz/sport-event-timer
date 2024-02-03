@@ -187,7 +187,9 @@ export const SplitTimes = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.splitTimes.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
-                            getHasError={item => item.hasError}
+                            getRowStyle={item =>
+                                item.hasError ? "bg-red-400 text-white" : item.hasWarning ? "bg-orange-400 text-white" : ""
+                            }
                             gridName="split-times"
                             searchFields={["name", "lastName", "bibNumber"]}
                         />
