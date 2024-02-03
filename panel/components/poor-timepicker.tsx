@@ -15,7 +15,7 @@ export const PoorTimepicker = ({
     placeholder?: string;
     onChange: (event: { target: { value: number } }) => void;
 }) => {
-    const inputRef = useMask({ mask: "--:--", replacement: { "-": /\d/ }, showMask: true });
+    const inputRef = useMask({ mask: "__:__", replacement: { _: /\d/ }, showMask: true });
 
     const [value, setValue] = useState<string>(milisecondsToTimeString(initialValue));
     return (
@@ -42,7 +42,7 @@ export const PoorFullTimepicker = ({
     date: number;
     onChange: (event: { target: { value: number } }) => void;
 }) => {
-    const inputRef = useMask({ mask: "--:--:--.---", replacement: { "-": /\d/ }, showMask: true });
+    const inputRef = useMask({ mask: "__:__:__.___", replacement: { _: /\d/ }, showMask: true });
 
     const [value, setValue] = useState<string>(formatTimeWithMilliSec(initialValue));
     return (

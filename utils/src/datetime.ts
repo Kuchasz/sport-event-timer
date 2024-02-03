@@ -36,7 +36,7 @@ export const getCountdownTime = (time: number) => {
 };
 
 export const timeOnlyFormatTimeNoSec = (time?: number) => {
-    if (!time) return "--:--";
+    if (!time) return "__:__";
 
     const dateTime = new Date(time);
 
@@ -44,13 +44,13 @@ export const timeOnlyFormatTimeNoSec = (time?: number) => {
 };
 
 export const formatTimeWithSec = (time?: number) => {
-    if (!time) return "--:--:--";
+    if (!time) return "__:__:__";
     const dateTime = new Date(time);
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(dateTime.getSeconds())}`;
 };
 
 export const formatTimeWithMilliSec = (time?: number) => {
-    if (!time) return "--:--:--.---";
+    if (!time) return "__:__:__.___";
     const dateTime = new Date(time);
     return `${formatNumber(dateTime.getHours())}:${formatNumber(dateTime.getMinutes())}:${formatNumber(
         dateTime.getSeconds(),
@@ -58,7 +58,7 @@ export const formatTimeWithMilliSec = (time?: number) => {
 };
 
 export const formatTimeWithMilliSecUTC = (totalMilliseconds?: number) => {
-    if (!totalMilliseconds) return "--:--:--.---";
+    if (!totalMilliseconds) return "__:__:__.___";
 
     const hours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
     const minutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
@@ -126,7 +126,7 @@ export const isPast = (date: Date) => {
     return dateCopyDateObject < todayDateObject;
 };
 
-//potential timezone related issues
+//potential timezone related i__ues
 export const getCurrentYear = () => new Date().getFullYear();
 
 type MonthFormat = "long" | "numeric" | "2-digit" | "short" | "narrow" | undefined;
