@@ -14,7 +14,7 @@ export default async function ({ params: { raceId } }: { params: { raceId: strin
         <div className="flex flex-col p-8">
             <div className="text-sm font-semibold">Choose classification:</div>
             {classifications.map(c => (
-                <Link className="py-2 hover:underline" href={`/results/${raceId}/${c.id}` as Route}>
+                <Link key={c.id} className="py-2 hover:underline" href={`/results/${raceId}/${c.id}` as Route}>
                     {c.name} 🚀
                 </Link>
             ))}
