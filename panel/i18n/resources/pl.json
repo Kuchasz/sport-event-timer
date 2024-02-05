@@ -1821,7 +1821,22 @@
       "snowboarding": "Snowboarding",
       "luge": "Saneczkarstwo",
       "triathlon": "Triathlon",
-      "motorsports": "Sporty motorowe"
+      "motorsports": "Sporty motorowe",
+      "trail-running": "Biegi terenowe",
+      "cyclocross": "Kolarstwo przełajowe",
+      "bmx": "BMX",
+      "bike-tour": "Wycieczka rowerowa",
+      "skiing": "Narciarstwo",
+      "speed-skating": "Łyżwiarstwo szybkie",
+      "sailing": "Żeglarstwo",
+      "biathlon": "Biathlon",
+      "duathlon": "Duathlon",
+      "walking": "Chodzenie",
+      "wakeboarding": "Wakeboarding",
+      "obstacle-course-run": "Bieg z przeszkodami",
+      "dog-sled-race": "Wyścig psich zaprzęgów",
+      "kayaking": "Kajakarstwo",
+      "other": "Inne"
     },
     "status": {
       "disabled": "Wyłączone",

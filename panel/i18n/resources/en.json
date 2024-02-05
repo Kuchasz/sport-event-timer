@@ -1822,7 +1822,22 @@
       "snowboarding": "Snowboarding",
       "luge": "Luge",
       "triathlon": "Triathlon",
-      "motorsports": "Motorsports"
+      "motorsports": "Motorsports",
+      "trail-running": "Trail Running",
+      "cyclocross": "Cyclocross",
+      "bmx": "BMX",
+      "bike-tour": "Bike Tour",
+      "skiing": "Skiing",
+      "speed-skating": "Speed Skating",
+      "sailing": "Sailing",
+      "biathlon": "Biathlon",
+      "duathlon": "Duathlon",
+      "walking": "Walking",
+      "wakeboarding": "Wakeboarding",
+      "obstacle-course-run": "Obstacle Course Run",
+      "dog-sled-race": "Dog Sled Race",
+      "kayaking": "Kayaking",
+      "other": "Other"
     },
     "status": {
       "disabled": "Disabled",
