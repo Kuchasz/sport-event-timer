@@ -64,7 +64,7 @@ export const Results = ({
                     <div className="w-full max-w-xl">
                         <div className="w-full border-b border-gray-200 shadow">
                             <table className="w-full divide-y divide-gray-300">
-                                <thead className="sticky top-0 bg-gray-100">
+                                <thead className="sticky top-0 bg-white">
                                     <tr>
                                         <th className="w-12 px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
                                         <th className="px-1 py-2 text-left text-xs text-gray-800">{t("results.grid.columns.player")}</th>
@@ -74,7 +74,7 @@ export const Results = ({
                                         {ageCategoriesExist && (
                                             <th className="px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
                                         )}
-                                        <th className="px-1 py-2 text-right text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
+                                        <th className="py-2 text-right text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -87,13 +87,13 @@ export const Results = ({
                                                     "bg-white": i % 2 === 1,
                                                     "bg-gray-100": i % 2 === 0,
                                                 })}>
-                                                <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
-                                                <td className="px-1 py-3 text-xs font-semibold uppercase">
+                                                <td className="px-1 py-2.5 text-center text-xs font-bold">{i + 1}</td>
+                                                <td className="px-1 py-2.5 text-xs font-semibold uppercase">
                                                     <span className="mr-1 font-semibold text-gray-500">{s.bibNumber}</span>
                                                     {s.name.slice(0, 1)}. {s.lastName}
                                                 </td>
                                                 {openCategoriesExist && (
-                                                    <td className="flex flex-col items-center px-1 py-3 text-center text-xs">
+                                                    <td className="flex flex-col items-center px-1 py-2.5 text-center text-xs">
                                                         <div
                                                             className={classNames("text-center", {
                                                                 ["flex h-5 w-5 items-center justify-center rounded-md bg-gray-600 font-bold text-white"]:
@@ -105,19 +105,24 @@ export const Results = ({
                                                 )}
 
                                                 {ageCategoriesExist && (
-                                                    <td className="px-1 py-3 text-center text-xs">
-                                                        {s.ageCategory && `${s.ageCategory.name} / ${s.ageCategoryPlace}`}
+                                                    <td className="px-1 py-2.5 text-center text-xs">
+                                                        {s.ageCategory && (
+                                                            <span className="flex justify-between">
+                                                                <span>{s.ageCategory.name}</span>
+                                                                <span className="mx-0.5">/</span>
+                                                                <span className="font-bold">{s.ageCategoryPlace}</span>
+                                                            </span>
+                                                        )}
                                                     </td>
                                                 )}
 
                                                 <td
-                                                    className={classNames(
-                                                        "px-1 py-3 text-center font-mono text-xs font-semibold uppercase",
-                                                        { "text-right": !s.invalidState },
-                                                    )}>
+                                                    className={classNames("px-1 py-2.5 text-center  text-xs font-semibold uppercase", {
+                                                        "text-right": !s.invalidState,
+                                                    })}>
                                                     {s.invalidState ? s.invalidState : !s.invalidState && formatGap(s.gap)}
                                                 </td>
-                                                <td>
+                                                <td className="pl-1 pr-2 text-gray-400">
                                                     <Icon path={rowIds.includes(i) ? mdiChevronDown : mdiChevronRight} size={0.8} />
                                                 </td>
                                             </tr>
