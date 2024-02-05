@@ -8,28 +8,33 @@ type ResultEntry = [string, number];
 
 export const resultRouter = router({
     results: publicProcedure
-        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                classificationId: z.number({ required_error: "classificationId is required" }),
+            }),
+        )
         .query(async ({ input, ctx }) => {
-            const raceId = input.raceId;
+            const { raceId, classificationId } = input;
 
             const allPlayers = await ctx.db.player.findMany({
-                where: { raceId },
+                where: { raceId, classificationId },
                 include: { absence: true, profile: true },
             });
 
-            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId } });
-            const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId } });
+            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId, player: { classificationId } } });
+            const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId, player: { classificationId } } });
 
             const disqualifications = await toMap(
                 ctx.db.disqualification.findMany({
-                    where: { raceId },
+                    where: { raceId, player: { classificationId } },
                 }),
                 d => d.bibNumber,
                 d => ({ id: d.id, reason: d.reason }),
             );
 
             const timePenalties = toLookup(
-                await ctx.db.timePenalty.findMany({ where: { raceId } }),
+                await ctx.db.timePenalty.findMany({ where: { raceId, player: { classificationId } } }),
                 p => p.bibNumber,
                 p => ({ time: p.time, reason: p.reason, id: p.id }),
             );
@@ -106,22 +111,14 @@ export const resultRouter = router({
                     invalidState: undefined,
                 }));
 
-            const classifications = await toMap(
-                ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } }),
-                c => c.id,
-                c => c,
-            );
+            const classification = await ctx.db.classification.findFirstOrThrow({ where: { raceId }, include: { categories: true } });
 
             const resultsWithCategories = results.map(r => ({
                 ...r,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                ageCategory: classifications[r.classificationId]!.categories!.filter(c => !!c.minAge && !!c.maxAge).find(
-                    c => c.minAge! <= r.age && c.maxAge! >= r.age && (!c.gender || c.gender === r.gender),
-                )!,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                openCategory: classifications[r.classificationId]!.categories!.filter(c => !c.minAge && !c.maxAge && !!c.gender).find(
-                    c => c.gender === r.gender,
-                )!,
+                ageCategory: classification.categories
+                    .filter(c => !!c.minAge && !!c.maxAge)
+                    .find(c => c.minAge! <= r.age && c.maxAge! >= r.age && (!c.gender || c.gender === r.gender))!,
+                openCategory: classification.categories.filter(c => !c.minAge && !c.maxAge && !!c.gender).find(c => c.gender === r.gender)!,
             }));
 
             const playersByAgeCategories = Object.fromEntries(

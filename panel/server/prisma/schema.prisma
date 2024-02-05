@@ -112,6 +112,8 @@ model Player {
     playerRegistrationId Int
     absence              Absence[]
     playerProfileId      Int
+    TimePenalty          TimePenalty[]
+    Disqualification     Disqualification?
 
     @@unique([raceId, playerRegistrationId])
     @@unique([raceId, bibNumber])
@@ -216,6 +218,7 @@ model TimePenalty {
     reason    String
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 }
 
 model Disqualification {
@@ -224,6 +227,7 @@ model Disqualification {
     reason    String
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@unique([raceId, bibNumber])
 }

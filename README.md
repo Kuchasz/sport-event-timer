@@ -102,6 +102,8 @@ Application for making time measurements
 | 02/02/2024 | Toast notification should be displayed on top of confirmationbackdrop |                  :date:                   |
 | 04/02/2024 | Highlight new result on results page                                  |                  :date:                   |
 | 04/02/2024 | Add split times (with laps) to results page                           |                  :date:                   |
+| 04/02/2024 | Overall/categories toggle switch on results page                      |                  :date:                   |
+| 05/02/2024 | Each classification may/should have separate timing points            |                  :date:                   |
 
 ## TODO
 

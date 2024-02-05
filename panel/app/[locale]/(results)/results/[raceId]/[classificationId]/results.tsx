@@ -13,9 +13,22 @@ import { trpc } from "trpc-core";
 type Results = AppRouterOutputs["result"]["results"];
 type Race = AppRouterOutputs["race"]["raceInformation"];
 
-export const Results = ({ raceId, initialResults, initialRace }: { raceId: number; initialResults: Results; initialRace: Race }) => {
+export const Results = ({
+    raceId,
+    classificationId,
+    initialResults,
+    initialRace,
+}: {
+    raceId: number;
+    classificationId: number;
+    initialResults: Results;
+    initialRace: Race;
+}) => {
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId }, { initialData: initialRace });
-    const { data: results } = trpc.result.results.useQuery({ raceId }, { refetchInterval: 10_000, initialData: initialResults });
+    const { data: results } = trpc.result.results.useQuery(
+        { raceId, classificationId },
+        { refetchInterval: 10_000, initialData: initialResults },
+    );
     const [rowIds, setRowIds] = useState<number[]>([]);
 
     const abbreviations = useTranslations("results.abbreviations");

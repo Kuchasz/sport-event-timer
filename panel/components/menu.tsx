@@ -17,7 +17,7 @@ type MenuGroup = {
 };
 
 export const MenuHeader = (n: { text: string }) => (
-    <div className={classNames("flex items-center px-6 text-sm font-semibold")}>{n.text}</div>
+    <div className={classNames("flex items-center px-6 py-2 text-sm font-semibold")}>{n.text}</div>
 );
 
 export const MenuButton = (n: {
@@ -31,7 +31,7 @@ export const MenuButton = (n: {
 }) => (
     <Link href={n.to}>
         <div
-            className={classNames("my-1.5 flex cursor-pointer items-center py-3 pl-6 pr-3 text-sm font-medium transition-all", {
+            className={classNames("flex cursor-pointer items-center py-3 pl-6 pr-3 text-sm font-medium transition-all", {
                 [n.bg]: n.isActive,
                 ["text-gray-700 hover:bg-gray-100"]: !n.isActive,
                 [n.color]: n.isActive,

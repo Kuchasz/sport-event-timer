@@ -16,6 +16,8 @@ import { PoorDataTable, type PoorDataTableColumn } from "components/poor-data-ta
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
+import { useState } from "react";
+import { PoorSelect } from "components/poor-select";
 
 type Result = AppRouterOutputs["result"]["results"][0];
 
@@ -53,7 +55,16 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
 
 export const Results = () => {
     const raceId = useCurrentRaceId();
-    const { data: results, refetch: refetchResults } = trpc.result.results.useQuery({ raceId: raceId });
+    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId }, { initialData: [] });
+
+    const [classificationId, setClassificationId] = useState<number>();
+
+    const { data: results, refetch: refetchResults } = trpc.result.results.useQuery(
+        { raceId: raceId, classificationId: classificationId! },
+        {
+            enabled: classificationId !== undefined,
+        },
+    );
 
     const { data: disqualifications, refetch: refetchDisqualifications } = trpc.disqualification.disqualifications.useQuery(
         {
@@ -197,7 +208,15 @@ export const Results = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
-
+                <div className="my-2">
+                    <PoorSelect
+                        initialValue={classificationId}
+                        items={classifications}
+                        placeholder={t("pages.players.form.classification.placeholder")}
+                        nameKey="name"
+                        valueKey="id"
+                        onChange={e => setClassificationId(e.target.value)}></PoorSelect>
+                </div>
                 {results && (
                     <div className="flex-grow overflow-hidden">
                         <PoorDataTable
