@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { categorySchema } from "modules/classification/models";
 import { Form, FormInput } from "form";
 import { useTranslations } from "next-intl";
+import { PoorCheckbox } from "components/poor-checkbox";
 
 type Category = AppRouterInputs["classification"]["addCategory"];
 
@@ -93,6 +94,16 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                     </RadioGroup>
                 )}
                 name="gender"
+            />
+            <div className="p-2"></div>
+            <FormInput<Category, "isSpecial">
+                label={t("pages.classifications.categories.form.isSpecial.label")}
+                description={t("pages.classifications.categories.form.isSpecial.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCheckbox label={t("pages.classifications.categories.form.isSpecial.label")} value={value} onChange={onChange} />
+                )}
+                name="isSpecial"
             />
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>

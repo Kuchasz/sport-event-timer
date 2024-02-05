@@ -639,6 +639,10 @@
             "label": "Name",
             "placeholder": "Enter category name",
             "description": "Name displayed in many places like results list."
+          },
+          "isSpecial": {
+            "label": "Special category",
+            "description": "Competitors must be manually assigned to special categories based on any criteria."
           }
         },
         "grid": {

@@ -52,7 +52,9 @@ export const Results = ({
             <div className="flex flex-col items-center">
                 <div className="my-4 flex w-full max-w-[800px] flex-col px-4">
                     <h2 className="text-2xl font-semibold uppercase">{race?.name}</h2>
-                    <h3 className="text-sm font-semibold">{race?.date?.toLocaleDateString(locale)}</h3>
+                    <h3 className="text-sm font-semibold">
+                        {race?.date?.toLocaleDateString(locale)}, {race?.location}
+                    </h3>
                     <div className="mt-2 text-xs">
                         <span>{t("results.refresh.message")}</span>
                         <div className="mt-2"></div>
@@ -96,8 +98,11 @@ export const Results = ({
                                                     <td className="flex flex-col items-center px-1 py-2.5 text-center text-xs">
                                                         <div
                                                             className={classNames("text-center", {
-                                                                ["flex h-5 w-5 items-center justify-center rounded-md bg-gray-600 font-bold text-white"]:
+                                                                ["flex h-5 w-5 items-center justify-center rounded-md font-bold text-white"]:
                                                                     s.openCategoryPlace && s.openCategoryPlace <= 3,
+                                                                ["bg-orange-300"]: s.openCategoryPlace === 3,
+                                                                ["bg-gray-300"]: s.openCategoryPlace === 2,
+                                                                ["bg-yellow-300"]: s.openCategoryPlace === 1,
                                                             })}>
                                                             {s.openCategory && `${s.openCategoryPlace}`}
                                                         </div>

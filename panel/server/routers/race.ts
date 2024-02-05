@@ -23,7 +23,7 @@ export const raceRouter = router({
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const id = input.raceId;
-            return await ctx.db.race.findUnique({ where: { id }, select: { name: true, date: true } });
+            return await ctx.db.race.findUnique({ where: { id }, select: { name: true, date: true, location: true } });
         }),
     updateRaceInformation: protectedProcedure.input(raceInformationSchema).mutation(async ({ input, ctx }) => {
         const { id, ...data } = input;

@@ -639,6 +639,10 @@
             "label": "Nazwa",
             "placeholder": "Wpisz nazwę kategorii",
             "description": "Nazwa wyświetlana między innymi na liście wyników."
+          },
+          "isSpecial": {
+            "label": "Kategoria specjalna",
+            "description": "Zawodnicy muszą być przypisywani ręcznie do kategorii specjalnych na podstawie dowolnych kryteriów."
           }
         },
         "grid": {

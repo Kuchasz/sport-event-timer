@@ -4,11 +4,11 @@ import type { Gender } from "modules/shared/models";
 import { categorySchema, classificationSchema } from "../../modules/classification/models";
 import { classificationErrorKeys } from "modules/classification/errors";
 
-const classificationsSchema = z.object({
-    id: z.number(),
-    raceId: z.number({ required_error: "raceId is required" }).min(1),
-    name: z.string({ required_error: "name is required" }),
-});
+// const classificationsSchema = z.object({
+//     id: z.number(),
+//     raceId: z.number({ required_error: "raceId is required" }).min(1),
+//     name: z.string({ required_error: "name is required" }),
+// });
 
 export const classificationRouter = router({
     classifications: protectedProcedure
@@ -17,14 +17,11 @@ export const classificationRouter = router({
                 raceId: z.number({ required_error: "raceId is required" }),
             }),
         )
-        .output(z.array(classificationsSchema))
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;
             const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
 
-            return classifications.map(
-                (c, index) => ({ ...c, categoriesNumber: c.categories.length, index: index + 1 }) as z.infer<typeof classificationsSchema>,
-            );
+            return classifications.map((c, index) => ({ ...c, categoriesNumber: c.categories.length, index: index + 1 }));
         }),
     categories: protectedProcedure
         .input(
