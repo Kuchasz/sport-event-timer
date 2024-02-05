@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import type { Gender } from "modules/shared/models";
 import { categorySchema, classificationSchema } from "../../modules/classification/models";
 import { classificationErrorKeys } from "modules/classification/errors";
@@ -11,7 +11,7 @@ import { classificationErrorKeys } from "modules/classification/errors";
 // });
 
 export const classificationRouter = router({
-    classifications: protectedProcedure
+    classifications: publicProcedure
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
