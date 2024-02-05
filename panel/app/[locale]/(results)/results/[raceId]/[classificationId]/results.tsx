@@ -50,10 +50,10 @@ export const Results = ({
                 <title>{t("results.header.title")}</title>
             </Head>
             <div className="flex flex-col items-center">
-                <div className="my-8 flex max-w-[800px] flex-col px-4">
-                    <h2 className="text-3xl font-semibold uppercase">{race?.name}</h2>
-                    <h3>{race?.date?.toLocaleDateString(locale)}</h3>
-                    <div className="mt-2 text-sm">
+                <div className="my-4 flex w-full max-w-[800px] flex-col px-4">
+                    <h2 className="text-2xl font-semibold uppercase">{race?.name}</h2>
+                    <h3 className="text-sm font-semibold">{race?.date?.toLocaleDateString(locale)}</h3>
+                    <div className="mt-2 text-xs">
                         <span>{t("results.refresh.message")}</span>
                         <div className="mt-2"></div>
                     </div>
@@ -66,16 +66,15 @@ export const Results = ({
                             <table className="w-full divide-y divide-gray-300">
                                 <thead className="sticky top-0 bg-gray-100">
                                     <tr>
-                                        <th className="w-12 px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
-                                        <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.bibNumber")}</th>
-                                        <th className="px-1 py-4 text-left text-xs text-gray-800">{t("results.grid.columns.player")}</th>
+                                        <th className="w-12 px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
+                                        <th className="px-1 py-2 text-left text-xs text-gray-800">{t("results.grid.columns.player")}</th>
                                         {openCategoriesExist && (
-                                            <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.open")}</th>
+                                            <th className="px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.open")}</th>
                                         )}
                                         {ageCategoriesExist && (
-                                            <th className="px-1 py-4 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
+                                            <th className="px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.category")}</th>
                                         )}
-                                        <th className="px-1 py-4 text-right text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
+                                        <th className="px-1 py-2 text-right text-xs text-gray-800">{t("results.grid.columns.gap")}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -89,8 +88,8 @@ export const Results = ({
                                                     "bg-gray-100": i % 2 === 0,
                                                 })}>
                                                 <td className="px-1 py-3 text-center text-xs">{i + 1}</td>
-                                                <td className="px-1 py-3 text-center text-xs font-semibold">{s.bibNumber}</td>
                                                 <td className="px-1 py-3 text-xs font-semibold uppercase">
+                                                    <span className="mr-1 font-semibold text-gray-500">{s.bibNumber}</span>
                                                     {s.name.slice(0, 1)}. {s.lastName}
                                                 </td>
                                                 {openCategoriesExist && (
@@ -128,8 +127,7 @@ export const Results = ({
                                                         "bg-white": i % 2 === 1,
                                                         "bg-gray-100": i % 2 === 0,
                                                     })}>
-                                                    <td></td>
-                                                    <td colSpan={6} className="px-2 pb-3 text-xs font-medium">
+                                                    <td colSpan={6} className="pb-3 pl-5 pr-2 text-xs font-medium">
                                                         <div className="table-row font-semibold">
                                                             <div className="table-cell py-0.5">{t("results.grid.columns.player")}:</div>
                                                             <div className="table-cell py-0.5 pl-2">
