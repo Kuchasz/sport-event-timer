@@ -1522,7 +1522,8 @@
       }
     },
     "header": {
-      "title": "Wyniki"
+      "title": "Wyniki",
+      "live": "wyniki na żywo"
     },
     "refresh": {
       "message": "Wyniki odświeżają się automatycznie co 10 sekund."

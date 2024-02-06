@@ -1522,7 +1522,8 @@
       }
     },
     "header": {
-      "title": "Results"
+      "title": "Results",
+      "live": "live results"
     },
     "refresh": {
       "message": "Results refresh automatically every 10 seconds."

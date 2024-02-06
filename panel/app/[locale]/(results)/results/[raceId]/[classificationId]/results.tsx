@@ -8,27 +8,21 @@ import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import React, { useState } from "react";
 import type { AppRouterOutputs } from "trpc";
-import { trpc } from "trpc-core";
 
 type Results = AppRouterOutputs["result"]["results"];
 type Race = AppRouterOutputs["race"]["raceInformation"];
 
 export const Results = ({
-    raceId,
-    classificationId,
-    initialResults,
-    initialRace,
+    title,
+    results,
+    race,
+    highlightOpenCategories,
 }: {
-    raceId: number;
-    classificationId: number;
-    initialResults: Results;
-    initialRace: Race;
+    title: string;
+    results: Results;
+    race: Race;
+    highlightOpenCategories: boolean;
 }) => {
-    const { data: race } = trpc.race.raceInformation.useQuery({ raceId }, { initialData: initialRace });
-    const { data: results } = trpc.result.results.useQuery(
-        { raceId, classificationId },
-        { refetchInterval: 10_000, initialData: initialResults },
-    );
     const [rowIds, setRowIds] = useState<number[]>([]);
 
     const abbreviations = useTranslations("results.abbreviations");
@@ -67,6 +61,11 @@ export const Results = ({
                         <div className="w-full border-b border-gray-200 shadow">
                             <table className="w-full divide-y divide-gray-300">
                                 <thead className="sticky top-0 bg-white">
+                                    <tr className="bg-orange-500 text-white">
+                                        <th className="px-2 text-left uppercase" colSpan={6}>
+                                            {title}
+                                        </th>
+                                    </tr>
                                     <tr>
                                         <th className="w-12 px-1 py-2 text-xs text-gray-800">{t("results.grid.columns.place")}</th>
                                         <th className="px-1 py-2 text-left text-xs text-gray-800">{t("results.grid.columns.player")}</th>
@@ -99,10 +98,12 @@ export const Results = ({
                                                         <div
                                                             className={classNames("text-center", {
                                                                 ["flex h-5 w-5 items-center justify-center rounded-md font-bold text-white"]:
-                                                                    s.openCategoryPlace && s.openCategoryPlace <= 3,
-                                                                ["bg-orange-300"]: s.openCategoryPlace === 3,
-                                                                ["bg-gray-300"]: s.openCategoryPlace === 2,
-                                                                ["bg-yellow-300"]: s.openCategoryPlace === 1,
+                                                                    highlightOpenCategories &&
+                                                                    s.openCategoryPlace &&
+                                                                    s.openCategoryPlace <= 3,
+                                                                ["bg-orange-300"]: highlightOpenCategories && s.openCategoryPlace === 3,
+                                                                ["bg-gray-300"]: highlightOpenCategories && s.openCategoryPlace === 2,
+                                                                ["bg-yellow-300"]: highlightOpenCategories && s.openCategoryPlace === 1,
                                                             })}>
                                                             {s.openCategory && `${s.openCategoryPlace}`}
                                                         </div>
