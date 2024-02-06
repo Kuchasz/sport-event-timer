@@ -1,5 +1,5 @@
 import deepmerge from "deepmerge";
-import { type Locales, locales } from "i18n";
+import { type Locales, locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";

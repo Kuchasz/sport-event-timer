@@ -5,7 +5,7 @@ import { StopwatchLayout } from "./stopwatch-layout";
 import { authenticate, getServerSession } from "auth";
 import { notFound } from "next/navigation";
 import deepmerge from "deepmerge";
-import { type Locales, locales } from "i18n";
+import { type Locales, locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { Task } from "@set/utils/dist/task";
 import { trpcRSC } from "trpc-core-rsc";

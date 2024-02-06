@@ -1,4 +1,4 @@
-import { locales } from "../i18n";
+import { locales } from "../i18n/locales";
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import type { MiddlewareFactory } from "./stack-handler";

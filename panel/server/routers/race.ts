@@ -1,7 +1,7 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
 import { raceErrors } from "modules/race/errors";
 import { z } from "zod";
-import { locales } from "../../i18n";
+import { locales } from "../../i18n/locales";
 import {
     raceConfirmationEmailTemplateSchema,
     raceInformationSchema,

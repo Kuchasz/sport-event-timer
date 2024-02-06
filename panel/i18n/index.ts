@@ -32,6 +32,3 @@ type ExcludedKeys = Exclude<TrpcClientKeys, TranslationKeys>;
 type PotentialMissingTranslations = ExcludedKeys extends never ? "" : ExcludedKeys;
 
 export const potentialInvalidMissingTranslation: PotentialMissingTranslations = "";
-
-export const locales = ["en", "pl"] as const;
-export type Locales = (typeof locales)[number];

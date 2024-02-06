@@ -15,7 +15,7 @@ import type {
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
 import { daysFromNow, stripSeconds, subtractDaysFromDate } from "@set/utils/dist/datetime";
-import type { Locales } from "../i18n";
+import type { Locales } from "../i18n/locales";
 import { db } from "./db";
 
 type FakerLocales = Record<Locales, Faker>;
