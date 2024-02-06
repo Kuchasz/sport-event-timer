@@ -1,5 +1,5 @@
-import { stackMiddlewares } from "middlewares/stack-handler";
-import { withIntl } from "middlewares/with-intl";
+import { stackMiddlewares } from "./middlewares/stack-handler";
+import { withIntl } from "./middlewares/with-intl";
 import { withAuth } from "./middlewares/with-auth";
 
 const middlewares = [withAuth, withIntl];
