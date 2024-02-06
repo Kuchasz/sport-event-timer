@@ -22,6 +22,11 @@ function defineNextConfig(config) {
 // import { env } from "env";
 
 import NextIntlPlugin from "next-intl/plugin";
+import BundleAnalizer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = BundleAnalizer({
+    enabled: process.env.ANALYZE === "true",
+});
 
 const withNextIntl = NextIntlPlugin(
     // This is the default (also the `src` folder is supported out of the box)
@@ -29,31 +34,33 @@ const withNextIntl = NextIntlPlugin(
 );
 
 // export default withPWA(defineNextConfig({
-export default withNextIntl(
-    defineNextConfig({
-        // reactStrictMode: true,
-        // swcMinify: true,
-        // i18n: {
-        //     locales: ["en", "pl"],
-        //     defaultLocale: "en",
-        // },
-        poweredByHeader: false,
-        // redirects: async () => {
-        //     return [{ source: '/', destination: '/panel', permanent: true }]
-        // }
-        eslint: {
-            ignoreDuringBuilds: true,
-        },
-        // rewrites() {
-        //     return [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }];
-        //     // return env.NEXT_PUBLIC_NODE_ENV === "production"
-        //     //     ? [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }]
-        //     //     : [];
-        // },
+export default withBundleAnalyzer(
+    withNextIntl(
+        defineNextConfig({
+            // reactStrictMode: true,
+            // swcMinify: true,
+            // i18n: {
+            //     locales: ["en", "pl"],
+            //     defaultLocale: "en",
+            // },
+            poweredByHeader: false,
+            // redirects: async () => {
+            //     return [{ source: '/', destination: '/panel', permanent: true }]
+            // }
+            eslint: {
+                ignoreDuringBuilds: true,
+            },
+            // rewrites() {
+            //     return [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }];
+            //     // return env.NEXT_PUBLIC_NODE_ENV === "production"
+            //     //     ? [{ source: "/api/trpc/:path*", destination: "http://localhost:3001/:path*" }]
+            //     //     : [];
+            // },
 
-        // experimental: {
-        //     runtime: "nodejs",
-        //     // appDir: true,
-        // },
-    }),
+            // experimental: {
+            //     runtime: "nodejs",
+            //     // appDir: true,
+            // },
+        }),
+    ),
 );

@@ -1,11 +1,10 @@
 {
-    "name": "@set/utils",
-    "version": "1.0.0",
-    "scripts": {
-        "build": "tsc --project tsconfig.json"
-    },
-    "dependencies": {
-        "fp-ts": "2.16.1",
-        "typescript": "5.2.2"
-    }
+  "name": "@set/utils",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "dependencies": {
+    "typescript": "5.2.2"
+  }
 }

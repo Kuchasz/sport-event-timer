@@ -5,6 +5,7 @@ import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import type { NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import type { IncomingMessage } from "http";
 import { DomainError, sharedErrors } from "../modules/shared/errors";
+import NodeCache from "node-cache";
 import superjson from "superjson";
 import type ws from "ws";
 import { getUserSession } from "../auth/index";
@@ -118,3 +119,46 @@ const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthenticated);
+
+const cacheSingleton = new NodeCache();
+
+// A map of cached procedure names to a callable that gives a TTL in seconds
+const cachedProcedures: Map<string, (() => number) | undefined> = new Map<string, (() => number) | undefined>();
+cachedProcedures.set("result.results", () => 10); // 10 seconds
+
+const middlewareMarker = "middlewareMarker" as "middlewareMarker" & {
+    __brand: "middlewareMarker";
+};
+
+export const cacheMiddleware = t.middleware(async ({ ctx, next, path, type, rawInput }) => {
+    if (type !== "query" || !cachedProcedures.has(path)) {
+        return next();
+    }
+    let key = path;
+    if (rawInput) {
+        key += JSON.stringify(rawInput).replace(/\"/g, "'");
+    }
+    const cachedData = cacheSingleton.get(key);
+    if (cachedData) {
+        return {
+            ok: true,
+            data: cachedData,
+            ctx,
+            marker: middlewareMarker,
+        };
+    }
+    const result = await next();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // data is not defined in the type MiddlewareResult
+    const dataCopy = structuredClone(result.data);
+
+    const ttlSecondsCallable = cachedProcedures.get(path);
+    if (ttlSecondsCallable) {
+        cacheSingleton.set(key, dataCopy, ttlSecondsCallable());
+    } else {
+        cacheSingleton.set(key, dataCopy);
+    }
+    return result;
+});

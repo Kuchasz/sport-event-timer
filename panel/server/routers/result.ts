@@ -1,13 +1,14 @@
-import { publicProcedure, router } from "../trpc";
 import { groupBy, sort, toLookup, toMap } from "@set/utils/dist/array";
-import { z } from "zod";
 import { calculateAge } from "@set/utils/dist/datetime";
 import { fromDeepEntries } from "@set/utils/dist/object";
+import { z } from "zod";
+import { publicProcedure, router } from "../trpc";
 
 type ResultEntry = [string, number];
 
 export const resultRouter = router({
     results: publicProcedure
+        // .use(cacheMiddleware)
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
@@ -43,6 +44,9 @@ export const resultRouter = router({
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
+
+            const classification = await ctx.db.classification.findFirstOrThrow({ where: { raceId }, include: { categories: true } });
+
             const raceDateStart = race?.date.getTime();
 
             const startTimingPoint = timingPoints.at(0)!;
@@ -110,8 +114,6 @@ export const resultRouter = router({
                     result: t.times[endTimingPoint.id][0] - t.times[startTimingPoint.id][0] + t.totalTimePenalty,
                     invalidState: undefined,
                 }));
-
-            const classification = await ctx.db.classification.findFirstOrThrow({ where: { raceId }, include: { categories: true } });
 
             const resultsWithCategories = results.map(r => ({
                 ...r,
