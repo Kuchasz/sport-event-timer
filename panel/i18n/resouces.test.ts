@@ -1,7 +1,7 @@
 import { excludeItems } from "@set/utils/dist/array";
 import { getAllPropertyNames } from "@set/utils/dist/object";
 import { errorKeys } from "../modules/shared/error-keys";
-import { locales } from "./index";
+import { locales } from "./locales";
 
 describe("Errors translations", () => {
     const errorTranslationKeys = Object.values(errorKeys);
