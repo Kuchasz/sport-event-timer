@@ -1,10 +1,10 @@
 import { type NextFetchEvent, type NextRequest, NextResponse } from "next/server";
 import type { MiddlewareFactory } from "./stack-handler";
-import { getUserSession } from "auth";
-import { env } from "env";
+import { getUserSession } from "../auth";
+import { env } from "../env";
 
 export const withAuth: MiddlewareFactory = next => async (request: NextRequest, _next: NextFetchEvent) => {
-    if (!/((api).*)/.test(request.nextUrl.pathname.slice(1))) {
+    if (!/((api|results).*)/.test(request.nextUrl.pathname.slice(1))) {
         const cookies = Object.fromEntries(request.cookies.getAll().map(c => [c.name, c.value]));
 
         const session = await getUserSession(cookies, true);
