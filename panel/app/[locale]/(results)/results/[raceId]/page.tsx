@@ -1,17 +1,17 @@
-import { trpcRSC } from "trpc-core-rsc";
 import { Task } from "@set/utils/dist/task";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { type Route } from "next";
 import { type AppRouterOutputs } from "trpc";
+import { publicTrpcRSC } from "public-trpc-core-rsc";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 
 export default async function ({ params: { raceId } }: { params: { raceId: string } }) {
-    const race = await Task.tryCatch(trpcRSC.race.raceInformation.query({ raceId: parseInt(raceId) }));
+    const race = await Task.tryCatch(publicTrpcRSC.race.raceInformation.query({ raceId: parseInt(raceId) }));
     if (race.type !== "success") notFound();
 
-    const classifications = await trpcRSC.classification.classifications.query({ raceId: parseInt(raceId) });
+    const classifications = await publicTrpcRSC.classification.classifications.query({ raceId: parseInt(raceId) });
 
     const hasOpenCategories = (classification: Classification) =>
         classification.categories.some(c => !c.minAge && !c.maxAge && !c.isSpecial);

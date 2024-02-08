@@ -2,11 +2,11 @@ import superjson from "superjson";
 import { type AppRouter } from "./server/routers/app";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { env } from "./env";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 
 const url = `http://localhost:${env.API_PORT}`;
 
-export const trpcRSC = createTRPCProxyClient<AppRouter>({
+export const publicTrpcRSC = createTRPCProxyClient<AppRouter>({
     transformer: superjson,
     links: [
         // loggerLink({
@@ -14,12 +14,8 @@ export const trpcRSC = createTRPCProxyClient<AppRouter>({
         // }),
         httpBatchLink({
             // url: `${url}/api/trpc`,
-
+            fetch: (req, options) => fetch(req, { ...options, next: { revalidate: 3 } }),
             url,
-            headers() {
-                const { cookie } = Object.fromEntries(new Map(headers()));
-                return { cookie };
-            },
         }),
     ],
 });

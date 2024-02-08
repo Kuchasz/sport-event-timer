@@ -57,6 +57,12 @@ export default withBundleAnalyzer(
             //     //     : [];
             // },
 
+            // logging: {
+            //     fetches: {
+            //         fullUrl: true,
+            //     },
+            // },
+
             // experimental: {
             //     runtime: "nodejs",
             //     // appDir: true,
