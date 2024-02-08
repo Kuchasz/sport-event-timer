@@ -1,4 +1,3 @@
-import deepmerge from "deepmerge";
 import { locales, type Locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
@@ -15,10 +14,7 @@ export default async function ResultLayout({ children, params }: { children: Rea
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }

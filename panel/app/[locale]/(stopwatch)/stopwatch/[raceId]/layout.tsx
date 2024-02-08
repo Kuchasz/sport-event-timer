@@ -1,16 +1,14 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import React from "react";
-import { StopwatchLayout } from "./stopwatch-layout";
-import { authenticate, getServerSession } from "auth";
-import { notFound } from "next/navigation";
-import deepmerge from "deepmerge";
-import { type Locales, locales } from "i18n/locales";
-import { NextIntlClientProvider } from "next-intl";
 import { Task } from "@set/utils/dist/task";
-import { trpcRSC } from "trpc-core-rsc";
+import { authenticate, getServerSession } from "auth";
 import { SessionProvider } from "auth/provider";
+import { locales, type Locales } from "i18n/locales";
+import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
+import type { ReactNode } from "react";
+import { trpcRSC } from "trpc-core-rsc";
+import { StopwatchLayout } from "./stopwatch-layout";
 
 export default async function ({
     children,
@@ -34,10 +32,7 @@ export default async function ({
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }

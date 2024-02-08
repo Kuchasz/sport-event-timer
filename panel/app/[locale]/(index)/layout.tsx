@@ -1,5 +1,7 @@
-import deepmerge from "deepmerge";
-import { type Locales, locales } from "i18n/locales";
+import { getServerSession } from "auth";
+import { SessionProvider } from "auth/provider";
+import { Toaster } from "components/toaster";
+import { locales, type Locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
@@ -7,9 +9,6 @@ import type { ReactNode } from "react";
 import { Status } from "../../../components/index/status";
 import { Meta } from "../../../components/meta";
 import "../../../globals.scss";
-import { SessionProvider } from "auth/provider";
-import { getServerSession } from "auth";
-import { Toaster } from "components/toaster";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
@@ -42,10 +41,7 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }

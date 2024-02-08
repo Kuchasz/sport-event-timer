@@ -1,13 +1,12 @@
-import deepmerge from "deepmerge";
 import { locales, type Locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
+import { authenticate, getServerSession } from "../../../../auth";
+import { SessionProvider } from "../../../../auth/provider";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
-import { SessionProvider } from "../../../../auth/provider";
-import { authenticate, getServerSession } from "../../../../auth";
 
 export default async function PanelLayout(props: {
     children: ReactNode;
@@ -27,10 +26,7 @@ export default async function PanelLayout(props: {
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }

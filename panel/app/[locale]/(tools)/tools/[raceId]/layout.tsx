@@ -1,11 +1,10 @@
+import { Task } from "@set/utils/dist/task";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import TimerLayout from "./timer-layout";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import deepmerge from "deepmerge";
-import { Task } from "@set/utils/dist/task";
+import type { ReactNode } from "react";
 import { trpcRSC } from "trpc-core-rsc";
+import TimerLayout from "./timer-layout";
 
 export default async function (props: { children: ReactNode; params: { locale: string; raceId: string } }) {
     const locale = useLocale();
@@ -20,10 +19,7 @@ export default async function (props: { children: ReactNode; params: { locale: s
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }

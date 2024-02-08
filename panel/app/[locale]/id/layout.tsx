@@ -1,7 +1,6 @@
 import { mdiEmailOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { getCurrentYear } from "@set/utils/dist/datetime";
-import deepmerge from "deepmerge";
 import { locales, type Locales } from "i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
@@ -24,10 +23,7 @@ export default async function Layout({ children, params }: { children: React.Rea
     let messages;
 
     try {
-        const localeMessages = (await import(`../../../i18n/resources/${locale}.json`)).default;
-        const defaultMessages = (await import(`../../../i18n/resources/en.json`)).default;
-
-        messages = deepmerge(defaultMessages, localeMessages) as any;
+        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
     } catch (error) {
         notFound();
     }
