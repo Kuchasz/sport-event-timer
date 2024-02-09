@@ -148,7 +148,9 @@ export const resultRouter = router({
 
             const winningResult = sorted[0]?.result;
 
-            return sorted.map(s => ({ ...s, gap: winningResult && s.result ? s.result - winningResult : undefined }));
+            const result = sorted.map(s => ({ ...s, gap: winningResult && s.result ? s.result - winningResult : undefined }));
+
+            return result;
         }),
 });
 

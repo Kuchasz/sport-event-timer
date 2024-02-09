@@ -4,9 +4,7 @@ import { withAuth } from "./middlewares/with-auth";
 
 const middlewares = [withAuth, withIntl];
 
-const middleware = stackMiddlewares(middlewares);
-
-export default middleware;
+export default stackMiddlewares(middlewares);
 
 // const intlMiddleware = createMiddleware({
 //     locales,

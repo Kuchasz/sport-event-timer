@@ -4,17 +4,19 @@ import { getUserSession } from "../auth";
 import { env } from "../env";
 
 export const withAuth: MiddlewareFactory = next => async (request: NextRequest, _next: NextFetchEvent) => {
-    if (!/((api).*)/.test(request.nextUrl.pathname.slice(1))) {
+    if (!/((api|_next|assets|favicon|fonts|sw\.js|favicon\.ico).*)/.test(request.nextUrl.pathname.slice(1))) {
         const cookies = Object.fromEntries(request.cookies.getAll().map(c => [c.name, c.value]));
 
-        const session = await getUserSession(cookies, true);
+        const { refreshToken } = cookies;
 
-        if (session.accessToken) request.cookies.set({ name: "accessToken", value: session.accessToken });
+        const session = refreshToken ? await getUserSession(cookies, true) : undefined;
+
+        if (session?.accessToken) request.cookies.set({ name: "accessToken", value: session.accessToken });
 
         const response = await next(request, _next);
 
         if (response instanceof NextResponse) {
-            if (session.accessToken) {
+            if (session?.accessToken) {
                 const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "rura.cc" : "";
                 response.cookies.set("accessToken", session.accessToken, {
                     httpOnly: true,

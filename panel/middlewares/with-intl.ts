@@ -10,9 +10,9 @@ const middleware = createMiddleware({
 });
 
 export const withIntl: MiddlewareFactory = _next => (request: NextRequest, _next: NextFetchEvent) => {
-    // console.log(request.nextUrl.pathname);
     if (!/((api|_next|assets|favicon|fonts|sw\.js|favicon\.ico).*)/.test(request.nextUrl.pathname.slice(1))) {
-        return middleware(request);
+        const result = middleware(request);
+        return result;
     } else {
         return NextResponse.next();
     }

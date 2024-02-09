@@ -11,10 +11,12 @@
     "dev:ws": "tsx --tsconfig tsconfig.server.json server/wsDevServer.ts",
     "dev:ws:debug": "export DEBUG=prisma* && tsx --tsconfig tsconfig.server.json server/wsDevServer.ts",
     "dev:next": "next dev",
+    "dev:inspect:next": "NODE_OPTIONS='--inspect' next dev",
     "dev:next:debug": "export DEBUG=prisma* && next dev",
     "dev:start": "bun dev:ws & bun dev:next",
     "prod:ws": "tsx --tsconfig tsconfig.server.json server/wsProdServer.ts",
     "prod:next": "next start",
+    "prod:inspect:next": "NODE_OPTIONS='--inspect' next start",
     "prod:start": "bun prod:ws & bun prod:next",
     "test": "jest",
     "test:watch": "jest --watch"

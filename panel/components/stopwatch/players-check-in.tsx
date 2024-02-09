@@ -28,7 +28,7 @@ type TypedPlayerProps = {
 };
 
 export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
-    const playerNumberDigits = [...playerNumber];
+    const playerNumberDigits = playerNumber.split("");
     const t = useTranslations();
     return (
         <div className="flex flex-col items-center px-12">
