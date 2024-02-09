@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { type Route } from "next";
 import { type AppRouterOutputs } from "trpc";
-import { publicTrpcRSC } from "public-trpc-core-rsc";
+import { publicTrpcRSC } from "trpc-core-public-rsc";
 
 type Classification = AppRouterOutputs["classification"]["classifications"][0];
 

@@ -2,7 +2,7 @@ import { Results } from "./results";
 import { Task } from "@set/utils/dist/task";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { publicTrpcRSC } from "public-trpc-core-rsc";
+import { publicTrpcRSC } from "trpc-core-public-rsc";
 
 export default async function ({ params: { raceId, classificationId } }: { params: { raceId: string; classificationId: string } }) {
     const racePromise = Task.tryCatch(publicTrpcRSC.race.raceInformation.query({ raceId: parseInt(raceId) }));
