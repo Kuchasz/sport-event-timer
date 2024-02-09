@@ -1,4 +1,4 @@
-import { Results } from "./race-results";
+import { Results } from "./results";
 import { Task } from "@set/utils/dist/task";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
