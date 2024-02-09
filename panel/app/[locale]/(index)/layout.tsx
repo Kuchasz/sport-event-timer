@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import { Status } from "../../../components/index/status";
 import { Meta } from "../../../components/meta";
 import "../../../globals.scss";
+import { getLocales } from "i18n";
 
 const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     return (
@@ -41,7 +42,7 @@ export default async function PanelLayout(props: { children: ReactNode; params: 
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

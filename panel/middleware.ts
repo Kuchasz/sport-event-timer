@@ -3,7 +3,10 @@ import { withIntl } from "./middlewares/with-intl";
 import { withAuth } from "./middlewares/with-auth";
 
 const middlewares = [withAuth, withIntl];
-export default stackMiddlewares(middlewares);
+
+const middleware = stackMiddlewares(middlewares);
+
+export default middleware;
 
 // const intlMiddleware = createMiddleware({
 //     locales,

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import "../../../globals.scss";
+import { getLocales } from "i18n";
 
 export default async function RegistrationLayout({ children, params }: { children: ReactNode; params: { locale: string } }) {
     const isValidLocale = locales.includes(params.locale as Locales);
@@ -14,7 +15,7 @@ export default async function RegistrationLayout({ children, params }: { childre
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

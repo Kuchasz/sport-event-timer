@@ -8,6 +8,7 @@ import { TrpcProvider } from "providers";
 import { env } from "../../../env";
 import "../../../globals.scss";
 import RegistrationStateProvider from "./registration-state-provider";
+import { getLocales } from "i18n/index";
 
 export const metadata = {
     title: "Login",
@@ -23,7 +24,7 @@ export default async function Layout({ children, params }: { children: React.Rea
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

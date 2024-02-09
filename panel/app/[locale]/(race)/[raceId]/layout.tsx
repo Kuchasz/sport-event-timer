@@ -7,6 +7,7 @@ import { authenticate, getServerSession } from "../../../../auth";
 import { SessionProvider } from "../../../../auth/provider";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
+import { getLocales } from "i18n";
 
 export default async function PanelLayout(props: {
     children: ReactNode;
@@ -26,7 +27,7 @@ export default async function PanelLayout(props: {
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

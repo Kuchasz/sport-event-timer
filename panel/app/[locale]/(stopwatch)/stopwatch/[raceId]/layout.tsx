@@ -9,6 +9,7 @@ import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import { trpcRSC } from "trpc-core-rsc";
 import { StopwatchLayout } from "./stopwatch-layout";
+import { getLocales } from "i18n";
 
 export default async function ({
     children,
@@ -32,7 +33,7 @@ export default async function ({
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

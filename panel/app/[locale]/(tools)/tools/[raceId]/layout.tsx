@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { trpcRSC } from "trpc-core-rsc";
 import TimerLayout from "./timer-layout";
+import { getLocales } from "i18n";
 
 export default async function (props: { children: ReactNode; params: { locale: string; raceId: string } }) {
     const locale = useLocale();
@@ -19,7 +20,7 @@ export default async function (props: { children: ReactNode; params: { locale: s
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }

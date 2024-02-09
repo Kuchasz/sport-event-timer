@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { TrpcProvider } from "providers";
 import type { ReactNode } from "react";
 import "../../../globals.scss";
+import { getLocales } from "i18n";
 
 export default async function ResultLayout({ children, params }: { children: ReactNode; params: { locale: string } }) {
     const isValidLocale = locales.includes(params.locale as Locales);
@@ -14,13 +15,13 @@ export default async function ResultLayout({ children, params }: { children: Rea
     let messages;
 
     try {
-        messages = (await import(`../../../i18n/resources/${locale}.json`)).default;
+        messages = await getLocales(locale);
     } catch (error) {
         notFound();
     }
 
     return (
-        <html className="h-full w-full" lang={locale}>
+        <html className="h-full w-full">
             <body className="flex h-full w-full flex-col text-zinc-900">
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                     <TrpcProvider toastConfirmations={false} enableSubscriptions={false}>
