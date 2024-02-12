@@ -117,6 +117,7 @@ Application for making time measurements
 | 05/02/2024 | Optional registration fields                                          |                  :date:                   |
 | 07/02/2024 | Reduce middlewares bundle size                                        |                  :date:                   |
 | 07/02/2024 | Improve results list rendering performance                            |                  :date:                   |
+| 12/02/2024 | SSR react benchmarking                                                |                  :date:                   |
 
 ## TODO
 
