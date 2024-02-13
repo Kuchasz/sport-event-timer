@@ -16,10 +16,10 @@ const config = {
         tsconfigRootDir: __dirname,
         project: [
             "./tsconfig.json",
-            // "./cli/tsconfig.eslint.json", // separate eslint config for the CLI since we want to lint and typecheck differently due to template files
-            "./panel/tsconfig.json",
-            "./utils/tsconfig.json",
-            "./timer/tsconfig.json",
+            "./packages/cws/tsconfig.json",
+            "./packages/panel/tsconfig.json",
+            "./packages/utils/tsconfig.json",
+            "./packages/timer/tsconfig.json",
         ],
     },
     // overrides: [

@@ -6,9 +6,7 @@
     "lint-fix": "eslint --fix . --ext .ts,.tsx"
   },
   "workspaces": [
-    "timer",
-    "utils",
-    "panel"
+    "packages/*"
   ],
   "dependencies": {
     "@types/bcryptjs": "2.4.6",

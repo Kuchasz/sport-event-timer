@@ -29,17 +29,17 @@ jobs:
 
             - name: Build library - utils
               run: |
-                  cd ./utils
+                  cd ./packages/utils
                   bun run build
 
             - name: Build library - timer
               run: |
-                  cd ./timer
+                  cd ./packages/timer
                   bun run build
 
             - name: Generate prisma
               run: |
-                  cd ./panel
+                  cd ./packages/panel
                   bun run generate-prisma
 
             - name: Build Application
@@ -85,17 +85,17 @@ jobs:
 
             - name: Build library - utils
               run: |
-                  cd ./utils
+                  cd ./packages/utils
                   bun run build
 
             - name: Build library - timer
               run: |
-                  cd ./timer
+                  cd ./packages/timer
                   bun run build
 
             - name: Generate prisma
               run: |
-                  cd ./panel
+                  cd ./packages/panel
                   bun run generate-prisma
 
             - name: Lint
@@ -123,15 +123,15 @@ jobs:
 
             - name: Build library - utils
               run: |
-                  cd ./utils
+                  cd ./packages/utils
                   bun run build
 
             - name: Run tests
               run: |
-                  cd ./panel
+                  cd ./packages/panel
                   bun run test
 
             - name: Run tests
               run: |
-                  cd ./timer
+                  cd ./packages/timer
                   bun run test
