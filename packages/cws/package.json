@@ -9,6 +9,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@types/react": "^18.2.55",
     "hono": "^4.0.1"
   }
 }

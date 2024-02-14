@@ -1,12 +1,16 @@
 import { Hono } from "hono";
 import { Page } from "./components/page";
+import { html } from "hono/html";
 const app = new Hono();
+
+const messages = Array.from(Array(1000).keys()).map(i => `Good Morning ${i}`);
 
 app.get("/text", c => c.text("Hono!"));
 app.get("/json", c => c.json({ name: "Hono!", age: 12, from: 222 }));
-app.get("/html", c => c.html("<h1>Hono!</h1>"));
+app.get("/html", c => {
+    return c.html(`<h1>${messages.map(m => html`<li>${m}</li>`)}</h1>`);
+});
 app.get("/react", c => {
-    const messages = ["Good Morning", "Good Evening", "Good Night"];
     return c.html(<Page messages={messages} />);
 });
 
