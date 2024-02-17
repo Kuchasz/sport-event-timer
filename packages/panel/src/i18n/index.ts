@@ -8,7 +8,6 @@ const getLocale = getRequestConfig(async ({ locale }) => ({
 
 export default getLocale;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 export const getLocales = async (locale: string) => (await import(`${__dirname}/resources/${locale}.json`)).default;
 
 //eslint-disable-next-line

@@ -3,13 +3,14 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "@types/bun": "latest",
+    "typescript": "5.2.2"
   },
   "dependencies": {
-    "@types/react": "^18.2.55",
-    "hono": "^4.0.1"
+    "@mdi/js": "^7.4.47",
+    "@set/utils": "workspace:*",
+    "@types/react": "18.2.55",
+    "classnames": "^2.5.1",
+    "hono": "4.0.2"
   }
 }

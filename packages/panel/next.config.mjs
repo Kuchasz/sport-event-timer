@@ -30,7 +30,7 @@ const withBundleAnalyzer = BundleAnalizer({
 
 const withNextIntl = NextIntlPlugin(
     // This is the default (also the `src` folder is supported out of the box)
-    "./i18n/index.ts",
+    "src/i18n/index.ts",
 );
 
 // export default withPWA(defineNextConfig({
