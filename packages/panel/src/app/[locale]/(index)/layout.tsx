@@ -1,17 +1,16 @@
+import { NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
 import { getServerSession } from "src/auth";
 import { SessionProvider } from "src/auth/provider";
 import { Toaster } from "src/components/toaster";
+import { getLocales } from "src/i18n";
 import { locales, type Locales } from "src/i18n/locales";
-import { NextIntlClientProvider } from "next-intl";
-import { notFound } from "next/navigation";
 import { TrpcProvider } from "src/providers";
-import type { ReactNode } from "react";
 import { Status } from "../../../components/index/status";
 import { Meta } from "../../../components/meta";
 import "../../../globals.scss";
-import { getLocales } from "src/i18n";
 
-const IndexPageLayout = ({ children }: { children: ReactNode }) => {
+const IndexPageLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             <Meta />
@@ -30,7 +29,7 @@ const IndexPageLayout = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export default async function PanelLayout(props: { children: ReactNode; params: { locale: string } }) {
+export default async function PanelLayout(props: { children: React.ReactNode; params: { locale: string } }) {
     const isValidLocale = locales.includes(props.params.locale as Locales);
     const session = await getServerSession();
     if (!isValidLocale) notFound();

@@ -1,12 +1,11 @@
-import { locales, type Locales } from "src/i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { TrpcProvider } from "src/providers";
-import type { ReactNode } from "react";
-import "../../../globals.scss";
 import { getLocales } from "src/i18n";
+import { locales, type Locales } from "src/i18n/locales";
+import { TrpcProvider } from "src/providers";
+import "../../../globals.scss";
 
-export default async function ResultLayout({ children, params }: { children: ReactNode; params: { locale: string } }) {
+export default async function ResultLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
     const isValidLocale = locales.includes(params.locale as Locales);
     if (!isValidLocale) notFound();
 

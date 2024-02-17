@@ -10,7 +10,7 @@
     "@mdi/js": "^7.4.47",
     "@set/utils": "workspace:*",
     "@types/react": "18.2.55",
-    "classnames": "^2.5.1",
+    "classix": "^2.1.36",
     "hono": "4.0.2"
   }
 }

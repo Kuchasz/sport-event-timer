@@ -1,7 +1,6 @@
 import { type Metadata } from "next";
-import { type ReactNode } from "react";
 
-export default function (props: { children: ReactNode }) {
+export default function (props: { children: React.ReactNode }) {
     return props.children;
 }
 

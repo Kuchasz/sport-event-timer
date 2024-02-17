@@ -1,10 +1,10 @@
 "use client";
 
-import { Popover } from "@headlessui/react";
 import { Float } from "@headlessui-float/react";
-import Icon from "@mdi/react";
+import { Popover } from "@headlessui/react";
 import { mdiDotsHorizontal } from "@mdi/js";
-import React, { useEffect, type ReactNode } from "react";
+import Icon from "@mdi/react";
+import React, { useEffect } from "react";
 
 type PoorActionProps = {
     name: string;
@@ -44,7 +44,7 @@ const PoorActionsCloser = ({ close }: { close: () => void }) => {
     return null;
 };
 
-export const PoorActions = ({ children }: { children: ReactNode }) => {
+export const PoorActions = ({ children }: { children: React.ReactNode }) => {
     return (
         <Popover className="flex h-full items-center">
             <Float

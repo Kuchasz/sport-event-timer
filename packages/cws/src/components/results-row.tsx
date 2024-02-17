@@ -1,5 +1,5 @@
 import { formatGap } from "@set/utils/dist/datetime";
-import classNames from "classnames";
+import { cx } from "classix";
 
 export type Result = {
     bibNumber: string;
@@ -32,11 +32,7 @@ export const ResultsRow = ({
     highlightOpenCategories: boolean;
     ageCategoriesExist: boolean;
 }) => (
-    <tr
-        className={classNames("cursor-pointer whitespace-nowrap", {
-            "bg-white": i % 2 === 1,
-            "bg-gray-100": i % 2 === 0,
-        })}>
+    <tr className={cx("cursor-pointer whitespace-nowrap", i % 2 === 1 && "bg-white", i % 2 === 0 && "bg-gray-100")}>
         <td className="px-1 py-2.5 text-center text-xs font-bold">{i + 1}</td>
         <td className="px-1 py-2.5 text-xs font-semibold uppercase">
             <span className="mr-1 font-semibold text-gray-500">{result.bibNumber}</span>
@@ -45,13 +41,16 @@ export const ResultsRow = ({
         {openCategoriesExist && (
             <td className="flex flex-col items-center px-1 py-2.5 text-center text-xs">
                 <div
-                    className={classNames("text-center", {
-                        ["flex h-5 w-5 items-center justify-center rounded-md font-bold text-white"]:
-                            highlightOpenCategories && result.openCategoryPlace && result.openCategoryPlace <= 3,
-                        ["bg-orange-300"]: highlightOpenCategories && result.openCategoryPlace === 3,
-                        ["bg-gray-300"]: highlightOpenCategories && result.openCategoryPlace === 2,
-                        ["bg-yellow-300"]: highlightOpenCategories && result.openCategoryPlace === 1,
-                    })}>
+                    className={cx(
+                        "text-center",
+                        highlightOpenCategories &&
+                            !result.openCategoryPlace &&
+                            result.openCategoryPlace <= 3 &&
+                            "flex h-5 w-5 items-center justify-center rounded-md font-bold text-white",
+                        highlightOpenCategories && result.openCategoryPlace === 3 && "bg-orange-300",
+                        highlightOpenCategories && result.openCategoryPlace === 2 && "bg-gray-300",
+                        highlightOpenCategories && result.openCategoryPlace === 1 && "bg-yellow-300",
+                    )}>
                     {result.openCategory && `${result.openCategoryPlace}`}
                 </div>
             </td>
@@ -69,14 +68,11 @@ export const ResultsRow = ({
             </td>
         )}
 
-        <td
-            className={classNames("px-1 py-2.5 text-center text-xs font-semibold uppercase", {
-                "text-right": !result.invalidState,
-            })}>
+        <td className={cx("px-1 py-2.5 text-center text-xs font-semibold uppercase", !result.invalidState && "text-right")}>
             {result.invalidState ? result.invalidState : !result.invalidState && formatGap(result.gap)}
         </td>
         <td className="pl-1 pr-2 text-gray-400">
-            <span className={classNames("mdi", displayDetails ? "mdi-chevron-down" : "mdi-chevron-right")}></span>
+            <span className={cx("mdi", displayDetails ? "mdi-chevron-down" : "mdi-chevron-right")}></span>
         </td>
     </tr>
 );

@@ -2,12 +2,11 @@ import { Task } from "@set/utils/dist/task";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import { getLocales } from "src/i18n";
 import { trpcRSC } from "src/trpc-core-rsc";
 import TimerLayout from "./timer-layout";
-import { getLocales } from "src/i18n";
 
-export default async function (props: { children: ReactNode; params: { locale: string; raceId: string } }) {
+export default async function (props: { children: React.ReactNode; params: { locale: string; raceId: string } }) {
     const locale = useLocale();
 
     if (props?.params?.locale !== locale) {

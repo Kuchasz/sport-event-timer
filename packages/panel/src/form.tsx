@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { SectionHeader } from "src/components/page-headers";
 import { useTranslations } from "next-intl";
-import type { HTMLProps, ReactNode } from "react";
+import type { HTMLProps } from "react";
 import React, { createContext } from "react";
+import { SectionHeader } from "src/components/page-headers";
 import type { ZodEffects, ZodObject, ZodType } from "zod";
 
 // type FormValues = { [k: string]: any };
@@ -141,7 +141,7 @@ export function Form<TItem extends object>({
     initialValues,
     onSubmit,
     validationSchema,
-}: { children: ReactNode } & FormStateProps<TItem>) {
+}: { children: React.ReactNode } & FormStateProps<TItem>) {
     const { formValues, formErrors, handleSubmit, handleChange } = useForm({ initialValues, onSubmit, validationSchema });
 
     return (

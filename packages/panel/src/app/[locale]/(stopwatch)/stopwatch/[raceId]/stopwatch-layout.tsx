@@ -2,26 +2,26 @@
 
 import { mdiCloudOffOutline, mdiCogOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import type { IssuedAction } from "@set/timer/dist/slices/actions-history";
 import type { TimerDispatch, TimerState } from "@set/timer/dist/store";
 import { createStore } from "@set/timer/dist/store";
 import { uuidv4 } from "@set/utils//dist/uuid";
-import { useSession } from "src/auth/provider";
-import { getConnection } from "src/connection";
 import { useAtom } from "jotai";
+import { type Route } from "next";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import type { Middleware } from "redux";
+import { useSession } from "src/auth/provider";
+import { getConnection } from "src/connection";
 import { connectionStateAtom, timeOffsetAtom, timingPointIdAtom } from "src/states/stopwatch-states";
 import { BottomMenu } from "../../../../../components/stopwatch/bottom-menu";
 import { Status } from "../../../../../components/stopwatch/status";
 import "../../../../../globals.scss";
 import { ServerConnectionHandler } from "../../../../../server-connection-handler";
 import { trpc } from "../../../../../trpc-core";
-import Link from "next/link";
-import { type Route } from "next";
-import type { IssuedAction } from "@set/timer/dist/slices/actions-history";
-import { useTranslations } from "next-intl";
 
 const clientId = uuidv4();
 
@@ -99,7 +99,7 @@ const ErrorPage = ({
     </div>
 );
 
-export function StopwatchLayout({ children, title }: { children: ReactNode; title: ReactNode }) {
+export function StopwatchLayout({ children, title }: { children: React.ReactNode; title: ReactNode }) {
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
     const { raceId } = useParams<{ raceId: string }>()!;

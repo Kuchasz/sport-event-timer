@@ -2,13 +2,13 @@
 
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { trpc } from "src/trpc-core";
-import { useState } from "react";
-import { connectionConfig } from "src/connection";
-import { toast } from "src/components/use-toast";
 import { type TRPCClientError } from "@trpc/client";
-import { type AppRouter } from "src/server/routers/app";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "src/components/use-toast";
+import { connectionConfig } from "src/connection";
+import { type AppRouter } from "src/server/routers/app";
+import { trpc } from "src/trpc-core";
 
 export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscriptions: boolean; toastConfirmations: boolean }> = p => {
     const t = useTranslations();
@@ -68,7 +68,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode; enableSubscript
 
     return (
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
-            <QueryClientProvider client={queryClient}>{p.children}</QueryClientProvider>
+            <QueryClientProvider client={queryClient}>{p.children as React.ReactNode}</QueryClientProvider>
         </trpc.Provider>
     );
 };
