@@ -7,7 +7,7 @@ import { loginSchema, type UserLogin } from "src/modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { useContext } from "react";
 import { trpc } from "src/trpc-core";
 import { RegistrationStateContext } from "../registration-state-provider";
 
@@ -21,7 +21,7 @@ export default function ({ searchParams }: { searchParams: { email?: string } })
         password: "",
     };
 
-    const registrationEnabled = use(RegistrationStateContext);
+    const registrationEnabled = useContext(RegistrationStateContext);
 
     const onResolve = async (data: UserLogin) => {
         const result = await loginMutation.mutateAsync({ ...data });
