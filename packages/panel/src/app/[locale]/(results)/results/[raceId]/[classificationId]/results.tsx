@@ -30,7 +30,7 @@ const ResultsRow = ({
     highlightOpenCategories: boolean;
     ageCategoriesExist: boolean;
 }) => (
-    <React.Fragment key={i}>
+    <>
         <tr
             onClick={() => toggleRow(i)}
             className={classNames("cursor-pointer whitespace-nowrap", {
@@ -80,7 +80,7 @@ const ResultsRow = ({
             </td>
         </tr>
         {displayDetails ? <RowDetails i={i} result={result} /> : null}
-    </React.Fragment>
+    </>
 );
 
 const RowDetails = ({ i, result }: { i: number; result: Results[0] }) => {
