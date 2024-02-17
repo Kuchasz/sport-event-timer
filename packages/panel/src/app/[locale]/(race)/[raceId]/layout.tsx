@@ -1,17 +1,16 @@
-import { locales, type Locales } from "src/i18n/locales";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import { getLocales } from "src/i18n";
+import { locales, type Locales } from "src/i18n/locales";
 import { TrpcProvider } from "src/providers";
-import type { ReactNode } from "react";
 import { authenticate, getServerSession } from "../../../../auth";
 import { SessionProvider } from "../../../../auth/provider";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
-import { getLocales } from "src/i18n";
 
 export default async function PanelLayout(props: {
-    children: ReactNode;
-    breadcrumbs: ReactNode;
+    children: React.ReactNode;
+    breadcrumbs: React.ReactNode;
     params: { locale: string; raceId: string };
 }) {
     await authenticate();
