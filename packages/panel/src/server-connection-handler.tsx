@@ -1,5 +1,4 @@
 import { allowedLatency, onConnectionStateChanged } from "./connection";
-import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { trpc } from "./trpc-core";
 import { useSetAtom } from "jotai";
@@ -15,7 +14,7 @@ export const ServerConnectionHandler = ({
     clientId,
 }: {
     dispatch: (action: any) => void;
-    children: ReactNode;
+    children: React.ReactNode;
     raceId: number;
     clientId: string;
 }) => {

@@ -1,9 +1,8 @@
 import { getServerSession } from "../auth/index";
-import type { ReactNode } from "react";
 import { LogoutButton } from "./status-components";
 import Avatar from "boring-avatars";
 
-export const Status = async ({ breadcrumbs }: { breadcrumbs: ReactNode }) => {
+export const Status = async ({ breadcrumbs }: { breadcrumbs: React.ReactNode }) => {
     const session = await getServerSession();
 
     return (

@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
-const Card = ({ title, value, children }: { title: string; value: string; children: ReactNode }) => (
+const Card = ({ title, value, children }: { title: string; value: string; children: React.ReactNode }) => (
     <div className="m-3 flex h-32 w-48 flex-col items-center self-start overflow-clip rounded-md border border-gray-100 p-4 shadow-sm">
         <div className="self-start text-xs font-medium uppercase text-gray-500">{title}</div>
         <div className="my-2 shrink self-start text-lg font-medium uppercase">{value}</div>

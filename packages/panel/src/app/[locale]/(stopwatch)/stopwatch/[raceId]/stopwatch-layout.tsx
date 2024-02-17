@@ -11,7 +11,6 @@ import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import type { ReactNode } from "react";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import type { Middleware } from "redux";
 import { useSession } from "src/auth/provider";
@@ -99,7 +98,7 @@ const ErrorPage = ({
     </div>
 );
 
-export function StopwatchLayout({ children, title }: { children: React.ReactNode; title: ReactNode }) {
+export function StopwatchLayout({ children, title }: { children: React.ReactNode; title: React.ReactNode }) {
     const [connectionState] = useAtom(connectionStateAtom);
     const [timingPointId] = useAtom(timingPointIdAtom);
     const { raceId } = useParams<{ raceId: string }>()!;

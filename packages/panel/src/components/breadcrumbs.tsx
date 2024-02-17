@@ -3,7 +3,6 @@ import Icon from "@mdi/react";
 import type { Route } from "next";
 import Link from "next/link";
 import React from "react";
-import type { ReactNode } from "react";
 
 type BreadcrumbItemProps<T extends string> = { text: string; href?: Route<T> | URL };
 
@@ -20,8 +19,8 @@ const BreadcrumbItem = <T extends string>({ text, href }: BreadcrumbItemProps<T>
     </div>
 );
 
-export const Breadcrumbs = <T extends string>({ children, homePath = "/" }: { children?: ReactNode; homePath?: Route<T> | URL }) => {
-    const areValidChildren = (children: ReactNode): children is React.ReactElement<BreadcrumbItemProps<string>>[] => {
+export const Breadcrumbs = <T extends string>({ children, homePath = "/" }: { children?: React.ReactNode; homePath?: Route<T> | URL }) => {
+    const areValidChildren = (children: React.ReactNode): children is React.ReactElement<BreadcrumbItemProps<string>>[] => {
         return !!children || React.Children.toArray(children).every(child => React.isValidElement(child) && child.type === BreadcrumbItem);
     };
 
@@ -36,7 +35,7 @@ export const Breadcrumbs = <T extends string>({ children, homePath = "/" }: { ch
                     <Icon className="cursor-pointer rounded-md text-gray-700 transition-colors" size={0.8} path={mdiHomeOutline} />
                 </Link>
             </div>
-            {children}
+            {children as any}
         </div>
     );
 };

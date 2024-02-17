@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { TrpcProvider } from "src/providers";
-import type { ReactNode } from "react";
 import { trpcRSC } from "src/trpc-core-rsc";
 import { StopwatchLayout } from "./stopwatch-layout";
 import { getLocales } from "src/i18n";
@@ -16,9 +15,9 @@ export default async function ({
     params,
     title,
 }: {
-    children: ReactNode;
+    children: React.ReactNode;
     params: { locale: string; raceId: string };
-    title: ReactNode;
+    title: React.ReactNode;
 }) {
     await authenticate();
     const isValidLocale = locales.includes(params.locale as Locales);
