@@ -8,7 +8,7 @@ import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { logger } from "src/utils";
 import cors from "cors";
 
-dotenv.config({ path: path.join(__dirname, ".env") });
+dotenv.config({ path: path.resolve(".env") });
 
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
