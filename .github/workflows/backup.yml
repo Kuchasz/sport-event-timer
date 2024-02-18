@@ -16,4 +16,4 @@ jobs:
                 password: ${{ secrets.OVH_REMOTE_USER_PASSWORD }}
                 script: |
                     cd ${{ secrets.OVH_REMOTE_TARGET }}
-                    cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
+                    cp packages/panel/src/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db

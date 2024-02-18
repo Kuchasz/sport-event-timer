@@ -56,7 +56,7 @@ jobs:
             - name: Bundle Application Package
               uses: montudor/action-zip@v1
               with:
-                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb panel utils timer -x "**/.next/cache/**"
+                  args: zip -qq --symlinks -r set-package.zip package.json bun.lockb packages -x "**/.next/cache/**"
 
             - uses: actions/upload-artifact@v3
               name: Store Application Package

@@ -37,16 +37,16 @@ jobs:
                       echo $PATH
                       cd ${{ secrets.OVH_REMOTE_TARGET }}
                       mv application-artifact/set-package.zip set-package.zip
-                      cp panel/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
-                      rm -rf node_modules/ application-artifact/ package/ package.json panel/ timer/ utils/ bun.lockb yarn.lock .yarnrc.yml
+                      cp packages/panel/src/server/prisma/database.db ../rura-databases/database-`date +"%Y%m%d%H%M"`.db
+                      rm -rf node_modules/ application-artifact/ package/ package.json packages/ bun.lockb yarn.lock .yarnrc.yml
                       unzip -q set-package.zip
                       rm set-package.zip
-                      cp ../app.rura.cc.env panel/.env
+                      cp ../app.rura.cc.env packages/panel/.env
                       bun install
-                      cd panel
-                      cp `ls -dtr1 ../../rura-databases/* | tail -1` "server/prisma/database.db"
+                      cd packages/panel/src
+                      cp `ls -dtr1 ../../../../rura-databases/* | tail -1` "server/prisma/database.db"
                       bun prisma generate
                       bun prisma migrate deploy
-                      chmod -R 777 server/prisma
+                      chmod 777 server/prisma/database.db
                       pm2 restart app.rura.cc/app
                       pm2 restart app.rura.cc/api
