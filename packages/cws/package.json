@@ -10,7 +10,7 @@
     "@set/utils": "workspace:*"
   },
   "peerDependencies": {
-    "hono": "4.0.2",
+    "hono": "4.0.4",
     "classix": "^2.1.36"
   }
 }

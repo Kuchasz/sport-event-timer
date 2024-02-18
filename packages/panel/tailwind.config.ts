@@ -10,7 +10,7 @@ module.exports = {
     //         pattern: /./
     //     }
     // ],
-    content: ["./pages/**/*.tsx", "./components/**/*.tsx", "./apps/**/*.tsx", "./app/**/*.tsx"],
+    content: ["./src/pages/**/*.tsx", "./src/components/**/*.tsx", "./src/apps/**/*.tsx", "./src/app/**/*.tsx"],
     theme: {
         container: {
             center: true,
