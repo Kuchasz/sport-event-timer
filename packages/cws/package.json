@@ -7,10 +7,10 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@mdi/js": "^7.4.47",
-    "@set/utils": "workspace:*",
-    "@types/react": "18.2.55",
-    "classix": "^2.1.36",
-    "hono": "4.0.2"
+    "@set/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "hono": "4.0.2",
+    "classix": "^2.1.36"
   }
 }

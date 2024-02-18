@@ -44,7 +44,7 @@ export const useSystemTime = (_allowedLatency: number, getServerTime: (loadStart
     const [systemTime, setSystemTime] = useState<{ timeOffset: number; latency: number }>();
 
     useEffect(() => {
-        let timeout: NodeJS.Timeout;
+        let timeout: Timer;
         let syncTries = 0;
 
         const requestTimeSync = async () => {
