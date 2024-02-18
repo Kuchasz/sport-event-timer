@@ -5,11 +5,6 @@ import defaultTheme from "tailwindcss/defaultTheme";
 module.exports = {
     mode: "jit",
     plugins: [require("tailwindcss-animate")],
-    // safelist: [
-    //     {
-    //         pattern: /./
-    //     }
-    // ],
     content: ["./src/pages/**/*.tsx", "./src/components/**/*.tsx", "./src/apps/**/*.tsx", "./src/app/**/*.tsx"],
     theme: {
         container: {

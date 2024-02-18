@@ -12,9 +12,9 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - uses: oven-sh/setup-bun@v1
-            - uses: actions/cache@v3
+            - uses: actions/cache@v4
               with:
                   path: |
                       ~./npm
@@ -58,7 +58,7 @@ jobs:
               with:
                   args: zip -qq --symlinks -r set-package.zip package.json bun.lockb packages -x "**/.next/cache/**"
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               name: Store Application Package
               with:
                   name: application-artifact
@@ -69,9 +69,9 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - uses: oven-sh/setup-bun@v1
-            - uses: actions/cache@v3
+            - uses: actions/cache@v4
               with:
                   path: |
                       ~./npm
@@ -107,9 +107,9 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - uses: oven-sh/setup-bun@v1
-            - uses: actions/cache@v3
+            - uses: actions/cache@v4
               with:
                   path: |
                       ~./npm
