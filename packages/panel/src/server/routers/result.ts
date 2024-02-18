@@ -45,7 +45,10 @@ export const resultRouter = router({
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
-            const classification = await ctx.db.classification.findFirstOrThrow({ where: { raceId }, include: { categories: true } });
+            const classification = await ctx.db.classification.findFirstOrThrow({
+                where: { raceId, id: classificationId },
+                include: { categories: true },
+            });
 
             const raceDateStart = race?.date.getTime();
 
