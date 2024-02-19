@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+declare const fetch: any;
+
 export const getTrpcData = async () => {
     const response = (await fetch(
         "http://localhost:3001/result.results?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22raceId%22%3A15%2C%22classificationId%22%3A31%7D%7D%7D",
-    ).then(res => res.json())) as Results[];
+    ).then((res: { json: () => any }) => res.json())) as Results[];
 
     return response[0].result.data.json;
 };

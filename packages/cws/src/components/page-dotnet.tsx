@@ -34,7 +34,7 @@ export async function PageDotnet({ title }: PropsWithChildren<Post>) {
                         ageCategoriesExist={true}
                         openCategoriesExist={true}
                         displayDetails={false}
-                        result={result}
+                        result={result as any}
                         i={i}></ResultsRow>
                 ))}
             </tbody>

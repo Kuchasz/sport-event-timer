@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+declare const fetch: any;
+
 export const getDotnetData = async () => {
-    const response = (await fetch("http://localhost:5002/rura/results").then(res => res.json())) as Results[];
+    const response = (await fetch("http://localhost:5002/rura/results").then((res: { json: () => any }) => res.json())) as Results[];
 
     return response;
 };
