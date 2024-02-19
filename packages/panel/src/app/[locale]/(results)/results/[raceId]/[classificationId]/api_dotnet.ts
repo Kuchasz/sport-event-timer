@@ -1,5 +1,5 @@
 export const getDotnetData = async () => {
-    const response = (await fetch("http://localhost:5233/rura/results").then(res => res.json())) as Results[];
+    const response = (await fetch("http://localhost:5002/rura/results").then(res => res.json())) as Results[];
 
     return response;
 };
