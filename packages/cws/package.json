@@ -2,6 +2,9 @@
   "name": "@set/cws",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "prod:start": "bun src/index.tsx"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "5.2.2"
