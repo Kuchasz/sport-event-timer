@@ -7,7 +7,7 @@ import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@s
 import classNames from "classnames";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { AppRouterOutputs } from "src/trpc";
 
 type Results = AppRouterOutputs["result"]["results"];

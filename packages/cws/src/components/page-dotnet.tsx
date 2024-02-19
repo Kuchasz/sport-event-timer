@@ -1,25 +1,15 @@
 import type { PropsWithChildren } from "hono/jsx";
-import { ResultsRow, type Result } from "./results-row";
-import { createRange } from "@set/utils/dist/array";
-
-const results: Result[] = createRange({ from: 1, to: 150 }).map(i => ({
-    name: `Name ${i}`,
-    lastName: `Last Name ${i}`,
-    bibNumber: `${i}`,
-    openCategory: { name: `O ${i}` },
-    ageCategory: { name: `A ${i}` },
-    openCategoryPlace: i % 3 === 0 ? 1 : i % 2 === 0 ? 2 : i % 5 === 0 ? 3 : 0,
-    ageCategoryPlace: i % 5 === 0 ? 1 : i % 3 === 0 ? 2 : i % 2 === 0 ? 3 : 0,
-    gap: i * 1000,
-    invalidState: i % 7 === 0 ? "DNF" : i % 11 === 0 ? "DSQ" : "",
-}));
+import { ResultsRow } from "./results-row";
+import { getDotnetData } from "./api_dotnet";
 
 type Post = {
     id: number;
     title: string;
 };
 
-export function Page({ title }: PropsWithChildren<Post>) {
+export async function PageDotnet({ title }: PropsWithChildren<Post>) {
+    const results = await getDotnetData();
+
     return (
         <table className="w-full divide-y divide-gray-300">
             <thead className="sticky top-0 bg-white">

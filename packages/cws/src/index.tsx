@@ -1,5 +1,6 @@
 import { Hono } from "hono";
-import { Page } from "./components/page";
+import { PageDotnet } from "./components/page-dotnet";
+import { PageTrpc } from "./components/page-trpc";
 import { html } from "hono/html";
 import { Layout } from "./components/layout";
 const app = new Hono();
@@ -11,12 +12,22 @@ app.get("/json", c => c.json({ name: "Hono!", age: 12, from: 222 }));
 app.get("/html", c => {
     return c.html(`<h1>${messages.map(m => html`<li>${m}</li>`)}</h1>`);
 });
-app.get("/react", c => {
+app.get("/results/15/31/new", c => {
     return c.html(
         <Layout>
-            <Page title="awdawd" id={234} />
+            <PageDotnet title="awdawd" id={234} />
+        </Layout>,
+    );
+});
+app.get("/results/15/31", c => {
+    return c.html(
+        <Layout>
+            <PageTrpc title="awdawd" id={234} />
         </Layout>,
     );
 });
 
-export default app;
+export default {
+    port: 3003,
+    fetch: app.fetch,
+};
