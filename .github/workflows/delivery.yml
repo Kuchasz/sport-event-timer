@@ -50,3 +50,4 @@ jobs:
                       chmod 777 server/prisma/database.db
                       pm2 restart app.rura.cc/app
                       pm2 restart app.rura.cc/api
+                      pm2 restart my.rura.cc
