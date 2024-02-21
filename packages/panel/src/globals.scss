@@ -14,7 +14,7 @@
     src: url("../public/fonts/Inter.ttf");
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap");
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -99,9 +99,9 @@ input::-webkit-datetime-edit {
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
+    // * {
+    //     @apply border-border;
+    // }
     body {
         @apply bg-background text-foreground;
         font-feature-settings:
