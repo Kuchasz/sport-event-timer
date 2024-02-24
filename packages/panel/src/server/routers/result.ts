@@ -2,13 +2,13 @@ import { groupBy, sort, toLookup, toMap } from "@set/utils/dist/array";
 import { calculateAge } from "@set/utils/dist/datetime";
 import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
-import { publicProcedure, router } from "../trpc";
+import { cacheMiddleware, publicProcedure, router } from "../trpc";
 
 type ResultEntry = [string, number];
 
 export const resultRouter = router({
     results: publicProcedure
-        // .use(cacheMiddleware)
+        .use(cacheMiddleware)
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
