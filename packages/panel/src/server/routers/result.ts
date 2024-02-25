@@ -1,4 +1,4 @@
-import { getStaticData } from "src/app/[locale]/(results)/results/[raceId]/[classificationId]/api_static";
+import { getStaticData } from "../../../src/app/[locale]/(results)/results/[raceId]/[classificationId]/api_static";
 import { z } from "zod";
 import { cacheMiddleware, publicProcedure, router } from "../trpc";
 

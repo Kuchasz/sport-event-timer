@@ -1,7 +1,7 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import * as dotenv from "dotenv";
 import * as path from "path";
-import { logger } from "src/utils";
+import { logger } from "../../src/utils";
 import { appRouter } from "./routers/app";
 import { createContextStandalone } from "./trpc";
 
