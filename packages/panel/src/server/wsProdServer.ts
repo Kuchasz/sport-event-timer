@@ -1,5 +1,4 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import cors from "cors";
 import * as dotenv from "dotenv";
 import * as path from "path";
 import { logger } from "src/utils";
@@ -19,10 +18,6 @@ const dev = process.env.NODE_ENV !== "production";
 const protocol = dev ? "http" : "https";
 
 const { listen } = createHTTPServer({
-    middleware: cors({
-        origin: ["https://app.rura.cc"],
-        credentials: true,
-    }),
     router: appRouter,
     createContext: createContextStandalone,
 });
