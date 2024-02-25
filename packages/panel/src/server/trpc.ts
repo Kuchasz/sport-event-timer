@@ -49,22 +49,23 @@ export const createContextNext = async (opts: FetchCreateContextFnOptions) => {
 };
 
 export const createContextStandalone = async (opts: CreateHTTPContextOptions) => {
-    const cookies = parseCookies(opts.req.headers.cookie ?? "");
+    // const cookies = parseCookies(opts.req.headers.cookie ?? "");
 
-    const session = await getUserSession(cookies);
+    // const session = await getUserSession(cookies);
 
-    const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
+    // const domain = env.NEXT_PUBLIC_NODE_ENV === "production" ? "Domain=rura.cc;" : "";
 
-    if (session.accessToken) {
-        opts.res.setHeader(
-            "Set-Cookie",
-            `accessToken=${session.accessToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=15`,
-        );
-    }
+    // if (session.accessToken) {
+    //     opts.res.setHeader(
+    //         "Set-Cookie",
+    //         `accessToken=${session.accessToken}; Secure; ${domain} SameSite=None; HttpOnly; Path=/; Max-Age=15`,
+    //     );
+    // }
 
-    return {
-        session: session.payload,
-        db,
+    return Promise.resolve({
+        // session: session.payload,
+        session: null as any,
+        db: null as any,
         resHeaders: {
             append: (header: string, headerValue: string) => {
                 const existingHeaders = opts.res.getHeader(header);
@@ -85,7 +86,7 @@ export const createContextStandalone = async (opts: CreateHTTPContextOptions) =>
                 }
             },
         } as Headers,
-    };
+    });
 };
 
 export type Context = inferAsyncReturnType<typeof createContextWs>;
