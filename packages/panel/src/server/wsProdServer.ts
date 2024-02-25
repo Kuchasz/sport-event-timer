@@ -1,13 +1,7 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import * as dotenv from "dotenv";
-import * as path from "path";
 import { logger } from "../../src/utils";
 import { appRouter } from "./routers/app";
 import { createContextStandalone } from "./trpc";
-
-console.log(process.env);
-
-dotenv.config({ path: path.resolve(__dirname + "../../.env") });
 
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
