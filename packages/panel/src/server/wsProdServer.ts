@@ -5,8 +5,8 @@ import * as path from "path";
 // import { createContextStandalone, createContextWs } from "./trpc";
 // import { WebSocketServer } from "ws";
 // import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import cors from "cors";
-import { logger } from "src/utils";
+// import cors from "cors";
+// import { logger } from "src/utils";
 import { appRouter } from "./routers/app";
 import { createContextStandalone } from "./trpc";
 
@@ -18,16 +18,16 @@ const env = {
 
 const port = env.NEXT_PUBLIC_API_PORT;
 // const appPort = env.NEXT_PUBLIC_APP_PORT;
-const dev = process.env.NODE_ENV !== "production";
+// const dev = process.env.NODE_ENV !== "production";
 
-const protocol = dev ? "http" : "https";
+// const protocol = "http";
 
 const { listen } = createHTTPServer({
     // const { server, listen } = createHTTPServer({
-    middleware: cors({
-        origin: ["https://app.rura.cc"],
-        credentials: true,
-    }),
+    // middleware: cors({
+    //     origin: ["https://app.rura.cc"],
+    //     credentials: true,
+    // }),
     router: appRouter,
     createContext: createContextStandalone,
 });
@@ -45,4 +45,4 @@ const { listen } = createHTTPServer({
 // });
 
 listen(port);
-logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
+// logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
