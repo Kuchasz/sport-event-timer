@@ -1,12 +1,10 @@
+import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import cors from "cors";
 import * as dotenv from "dotenv";
 import * as path from "path";
-import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import { type AppRouter, appRouter } from "./routers/app";
-import { createContextStandalone, createContextWs } from "./trpc";
-import { WebSocketServer } from "ws";
-import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { logger } from "src/utils";
-import cors from "cors";
+import { appRouter } from "./routers/app";
+import { createContextStandalone } from "./trpc";
 
 dotenv.config({ path: path.resolve(".env") });
 
@@ -20,7 +18,7 @@ const dev = process.env.NODE_ENV !== "production";
 
 const protocol = dev ? "http" : "https";
 
-const { server, listen } = createHTTPServer({
+const { listen } = createHTTPServer({
     middleware: cors({
         origin: ["https://app.rura.cc"],
         credentials: true,
@@ -29,17 +27,17 @@ const { server, listen } = createHTTPServer({
     createContext: createContextStandalone,
 });
 
-const wss = new WebSocketServer({ server });
-const handler = applyWSSHandler<AppRouter>({
-    wss,
-    router: appRouter,
-    createContext: createContextWs,
-});
+// const wss = new WebSocketServer({ server });
+// const handler = applyWSSHandler<AppRouter>({
+//     wss,
+//     router: appRouter,
+//     createContext: createContextWs,
+// });
 
-process.on("SIGTERM", () => {
-    logger.log("SIGTERM");
-    handler.broadcastReconnectNotification();
-});
+// process.on("SIGTERM", () => {
+//     logger.log("SIGTERM");
+//     handler.broadcastReconnectNotification();
+// });
 
 listen(port);
 logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
