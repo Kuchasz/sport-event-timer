@@ -7,7 +7,7 @@ import { createContextStandalone } from "./trpc";
 
 console.log(process.env);
 
-dotenv.config({ path: path.resolve(".env") });
+dotenv.config({ path: path.resolve("../../.env") });
 
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
