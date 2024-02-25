@@ -5,7 +5,7 @@ import { logger } from "../../src/utils";
 import { appRouter } from "./routers/app";
 import { createContextStandalone } from "./trpc";
 
-dotenv.config({ path: path.resolve("../../.env") });
+dotenv.config({ path: path.resolve(".env") });
 
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
