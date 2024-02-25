@@ -5,6 +5,8 @@ import { logger } from "../../src/utils";
 import { appRouter } from "./routers/app";
 import { createContextStandalone } from "./trpc";
 
+console.log(process.env);
+
 dotenv.config({ path: path.resolve(".env") });
 
 const env = {
