@@ -40,7 +40,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                         </nav>
                         <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
-                            <div className="flex-grow overflow-y-scroll px-8 py-4">{children}</div>
+                            <div className="flex-grow overflow-y-scroll bg-gray-50 px-8 py-4">{children}</div>
                             <Toaster />
                         </main>
                     </div>

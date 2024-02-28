@@ -6,7 +6,7 @@ export const Status = async ({ breadcrumbs }: { breadcrumbs: React.ReactNode }) 
     const session = await getServerSession();
 
     return (
-        <div className="flex cursor-default items-center bg-gray-50 px-8 py-4">
+        <div className="z-10 flex cursor-default items-center px-8 py-4 shadow-sm">
             {breadcrumbs}
             <div className="grow"></div>
             {session && (
