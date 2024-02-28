@@ -62,7 +62,7 @@ export const createContextStandalone = async (opts: CreateHTTPContextOptions) =>
         );
     }
 
-    return Promise.resolve({
+    return {
         session: session.payload,
 
         db,
@@ -86,7 +86,7 @@ export const createContextStandalone = async (opts: CreateHTTPContextOptions) =>
                 }
             },
         } as Headers,
-    });
+    };
 };
 
 export type Context = inferAsyncReturnType<typeof createContextWs>;
