@@ -174,7 +174,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                     {visibleColumns.map(c => (
                                         <div
                                             className={classNames(
-                                                "flex items-center border-b px-4 py-2",
+                                                "flex items-center border-b bg-white px-4 py-2",
                                                 getRowStyle ? getRowStyle(d.obj) : "",
                                             )}
                                             key={c.headerName}>
