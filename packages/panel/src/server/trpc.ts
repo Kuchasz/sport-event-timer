@@ -64,6 +64,7 @@ export const createContextStandalone = async (opts: CreateHTTPContextOptions) =>
 
     return {
         session: session.payload,
+
         db,
         resHeaders: {
             append: (header: string, headerValue: string) => {

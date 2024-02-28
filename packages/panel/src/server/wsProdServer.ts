@@ -1,14 +1,9 @@
-import * as dotenv from "dotenv";
-import * as path from "path";
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import { logger } from "../../src/utils";
 import { type AppRouter, appRouter } from "./routers/app";
 import { createContextStandalone, createContextWs } from "./trpc";
 import { WebSocketServer } from "ws";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import { logger } from "src/utils";
-import cors from "cors";
-
-dotenv.config({ path: path.resolve(".env") });
 
 const env = {
     NEXT_PUBLIC_API_PORT: 3001,
@@ -21,10 +16,6 @@ const dev = process.env.NODE_ENV !== "production";
 const protocol = dev ? "http" : "https";
 
 const { server, listen } = createHTTPServer({
-    middleware: cors({
-        origin: ["https://app.rura.cc"],
-        credentials: true,
-    }),
     router: appRouter,
     createContext: createContextStandalone,
 });
