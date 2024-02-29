@@ -10,17 +10,6 @@ export const env = createEnv({
             .string()
             .regex(/[0-9]+/)
             .optional(),
-        NEXTAUTH_URL: z.preprocess(
-            // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-            // Since NextAuth automatically uses the VERCEL_URL if present.
-            str => process.env.VERCEL_URL ?? str,
-            // VERCEL_URL doesnt include `https` so it cant be validated as a URL
-            process.env.VERCEL ? z.string() : z.string().url(),
-        ),
-        NEXTAUTH_SECRET: z.string(),
-        AUTH0_CLIENT_ID: z.string(),
-        AUTH0_CLIENT_SECRET: z.string(),
-        AUTH0_ISSUER: z.string(),
         AUTH_PUBLIC_KEY: z.string(),
         AUTH_PRIVATE_KEY: z.string(),
         NOTIFICATIONS_SERVER_HOST: z.string(),
@@ -43,11 +32,6 @@ export const env = createEnv({
     runtimeEnv: {
         DATABASE_URL: process.env.DATABASE_URL,
         PORT: process.env.PORT,
-        NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-        NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-        AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-        AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
-        AUTH0_ISSUER: process.env.AUTH0_ISSUER,
         AUTH_PUBLIC_KEY: process.env.AUTH_PUBLIC_KEY ? Buffer.from(process.env.AUTH_PUBLIC_KEY, "base64").toString("ascii") : undefined,
         AUTH_PRIVATE_KEY: process.env.AUTH_PRIVATE_KEY ? Buffer.from(process.env.AUTH_PRIVATE_KEY, "base64").toString("ascii") : undefined,
         NOTIFICATIONS_SERVER_HOST: process.env.NOTIFICATIONS_SERVER_HOST,
