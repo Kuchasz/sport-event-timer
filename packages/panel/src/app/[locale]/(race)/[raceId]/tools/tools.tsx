@@ -13,6 +13,7 @@ import QR from "qrcode";
 import { sanitizeFileName, triggerBase64Download } from "@set/utils/dist/file";
 import { buildApplicationPath } from "src/utils";
 import { useRouter } from "next/navigation";
+import { FormCard } from "src/form";
 
 type ApplicationCardProps = {
     href: Route;
@@ -36,28 +37,29 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
     };
 
     return (
-        <div className="my-5 flex">
-            <Link
-                href={href}
-                target="_blank"
-                className="mx-5 flex h-32 w-48 shrink-0  flex-col items-center justify-center self-start overflow-clip rounded-md border border-gray-100 p-4 text-gray-700 shadow-sm hover:bg-gray-50">
-                <Icon path={icon} size={2} />
-                <span className="mt-2 text-sm font-medium">{name}</span>
-            </Link>
-            <div className="flex max-w-xl flex-col justify-between">
-                <div className="text-sm">{description}</div>
-                <div className="flex justify-end gap-2">
-                    <Button onClick={generateQRCode}>
-                        <Icon path={mdiQrcode} size={0.8} />
-                        <span className="ml-2">{t("pages.tools.applications.buttons.getQrCode")}</span>
-                    </Button>
-                    <Button onClick={openApplication} outline>
-                        <Icon size={0.8} path={mdiOpenInNew} />
-                        <span className="ml-2">{t("pages.tools.applications.buttons.open")}</span>
-                    </Button>
+        <FormCard title={name}>
+            <div className="my-5 flex">
+                <Link
+                    href={href}
+                    target="_blank"
+                    className="mx-5 flex shrink-0 flex-col items-center justify-center self-start overflow-clip rounded-md border border-gray-100 p-4 text-gray-700 shadow-sm hover:bg-gray-50">
+                    <Icon path={icon} size={2} />
+                </Link>
+                <div className="flex max-w-xl flex-col justify-between">
+                    <div className="text-sm">{description}</div>
+                    <div className="mt-2 flex justify-end gap-2">
+                        <Button onClick={generateQRCode}>
+                            <Icon path={mdiQrcode} size={0.8} />
+                            <span className="ml-2">{t("pages.tools.applications.buttons.getQrCode")}</span>
+                        </Button>
+                        <Button onClick={openApplication} outline>
+                            <Icon size={0.8} path={mdiOpenInNew} />
+                            <span className="ml-2">{t("pages.tools.applications.buttons.open")}</span>
+                        </Button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </FormCard>
     );
 };
 
@@ -73,7 +75,7 @@ export const Tools = () => {
                     <div>
                         <PageHeader title={t("pages.tools.header.title")} description={t("pages.tools.header.description")} />
                         <div className="mb-4 mt-8">
-                            <div className="flex flex-col">
+                            <div className="flex max-w-3xl flex-col gap-4">
                                 <ApplicationCard
                                     href={buildApplicationPath(`/results/${raceId}`)}
                                     qrFileName={`qr-results-${sanitizeFileName(race.name)}.png`}
