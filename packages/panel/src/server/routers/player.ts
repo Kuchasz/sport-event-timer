@@ -1,5 +1,5 @@
 import { sort } from "@set/utils/dist/array";
-import { playerErrors } from "src/modules/player/errors";
+import { playerErrors } from "../../modules/player/errors";
 import { z } from "zod";
 import { playerPromotionSchema, racePlayerSchema } from "../../modules/player/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";

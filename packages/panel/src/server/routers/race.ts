@@ -1,5 +1,5 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
-import { raceErrors } from "src/modules/race/errors";
+import { raceErrors } from "../../modules/race/errors";
 import { z } from "zod";
 import { locales } from "../../i18n/locales";
 import {

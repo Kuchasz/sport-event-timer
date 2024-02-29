@@ -1,4 +1,4 @@
-import { disqualificationSchema } from "src/modules/disqualification/models";
+import { disqualificationSchema } from "../../modules/disqualification/models";
 import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 

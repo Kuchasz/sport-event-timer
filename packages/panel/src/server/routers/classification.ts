@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
-import type { Gender } from "src/modules/shared/models";
+import type { Gender } from "../../modules/shared/models";
 import { categorySchema, classificationSchema } from "../../modules/classification/models";
-import { classificationErrorKeys } from "src/modules/classification/errors";
+import { classificationErrorKeys } from "../../modules/classification/errors";
 
 // const classificationsSchema = z.object({
 //     id: z.number(),

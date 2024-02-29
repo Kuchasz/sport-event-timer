@@ -1,7 +1,7 @@
 import { loginSchema, registrationSchema } from "../../modules/user/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { login, register, secondsInWeek } from "../../auth";
-import { userErrors } from "src/modules/user/errors";
+import { userErrors } from "../../modules/user/errors";
 import { env } from "src/env";
 
 type ResultStatus = "Error" | "Success";

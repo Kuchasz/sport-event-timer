@@ -1,5 +1,5 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
-import { timingPointErrors } from "src/modules/timing-point/errors";
+import { timingPointErrors } from "../../modules/timing-point/errors";
 import { z } from "zod";
 import { type TimingPointType, timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
 import { protectedProcedure, router } from "../trpc";

@@ -1,11 +1,11 @@
-import { playerRegistrationErrors } from "src/modules/player-registration/errors";
+import { playerRegistrationErrors } from "../../modules/player-registration/errors";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 import { env } from "../../env";
 import type { CountryCode } from "../../modules/player-registration/models";
 import { racePlayerRegistrationSchema } from "../../modules/player-registration/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
-import { getRegistrationState } from "src/modules/race/models";
+import { getRegistrationState } from "../../modules/race/models";
 import { type Gender } from "../../modules/shared/models";
 
 export const playerRegistrationRouter = router({
