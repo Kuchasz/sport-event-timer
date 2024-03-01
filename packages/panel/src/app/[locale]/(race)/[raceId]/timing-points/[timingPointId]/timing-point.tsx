@@ -208,7 +208,7 @@ export const TimingPoint = ({
                         <div className="my-8">
                             <SectionHeader
                                 title={t("pages.timingPoints.sections.delete.header.title")}
-                                description={t("ppages.timingPoints.sections.delete.header.description")}
+                                description={t("pages.timingPoints.sections.delete.header.description")}
                             />
                             <PoorConfirmation
                                 onAccept={() => deleteTimingPoint(timingPoint)}

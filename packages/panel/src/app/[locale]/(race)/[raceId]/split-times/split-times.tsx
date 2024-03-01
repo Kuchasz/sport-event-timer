@@ -14,6 +14,7 @@ import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { Tooltip, TooltipContent, TooltipTrigger } from "src/components/tooltip";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -136,9 +137,19 @@ export const SplitTimes = () => {
             sortable: false,
             cellRenderer: data =>
                 data.hasError ? (
-                    <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-red-100 text-red-500"></Icon>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-red-100 text-red-500"></Icon>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("pages.splitTimes.grid.columns.status.error")}</TooltipContent>
+                    </Tooltip>
                 ) : data.hasWarning ? (
-                    <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-orange-100 text-orange-500"></Icon>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-orange-100 text-orange-500"></Icon>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("pages.splitTimes.grid.columns.status.warning")}</TooltipContent>
+                    </Tooltip>
                 ) : null,
         },
         {

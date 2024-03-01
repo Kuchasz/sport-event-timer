@@ -7,6 +7,7 @@ import { authenticate, getServerSession } from "../../../../auth";
 import { SessionProvider } from "../../../../auth/provider";
 import "../../../../globals.scss";
 import { RacePageLayout } from "./race-page-layout";
+import { TooltipProvider } from "src/components/tooltip";
 
 export default async function PanelLayout(props: {
     children: React.ReactNode;
@@ -37,9 +38,11 @@ export default async function PanelLayout(props: {
                 <NextIntlClientProvider timeZone="Europe/Warsaw" locale={locale} messages={messages}>
                     <TrpcProvider toastConfirmations={true} enableSubscriptions={false}>
                         <SessionProvider session={session!}>
-                            <RacePageLayout raceId={props.params.raceId} breadcrumbs={props.breadcrumbs}>
-                                {props.children}
-                            </RacePageLayout>
+                            <TooltipProvider>
+                                <RacePageLayout raceId={props.params.raceId} breadcrumbs={props.breadcrumbs}>
+                                    {props.children}
+                                </RacePageLayout>
+                            </TooltipProvider>
                         </SessionProvider>
                     </TrpcProvider>
                 </NextIntlClientProvider>

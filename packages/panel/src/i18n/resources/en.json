@@ -328,26 +328,6 @@
         "description": "A new race has been successfully added to the event.",
         "title": "Race Added"
       },
-      "updateRaceInformation": {
-        "description": "Race basic information has been successfully updated.",
-        "title": "Race information Updated"
-      },
-      "updateRaceRegistration": {
-        "description": "Race registration settings has been successfully updated.",
-        "title": "Registration settings updated"
-      },
-      "updateRaceRegulations": {
-        "description": "Race regulations has been successfully updated.",
-        "title": "Race regulations updated"
-      },
-      "updateRaceConfirmationEmailTemplate": {
-        "description": "Race confirmation email template has been successfully updated.",
-        "title": "Race confirmation email updated"
-      },
-      "raceInformation": {
-        "description": "Basic race information has been successfully confirmed.",
-        "title": "Basic Information Confirmed"
-      },
       "delete": {
         "description": "The specified race has been successfully deleted from the event.",
         "title": "Race Deleted"
@@ -359,6 +339,10 @@
       "race": {
         "description": "Details of the specified race have been successfully confirmed.",
         "title": "Race Details Confirmed"
+      },
+      "raceInformation": {
+        "description": "Basic race information has been successfully confirmed.",
+        "title": "Basic Information Confirmed"
       },
       "raceRaport": {
         "description": "The race report has been successfully confirmed.",
@@ -379,6 +363,22 @@
       "update": {
         "description": "Details of the specified race have been successfully updated.",
         "title": "Race Updated"
+      },
+      "updateRaceConfirmationEmailTemplate": {
+        "description": "Race confirmation email template has been successfully updated.",
+        "title": "Race confirmation email updated"
+      },
+      "updateRaceInformation": {
+        "description": "Race basic information has been successfully updated.",
+        "title": "Race information Updated"
+      },
+      "updateRaceRegistration": {
+        "description": "Race registration settings has been successfully updated.",
+        "title": "Registration settings updated"
+      },
+      "updateRaceRegulations": {
+        "description": "Race regulations has been successfully updated.",
+        "title": "Race regulations updated"
       }
     },
     "result": {
@@ -545,8 +545,8 @@
             "placeholder": "Enter range end number"
           },
           "omitDuplicates": {
-            "label": "Omit duplicates",
-            "description": "If the defined range contains a bib number that has already been defined then it will be skipped. Otherwise an error prompt will be displayed."
+            "description": "If the defined range contains a bib number that has already been defined then it will be skipped. Otherwise an error prompt will be displayed.",
+            "label": "Omit duplicates"
           },
           "startNumber": {
             "label": "Start number",
@@ -617,32 +617,32 @@
         },
         "form": {
           "gender": {
+            "description": "Gender required for the player to be included in the category.",
             "kind": {
               "any": "Any",
               "female": "Female",
               "male": "Male"
             },
-            "label": "Gender",
-            "description": "Gender required for the player to be included in the category."
-          },
-          "maxAge": {
-            "label": "Max age",
-            "placeholder": "Enter maximum age",
-            "description": "The maximum age required for the player to be included in the category."
-          },
-          "minAge": {
-            "label": "Min age",
-            "placeholder": "Enter minimum age",
-            "description": "The minimum age required for the player to be included in the category."
-          },
-          "name": {
-            "label": "Name",
-            "placeholder": "Enter category name",
-            "description": "Name displayed in many places like results list."
+            "label": "Gender"
           },
           "isSpecial": {
-            "label": "Special category",
-            "description": "Competitors must be manually assigned to special categories based on any criteria."
+            "description": "Competitors must be manually assigned to special categories based on any criteria.",
+            "label": "Special category"
+          },
+          "maxAge": {
+            "description": "The maximum age required for the player to be included in the category.",
+            "label": "Max age",
+            "placeholder": "Enter maximum age"
+          },
+          "minAge": {
+            "description": "The minimum age required for the player to be included in the category.",
+            "label": "Min age",
+            "placeholder": "Enter minimum age"
+          },
+          "name": {
+            "description": "Name displayed in many places like results list.",
+            "label": "Name",
+            "placeholder": "Enter category name"
           }
         },
         "grid": {
@@ -685,9 +685,9 @@
       },
       "form": {
         "name": {
+          "description": "The name displayed in many places like the results and registration system.",
           "label": "Name",
-          "placeholder": "Enter the name",
-          "description": "The name displayed in many places like the results and registration system."
+          "placeholder": "Enter the name"
         }
       },
       "grid": {
@@ -837,18 +837,18 @@
         "description": "Promoted player will be available in stopwatch.",
         "form": {
           "bibNumber": {
+            "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it.",
             "label": "Bib number",
-            "placeholder": "Enter bib number",
-            "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it."
+            "placeholder": "Enter bib number"
           },
           "classification": {
+            "description": "Each player must be assigned to a classification.",
             "label": "Classification",
-            "placeholder": "Select classification",
-            "description": "Each player must be assigned to a classification."
+            "placeholder": "Select classification"
           },
           "startTime": {
-            "label": "Start time",
-            "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing."
+            "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing.",
+            "label": "Start time"
           }
         },
         "title": "Promote to Player"
@@ -883,9 +883,9 @@
       },
       "form": {
         "bibNumber": {
+          "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it.",
           "label": "Bib Number",
-          "placeholder": "bib number",
-          "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it."
+          "placeholder": "bib number"
         },
         "birthDate": {
           "placeholder": "Birth Date"
@@ -895,9 +895,9 @@
           "placeholder": "City"
         },
         "classification": {
+          "description": "Each player must be assigned to a classification.",
           "label": "Classification",
-          "placeholder": "Choose classification",
-          "description": "Each player must be assigned to a classification."
+          "placeholder": "Choose classification"
         },
         "country": {
           "label": "Country",
@@ -928,9 +928,9 @@
           "placeholder": "Phone Number"
         },
         "startTime": {
+          "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing.",
           "label": "Start Time",
-          "placeholder": "eg. 11:11",
-          "description": "The player's start time. It is displayed on the start list. It can be used in the timing system to automatically start timing."
+          "placeholder": "eg. 11:11"
         },
         "team": {
           "label": "Team",
@@ -988,62 +988,62 @@
       },
       "form": {
         "date": {
+          "description": "The date of the race displayed in many places and used in the timing system, such as for counting down the time until the start of each player.",
           "label": "Date",
-          "placeholder": "Date of the race",
-          "description": "The date of the race displayed in many places and used in the timing system, such as for counting down the time until the start of each player."
+          "placeholder": "Date of the race"
         },
         "description": {
+          "description": "Description displayed on the race page.",
           "label": "Description",
-          "placeholder": "Describe the race",
-          "description": "Description displayed on the race page."
+          "placeholder": "Describe the race"
         },
         "emailTemplate": {
+          "description": "Text attached at the end of the email with a summary of the competition registration. You can write in it, for example, a thank you for registering and instructions for paying the entry fee.",
           "label": "Email template",
-          "placeholder": "Enter your appendinx to the registration confirmation email",
-          "description": "Text attached at the end of the email with a summary of the competition registration. You can write in it, for example, a thank you for registering and instructions for paying the entry fee."
+          "placeholder": "Enter your appendinx to the registration confirmation email"
         },
         "location": {
+          "description": "The place where the competition is held. This can be the name of the town, the name of the starting base. Make it easy for competitors to determine where your race will be held. E.g. OSiR Kolna indoor swimming pool.",
           "label": "Location",
-          "placeholder": "Enter location",
-          "description": "The place where the competition is held. This can be the name of the town, the name of the starting base. Make it easy for competitors to determine where your race will be held. E.g. OSiR Kolna indoor swimming pool."
+          "placeholder": "Enter location"
         },
         "name": {
+          "description": "With the full name of the race displayed in many different places, you can distinguish your race from others.",
           "label": "Name",
-          "placeholder": "Enter race name",
-          "description": "With the full name of the race displayed in many different places, you can distinguish your race from others."
+          "placeholder": "Enter race name"
         },
         "playersLimit": {
+          "description": "Optional limit on the number of players who can register. When the limit of players is reached, registration will automatically be blocked with an appropriate message.",
           "label": "Players limit",
-          "placeholder": "Enter limit of players",
-          "description": "Optional limit on the number of players who can register. When the limit of players is reached, registration will automatically be blocked with an appropriate message."
+          "placeholder": "Enter limit of players"
         },
         "registrationCutoff": {
+          "description": "Optional date of shutdown of the registration system. After this date, registration of new players will be blocked. Users will see a corresponding message.",
           "label": "Registration cutoff",
-          "placeholder": "Date of the registration cutoff",
-          "description": "Optional date of shutdown of the registration system. After this date, registration of new players will be blocked. Users will see a corresponding message."
+          "placeholder": "Date of the registration cutoff"
         },
         "registrationEnabled": {
-          "label": "Registration enabled",
-          "description": "You can manually define whether the registration system should be disabled. Optional rules for automatically disabling registration take priority over this setting."
+          "description": "You can manually define whether the registration system should be disabled. Optional rules for automatically disabling registration take priority over this setting.",
+          "label": "Registration enabled"
         },
         "sportKind": {
+          "description": "The type of competition used for statistical purposes. Makes it easier for people interested in your chosen sport to find your race.",
           "label": "Sport kind",
-          "placeholder": "Choose the sport kind",
-          "description": "The type of competition used for statistical purposes. Makes it easier for people interested in your chosen sport to find your race."
+          "placeholder": "Choose the sport kind"
         },
         "terms": {
+          "description": "Url to the document containing the regulations. It will be available for download on the competition registration page, for example.",
           "label": "Terms and conditions",
-          "placeholder": "Url to the terms and conditions",
-          "description": "Url to the document containing the regulations. It will be available for download on the competition registration page, for example."
+          "placeholder": "Url to the terms and conditions"
         },
         "useSampleData": {
-          "label": "Add sample data",
-          "description": "Create sample data including: athletes, measuring points, classifications, age categories, starting numbers and measured split times."
+          "description": "Create sample data including: athletes, measuring points, classifications, age categories, starting numbers and measured split times.",
+          "label": "Add sample data"
         },
         "websiteUrl": {
+          "description": "Your race website address, displayed on the race page.",
           "label": "Official website",
-          "placeholder": "Enter official website url",
-          "description": "Your race website address, displayed on the race page."
+          "placeholder": "Enter official website url"
         }
       },
       "grid": {
@@ -1092,23 +1092,23 @@
       "applyTimePenalty": {
         "form": {
           "reason": {
+            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Type reason for penalty",
-            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results."
+            "placeholder": "Type reason for penalty"
           },
           "time": {
+            "description": "The number of seconds that will be added to the player's score.",
             "label": "Time",
-            "placeholder": "Enter time penalty",
-            "description": "The number of seconds that will be added to the player's score."
+            "placeholder": "Enter time penalty"
           }
         }
       },
       "disqualify": {
         "form": {
           "reason": {
+            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Type reason for disqualification",
-            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results."
+            "placeholder": "Type reason for disqualification"
           }
         }
       }
@@ -1197,9 +1197,9 @@
         },
         "form": {
           "name": {
+            "description": "The name for the API key, allows you to distinguish the different keys from each other.",
             "label": "API Key Name",
-            "placeholder": "Type API Key Name",
-            "description": "The name for the API key, allows you to distinguish the different keys from each other."
+            "placeholder": "Type API Key Name"
           }
         }
       },
@@ -1214,25 +1214,29 @@
       },
       "form": {
         "bibNumber": {
+          "description": "The bib number for which the split time was recorded.",
           "label": "Bib number",
-          "placeholder": "Enter bib number",
-          "description": "The bib number for which the split time was recorded."
+          "placeholder": "Enter bib number"
         },
         "time": {
-          "label": "Time",
-          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified."
+          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
+          "label": "Time"
         },
         "timingPoint": {
+          "description": "Timing point related to the split time.",
           "label": "Timing Point",
-          "placeholder": "Choose timing point",
-          "description": "Timing point related to the split time."
+          "placeholder": "Choose timing point"
         }
       },
       "grid": {
         "columns": {
           "bibNumber": "Bib",
           "playerLastName": "Last Name",
-          "playerName": "Name"
+          "playerName": "Name",
+          "status": {
+            "error": "Error, each subsequent time must be greater than the previous one.",
+            "warning": "Warning, some time measurements are missing."
+          }
         },
         "search": {
           "placeholder": "Search split times..."
@@ -1288,18 +1292,18 @@
         },
         "form": {
           "canAccessOthers": {
-            "label": "Can access others",
-            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations. For example, between the start and finish."
+            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations. For example, between the start and finish.",
+            "label": "Can access others"
           },
           "code": {
+            "description": "Optional code/password to enter when logging into the stopwatch.",
             "label": "Code (optional)",
-            "placeholder": "Type Passcode",
-            "description": "Optional code/password to enter when logging into the stopwatch."
+            "placeholder": "Type Passcode"
           },
           "name": {
+            "description": "Use a name that will allow you to distinguish this URL from others, it can be, for example, the name of the timekeeper.",
             "label": "Access Url name",
-            "placeholder": "Type Access Url name",
-            "description": "Use a name that will allow you to distinguish this URL from others, it can be, for example, the name of the timekeeper."
+            "placeholder": "Type Access Url name"
           }
         },
         "grid": {
@@ -1330,24 +1334,24 @@
       },
       "form": {
         "description": {
+          "description": "Optional description of the timing point displayed in several places in the application.",
           "label": "Description",
-          "placeholder": "Describe the timing point",
-          "description": "Optional description of the timing point displayed in several places in the application."
+          "placeholder": "Describe the timing point"
         },
         "laps": {
+          "description": "Optional number of laps that can be measured at the timing point. Use only in races whose route includes laps.",
           "label": "Number of laps",
-          "placeholder": "Enter number of laps",
-          "description": "Optional number of laps that can be measured at the timing point. Use only in races whose route includes laps."
+          "placeholder": "Enter number of laps"
         },
         "name": {
+          "description": "The name of the timing point displayed in the stopwatch, times list and result list, such as start, finish, checkpoint.",
           "label": "Timing Point Name",
-          "placeholder": "Type Timing Point Name",
-          "description": "The name of the timing point displayed in the stopwatch, times list and result list, such as start, finish, checkpoint."
+          "placeholder": "Type Timing Point Name"
         },
         "shortName": {
+          "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters.",
           "label": "Short name",
-          "placeholder": "Enter short name",
-          "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters."
+          "placeholder": "Enter short name"
         }
       },
       "header": {
@@ -1357,6 +1361,7 @@
       "sections": {
         "delete": {
           "header": {
+            "description": "Deletes the timing point permanently. This cannot be undone.",
             "title": "Delete timing point"
           }
         }
@@ -1522,8 +1527,8 @@
       }
     },
     "header": {
-      "title": "Results",
-      "live": "live results"
+      "live": "live results",
+      "title": "Results"
     },
     "refresh": {
       "message": "Results refresh automatically every 10 seconds."
@@ -1794,6 +1799,7 @@
         "placeholder": "Search..."
       }
     },
+    "delete": "Delete",
     "errorOccured": "Error occured",
     "errors": {
       "goBack": "Go back",
@@ -1811,38 +1817,37 @@
     "generalError": "Oops! Something went wrong on our end. Our team has been notified, and we're working to fix it. Please try again later. If the problem persists, feel free to contact support. We apologize for any inconvenience.",
     "ok": "OK",
     "save": "Save",
-    "delete": "Delete",
     "sportKinds": {
+      "alpine-skiing": "Alpine skiing",
+      "biathlon": "Biathlon",
+      "bike-tour": "Bike Tour",
+      "bmx": "BMX",
       "bobsleigh": "Bobsleigh",
       "canoeing": "Canoeing",
+      "cross-country-skiing": "Cross-country skiing",
+      "cyclocross": "Cyclocross",
+      "dog-sled-race": "Dog Sled Race",
+      "duathlon": "Duathlon",
       "gravel-cycling": "Gravel Cycling",
       "hiking": "Hiking",
-      "mtb-cycling": "Mountain Biking",
-      "road-cycling": "Road Cycling",
-      "running": "Running",
-      "swimming": "Swimming",
-      "rowing": "Rowing",
-      "alpine-skiing": "Alpine skiing",
-      "cross-country-skiing": "Cross-country skiing",
-      "snowboarding": "Snowboarding",
-      "luge": "Luge",
-      "triathlon": "Triathlon",
-      "motorsports": "Motorsports",
-      "trail-running": "Trail Running",
-      "cyclocross": "Cyclocross",
-      "bmx": "BMX",
-      "bike-tour": "Bike Tour",
-      "skiing": "Skiing",
-      "speed-skating": "Speed Skating",
-      "sailing": "Sailing",
-      "biathlon": "Biathlon",
-      "duathlon": "Duathlon",
-      "walking": "Walking",
-      "wakeboarding": "Wakeboarding",
-      "obstacle-course-run": "Obstacle Course Run",
-      "dog-sled-race": "Dog Sled Race",
       "kayaking": "Kayaking",
-      "other": "Other"
+      "luge": "Luge",
+      "motorsports": "Motorsports",
+      "mtb-cycling": "Mountain Biking",
+      "obstacle-course-run": "Obstacle Course Run",
+      "other": "Other",
+      "road-cycling": "Road Cycling",
+      "rowing": "Rowing",
+      "running": "Running",
+      "sailing": "Sailing",
+      "skiing": "Skiing",
+      "snowboarding": "Snowboarding",
+      "speed-skating": "Speed Skating",
+      "swimming": "Swimming",
+      "trail-running": "Trail Running",
+      "triathlon": "Triathlon",
+      "wakeboarding": "Wakeboarding",
+      "walking": "Walking"
     },
     "status": {
       "disabled": "Disabled",
@@ -1865,9 +1870,9 @@
       }
     },
     "checkIn": {
-      "typeBibNumber": "Type player's bib number",
       "lap": "LAP",
-      "split": "SPLIT"
+      "split": "SPLIT",
+      "typeBibNumber": "Type player's bib number"
     },
     "error": {
       "disconnected": {
@@ -1888,10 +1893,10 @@
     },
     "list": {
       "absent": "absent",
+      "lap": "LAP",
       "title": {
         "text": "Players list"
-      },
-      "lap": "LAP"
+      }
     },
     "menuItems": {
       "history": "History",
@@ -1959,14 +1964,14 @@
         },
         "form": {
           "bibNumber": {
+            "description": "The bib number of the player who will be disqualified.",
             "label": "Bib Number",
-            "placeholder": "Enter bib number",
-            "description": "The bib number of the player who will be disqualified."
+            "placeholder": "Enter bib number"
           },
           "reason": {
+            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Reason the disqualification",
-            "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results."
+            "placeholder": "Reason the disqualification"
           }
         }
       },
@@ -2061,19 +2066,19 @@
         },
         "form": {
           "bibNumber": {
+            "description": "The bib number of the player who will be penalized.",
             "label": "Bib Number",
-            "placeholder": "Enter bib number",
-            "description": "The bib number of the player who will be penalized."
+            "placeholder": "Enter bib number"
           },
           "reason": {
+            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Reason the time penalty",
-            "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results."
+            "placeholder": "Reason the time penalty"
           },
           "time": {
+            "description": "The number of seconds that will be added to the player's score.",
             "label": "Time",
-            "placeholder": "Enter time",
-            "description": "The number of seconds that will be added to the player's score."
+            "placeholder": "Enter time"
           }
         },
         "timePenaltyReasons": {
@@ -2100,20 +2105,9 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
+        "deleteNotAllowedWithSplitTimesRegistered": "It is not possible to delete a timing point when the players' split times have been measured on it. You must first delete the split times",
         "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints",
-        "splitTimesForLapsRegistered": "It is not possible to reduce the number of laps to a value lower than the number of laps completed by the competitors.",
-        "deleteNotAllowedWithSplitTimesRegistered": "It is not possible to delete a timing point when the players' split times have been measured on it. You must first delete the split times"
-      }
-    }
-  },
-  "ppages": {
-    "timingPoints": {
-      "sections": {
-        "delete": {
-          "header": {
-            "description": "Deletes the timing point permanently. This cannot be undone."
-          }
-        }
+        "splitTimesForLapsRegistered": "It is not possible to reduce the number of laps to a value lower than the number of laps completed by the competitors."
       }
     }
   }

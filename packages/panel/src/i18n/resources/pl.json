@@ -328,26 +328,6 @@
         "description": "Nowy wyścig został pomyślnie dodany do wydarzenia.",
         "title": "Dodano Wyścig"
       },
-      "raceInformation": {
-        "description": "Podstawowe informacje o wyścigu zostały pomyślnie potwierdzone.",
-        "title": "Podstawowe Informacje Potwierdzone"
-      },
-      "updateRaceInformation": {
-        "description": "Dane podstawowe zostały pomyślnie aktualizowane.",
-        "title": "Dane podstawowe Zaktualizowane"
-      },
-      "updateRaceRegistration": {
-        "description": "Ustawienia rejestracji zostały pomyślnie aktualizowane.",
-        "title": "Ustawienia rejestracji zaktualizowane"
-      },
-      "updateRaceRegulations": {
-        "description": "Regulamin zawodów został pomyślnie zaktualizowany.",
-        "title": "Regulamin zawodów zaktualizowany"
-      },
-      "updateRaceConfirmationEmailTemplate": {
-        "description": "Szablon wiadomości potwierdzającej rejestrację został pomyślnie zaktualizowany.",
-        "title": "Powierdzenie rejestracji zaktualizowane"
-      },
       "delete": {
         "description": "Określony wyścig został pomyślnie usunięty z wydarzenia.",
         "title": "Usunięto Wyścig"
@@ -359,6 +339,10 @@
       "race": {
         "description": "Szczegóły określonego wyścigu zostały pomyślnie potwierdzone.",
         "title": "Potwierdzono Szczegóły Wyścigu"
+      },
+      "raceInformation": {
+        "description": "Podstawowe informacje o wyścigu zostały pomyślnie potwierdzone.",
+        "title": "Podstawowe Informacje Potwierdzone"
       },
       "raceRaport": {
         "description": "Raport z wyścigu został pomyślnie potwierdzony.",
@@ -379,6 +363,22 @@
       "update": {
         "description": "Szczegóły określonego wyścigu zostały pomyślnie zaktualizowane.",
         "title": "Zaktualizowano Wyścig"
+      },
+      "updateRaceConfirmationEmailTemplate": {
+        "description": "Szablon wiadomości potwierdzającej rejestrację został pomyślnie zaktualizowany.",
+        "title": "Powierdzenie rejestracji zaktualizowane"
+      },
+      "updateRaceInformation": {
+        "description": "Dane podstawowe zostały pomyślnie aktualizowane.",
+        "title": "Dane podstawowe Zaktualizowane"
+      },
+      "updateRaceRegistration": {
+        "description": "Ustawienia rejestracji zostały pomyślnie aktualizowane.",
+        "title": "Ustawienia rejestracji zaktualizowane"
+      },
+      "updateRaceRegulations": {
+        "description": "Regulamin zawodów został pomyślnie zaktualizowany.",
+        "title": "Regulamin zawodów zaktualizowany"
       }
     },
     "result": {
@@ -545,8 +545,8 @@
             "placeholder": "Wpisz końcowy numer"
           },
           "omitDuplicates": {
-            "label": "Pomijaj duplikaty",
-            "description": "Jeżeli zdefiniowany zakres zawiera numer startowy który został już zdefiniowany to zostanie on pominięty. Inaczej zostanie wyświetlony monit o błędzie."
+            "description": "Jeżeli zdefiniowany zakres zawiera numer startowy który został już zdefiniowany to zostanie on pominięty. Inaczej zostanie wyświetlony monit o błędzie.",
+            "label": "Pomijaj duplikaty"
           },
           "startNumber": {
             "label": "Początkowy numer",
@@ -617,32 +617,32 @@
         },
         "form": {
           "gender": {
+            "description": "Płeć wymagana do tego, żeby dany zawodnik został uwzględniony w danej kategorii.",
             "kind": {
               "any": "Dowolna",
               "female": "Kobieta",
               "male": "Mężczyzna"
             },
-            "label": "Płeć",
-            "description": "Płeć wymagana do tego, żeby dany zawodnik został uwzględniony w danej kategorii."
-          },
-          "maxAge": {
-            "label": "Max wiek",
-            "placeholder": "Wpisz maksymalny wiek",
-            "description": "Maksymalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii."
-          },
-          "minAge": {
-            "label": "Min wiek",
-            "placeholder": "Wpisz minimalny wiek",
-            "description": "Minimalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii."
-          },
-          "name": {
-            "label": "Nazwa",
-            "placeholder": "Wpisz nazwę kategorii",
-            "description": "Nazwa wyświetlana między innymi na liście wyników."
+            "label": "Płeć"
           },
           "isSpecial": {
-            "label": "Kategoria specjalna",
-            "description": "Zawodnicy muszą być przypisywani ręcznie do kategorii specjalnych na podstawie dowolnych kryteriów."
+            "description": "Zawodnicy muszą być przypisywani ręcznie do kategorii specjalnych na podstawie dowolnych kryteriów.",
+            "label": "Kategoria specjalna"
+          },
+          "maxAge": {
+            "description": "Maksymalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii.",
+            "label": "Max wiek",
+            "placeholder": "Wpisz maksymalny wiek"
+          },
+          "minAge": {
+            "description": "Minimalny wiek wymagany do tego, żeby zawodnik został uwzględniony w danej kategorii.",
+            "label": "Min wiek",
+            "placeholder": "Wpisz minimalny wiek"
+          },
+          "name": {
+            "description": "Nazwa wyświetlana między innymi na liście wyników.",
+            "label": "Nazwa",
+            "placeholder": "Wpisz nazwę kategorii"
           }
         },
         "grid": {
@@ -685,9 +685,9 @@
       },
       "form": {
         "name": {
+          "description": "Nazwa wyświetlana między innymi na liście wyników i systemie rejestracji.",
           "label": "Nazwa",
-          "placeholder": "Wpisz nazwę",
-          "description": "Nazwa wyświetlana między innymi na liście wyników i systemie rejestracji."
+          "placeholder": "Wpisz nazwę"
         }
       },
       "grid": {
@@ -837,18 +837,18 @@
         "description": "Awansowany zawodnik będzie dostępny w stoperze.",
         "form": {
           "bibNumber": {
+            "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu.",
             "label": "Numer startowy",
-            "placeholder": "Wpisz numer startowy",
-            "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu."
+            "placeholder": "Wpisz numer startowy"
           },
           "classification": {
+            "description": "Każdy zawodnik musi być przypisany do klasyfikacji.",
             "label": "Klasyfikacja",
-            "placeholder": "Wybierz klasyfikację",
-            "description": "Każdy zawodnik musi być przypisany do klasyfikacji."
+            "placeholder": "Wybierz klasyfikację"
           },
           "startTime": {
-            "label": "Czas startu",
-            "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu."
+            "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu.",
+            "label": "Czas startu"
           }
         },
         "title": "Awansuj na Zawodnika"
@@ -883,9 +883,9 @@
       },
       "form": {
         "bibNumber": {
+          "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu.",
           "label": "Numer startowy",
-          "placeholder": "Numer startowy",
-          "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu."
+          "placeholder": "Numer startowy"
         },
         "birthDate": {
           "placeholder": "Data urodzenia"
@@ -895,9 +895,9 @@
           "placeholder": "Miasto"
         },
         "classification": {
+          "description": "Każdy zawodnik musi być przypisany do klasyfikacji.",
           "label": "Klasyfikacja",
-          "placeholder": "Wybierz klasyfikację",
-          "description": "Każdy zawodnik musi być przypisany do klasyfikacji."
+          "placeholder": "Wybierz klasyfikację"
         },
         "country": {
           "label": "Kraj",
@@ -928,9 +928,9 @@
           "placeholder": "Numer telefonu"
         },
         "startTime": {
+          "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu.",
           "label": "Godzina rozpoczęcia",
-          "placeholder": "np. 11:11",
-          "description": "Czas startu zawodnika. Jest wyświetlany na liście startowej. Może być wykorzystany w systemie pomiaru czasu do automatycznego wystartowania pomiaru czasu."
+          "placeholder": "np. 11:11"
         },
         "team": {
           "label": "Drużyna",
@@ -988,62 +988,62 @@
       },
       "form": {
         "date": {
+          "description": "Data wyścigu wyświetlana w wielu miejscach oraz używana w systemie pomiaru czasu, np. do odliczania czasu do startu poszczególnych zawodników.",
           "label": "Data",
-          "placeholder": "Data wyścigu",
-          "description": "Data wyścigu wyświetlana w wielu miejscach oraz używana w systemie pomiaru czasu, np. do odliczania czasu do startu poszczególnych zawodników."
+          "placeholder": "Data wyścigu"
         },
         "description": {
+          "description": "Opis wyświetlany na stronie wyścigu.",
           "label": "Opis",
-          "placeholder": "Opis wyścig",
-          "description": "Opis wyświetlany na stronie wyścigu."
+          "placeholder": "Opis wyścig"
         },
         "emailTemplate": {
+          "description": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np. podziękowanie za rejestrację i instrukcję opłaty wpisowego.",
           "label": "Szablon email",
-          "placeholder": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np podziękowanie za rejestrację i instrukcję opłaty wpisowego.",
-          "description": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np. podziękowanie za rejestrację i instrukcję opłaty wpisowego."
+          "placeholder": "Tekst dołączany na koniec wiadomości email z podsumowaniem rejestracji w zawodach. Możesz w nim wpisać np podziękowanie za rejestrację i instrukcję opłaty wpisowego."
         },
         "location": {
+          "description": "Miejsce odbywania się zawodów. Może to być nazwa miejscowości, nazwa bazy startowej. Ułatw zawodnikom określenie gdzie Twój wyścig się odbędzie. Np. kryta pływalnia OSiR Kolna.",
           "label": "Lokalizacja",
-          "placeholder": "Podaj lokalizację",
-          "description": "Miejsce odbywania się zawodów. Może to być nazwa miejscowości, nazwa bazy startowej. Ułatw zawodnikom określenie gdzie Twój wyścig się odbędzie. Np. kryta pływalnia OSiR Kolna."
+          "placeholder": "Podaj lokalizację"
         },
         "name": {
+          "description": "Pełna nazwa wyścigu wyświetlana w wielu różnych miejscach, pozwala na odróżnienie Twojego wyścigu od innych.",
           "label": "Nazwa",
-          "placeholder": "Wpisz nazwę wyścigu",
-          "description": "Pełna nazwa wyścigu wyświetlana w wielu różnych miejscach, pozwala na odróżnienie Twojego wyścigu od innych."
+          "placeholder": "Wpisz nazwę wyścigu"
         },
         "playersLimit": {
+          "description": "Opcjonalny limit ilości zawodników, którzy mogą się zarejestrować. Po osiągnięciu limitu zawodników rejestracja automatycznie zostanie zablokowana ze stosownym komunikatem.",
           "label": "Limit zawodników",
-          "placeholder": "Wpisz limit zawodników",
-          "description": "Opcjonalny limit ilości zawodników, którzy mogą się zarejestrować. Po osiągnięciu limitu zawodników rejestracja automatycznie zostanie zablokowana ze stosownym komunikatem."
+          "placeholder": "Wpisz limit zawodników"
         },
         "registrationCutoff": {
+          "description": "Opcjonalna data wyłączenia systemu rejestracji. Po tym terminie rejestracja nowych zawodników zostanie zablokowana. Użytkownicy zobaczą stosowny komunikat.",
           "label": "Wyłączenie rejestracji",
-          "placeholder": "Data wyłączenia rejestracji",
-          "description": "Opcjonalna data wyłączenia systemu rejestracji. Po tym terminie rejestracja nowych zawodników zostanie zablokowana. Użytkownicy zobaczą stosowny komunikat."
+          "placeholder": "Data wyłączenia rejestracji"
         },
         "registrationEnabled": {
-          "label": "Rejestracja uruchomiona",
-          "description": "Możesz ręcznie zdefiniować czy system rejestracji powinien być wyłączony. Opcjonalne reguły automatycznego wyłączenia rejestracji mają priorytet nad tym ustawieniem."
+          "description": "Możesz ręcznie zdefiniować czy system rejestracji powinien być wyłączony. Opcjonalne reguły automatycznego wyłączenia rejestracji mają priorytet nad tym ustawieniem.",
+          "label": "Rejestracja uruchomiona"
         },
         "sportKind": {
+          "description": "Typ zawodów używany w celach statystycznych. Ułatwia odnalezienie Twojego wyścigu osobom zainteresowanym wybraną dyscypliną sportową.",
           "label": "Dyscyplina sportowa",
-          "placeholder": "Wybierz dyscyplinę sportową",
-          "description": "Typ zawodów używany w celach statystycznych. Ułatwia odnalezienie Twojego wyścigu osobom zainteresowanym wybraną dyscypliną sportową."
+          "placeholder": "Wybierz dyscyplinę sportową"
         },
         "terms": {
+          "description": "Adres url do dokumentu zawierającego regulamin. Będzie dostępny do pobrania np. na stronie rejestracji do zawodów.",
           "label": "Regulamin",
-          "placeholder": "Link do regulaminu",
-          "description": "Adres url do dokumentu zawierającego regulamin. Będzie dostępny do pobrania np. na stronie rejestracji do zawodów."
+          "placeholder": "Link do regulaminu"
         },
         "useSampleData": {
-          "label": "Dodaj przykładowe dane",
-          "description": "Utwórz przykładowe dane w tym: zawodników, punkty pomiarowe, klasyfikacje, kategorie wiekowe, numery startowe i zmierzone międzyczasy."
+          "description": "Utwórz przykładowe dane w tym: zawodników, punkty pomiarowe, klasyfikacje, kategorie wiekowe, numery startowe i zmierzone międzyczasy.",
+          "label": "Dodaj przykładowe dane"
         },
         "websiteUrl": {
+          "description": "Adres strony internetowej Twojego wyścigu, wyświetlany na stronie wyścigu.",
           "label": "Oficjalna strona internetowa",
-          "placeholder": "Wpisz oficjalną stronę wydarzenia",
-          "description": "Adres strony internetowej Twojego wyścigu, wyświetlany na stronie wyścigu."
+          "placeholder": "Wpisz oficjalną stronę wydarzenia"
         }
       },
       "grid": {
@@ -1092,23 +1092,23 @@
       "applyTimePenalty": {
         "form": {
           "reason": {
+            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Wpisz powód zastosowania kary",
-            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników."
+            "placeholder": "Wpisz powód zastosowania kary"
           },
           "time": {
+            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika.",
             "label": "Czas",
-            "placeholder": "Wpisz karę czasową",
-            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika."
+            "placeholder": "Wpisz karę czasową"
           }
         }
       },
       "disqualify": {
         "form": {
           "reason": {
+            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Wpisz powód dyskwalifikacji",
-            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników."
+            "placeholder": "Wpisz powód dyskwalifikacji"
           }
         }
       }
@@ -1197,9 +1197,9 @@
         },
         "form": {
           "name": {
+            "description": "Nazwa dla klucza API, pozwala na odróżnianie od siebie poszczególnych kluczy.",
             "label": "Nazwa klucza API",
-            "placeholder": "Wpisz nazwę klucza API",
-            "description": "Nazwa dla klucza API, pozwala na odróżnianie od siebie poszczególnych kluczy."
+            "placeholder": "Wpisz nazwę klucza API"
           }
         }
       },
@@ -1214,25 +1214,29 @@
       },
       "form": {
         "bibNumber": {
+          "description": "Numer startowy dla którego zarejestrowano czas.",
           "label": "Numer startowy",
-          "placeholder": "Wpisz numer startowy",
-          "description": "Numer startowy dla którego zarejestrowano czas."
+          "placeholder": "Wpisz numer startowy"
         },
         "time": {
-          "label": "Czas",
-          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany."
+          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany.",
+          "label": "Czas"
         },
         "timingPoint": {
+          "description": "Punkt pomiarowy którego dotyczy zarejestrowany czas.",
           "label": "Punkt pomiarowy",
-          "placeholder": "Wybierz punkt pomiarowy",
-          "description": "Punkt pomiarowy którego dotyczy zarejestrowany czas."
+          "placeholder": "Wybierz punkt pomiarowy"
         }
       },
       "grid": {
         "columns": {
           "bibNumber": "Numer",
           "playerLastName": "Nazwisko",
-          "playerName": "Imię"
+          "playerName": "Imię",
+          "status": {
+            "error": "Błąd, każdy następujący po sobie czas musi być większy niż poprzedni.",
+            "warning": "Ostrzeżenie, brakuje niektórych pomiarów czasu."
+          }
         },
         "search": {
           "placeholder": "Szukaj czasów pomiarowych..."
@@ -1288,18 +1292,18 @@
         },
         "form": {
           "canAccessOthers": {
-            "label": "Może edytować inne",
-            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach. Na przykład między startem i metą."
+            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach. Na przykład między startem i metą.",
+            "label": "Może edytować inne"
           },
           "code": {
+            "description": "Opcjonalny kod/hasło do podania przy logowaniu się do stopera.",
             "label": "Kod (opcjonalny)",
-            "placeholder": "Wpisz Kod",
-            "description": "Opcjonalny kod/hasło do podania przy logowaniu się do stopera."
+            "placeholder": "Wpisz Kod"
           },
           "name": {
+            "description": "Użyj nazwy która pozwoli Ci na odróżnienie tego URL od innych, może to być np. imię sędziego.",
             "label": "Nazwa Dostępowego Url",
-            "placeholder": "Wpisz nazwę dostępowego Url",
-            "description": "Użyj nazwy która pozwoli Ci na odróżnienie tego URL od innych, może to być np. imię sędziego."
+            "placeholder": "Wpisz nazwę dostępowego Url"
           }
         },
         "grid": {
@@ -1330,24 +1334,24 @@
       },
       "form": {
         "description": {
+          "description": "Opcjonalny opis punktu pomiarowego wyświetlany w kilku miejscach w aplikacji.",
           "label": "Opis",
-          "placeholder": "Opisz punkt pomiarowy",
-          "description": "Opcjonalny opis punktu pomiarowego wyświetlany w kilku miejscach w aplikacji."
+          "placeholder": "Opisz punkt pomiarowy"
         },
         "laps": {
+          "description": "Opcjonalna ilość okrążeń możliwych do zmierzenia w punkcie pomiarowym. Używaj tylko w wyścigach których trasa zakłada okrążenia.",
           "label": "Ilość okrążeń",
-          "placeholder": "Podaj ilość okrążeń",
-          "description": "Opcjonalna ilość okrążeń możliwych do zmierzenia w punkcie pomiarowym. Używaj tylko w wyścigach których trasa zakłada okrążenia."
+          "placeholder": "Podaj ilość okrążeń"
         },
         "name": {
+          "description": "Nazwa punktu pomiarowego wyświetlana w stoperze, liście czasów i liście wyników, np. start, meta, punkt kontrolny.",
           "label": "Nazwa Punktu Pomiarowego",
-          "placeholder": "Wpisz nazwę Punktu Pomiarowego",
-          "description": "Nazwa punktu pomiarowego wyświetlana w stoperze, liście czasów i liście wyników, np. start, meta, punkt kontrolny."
+          "placeholder": "Wpisz nazwę Punktu Pomiarowego"
         },
         "shortName": {
+          "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków.",
           "label": "Nazwa skrócona",
-          "placeholder": "Wpisz nazwę skróconą",
-          "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków."
+          "placeholder": "Wpisz nazwę skróconą"
         }
       },
       "header": {
@@ -1357,6 +1361,7 @@
       "sections": {
         "delete": {
           "header": {
+            "description": "Permanentnie usuwa punkt pomiarowy. Ta akcja jest nieodwracalna.",
             "title": "Usuń punkt pomiarowy"
           }
         }
@@ -1522,8 +1527,8 @@
       }
     },
     "header": {
-      "title": "Wyniki",
-      "live": "wyniki na żywo"
+      "live": "wyniki na żywo",
+      "title": "Wyniki"
     },
     "refresh": {
       "message": "Wyniki odświeżają się automatycznie co 10 sekund."
@@ -1794,6 +1799,7 @@
         "placeholder": "Szukaj..."
       }
     },
+    "delete": "Usuń",
     "errorOccured": "Wystąpił błąd",
     "errors": {
       "goBack": "Wróć",
@@ -1812,43 +1818,42 @@
     "ok": "OK",
     "save": "Zapisz",
     "sportKinds": {
+      "alpine-skiing": "Narciastwo alpejskie",
+      "biathlon": "Biathlon",
+      "bike-tour": "Wycieczka rowerowa",
+      "bmx": "BMX",
       "bobsleigh": "Bobsleje",
       "canoeing": "Kajakarstwo",
+      "cross-country-skiing": "Biegi narciarskie",
+      "cyclocross": "Kolarstwo przełajowe",
+      "dog-sled-race": "Wyścig psich zaprzęgów",
+      "duathlon": "Duathlon",
       "gravel-cycling": "Gravel",
       "hiking": "Turystyka piesza",
-      "mtb-cycling": "Kolarstwo górskie",
-      "road-cycling": "Kolarstwo szosowe",
-      "running": "Bieganie",
-      "swimming": "Pływanie",
-      "rowing": "Wioślarstwo",
-      "alpine-skiing": "Narciastwo alpejskie",
-      "cross-country-skiing": "Biegi narciarskie",
-      "snowboarding": "Snowboarding",
-      "luge": "Saneczkarstwo",
-      "triathlon": "Triathlon",
-      "motorsports": "Sporty motorowe",
-      "trail-running": "Biegi terenowe",
-      "cyclocross": "Kolarstwo przełajowe",
-      "bmx": "BMX",
-      "bike-tour": "Wycieczka rowerowa",
-      "skiing": "Narciarstwo",
-      "speed-skating": "Łyżwiarstwo szybkie",
-      "sailing": "Żeglarstwo",
-      "biathlon": "Biathlon",
-      "duathlon": "Duathlon",
-      "walking": "Chodzenie",
-      "wakeboarding": "Wakeboarding",
-      "obstacle-course-run": "Bieg z przeszkodami",
-      "dog-sled-race": "Wyścig psich zaprzęgów",
       "kayaking": "Kajakarstwo",
-      "other": "Inne"
+      "luge": "Saneczkarstwo",
+      "motorsports": "Sporty motorowe",
+      "mtb-cycling": "Kolarstwo górskie",
+      "obstacle-course-run": "Bieg z przeszkodami",
+      "other": "Inne",
+      "road-cycling": "Kolarstwo szosowe",
+      "rowing": "Wioślarstwo",
+      "running": "Bieganie",
+      "sailing": "Żeglarstwo",
+      "skiing": "Narciarstwo",
+      "snowboarding": "Snowboarding",
+      "speed-skating": "Łyżwiarstwo szybkie",
+      "swimming": "Pływanie",
+      "trail-running": "Biegi terenowe",
+      "triathlon": "Triathlon",
+      "wakeboarding": "Wakeboarding",
+      "walking": "Chodzenie"
     },
     "status": {
       "disabled": "Wyłączone",
       "enabled": "Włączone"
     },
-    "unauthorized": "Nieautoryzowany",
-    "delete": "Usuń"
+    "unauthorized": "Nieautoryzowany"
   },
   "startList": {
     "empty": "Lista startowa jest pusta",
@@ -1865,9 +1870,9 @@
       }
     },
     "checkIn": {
-      "typeBibNumber": "Wpisz numer startowy zawodnika",
       "lap": "LAP",
-      "split": "SPLIT"
+      "split": "SPLIT",
+      "typeBibNumber": "Wpisz numer startowy zawodnika"
     },
     "error": {
       "disconnected": {
@@ -1888,10 +1893,10 @@
     },
     "list": {
       "absent": "nieobecny",
+      "lap": "LAP",
       "title": {
         "text": "Lista zawodników"
-      },
-      "lap": "LAP"
+      }
     },
     "menuItems": {
       "history": "Historia",
@@ -1959,14 +1964,14 @@
         },
         "form": {
           "bibNumber": {
+            "description": "Numer startowy zawodnika który zostanie zdyskwalifikowany.",
             "label": "Numer startowy",
-            "placeholder": "Wprowadź numer startowy",
-            "description": "Numer startowy zawodnika który zostanie zdyskwalifikowany."
+            "placeholder": "Wprowadź numer startowy"
           },
           "reason": {
+            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Uzasadnij dyskwalifikację",
-            "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników."
+            "placeholder": "Uzasadnij dyskwalifikację"
           }
         }
       },
@@ -2061,19 +2066,19 @@
         },
         "form": {
           "bibNumber": {
+            "description": "Numer startowy zawodnika który zostanie ukarany.",
             "label": "Numer startowy",
-            "placeholder": "Wprowadź numer startowy",
-            "description": "Numer startowy zawodnika który zostanie ukarany."
+            "placeholder": "Wprowadź numer startowy"
           },
           "reason": {
+            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Uzasadnij karę czasową",
-            "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników."
+            "placeholder": "Uzasadnij karę czasową"
           },
           "time": {
+            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika.",
             "label": "Czas",
-            "placeholder": "Wpisz czas",
-            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika."
+            "placeholder": "Wpisz czas"
           }
         },
         "timePenaltyReasons": {
@@ -2100,20 +2105,9 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę).",
+        "deleteNotAllowedWithSplitTimesRegistered": "Nie można usunąć punktu pomiarowego gdy zmierzono na nim czasy zawodników. Należy najpierw usunąć zmierzone czasy.",
         "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych.",
-        "splitTimesForLapsRegistered": "Nie można zmniejszyć ilości okrążeń do wartości niższej niż ilość okrążeń pokonanych przez zawodników.",
-        "deleteNotAllowedWithSplitTimesRegistered": "Nie można usunąć punktu pomiarowego gdy zmierzono na nim czasy zawodników. Należy najpierw usunąć zmierzone czasy."
-      }
-    }
-  },
-  "ppages": {
-    "timingPoints": {
-      "sections": {
-        "delete": {
-          "header": {
-            "description": "Permanentnie usuwa punkt pomiarowy. Ta akcja jest nieodwracalna."
-          }
-        }
+        "splitTimesForLapsRegistered": "Nie można zmniejszyć ilości okrążeń do wartości niższej niż ilość okrążeń pokonanych przez zawodników."
       }
     }
   }
