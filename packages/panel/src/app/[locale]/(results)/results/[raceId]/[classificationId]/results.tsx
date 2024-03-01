@@ -5,13 +5,13 @@ import Icon from "@mdi/react";
 import { formatGap, formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 
 import classNames from "classnames";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import { useState } from "react";
 import type { AppRouterOutputs } from "src/trpc";
 
 type Results = AppRouterOutputs["result"]["results"];
-// type Race = AppRouterOutputs["race"]["raceInformation"];
+type Race = AppRouterOutputs["race"]["raceInformation"];
 
 const ResultsRow = ({
     i,
@@ -150,17 +150,17 @@ const RowDetails = ({ i, result }: { i: number; result: Results[0] }) => {
 export const Results = ({
     title,
     results,
-    // race,
+    race,
     highlightOpenCategories,
 }: {
     title: string;
     results: Results;
-    // race: Race;
+    race: Race;
     highlightOpenCategories: boolean;
 }) => {
     const [rowIds, setRowIds] = useState<number[]>([]);
     const t = useTranslations();
-    // const locale = useLocale();
+    const locale = useLocale();
 
     const toggleRow = (rowId: number) => {
         const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
@@ -176,7 +176,7 @@ export const Results = ({
             <Head>
                 <title>{t("results.header.title")}</title>
             </Head>
-            {/* <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center">
                 <div className="my-4 flex w-full max-w-[800px] flex-col px-4">
                     <h2 className="text-2xl font-semibold uppercase">{race?.name}</h2>
                     <h3 className="text-sm font-semibold">
@@ -187,7 +187,7 @@ export const Results = ({
                         <div className="mt-2"></div>
                     </div>
                 </div>
-            </div> */}
+            </div>
             <div className="flex w-full justify-center">
                 <div className="flex w-full flex-col items-center">
                     <div className="w-full max-w-xl">
