@@ -29,6 +29,12 @@ export const useCurrentRaceId = () => {
     return parseInt(raceId);
 };
 
+export const useCurrentClassificationId = () => {
+    const { classificationId } = useParams<{ classificationId: string }>()!;
+
+    return parseInt(classificationId);
+};
+
 export const usePreviousValue = <T,>(value: T) => {
     const ref = useRef<T>();
 

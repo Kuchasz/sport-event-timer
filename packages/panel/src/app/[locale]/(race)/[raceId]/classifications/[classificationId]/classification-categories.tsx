@@ -13,15 +13,9 @@ import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import { type Gender } from "src/modules/shared/models";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
-import { useParams } from "next/navigation";
 import type { AppRouterOutputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
-
-export const useCurrentClassificationId = () => {
-    const { classificationId } = useParams<{ classificationId: string }>()!;
-
-    return parseInt(classificationId);
-};
+import { useCurrentClassificationId } from "src/hooks";
 
 type Category = AppRouterOutputs["classification"]["categories"][0];
 

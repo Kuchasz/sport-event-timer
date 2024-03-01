@@ -8,7 +8,9 @@ import classNames from "classnames";
 import { useLocale, useTranslations } from "next-intl";
 import Head from "next/head";
 import { useState } from "react";
+import { useCurrentClassificationId, useCurrentRaceId } from "src/hooks";
 import type { AppRouterOutputs } from "src/trpc";
+import { trpc } from "src/trpc-core";
 
 type Results = AppRouterOutputs["result"]["results"];
 type Race = AppRouterOutputs["race"]["raceInformation"];
@@ -149,18 +151,26 @@ const RowDetails = ({ i, result }: { i: number; result: Results[0] }) => {
 
 export const Results = ({
     title,
-    results,
+    initialResults,
     race,
     highlightOpenCategories,
 }: {
     title: string;
-    results: Results;
+    initialResults: Results;
     race: Race;
     highlightOpenCategories: boolean;
 }) => {
+    const raceId = useCurrentRaceId();
+    const classificationId = useCurrentClassificationId();
+
     const [rowIds, setRowIds] = useState<number[]>([]);
     const t = useTranslations();
     const locale = useLocale();
+
+    const { data: results } = trpc.result.results.useQuery(
+        { raceId, classificationId },
+        { initialData: initialResults, refetchInterval: 10_000 },
+    );
 
     const toggleRow = (rowId: number) => {
         const newRowIds = rowIds.includes(rowId) ? rowIds.filter(r => r !== rowId) : [...rowIds, rowId];
@@ -168,8 +178,8 @@ export const Results = ({
         setRowIds(newRowIds);
     };
 
-    const openCategoriesExist = results?.some(r => !!r.openCategory);
-    const ageCategoriesExist = results?.some(r => !!r.ageCategory);
+    const openCategoriesExist = results.some(r => !!r.openCategory);
+    const ageCategoriesExist = results.some(r => !!r.ageCategory);
 
     return (
         <>

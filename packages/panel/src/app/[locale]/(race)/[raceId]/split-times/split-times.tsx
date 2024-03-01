@@ -1,19 +1,19 @@
 "use client";
 
-import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
+import { mdiAlertCircleOutline, mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
+import { createRange } from "@set/utils/dist/array";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
+import classNames from "classnames";
+import { useTranslations } from "next-intl";
+import Head from "next/head";
 import { PageHeader } from "src/components/page-headers";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
-import { useTranslations } from "next-intl";
-import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
 import { SplitTimeEdit } from "../../../../../components/panel/split-time/split-time-edit";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { createRange } from "@set/utils/dist/array";
-import classNames from "classnames";
 
 type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
@@ -131,6 +131,17 @@ export const SplitTimes = () => {
 
     const cols: PoorDataTableColumn<SplitTime>[] = [
         {
+            field: "hasError",
+            headerName: "",
+            sortable: false,
+            cellRenderer: data =>
+                data.hasError ? (
+                    <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-red-100 text-red-500"></Icon>
+                ) : data.hasWarning ? (
+                    <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-orange-100 text-orange-500"></Icon>
+                ) : null,
+        },
+        {
             field: "bibNumber",
             headerName: t("pages.splitTimes.grid.columns.bibNumber"),
             sortable: true,
@@ -151,6 +162,7 @@ export const SplitTimes = () => {
                 createRange({ from: 0, to: tp.laps ?? 0 }).map((_, lap) => ({
                     field: `${tp.name}.${lap}` as any,
                     headerName: tp.laps ? `${tp.name}(${lap + 1})` : tp.name,
+                    sortable: true,
                     cellRenderer: (data: SplitTime) => (
                         <SplitTimeResult
                             refetch={() => refetch()}
@@ -187,9 +199,9 @@ export const SplitTimes = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.splitTimes.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
-                            getRowStyle={item =>
-                                item.hasError ? "bg-red-400 text-white" : item.hasWarning ? "bg-orange-400 text-white" : ""
-                            }
+                            // getRowStyle={item =>
+                            //     item.hasError ? "bg-red-100 text-red-500" : item.hasWarning ? "bg-orange-100 text-orange-500" : ""
+                            // }
                             gridName="split-times"
                             searchFields={["name", "lastName", "bibNumber"]}
                         />

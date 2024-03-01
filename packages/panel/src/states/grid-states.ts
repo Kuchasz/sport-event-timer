@@ -11,7 +11,8 @@ export const getGridColumnVisibilityStateAtom = (gridName: string, defaultColumn
     const newAtom = atomWithWebStorage(
         `set.panel.grid-column-state.${gridName}`,
         defaultColumnState,
-        typeof window !== "undefined" ? localStorage : undefined,
+        undefined,
+        // typeof window !== "undefined" ? localStorage : undefined,
     );
 
     gridColumnVisibilityStateAtoms.set(gridName, newAtom);

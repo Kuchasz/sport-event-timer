@@ -22,7 +22,7 @@ export default async function ({ params: { raceId, classificationId } }: { param
         <Results
             title={`${classifications.result!.find(c => c.id === Number(classificationId))!.name} - ${t("results.header.live")}`}
             highlightOpenCategories={false}
-            results={results.result!}
+            initialResults={results.result!}
             race={race.result!}
         />
     );

@@ -66,6 +66,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
     const visibleColumns = columns.filter(c => visibleColumnKeys.has(c.field));
+    console.log(gridName, visibleColumnKeys);
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
@@ -133,7 +134,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
             </div>
             <ScrollArea className="basis-auto rounded-md border">
                 <div
-                    className="relative grid"
+                    className="relative grid bg-white"
                     style={{
                         gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
                         gridAutoRows: "auto",
@@ -174,7 +175,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                     {visibleColumns.map(c => (
                                         <div
                                             className={classNames(
-                                                "flex items-center border-b bg-white px-4 py-2",
+                                                "flex items-center border-b px-4 py-2",
                                                 getRowStyle ? getRowStyle(d.obj) : "",
                                             )}
                                             key={c.headerName}>
