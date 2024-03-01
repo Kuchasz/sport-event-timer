@@ -2,7 +2,7 @@ import { loginSchema, registrationSchema } from "../../modules/user/models";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { login, register, secondsInWeek } from "../../auth";
 import { userErrors } from "../../modules/user/errors";
-import { env } from "src/env";
+import { env } from "../../env";
 
 type ResultStatus = "Error" | "Success";
 
