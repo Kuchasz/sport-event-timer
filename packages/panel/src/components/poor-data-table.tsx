@@ -12,6 +12,7 @@ import { PoorColumnChooser } from "./poor-column-chooser";
 import { PoorInput } from "./poor-input";
 import { ScrollArea, ScrollBar } from "./scroll-area";
 import { naturalSort } from "@set/utils/dist/array";
+import { getValueAtPath } from "@set/utils/dist/object";
 
 export type PoorDataTableColumn<T> = {
     [TField in keyof T]: {
@@ -66,7 +67,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const visibleColumnKeys = new Set<string | number | symbol>(gridColumnVisibilityState.filter(s => !s.hide).map(s => s.colId));
 
     const visibleColumns = columns.filter(c => visibleColumnKeys.has(c.field));
-    console.log(gridName, visibleColumnKeys);
 
     const usableSearchFields = searchFields?.filter(sf => visibleColumnKeys.has(sf));
 
@@ -80,8 +80,11 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         ? (fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[])
         : (data.map(d => ({ obj: d, field: "", score: 0 })) as unknown as readonly KeysResult<T>[]);
 
+    console.log(sortColumn?.field);
+
     const sortedFilteredData = sortColumn
-        ? naturalSort([...filteredData], sortColumn.order, d => String(d.obj[sortColumn.field]))
+        ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          naturalSort([...filteredData], sortColumn.order, d => String(getValueAtPath(d.obj, sortColumn.field.toString())))
         : filteredData;
 
     const pagesData = !props.hidePaging

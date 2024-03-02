@@ -171,7 +171,7 @@ export const SplitTimes = () => {
             .map(id => timingPoints.find(tp => tp.id === id)!)!
             .flatMap(tp =>
                 createRange({ from: 0, to: tp.laps ?? 0 }).map((_, lap) => ({
-                    field: `${tp.name}.${lap}` as any,
+                    field: `times.${tp.id}.${lap}.time` as any,
                     headerName: tp.laps ? `${tp.name}(${lap + 1})` : tp.name,
                     sortable: true,
                     cellRenderer: (data: SplitTime) => (

@@ -49,6 +49,12 @@ export const fromDeepEntries = <T>(nestedEntries: [string, T][]) => {
 
 type Path = string;
 
+export const getValueAtPath = <T>(obj: T, path: string): unknown => {
+    const keys = path.split(".");
+
+    return keys.reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj as any);
+};
+
 export const getObjectSlice = (obj: Record<string, any>, paths: Path[]): Record<string, any> => {
     return paths.reduce((acc, path) => {
         const keys = path.split(".");
