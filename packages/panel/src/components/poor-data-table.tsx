@@ -80,8 +80,6 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
         ? (fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[])
         : (data.map(d => ({ obj: d, field: "", score: 0 })) as unknown as readonly KeysResult<T>[]);
 
-    console.log(sortColumn?.field);
-
     const sortedFilteredData = sortColumn
         ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           naturalSort([...filteredData], sortColumn.order, d => String(getValueAtPath(d.obj, sortColumn.field.toString())))

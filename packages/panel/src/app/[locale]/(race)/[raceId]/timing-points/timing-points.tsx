@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronRight, mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiGestureTap, mdiGestureTapHold, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { PageHeader } from "src/components/page-headers";
@@ -14,9 +14,9 @@ import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { createRange } from "@set/utils/dist/array";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
-// type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 
 const TimingPointCard = ({
     onCreate,
@@ -88,9 +88,6 @@ export const TimingPoints = () => {
     );
     const t = useTranslations();
 
-    // const deleteTimingPointMutation = trpc.timingPoint.delete.useMutation();
-    // const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
-
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: raceId },
         {
@@ -100,16 +97,7 @@ export const TimingPoints = () => {
 
     const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
 
-    // const deleteTimingPoint = async (timingPoint: TimingPoint) => {
-    //     await deleteTimingPointMutation.mutateAsync(timingPoint);
-
-    //     void refetchOrder();
-    //     void refetchTimingPoints();
-    // };
-
-    // const deleteAccessKey = async (timingPointAccessKey: AccessKeys[0]) => {
-    //     await deleteTimingPointAccessKeyMutation.mutateAsync({ timingPointAccessUrlId: timingPointAccessKey.id });
-    // };
+    const timesInOrder = timingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
 
     return (
         <>
@@ -133,6 +121,20 @@ export const TimingPoints = () => {
                                 isFirst={index === 0}
                                 isLast={index === sortedTimingPoints.length - 1}
                             />
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        {timesInOrder.map(tio => (
+                            <div className="max-w-32 group my-2 flex cursor-pointer rounded-md bg-gray-100 px-3 py-2">
+                                <div>{tio.name}</div>
+                                <div className="flex-grow"></div>
+                                <Icon
+                                    className="opacity-0 transition-all group-hover:opacity-25 group-active:opacity-100"
+                                    path={mdiGestureTapHold}
+                                    size={1}></Icon>
+                            </div>
                         ))}
                     </div>
                 </div>
