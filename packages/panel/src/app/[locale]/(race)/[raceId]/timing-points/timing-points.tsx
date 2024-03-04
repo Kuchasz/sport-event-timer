@@ -1,20 +1,21 @@
 "use client";
 
-import { mdiChevronRight, mdiGestureTap, mdiGestureTapHold, mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiGestureTapHold, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
+import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
-import { PageHeader } from "src/components/page-headers";
-import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
-import { PoorModal } from "src/components/poor-modal";
+import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
-import { type Route } from "next";
+import { PageHeader } from "src/components/page-headers";
+import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
+import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { createRange } from "@set/utils/dist/array";
+import React, { useState } from "react";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
 
@@ -80,6 +81,45 @@ const TimingPointCard = ({
     );
 };
 
+type TimingPointWithLap = TimingPoint & { lap: number };
+
+const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
+    const [dropTarget, setDropTarget] = useState<string>("");
+    const [dragTarget, setDragTarget] = useState<string>("");
+
+    return (
+        <div>
+            {timesInOrder.map(tio => (
+                <React.Fragment key={`${tio.id}.${tio.lap}`}>
+                    <div
+                        onDragEnter={() => setDropTarget(`${tio.id}.${tio.lap}`)}
+                        onDragLeave={() => setDropTarget("")}
+                        className={classNames(
+                            "w-32 bg-red-100 transition-all",
+                            `${tio.id}.${tio.lap}` === dropTarget ? "h-12" : "h-2",
+                        )}></div>
+                    <div
+                        draggable
+                        onDragStart={() => setDragTarget(`${tio.id}.${tio.lap}`)}
+                        onDragEnd={() => setDragTarget("")}
+                        key={`${tio.id}.${tio.lap}`}
+                        className={classNames(
+                            "my-2 flex w-32 cursor-pointer rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            `${tio.id}.${tio.lap}` === dragTarget ? "border-dashed border-gray-400" : "border-transparent opacity-100",
+                        )}>
+                        <div>{tio.name}</div>
+                        <div className="flex-grow"></div>
+                        <Icon
+                            className="opacity-25 transition-all hover:opacity-50 active:opacity-100"
+                            path={mdiGestureTapHold}
+                            size={1}></Icon>
+                    </div>
+                </React.Fragment>
+            ))}
+        </div>
+    );
+};
+
 export const TimingPoints = () => {
     const raceId = useCurrentRaceId();
     const { data: timingPoints, refetch: refetchTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
@@ -125,18 +165,7 @@ export const TimingPoints = () => {
                     </div>
                 </div>
                 <div>
-                    <div>
-                        {timesInOrder.map(tio => (
-                            <div className="max-w-32 group my-2 flex cursor-pointer rounded-md bg-gray-100 px-3 py-2">
-                                <div>{tio.name}</div>
-                                <div className="flex-grow"></div>
-                                <Icon
-                                    className="opacity-0 transition-all group-hover:opacity-25 group-active:opacity-100"
-                                    path={mdiGestureTapHold}
-                                    size={1}></Icon>
-                            </div>
-                        ))}
-                    </div>
+                    <TimingPointsOrder timesInOrder={timesInOrder} />
                 </div>
             </div>
         </>
