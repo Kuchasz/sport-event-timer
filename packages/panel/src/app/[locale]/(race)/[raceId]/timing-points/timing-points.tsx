@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronRight, mdiGestureTapHold, mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
@@ -8,6 +8,7 @@ import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 import { PageHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorModal } from "src/components/poor-modal";
@@ -15,7 +16,6 @@ import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import React, { useState } from "react";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
 
@@ -81,38 +81,146 @@ const TimingPointCard = ({
     );
 };
 
+const isColliding = (element1: HTMLDivElement, element2: HTMLDivElement) => {
+    if (element1 === element2) return false;
+
+    const rect1 = element1.getBoundingClientRect();
+    const rect2 = element2.getBoundingClientRect();
+
+    return !(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top || rect1.top > rect2.bottom);
+};
+
 type TimingPointWithLap = TimingPoint & { lap: number };
 
 const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
     const [dropTarget, setDropTarget] = useState<string>("");
     const [dragTarget, setDragTarget] = useState<string>("");
 
+    const dragStartX = useRef<number>(0);
+    const dragStartY = useRef<number>(0);
+    const dragElement = useRef<HTMLDivElement | null>(null);
+    const dropElement = useRef<HTMLDivElement | null>(null);
+    const dropElements = useRef<(HTMLDivElement | null)[]>([]);
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
+        if (!targetElement) return;
+        dragElement.current = targetElement;
+        dragStartX.current = e.clientX;
+        dragStartY.current = e.clientY;
+
+        targetElement.style.willChange = "transform";
+        targetElement.style.zIndex = "1000";
+        targetElement.style.transition = "none";
+    };
+
+    const handlePointerUp = (_e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
+        if (!targetElement) return;
+        dragElement.current = null;
+        dropElement.current = null;
+        dragStartX.current = 0;
+        dragStartY.current = 0;
+
+        dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+
+        targetElement.style.willChange = "auto";
+        targetElement.style.zIndex = "auto";
+        targetElement.style.transition = "transform 0.2s";
+        targetElement.style.transform = `translate(0px, 0px)`;
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+        if (!dragElement.current || !dragStartX.current || !dragStartY.current) return;
+
+        const dX = e.clientX - dragStartX.current;
+        const dY = e.clientY - dragStartY.current;
+
+        const targetDropElement =
+            dY > 0
+                ? dropElements.current.filter(el => el && isColliding(dragElement.current!, el)).at(-1)
+                : dropElements.current.find(el => el && isColliding(dragElement.current!, el));
+
+        if (targetDropElement && targetDropElement !== dropElement.current) {
+            console.log("highlight-elements!");
+            dropElement.current = targetDropElement;
+
+            dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+
+            const dropElementIndex = dropElements.current.indexOf(dropElement.current);
+            const dragElementIndex = dropElements.current.indexOf(dragElement.current);
+
+            const startIndex = dropElementIndex > dragElementIndex ? dragElementIndex + 1 : dropElementIndex;
+            const endIndex = dropElementIndex > dragElementIndex ? dropElementIndex + 1 : dragElementIndex;
+
+            const moveElements = dropElements.current.slice(startIndex, endIndex);
+
+            moveElements.forEach(el => {
+                el?.classList.add("bg-red-200");
+            });
+
+            // const moveElements = dropElements.current.slice(index);
+
+            // const dragElementHeight = dragElement.current.getBoundingClientRect().height;
+        }
+
+        if (!targetDropElement) {
+            dropElement.current = null;
+            dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+        }
+
+        // const collidingElement = targetElements.current
+        //     .concat(dropElements.current)
+        //     .find(el => el && isColliding(dragElement.current!, el));
+
+        // if (!collidingElement && dropElement.current) {
+        //     console.log("clear--items");
+        //     dropElement.current = null;
+        //     dropElements.current.forEach(el => (el!.style.height = "0px"));
+        // }
+
+        // const collidingElementIsTargetElement = targetElements.current.includes(collidingElement!);
+
+        // if (collidingElementIsTargetElement) {
+        //     const index = targetElements.current.indexOf(dropElement.current);
+        //     const ele = dropElements.current[index];
+        //     const dragElementHeight = dragElement.current.getBoundingClientRect().height;
+        //     ele!.style.height = dragElementHeight + "px";
+        //     // dY = dY - dragElementHeight;
+        //     console.log("move--items");
+        // }
+
+        // const heights = targetElements.current.map(el => (el ? el.getBoundingClientRect().height : 0));
+        // console.log(heights);
+
+        dragElement.current.style.transform = `translate(${dX}px, ${dY}px)`;
+    };
+
+    useEffect(() => {
+        window.addEventListener("pointermove", handlePointerMove);
+
+        return () => {
+            window.removeEventListener("pointermove", handlePointerMove);
+        };
+    }, []);
+
     return (
-        <div>
-            {timesInOrder.map(tio => (
+        <div className="bg-yellow-200 p-16">
+            {timesInOrder.map((tio, index) => (
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
-                        onDragEnter={() => setDropTarget(`${tio.id}.${tio.lap}`)}
-                        onDragLeave={() => setDropTarget("")}
-                        className={classNames(
-                            "w-32 bg-red-100 transition-all",
-                            `${tio.id}.${tio.lap}` === dropTarget ? "h-12" : "h-2",
-                        )}></div>
-                    <div
-                        draggable
-                        onDragStart={() => setDragTarget(`${tio.id}.${tio.lap}`)}
-                        onDragEnd={() => setDragTarget("")}
+                        ref={el => (dropElements.current[index] = el)}
+                        onPointerDown={e => handlePointerDown(e, dropElements.current[index])}
+                        onPointerUp={e => handlePointerUp(e, dropElements.current[index])}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "my-2 flex w-32 cursor-pointer rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            "relative my-2 flex w-64 cursor-pointer select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                             `${tio.id}.${tio.lap}` === dragTarget ? "border-dashed border-gray-400" : "border-transparent opacity-100",
                         )}>
-                        <div>{tio.name}</div>
+                        <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
+                        <div className="ml-3">
+                            <div className="text-sm font-semibold">{tio.name}</div>
+                            <div className="text-xs">{tio.description ?? "Some default description"}</div>
+                        </div>
                         <div className="flex-grow"></div>
-                        <Icon
-                            className="opacity-25 transition-all hover:opacity-50 active:opacity-100"
-                            path={mdiGestureTapHold}
-                            size={1}></Icon>
                     </div>
                 </React.Fragment>
             ))}
@@ -147,7 +255,7 @@ export const TimingPoints = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
                 <div className="flex">
-                    <div className="w-full max-w-md ">
+                    <div className="hidden w-full max-w-md ">
                         {sortedTimingPoints?.map((e, index) => (
                             <TimingPointCard
                                 key={e.id}
