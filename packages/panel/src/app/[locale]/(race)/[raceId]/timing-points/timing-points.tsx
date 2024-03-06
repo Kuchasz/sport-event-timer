@@ -8,7 +8,7 @@ import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { PageHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorModal } from "src/components/poor-modal";
@@ -81,29 +81,58 @@ const TimingPointCard = ({
     );
 };
 
-const isColliding = (element1: HTMLDivElement, element2: HTMLDivElement) => {
-    if (element1 === element2) return false;
+// const isColliding = (element1: HTMLDivElement, element2: HTMLDivElement) => {
+//     if (element1 === element2) return false;
 
-    const rect1 = element1.getBoundingClientRect();
-    const rect2 = element2.getBoundingClientRect();
+//     const rect1 = element1.getBoundingClientRect();
+//     const rect2 = element2.getBoundingClientRect();
 
-    const horizontalOverlap = !(rect1.right < rect2.left || rect1.left > rect2.right);
+//     const horizontalOverlap = !(rect1.right < rect2.left || rect1.left > rect2.right);
 
-    const verticalOverlap = Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top);
-    // const halfHeight1 = rect1.height / 2;
-    const halfHeight2 = rect2.height / 2;
+//     console.log(rect1.top);
 
-    return horizontalOverlap && verticalOverlap >= Math.min(halfHeight2, halfHeight2);
+//     const verticalOverlap = Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top);
+//     // const halfHeight1 = rect1.height / 2;
+//     const halfHeight2 = rect2.height / 2;
+
+//     return horizontalOverlap && verticalOverlap >= halfHeight2;
+// };
+
+const isColliding = (dragElement: HTMLDivElement, dropElement: HTMLDivElement, dragElementRect: DOMRect, dY: number) => {
+    if (dragElement === dropElement) return false;
+
+    const dragRect = dragElement.getBoundingClientRect();
+    const dropRect = dropElement.getBoundingClientRect();
+
+    const horizontalOverlap = !(dragRect.right < dropRect.left || dragRect.left > dropRect.right);
+
+    // console.log(dragRect.top);
+
+    const dropRectCenter = dropRect.top + dropRect.height / 2;
+
+    const result =
+        horizontalOverlap &&
+        (dY > 0
+            ? dragElementRect.top < dropRect.top && dragRect.bottom >= dropRectCenter
+            : dragElementRect.top > dropRect.top && dragRect.top <= dropRectCenter);
+
+    // if (result) console.log(dY > 0, dragRect.bottom >= dropRectCenter, dragRect.top <= dropRectCenter);
+
+    return result;
+
+    // const verticalOverlap = Math.min(dragRect.bottom, dropRect.bottom) - Math.max(dragRect.top, dropRect.top);
+    // // const halfHeight1 = rect1.height / 2;
+    // const halfHeight2 = dropRect.height / 2;
+
+    // return horizontalOverlap && verticalOverlap >= halfHeight2;
 };
 
 type TimingPointWithLap = TimingPoint & { lap: number };
 
 const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
-    const [dropTarget, setDropTarget] = useState<string>("");
-    const [dragTarget, setDragTarget] = useState<string>("");
-
     const dragStartX = useRef<number>(0);
     const dragStartY = useRef<number>(0);
+    const dragElementRect = useRef<DOMRect | null>(null);
     const dragElement = useRef<HTMLDivElement | null>(null);
     const dropElement = useRef<HTMLDivElement | null>(null);
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
@@ -111,9 +140,18 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
         if (!targetElement) return;
         dragElement.current = targetElement;
+        dragElementRect.current = targetElement.getBoundingClientRect();
         dragStartX.current = e.clientX;
         dragStartY.current = e.clientY;
 
+        const targetElementIndex = dropElements.current.indexOf(targetElement);
+        dropElements.current
+            .slice(targetElementIndex + 1)
+            .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
+
+        targetElement.style.position = "fixed";
+        targetElement.style.top = `${dragElementRect.current.top}px`;
+        targetElement.style.left = `${dragElementRect.current.left}px`;
         targetElement.style.willChange = "transform";
         targetElement.style.zIndex = "1000";
         targetElement.style.transition = "none";
@@ -127,7 +165,11 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         dragStartY.current = 0;
 
         dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+        dropElements.current.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
 
+        targetElement.style.position = "relative";
+        targetElement.style.top = `0px`;
+        targetElement.style.left = `0px`;
         targetElement.style.willChange = "auto";
         targetElement.style.zIndex = "auto";
         targetElement.style.transition = "transform 0.2s";
@@ -135,15 +177,17 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     };
 
     const handlePointerMove = (e: PointerEvent) => {
-        if (!dragElement.current || !dragStartX.current || !dragStartY.current) return;
+        if (!dragElement.current || !dragElementRect.current || !dragStartX.current || !dragStartY.current) return;
 
         const dX = e.clientX - dragStartX.current;
         const dY = e.clientY - dragStartY.current;
 
+        // console.log(dY > 0);
+
         const targetDropElement =
             dY > 0
-                ? dropElements.current.filter(el => el && isColliding(dragElement.current!, el)).at(-1)
-                : dropElements.current.find(el => el && isColliding(dragElement.current!, el));
+                ? dropElements.current.filter(el => el && isColliding(dragElement.current!, el, dragElementRect.current!, dY)).at(-1)
+                : dropElements.current.filter(el => el && isColliding(dragElement.current!, el, dragElementRect.current!, dY)).at(0);
 
         if (targetDropElement && targetDropElement !== dropElement.current) {
             console.log("highlight-elements!");
@@ -159,6 +203,8 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
             const endIndex = dropElementIndex > dragElementIndex ? dropElementIndex + 1 : dragElementIndex;
 
             const moveElements = dropElements.current.slice(startIndex, endIndex);
+
+            // targetDropElement.style.marginTop = `${dragElementRect.current.height}px`;
 
             // const dragElementHeight =
             //     dropElementIndex > dragElementIndex
@@ -217,7 +263,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     }, []);
 
     return (
-        <div className="bg-yellow-200 p-16">
+        <div className="bg-orange-100 p-16">
             {timesInOrder.map((tio, index) => (
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
@@ -226,8 +272,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         onPointerUp={e => handlePointerUp(e, dropElements.current[index])}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "relative my-2 flex w-64 cursor-pointer select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
-                            `${tio.id}.${tio.lap}` === dragTarget ? "border-dashed border-gray-400" : "border-transparent opacity-100",
+                            "relative mb-2 flex w-64 cursor-pointer select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                         )}>
                         <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
                         <div className="ml-3">
