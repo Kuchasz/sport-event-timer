@@ -87,7 +87,13 @@ const isColliding = (element1: HTMLDivElement, element2: HTMLDivElement) => {
     const rect1 = element1.getBoundingClientRect();
     const rect2 = element2.getBoundingClientRect();
 
-    return !(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top || rect1.top > rect2.bottom);
+    const horizontalOverlap = !(rect1.right < rect2.left || rect1.left > rect2.right);
+
+    const verticalOverlap = Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top);
+    // const halfHeight1 = rect1.height / 2;
+    const halfHeight2 = rect2.height / 2;
+
+    return horizontalOverlap && verticalOverlap >= Math.min(halfHeight2, halfHeight2);
 };
 
 type TimingPointWithLap = TimingPoint & { lap: number };
@@ -144,6 +150,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
             dropElement.current = targetDropElement;
 
             dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+            // dropElements.current.forEach(el => (el!.style.transform = ""));
 
             const dropElementIndex = dropElements.current.indexOf(dropElement.current);
             const dragElementIndex = dropElements.current.indexOf(dragElement.current);
@@ -153,17 +160,24 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
 
             const moveElements = dropElements.current.slice(startIndex, endIndex);
 
-            moveElements.forEach(el => {
-                el?.classList.add("bg-red-200");
-            });
+            // const dragElementHeight =
+            //     dropElementIndex > dragElementIndex
+            //         ? -dragElement.current.getBoundingClientRect().height - 8
+            //         : dragElement.current.getBoundingClientRect().height + 8;
+
+            // moveElements.forEach(el => {
+            //     el!.style.transform = `translateY(${dragElementHeight}px)`;
+            // });
+
+            moveElements.forEach(el => el!.classList.add("bg-red-200"));
 
             // const moveElements = dropElements.current.slice(index);
-
-            // const dragElementHeight = dragElement.current.getBoundingClientRect().height;
         }
 
         if (!targetDropElement) {
             dropElement.current = null;
+            // dropElements.current.forEach(el => (el!.style.transform = ""));
+
             dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
         }
 
