@@ -81,23 +81,6 @@ const TimingPointCard = ({
     );
 };
 
-// const isColliding = (element1: HTMLDivElement, element2: HTMLDivElement) => {
-//     if (element1 === element2) return false;
-
-//     const rect1 = element1.getBoundingClientRect();
-//     const rect2 = element2.getBoundingClientRect();
-
-//     const horizontalOverlap = !(rect1.right < rect2.left || rect1.left > rect2.right);
-
-//     console.log(rect1.top);
-
-//     const verticalOverlap = Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top);
-//     // const halfHeight1 = rect1.height / 2;
-//     const halfHeight2 = rect2.height / 2;
-
-//     return horizontalOverlap && verticalOverlap >= halfHeight2;
-// };
-
 const isColliding = (
     dragElement: HTMLDivElement,
     dropElement: HTMLDivElement,
@@ -115,8 +98,6 @@ const isColliding = (
 
     const horizontalOverlap = !(dragRect.right < dropRect.left || dragRect.left > dropRect.right);
 
-    // console.log(dragRect.top);
-
     const dropRectCenter = dropRect.top + dropRect.height / 2;
 
     const result =
@@ -124,8 +105,6 @@ const isColliding = (
         (dY > 0
             ? dragElementRect.top < dropRect.top && dragRect.bottom >= dropRectCenter
             : dragElementRect.top > dropRect.top && dragRect.top <= dropRectCenter);
-
-    // if (result) console.log(dY > 0, dragRect.bottom >= dropRectCenter, dragRect.top <= dropRectCenter);
 
     return result;
 };
@@ -140,6 +119,8 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     const dropElement = useRef<HTMLDivElement | null>(null);
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const dropElementsRects = useRef<(DOMRect | null)[]>([]);
+    const elementsHolder = useRef<HTMLDivElement | null>(null);
+    const dragElementPlaceholder = useRef<HTMLDivElement | null>(null);
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
         if (!targetElement) return;
@@ -150,6 +131,11 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
 
         const targetElementIndex = dropElements.current.indexOf(targetElement);
         dropElementsRects.current = dropElements.current.map(el => el?.getBoundingClientRect() ?? null);
+
+        dragElementPlaceholder.current!.style.height = `${dragElementRect.current.height}px`;
+        dragElementPlaceholder.current!.style.width = `${dragElementRect.current.width}px`;
+
+        dropElements.current.forEach(el => (el!.style.transition = "none"));
 
         dropElements.current
             .slice(targetElementIndex + 1)
@@ -163,22 +149,26 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         targetElement.style.willChange = "transform";
         targetElement.style.zIndex = "1000";
         targetElement.style.transition = "none";
+        targetElement.style.boxSizing = "border-box";
     };
 
     const handlePointerUp = (_e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
         if (!targetElement) return;
+
         dragElement.current = null;
         dropElement.current = null;
         dropElementsRects.current = [];
         dragStartX.current = 0;
         dragStartY.current = 0;
 
+        targetElement.style.height = "auto";
+        // targetElement.style.width = "auto";
+
         dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
         dropElements.current.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
         dropElements.current.forEach(el => (el!.style.transition = "none"));
 
         targetElement.classList.replace("cursor-grabbing", "cursor-grab");
-
         targetElement.style.position = "relative";
         targetElement.style.top = `0px`;
         targetElement.style.left = `0px`;
@@ -186,6 +176,10 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         targetElement.style.zIndex = "auto";
         targetElement.style.transition = "transform 0.2s";
         targetElement.style.transform = `translate(0px, 0px)`;
+        targetElement.style.boxSizing = "auto";
+
+        dragElementPlaceholder.current!.style.height = `0px`;
+        dragElementPlaceholder.current!.style.width = `0px`;
     };
 
     const handlePointerMove = (e: PointerEvent) => {
@@ -214,34 +208,19 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
             dropElements.current
                 .slice(dragElementIndex + 1)
                 .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
-            // dropElements.current.forEach(el => (el!.style.transform = ""));
 
             const startIndex = dropElementIndex > dragElementIndex ? dragElementIndex + 1 : dropElementIndex;
             const endIndex = dropElementIndex > dragElementIndex ? dropElementIndex + 1 : dragElementIndex;
 
             const moveElements = dropElements.current.slice(startIndex, endIndex);
 
-            // targetDropElement.style.marginTop = `${dragElementRect.current.height}px`;
-
-            // const dragElementHeight =
-            //     dropElementIndex > dragElementIndex
-            //         ? -dragElement.current.getBoundingClientRect().height - 8
-            //         : dragElement.current.getBoundingClientRect().height + 8;
-
-            // moveElements.forEach(el => {
-            //     el!.style.transform = `translateY(${dragElementHeight}px)`;
-            // });
-
             moveElements.forEach(el => el!.classList.add("bg-red-200"));
             if (dY > 0) moveElements.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
             else moveElements.forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
-
-            // const moveElements = dropElements.current.slice(index);
         }
 
         if (!targetDropElement) {
             dropElement.current = null;
-            // dropElements.current.forEach(el => (el!.style.transform = ""));
 
             const dragElementIndex = dropElements.current.indexOf(dragElement.current);
 
@@ -253,30 +232,6 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
 
             dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
         }
-
-        // const collidingElement = targetElements.current
-        //     .concat(dropElements.current)
-        //     .find(el => el && isColliding(dragElement.current!, el));
-
-        // if (!collidingElement && dropElement.current) {
-        //     console.log("clear--items");
-        //     dropElement.current = null;
-        //     dropElements.current.forEach(el => (el!.style.height = "0px"));
-        // }
-
-        // const collidingElementIsTargetElement = targetElements.current.includes(collidingElement!);
-
-        // if (collidingElementIsTargetElement) {
-        //     const index = targetElements.current.indexOf(dropElement.current);
-        //     const ele = dropElements.current[index];
-        //     const dragElementHeight = dragElement.current.getBoundingClientRect().height;
-        //     ele!.style.height = dragElementHeight + "px";
-        //     // dY = dY - dragElementHeight;
-        //     console.log("move--items");
-        // }
-
-        // const heights = targetElements.current.map(el => (el ? el.getBoundingClientRect().height : 0));
-        // console.log(heights);
 
         dragElement.current.style.transform = `translate(${dX}px, ${dY}px)`;
     };
@@ -290,7 +245,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     }, []);
 
     return (
-        <div className="bg-orange-100 p-16">
+        <div className="relative bg-pink-100 p-8" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
@@ -310,6 +265,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                     </div>
                 </React.Fragment>
             ))}
+            <div className="mb-2 bg-pink-500" ref={dragElementPlaceholder}></div>
         </div>
     );
 };
