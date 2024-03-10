@@ -155,7 +155,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
             .slice(targetElementIndex + 1)
             .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
 
-        dropElements.current.forEach(el => el?.classList.add("transition-transform"));
+        targetElement.classList.replace("cursor-grab", "cursor-grabbing");
 
         targetElement.style.position = "fixed";
         targetElement.style.top = `${dragElementRect.current.top}px`;
@@ -169,12 +169,15 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         if (!targetElement) return;
         dragElement.current = null;
         dropElement.current = null;
+        dropElementsRects.current = [];
         dragStartX.current = 0;
         dragStartY.current = 0;
 
-        dropElements.current.forEach(el => el?.classList.remove("transition-transform"));
         dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
         dropElements.current.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
+        dropElements.current.forEach(el => (el!.style.transition = "none"));
+
+        targetElement.classList.replace("cursor-grabbing", "cursor-grab");
 
         targetElement.style.position = "relative";
         targetElement.style.top = `0px`;
@@ -199,7 +202,9 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         const targetDropElement = dY > 0 ? collidingItems.at(-1) : collidingItems.at(0);
 
         if (targetDropElement && targetDropElement !== dropElement.current) {
+            dropElements.current.filter(e => e !== dragElement.current!).forEach(el => (el!.style.transition = "transform 0.2s"));
             console.log("highlight-elements!");
+            dropElements.current.forEach(el => el?.classList.add("transition-transform"));
             dropElement.current = targetDropElement;
 
             const dropElementIndex = dropElements.current.indexOf(dropElement.current);
@@ -294,7 +299,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         onPointerUp={e => handlePointerUp(e, dropElements.current[index])}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "relative mb-2 flex w-64 cursor-pointer select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            "relative mb-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                         )}>
                         <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
                         <div className="ml-3">
