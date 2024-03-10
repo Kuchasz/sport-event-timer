@@ -81,32 +81,40 @@ const TimingPointCard = ({
     );
 };
 
-const isColliding = (
+// function createDOMRect(point1: DOMRect, point2: DOMRect): DOMRect {
+//     const x = Math.min(point1.x, point2.x);
+//     const y = Math.min(point1.y, point2.y);
+//     const width = Math.abs(point2.x - point1.x);
+//     const height = Math.abs(point2.y - point1.y);
+
+//     return new DOMRect(x, y, width, height);
+// }
+
+const getCollision = (
     dragElement: HTMLDivElement,
     dropElement: HTMLDivElement,
     dropElements: (HTMLDivElement | null)[],
     dropElementsRects: (DOMRect | null)[],
-    dragElementRect: DOMRect,
-    dY: number,
-) => {
-    if (dragElement === dropElement) return false;
+): "lower" | "higher" | "none" => {
+    if (dragElement === dropElement) return "none";
 
     const dropElementIndex = dropElements.indexOf(dropElement);
+    const dragElementIndex = dropElements.indexOf(dragElement);
 
     const dragRect = dragElement.getBoundingClientRect();
     const dropRect = dropElementsRects[dropElementIndex]!;
+    const dragElementRect = dropElementsRects[dragElementIndex]!;
 
     const horizontalOverlap = !(dragRect.right < dropRect.left || dragRect.left > dropRect.right);
-
     const dropRectCenter = dropRect.top + dropRect.height / 2;
 
-    const result =
-        horizontalOverlap &&
-        (dY > 0
-            ? dragElementRect.top < dropRect.top && dragRect.bottom >= dropRectCenter
-            : dragElementRect.top > dropRect.top && dragRect.top <= dropRectCenter);
+    const edge = dragElementRect.top - dragRect.top > 0 ? dragRect.top : dragRect.bottom;
 
-    return result;
+    // const moveVector = createDOMRect(dragElementRect, dragRect);
+
+    const potentialResult = dropRectCenter > edge ? "lower" : "higher";
+
+    return horizontalOverlap ? potentialResult : "none";
 };
 
 type TimingPointWithLap = TimingPoint & { lap: number };
@@ -114,38 +122,37 @@ type TimingPointWithLap = TimingPoint & { lap: number };
 const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
     const dragStartX = useRef<number>(0);
     const dragStartY = useRef<number>(0);
-    const dragElementRect = useRef<DOMRect | null>(null);
+    const initialDragElementRect = useRef<DOMRect | null>(null);
     const dragElement = useRef<HTMLDivElement | null>(null);
     const dropElement = useRef<HTMLDivElement | null>(null);
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
-    const dropElementsRects = useRef<(DOMRect | null)[]>([]);
+    const initialElementsRects = useRef<(DOMRect | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
     const dragElementPlaceholder = useRef<HTMLDivElement | null>(null);
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
         if (!targetElement) return;
         dragElement.current = targetElement;
-        dragElementRect.current = targetElement.getBoundingClientRect();
+        initialDragElementRect.current = targetElement.getBoundingClientRect();
         dragStartX.current = e.clientX;
         dragStartY.current = e.clientY;
 
         const targetElementIndex = dropElements.current.indexOf(targetElement);
-        dropElementsRects.current = dropElements.current.map(el => el?.getBoundingClientRect() ?? null);
+        initialElementsRects.current = dropElements.current.map(el => el?.getBoundingClientRect() ?? null);
 
-        dragElementPlaceholder.current!.style.height = `${dragElementRect.current.height}px`;
-        dragElementPlaceholder.current!.style.width = `${dragElementRect.current.width}px`;
+        dragElementPlaceholder.current!.style.height = `${initialDragElementRect.current.height}px`;
+        dragElementPlaceholder.current!.style.width = `${initialDragElementRect.current.width}px`;
 
         dropElements.current.forEach(el => (el!.style.transition = "none"));
 
         dropElements.current
             .slice(targetElementIndex + 1)
-            .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
+            .forEach(el => (el!.style.transform = `translate(0px, ${initialDragElementRect.current!.height + 8}px)`));
 
         targetElement.classList.replace("cursor-grab", "cursor-grabbing");
-
         targetElement.style.position = "fixed";
-        targetElement.style.top = `${dragElementRect.current.top}px`;
-        targetElement.style.left = `${dragElementRect.current.left}px`;
+        targetElement.style.top = `${initialDragElementRect.current.top}px`;
+        targetElement.style.left = `${initialDragElementRect.current.left}px`;
         targetElement.style.willChange = "transform";
         targetElement.style.zIndex = "1000";
         targetElement.style.transition = "none";
@@ -157,7 +164,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
 
         dragElement.current = null;
         dropElement.current = null;
-        dropElementsRects.current = [];
+        initialElementsRects.current = [];
         dragStartX.current = 0;
         dragStartY.current = 0;
 
@@ -175,65 +182,83 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         targetElement.style.willChange = "auto";
         targetElement.style.zIndex = "auto";
         targetElement.style.transition = "transform 0.2s";
-        targetElement.style.transform = `translate(0px, 0px)`;
         targetElement.style.boxSizing = "auto";
+        targetElement.style.transform = `translate(0px, 0px)`;
 
         dragElementPlaceholder.current!.style.height = `0px`;
         dragElementPlaceholder.current!.style.width = `0px`;
     };
 
     const handlePointerMove = (e: PointerEvent) => {
-        if (!dragElement.current || !dragElementRect.current || !dragStartX.current || !dragStartY.current) return;
+        if (!dragElement.current || !initialDragElementRect.current || !dragStartX.current || !dragStartY.current) return;
 
-        const dX = e.clientX - dragStartX.current;
-        const dY = e.clientY - dragStartY.current;
+        const deltaX = e.clientX - dragStartX.current;
+        const deltaY = e.clientY - dragStartY.current;
 
-        const collidingItems = dropElements.current.filter(
-            el =>
-                el && isColliding(dragElement.current!, el, dropElements.current, dropElementsRects.current, dragElementRect.current!, dY),
-        );
+        const collisions = dropElements.current.map(element => ({
+            element,
+            collision: getCollision(dragElement.current!, element!, dropElements.current, initialElementsRects.current),
+        }));
 
-        const targetDropElement = dY > 0 ? collidingItems.at(-1) : collidingItems.at(0);
+        const currentDropElement =
+            deltaY > 0
+                ? collisions.filter(c => c.collision === "higher").at(-1)?.element
+                : collisions.filter(c => c.collision === "lower").at(0)?.element;
 
-        if (targetDropElement && targetDropElement !== dropElement.current) {
-            dropElements.current.filter(e => e !== dragElement.current!).forEach(el => (el!.style.transition = "transform 0.2s"));
+        if (currentDropElement && currentDropElement !== dropElement.current) {
+            collisions
+                .filter(c => c.collision !== "none")
+                .forEach(c => {
+                    c.element!.style.transition = "transform 0.2s";
+                    if (c.collision === "higher") c.element!.style.transform = `translate(0px, 0px)`;
+                    if (c.collision === "lower")
+                        c.element!.style.transform = `translate(0px, ${initialDragElementRect.current!.height + 8}px)`;
+                });
+
             console.log("highlight-elements!");
-            dropElements.current.forEach(el => el?.classList.add("transition-transform"));
-            dropElement.current = targetDropElement;
 
-            const dropElementIndex = dropElements.current.indexOf(dropElement.current);
-            const dragElementIndex = dropElements.current.indexOf(dragElement.current);
+            dropElement.current = currentDropElement;
 
-            dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
-            dropElements.current
-                .slice(dragElementIndex + 1)
-                .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
+            // const dropElementIndex = dropElements.current.indexOf(dropElement.current);
+            // const dragElementIndex = dropElements.current.indexOf(dragElement.current);
 
-            const startIndex = dropElementIndex > dragElementIndex ? dragElementIndex + 1 : dropElementIndex;
-            const endIndex = dropElementIndex > dragElementIndex ? dropElementIndex + 1 : dragElementIndex;
+            // dropElements.current
+            //     .slice(dragElementIndex + 1)
+            //     .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
 
-            const moveElements = dropElements.current.slice(startIndex, endIndex);
+            // const startIndex = dropElementIndex > dragElementIndex ? dragElementIndex + 1 : dropElementIndex;
+            // const endIndex = dropElementIndex > dragElementIndex ? dropElementIndex + 1 : dragElementIndex;
 
-            moveElements.forEach(el => el!.classList.add("bg-red-200"));
-            if (dY > 0) moveElements.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
-            else moveElements.forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
+            // const moveElements = dropElements.current.slice(startIndex, endIndex);
+
+            // moveElements.forEach(el => {
+            //     el!.classList.add("bg-red-200");
+
+            // });
+            // moveElements.forEach(el => ();
+            // else moveElements.forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
         }
 
-        if (!targetDropElement) {
+        if (!currentDropElement) {
             dropElement.current = null;
 
-            const dragElementIndex = dropElements.current.indexOf(dragElement.current);
+            // const dragElementIndex = dropElements.current.indexOf(dragElement.current);
 
-            dropElements.current.slice(0, dragElementIndex).forEach(el => (el!.style.transform = `translate(0px, 0px)`));
+            // dropElements.current.slice(0, dragElementIndex).forEach(el => (el!.style.transform = `translate(0px, 0px)`));
 
-            dropElements.current
-                .slice(dragElementIndex + 1)
-                .forEach(el => (el!.style.transform = `translate(0px, ${dragElementRect.current!.height + 8}px)`));
+            collisions
+                .filter(c => c.collision !== "none")
+                .forEach(c => {
+                    c.element!.style.transition = "transform 0.2s";
+                    if (c.collision === "higher") c.element!.style.transform = `translate(0px, 0px)`;
+                    if (c.collision === "lower")
+                        c.element!.style.transform = `translate(0px, ${initialDragElementRect.current!.height + 8}px)`;
+                });
 
-            dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
+            // dropElements.current.forEach(el => el?.classList.remove("bg-red-200"));
         }
 
-        dragElement.current.style.transform = `translate(${dX}px, ${dY}px)`;
+        dragElement.current.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     };
 
     useEffect(() => {
