@@ -87,9 +87,15 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
     const [dragStarted, setDragStarted] = useState(false);
+    const [dropTarget, setDropTarget] = useState<number | null>(null);
 
     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         console.log(idx);
+        setDropTarget(idx);
+    };
+    const onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
+        // console.log(idx);
+        setDropTarget(null);
     };
 
     const onDragStart = (_event: React.DragEvent<HTMLDivElement>) => {
@@ -105,7 +111,11 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
                         onDragEnter={onDragEnter(index)}
-                        className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
+                        onDragLeave={onDragLeave}
+                        className={classNames("h-1 w-64 transition-colors", {
+                            ["bg-orange-100"]: dragStarted,
+                            ["bg-orange-200"]: dropTarget === index,
+                        })}></div>
                     <div
                         draggable
                         onDragStart={onDragStart}
@@ -126,7 +136,11 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                     </div>
                     <div
                         onDragEnter={onDragEnter(index + 1)}
-                        className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
+                        onDragLeave={onDragLeave}
+                        className={classNames("h-1 w-64 transition-colors", {
+                            ["bg-orange-100"]: dragStarted,
+                            ["bg-orange-200"]: dropTarget === index + 1,
+                        })}></div>
                 </React.Fragment>
             ))}
         </div>
