@@ -8,7 +8,7 @@ import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { PageHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorModal } from "src/components/poor-modal";
@@ -81,42 +81,160 @@ const TimingPointCard = ({
     );
 };
 
+const getCollision = (
+    dragElement: HTMLDivElement,
+    dropElement: HTMLDivElement,
+    dropElements: (HTMLDivElement | null)[],
+    dropElementsRects: (DOMRect | null)[],
+): "lower" | "higher" | "none" | "self" => {
+    if (dragElement === dropElement) return "self";
+
+    const dropElementIndex = dropElements.indexOf(dropElement);
+    const dragElementIndex = dropElements.indexOf(dragElement);
+
+    const dragRect = dragElement.getBoundingClientRect();
+    const dropRect = dropElementsRects[dropElementIndex]!;
+    const dragElementRect = dropElementsRects[dragElementIndex]!;
+
+    const horizontalOverlap = !(dragRect.right < dropRect.left || dragRect.left > dropRect.right);
+    const dropRectCenter = dropRect.top + dropRect.height / 2;
+
+    const edge = dragElementRect.top - dragRect.top > 0 ? dragRect.top : dragRect.bottom;
+
+    const potentialResult = dropRectCenter > edge ? "lower" : "higher";
+
+    return horizontalOverlap ? potentialResult : "none";
+};
+
 type TimingPointWithLap = TimingPoint & { lap: number };
 
 const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
+    const dragStartX = useRef<number>(0);
+    const dragStartY = useRef<number>(0);
+    const initialDragElementRect = useRef<DOMRect | null>(null);
+    const dragElement = useRef<HTMLDivElement | null>(null);
+    const dropElement = useRef<HTMLDivElement | null>(null);
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
+    const initialElementsRects = useRef<(DOMRect | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
-    const [dragStarted, setDragStarted] = useState(false);
+    const dragElementPlaceholder = useRef<HTMLDivElement | null>(null);
+    const timingPointsInOrder = useRef<TimingPointWithLap[]>(timesInOrder);
 
-    const onDragEnter = (data: { id: number; lap: number }) => (_event: React.DragEvent<HTMLDivElement>) => {
-        console.log(data);
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
+        if (!targetElement) return;
+        dragElement.current = targetElement;
+        initialDragElementRect.current = targetElement.getBoundingClientRect();
+        dragStartX.current = e.clientX;
+        dragStartY.current = e.clientY;
+        timingPointsInOrder.current = timesInOrder;
+
+        const targetElementIndex = dropElements.current.indexOf(targetElement);
+        initialElementsRects.current = dropElements.current.map(el => el?.getBoundingClientRect() ?? null);
+
+        dragElementPlaceholder.current!.style.height = `${initialDragElementRect.current.height}px`;
+        dragElementPlaceholder.current!.style.width = `${initialDragElementRect.current.width}px`;
+
+        dropElements.current.forEach(el => (el!.style.transition = "none"));
+
+        dropElements.current
+            .slice(targetElementIndex + 1)
+            .forEach(el => (el!.style.transform = `translate(0px, ${initialDragElementRect.current!.height + 8}px)`));
+
+        targetElement.classList.replace("cursor-grab", "cursor-grabbing");
+        targetElement.style.position = "fixed";
+        targetElement.style.top = `${initialDragElementRect.current.top}px`;
+        targetElement.style.left = `${initialDragElementRect.current.left}px`;
+        targetElement.style.zIndex = "1000";
+        targetElement.style.transition = "none";
     };
-    const onDragLeave = (data: { id: number; lap: number }) => (_event: React.DragEvent<HTMLDivElement>) => {
-        console.log(data);
+
+    const handlePointerUp = (_e: React.PointerEvent<HTMLDivElement>, targetElement: HTMLDivElement | null) => {
+        if (!targetElement) return;
+
+        dragElement.current = null;
+        dropElement.current = null;
+        initialElementsRects.current = [];
+        dragStartX.current = 0;
+        dragStartY.current = 0;
+
+        targetElement.style.height = "auto";
+
+        dropElements.current.forEach(el => (el!.style.transform = `translate(0px, 0px)`));
+        dropElements.current.forEach(el => (el!.style.transition = "none"));
+
+        targetElement.classList.replace("cursor-grabbing", "cursor-grab");
+        targetElement.style.position = "relative";
+        targetElement.style.top = `0px`;
+        targetElement.style.left = `0px`;
+        targetElement.style.zIndex = "auto";
+        targetElement.style.transition = "transform 0.2s";
+        targetElement.style.transform = `translate(0px, 0px)`;
+
+        dragElementPlaceholder.current!.style.height = `0px`;
+        dragElementPlaceholder.current!.style.width = `0px`;
     };
-    const onDragStart = (_event: React.DragEvent<HTMLDivElement>) => {
-        setDragStarted(true);
+
+    const handlePointerMove = (e: PointerEvent) => {
+        if (!dragElement.current || !initialDragElementRect.current || !dragStartX.current || !dragStartY.current) return;
+
+        const deltaX = e.clientX - dragStartX.current;
+        const deltaY = e.clientY - dragStartY.current;
+
+        const collisions = dropElements.current.map(element => ({
+            element,
+            collision: getCollision(dragElement.current!, element!, dropElements.current, initialElementsRects.current),
+        }));
+
+        const currentDropCollision =
+            deltaY > 0 ? collisions.filter(c => c.collision === "higher").at(-1) : collisions.filter(c => c.collision === "lower").at(0);
+
+        const currentDropElement = currentDropCollision?.element;
+
+        if (currentDropElement && currentDropElement !== dropElement.current) {
+            collisions
+                .filter(c => c.collision !== "self" && c.collision !== "none")
+                .forEach(c => {
+                    c.element!.style.transition = "transform 0.2s";
+                    if (c.collision === "higher") c.element!.style.transform = `translate(0px, 0px)`;
+                    if (c.collision === "lower")
+                        c.element!.style.transform = `translate(0px, ${initialDragElementRect.current!.height + 8}px)`;
+                });
+
+            dropElement.current = currentDropElement;
+        }
+
+        if (collisions.some(c => c.collision === "none")) {
+            console.log("awdawd");
+            collisions
+                .filter(c => c.collision === "none")
+                .forEach(c => {
+                    c.element!.style.transition = "transform 0.2s";
+                    c.element!.style.transform = `translate(0px, 0px)`;
+                });
+        }
+
+        dragElement.current.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     };
-    const onDragEnd = (_event: React.DragEvent<HTMLDivElement>) => {
-        setDragStarted(false);
-    };
+
+    useEffect(() => {
+        window.addEventListener("pointermove", handlePointerMove);
+
+        return () => {
+            window.removeEventListener("pointermove", handlePointerMove);
+        };
+    }, []);
 
     return (
         <div className="relative bg-pink-100 p-8" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
-                        onDragEnter={onDragEnter(tio)}
-                        onDragLeave={onDragLeave(tio)}
-                        className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
-                    <div
-                        draggable
-                        onDragStart={onDragStart}
-                        onDragEnd={onDragEnd}
                         ref={el => (dropElements.current[index] = el)}
+                        onPointerDown={e => handlePointerDown(e, dropElements.current[index])}
+                        onPointerUp={e => handlePointerUp(e, dropElements.current[index])}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "relative flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            "relative mb-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                         )}>
                         <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
                         <div className="ml-3">
@@ -127,12 +245,9 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         </div>
                         <div className="flex-grow"></div>
                     </div>
-                    <div
-                        onDragEnter={onDragEnter(tio)}
-                        onDragLeave={onDragLeave(tio)}
-                        className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
                 </React.Fragment>
             ))}
+            <div className="mb-2" ref={dragElementPlaceholder}></div>
         </div>
     );
 };
