@@ -108,12 +108,12 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     return (
         <div className="relative bg-pink-100 p-8" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
-                <React.Fragment key={`${tio.id}.${tio.lap}`}>
+                <div className="relative" key={`${tio.id}.${tio.lap}`}>
                     <div
                         onDragEnter={onDragEnter(index)}
                         onDragLeave={onDragLeave}
-                        className={classNames("h-1 w-64 transition-colors", {
-                            ["bg-orange-100"]: dragStarted,
+                        className={classNames("-z-1 absolute -mt-3 h-6 w-64 bg-green-500 transition-colors", {
+                            ["z-10 bg-orange-100"]: dragStarted,
                             ["bg-orange-200"]: dropTarget === index,
                         })}></div>
                     <div
@@ -123,7 +123,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         ref={el => (dropElements.current[index] = el)}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "relative flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            "my-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                         )}>
                         <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
                         <div className="ml-3">
@@ -137,11 +137,11 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                     <div
                         onDragEnter={onDragEnter(index + 1)}
                         onDragLeave={onDragLeave}
-                        className={classNames("h-1 w-64 transition-colors", {
-                            ["bg-orange-100"]: dragStarted,
+                        className={classNames("-z-1 absolute bottom-0 mt-3 h-6 w-64 bg-red-500 transition-colors", {
+                            ["z-10 bg-orange-100"]: dragStarted,
                             ["bg-orange-200"]: dropTarget === index + 1,
                         })}></div>
-                </React.Fragment>
+                </div>
             ))}
         </div>
     );
