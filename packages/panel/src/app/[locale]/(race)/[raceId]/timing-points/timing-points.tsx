@@ -88,12 +88,10 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     const elementsHolder = useRef<HTMLDivElement | null>(null);
     const [dragStarted, setDragStarted] = useState(false);
 
-    const onDragEnter = (data: { id: number; lap: number }) => (_event: React.DragEvent<HTMLDivElement>) => {
-        console.log(data);
+    const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        console.log(idx);
     };
-    const onDragLeave = (data: { id: number; lap: number }) => (_event: React.DragEvent<HTMLDivElement>) => {
-        console.log(data);
-    };
+
     const onDragStart = (_event: React.DragEvent<HTMLDivElement>) => {
         setDragStarted(true);
     };
@@ -106,8 +104,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
             {timesInOrder.map((tio, index) => (
                 <React.Fragment key={`${tio.id}.${tio.lap}`}>
                     <div
-                        onDragEnter={onDragEnter(tio)}
-                        onDragLeave={onDragLeave(tio)}
+                        onDragEnter={onDragEnter(index)}
                         className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
                     <div
                         draggable
@@ -128,8 +125,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         <div className="flex-grow"></div>
                     </div>
                     <div
-                        onDragEnter={onDragEnter(tio)}
-                        onDragLeave={onDragLeave(tio)}
+                        onDragEnter={onDragEnter(index + 1)}
                         className={classNames("h-1 w-64 transition-colors", { ["bg-orange-100"]: dragStarted })}></div>
                 </React.Fragment>
             ))}
