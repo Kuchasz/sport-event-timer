@@ -116,11 +116,14 @@ const DropTarget = ({
     </div>
 );
 
-const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
+const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: TimingPointWithLap[] }) => {
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
     const [dragStarted, setDragStarted] = useState(false);
     const [dropTarget, setDropTarget] = useState<number | null>(null);
+    const [dragTarget, setDragTarget] = useState<number | null>(null);
+
+    const [timesInOrder, setTimesInOrder] = useState<TimingPointWithLap[]>(initialTimesInOrder);
 
     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         _event.preventDefault();
@@ -134,8 +137,9 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
         setDropTarget(null);
     };
 
-    const onDragStart = (_event: React.DragEvent<HTMLDivElement>) => {
+    const onDragStart = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         setDragStarted(true);
+        setDragTarget(idx);
 
         const crt = _event.currentTarget.cloneNode(true) as HTMLDivElement;
         document.body.appendChild(crt);
@@ -147,12 +151,16 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     };
 
     const onDrop = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-        alert(`Dropped on ${idx}`);
+        const newTimesInOrder = [...timesInOrder];
+        const draggedElement = newTimesInOrder.splice(dragTarget!, 1)[0];
+        newTimesInOrder.splice(idx, 0, draggedElement);
+        setTimesInOrder(newTimesInOrder);
+
         setDropTarget(null);
     };
 
     return (
-        <div className="relative bg-pink-100 p-8" ref={elementsHolder}>
+        <div className="relative p-8" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
                 <div className="relative" key={`${tio.id}.${tio.lap}`}>
                     <DropTarget
@@ -166,7 +174,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                     />
                     <div
                         draggable
-                        onDragStart={onDragStart}
+                        onDragStart={onDragStart(index)}
                         onDragEnd={onDragEnd}
                         ref={el => (dropElements.current[index] = el)}
                         key={`${tio.id}.${tio.lap}`}
@@ -243,9 +251,7 @@ export const TimingPoints = () => {
                         ))}
                     </div>
                 </div>
-                <div>
-                    <TimingPointsOrder timesInOrder={timesInOrder} />
-                </div>
+                <div>{timesInOrder.length > 0 && <TimingPointsOrder initialTimesInOrder={timesInOrder} />}</div>
             </div>
         </>
     );
