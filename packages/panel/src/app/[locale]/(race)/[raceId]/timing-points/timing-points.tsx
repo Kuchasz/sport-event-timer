@@ -113,7 +113,7 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         onDragEnter={onDragEnter(index)}
                         onDragLeave={onDragLeave}
                         className={classNames(
-                            "-z-1 absolute h-1 w-64 transition-colors",
+                            "-z-1 absolute -mt-5 h-8 w-64 transition-colors",
                             dropTarget === index ? "bg-pink-500" : "bg-green-500",
                             {
                                 ["z-10"]: dragStarted,
@@ -137,16 +137,18 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         </div>
                         <div className="flex-grow"></div>
                     </div>
-                    <div
-                        onDragEnter={onDragEnter(index + 1)}
-                        onDragLeave={onDragLeave}
-                        className={classNames(
-                            "-z-1 absolute bottom-0 h-1 w-64 transition-colors",
-                            dropTarget === index + 1 ? "bg-pink-500" : "bg-red-500",
-                            {
-                                ["z-10"]: dragStarted,
-                            },
-                        )}></div>
+                    {index === timesInOrder.length - 1 && (
+                        <div
+                            onDragEnter={onDragEnter(index + 1)}
+                            onDragLeave={onDragLeave}
+                            className={classNames(
+                                "-z-1 absolute -bottom-4 h-8 w-64 transition-colors",
+                                dropTarget === index + 1 ? "bg-pink-500" : "bg-red-500",
+                                {
+                                    ["z-10"]: dragStarted,
+                                },
+                            )}></div>
+                    )}
                 </div>
             ))}
         </div>
