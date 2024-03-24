@@ -83,6 +83,39 @@ const TimingPointCard = ({
 
 type TimingPointWithLap = TimingPoint & { lap: number };
 
+const DropTarget = ({
+    index,
+    dropTarget,
+    dragStarted,
+    onDragEnter,
+    onDragOver,
+    onDragLeave,
+    onDrop,
+}: {
+    index: number;
+    dropTarget: number | null;
+    dragStarted: boolean;
+    onDragEnter: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDragOver: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDragLeave: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDrop: (_event: React.DragEvent<HTMLDivElement>) => void;
+}) => (
+    <div
+        onDragEnter={onDragEnter}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        className={classNames("-z-1 absolute -mt-5 flex h-8 w-64 items-center transition-colors", dropTarget === index ? "" : "", {
+            ["z-10"]: dragStarted,
+        })}>
+        <div
+            className={classNames(
+                "pointer-events-none mx-4 h-1 w-full bg-red-500 opacity-0 transition-opacity",
+                dropTarget === index && "opacity-25",
+            )}></div>
+    </div>
+);
+
 const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[] }) => {
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
@@ -90,35 +123,47 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
     const [dropTarget, setDropTarget] = useState<number | null>(null);
 
     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-        console.log(idx);
+        _event.preventDefault();
         setDropTarget(idx);
     };
+    const onDragOver = (_idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        _event.dataTransfer.dropEffect = "move";
+        _event.preventDefault();
+    };
     const onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
-        // console.log(idx);
         setDropTarget(null);
     };
 
     const onDragStart = (_event: React.DragEvent<HTMLDivElement>) => {
         setDragStarted(true);
+
+        const crt = _event.currentTarget.cloneNode(true) as HTMLDivElement;
+        document.body.appendChild(crt);
+        _event.dataTransfer.setDragImage(crt, 0, 0);
     };
+
     const onDragEnd = (_event: React.DragEvent<HTMLDivElement>) => {
         setDragStarted(false);
+    };
+
+    const onDrop = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        alert(`Dropped on ${idx}`);
+        setDropTarget(null);
     };
 
     return (
         <div className="relative bg-pink-100 p-8" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
                 <div className="relative" key={`${tio.id}.${tio.lap}`}>
-                    <div
+                    <DropTarget
                         onDragEnter={onDragEnter(index)}
+                        onDragOver={onDragOver(index)}
                         onDragLeave={onDragLeave}
-                        className={classNames(
-                            "-z-1 absolute -mt-5 h-8 w-64 transition-colors",
-                            dropTarget === index ? "bg-pink-500" : "bg-green-500",
-                            {
-                                ["z-10"]: dragStarted,
-                            },
-                        )}></div>
+                        onDrop={onDrop(index)}
+                        dropTarget={dropTarget}
+                        index={index}
+                        dragStarted={dragStarted}
+                    />
                     <div
                         draggable
                         onDragStart={onDragStart}
@@ -138,16 +183,15 @@ const TimingPointsOrder = ({ timesInOrder }: { timesInOrder: TimingPointWithLap[
                         <div className="flex-grow"></div>
                     </div>
                     {index === timesInOrder.length - 1 && (
-                        <div
+                        <DropTarget
                             onDragEnter={onDragEnter(index + 1)}
+                            onDragOver={onDragOver(index + 1)}
                             onDragLeave={onDragLeave}
-                            className={classNames(
-                                "-z-1 absolute -bottom-4 h-8 w-64 transition-colors",
-                                dropTarget === index + 1 ? "bg-pink-500" : "bg-red-500",
-                                {
-                                    ["z-10"]: dragStarted,
-                                },
-                            )}></div>
+                            onDrop={onDrop(index + 1)}
+                            dropTarget={dropTarget}
+                            index={index + 1}
+                            dragStarted={dragStarted}
+                        />
                     )}
                 </div>
             ))}
