@@ -157,10 +157,11 @@ const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: Timin
         setTimesInOrder(newTimesInOrder);
 
         setDropTarget(null);
+        setDragTarget(null);
     };
 
     return (
-        <div className="relative p-8" ref={elementsHolder}>
+        <div className="relative" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
                 <div className="relative" key={`${tio.id}.${tio.lap}`}>
                     <DropTarget
@@ -180,6 +181,7 @@ const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: Timin
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
                             "my-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            dragTarget === index && "opacity-50",
                         )}>
                         <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
                         <div className="ml-3">
