@@ -141,19 +141,24 @@ const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: Timin
         setDragStarted(true);
         setDragTarget(idx);
 
-        const crt = _event.currentTarget.cloneNode(true) as HTMLDivElement;
-        document.body.appendChild(crt);
-        _event.dataTransfer.setDragImage(crt, 0, 0);
+        // const crt = _event.currentTarget.cloneNode(true) as HTMLDivElement;
+        // crt.style.position = "absolute";
+        // document.body.appendChild(crt);
+        // _event.dataTransfer.setDragImage(crt, 0, 0);
     };
 
     const onDragEnd = (_event: React.DragEvent<HTMLDivElement>) => {
         setDragStarted(false);
+        setDragTarget(null);
     };
 
     const onDrop = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         const newTimesInOrder = [...timesInOrder];
         const draggedElement = newTimesInOrder.splice(dragTarget!, 1)[0];
-        newTimesInOrder.splice(idx, 0, draggedElement);
+
+        const dropIndex = idx > dragTarget! ? idx - 1 : idx;
+
+        newTimesInOrder.splice(dropIndex, 0, draggedElement);
         setTimesInOrder(newTimesInOrder);
 
         setDropTarget(null);
