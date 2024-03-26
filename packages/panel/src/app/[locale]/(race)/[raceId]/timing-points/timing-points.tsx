@@ -116,7 +116,13 @@ const DropTarget = ({
     </div>
 );
 
-const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: TimingPointWithLap[] }) => {
+const TimingPointsOrder = ({
+    initialTimesInOrder,
+    onTimesInOrderChange,
+}: {
+    initialTimesInOrder: TimingPointWithLap[];
+    onTimesInOrderChange: (times: TimingPointWithLap[]) => void;
+}) => {
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
     const [dragStarted, setDragStarted] = useState(false);
@@ -162,6 +168,7 @@ const TimingPointsOrder = ({ initialTimesInOrder }: { initialTimesInOrder: Timin
 
         newTimesInOrder.splice(dropIndex, 0, draggedElement);
         setTimesInOrder(newTimesInOrder);
+        onTimesInOrderChange(newTimesInOrder);
 
         setDropTarget(null);
         setDragTarget(null);
@@ -235,6 +242,10 @@ export const TimingPoints = () => {
 
     const timesInOrder = timingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
 
+    const onTimesInOrderChange = (times: TimingPointWithLap[]) => {
+        console.log(times);
+    };
+
     return (
         <>
             <Head>
@@ -260,7 +271,11 @@ export const TimingPoints = () => {
                         ))}
                     </div>
                 </div>
-                <div>{timesInOrder.length > 0 && <TimingPointsOrder initialTimesInOrder={timesInOrder} />}</div>
+                <div>
+                    {timesInOrder.length > 0 && (
+                        <TimingPointsOrder onTimesInOrderChange={onTimesInOrderChange} initialTimesInOrder={timesInOrder} />
+                    )}
+                </div>
             </div>
         </>
     );
