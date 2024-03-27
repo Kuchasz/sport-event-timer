@@ -1364,6 +1364,13 @@
             "description": "Permanentnie usuwa punkt pomiarowy. Ta akcja jest nieodwracalna.",
             "title": "Usuń punkt pomiarowy"
           }
+        },
+        "order": {
+          "header": {
+            "description": "Zmień kolejność punktów pomiarowych, zmiana kolejności wpłynie na wyświetlanie czasów w stoperze.",
+            "title": "Kolejność punktów pomiarowych"
+          }
+        
         }
       }
     },

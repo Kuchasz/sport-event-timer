@@ -1364,6 +1364,12 @@
             "description": "Deletes the timing point permanently. This cannot be undone.",
             "title": "Delete timing point"
           }
+        },
+        "order": {
+          "header": {
+            "description": "Change the order of the timing points. The order is important for the stopwatch to work correctly.",
+            "title": "Timing Points Order"
+          }
         }
       }
     },

@@ -16,6 +16,9 @@ import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { Button } from "src/components/button";
+import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
+import { PoorActions } from "src/components/poor-actions";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
 
@@ -238,6 +241,61 @@ export const TimingPoints = () => {
         },
     );
 
+    const cols: PoorDataTableColumn<TimingPoint>[] = [
+        { field: "name", headerName: t("pages.timingPoints.accessUrls.grid.columns.keyName"), sortable: true },
+        {
+            field: "shortName",
+            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+        },
+        {
+            field: "type",
+            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+        },
+        {
+            field: "laps",
+            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+        },
+        {
+            field: "id",
+            headerName: t("pages.timingPoints.accessUrls.grid.columns.actions"),
+            sortable: false,
+            cellRenderer: _d => (
+                <PoorActions>
+                    {/* <PoorModal
+                        onResolve={() => refetchAccessKeys()}
+                        title={t("pages.timingPoints.accessUrls.edit.confirmation.title")}
+                        component={TimingPointAccessUrlEdit}
+                        componentProps={{
+                            editedTimingPointAccessKey: d,
+                            timingPointId: timingPoint.id,
+                            raceId: timingPoint.raceId,
+                            onReject: () => {},
+                        }}>
+                        <NewPoorActionsItem
+                            name={t("pages.timingPoints.accessUrls.edit.title")}
+                            description={t("pages.timingPoints.accessUrls.edit.description")}
+                            iconPath={mdiPencilOutline}></NewPoorActionsItem>
+                    </PoorModal>
+                    <PoorConfirmation
+                        onAccept={() => deleteAccessKey(d)}
+                        title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
+                        message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}
+                        isLoading={deleteTimingPointAccessKeyMutation.isLoading}>
+                        <NewPoorActionsItem
+                            name={t("pages.timingPoints.accessUrls.delete.title")}
+                            description={t("pages.timingPoints.accessUrls.delete.description")}
+                            iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
+                    </PoorConfirmation>
+                    <NewPoorActionsItem
+                        onClick={generateAccessUrl}
+                        name={t("pages.timingPoints.accessUrls.copy.title")}
+                        description={t("pages.timingPoints.accessUrls.copy.description")}
+                        iconPath={mdiClipboardFileOutline}></NewPoorActionsItem> */}
+                </PoorActions>
+            ),
+        },
+    ];
+
     const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
 
     const timesInOrder = sortedTimingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
@@ -253,7 +311,7 @@ export const TimingPoints = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
-                <div className="flex">
+                {/* <div className="flex">
                     <div className="w-full max-w-md ">
                         {sortedTimingPoints?.map((e, index) => (
                             <TimingPointCard
@@ -270,11 +328,36 @@ export const TimingPoints = () => {
                             />
                         ))}
                     </div>
+                </div> */}
+                <div className="mt-8">
+                    <SectionHeader
+                        title={t("pages.timingPoints.accessUrls.header.title")}
+                        description={t("pages.timingPoints.accessUrls.header.description")}
+                    />
+                    <div className="p-2"></div>
+                    <PoorModal
+                        onResolve={() => refetchTimingPoints()}
+                        title={t("pages.timingPoints.create.title")}
+                        component={TimingPointCreate}
+                        componentProps={{ raceId: raceId, index: 0, onReject: () => {} }}>
+                        <Button outline>
+                            <Icon size={0.8} path={mdiPlus} />
+                            <span className="ml-2">{t("pages.timingPoints.create.button")}</span>
+                        </Button>
+                    </PoorModal>
+                    <div className="p-2"></div>
+                    <PoorDataTable
+                        columns={cols}
+                        hideColumnsChooser
+                        getRowId={d => d.id}
+                        gridName="timing-points"
+                        data={sortedTimingPoints}
+                    />
                 </div>
                 <div className="my-8">
                     <SectionHeader
-                        title={t("pages.timingPoints.sections.delete.header.title")}
-                        description={t("pages.timingPoints.sections.delete.header.description")}
+                        title={t("pages.timingPoints.sections.order.header.title")}
+                        description={t("pages.timingPoints.sections.order.header.description")}
                     />
                     <div>
                         {timesInOrder.length > 0 && (
