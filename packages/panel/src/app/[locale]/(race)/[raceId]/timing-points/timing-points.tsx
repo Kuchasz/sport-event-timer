@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronRight, mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiDrag, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
@@ -197,14 +197,14 @@ const TimingPointsOrder = ({
                             "my-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
                             dragTarget === index && "opacity-50",
                         )}>
-                        <div className="size-8 shrink-0 rounded-full bg-orange-500"></div>
-                        <div className="ml-3">
+                        <div className="">
                             <div className="text-sm font-semibold">
-                                {tio.name} ... {tio.lap}
+                                [{tio.id}] {tio.name} ... {tio.lap}
                             </div>
                             <div className="text-xs">{tio.description ?? "Some default description"}</div>
                         </div>
                         <div className="flex-grow"></div>
+                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
                     </div>
                     {index === timesInOrder.length - 1 && (
                         <DropTarget
@@ -240,7 +240,7 @@ export const TimingPoints = () => {
 
     const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
 
-    const timesInOrder = timingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
+    const timesInOrder = sortedTimingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
 
     const onTimesInOrderChange = (times: TimingPointWithLap[]) => {
         console.log(times);
@@ -254,7 +254,7 @@ export const TimingPoints = () => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
                 <div className="flex">
-                    <div className="hidden w-full max-w-md ">
+                    <div className="w-full max-w-md ">
                         {sortedTimingPoints?.map((e, index) => (
                             <TimingPointCard
                                 key={e.id}
