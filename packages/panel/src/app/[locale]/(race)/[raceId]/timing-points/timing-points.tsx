@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
-import { PageHeader } from "src/components/page-headers";
+import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
@@ -271,10 +271,16 @@ export const TimingPoints = () => {
                         ))}
                     </div>
                 </div>
-                <div>
-                    {timesInOrder.length > 0 && (
-                        <TimingPointsOrder onTimesInOrderChange={onTimesInOrderChange} initialTimesInOrder={timesInOrder} />
-                    )}
+                <div className="my-8">
+                    <SectionHeader
+                        title={t("pages.timingPoints.sections.delete.header.title")}
+                        description={t("pages.timingPoints.sections.delete.header.description")}
+                    />
+                    <div>
+                        {timesInOrder.length > 0 && (
+                            <TimingPointsOrder onTimesInOrderChange={onTimesInOrderChange} initialTimesInOrder={timesInOrder} />
+                        )}
+                    </div>
                 </div>
             </div>
         </>
