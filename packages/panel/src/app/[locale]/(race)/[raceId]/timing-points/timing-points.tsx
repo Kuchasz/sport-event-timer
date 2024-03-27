@@ -194,17 +194,17 @@ const TimingPointsOrder = ({
                         ref={el => (dropElements.current[index] = el)}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "my-2 flex w-64 cursor-grab select-none items-center rounded-md border-2 bg-gray-100 px-3 py-1.5",
+                            "my-2 flex w-64 cursor-grab select-none items-center rounded-md border bg-white p-1.5 shadow-sm",
                             dragTarget === index && "opacity-50",
                         )}>
-                        <div className="">
+                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
+                        <div className="ml-1">
                             <div className="text-sm font-semibold">
-                                [{tio.id}] {tio.name} ... {tio.lap}
+                                {tio.name} ... {tio.lap}
                             </div>
-                            <div className="text-xs">{tio.description ?? "Some default description"}</div>
+                            <div className="text-2xs font-semibold text-gray-500">{tio.description ?? "Some default description"}</div>
                         </div>
                         <div className="flex-grow"></div>
-                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
                     </div>
                     {index === timesInOrder.length - 1 && (
                         <DropTarget
