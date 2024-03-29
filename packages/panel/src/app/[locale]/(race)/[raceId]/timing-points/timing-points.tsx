@@ -202,9 +202,7 @@ const TimingPointsOrder = ({
                         )}>
                         <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
                         <div className="ml-1">
-                            <div className="text-sm font-semibold">
-                                {tio.name} ... {tio.lap}
-                            </div>
+                            <div className="text-sm font-semibold">{tio.name}</div>
                             <div className="text-2xs font-semibold text-gray-500">{tio.description ?? "Some default description"}</div>
                         </div>
                         <div className="flex-grow"></div>
@@ -304,6 +302,11 @@ export const TimingPoints = () => {
         console.log(times);
     };
 
+    const onTimingPointCreated = () => {
+        void refetchTimingPoints();
+        void refetchOrder();
+    };
+
     return (
         <>
             <Head>
@@ -336,7 +339,7 @@ export const TimingPoints = () => {
                     />
                     <div className="p-2"></div>
                     <PoorModal
-                        onResolve={() => refetchTimingPoints()}
+                        onResolve={onTimingPointCreated}
                         title={t("pages.timingPoints.create.title")}
                         component={TimingPointCreate}
                         componentProps={{ raceId: raceId, index: 0, onReject: () => {} }}>

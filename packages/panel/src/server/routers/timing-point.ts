@@ -137,6 +137,17 @@ export const timingPointRouter = router({
                 },
             });
 
+            await ctx.db.timingPointAccessUrl.create({
+                data: {
+                    raceId: input.timingPoint.raceId,
+                    name: "Default",
+                    canAccessOthers: false,
+                    expireDate: daysFromNow(5),
+                    token: "blah",
+                    timingPointId: newTimingPoint.id,
+                },
+            });
+
             const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } });
 
             const order = JSON.parse(timingPointOrder.order) as number[];
