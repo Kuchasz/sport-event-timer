@@ -1370,6 +1370,15 @@
             "description": "Change the order of the timing points. The order is important for the stopwatch to work correctly.",
             "title": "Timing Points Order"
           }
+        },
+        "grid": {
+          "columns": {
+            "actions": "Actions",
+            "laps": "Laps",
+            "type": "Type",
+            "name": "Name",
+            "shortName": "Abbreviation"
+          }
         }
       }
     },

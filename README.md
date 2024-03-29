@@ -113,11 +113,12 @@ Application for making time measurements
 | 04/02/2024 | Add split times (with laps) to results page                           |                  :date:                   |
 | 04/02/2024 | Overall/categories toggle switch on results page                      |                  :date:                   |
 | 05/02/2024 | Each classification may/should have separate timing points            |                  :date:                   |
-| 05/02/2024 | Each classification should have separate route length and start       |                  :date:                   |
+| 05/02/2024 | Each classification should have separate route length, date and start |                  :date:                   |
 | 05/02/2024 | Optional registration fields                                          |                  :date:                   |
 | 07/02/2024 | Reduce middlewares bundle size                                        |                  :date:                   |
 | 07/02/2024 | Improve results list rendering performance                            |                  :date:                   |
 | 12/02/2024 | SSR react benchmarking                                                |                  :date:                   |
+| 28/03/2024 | Shortname to Abbreviation in timing point rework                      |                  :date:                   |
 
 ## TODO
 

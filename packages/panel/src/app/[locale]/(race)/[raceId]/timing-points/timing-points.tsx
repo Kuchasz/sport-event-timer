@@ -242,22 +242,22 @@ export const TimingPoints = () => {
     );
 
     const cols: PoorDataTableColumn<TimingPoint>[] = [
-        { field: "name", headerName: t("pages.timingPoints.accessUrls.grid.columns.keyName"), sortable: true },
+        { field: "name", headerName: t("pages.timingPoints.sections.grid.columns.name"), sortable: true },
         {
             field: "shortName",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+            headerName: t("pages.timingPoints.sections.grid.columns.shortName"),
         },
         {
             field: "type",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+            headerName: t("pages.timingPoints.sections.grid.columns.type"),
         },
         {
             field: "laps",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+            headerName: t("pages.timingPoints.sections.grid.columns.laps"),
         },
         {
             field: "id",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.actions"),
+            headerName: t("pages.timingPoints.sections.grid.columns.actions"),
             sortable: false,
             cellRenderer: _d => (
                 <PoorActions>
