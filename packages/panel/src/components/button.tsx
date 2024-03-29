@@ -7,9 +7,10 @@ type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HT
     loading?: boolean;
     outline?: boolean;
     kind?: "delete";
+    small?: boolean;
 };
 
-export const Button = ({ outline, children, loading, className, kind, ...props }: ButtonProps) => {
+export const Button = ({ outline, small, children, loading, className, kind, ...props }: ButtonProps) => {
     const isLoading = useDeferredValue(loading);
 
     const color = kind === "delete" ? "red" : "blue";
@@ -20,6 +21,8 @@ export const Button = ({ outline, children, loading, className, kind, ...props }
 
     const pointerEvents = isLoading ? "pointer-events-none" : "";
 
+    const padding = small ? "text-xs px-2 py-1" : "text-sm px-4 py-2";
+
     const loadingVisuals = isLoading ? "opacity-0 pointer-events-none" : "";
 
     return (
@@ -28,7 +31,7 @@ export const Button = ({ outline, children, loading, className, kind, ...props }
             onClick={loading ? () => null : props.onClick}
             type="button"
             {...props}
-            className={`relative flex items-center justify-center rounded-full border border-transparent px-4 py-2 text-sm font-medium transition-all focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${className}`}>
+            className={`relative flex items-center justify-center rounded-full border border-transparent font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${padding} ${className}`}>
             {isLoading && <LoadingSpinner fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
             <div className={`flex items-center transition-all ${loadingVisuals}`}>{children}</div>
         </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiChevronRight, mdiDrag, mdiPlus } from "@mdi/js";
+import { mdiChevronRight, mdiDrag, mdiFileDocumentArrowRightOutline, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
@@ -9,16 +9,16 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
+import { Button } from "src/components/button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
+import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { Button } from "src/components/button";
-import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
-import { PoorActions } from "src/components/poor-actions";
+import { useRouter } from "next/navigation";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 
@@ -231,6 +231,7 @@ export const TimingPoints = () => {
         { initialData: [] },
     );
     const t = useTranslations();
+    const router = useRouter();
 
     const { data: timingPointsOrder, refetch: refetchOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
         { raceId: raceId },
@@ -261,9 +262,13 @@ export const TimingPoints = () => {
             field: "id",
             headerName: t("pages.timingPoints.sections.grid.columns.actions"),
             sortable: false,
-            cellRenderer: _d => (
-                <PoorActions>
-                    {/* <PoorModal
+            cellRenderer: d => (
+                <Button onClick={() => router.push(`/${raceId}/timing-points/${d.id}`)} small outline>
+                    <Icon size={0.8} path={mdiFileDocumentArrowRightOutline} />
+                    <span className="ml-2">{t("shared.details")}</span>
+                </Button>
+                /* <PoorActions>
+                    <PoorModal
                         onResolve={() => refetchAccessKeys()}
                         title={t("pages.timingPoints.accessUrls.edit.confirmation.title")}
                         component={TimingPointAccessUrlEdit}
@@ -278,6 +283,7 @@ export const TimingPoints = () => {
                             description={t("pages.timingPoints.accessUrls.edit.description")}
                             iconPath={mdiPencilOutline}></NewPoorActionsItem>
                     </PoorModal>
+
                     <PoorConfirmation
                         onAccept={() => deleteAccessKey(d)}
                         title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
@@ -292,8 +298,8 @@ export const TimingPoints = () => {
                         onClick={generateAccessUrl}
                         name={t("pages.timingPoints.accessUrls.copy.title")}
                         description={t("pages.timingPoints.accessUrls.copy.description")}
-                        iconPath={mdiClipboardFileOutline}></NewPoorActionsItem> */}
-                </PoorActions>
+                        iconPath={mdiClipboardFileOutline}></NewPoorActionsItem> 
+                </PoorActions>*/
             ),
         },
     ];
