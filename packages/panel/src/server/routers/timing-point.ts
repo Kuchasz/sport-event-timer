@@ -128,6 +128,7 @@ export const timingPointRouter = router({
         const newOrder = order.filter(i => i !== id);
 
         await ctx.db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } });
+        await ctx.db.timingPointAccessUrl.deleteMany({ where: { timingPointId: id! } });
         return await ctx.db.timingPoint.delete({ where: { id: id! } });
     }),
     add: protectedProcedure
