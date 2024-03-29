@@ -20,7 +20,7 @@ import { Button } from "src/components/button";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorActions } from "src/components/poor-actions";
 
-type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
+type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 
 const TimingPointCard = ({
     onCreate,
@@ -254,6 +254,10 @@ export const TimingPoints = () => {
             headerName: t("pages.timingPoints.sections.grid.columns.laps"),
         },
         {
+            field: "numberOfAccessUrls",
+            headerName: t("pages.timingPoints.sections.grid.columns.numberOfAccessUrls"),
+        },
+        {
             field: "id",
             headerName: t("pages.timingPoints.sections.grid.columns.actions"),
             sortable: false,
@@ -334,8 +338,8 @@ export const TimingPoints = () => {
                 </div> */}
                 <div className="mt-8">
                     <SectionHeader
-                        title={t("pages.timingPoints.accessUrls.header.title")}
-                        description={t("pages.timingPoints.accessUrls.header.description")}
+                        title={t("pages.timingPoints.sections.grid.header.title")}
+                        description={t("pages.timingPoints.sections.grid.header.description")}
                     />
                     <div className="p-2"></div>
                     <PoorModal

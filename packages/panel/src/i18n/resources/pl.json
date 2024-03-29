@@ -1259,66 +1259,66 @@
         "title": "Punkt pomiarowy"
       },
       "sections": {
+        "accessUrls": {
+          "copy": {
+            "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru.",
+            "title": "Kupiuj url dostępowy"
+          },
+          "create": {
+            "button": "Dodaj url dostępu",
+            "title": "Stwórz klucz dostępu"
+          },
+          "delete": {
+            "confirmation": {
+              "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
+              "title": "Usuń URL punktu pomiarowego"
+            },
+            "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy.",
+            "title": "Usuń url dostępu"
+          },
+          "edit": {
+            "button": "Edytuj",
+            "confirmation": {
+              "title": "Edytuj url dostępowy"
+            },
+            "description": "Edytuj szczegóły url dostępowego.",
+            "title": "Edytuj url dostępowy"
+          },
+          "form": {
+            "canAccessOthers": {
+              "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach. Na przykład między startem i metą.",
+              "label": "Może edytować inne"
+            },
+            "code": {
+              "description": "Opcjonalny kod/hasło do podania przy logowaniu się do stopera.",
+              "label": "Kod (opcjonalny)",
+              "placeholder": "Wpisz Kod"
+            },
+            "name": {
+              "description": "Użyj nazwy która pozwoli Ci na odróżnienie tego URL od innych, może to być np. imię sędziego.",
+              "label": "Nazwa Dostępowego Url",
+              "placeholder": "Wpisz nazwę dostępowego Url"
+            }
+          },
+          "grid": {
+            "columns": {
+              "actions": "Akcje",
+              "expiresAt": "Wygasa",
+              "keyName": "Klucz",
+              "supervisor": "Kierownik"
+            }
+          },
+          "header": {
+            "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów.",
+            "title": "URL Dostępu"
+          }
+        },
         "base": {
           "title": "Dane podstawowe"
         }
       }
     },
     "timingPoints": {
-      "accessUrls": {
-        "copy": {
-          "description": "Wyślij go do sędziego by mógł mierzyć czas na tym punkcie pomiaru.",
-          "title": "Kupiuj url dostępowy"
-        },
-        "create": {
-          "button": "Dodaj url dostępu",
-          "title": "Stwórz klucz dostępu"
-        },
-        "delete": {
-          "confirmation": {
-            "text": "Próbujesz usunąć URL Punktu Pomiarowego {name}. Czy chcesz kontynuować?",
-            "title": "Usuń URL punktu pomiarowego"
-          },
-          "description": "Dostęp do stopera przy użyciu tego url dostępowego będzie niemożliwy.",
-          "title": "Usuń url dostępu"
-        },
-        "edit": {
-          "button": "Edytuj",
-          "confirmation": {
-            "title": "Edytuj url dostępowy"
-          },
-          "description": "Edytuj szczegóły url dostępowego.",
-          "title": "Edytuj url dostępowy"
-        },
-        "form": {
-          "canAccessOthers": {
-            "description": "Zdecyduj czy sędzia używający tego url może przełączać się między punktami pomiarowymi, mierzyć czas w różnych miejscach. Na przykład między startem i metą.",
-            "label": "Może edytować inne"
-          },
-          "code": {
-            "description": "Opcjonalny kod/hasło do podania przy logowaniu się do stopera.",
-            "label": "Kod (opcjonalny)",
-            "placeholder": "Wpisz Kod"
-          },
-          "name": {
-            "description": "Użyj nazwy która pozwoli Ci na odróżnienie tego URL od innych, może to być np. imię sędziego.",
-            "label": "Nazwa Dostępowego Url",
-            "placeholder": "Wpisz nazwę dostępowego Url"
-          }
-        },
-        "grid": {
-          "columns": {
-            "actions": "Akcje",
-            "expiresAt": "Wygasa",
-            "keyName": "Klucz",
-            "supervisor": "Kierownik"
-          }
-        },
-        "header": {
-          "description": "Skopiuj adresy URL dostępu i wyślij je do sędziów.",
-          "title": "URL Dostępu"
-        }
-      },
       "create": {
         "button": "Dodaj punkt pomiarowy",
         "title": "Stwórz nowy punkt pomiarowy"
@@ -1372,11 +1372,16 @@
           }
         },
         "grid": {
+          "header": {
+            "description": "Zarządzaj punktami pomiarowymi.",
+            "title": "Punkty Pomiarowe"
+          },
           "columns": {
             "actions": "Akcje",
             "laps": "Okrążenia",
             "type": "Typ",
             "name": "Nazwa",
+            "numberOfAccessUrls": "Linki dostępowe",
             "shortName": "Skrót"
           }
         }

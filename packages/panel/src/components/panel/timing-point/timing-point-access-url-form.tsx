@@ -23,30 +23,42 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
             onSubmit={onResolve}
             validationSchema={timingPointAccessUrlSchema}>
             <FormInput<TimingPointAccessUrl, "name">
-                label={t("pages.timingPoints.accessUrls.form.name.label")}
-                description={t("pages.timingPoints.accessUrls.form.name.description")}
+                label={t("pages.timingPoint.sections.accessUrls.form.name.label")}
+                description={t("pages.timingPoint.sections.accessUrls.form.name.description")}
                 className="grow"
                 render={({ value, onChange }) => (
-                    <PoorInput placeholder={t("pages.timingPoints.accessUrls.form.name.placeholder")} value={value} onChange={onChange} />
+                    <PoorInput
+                        placeholder={t("pages.timingPoint.sections.accessUrls.form.name.placeholder")}
+                        value={value}
+                        onChange={onChange}
+                    />
                 )}
                 name="name"
             />
             <div className="p-2"></div>
             <FormInput<TimingPointAccessUrl, "code">
-                label={t("pages.timingPoints.accessUrls.form.code.label")}
-                description={t("pages.timingPoints.accessUrls.form.code.description")}
+                label={t("pages.timingPoint.sections.accessUrls.form.code.label")}
+                description={t("pages.timingPoint.sections.accessUrls.form.code.description")}
                 className="grow"
                 render={({ value, onChange }) => (
-                    <PoorInput placeholder={t("pages.timingPoints.accessUrls.form.code.placeholder")} value={value} onChange={onChange} />
+                    <PoorInput
+                        placeholder={t("pages.timingPoint.sections.accessUrls.form.code.placeholder")}
+                        value={value}
+                        onChange={onChange}
+                    />
                 )}
                 name="code"
             />
             <div className="p-2"></div>
             <FormInput<TimingPointAccessUrl, "canAccessOthers">
-                label={t("pages.timingPoints.accessUrls.form.canAccessOthers.label")}
-                description={t("pages.timingPoints.accessUrls.form.canAccessOthers.description")}
+                label={t("pages.timingPoint.sections.accessUrls.form.canAccessOthers.label")}
+                description={t("pages.timingPoint.sections.accessUrls.form.canAccessOthers.description")}
                 render={({ value, onChange }) => (
-                    <PoorCheckbox label={t("pages.timingPoints.accessUrls.form.canAccessOthers.label")} value={value} onChange={onChange} />
+                    <PoorCheckbox
+                        label={t("pages.timingPoint.sections.accessUrls.form.canAccessOthers.label")}
+                        value={value}
+                        onChange={onChange}
+                    />
                 )}
                 name="canAccessOthers"
             />

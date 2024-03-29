@@ -1259,66 +1259,66 @@
         "title": "Timing Point"
       },
       "sections": {
+        "accessUrls": {
+          "copy": {
+            "description": "Send that to the timekeeper to handle that timing point measurements.",
+            "title": "Copy access url"
+          },
+          "create": {
+            "button": "Create access url",
+            "title": "Create access key"
+          },
+          "delete": {
+            "confirmation": {
+              "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
+              "title": "Delete timing point access url"
+            },
+            "description": "Stopwatch access using this aceess url won't be possible.",
+            "title": "Delete access url"
+          },
+          "edit": {
+            "button": "Edit",
+            "confirmation": {
+              "title": "Edit access url"
+            },
+            "description": "Change timing point access url details.",
+            "title": "Edit access url"
+          },
+          "form": {
+            "canAccessOthers": {
+              "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations. For example, between the start and finish.",
+              "label": "Can access others"
+            },
+            "code": {
+              "description": "Optional code/password to enter when logging into the stopwatch.",
+              "label": "Code (optional)",
+              "placeholder": "Type Passcode"
+            },
+            "name": {
+              "description": "Use a name that will allow you to distinguish this URL from others, it can be, for example, the name of the timekeeper.",
+              "label": "Access Url name",
+              "placeholder": "Type Access Url name"
+            }
+          },
+          "grid": {
+            "columns": {
+              "actions": "Actions",
+              "expiresAt": "Expires At",
+              "keyName": "Key name",
+              "supervisor": "Supervisor"
+            }
+          },
+          "header": {
+            "description": "Copy access URLs and send them to the timekeepers.",
+            "title": "Access URLs"
+          }
+        },
         "base": {
           "title": "Basic data"
         }
       }
     },
     "timingPoints": {
-      "accessUrls": {
-        "copy": {
-          "description": "Send that to the timekeeper to handle that timing point measurements.",
-          "title": "Copy access url"
-        },
-        "create": {
-          "button": "Create access url",
-          "title": "Create access key"
-        },
-        "delete": {
-          "confirmation": {
-            "text": "You are trying to delete the Timing Point Access URL {name}. Do you want to proceed?",
-            "title": "Delete timing point access url"
-          },
-          "description": "Stopwatch access using this aceess url won't be possible.",
-          "title": "Delete access url"
-        },
-        "edit": {
-          "button": "Edit",
-          "confirmation": {
-            "title": "Edit access url"
-          },
-          "description": "Change timing point access url details.",
-          "title": "Edit access url"
-        },
-        "form": {
-          "canAccessOthers": {
-            "description": "Decide whether the timekeeper using this url can switch between timing points, measure the time at different locations. For example, between the start and finish.",
-            "label": "Can access others"
-          },
-          "code": {
-            "description": "Optional code/password to enter when logging into the stopwatch.",
-            "label": "Code (optional)",
-            "placeholder": "Type Passcode"
-          },
-          "name": {
-            "description": "Use a name that will allow you to distinguish this URL from others, it can be, for example, the name of the timekeeper.",
-            "label": "Access Url name",
-            "placeholder": "Type Access Url name"
-          }
-        },
-        "grid": {
-          "columns": {
-            "actions": "Actions",
-            "expiresAt": "Expires At",
-            "keyName": "Key name",
-            "supervisor": "Supervisor"
-          }
-        },
-        "header": {
-          "description": "Copy access URLs and send them to the timekeepers.",
-          "title": "Access URLs"
-        }
-      },
       "create": {
         "button": "Add timing point",
         "title": "Create new timing point"
@@ -1372,11 +1372,16 @@
           }
         },
         "grid": {
+          "header": {
+            "description": "The list of timing points.",
+            "title": "Timing Points"
+          },
           "columns": {
             "actions": "Actions",
             "laps": "Laps",
             "type": "Type",
             "name": "Name",
+            "numberOfAccessUrls": "Access URLs",
             "shortName": "Abbreviation"
           }
         }

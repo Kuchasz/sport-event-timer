@@ -75,28 +75,28 @@ export const TimingPoint = ({
     const deleteTimingPointAccessKeyMutation = trpc.timingPoint.deleteTimingPointAccessUrl.useMutation();
 
     const cols: PoorDataTableColumn<AccessKey>[] = [
-        { field: "name", headerName: t("pages.timingPoints.accessUrls.grid.columns.keyName"), sortable: true },
+        { field: "name", headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.keyName"), sortable: true },
         {
             field: "expireDate",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.expiresAt"),
+            headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.expiresAt"),
             sortable: false,
             cellRenderer: d => d.expireDate.toLocaleString(),
         },
         {
             field: "canAccessOthers",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.supervisor"),
+            headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.supervisor"),
             sortable: true,
             cellRenderer: d => (d.canAccessOthers ? "true" : "false"),
         },
         {
             field: "id",
-            headerName: t("pages.timingPoints.accessUrls.grid.columns.actions"),
+            headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.actions"),
             sortable: false,
             cellRenderer: d => (
                 <PoorActions>
                     <PoorModal
                         onResolve={() => refetchAccessKeys()}
-                        title={t("pages.timingPoints.accessUrls.edit.confirmation.title")}
+                        title={t("pages.timingPoint.sections.accessUrls.edit.confirmation.title")}
                         component={TimingPointAccessUrlEdit}
                         componentProps={{
                             editedTimingPointAccessKey: d,
@@ -105,24 +105,24 @@ export const TimingPoint = ({
                             onReject: () => {},
                         }}>
                         <NewPoorActionsItem
-                            name={t("pages.timingPoints.accessUrls.edit.title")}
-                            description={t("pages.timingPoints.accessUrls.edit.description")}
+                            name={t("pages.timingPoint.sections.accessUrls.edit.title")}
+                            description={t("pages.timingPoint.sections.accessUrls.edit.description")}
                             iconPath={mdiPencilOutline}></NewPoorActionsItem>
                     </PoorModal>
                     <PoorConfirmation
                         onAccept={() => deleteAccessKey(d)}
-                        title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
-                        message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}
+                        title={t("pages.timingPoint.sections.accessUrls.delete.confirmation.title")}
+                        message={t("pages.timingPoint.sections.accessUrls.delete.confirmation.text", { name: d.name })}
                         isLoading={deleteTimingPointAccessKeyMutation.isLoading}>
                         <NewPoorActionsItem
-                            name={t("pages.timingPoints.accessUrls.delete.title")}
-                            description={t("pages.timingPoints.accessUrls.delete.description")}
+                            name={t("pages.timingPoint.sections.accessUrls.delete.title")}
+                            description={t("pages.timingPoint.sections.accessUrls.delete.description")}
                             iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
                     </PoorConfirmation>
                     <NewPoorActionsItem
                         onClick={generateAccessUrl}
-                        name={t("pages.timingPoints.accessUrls.copy.title")}
-                        description={t("pages.timingPoints.accessUrls.copy.description")}
+                        name={t("pages.timingPoint.sections.accessUrls.copy.title")}
+                        description={t("pages.timingPoint.sections.accessUrls.copy.description")}
                         iconPath={mdiClipboardFileOutline}></NewPoorActionsItem>
                 </PoorActions>
             ),
@@ -178,13 +178,13 @@ export const TimingPoint = ({
                         {/* </div> */}
                         <div className="mt-8">
                             <SectionHeader
-                                title={t("pages.timingPoints.accessUrls.header.title")}
-                                description={t("pages.timingPoints.accessUrls.header.description")}
+                                title={t("pages.timingPoint.sections.accessUrls.header.title")}
+                                description={t("pages.timingPoint.sections.accessUrls.header.description")}
                             />
                             <div className="p-2"></div>
                             <PoorModal
                                 onResolve={() => refetchAccessKeys()}
-                                title={t("pages.timingPoints.accessUrls.create.title")}
+                                title={t("pages.timingPoint.sections.accessUrls.create.title")}
                                 component={TimingPointAccessUrlCreate}
                                 componentProps={{
                                     timingPointId: timingPoint.id,
@@ -193,7 +193,7 @@ export const TimingPoint = ({
                                 }}>
                                 <Button outline>
                                     <Icon size={0.8} path={mdiPlus} />
-                                    <span className="ml-2">{t("pages.timingPoints.accessUrls.create.button")}</span>
+                                    <span className="ml-2">{t("pages.timingPoint.sections.accessUrls.create.button")}</span>
                                 </Button>
                             </PoorModal>
                             <div className="p-2"></div>

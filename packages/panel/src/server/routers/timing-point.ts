@@ -9,9 +9,16 @@ export const timingPointRouter = router({
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            const timingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+            const timingPoints = await ctx.db.timingPoint.findMany({
+                where: { raceId },
+                include: { _count: { select: { timingPointAccessUrl: true } } },
+            });
 
-            return timingPoints.map(timingPoint => ({ ...timingPoint, type: timingPoint.type as TimingPointType }));
+            return timingPoints.map(timingPoint => ({
+                ...timingPoint,
+                type: timingPoint.type as TimingPointType,
+                numberOfAccessUrls: timingPoint._count.timingPointAccessUrl,
+            }));
         }),
     timingPoint: protectedProcedure
         .input(
@@ -22,8 +29,13 @@ export const timingPointRouter = router({
         )
         .query(async ({ input, ctx }) => {
             const { raceId, timingPointId } = input;
-            const timingPoint = await ctx.db.timingPoint.findFirstOrThrow({ where: { raceId, id: timingPointId } });
-            return { ...timingPoint, type: timingPoint.type as TimingPointType };
+            const timingPoint = await ctx.db.timingPoint.findFirstOrThrow({
+                where: { raceId, id: timingPointId },
+            });
+            return {
+                ...timingPoint,
+                type: timingPoint.type as TimingPointType,
+            };
         }),
     timingPointsOrder: protectedProcedure
         .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
