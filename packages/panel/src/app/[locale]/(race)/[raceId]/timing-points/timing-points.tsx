@@ -1,13 +1,12 @@
 "use client";
 
-import { mdiChevronRight, mdiDrag, mdiFileDocumentArrowRightOutline, mdiPlus } from "@mdi/js";
+import { mdiDrag, mdiFileDocumentArrowRightOutline, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
-import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { Button } from "src/components/button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
@@ -18,71 +17,8 @@ import type { AppRouterOutputs } from "src/trpc";
 import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { useRouter } from "next/navigation";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
-
-const TimingPointCard = ({
-    onCreate,
-    index,
-    raceId,
-    timingPoint,
-    isFirst,
-    isLast,
-}: {
-    onCreate: () => void;
-    index: number;
-    raceId: number;
-    isFirst: boolean;
-    isLast: boolean;
-    timingPoint: TimingPoint;
-}) => {
-    const t = useTranslations();
-
-    return (
-        <div className="flex flex-col">
-            {!isFirst && (
-                <div className="flex flex-col items-center">
-                    <PoorModal
-                        onResolve={onCreate}
-                        title={t("pages.timingPoints.create.title")}
-                        component={TimingPointCreate}
-                        componentProps={{ raceId: raceId, index, onReject: () => {} }}>
-                        <button className="my-1 flex w-full cursor-pointer items-center self-center rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200 hover:text-gray-600">
-                            <Icon path={mdiPlus} size={0.7} />
-                            <span className="ml-1.5">{t("pages.timingPoints.create.button")}</span>
-                        </button>
-                    </PoorModal>
-                </div>
-            )}
-
-            <div>
-                <div className="my-1 flex w-full items-center rounded-3xl bg-gray-100 p-1">
-                    <div className={classNames("flex rounded-lg px-6 py-4")}>
-                        <div
-                            className={classNames(`mr-4 self-center rounded-2xl bg-gray-300 p-3 text-white`, {
-                                ["rotate-90"]: !isLast,
-                            })}>
-                            <Icon path={getTimingPointIcon(isFirst, isLast)} size={0.8} />
-                        </div>
-                        <div className="flex flex-col">
-                            <h4 className={classNames("text-md font-bold")}>{timingPoint.name}</h4>
-                            <span className={classNames("text-sm text-gray-400")}>
-                                {timingPoint.description ?? "Timing point where time should be registered"}
-                            </span>
-                        </div>
-                    </div>
-                    <div className="flex-grow"></div>
-                    <Link
-                        className="mr-4 rounded-full p-1 hover:bg-white"
-                        href={`/${timingPoint.raceId}/timing-points/${timingPoint.id}` as Route}>
-                        <Icon path={mdiChevronRight} size={1}></Icon>
-                    </Link>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 type TimingPointWithLap = TimingPoint & { lap: number };
 
@@ -108,7 +44,7 @@ const DropTarget = ({
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
-        className={classNames("-z-1 absolute -mt-5 flex h-8 w-64 items-center transition-colors", dropTarget === index ? "" : "", {
+        className={classNames("-z-1 absolute -mt-5 flex h-8 w-80 items-center transition-colors", dropTarget === index ? "" : "", {
             ["z-10"]: dragStarted,
         })}>
         <div
@@ -197,15 +133,17 @@ const TimingPointsOrder = ({
                         ref={el => (dropElements.current[index] = el)}
                         key={`${tio.id}.${tio.lap}`}
                         className={classNames(
-                            "my-2 flex w-64 cursor-grab select-none items-center rounded-md border bg-white p-1.5 shadow-sm",
+                            "my-2 flex w-80 cursor-grab select-none items-center rounded-md border bg-white p-2.5 shadow-sm",
                             dragTarget === index && "opacity-50",
                         )}>
-                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
-                        <div className="ml-1">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-gray-200">{index + 1}</div>
+                        <div className="mx-2">
                             <div className="text-sm font-semibold">{tio.name}</div>
                             <div className="text-2xs font-semibold text-gray-500">{tio.description ?? "Some default description"}</div>
                         </div>
                         <div className="flex-grow"></div>
+                        {tio.laps ? <div className="shrink-0 text-xs font-semibold">LAP: {tio.lap + 1}</div> : null}
+                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
                     </div>
                     {index === timesInOrder.length - 1 && (
                         <DropTarget
