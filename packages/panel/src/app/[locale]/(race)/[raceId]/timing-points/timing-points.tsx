@@ -14,7 +14,6 @@ import { TimingPointCreate } from "src/components/panel/timing-point/timing-poin
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
-import { getTimingPointIcon } from "src/utils";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 
@@ -143,7 +142,7 @@ const TimingPointsOrder = ({
                         </div>
                         <div className="flex-grow"></div>
                         {tio.laps ? <div className="shrink-0 text-xs font-semibold">LAP: {tio.lap + 1}</div> : null}
-                        <Icon className="shrink-0" size={1} path={mdiDrag}></Icon>
+                        <Icon className="ml-1 shrink-0" size={1} path={mdiDrag}></Icon>
                     </div>
                     {index === timesInOrder.length - 1 && (
                         <DropTarget
@@ -205,39 +204,6 @@ export const TimingPoints = () => {
                     <Icon size={0.8} path={mdiFileDocumentArrowRightOutline} />
                     <span className="ml-2">{t("shared.details")}</span>
                 </Button>
-                /* <PoorActions>
-                    <PoorModal
-                        onResolve={() => refetchAccessKeys()}
-                        title={t("pages.timingPoints.accessUrls.edit.confirmation.title")}
-                        component={TimingPointAccessUrlEdit}
-                        componentProps={{
-                            editedTimingPointAccessKey: d,
-                            timingPointId: timingPoint.id,
-                            raceId: timingPoint.raceId,
-                            onReject: () => {},
-                        }}>
-                        <NewPoorActionsItem
-                            name={t("pages.timingPoints.accessUrls.edit.title")}
-                            description={t("pages.timingPoints.accessUrls.edit.description")}
-                            iconPath={mdiPencilOutline}></NewPoorActionsItem>
-                    </PoorModal>
-
-                    <PoorConfirmation
-                        onAccept={() => deleteAccessKey(d)}
-                        title={t("pages.timingPoints.accessUrls.delete.confirmation.title")}
-                        message={t("pages.timingPoints.accessUrls.delete.confirmation.text", { name: d.name })}
-                        isLoading={deleteTimingPointAccessKeyMutation.isLoading}>
-                        <NewPoorActionsItem
-                            name={t("pages.timingPoints.accessUrls.delete.title")}
-                            description={t("pages.timingPoints.accessUrls.delete.description")}
-                            iconPath={mdiTrashCanOutline}></NewPoorActionsItem>
-                    </PoorConfirmation>
-                    <NewPoorActionsItem
-                        onClick={generateAccessUrl}
-                        name={t("pages.timingPoints.accessUrls.copy.title")}
-                        description={t("pages.timingPoints.accessUrls.copy.description")}
-                        iconPath={mdiClipboardFileOutline}></NewPoorActionsItem> 
-                </PoorActions>*/
             ),
         },
     ];
@@ -262,24 +228,6 @@ export const TimingPoints = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.timingPoints.header.title")} description={t("pages.timingPoints.header.description")} />
-                {/* <div className="flex">
-                    <div className="w-full max-w-md ">
-                        {sortedTimingPoints?.map((e, index) => (
-                            <TimingPointCard
-                                key={e.id}
-                                index={index}
-                                raceId={raceId}
-                                onCreate={() => {
-                                    void refetchTimingPoints();
-                                    void refetchOrder();
-                                }}
-                                timingPoint={e}
-                                isFirst={index === 0}
-                                isLast={index === sortedTimingPoints.length - 1}
-                            />
-                        ))}
-                    </div>
-                </div> */}
                 <div className="mt-8">
                     <SectionHeader
                         title={t("pages.timingPoints.sections.grid.header.title")}

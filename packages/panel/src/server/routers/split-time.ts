@@ -21,6 +21,7 @@ export const splitTimeRouter = router({
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId } });
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+            //todo: should handle new timing points here
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const startTimingPoint = timingPoints[0];

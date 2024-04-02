@@ -41,6 +41,7 @@ export const resultRouter = router({
             );
 
             const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
+            //todo: should handle new timing points here
             const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
             const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });

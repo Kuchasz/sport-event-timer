@@ -31,6 +31,49 @@ export const countById = <T>(items: T[], selector: (item: T) => number): Map<num
     }, new Map<number, number>());
 };
 
+export const limitOccurrences = (arr: number[], num: number, limit: number): number[] => {
+    let count = 0;
+    const newArr: number[] = [];
+    for (const item of arr) {
+        if (item === num) {
+            count++;
+            if (count > limit) {
+                continue;
+            }
+        }
+        newArr.push(item);
+    }
+    return newArr;
+};
+
+export const addOccurrences = (arr: number[], num: number, limit: number): number[] => {
+    const newArr: number[] = [];
+    let count = 0;
+    let lastSixIndex = -1;
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === 6) {
+            newArr.push(arr[i]);
+            lastSixIndex = i;
+        } else {
+            newArr.push(arr[i]);
+            if (arr[i] === num) {
+                count++;
+                if (count >= limit) {
+                    break;
+                }
+            }
+        }
+    }
+
+    const remainingOccurrences = limit - count;
+    for (let i = 0; i < remainingOccurrences; i++) {
+        newArr.splice(lastSixIndex + 1 + i, 0, num);
+    }
+
+    return newArr;
+};
+
 export const getIndexById = <T>(items: T[], groupId: (item: T) => number, id: (item: T) => number): Map<number, Record<number, number>> => {
     return items.reduce((idTimesMap, item) => {
         const groupKey = groupId(item);

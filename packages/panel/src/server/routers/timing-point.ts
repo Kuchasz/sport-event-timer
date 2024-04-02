@@ -3,6 +3,7 @@ import { timingPointErrors } from "../../modules/timing-point/errors";
 import { z } from "zod";
 import { type TimingPointType, timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
 import { protectedProcedure, router } from "../trpc";
+import { addOccurrences, createRange, limitOccurrences } from "@set/utils/dist/array";
 
 export const timingPointRouter = router({
     timingPoints: protectedProcedure
@@ -64,6 +65,11 @@ export const timingPointRouter = router({
 
         return await ctx.db.timingPointAccessUrl.update({ where: { id: id! }, data });
     }),
+    updateOrder: protectedProcedure.input(z.object({ raceId: z.number(), order: z.array(z.number()) })).mutation(async ({ input, ctx }) => {
+        const { raceId, order } = input;
+
+        await ctx.db.timingPointOrder.update({ where: { raceId }, data: { order: JSON.stringify(order) } });
+    }),
     timingPointAccessUrls: protectedProcedure
         .input(
             z.object({
@@ -106,6 +112,17 @@ export const timingPointRouter = router({
 
             if (newLaps < (maxLapSplitTime?.lap ?? 0) || newLaps < (maxLapManualSplitTime?.lap ?? 0))
                 throw timingPointErrors.SPLIT_TIMES_FOR_LAPS_REGISTERED;
+        }
+
+        const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: data.raceId } });
+        const order = JSON.parse(timingPointOrder.order) as number[];
+
+        if (timingPoint.laps > newLaps) {
+            const newOrder = limitOccurrences(order, timingPoint.id, newLaps);
+            await ctx.db.timingPointOrder.update({ where: { raceId: data.raceId }, data: { order: JSON.stringify(newOrder) } });
+        } else if (timingPoint.laps < newLaps) {
+            const newOrder = addOccurrences(order, timingPoint.id, newLaps);
+            await ctx.db.timingPointOrder.update({ where: { raceId: data.raceId }, data: { order: JSON.stringify(newOrder) } });
         }
 
         return await ctx.db.timingPoint.update({ where: { id: id! }, data });
@@ -165,7 +182,7 @@ export const timingPointRouter = router({
 
             const order = JSON.parse(timingPointOrder.order) as number[];
             const newOrder = [...order];
-            newOrder.splice(input.desiredIndex, 0, newTimingPoint.id);
+            newOrder.splice(input.desiredIndex, 0, ...createRange({ from: 0, to: input.timingPoint.laps }).map(() => newTimingPoint.id));
 
             await ctx.db.timingPointOrder.update({
                 where: { raceId: input.timingPoint.raceId },
