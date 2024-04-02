@@ -177,6 +177,8 @@ export const TimingPoints = () => {
         },
     );
 
+    const updateOrderMutation = trpc.timingPoint.updateOrder.useMutation();
+
     const cols: PoorDataTableColumn<TimingPoint>[] = [
         { field: "name", headerName: t("pages.timingPoints.sections.grid.columns.name"), sortable: true },
         {
@@ -210,10 +212,13 @@ export const TimingPoints = () => {
 
     const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
 
-    const timesInOrder = sortedTimingPoints.flatMap(tp => createRange({ from: 0, to: tp.laps }).map(lap => ({ ...tp, lap })));
+    const timesInOrder = sortedTimingPoints.map((tp, lap) => ({ ...tp, lap }));
 
-    const onTimesInOrderChange = (times: TimingPointWithLap[]) => {
+    const onTimesInOrderChange = async (times: TimingPointWithLap[]) => {
         console.log(times);
+
+        await updateOrderMutation.mutateAsync({ raceId, order: times.map(t => t.id) });
+        onTimingPointCreated();
     };
 
     const onTimingPointCreated = () => {
@@ -245,13 +250,7 @@ export const TimingPoints = () => {
                         </Button>
                     </PoorModal>
                     <div className="p-2"></div>
-                    <PoorDataTable
-                        columns={cols}
-                        hideColumnsChooser
-                        getRowId={d => d.id}
-                        gridName="timing-points"
-                        data={sortedTimingPoints}
-                    />
+                    <PoorDataTable columns={cols} hideColumnsChooser getRowId={d => d.id} gridName="timing-points" data={timingPoints} />
                 </div>
                 <div className="my-8">
                     <SectionHeader
