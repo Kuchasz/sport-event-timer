@@ -2,26 +2,80 @@
 
 import { useDeferredValue } from "src/hooks";
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import { cva, type VariantProps } from "cva";
 
-type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
-    loading?: boolean;
-    outline?: boolean;
-    kind?: "delete";
-    small?: boolean;
-};
+const buttonStyles = cva(
+    [
+        "relative",
+        "flex",
+        "items-center",
+        "justify-center",
+        "rounded-full",
+        "border",
+        "border-transparent",
+        "font-medium",
+        "transition-all",
+        "focus:outline-none",
+        "focus-visible:ring-2",
+        "focus-visible:ring-offset-2",
+    ],
+    {
+        variants: {
+            kind: {
+                default: "",
+                delete: "",
+            },
+            outline: {
+                true: "",
+                false: "",
+            },
+            small: {
+                true: "text-xs px-2 py-1",
+                false: "text-sm px-4 py-2",
+            },
+            isLoading: {
+                true: "pointer-events-none",
+                false: "",
+            },
+        },
+        compoundVariants: [
+            {
+                outline: false,
+                kind: "delete",
+                className: ["bg-red-500 text-white focus-visible:ring-red-500 hover:bg-red-600"],
+            },
+            {
+                outline: true,
+                kind: "delete",
+                className: ["bg-red-100 text-red-900 hover:bg-red-200"],
+            },
+            {
+                outline: false,
+                kind: "default",
+                className: ["bg-blue-500 text-white focus-visible:ring-blue-500 hover:bg-blue-600"],
+            },
+            {
+                outline: true,
+                kind: "default",
+                className: ["bg-blue-100 text-blue-900 hover:bg-blue-200"],
+            },
+        ],
+        defaultVariants: {
+            isLoading: false,
+            kind: "default",
+            outline: false,
+            small: false,
+        },
+    },
+);
+
+type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> &
+    VariantProps<typeof buttonStyles> & {
+        loading?: boolean;
+    };
 
 export const Button = ({ outline, small, children, loading, className, kind, ...props }: ButtonProps) => {
     const isLoading = useDeferredValue(loading);
-
-    const color = kind === "delete" ? "red" : "blue";
-
-    const visuals = outline
-        ? `bg-${color}-100 text-${color}-900 hover:bg-${color}-200`
-        : `bg-${color}-500 text-white focus-visible:ring-${color}-500 hover:bg-${color}-600`;
-
-    const pointerEvents = isLoading ? "pointer-events-none" : "";
-
-    const padding = small ? "text-xs px-2 py-1" : "text-sm px-4 py-2";
 
     const loadingVisuals = isLoading ? "opacity-0 pointer-events-none" : "";
 
@@ -31,7 +85,7 @@ export const Button = ({ outline, small, children, loading, className, kind, ...
             onClick={loading ? () => null : props.onClick}
             type="button"
             {...props}
-            className={`relative flex items-center justify-center rounded-full border border-transparent font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${visuals} ${pointerEvents} ${padding} ${className}`}>
+            className={`${buttonStyles({ kind, outline, small, isLoading })} ${className}`}>
             {isLoading && <LoadingSpinner fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
             <div className={`flex items-center transition-all ${loadingVisuals}`}>{children}</div>
         </button>
