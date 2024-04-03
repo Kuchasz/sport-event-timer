@@ -467,6 +467,10 @@
       "update": {
         "description": "Określony punkt czasowy został pomyślnie zaktualizowany.",
         "title": "Zaktualizowano Punkt Czasowy"
+      },
+      "updateOrder": {
+        "description": "Kolejność punktów czasowych została pomyślnie zaktualizowana.",
+        "title": "Zaktualizowano Kolejność Punktów Czasowych"
       }
     },
     "user": {
@@ -1365,24 +1369,24 @@
             "title": "Usuń punkt pomiarowy"
           }
         },
+        "grid": {
+          "columns": {
+            "actions": "Akcje",
+            "laps": "Okrążenia",
+            "name": "Nazwa",
+            "numberOfAccessUrls": "Linki dostępowe",
+            "shortName": "Skrót",
+            "type": "Typ"
+          },
+          "header": {
+            "description": "Zarządzaj punktami pomiarowymi.",
+            "title": "Punkty Pomiarowe"
+          }
+        },
         "order": {
           "header": {
             "description": "Zmień kolejność punktów pomiarowych, zmiana kolejności wpłynie na wyświetlanie czasów w stoperze.",
             "title": "Kolejność punktów pomiarowych"
-          }
-        },
-        "grid": {
-          "header": {
-            "description": "Zarządzaj punktami pomiarowymi.",
-            "title": "Punkty Pomiarowe"
-          },
-          "columns": {
-            "actions": "Akcje",
-            "laps": "Okrążenia",
-            "type": "Typ",
-            "name": "Nazwa",
-            "numberOfAccessUrls": "Linki dostępowe",
-            "shortName": "Skrót"
           }
         }
       }

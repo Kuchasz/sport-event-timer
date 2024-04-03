@@ -17,6 +17,21 @@ export const sort = <T>(items: T[], func: (item: T) => number): T[] => {
     return i.sort((a, b) => func(a) - func(b));
 };
 
+export const mapWithCount = <T, U>(originalArray: T[], selector: (item: T) => number, map: (item: T, count: number) => U): U[] => {
+    const occurencesMap = new Map<number, number>();
+
+    const processedArray: U[] = [];
+
+    for (const item of originalArray) {
+        const id = selector(item);
+        const occurrence = occurencesMap.get(id) || 0;
+        occurencesMap.set(id, occurrence + 1);
+        processedArray.push(map(item, occurrence));
+    }
+
+    return processedArray;
+};
+
 export const sortDesc = <T>(items: T[], func: (item: T) => number): T[] => {
     const i = [...items];
 

@@ -467,6 +467,10 @@
       "update": {
         "description": "The specified timing point has been successfully updated.",
         "title": "Timing Point Updated"
+      },
+      "updateOrder": {
+        "description": "The order of timing points has been successfully updated.",
+        "title": "Timing Points Order Updated"
       }
     },
     "user": {
@@ -1365,24 +1369,24 @@
             "title": "Delete timing point"
           }
         },
+        "grid": {
+          "columns": {
+            "actions": "Actions",
+            "laps": "Laps",
+            "name": "Name",
+            "numberOfAccessUrls": "Access URLs",
+            "shortName": "Abbreviation",
+            "type": "Type"
+          },
+          "header": {
+            "description": "The list of timing points.",
+            "title": "Timing Points"
+          }
+        },
         "order": {
           "header": {
             "description": "Change the order of the timing points. The order is important for the stopwatch to work correctly.",
             "title": "Timing Points Order"
-          }
-        },
-        "grid": {
-          "header": {
-            "description": "The list of timing points.",
-            "title": "Timing Points"
-          },
-          "columns": {
-            "actions": "Actions",
-            "laps": "Laps",
-            "type": "Type",
-            "name": "Name",
-            "numberOfAccessUrls": "Access URLs",
-            "shortName": "Abbreviation"
           }
         }
       }

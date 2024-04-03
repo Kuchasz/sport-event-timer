@@ -2,7 +2,6 @@
 
 import { mdiDrag, mdiFileDocumentArrowRightOutline, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
-import { createRange } from "@set/utils/dist/array";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -16,6 +15,7 @@ import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { mapWithCount } from "@set/utils/dist/array";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 
@@ -55,11 +55,11 @@ const DropTarget = ({
 );
 
 const TimingPointsOrder = ({
-    initialTimesInOrder,
-    onTimesInOrderChange,
+    initialTimingPointsInOrder,
+    onTimingPointsOrderChange,
 }: {
-    initialTimesInOrder: TimingPointWithLap[];
-    onTimesInOrderChange: (times: TimingPointWithLap[]) => void;
+    initialTimingPointsInOrder: TimingPointWithLap[];
+    onTimingPointsOrderChange: (times: TimingPointWithLap[]) => void;
 }) => {
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
@@ -67,7 +67,7 @@ const TimingPointsOrder = ({
     const [dropTarget, setDropTarget] = useState<number | null>(null);
     const [dragTarget, setDragTarget] = useState<number | null>(null);
 
-    const [timesInOrder, setTimesInOrder] = useState<TimingPointWithLap[]>(initialTimesInOrder);
+    const [timesInOrder, setTimesInOrder] = useState<TimingPointWithLap[]>(initialTimingPointsInOrder);
 
     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         _event.preventDefault();
@@ -106,7 +106,7 @@ const TimingPointsOrder = ({
 
         newTimesInOrder.splice(dropIndex, 0, draggedElement);
         setTimesInOrder(newTimesInOrder);
-        onTimesInOrderChange(newTimesInOrder);
+        onTimingPointsOrderChange(newTimesInOrder);
 
         setDropTarget(null);
         setDragTarget(null);
@@ -212,12 +212,14 @@ export const TimingPoints = () => {
 
     const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
 
-    const timesInOrder = sortedTimingPoints.map((tp, lap) => ({ ...tp, lap }));
+    const timingPointsInOrder = mapWithCount(
+        sortedTimingPoints,
+        s => s.id,
+        (tp, lap) => ({ ...tp, lap }),
+    );
 
-    const onTimesInOrderChange = async (times: TimingPointWithLap[]) => {
-        console.log(times);
-
-        await updateOrderMutation.mutateAsync({ raceId, order: times.map(t => t.id) });
+    const onTimingPointsOrderChange = async (timingPoints: TimingPointWithLap[]) => {
+        await updateOrderMutation.mutateAsync({ raceId, order: timingPoints.map(t => t.id) });
         onTimingPointCreated();
     };
 
@@ -258,8 +260,11 @@ export const TimingPoints = () => {
                         description={t("pages.timingPoints.sections.order.header.description")}
                     />
                     <div>
-                        {timesInOrder.length > 0 && (
-                            <TimingPointsOrder onTimesInOrderChange={onTimesInOrderChange} initialTimesInOrder={timesInOrder} />
+                        {timingPointsInOrder.length > 0 && (
+                            <TimingPointsOrder
+                                onTimingPointsOrderChange={onTimingPointsOrderChange}
+                                initialTimingPointsInOrder={timingPointsInOrder}
+                            />
                         )}
                     </div>
                 </div>
