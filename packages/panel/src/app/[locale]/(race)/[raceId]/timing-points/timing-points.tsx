@@ -18,8 +18,7 @@ import { trpc } from "../../../../../trpc-core";
 import { mapWithCount } from "@set/utils/dist/array";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
-
-type TimingPointWithLap = TimingPoint & { lap: number };
+type Split = AppRouterOutputs["split"]["splits"][0];
 
 const DropTarget = ({
     index,
@@ -58,8 +57,8 @@ const TimingPointsOrder = ({
     initialTimingPointsInOrder,
     onTimingPointsOrderChange,
 }: {
-    initialTimingPointsInOrder: TimingPointWithLap[];
-    onTimingPointsOrderChange: (times: TimingPointWithLap[]) => void;
+    initialTimingPointsInOrder: Split[];
+    onTimingPointsOrderChange: (times: Split[]) => void;
 }) => {
     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
     const elementsHolder = useRef<HTMLDivElement | null>(null);
@@ -67,7 +66,7 @@ const TimingPointsOrder = ({
     const [dropTarget, setDropTarget] = useState<number | null>(null);
     const [dragTarget, setDragTarget] = useState<number | null>(null);
 
-    const [timesInOrder, setTimesInOrder] = useState<TimingPointWithLap[]>(initialTimingPointsInOrder);
+    const [timesInOrder, setTimesInOrder] = useState<Split[]>(initialTimingPointsInOrder);
 
     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
         _event.preventDefault();
@@ -115,7 +114,7 @@ const TimingPointsOrder = ({
     return (
         <div className="relative" ref={elementsHolder}>
             {timesInOrder.map((tio, index) => (
-                <div className="relative" key={`${tio.id}.${tio.lap}`}>
+                <div className="relative" key={`${tio.id}.${tio.split}`}>
                     <DropTarget
                         onDragEnter={onDragEnter(index)}
                         onDragOver={onDragOver(index)}
@@ -130,7 +129,7 @@ const TimingPointsOrder = ({
                         onDragStart={onDragStart(index)}
                         onDragEnd={onDragEnd}
                         ref={el => (dropElements.current[index] = el)}
-                        key={`${tio.id}.${tio.lap}`}
+                        key={`${tio.id}.${tio.split}`}
                         className={classNames(
                             "my-2 flex w-80 cursor-grab select-none items-center rounded-md border bg-white p-2.5 shadow-sm",
                             dragTarget === index && "opacity-50",
@@ -141,7 +140,7 @@ const TimingPointsOrder = ({
                             <div className="text-2xs font-semibold text-gray-500">{tio.description ?? "Some default description"}</div>
                         </div>
                         <div className="flex-grow"></div>
-                        {tio.laps ? <div className="shrink-0 text-xs font-semibold">LAP: {tio.lap + 1}</div> : null}
+                        {tio.laps ? <div className="shrink-0 text-xs font-semibold">SPLIT: {tio.split + 1}</div> : null}
                         <Icon className="ml-1 shrink-0" size={1} path={mdiDrag}></Icon>
                     </div>
                     {index === timesInOrder.length - 1 && (
@@ -190,8 +189,8 @@ export const TimingPoints = () => {
             headerName: t("pages.timingPoints.sections.grid.columns.type"),
         },
         {
-            field: "laps",
-            headerName: t("pages.timingPoints.sections.grid.columns.laps"),
+            field: "splits",
+            headerName: t("pages.timingPoints.sections.grid.columns.splits"),
         },
         {
             field: "numberOfAccessUrls",
@@ -215,10 +214,10 @@ export const TimingPoints = () => {
     const timingPointsInOrder = mapWithCount(
         sortedTimingPoints,
         s => s.id,
-        (tp, lap) => ({ ...tp, lap }),
+        (tp, split) => ({ ...tp, split }),
     );
 
-    const onTimingPointsOrderChange = async (timingPoints: TimingPointWithLap[]) => {
+    const onTimingPointsOrderChange = async (timingPoints: Split[]) => {
         await updateOrderMutation.mutateAsync({ raceId, order: timingPoints.map(t => t.id) });
         onTimingPointCreated();
     };

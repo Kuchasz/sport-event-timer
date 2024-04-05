@@ -9,6 +9,7 @@ import { playerRouter } from "./player";
 import { playerRegistrationRouter } from "./player-registration";
 import { raceRouter } from "./race";
 import { resultRouter } from "./result";
+import { splitRouter } from "./split";
 import { splitTimeRouter } from "./split-time";
 import { timePenaltyRouter } from "./time-penalty";
 import { timingPointRouter } from "./timing-point";
@@ -29,6 +30,7 @@ export const appRouter = router({
     bibNumber: bibNumberRouter,
     timePenalty: timePenaltyRouter,
     disqualification: disqualificationRouter,
+    split: splitRouter,
 });
 
 // export type definition of API

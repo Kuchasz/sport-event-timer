@@ -467,10 +467,6 @@
       "update": {
         "description": "The specified timing point has been successfully updated.",
         "title": "Timing Point Updated"
-      },
-      "updateOrder": {
-        "description": "The order of timing points has been successfully updated.",
-        "title": "Timing Points Order Updated"
       }
     },
     "user": {
@@ -1372,10 +1368,10 @@
         "grid": {
           "columns": {
             "actions": "Actions",
-            "laps": "Laps",
             "name": "Name",
             "numberOfAccessUrls": "Access URLs",
             "shortName": "Abbreviation",
+            "splits": "Splits",
             "type": "Type"
           },
           "header": {
@@ -2130,9 +2126,7 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
-        "deleteNotAllowedWithSplitTimesRegistered": "It is not possible to delete a timing point when the players' split times have been measured on it. You must first delete the split times",
-        "lapsAllowedOnlyOnCheckpoint": "Laps can be configured only on checkpoints",
-        "splitTimesForLapsRegistered": "It is not possible to reduce the number of laps to a value lower than the number of laps completed by the competitors."
+        "deleteNotAllowedWhenUsedInSplits": "It is not possible to delete a timing point that is used in the splits. First, remove the splits that use this timing point."
       }
     }
   }

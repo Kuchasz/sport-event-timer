@@ -8,7 +8,6 @@ export const timingPointSchema = z.object({
     id: z.number().min(1).nullish(),
     raceId: z.number({ required_error: sharedErrorCodes.required }).min(1),
     name: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
-    laps: z.number({ required_error: sharedErrorCodes.required }).min(0).max(100),
     shortName: z
         .string({ required_error: sharedErrorCodes.required })
         .nonempty(sharedErrorCodes.required)

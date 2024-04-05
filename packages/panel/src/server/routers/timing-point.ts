@@ -1,9 +1,8 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
-import { timingPointErrors } from "../../modules/timing-point/errors";
 import { z } from "zod";
-import { type TimingPointType, timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
+import { timingPointErrors } from "../../modules/timing-point/errors";
+import { timingPointAccessUrlSchema, timingPointSchema, type TimingPointType } from "../../modules/timing-point/models";
 import { protectedProcedure, router } from "../trpc";
-import { addOccurrences, createRange, limitOccurrences } from "@set/utils/dist/array";
 
 export const timingPointRouter = router({
     timingPoints: protectedProcedure
@@ -12,12 +11,13 @@ export const timingPointRouter = router({
             const raceId = input.raceId;
             const timingPoints = await ctx.db.timingPoint.findMany({
                 where: { raceId },
-                include: { _count: { select: { timingPointAccessUrl: true } } },
+                include: { _count: { select: { timingPointAccessUrl: true, split: true } } },
             });
 
             return timingPoints.map(timingPoint => ({
                 ...timingPoint,
                 type: timingPoint.type as TimingPointType,
+                splits: timingPoint._count.split,
                 numberOfAccessUrls: timingPoint._count.timingPointAccessUrl,
             }));
         }),
@@ -38,13 +38,6 @@ export const timingPointRouter = router({
                 type: timingPoint.type as TimingPointType,
             };
         }),
-    timingPointsOrder: protectedProcedure
-        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
-        .query(async ({ input, ctx }) => {
-            const raceId = input.raceId;
-            const { order } = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId }, select: { order: true } });
-            return JSON.parse(order) as number[];
-        }),
     addTimingPointAccessUrl: protectedProcedure.input(timingPointAccessUrlSchema).mutation(async ({ input, ctx }) => {
         const timingPointAccessUrl = await ctx.db.timingPointAccessUrl.create({
             data: {
@@ -64,11 +57,6 @@ export const timingPointRouter = router({
         const { id, ...data } = input;
 
         return await ctx.db.timingPointAccessUrl.update({ where: { id: id! }, data });
-    }),
-    updateOrder: protectedProcedure.input(z.object({ raceId: z.number(), order: z.array(z.number()) })).mutation(async ({ input, ctx }) => {
-        const { raceId, order } = input;
-
-        await ctx.db.timingPointOrder.update({ where: { raceId }, data: { order: JSON.stringify(order) } });
     }),
     timingPointAccessUrls: protectedProcedure
         .input(
@@ -92,39 +80,6 @@ export const timingPointRouter = router({
     update: protectedProcedure.input(timingPointSchema).mutation(async ({ input, ctx }) => {
         const { id, ...data } = input;
 
-        const timingPoint = await ctx.db.timingPoint.findFirstOrThrow({
-            where: {
-                id: id!,
-                raceId: data.raceId,
-            },
-        });
-
-        if (timingPoint.type !== "checkpoint" && data.laps) throw timingPointErrors.LAPS_ALLOWED_ONLY_ON_CHECKPOINT;
-
-        const newLaps = data.laps ?? 0;
-
-        if (timingPoint.laps && timingPoint.laps > newLaps) {
-            const maxLapSplitTime = await ctx.db.splitTime.findFirst({ where: { timingPointId: id! }, orderBy: { lap: "desc" } });
-            const maxLapManualSplitTime = await ctx.db.manualSplitTime.findFirst({
-                where: { timingPointId: id! },
-                orderBy: { lap: "desc" },
-            });
-
-            if (newLaps < (maxLapSplitTime?.lap ?? 0) || newLaps < (maxLapManualSplitTime?.lap ?? 0))
-                throw timingPointErrors.SPLIT_TIMES_FOR_LAPS_REGISTERED;
-        }
-
-        const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: data.raceId } });
-        const order = JSON.parse(timingPointOrder.order) as number[];
-
-        if (timingPoint.laps > newLaps) {
-            const newOrder = limitOccurrences(order, timingPoint.id, newLaps);
-            await ctx.db.timingPointOrder.update({ where: { raceId: data.raceId }, data: { order: JSON.stringify(newOrder) } });
-        } else if (timingPoint.laps < newLaps) {
-            const newOrder = addOccurrences(order, timingPoint.id, newLaps);
-            await ctx.db.timingPointOrder.update({ where: { raceId: data.raceId }, data: { order: JSON.stringify(newOrder) } });
-        }
-
         return await ctx.db.timingPoint.update({ where: { id: id! }, data });
     }),
     delete: protectedProcedure.input(timingPointSchema).mutation(async ({ input, ctx }) => {
@@ -133,18 +88,9 @@ export const timingPointRouter = router({
         const numberOfTimingPoints = await ctx.db.timingPoint.count({ where: { raceId: input.raceId } });
         if (numberOfTimingPoints <= 2) throw timingPointErrors.AT_LEAST_TWO_TIMING_POINTS_REQUIRED;
 
-        const existsAnySplitTime = await ctx.db.splitTime.findFirst({ where: { raceId: input.raceId, timingPointId: id! } });
-        if (existsAnySplitTime) throw timingPointErrors.DELETE_NOT_ALLOWED_WITH_SPLIT_TIMES_REGISTERED;
+        const existsAnySplit = await ctx.db.split.findFirst({ where: { raceId: input.raceId, timingPointId: id! } });
+        if (existsAnySplit) throw timingPointErrors.DELETE_NOT_ALLOWED_WHEN_USED_IN_SPLITS;
 
-        const existsAnyManualSplitTime = await ctx.db.manualSplitTime.findFirst({ where: { raceId: input.raceId, timingPointId: id! } });
-        if (existsAnyManualSplitTime) throw timingPointErrors.DELETE_NOT_ALLOWED_WITH_SPLIT_TIMES_REGISTERED;
-
-        const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.raceId } });
-
-        const order = JSON.parse(timingPointOrder.order) as number[];
-        const newOrder = order.filter(i => i !== id);
-
-        await ctx.db.timingPointOrder.update({ where: { raceId: input.raceId }, data: { order: JSON.stringify(newOrder) } });
         await ctx.db.timingPointAccessUrl.deleteMany({ where: { timingPointId: id! } });
         return await ctx.db.timingPoint.delete({ where: { id: id! } });
     }),
@@ -163,7 +109,6 @@ export const timingPointRouter = router({
                     shortName: input.timingPoint.shortName,
                     description: input.timingPoint.description,
                     raceId: input.timingPoint.raceId,
-                    laps: input.timingPoint.laps,
                 },
             });
 
@@ -176,17 +121,6 @@ export const timingPointRouter = router({
                     token: "blah",
                     timingPointId: newTimingPoint.id,
                 },
-            });
-
-            const timingPointOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId: input.timingPoint.raceId } });
-
-            const order = JSON.parse(timingPointOrder.order) as number[];
-            const newOrder = [...order];
-            newOrder.splice(input.desiredIndex, 0, ...createRange({ from: 0, to: input.timingPoint.laps }).map(() => newTimingPoint.id));
-
-            await ctx.db.timingPointOrder.update({
-                where: { raceId: input.timingPoint.raceId },
-                data: { order: JSON.stringify(newOrder) },
             });
 
             return newTimingPoint;

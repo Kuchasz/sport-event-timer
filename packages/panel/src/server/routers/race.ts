@@ -123,7 +123,8 @@ export const raceRouter = router({
             await ctx.db.stopwatch.deleteMany({ where: { raceId: input.raceId } });
 
             await ctx.db.timingPointAccessUrl.deleteMany({ where: { raceId: input.raceId } });
-            await ctx.db.timingPointOrder.deleteMany({ where: { raceId: input.raceId } });
+            await ctx.db.splitOrder.deleteMany({ where: { raceId: input.raceId } });
+            await ctx.db.split.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.timingPoint.deleteMany({ where: { raceId: input.raceId } });
 
             return await ctx.db.race.delete({ where: { id: input.raceId } });
@@ -187,6 +188,23 @@ export const raceRouter = router({
 
             const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
 
+            const classification = await ctx.db.classification.create({ data: { raceId: race.id, name: "Base" } });
+
+            const splitsToCreate = timingPoints
+                .map(tp => ({
+                    name: tp.name,
+                    raceId: tp.raceId,
+                    timingPointId: tp.id,
+                    classificationId: classification.id,
+                }))
+                .map(s => ctx.db.split.create({ data: s }));
+
+            const splits = await ctx.db.$transaction(splitsToCreate);
+
+            await ctx.db.splitOrder.create({
+                data: { raceId: race.id, classificationId: classification.id, order: JSON.stringify(splits.map(s => s.id)) },
+            });
+
             const timingPointsAccessUrlsToCreate = timingPoints.map(tp =>
                 ctx.db.timingPointAccessUrl.create({
                     data: {
@@ -202,10 +220,6 @@ export const raceRouter = router({
             );
 
             await ctx.db.$transaction(timingPointsAccessUrlsToCreate);
-
-            await ctx.db.classification.create({ data: { raceId: race.id, name: "Base" } });
-
-            await ctx.db.timingPointOrder.create({ data: { raceId: race.id, order: JSON.stringify(timingPoints.map(tp => tp.id)) } });
         }
     }),
 });

@@ -47,13 +47,14 @@ model Race {
     stopwatch            Stopwatch?
     playerRegistration   PlayerRegistration[]
     apiKey               ApiKey[]
-    timingPointOrder     TimingPointOrder[]
     timingPointAccessUrl TimingPointAccessUrl[]
     bibNumber            BibNumber[]
     absence              Absence[]
     playerProfile        PlayerProfile[]
     TimePenalty          TimePenalty[]
     Disqualification     Disqualification[]
+    SplitOrder           SplitOrder[]
+    Split                Split[]
 }
 
 model ApiKey {
@@ -74,12 +75,14 @@ model Stopwatch {
 }
 
 model Classification {
-    id         Int        @id @default(autoincrement())
+    id         Int          @id @default(autoincrement())
     name       String
-    race       Race       @relation(fields: [raceId], references: [id])
+    race       Race         @relation(fields: [raceId], references: [id])
     raceId     Int
     players    Player[]
     categories Category[]
+    SplitOrder SplitOrder[]
+    Split      Split[]
 
     @@unique([raceId, name])
 }
@@ -126,22 +129,36 @@ model TimingPoint {
     shortName            String
     type                 String
     description          String?
-    laps                 Int
     race                 Race                   @relation(fields: [raceId], references: [id])
     raceId               Int
-    splitTime            SplitTime[]
-    manualSplitTime      ManualSplitTime[]
     timingPointAccessUrl TimingPointAccessUrl[]
-    absence              Absence[]
+    split                Split[]
 
     @@unique([raceId, name])
     @@unique([raceId, shortName])
 }
 
-model TimingPointOrder {
-    order  String
-    race   Race   @relation(fields: [raceId], references: [id])
-    raceId Int
+model Split {
+    id               Int            @id @default(autoincrement())
+    name             String
+    classification   Classification @relation(fields: [classificationId], references: [id])
+    classificationId Int
+    race             Race           @relation(fields: [raceId], references: [id])
+    raceId           Int
+    timingPoint      TimingPoint    @relation(fields: [timingPointId], references: [id])
+    timingPointId    Int
+
+    splitTime       SplitTime[]
+    manualSplitTime ManualSplitTime[]
+    Absence         Absence[]
+}
+
+model SplitOrder {
+    order            String
+    race             Race           @relation(fields: [raceId], references: [id])
+    raceId           Int
+    classification   Classification @relation(fields: [classificationId], references: [id])
+    classificationId Int
 
     @@id([raceId])
 }
@@ -170,64 +187,62 @@ model TimingPointAccessUrl {
 }
 
 model SplitTime {
-    id            Int
-    bibNumber     String
-    time          BigInt
-    race          Race        @relation(fields: [raceId], references: [id])
-    raceId        Int
-    timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
-    timingPointId Int
-    lap           Int
-    player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    id        Int
+    bibNumber String
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    time      BigInt
+    race      Race   @relation(fields: [raceId], references: [id])
+    raceId    Int
+    split     Split? @relation(fields: [splitId], references: [id])
+    splitId   Int?
 
     @@id([id, raceId])
-    @@unique([timingPointId, lap, bibNumber])
+    @@unique([splitId, bibNumber])
 }
 
 model Absence {
-    id            Int
-    bibNumber     String
-    race          Race        @relation(fields: [raceId], references: [id])
-    raceId        Int
-    timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
-    timingPointId Int
-    player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    id        Int
+    bibNumber String
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    race      Race   @relation(fields: [raceId], references: [id])
+    raceId    Int
+    split     Split  @relation(fields: [splitId], references: [id])
+    splitId   Int
 
     @@id([id, raceId])
-    @@unique([timingPointId, bibNumber])
+    @@unique([splitId, bibNumber])
 }
 
 model ManualSplitTime {
-    id            Int         @id @default(autoincrement())
-    bibNumber     String
-    time          BigInt
-    race          Race        @relation(fields: [raceId], references: [id])
-    raceId        Int
-    timingPoint   TimingPoint @relation(fields: [timingPointId], references: [id])
-    timingPointId Int
-    lap           Int
-    player        Player      @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    id        Int    @id @default(autoincrement())
+    bibNumber String
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
+    time      BigInt
+    race      Race   @relation(fields: [raceId], references: [id])
+    raceId    Int
+    split     Split? @relation(fields: [splitId], references: [id])
+    splitId   Int?
 
-    @@unique([timingPointId, lap, bibNumber])
+    @@unique([splitId, bibNumber])
 }
 
 model TimePenalty {
     id        Int    @id @default(autoincrement())
     bibNumber String
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
     time      Int
     reason    String
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int
-    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 }
 
 model Disqualification {
     id        Int    @id @default(autoincrement())
     bibNumber String
+    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
     reason    String
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int
-    player    Player @relation(fields: [raceId, bibNumber], references: [raceId, bibNumber])
 
     @@unique([raceId, bibNumber])
 }

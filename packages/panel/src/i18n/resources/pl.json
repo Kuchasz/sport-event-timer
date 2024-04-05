@@ -467,10 +467,6 @@
       "update": {
         "description": "Określony punkt czasowy został pomyślnie zaktualizowany.",
         "title": "Zaktualizowano Punkt Czasowy"
-      },
-      "updateOrder": {
-        "description": "Kolejność punktów czasowych została pomyślnie zaktualizowana.",
-        "title": "Zaktualizowano Kolejność Punktów Czasowych"
       }
     },
     "user": {
@@ -1372,10 +1368,10 @@
         "grid": {
           "columns": {
             "actions": "Akcje",
-            "laps": "Okrążenia",
             "name": "Nazwa",
             "numberOfAccessUrls": "Linki dostępowe",
             "shortName": "Skrót",
+            "splits": "Pomiary",
             "type": "Typ"
           },
           "header": {
@@ -2130,9 +2126,7 @@
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę).",
-        "deleteNotAllowedWithSplitTimesRegistered": "Nie można usunąć punktu pomiarowego gdy zmierzono na nim czasy zawodników. Należy najpierw usunąć zmierzone czasy.",
-        "lapsAllowedOnlyOnCheckpoint": "Okrążenia mogą być konfigurowane tylko w punktach kontrolnych.",
-        "splitTimesForLapsRegistered": "Nie można zmniejszyć ilości okrążeń do wartości niższej niż ilość okrążeń pokonanych przez zawodników."
+        "deleteNotAllowedWhenUsedInSplits": "Nie można usunąć punktu pomiarowego, który jest używany w międzyczasach. Najpierw usuń międzyczasy, które korzystają z tego punktu pomiarowego."
       }
     }
   }
