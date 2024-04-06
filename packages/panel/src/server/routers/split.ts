@@ -17,6 +17,25 @@ export const splitRouter = router({
 
             return splits;
         }),
+    updateOrder: protectedProcedure
+        .input(z.object({ raceId: z.number(), classificationId: z.number(), order: z.array(z.number()) }))
+        .mutation(async ({ input, ctx }) => {
+            const { raceId, order, classificationId } = input;
+
+            await ctx.db.splitOrder.update({ where: { raceId, classificationId }, data: { order: JSON.stringify(order) } });
+        }),
+    splitsOrder: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                classificationId: z.number({ required_error: "classificationId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, classificationId } = input;
+            const { order } = await ctx.db.splitOrder.findUniqueOrThrow({ where: { raceId, classificationId }, select: { order: true } });
+            return JSON.parse(order) as number[];
+        }),
     // update: protectedProcedure.input(timingPointSchema).mutation(async ({ input, ctx }) => {
     //     const { id, ...data } = input;
 

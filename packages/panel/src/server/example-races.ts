@@ -11,7 +11,8 @@ import type {
     PlayerRegistration,
     Race,
     TimingPoint,
-    TimingPointOrder,
+    SplitOrder,
+    Split,
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
 import { daysFromNow, stripSeconds, subtractDaysFromDate } from "@set/utils/dist/datetime";
@@ -77,11 +78,14 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     const _timingPointsAccessUrls = createTimingPointsAccessUrls(timingPoints);
     await db.$transaction(_timingPointsAccessUrls.map(data => db.timingPointAccessUrl.create({ data })));
 
-    const _timingPointsOrders = createTimingPointsOrders(
-        races.map(r => r.id),
-        timingPoints,
+    const _splits = createSplits(timingPoints, classifications);
+    const splits = await db.$transaction(_splits.map(data => db.split.create({ data })));
+
+    const _splitsOrders = createSplitsOrders(
+        classifications.map(c => ({ raceId: c.raceId, classificationId: c.id })),
+        splits,
     );
-    const timingPointsOrders = await db.$transaction(_timingPointsOrders.map(data => db.timingPointOrder.create({ data })));
+    const splitsOrders = await db.$transaction(_splitsOrders.map(data => db.splitOrder.create({ data })));
 
     const _bibNumbers = createBibNumbers(
         races.map(r => r.id),
@@ -89,7 +93,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     );
     await db.$transaction(_bibNumbers.map(data => db.bibNumber.create({ data })));
 
-    const _stopwatches = createStopwatches(faker, races, players, timingPoints, timingPointsOrders);
+    const _stopwatches = createStopwatches(faker, races, players, splits, splitsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 };
 
@@ -223,10 +227,21 @@ const createTimingPointsAccessUrls = (timingPoints: TimingPoint[]) =>
         name: "",
     }));
 
-const createTimingPointsOrders = (raceIds: number[], timingPoints: TimingPoint[]): TimingPointOrder[] =>
-    raceIds.map(raceId => ({
+const createSplits = (timingPoints: TimingPoint[], classifications: Classification[]): Omit<Split, "id">[] =>
+    classifications.flatMap(c =>
+        timingPoints.map(tp => ({
+            name: tp.name,
+            classificationId: c.id,
+            raceId: c.raceId,
+            timingPointId: tp.id,
+        })),
+    );
+
+const createSplitsOrders = (ids: { raceId: number; classificationId: number }[], splits: Split[]): SplitOrder[] =>
+    ids.map(({ raceId, classificationId }) => ({
         raceId,
-        order: JSON.stringify(timingPoints.filter(tp => tp.raceId === raceId).map(tp => tp.id)),
+        classificationId,
+        order: JSON.stringify(splits.filter(s => s.raceId === raceId && s.classificationId === classificationId).map(s => s.id)),
     }));
 
 const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
@@ -242,20 +257,12 @@ const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
             ),
     );
 
-const createStopwatches = (
-    faker: Faker,
-    races: Race[],
-    players: Player[],
-    timingPoints: TimingPoint[],
-    timingPointsOrders: TimingPointOrder[],
-) => {
+const createStopwatches = (faker: Faker, races: Race[], players: Player[], splits: Split[], splitsOrders: SplitOrder[]) => {
     return races.map(r => {
         const playersForRace = players.filter(p => p.raceId === r.id);
-        const timingPointsOrder = JSON.parse(timingPointsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];
+        const splitsOrder = JSON.parse(splitsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];
 
-        const timingPointsForRace = timingPointsOrder.map(
-            timingPointId => timingPoints.find(tp => tp.raceId === r.id && tp.id === timingPointId)!,
-        );
+        const splitsForRace = splitsOrder.map(splitId => splits.find(s => s.raceId === r.id && s.id === splitId)!);
 
         const chosenPlayersNumber = faker.number.int({ min: 0, max: playersForRace.length });
 
@@ -266,10 +273,10 @@ const createStopwatches = (
         const splitTimes = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
             .flatMap(p =>
-                timingPointsForRace.map((tp, i) => ({
+                splitsForRace.map((s, i) => ({
                     id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
                     bibNumber: Number(p.bibNumber),
-                    timingPointId: tp.id,
+                    splitId: s.id,
                     time: faker.date
                         .between({
                             from: new Date(startTimeDate.getTime() + i * 3_600_000),

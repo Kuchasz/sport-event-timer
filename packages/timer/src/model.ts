@@ -18,8 +18,7 @@ export type HistoricAction = {
 export type SplitTime = {
     id: number;
     bibNumber?: number;
-    lap?: number;
-    timingPointId: number;
+    splitId: number;
     time: number;
 };
 
