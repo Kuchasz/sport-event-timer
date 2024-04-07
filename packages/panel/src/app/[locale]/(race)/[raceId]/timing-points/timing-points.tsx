@@ -13,6 +13,8 @@ import { PoorModal } from "src/components/poor-modal";
 import type { AppRouterOutputs } from "src/trpc";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import { PoorSelect } from "src/components/poor-select";
+import { useState } from "react";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 // type Split = AppRouterOutputs["split"]["splits"][0];
@@ -163,6 +165,9 @@ export const TimingPoints = () => {
         { raceId: raceId },
         { initialData: [] },
     );
+    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId }, { initialData: [] });
+
+    const [classificationId, setClassificationId] = useState<number>();
     const t = useTranslations();
     const router = useRouter();
 
@@ -178,7 +183,7 @@ export const TimingPoints = () => {
     const cols: PoorDataTableColumn<TimingPoint>[] = [
         { field: "name", headerName: t("pages.timingPoints.sections.grid.columns.name"), sortable: true },
         {
-            field: "shortName",
+            field: "abbrev",
             headerName: t("pages.timingPoints.sections.grid.columns.shortName"),
         },
         {
@@ -255,6 +260,15 @@ export const TimingPoints = () => {
                         title={t("pages.timingPoints.sections.order.header.title")}
                         description={t("pages.timingPoints.sections.order.header.description")}
                     />
+                    <div className="my-2">
+                        <PoorSelect
+                            initialValue={classificationId}
+                            items={classifications}
+                            placeholder={t("pages.players.form.classification.placeholder")}
+                            nameKey="name"
+                            valueKey="id"
+                            onChange={e => setClassificationId(e.target.value)}></PoorSelect>
+                    </div>
                     {/* <div>
                         {timingPointsInOrder.length > 0 && (
                             <TimingPointsOrder
