@@ -118,15 +118,13 @@ export const raceRouter = router({
             await ctx.db.playerRegistration.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.playerProfile.deleteMany({ where: { raceId: input.raceId } });
 
-            await ctx.db.classification.deleteMany({ where: { raceId: input.raceId } });
-
             await ctx.db.stopwatch.deleteMany({ where: { raceId: input.raceId } });
-
             await ctx.db.timingPointAccessUrl.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.splitOrder.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.split.deleteMany({ where: { raceId: input.raceId } });
             await ctx.db.timingPoint.deleteMany({ where: { raceId: input.raceId } });
 
+            await ctx.db.classification.deleteMany({ where: { raceId: input.raceId } });
             return await ctx.db.race.delete({ where: { id: input.raceId } });
         }),
     update: protectedProcedure.input(raceSchema).mutation(async ({ input, ctx }) => {
