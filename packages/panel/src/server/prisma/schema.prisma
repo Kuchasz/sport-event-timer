@@ -126,7 +126,7 @@ model Player {
 model TimingPoint {
     id                   Int                    @id @default(autoincrement())
     name                 String
-    shortName            String
+    abbrev               String
     type                 String
     description          String?
     race                 Race                   @relation(fields: [raceId], references: [id])
@@ -135,7 +135,7 @@ model TimingPoint {
     split                Split[]
 
     @@unique([raceId, name])
-    @@unique([raceId, shortName])
+    @@unique([raceId, abbrev])
 }
 
 model Split {

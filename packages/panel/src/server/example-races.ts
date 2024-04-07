@@ -204,16 +204,16 @@ const createPlayers = (
 
 const createTimingPoints = (faker: Faker, raceIds: number[]): Omit<TimingPoint, "id">[] =>
     raceIds.flatMap(r => [
-        { name: "Start", type: "start", shortName: "S", laps: 0, description: faker.lorem.sentence(), raceId: r },
+        { name: "Start", type: "start", abbrev: "S", laps: 0, description: faker.lorem.sentence(), raceId: r },
         ...createRange({ from: 0, to: faker.number.int({ min: 0, max: 2 }) }).map(() => ({
             name: capitalizeFirstLetter(faker.word.noun()),
             type: "checkpoint",
-            shortName: faker.helpers.fromRegExp(/[A-Z][0-9]/),
+            abbrev: faker.helpers.fromRegExp(/[A-Z][0-9]/),
             description: faker.lorem.sentence(),
             raceId: r,
             laps: 0,
         })),
-        { name: "Finish", type: "finish", shortName: "M", laps: 0, description: faker.lorem.sentence(), raceId: r },
+        { name: "Finish", type: "finish", abbrev: "M", laps: 0, description: faker.lorem.sentence(), raceId: r },
     ]);
 
 const createTimingPointsAccessUrls = (timingPoints: TimingPoint[]) =>
