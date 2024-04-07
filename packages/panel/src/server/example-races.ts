@@ -1,4 +1,4 @@
-import { createRange, fillArray, groupBy } from "@set/utils/dist/array";
+import { createRange, fillArray, groupBy, toMap } from "@set/utils/dist/array";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import { fakerEN, fakerPL, type Faker } from "@faker-js/faker";
@@ -93,7 +93,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     );
     await db.$transaction(_bibNumbers.map(data => db.bibNumber.create({ data })));
 
-    const _stopwatches = createStopwatches(faker, races, players, splits, splitsOrders);
+    const _stopwatches = createStopwatches(faker, races, players, classifications, splits, splitsOrders);
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 };
 
@@ -257,12 +257,29 @@ const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
             ),
     );
 
-const createStopwatches = (faker: Faker, races: Race[], players: Player[], splits: Split[], splitsOrders: SplitOrder[]) => {
+const createStopwatches = (
+    faker: Faker,
+    races: Race[],
+    players: Player[],
+    classifications: Classification[],
+    splits: Split[],
+    splitsOrders: SplitOrder[],
+) => {
     return races.map(r => {
         const playersForRace = players.filter(p => p.raceId === r.id);
-        const splitsOrder = JSON.parse(splitsOrders.find(tpo => tpo.raceId === r.id)!.order) as number[];
+        const classificationsForRace = classifications.filter(c => c.raceId === r.id);
 
-        const splitsForRace = splitsOrder.map(splitId => splits.find(s => s.raceId === r.id && s.id === splitId)!);
+        const splitsOrdersForRace = toMap(
+            splitsOrders.filter(so => so.raceId === r.id),
+            so => so.classificationId,
+            so => JSON.parse(so.order) as number[],
+        );
+
+        const splitsForRace = toMap(
+            classificationsForRace,
+            c => c.id,
+            c => splitsOrdersForRace[c.id].map(splitId => splits.find(s => s.raceId === r.id && s.id === splitId)!),
+        );
 
         const chosenPlayersNumber = faker.number.int({ min: 0, max: playersForRace.length });
 
@@ -273,7 +290,7 @@ const createStopwatches = (faker: Faker, races: Race[], players: Player[], split
         const splitTimes = createRange({ from: 0, to: chosenPlayersNumber })
             .map(i => playersForRace[i])
             .flatMap(p =>
-                splitsForRace.map((s, i) => ({
+                splitsForRace[p.classificationId].map((s, i) => ({
                     id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
                     bibNumber: Number(p.bibNumber),
                     splitId: s.id,

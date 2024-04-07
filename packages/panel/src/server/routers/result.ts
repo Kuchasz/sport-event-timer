@@ -26,8 +26,8 @@ export const resultRouter = router({
             const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId, player: { classificationId } } });
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId, player: { classificationId } } });
 
-            const disqualifications = await toMap(
-                ctx.db.disqualification.findMany({
+            const disqualifications = toMap(
+                await ctx.db.disqualification.findMany({
                     where: { raceId, player: { classificationId } },
                 }),
                 d => d.bibNumber,

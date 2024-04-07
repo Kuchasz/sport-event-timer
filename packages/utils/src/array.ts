@@ -161,10 +161,8 @@ export const naturalSort = <T>(items: T[], order: "desc" | "asc", func: (item: T
         : i.sort((a, b) => func(b).localeCompare(func(a), undefined, { numeric: true }));
 };
 
-export const toMap = async <T, U>(array: Promise<T[]>, keySelector: (obj: T) => string | number, valueSelector: (obj: T) => U) => {
-    const elements = await array;
-
-    return Object.fromEntries(elements.map(r => [keySelector(r), valueSelector(r)]));
+export const toMap = <T, TK extends string | number, U>(array: T[], keySelector: (obj: T) => TK, valueSelector: (obj: T) => U) => {
+    return Object.fromEntries(array.map(r => [keySelector(r), valueSelector(r)])) as Record<TK, U>;
 };
 
 export const toLookup = <T, TV>(array: T[], keySelector: (obj: T) => string, valueSelector: (obj: T) => TV) => {
