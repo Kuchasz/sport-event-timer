@@ -106,7 +106,7 @@ export const timingPointRouter = router({
                 data: {
                     type: "checkpoint",
                     name: input.timingPoint.name,
-                    shortName: input.timingPoint.shortName,
+                    abbrev: input.timingPoint.abbrev,
                     description: input.timingPoint.description,
                     raceId: input.timingPoint.raceId,
                 },

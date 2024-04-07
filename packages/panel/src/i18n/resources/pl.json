@@ -69,7 +69,7 @@
       "description": {
         "length": "Opis nie może zawierać więcej niż 100 znaków"
       },
-      "shortName": {
+      "abbrev": {
         "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
       }
     }

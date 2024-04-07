@@ -160,7 +160,7 @@ model SplitOrder {
     classification   Classification @relation(fields: [classificationId], references: [id])
     classificationId Int
 
-    @@id([raceId])
+    @@id([classificationId])
 }
 
 model BibNumber {

@@ -69,8 +69,8 @@
       "description": {
         "length": "Description should not be longer than 100 characters"
       },
-      "shortName": {
-        "length": "Short name should not be longer than 3 characters"
+      "abbrev": {
+        "length": "Abbreviation should not be longer than 3 characters"
       }
     }
   },

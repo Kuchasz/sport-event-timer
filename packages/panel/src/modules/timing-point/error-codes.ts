@@ -2,7 +2,7 @@ export default {
     description: {
         length: "errorCodes.timingPoint.description.length",
     },
-    shortName: {
-        length: "errorCodes.timingPoint.name.length",
+    abbrev: {
+        length: "errorCodes.timingPoint.abbrev.length",
     },
 };
