@@ -171,21 +171,18 @@ export const raceRouter = router({
                 {
                     name: "Start",
                     type: "start",
-                    shortName: "ST",
+                    abbrev: "ST",
                     description: "Where the players start",
                     raceId: race.id,
-                    laps: 0,
                 },
                 {
                     name: "Finish",
                     type: "finish",
-                    shortName: "MT",
+                    abbrev: "MT",
                     description: "Where the players finish",
                     raceId: race.id,
-                    laps: 0,
                 },
             ].map(tp => ctx.db.timingPoint.create({ data: tp }));
-
             const timingPoints = await ctx.db.$transaction(timingPointsToCreate);
 
             const classification = await ctx.db.classification.create({ data: { raceId: race.id, name: "Base" } });

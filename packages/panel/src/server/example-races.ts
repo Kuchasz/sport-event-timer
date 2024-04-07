@@ -79,12 +79,14 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     await db.$transaction(_timingPointsAccessUrls.map(data => db.timingPointAccessUrl.create({ data })));
 
     const _splits = createSplits(timingPoints, classifications);
+
     const splits = await db.$transaction(_splits.map(data => db.split.create({ data })));
 
     const _splitsOrders = createSplitsOrders(
         classifications.map(c => ({ raceId: c.raceId, classificationId: c.id })),
         splits,
     );
+
     const splitsOrders = await db.$transaction(_splitsOrders.map(data => db.splitOrder.create({ data })));
 
     const _bibNumbers = createBibNumbers(
@@ -94,6 +96,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     await db.$transaction(_bibNumbers.map(data => db.bibNumber.create({ data })));
 
     const _stopwatches = createStopwatches(faker, races, players, classifications, splits, splitsOrders);
+
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
 };
 
@@ -237,10 +240,10 @@ const createSplits = (timingPoints: TimingPoint[], classifications: Classificati
     );
 
 const createSplitsOrders = (ids: { raceId: number; classificationId: number }[], splits: Split[]): SplitOrder[] =>
-    ids.map(({ raceId, classificationId }) => ({
-        raceId,
-        classificationId,
-        order: JSON.stringify(splits.filter(s => s.raceId === raceId && s.classificationId === classificationId).map(s => s.id)),
+    ids.map(id => ({
+        raceId: id.raceId,
+        classificationId: id.classificationId,
+        order: JSON.stringify(splits.filter(s => s.raceId === id.raceId && s.classificationId === id.classificationId).map(s => s.id)),
     }));
 
 const createBibNumbers = (raceIds: number[], players: Player[]): BibNumber[] =>
