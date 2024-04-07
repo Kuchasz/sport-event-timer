@@ -171,12 +171,20 @@ export const TimingPoints = () => {
     const t = useTranslations();
     const router = useRouter();
 
-    // const { data: timingPointsOrder, refetch: refetchOrder } = trpc.split.splitsOrder.useQuery(
-    //     { raceId: raceId },
-    //     {
-    //         initialData: [],
-    //     },
-    // );
+    const { data: splitsOrder, refetch: refetchOrder } = trpc.split.splitsOrder.useQuery(
+        { raceId: raceId, classificationId: classificationId! },
+        {
+            enabled: !!classificationId,
+            initialData: [],
+        },
+    );
+    const { data: splits, refetch: refetchSplits } = trpc.split.splits.useQuery(
+        { raceId: raceId, classificationId: classificationId! },
+        {
+            enabled: !!classificationId,
+            initialData: [],
+        },
+    );
 
     // const updateOrderMutation = trpc.split.updateOrder.useMutation();
 
@@ -211,9 +219,9 @@ export const TimingPoints = () => {
         },
     ];
 
-    // const sortedTimingPoints = timingPointsOrder.map(point => timingPoints.find(tp => point === tp.id)!);
+    const splitsInOrder = splitsOrder.map(split => splits.find(s => split === s.id)!);
 
-    // const timingPointsInOrder = mapWithCount(
+    // const splitsInOrder = mapWithCount(
     //     sortedTimingPoints,
     //     s => s.id,
     //     (tp, split) => ({ ...tp, split }),
@@ -269,14 +277,22 @@ export const TimingPoints = () => {
                             valueKey="id"
                             onChange={e => setClassificationId(e.target.value)}></PoorSelect>
                     </div>
-                    {/* <div>
-                        {timingPointsInOrder.length > 0 && (
-                            <TimingPointsOrder
-                                onTimingPointsOrderChange={onTimingPointsOrderChange}
-                                initialTimingPointsInOrder={timingPointsInOrder}
-                            />
-                        )}
-                    </div> */}
+                    <div>
+                        {
+                            splitsOrder.length > 0
+                                ? splitsInOrder.map(s => (
+                                      <div>
+                                          {s.id}
+                                          {s.name}
+                                      </div>
+                                  ))
+                                : null
+                            // <TimingPointsOrder
+                            //     onTimingPointsOrderChange={onTimingPointsOrderChange}
+                            //     initialTimingPointsInOrder={timingPointsInOrder}
+                            // />
+                        }
+                    </div>
                 </div>
             </div>
         </>
