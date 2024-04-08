@@ -153,8 +153,7 @@ export const TimingPoint = ({
                             <TimingPointForm
                                 initialTimingPoint={timingPoint}
                                 isLoading={updateTimingPointMutation.isLoading}
-                                onResolve={timingPointEdited}
-                                timingPointType={timingPoint.type}></TimingPointForm>
+                                onResolve={timingPointEdited}></TimingPointForm>
                         </FormCard>
                         {/* <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
                             <div className="flex-grow">
