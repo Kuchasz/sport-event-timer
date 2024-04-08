@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiFileDocumentArrowRightOutline, mdiPlus } from "@mdi/js";
+import { mdiDrag, mdiFileDocumentArrowRightOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
@@ -279,32 +279,51 @@ export const TimingPoints = () => {
                             valueKey="id"
                             onChange={e => setClassificationId(e.target.value)}></PoorSelect>
                     </div>
-                    <div className="mb-16 grid grid-cols-3 gap-2">
-                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
-                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
-                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
-                        {
-                            splitsOrder.length > 0
-                                ? splitsInOrder.map(s => (
-                                      <>
-                                          <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-                                          <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-                                          <PoorSelect
-                                              initialValue={s.timingPointId}
-                                              items={timingPoints}
-                                              placeholder="choose timing point"
-                                              nameKey="name"
-                                              valueKey="id"
-                                              onChange={() => {}}></PoorSelect>
-                                      </>
-                                  ))
-                                : null
-                            // <TimingPointsOrder
-                            //     onTimingPointsOrderChange={onTimingPointsOrderChange}
-                            //     initialTimingPointsInOrder={timingPointsInOrder}
-                            // />
-                        }
-                    </div>
+                    {splitsOrder.length > 0 ? (
+                        <div className="mb-16 mt-8">
+                            <div className="grid grid-cols-4 gap-2">
+                                <Label>Name</Label>
+                                <Label>Timing Point</Label>
+                                <Label>Distance</Label>
+                                <Label>Actions</Label>
+                                {
+                                    splitsInOrder.map(s => (
+                                        <>
+                                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+
+                                            <PoorSelect
+                                                initialValue={s.timingPointId}
+                                                items={timingPoints}
+                                                placeholder="choose timing point"
+                                                nameKey="name"
+                                                valueKey="id"
+                                                onChange={() => {}}></PoorSelect>
+                                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+                                            <div className="flex items-center">
+                                                <Button kind="delete" small outline>
+                                                    <Icon size={0.8} path={mdiTrashCanOutline} />
+                                                    <span className="mx-2">Delete</span>
+                                                </Button>
+                                                <Button small outline className="ml-2">
+                                                    <Icon size={0.8} path={mdiDrag} />
+                                                    <span className="mx-2">Move</span>
+                                                </Button>
+                                            </div>
+                                        </>
+                                    ))
+                                    // <TimingPointsOrder
+                                    //     onTimingPointsOrderChange={onTimingPointsOrderChange}
+                                    //     initialTimingPointsInOrder={timingPointsInOrder}
+                                    // />
+                                }
+                            </div>
+                            <div className="mt-4 flex justify-between">
+                                <Button outline>{t("shared.cancel")}</Button>
+
+                                <Button type="submit">{t("shared.save")}</Button>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </>

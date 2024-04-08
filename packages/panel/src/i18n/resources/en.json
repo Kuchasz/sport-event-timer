@@ -1348,10 +1348,10 @@
           "label": "Timing Point Name",
           "placeholder": "Type Timing Point Name"
         },
-        "shortName": {
+        "abbrev": {
           "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters.",
-          "label": "Short name",
-          "placeholder": "Enter short name"
+          "label": "Abbreviation",
+          "placeholder": "Enter abbreviation"
         }
       },
       "header": {

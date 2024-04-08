@@ -1,11 +1,9 @@
+import { useTranslations } from "next-intl";
+import { Form, FormInput } from "src/form";
+import { timingPointSchema } from "src/modules/timing-point/models";
+import type { AppRouterInputs } from "src/trpc";
 import { Button } from "../../button";
 import { PoorInput } from "../../poor-input";
-import type { AppRouterInputs } from "src/trpc";
-import { Form, FormInput } from "src/form";
-import { type TimingPointType, timingPointSchema } from "src/modules/timing-point/models";
-import { useTranslations } from "next-intl";
-import { PoorNumberInput } from "src/components/poor-number-input";
-
 type TimingPoint = AppRouterInputs["timingPoint"]["update"];
 
 type TimingPointFormProps = {
@@ -13,10 +11,9 @@ type TimingPointFormProps = {
     onResolve: (timingPoint: TimingPoint) => void;
     initialTimingPoint: TimingPoint;
     isLoading: boolean;
-    timingPointType: TimingPointType;
 };
 
-export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoading, timingPointType }: TimingPointFormProps) => {
+export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoading }: TimingPointFormProps) => {
     const t = useTranslations();
     return (
         <Form<TimingPoint> initialValues={initialTimingPoint} onSubmit={onResolve} validationSchema={timingPointSchema}>
@@ -32,34 +29,16 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
                 />
             </div>
             <div className="flex">
-                <FormInput<TimingPoint, "shortName">
-                    label={t("pages.timingPoints.form.shortName.label")}
-                    description={t("pages.timingPoints.form.shortName.description")}
+                <FormInput<TimingPoint, "abbrev">
+                    label={t("pages.timingPoints.form.abbrev.label")}
+                    description={t("pages.timingPoints.form.abbrev.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
-                        <PoorInput placeholder={t("pages.timingPoints.form.shortName.placeholder")} value={value} onChange={onChange} />
+                        <PoorInput placeholder={t("pages.timingPoints.form.abbrev.placeholder")} value={value} onChange={onChange} />
                     )}
-                    name="shortName"
+                    name="abbrev"
                 />
             </div>
-            {timingPointType === "checkpoint" && (
-                <div className="flex">
-                    <FormInput<TimingPoint, "laps">
-                        label={t("pages.timingPoints.form.laps.label")}
-                        description={t("pages.timingPoints.form.laps.description")}
-                        className="flex-1"
-                        render={({ value, onChange }) => (
-                            <PoorNumberInput
-                                placeholder={t("pages.timingPoints.form.laps.placeholder")}
-                                value={value}
-                                required
-                                onChange={onChange}
-                            />
-                        )}
-                        name="laps"
-                    />
-                </div>
-            )}
             <div className="flex">
                 <FormInput<TimingPoint, "description">
                     label={t("pages.timingPoints.form.description.label")}

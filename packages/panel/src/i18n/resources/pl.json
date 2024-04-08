@@ -1348,7 +1348,7 @@
           "label": "Nazwa Punktu Pomiarowego",
           "placeholder": "Wpisz nazwę Punktu Pomiarowego"
         },
-        "shortName": {
+        "abbrev": {
           "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków.",
           "label": "Nazwa skrócona",
           "placeholder": "Wpisz nazwę skróconą"
