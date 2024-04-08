@@ -15,6 +15,8 @@ import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
 import { PoorSelect } from "src/components/poor-select";
 import { useState } from "react";
+import { PoorInput } from "src/components/poor-input";
+import { Label } from "src/form";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 // type Split = AppRouterOutputs["split"]["splits"][0];
@@ -277,14 +279,24 @@ export const TimingPoints = () => {
                             valueKey="id"
                             onChange={e => setClassificationId(e.target.value)}></PoorSelect>
                     </div>
-                    <div>
+                    <div className="mb-16 grid grid-cols-3 gap-2">
+                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
+                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
+                        <Label>{t("pages.timingPoints.sections.order.columns.name")}</Label>
                         {
                             splitsOrder.length > 0
                                 ? splitsInOrder.map(s => (
-                                      <div>
-                                          {s.id}
-                                          {s.name}
-                                      </div>
+                                      <>
+                                          <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+                                          <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+                                          <PoorSelect
+                                              initialValue={s.timingPointId}
+                                              items={timingPoints}
+                                              placeholder="choose timing point"
+                                              nameKey="name"
+                                              valueKey="id"
+                                              onChange={() => {}}></PoorSelect>
+                                      </>
                                   ))
                                 : null
                             // <TimingPointsOrder
