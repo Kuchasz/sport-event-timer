@@ -5,21 +5,21 @@ import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "src/components/button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
+import { PoorInput } from "src/components/poor-input";
 import { PoorModal } from "src/components/poor-modal";
+import { PoorSelect } from "src/components/poor-select";
+import { FormCard, Label } from "src/form";
 import type { AppRouterOutputs } from "src/trpc";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
-import { PoorSelect } from "src/components/poor-select";
-import { useState } from "react";
-import { PoorInput } from "src/components/poor-input";
-import { FormCard, Label } from "src/form";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
-// type Split = AppRouterOutputs["split"]["splits"][0];
+type Split = AppRouterOutputs["split"]["splits"][0];
 
 // const DropTarget = ({
 //     index,
@@ -160,6 +160,83 @@ type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 //         </div>
 //     );
 // };
+type SplitsProps = {
+    classificationId: number;
+    timingPoints: TimingPoint[];
+    raceId: number;
+    splits: Split[];
+    splitsOrder: number[];
+};
+
+const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }: SplitsProps) => {
+    const [newSplits, setNewSplits] = useState<Split[]>(splits);
+    const [newSplitsOrder, setNewSplitsOrder] = useState<number[]>(splitsOrder);
+
+    const t = useTranslations();
+
+    const splitsInOrder = newSplitsOrder.map(split => newSplits.find(s => split === s.id)!);
+
+    const addSplit = () => {
+        const id = -newSplits.length;
+        setNewSplits([
+            ...newSplits,
+            {
+                id,
+                name: "New split",
+                timingPointId: timingPoints[0].id,
+                raceId,
+                classificationId,
+            },
+        ]);
+        setNewSplitsOrder([...newSplitsOrder, id]);
+    };
+
+    return (
+        <FormCard title="lorem ipsum polelum">
+            <div className="">
+                <Button onClick={addSplit} outline>
+                    <Icon size={0.8} path={mdiPlus} />
+                    <span className="ml-2">Add split</span>
+                </Button>
+                <div className="mt-4 grid grid-cols-4 gap-2">
+                    <Label>Name</Label>
+                    <Label>Timing Point</Label>
+                    <Label>Distance</Label>
+                    <Label>Actions</Label>
+                    {splitsInOrder.map(s => (
+                        <>
+                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+                            <PoorSelect
+                                initialValue={s.timingPointId}
+                                items={timingPoints}
+                                placeholder="choose timing point"
+                                nameKey="name"
+                                valueKey="id"
+                                onChange={() => {}}></PoorSelect>
+                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+                            <div className="flex items-center">
+                                <Button kind="delete" small outline>
+                                    <Icon size={0.8} path={mdiTrashCanOutline} />
+                                    <span className="mx-2">Delete</span>
+                                </Button>
+                                <Button small outline className="ml-2">
+                                    <Icon size={0.8} path={mdiDrag} />
+                                    <span className="mx-2">Move</span>
+                                </Button>
+                            </div>
+                        </>
+                    ))}
+                </div>
+                <div className="mt-4 flex">
+                    <Button outline>{t("shared.cancel")}</Button>
+                    <Button className="ml-2" type="submit">
+                        {t("shared.save")}
+                    </Button>
+                </div>
+            </div>
+        </FormCard>
+    );
+};
 
 export const TimingPoints = () => {
     const raceId = useCurrentRaceId();
@@ -180,6 +257,7 @@ export const TimingPoints = () => {
             initialData: [],
         },
     );
+
     const { data: splits, refetch: refetchSplits } = trpc.split.splits.useQuery(
         { raceId: raceId, classificationId: classificationId! },
         {
@@ -220,8 +298,6 @@ export const TimingPoints = () => {
             ),
         },
     ];
-
-    const splitsInOrder = splitsOrder.map(split => splits.find(s => split === s.id)!);
 
     // const splitsInOrder = mapWithCount(
     //     sortedTimingPoints,
@@ -265,7 +341,7 @@ export const TimingPoints = () => {
                     <div className="p-2"></div>
                     <PoorDataTable columns={cols} hideColumnsChooser getRowId={d => d.id} gridName="timing-points" data={timingPoints} />
                 </div>
-                <div className="my-8">
+                <div className="py-8">
                     <SectionHeader
                         title={t("pages.timingPoints.sections.order.header.title")}
                         description={t("pages.timingPoints.sections.order.header.description")}
@@ -280,56 +356,13 @@ export const TimingPoints = () => {
                             onChange={e => setClassificationId(e.target.value)}></PoorSelect>
                     </div>
                     {splitsOrder.length > 0 ? (
-                        <FormCard title="lorem ipsum polelum">
-                            <div className="">
-                                <Button outline>
-                                    <Icon size={0.8} path={mdiPlus} />
-                                    <span className="ml-2">Add split</span>
-                                </Button>
-                                <div className="mt-4 grid grid-cols-4 gap-2">
-                                    <Label>Name</Label>
-                                    <Label>Timing Point</Label>
-                                    <Label>Distance</Label>
-                                    <Label>Actions</Label>
-                                    {
-                                        splitsInOrder.map(s => (
-                                            <>
-                                                <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-
-                                                <PoorSelect
-                                                    initialValue={s.timingPointId}
-                                                    items={timingPoints}
-                                                    placeholder="choose timing point"
-                                                    nameKey="name"
-                                                    valueKey="id"
-                                                    onChange={() => {}}></PoorSelect>
-                                                <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-                                                <div className="flex items-center">
-                                                    <Button kind="delete" small outline>
-                                                        <Icon size={0.8} path={mdiTrashCanOutline} />
-                                                        <span className="mx-2">Delete</span>
-                                                    </Button>
-                                                    <Button small outline className="ml-2">
-                                                        <Icon size={0.8} path={mdiDrag} />
-                                                        <span className="mx-2">Move</span>
-                                                    </Button>
-                                                </div>
-                                            </>
-                                        ))
-                                        // <TimingPointsOrder
-                                        //     onTimingPointsOrderChange={onTimingPointsOrderChange}
-                                        //     initialTimingPointsInOrder={timingPointsInOrder}
-                                        // />
-                                    }
-                                </div>
-                                <div className="mt-4 flex">
-                                    <Button outline>{t("shared.cancel")}</Button>
-                                    <Button className="ml-2" type="submit">
-                                        {t("shared.save")}
-                                    </Button>
-                                </div>
-                            </div>
-                        </FormCard>
+                        <Splits
+                            classificationId={classificationId!}
+                            timingPoints={timingPoints}
+                            raceId={raceId}
+                            splits={splits}
+                            splitsOrder={splitsOrder}
+                        />
                     ) : null}
                 </div>
             </div>
