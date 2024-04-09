@@ -160,6 +160,42 @@ type Split = AppRouterOutputs["split"]["splits"][0];
 //         </div>
 //     );
 // };
+
+const SplitRow = ({
+    s,
+    timingPoints,
+    onDragStart,
+    onDragEnd,
+}: {
+    s: Split;
+    timingPoints: TimingPoint[];
+    onDragStart: (_event: React.DragEvent<HTMLButtonElement>) => void;
+    onDragEnd: (_event: React.DragEvent<HTMLButtonElement>) => void;
+}) => {
+    return (
+        <>
+            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+            <PoorSelect
+                initialValue={s.timingPointId}
+                items={timingPoints}
+                placeholder="choose timing point"
+                nameKey="name"
+                valueKey="id"
+                onChange={() => {}}></PoorSelect>
+            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+            <div className="flex items-center">
+                <Button kind="delete" small outline>
+                    <Icon size={0.8} path={mdiTrashCanOutline} />
+                    <span className="mx-2">Delete</span>
+                </Button>
+                <Button onDragStart={onDragStart} onDragEnd={onDragEnd} small outline className="ml-2">
+                    <Icon size={0.8} path={mdiDrag} />
+                    <span className="mx-2">Move</span>
+                </Button>
+            </div>
+        </>
+    );
+};
 type SplitsProps = {
     classificationId: number;
     timingPoints: TimingPoint[];
@@ -203,28 +239,8 @@ const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }:
                     <Label>Timing Point</Label>
                     <Label>Distance</Label>
                     <Label>Actions</Label>
-                    {splitsInOrder.map(s => (
-                        <>
-                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-                            <PoorSelect
-                                initialValue={s.timingPointId}
-                                items={timingPoints}
-                                placeholder="choose timing point"
-                                nameKey="name"
-                                valueKey="id"
-                                onChange={() => {}}></PoorSelect>
-                            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-                            <div className="flex items-center">
-                                <Button kind="delete" small outline>
-                                    <Icon size={0.8} path={mdiTrashCanOutline} />
-                                    <span className="mx-2">Delete</span>
-                                </Button>
-                                <Button small outline className="ml-2">
-                                    <Icon size={0.8} path={mdiDrag} />
-                                    <span className="mx-2">Move</span>
-                                </Button>
-                            </div>
-                        </>
+                    {splitsInOrder.map((s, index) => (
+                        <SplitRow index={index} />
                     ))}
                 </div>
                 <div className="mt-4 flex">
