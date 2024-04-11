@@ -5,7 +5,7 @@ import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "src/components/button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
@@ -17,42 +17,43 @@ import { FormCard, Label } from "src/form";
 import type { AppRouterOutputs } from "src/trpc";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { trpc } from "../../../../../trpc-core";
+import classNames from "classnames";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type Split = AppRouterOutputs["split"]["splits"][0];
 
-// const DropTarget = ({
-//     index,
-//     dropTarget,
-//     dragStarted,
-//     onDragEnter,
-//     onDragOver,
-//     onDragLeave,
-//     onDrop,
-// }: {
-//     index: number;
-//     dropTarget: number | null;
-//     dragStarted: boolean;
-//     onDragEnter: (_event: React.DragEvent<HTMLDivElement>) => void;
-//     onDragOver: (_event: React.DragEvent<HTMLDivElement>) => void;
-//     onDragLeave: (_event: React.DragEvent<HTMLDivElement>) => void;
-//     onDrop: (_event: React.DragEvent<HTMLDivElement>) => void;
-// }) => (
-//     <div
-//         onDragEnter={onDragEnter}
-//         onDragOver={onDragOver}
-//         onDragLeave={onDragLeave}
-//         onDrop={onDrop}
-//         className={classNames("-z-1 absolute -mt-5 flex h-8 w-80 items-center transition-colors", dropTarget === index ? "" : "", {
-//             ["z-10"]: dragStarted,
-//         })}>
-//         <div
-//             className={classNames(
-//                 "pointer-events-none mx-4 h-1 w-full bg-red-500 opacity-0 transition-opacity",
-//                 dropTarget === index && "opacity-25",
-//             )}></div>
-//     </div>
-// );
+const DropTarget = ({
+    index,
+    dropTarget,
+    dragStarted,
+    onDragEnter,
+    onDragOver,
+    onDragLeave,
+    onDrop,
+}: {
+    index: number;
+    dropTarget: number | null;
+    dragStarted: boolean;
+    onDragEnter: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDragOver: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDragLeave: (_event: React.DragEvent<HTMLDivElement>) => void;
+    onDrop: (_event: React.DragEvent<HTMLDivElement>) => void;
+}) => (
+    <div
+        onDragEnter={onDragEnter}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        className={classNames("-z-1 absolute -mt-5 flex h-8 w-80 items-center transition-colors", dropTarget === index ? "" : "", {
+            ["z-10"]: dragStarted,
+        })}>
+        <div
+            className={classNames(
+                "pointer-events-none mx-4 h-1 w-full bg-red-500 opacity-0 transition-opacity",
+                dropTarget === index && "opacity-25",
+            )}></div>
+    </div>
+);
 
 // const TimingPointsOrder = ({
 //     initialTimingPointsInOrder,
@@ -169,8 +170,8 @@ const SplitRow = ({
 }: {
     s: Split;
     timingPoints: TimingPoint[];
-    onDragStart: (_event: React.DragEvent<HTMLButtonElement>) => void;
-    onDragEnd: (_event: React.DragEvent<HTMLButtonElement>) => void;
+    onDragStart: (_event: React.DragEvent) => void;
+    onDragEnd: (_event: React.DragEvent) => void;
 }) => {
     return (
         <>
@@ -188,10 +189,18 @@ const SplitRow = ({
                     <Icon size={0.8} path={mdiTrashCanOutline} />
                     <span className="mx-2">Delete</span>
                 </Button>
-                <Button onDragStart={onDragStart} onDragEnd={onDragEnd} small outline className="ml-2">
+                {/* <Button onDragStart={onDragStart} onDragEnd={onDragEnd} small outline className="ml-2">
                     <Icon size={0.8} path={mdiDrag} />
                     <span className="mx-2">Move</span>
-                </Button>
+                </Button> */}
+                <div
+                    draggable
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                    className="ml-2 flex items-center rounded-full bg-orange-500 px-2">
+                    <Icon size={0.8} path={mdiDrag} />
+                    <span className="mx-2">Move</span>
+                </div>
             </div>
         </>
     );
@@ -207,10 +216,59 @@ type SplitsProps = {
 const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }: SplitsProps) => {
     const [newSplits, setNewSplits] = useState<Split[]>(splits);
     const [newSplitsOrder, setNewSplitsOrder] = useState<number[]>(splitsOrder);
+    const [dragStarted, setDragStarted] = useState(false);
+    const [dragTarget, setDragTarget] = useState<number | null>(null);
+    const [dropTarget, setDropTarget] = useState<number | null>(null);
 
     const t = useTranslations();
 
     const splitsInOrder = newSplitsOrder.map(split => newSplits.find(s => split === s.id)!);
+
+    const onDragEnter = (index: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        _event.preventDefault();
+        setDropTarget(index);
+    };
+
+    const onDragOver = (_index: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        _event.dataTransfer.dropEffect = "move";
+        _event.preventDefault();
+    };
+
+    const onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
+        setDropTarget(null);
+    };
+
+    const onDrop = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
+        const newSplitsInOrder = [...newSplitsOrder];
+        const draggedElement = newSplitsInOrder.splice(dragTarget!, 1)[0];
+
+        const dropIndex = idx > dragTarget! ? idx - 1 : idx;
+
+        newSplitsInOrder.splice(dropIndex, 0, draggedElement);
+
+        setNewSplitsOrder(newSplitsInOrder);
+        // onTimingPointsOrderChange(newSplitsInOrder);
+
+        setDropTarget(null);
+        setDragTarget(null);
+    };
+
+    const onDragStart = (index: number) => (_event: React.DragEvent) => {
+        setDragStarted(true);
+        setDragTarget(index);
+
+        const crt = _event.currentTarget.parentNode!.parentNode!.cloneNode(true) as HTMLDivElement;
+        crt.style.position = "absolute";
+        crt.style.top = "-1000px";
+        document.body.appendChild(crt);
+        _event.dataTransfer.setDragImage(crt, 0, 0);
+        setTimeout(() => document.body.removeChild(crt));
+    };
+
+    const onDragEnd = (_event: React.DragEvent) => {
+        setDragStarted(false);
+        setDragTarget(null);
+    };
 
     const addSplit = () => {
         const id = -newSplits.length;
@@ -240,7 +298,29 @@ const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }:
                     <Label>Distance</Label>
                     <Label>Actions</Label>
                     {splitsInOrder.map((s, index) => (
-                        <SplitRow index={index} />
+                        <>
+                            <DropTarget
+                                onDragEnter={onDragEnter(index)}
+                                onDragOver={onDragOver(index)}
+                                onDragLeave={onDragLeave}
+                                onDrop={onDrop(index)}
+                                dropTarget={dropTarget}
+                                index={index}
+                                dragStarted={dragStarted}
+                            />
+                            <SplitRow s={s} timingPoints={timingPoints} onDragEnd={onDragEnd} onDragStart={onDragStart(index)} />
+                            {index === splitsInOrder.length - 1 && (
+                                <DropTarget
+                                    onDragEnter={onDragEnter(index + 1)}
+                                    onDragOver={onDragOver(index + 1)}
+                                    onDragLeave={onDragLeave}
+                                    onDrop={onDrop(index + 1)}
+                                    dropTarget={dropTarget}
+                                    index={index + 1}
+                                    dragStarted={dragStarted}
+                                />
+                            )}
+                        </>
                     ))}
                 </div>
                 <div className="mt-4 flex">
