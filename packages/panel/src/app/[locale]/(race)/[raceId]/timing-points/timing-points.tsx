@@ -36,16 +36,22 @@ const DropTarget = ({ onDrop, moveMode }: { onDrop: () => void; moveMode: number
 const SplitRow = ({
     s,
     timingPoints,
+    moveMode,
     onEnableMoveMode,
     onDeleteSplit,
 }: {
     s: Split;
     timingPoints: TimingPoint[];
+    moveMode: number;
     onEnableMoveMode: (id: number) => void;
     onDeleteSplit: (id: number) => void;
 }) => {
     return (
-        <>
+        <div
+            className={classNames(
+                "col-span-5 grid grid-cols-subgrid transition-opacity",
+                moveMode && moveMode !== s.id && "pointer-events-none opacity-25",
+            )}>
             <SplitButton onClick={() => onEnableMoveMode(s.id)} icon={mdiDrag} />
             <PoorInput value={s.name} onChange={() => {}}></PoorInput>
             <PoorSelect
@@ -57,7 +63,7 @@ const SplitRow = ({
                 onChange={() => {}}></PoorSelect>
             <PoorInput value={s.name} onChange={() => {}}></PoorInput>
             <SplitButton onClick={() => onDeleteSplit(s.id)} icon={mdiTrashCanOutline} />
-        </>
+        </div>
     );
 };
 type SplitsProps = {
@@ -139,6 +145,7 @@ const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }:
                             <SplitRow
                                 s={s}
                                 timingPoints={timingPoints}
+                                moveMode={moveMode}
                                 onEnableMoveMode={handleMoveMode}
                                 onDeleteSplit={handleDeleteSplit}
                             />
