@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "src/components/button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
@@ -26,131 +26,27 @@ const DropTarget = ({ onDrop, moveMode }: { onDrop: () => void; moveMode: number
     <div
         onClick={onDrop}
         className={classNames(
-            "text-2xs col-span-4 cursor-pointer overflow-hidden bg-orange-300 uppercase text-orange-700 transition-all hover:bg-orange-100",
+            "text-2xs col-span-5 flex cursor-pointer justify-center overflow-hidden rounded-md bg-gray-100 font-semibold uppercase text-gray-700 transition-all hover:bg-gray-50",
             moveMode ? "h-auto px-2 py-1" : "h-0",
         )}>
         drop element here
     </div>
 );
 
-// const TimingPointsOrder = ({
-//     initialTimingPointsInOrder,
-//     onTimingPointsOrderChange,
-// }: {
-//     initialTimingPointsInOrder: Split[];
-//     onTimingPointsOrderChange: (times: Split[]) => void;
-// }) => {
-//     const dropElements = useRef<(HTMLDivElement | null)[]>([]);
-//     const elementsHolder = useRef<HTMLDivElement | null>(null);
-//     const [dragStarted, setDragStarted] = useState(false);
-//     const [dropTarget, setDropTarget] = useState<number | null>(null);
-//     const [dragTarget, setDragTarget] = useState<number | null>(null);
-
-//     const [timesInOrder, setTimesInOrder] = useState<Split[]>(initialTimingPointsInOrder);
-
-//     const onDragEnter = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-//         _event.preventDefault();
-//         setDropTarget(idx);
-//     };
-//     const onDragOver = (_idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-//         _event.dataTransfer.dropEffect = "move";
-//         _event.preventDefault();
-//     };
-//     const onDragLeave = (_event: React.DragEvent<HTMLDivElement>) => {
-//         setDropTarget(null);
-//     };
-
-//     const onDragStart = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-//         setDragStarted(true);
-//         setDragTarget(idx);
-
-//         const crt = _event.currentTarget.cloneNode(true) as HTMLDivElement;
-//         crt.style.position = "absolute";
-//         crt.style.top = "-1000px";
-//         document.body.appendChild(crt);
-//         _event.dataTransfer.setDragImage(crt, 0, 0);
-//         setTimeout(() => document.body.removeChild(crt));
-//     };
-
-//     const onDragEnd = (_event: React.DragEvent<HTMLDivElement>) => {
-//         setDragStarted(false);
-//         setDragTarget(null);
-//     };
-
-//     const onDrop = (idx: number) => (_event: React.DragEvent<HTMLDivElement>) => {
-//         const newTimesInOrder = [...timesInOrder];
-//         const draggedElement = newTimesInOrder.splice(dragTarget!, 1)[0];
-
-//         const dropIndex = idx > dragTarget! ? idx - 1 : idx;
-
-//         newTimesInOrder.splice(dropIndex, 0, draggedElement);
-//         setTimesInOrder(newTimesInOrder);
-//         onTimingPointsOrderChange(newTimesInOrder);
-
-//         setDropTarget(null);
-//         setDragTarget(null);
-//     };
-
-//     return (
-//         <div className="relative" ref={elementsHolder}>
-//             {timesInOrder.map((tio, index) => (
-//                 <div className="relative" key={`${tio.id}.${tio.split}`}>
-//                     <DropTarget
-//                         onDragEnter={onDragEnter(index)}
-//                         onDragOver={onDragOver(index)}
-//                         onDragLeave={onDragLeave}
-//                         onDrop={onDrop(index)}
-//                         dropTarget={dropTarget}
-//                         index={index}
-//                         dragStarted={dragStarted}
-//                     />
-//                     <div
-//                         draggable
-//                         onDragStart={onDragStart(index)}
-//                         onDragEnd={onDragEnd}
-//                         ref={el => (dropElements.current[index] = el)}
-//                         key={`${tio.id}.${tio.split}`}
-//                         className={classNames(
-//                             "my-2 flex w-80 cursor-grab select-none items-center rounded-md border bg-white p-2.5 shadow-sm",
-//                             dragTarget === index && "opacity-50",
-//                         )}>
-//                         <div className="flex size-8 items-center justify-center rounded-full bg-gray-200">{index + 1}</div>
-//                         <div className="mx-2">
-//                             <div className="text-sm font-semibold">{tio.name}</div>
-//                             <div className="text-2xs font-semibold text-gray-500">{tio.description ?? "Some default description"}</div>
-//                         </div>
-//                         <div className="flex-grow"></div>
-//                         {tio.laps ? <div className="shrink-0 text-xs font-semibold">SPLIT: {tio.split + 1}</div> : null}
-//                         <Icon className="ml-1 shrink-0" size={1} path={mdiDrag}></Icon>
-//                     </div>
-//                     {index === timesInOrder.length - 1 && (
-//                         <DropTarget
-//                             onDragEnter={onDragEnter(index + 1)}
-//                             onDragOver={onDragOver(index + 1)}
-//                             onDragLeave={onDragLeave}
-//                             onDrop={onDrop(index + 1)}
-//                             dropTarget={dropTarget}
-//                             index={index + 1}
-//                             dragStarted={dragStarted}
-//                         />
-//                     )}
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// };
-
 const SplitRow = ({
     s,
     timingPoints,
     onEnableMoveMode,
+    onDeleteSplit,
 }: {
     s: Split;
     timingPoints: TimingPoint[];
     onEnableMoveMode: (id: number) => void;
+    onDeleteSplit: (id: number) => void;
 }) => {
     return (
         <>
+            <SplitButton onClick={() => onEnableMoveMode(s.id)} icon={mdiDrag} />
             <PoorInput value={s.name} onChange={() => {}}></PoorInput>
             <PoorSelect
                 initialValue={s.timingPointId}
@@ -160,16 +56,7 @@ const SplitRow = ({
                 valueKey="id"
                 onChange={() => {}}></PoorSelect>
             <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-            <div className="flex items-center">
-                <Button kind="delete" small outline>
-                    <Icon size={0.8} path={mdiTrashCanOutline} />
-                    <span className="mx-2">Delete</span>
-                </Button>
-                <Button onClick={() => onEnableMoveMode(s.id)} small outline className="ml-2">
-                    <Icon size={0.8} path={mdiDrag} />
-                    <span className="mx-2">Move</span>
-                </Button>
-            </div>
+            <SplitButton onClick={() => onDeleteSplit(s.id)} icon={mdiTrashCanOutline} />
         </>
     );
 };
@@ -179,6 +66,14 @@ type SplitsProps = {
     raceId: number;
     splits: Split[];
     splitsOrder: number[];
+};
+
+const SplitButton = ({ onClick, icon }: { onClick: () => void; icon: string }) => {
+    return (
+        <div className="flex cursor-pointer items-center self-center rounded-full p-2 hover:bg-gray-100" onClick={onClick}>
+            <Icon size={0.8} path={icon} />
+        </div>
+    );
 };
 
 const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }: SplitsProps) => {
@@ -191,12 +86,13 @@ const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }:
     const splitsInOrder = newSplitsOrder.map(split => newSplits.find(s => split === s.id)!);
 
     const addSplit = () => {
-        const id = -newSplits.length;
+        const minId = Math.min(...newSplits.map(tp => tp.id));
+        const id = (minId > 0 ? 0 : minId) - 2;
         setNewSplits([
             ...newSplits,
             {
                 id,
-                name: "New split",
+                name: "Split",
                 timingPointId: timingPoints[0].id,
                 raceId,
                 classificationId,
@@ -205,31 +101,54 @@ const Splits = ({ timingPoints, classificationId, raceId, splits, splitsOrder }:
         setNewSplitsOrder([...newSplitsOrder, id]);
     };
 
-    const handleDrop = (dropIndex: number, splitId: number) => {
-        alert(`dropIndex: ${dropIndex}, splitId: ${splitId}`);
+    const handleMoveMode = (id: number) => {
+        if (moveMode === id) {
+            setMoveMode(0);
+            return;
+        }
+
+        setMoveMode(id);
+    };
+
+    const handleDeleteSplit = (id: number) => {
+        setNewSplits(newSplits.filter(s => s.id !== id));
+        setNewSplitsOrder(newSplitsOrder.filter(s => s !== id));
+    };
+
+    const moveSplitToIndex = (dropIndex: number, splitId: number) => {
+        setMoveMode(0);
+        // console.log(`dropIndex: ${dropIndex}, splitId: ${splitId}`);
+
+        const newOrder = newSplitsOrder.filter(s => s !== splitId);
+        newOrder.splice(dropIndex, 0, splitId);
+        setNewSplitsOrder(newOrder);
     };
 
     return (
         <FormCard title="lorem ipsum polelum">
             <div className="">
-                <Button onClick={addSplit} outline>
-                    <Icon size={0.8} path={mdiPlus} />
-                    <span className="ml-2">Add split</span>
-                </Button>
-                <div className="mt-4 grid grid-cols-4 gap-2">
+                <div className="mt-4 grid gap-2" style={{ gridTemplateColumns: "min-content 1fr 1fr 1fr min-content" }}>
+                    <div></div>
                     <Label>Name</Label>
                     <Label>Timing Point</Label>
                     <Label>Distance</Label>
-                    <Label>Actions</Label>
+                    <Label></Label>
                     {splitsInOrder.map((s, index) => (
-                        <>
-                            <DropTarget onDrop={() => handleDrop(index, moveMode)} moveMode={moveMode} />
-                            <SplitRow s={s} timingPoints={timingPoints} onEnableMoveMode={id => setMoveMode(id)} />
+                        <React.Fragment key={s.id}>
+                            <DropTarget onDrop={() => moveSplitToIndex(index, moveMode)} moveMode={moveMode} />
+                            <SplitRow
+                                s={s}
+                                timingPoints={timingPoints}
+                                onEnableMoveMode={handleMoveMode}
+                                onDeleteSplit={handleDeleteSplit}
+                            />
                             {index === splitsInOrder.length - 1 && (
-                                <DropTarget onDrop={() => handleDrop(index + 1, moveMode)} moveMode={moveMode} />
+                                <DropTarget onDrop={() => moveSplitToIndex(index + 1, moveMode)} moveMode={moveMode} />
                             )}
-                        </>
+                        </React.Fragment>
                     ))}
+                    <div className="col-span-4 flex items-center justify-end"></div>
+                    <SplitButton icon={mdiPlus} onClick={addSplit} />
                 </div>
                 <div className="mt-4 flex">
                     <Button outline>{t("shared.cancel")}</Button>
