@@ -12,10 +12,11 @@ import { Task } from "@set/utils/dist/task";
 type Props = {
     raceId: string;
     breadcrumbs: React.ReactNode;
+    side: React.ReactNode;
     children: React.ReactNode;
 };
 
-export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
+export const RacePageLayout = async ({ raceId, breadcrumbs, side, children }: Props) => {
     const race = await Task.tryCatch(trpcRSC.race.race.query({ raceId: Number(raceId) }));
 
     if (race.type !== "success") notFound();
@@ -29,7 +30,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
             <div className="relative h-full">
                 <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
-                        <nav className="z-10 flex h-full w-64 shrink-0 flex-col overflow-hidden shadow-lg">
+                        <nav className="z-20 flex h-full w-64 shrink-0 flex-col overflow-hidden shadow-lg">
                             <Link href={"/" as Route}>
                                 <div className="mb-6 ml-3 flex cursor-pointer flex-col items-center px-4 py-4 text-center transition-opacity">
                                     <img className="h-8" src="/assets/logo_ravelo_black.png"></img>
@@ -38,9 +39,14 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                             <ConciseRaceIcon r={race.result} />
                             <RaceMenu raceId={raceId} totalPlayers={totalPlayers} totalRegistrations={totalRegistrations} />
                         </nav>
+
                         <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
-                            <div className="flex-grow overflow-y-scroll bg-gray-50 px-16 py-12">{children}</div>
+                            <div className="flex flex-grow bg-gray-50">
+                                {side}
+                                <div className="flex-grow overflow-y-scroll px-12 py-12">{children}</div>
+                            </div>
+
                             <Toaster />
                         </main>
                     </div>

@@ -1,14 +1,15 @@
 import {
-    mdiViewDashboardEditOutline,
-    mdiTimetable,
-    mdiAlarm,
-    mdiNumeric,
-    mdiAccountGroup,
     mdiAccountCogOutline,
-    mdiTimerCogOutline,
-    mdiCog,
-    mdiToolboxOutline,
+    mdiAccountGroup,
+    mdiAlarm,
     mdiAlertOutline,
+    mdiCog,
+    mdiNumeric,
+    mdiTimelineClockOutline,
+    mdiTimerMarkerOutline,
+    mdiTimetable,
+    mdiToolboxOutline,
+    mdiViewDashboardEditOutline,
 } from "@mdi/js";
 import { useTranslations } from "next-intl";
 import { Menu } from "./menu";
@@ -85,8 +86,15 @@ export const RaceMenu = ({
             },
             {
                 text: t("menuOptions.timeMeasurement.timingPoints"),
-                icon: mdiTimerCogOutline,
+                icon: mdiTimerMarkerOutline,
                 to: "/:raceId/timing-points",
+                color: "text-blue-800",
+                bg: "bg-blue-100",
+            },
+            {
+                text: t("menuOptions.timeMeasurement.splits"),
+                icon: mdiTimelineClockOutline,
+                to: "/:raceId/splits",
                 color: "text-blue-800",
                 bg: "bg-blue-100",
             },

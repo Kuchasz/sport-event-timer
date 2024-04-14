@@ -106,6 +106,7 @@
       "results": "Results",
       "splitTimes": "Split Times",
       "timingPoints": "Timing Points",
+      "splits": "Splits",
       "title": "Time measurement",
       "tools": "Tools"
     }
@@ -1417,6 +1418,11 @@
       "header": {
         "description": "Tools useful during the race.",
         "title": "Tools"
+      }
+    },
+    "splits": {
+      "header": {
+        "title": "Splits"
       }
     }
   },

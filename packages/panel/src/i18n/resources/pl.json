@@ -106,6 +106,7 @@
       "results": "Wyniki",
       "splitTimes": "Zmierzone czasy",
       "timingPoints": "Punkty Pomiarowe",
+      "splits": "Międzyczasy",
       "title": "Pomiar czasu",
       "tools": "Narzędzia"
     }
@@ -1417,6 +1418,11 @@
       "header": {
         "description": "Narzedzia przydatne w trakcie trwania wyścigu.",
         "title": "Narzędzia"
+      }
+    },
+    "splits": {
+      "header": {
+        "title": "Międzyczasy"
       }
     }
   },
