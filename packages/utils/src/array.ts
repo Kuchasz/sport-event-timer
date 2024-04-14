@@ -190,3 +190,7 @@ export const excludeItems = <T>(array: T[], itemsToExclude: T[]): T[] => {
 export const findCommonElements = <T>(arr1: T[], arr2: T[]): T[] => {
     return arr1.filter(element => arr2.includes(element));
 };
+
+export const arraysMatches = <T>(arr1: T[], arr2: T[]): boolean => {
+    return arr2.every(element => arr1.includes(element)) && arr1.every(element => arr2.includes(element));
+};

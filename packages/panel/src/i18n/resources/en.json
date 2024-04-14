@@ -2134,6 +2134,11 @@
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
         "deleteNotAllowedWhenUsedInSplits": "It is not possible to delete a timing point that is used in the splits. First, remove the splits that use this timing point."
       }
+    },
+    "split": {
+      "errors": {
+        "orderArrayMustMatchSplitsDefinitions": "Order of splits and splits definitions must match"
+      }
     }
   }
 }

@@ -69,13 +69,14 @@ const SplitRow = ({
 
 type SplitsProps = {
     classificationId: number;
+    classificationName: string;
     timingPoints: TimingPoint[];
     raceId: number;
     splits: Split[];
     splitsOrder: number[];
 };
 
-export const SplitsList = ({ timingPoints, classificationId, raceId, splits, splitsOrder }: SplitsProps) => {
+export const SplitsList = ({ timingPoints, classificationId, classificationName, raceId, splits, splitsOrder }: SplitsProps) => {
     const [newSplits, setNewSplits] = useState<Split[]>(splits);
     const [newSplitsOrder, setNewSplitsOrder] = useState<number[]>(splitsOrder);
     const [moveMode, setMoveMode] = useState<number>(0);
@@ -123,7 +124,7 @@ export const SplitsList = ({ timingPoints, classificationId, raceId, splits, spl
     };
 
     return (
-        <FormCard title="lorem ipsum polelum">
+        <FormCard title={classificationName}>
             <div className="">
                 <div className="mt-4 grid gap-2" style={{ gridTemplateColumns: "min-content 1fr 1fr 1fr min-content" }}>
                     <div></div>

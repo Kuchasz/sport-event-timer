@@ -2134,6 +2134,11 @@
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę).",
         "deleteNotAllowedWhenUsedInSplits": "Nie można usunąć punktu pomiarowego, który jest używany w międzyczasach. Najpierw usuń międzyczasy, które korzystają z tego punktu pomiarowego."
       }
+    },
+    "split": {
+      "errors": {
+        "orderArrayMustMatchSplitsDefinitions": "Kolejność międzyczasów musi odpowiadać definicjom międzyczasów"
+      }
     }
   }
 }

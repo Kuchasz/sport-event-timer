@@ -23,6 +23,19 @@ export const classificationRouter = router({
 
             return classifications.map((c, index) => ({ ...c, categoriesNumber: c.categories.length, index: index + 1 }));
         }),
+    classification: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                classificationId: z.number({ required_error: "classificationId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, classificationId } = input;
+            const classification = await ctx.db.classification.findUniqueOrThrow({ where: { raceId, id: classificationId } });
+
+            return classification;
+        }),
     categories: protectedProcedure
         .input(
             z.object({

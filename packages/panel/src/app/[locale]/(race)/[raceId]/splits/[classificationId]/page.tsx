@@ -8,11 +8,16 @@ export default async function ({ params: { classificationId, raceId } }: { param
     const timingPoints = await trpcRSC.timingPoint.timingPoints.query({ raceId: Number(raceId) });
     const splits = await trpcRSC.split.splits.query({ raceId: Number(raceId), classificationId: Number(classificationId) });
     const splitsOrder = await trpcRSC.split.splitsOrder.query({ raceId: Number(raceId), classificationId: Number(classificationId) });
+    const classification = await trpcRSC.classification.classification.query({
+        raceId: Number(raceId),
+        classificationId: Number(classificationId),
+    });
 
     return (
         <SplitsList
             raceId={Number(raceId)}
             classificationId={Number(classificationId)}
+            classificationName={classification.name}
             splitsOrder={splitsOrder}
             splits={splits}
             timingPoints={timingPoints}

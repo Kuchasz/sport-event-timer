@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
+import { splitSchema } from "../../modules/split/model";
+import { arraysMatches } from "@set/utils/dist/array";
+import { splitErrors } from "../../modules/split/errors";
 
 export const splitRouter = router({
     splits: protectedProcedure
@@ -17,10 +20,21 @@ export const splitRouter = router({
 
             return splits;
         }),
-    updateOrder: protectedProcedure
-        .input(z.object({ raceId: z.number(), classificationId: z.number(), order: z.array(z.number()) }))
+    updateSplits: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number(),
+                classificationId: z.number(),
+                order: z.array(z.number()),
+                splits: z.array(splitSchema),
+            }),
+        )
         .mutation(async ({ input, ctx }) => {
-            const { raceId, order, classificationId } = input;
+            const { raceId, order, classificationId, splits } = input;
+
+            const splitIds = splits.map(s => s.id);
+
+            if (!arraysMatches(splitIds, order)) throw splitErrors.ORDER_ARRAY_MUST_MATCH_SPLITS_DEFINITIONS;
 
             await ctx.db.splitOrder.update({ where: { raceId, classificationId }, data: { order: JSON.stringify(order) } });
         }),
