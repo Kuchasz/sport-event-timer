@@ -36,6 +36,14 @@ export const splitRouter = router({
 
             if (!arraysMatches(splitIds, order)) throw splitErrors.ORDER_ARRAY_MUST_MATCH_SPLITS_DEFINITIONS;
 
+            const splitsToUpdate = splits.filter(s => s.id > 0);
+            const splitsToCreate = splits.filter(s => s.id < 0);
+
+            const existingSplits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
+
+            const updates = splitsToUpdate.map(s => ctx.db.split.update({ where: { id: s.id }, data: s }));
+            const creates = splitsToCreate.map(s => ctx.db.split.create({ data: { ...s, raceId, classificationId } }));
+
             await ctx.db.splitOrder.update({ where: { raceId, classificationId }, data: { order: JSON.stringify(order) } });
         }),
     splitsOrder: protectedProcedure
