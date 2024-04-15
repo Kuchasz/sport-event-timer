@@ -19,9 +19,17 @@ export const classificationRouter = router({
         )
         .query(async ({ input, ctx }) => {
             const raceId = input.raceId;
-            const classifications = await ctx.db.classification.findMany({ where: { raceId }, include: { categories: true } });
+            const classifications = await ctx.db.classification.findMany({
+                where: { raceId },
+                include: { categories: true, splits: true },
+            });
 
-            return classifications.map((c, index) => ({ ...c, categoriesNumber: c.categories.length, index: index + 1 }));
+            return classifications.map((c, index) => ({
+                ...c,
+                categoriesNumber: c.categories.length,
+                splitsNumber: c.splits.length,
+                index: index + 1,
+            }));
         }),
     classification: protectedProcedure
         .input(
@@ -102,9 +110,17 @@ export const classificationRouter = router({
     }),
     add: protectedProcedure.input(classificationSchema).mutation(async ({ input, ctx }) => {
         const { id: _id, ...data } = input;
-        return await ctx.db.classification.create({
+        const newClassification = await ctx.db.classification.create({
             data: {
                 ...data,
+            },
+        });
+
+        await ctx.db.splitOrder.create({
+            data: {
+                raceId: input.raceId,
+                classificationId: newClassification.id,
+                order: JSON.stringify([]),
             },
         });
     }),
@@ -116,6 +132,7 @@ export const classificationRouter = router({
         if (playersCount) throw classificationErrorKeys.PLAYERS_ASSIGNED_TO_CLASSIFICATION;
 
         await ctx.db.category.deleteMany({ where: { classificationId: input.classificationId } });
+        await ctx.db.splitOrder.delete({ where: { classificationId: input.classificationId } });
 
         return await ctx.db.classification.delete({ where: { id: input.classificationId } });
     }),

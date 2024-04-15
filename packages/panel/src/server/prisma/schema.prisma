@@ -75,14 +75,14 @@ model Stopwatch {
 }
 
 model Classification {
-    id         Int          @id @default(autoincrement())
-    name       String
-    race       Race         @relation(fields: [raceId], references: [id])
-    raceId     Int
-    players    Player[]
-    categories Category[]
-    SplitOrder SplitOrder[]
-    Split      Split[]
+    id          Int          @id @default(autoincrement())
+    name        String
+    race        Race         @relation(fields: [raceId], references: [id])
+    raceId      Int
+    players     Player[]
+    categories  Category[]
+    splitOrders SplitOrder[]
+    splits      Split[]
 
     @@unique([raceId, name])
 }
