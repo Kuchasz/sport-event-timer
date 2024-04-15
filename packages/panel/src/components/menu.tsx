@@ -40,7 +40,7 @@ export const MenuButton = (n: {
                 },
             )}>
             <Icon className={classNames("transition-opacity", { ["opacity-50"]: !n.isActive })} size={0.8} path={n.icon}></Icon>
-            <span className="ml-2.5">{n.text}</span>
+            <span className="ml-2.5 grow">{n.text}</span>
             {n.badgeCount != null && (
                 <span className="text-2xs ml-2 rounded-full bg-blue-500 px-1.5 py-0.5 text-center text-white">{n.badgeCount}</span>
             )}

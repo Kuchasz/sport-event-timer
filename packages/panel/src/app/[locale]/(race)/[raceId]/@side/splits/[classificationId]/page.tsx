@@ -11,7 +11,7 @@ export default async ({ params: { raceId, classificationId } }: { params: { race
             {classifications.map(c => (
                 <Link
                     className={classNames(
-                        "my-1 rounded-md px-3 py-2 font-medium",
+                        "my-0.5 rounded-md px-3 py-2 font-medium",
                         c.id === Number(classificationId) ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100",
                     )}
                     href={`/${raceId}/splits/${c.id}`}

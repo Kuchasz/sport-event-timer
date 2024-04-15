@@ -35,13 +35,15 @@ const SplitButton = ({ onClick, icon }: { onClick: () => void; icon: string }) =
 };
 
 const SplitRow = ({
-    s,
+    split,
+    onSplitChange,
     timingPoints,
     moveMode,
     onEnableMoveMode,
     onDeleteSplit,
 }: {
-    s: Split;
+    split: Split;
+    onSplitChange: (split: Split) => void;
     timingPoints: TimingPoint[];
     moveMode: number;
     onEnableMoveMode: (id: number) => void;
@@ -51,19 +53,19 @@ const SplitRow = ({
         <div
             className={classNames(
                 "col-span-5 grid grid-cols-subgrid transition-opacity",
-                moveMode && moveMode !== s.id && "pointer-events-none opacity-25",
+                moveMode && moveMode !== split.id && "pointer-events-none opacity-25",
             )}>
-            <SplitButton onClick={() => onEnableMoveMode(s.id)} icon={mdiDrag} />
-            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
+            <SplitButton onClick={() => onEnableMoveMode(split.id)} icon={mdiDrag} />
+            <PoorInput value={split.name} onChange={e => onSplitChange({ ...split, name: e.target.value })}></PoorInput>
             <PoorSelect
-                initialValue={s.timingPointId}
+                initialValue={split.timingPointId}
                 items={timingPoints}
                 placeholder="choose timing point"
                 nameKey="name"
                 valueKey="id"
-                onChange={() => {}}></PoorSelect>
-            <PoorInput value={s.name} onChange={() => {}}></PoorInput>
-            <SplitButton onClick={() => onDeleteSplit(s.id)} icon={mdiTrashCanOutline} />
+                onChange={e => onSplitChange({ ...split, timingPointId: e.target.value })}></PoorSelect>
+            <PoorInput value={split.name} onChange={e => onSplitChange({ ...split, name: e.target.value })}></PoorInput>
+            <SplitButton onClick={() => onDeleteSplit(split.id)} icon={mdiTrashCanOutline} />
         </div>
     );
 };
@@ -129,6 +131,13 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
         setNewSplitsOrder(newOrder);
     };
 
+    const handleSplitChange = (split: Split) => {
+        const index = newSplits.findIndex(s => s.id === split.id);
+        const newSplitsCopy = [...newSplits];
+        newSplitsCopy[index] = split;
+        setNewSplits(newSplitsCopy);
+    };
+
     return (
         <FormCard title={classificationName}>
             <div className="">
@@ -142,7 +151,8 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
                         <React.Fragment key={s.id}>
                             <DropTarget onDrop={() => moveSplitToIndex(index, moveMode)} moveMode={moveMode} />
                             <SplitRow
-                                s={s}
+                                split={s}
+                                onSplitChange={handleSplitChange}
                                 timingPoints={timingPoints}
                                 moveMode={moveMode}
                                 onEnableMoveMode={handleMoveMode}

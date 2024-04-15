@@ -10,7 +10,7 @@ export default async ({ params: { raceId } }: { params: { raceId: string } }) =>
             <SectionHeader title="Classifications"></SectionHeader>
             {classifications.map(c => (
                 <Link
-                    className={classNames("my-1 rounded-md px-3 py-2 font-medium hover:bg-gray-100")}
+                    className={classNames("my-0.5 rounded-md px-3 py-2 font-medium hover:bg-gray-100")}
                     href={`/${raceId}/splits/${c.id}`}
                     key={c.id}>
                     {c.name}
