@@ -36,15 +36,37 @@ export const splitRouter = router({
 
             if (!arraysMatches(splitIds, order)) throw splitErrors.ORDER_ARRAY_MUST_MATCH_SPLITS_DEFINITIONS;
 
-            const splitsToUpdate = splits.filter(s => s.id > 0);
-            const splitsToCreate = splits.filter(s => s.id < 0);
-
             const existingSplits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
 
-            const updates = splitsToUpdate.map(s => ctx.db.split.update({ where: { id: s.id }, data: s }));
-            const creates = splitsToCreate.map(s => ctx.db.split.create({ data: { ...s, raceId, classificationId } }));
+            const splits_actual = new Set(splits.map(s => s.id));
+            const splits_existing = new Set(existingSplits.map(s => s.id));
 
-            await ctx.db.splitOrder.update({ where: { raceId, classificationId }, data: { order: JSON.stringify(order) } });
+            const splits_toCreate = new Set([...splits_actual].filter(e => !splits_existing.has(e)));
+            const splits_toUpdate = new Set([...splits_existing].filter(x => splits_actual.has(x)));
+            const splits_toDelete = new Set([...splits_existing].filter(e => !splits_actual.has(e)));
+
+            const newSplits = await ctx.db.$transaction(
+                [...splits_toCreate].map(newSplitId =>
+                    ctx.db.split.create({ data: { ...splits.find(s => s.id === newSplitId)!, id: undefined } }),
+                ),
+            );
+
+            await ctx.db.$transaction([...splits_toDelete].map(id => ctx.db.split.delete({ where: { id, raceId, classificationId } })));
+            await ctx.db.$transaction(
+                [...splits_toUpdate].map(id =>
+                    ctx.db.split.update({ where: { id, raceId, classificationId }, data: splits.find(s => s.id === id)! }),
+                ),
+            );
+
+            const newSplitsMap = new Map([...splits_toCreate].map((id, index) => [id, newSplits[index].id]));
+
+            const newOrder = order.map(id => (newSplitsMap.has(id) ? newSplitsMap.get(id) : id));
+
+            await ctx.db.splitOrder.upsert({
+                where: { raceId, classificationId },
+                create: { raceId, classificationId, order: JSON.stringify(newOrder) },
+                update: { order: JSON.stringify(newOrder) },
+            });
         }),
     splitsOrder: protectedProcedure
         .input(

@@ -10,6 +10,7 @@ import { PoorInput } from "src/components/poor-input";
 import { PoorSelect } from "src/components/poor-select";
 import { FormCard, Label } from "src/form";
 import type { AppRouterOutputs } from "src/trpc";
+import { trpc } from "src/trpc-core";
 
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type Split = AppRouterOutputs["split"]["splits"][0];
@@ -80,6 +81,7 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
     const [newSplits, setNewSplits] = useState<Split[]>(splits);
     const [newSplitsOrder, setNewSplitsOrder] = useState<number[]>(splitsOrder);
     const [moveMode, setMoveMode] = useState<number>(0);
+    const updateSplitsMutation = trpc.split.updateSplits.useMutation();
 
     const t = useTranslations();
 
@@ -99,6 +101,10 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
             },
         ]);
         setNewSplitsOrder([...newSplitsOrder, id]);
+    };
+
+    const handleSaveChanges = async () => {
+        await updateSplitsMutation.mutateAsync({ classificationId, raceId, splits: newSplits, order: newSplitsOrder });
     };
 
     const handleMoveMode = (id: number) => {
@@ -152,7 +158,7 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
                 </div>
                 <div className="mt-4 flex">
                     <Button outline>{t("shared.cancel")}</Button>
-                    <Button className="ml-2" type="submit">
+                    <Button onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
                         {t("shared.save")}
                     </Button>
                 </div>
