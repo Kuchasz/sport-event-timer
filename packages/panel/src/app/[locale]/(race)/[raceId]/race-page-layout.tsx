@@ -12,11 +12,10 @@ import { Task } from "@set/utils/dist/task";
 type Props = {
     raceId: string;
     breadcrumbs: React.ReactNode;
-    side: React.ReactNode;
     children: React.ReactNode;
 };
 
-export const RacePageLayout = async ({ raceId, breadcrumbs, side, children }: Props) => {
+export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) => {
     const race = await Task.tryCatch(trpcRSC.race.race.query({ raceId: Number(raceId) }));
 
     if (race.type !== "success") notFound();
@@ -43,10 +42,8 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, side, children }: Pr
                         <main className="flex h-full grow flex-col overflow-y-auto">
                             <Status breadcrumbs={breadcrumbs} />
                             <div className="flex flex-grow bg-gray-50">
-                                {side}
                                 <div className="flex-grow overflow-y-scroll px-12 py-12">{children}</div>
                             </div>
-
                             <Toaster />
                         </main>
                     </div>

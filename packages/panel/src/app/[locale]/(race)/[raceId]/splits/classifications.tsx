@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SectionHeader } from "src/components/page-headers";
 import { trpcRSC } from "src/trpc-core-rsc";
 
-export default async ({ params: { raceId, classificationId } }: { params: { raceId: string; classificationId?: string } }) => {
+export const Classifications = async ({ raceId, classificationId }: { raceId: string; classificationId?: string }) => {
     const classifications = await trpcRSC.classification.classifications.query({ raceId: Number(raceId) });
     return (
         <div className="z-10 flex w-80 shrink-0 flex-col p-8 text-sm">

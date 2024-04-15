@@ -1,6 +1,8 @@
 import { authenticate } from "src/auth";
 import { SplitsList } from "./splits-list";
 import { trpcRSC } from "src/trpc-core-rsc";
+import { PageWithSide } from "src/components/pages";
+import { Classifications } from "../classifications";
 
 export default async function ({ params: { classificationId, raceId } }: { params: { raceId: string; classificationId?: string } }) {
     await authenticate();
@@ -14,13 +16,17 @@ export default async function ({ params: { classificationId, raceId } }: { param
     });
 
     return (
-        <SplitsList
-            raceId={Number(raceId)}
-            classificationId={Number(classificationId)}
-            classificationName={classification.name}
-            splitsOrder={splitsOrder}
-            splits={splits}
-            timingPoints={timingPoints}
-        />
+        <PageWithSide
+            side={<Classifications raceId={raceId} classificationId={classificationId} />}
+            content={
+                <SplitsList
+                    raceId={Number(raceId)}
+                    classificationId={Number(classificationId)}
+                    classificationName={classification.name}
+                    splitsOrder={splitsOrder}
+                    splits={splits}
+                    timingPoints={timingPoints}
+                />
+            }></PageWithSide>
     );
 }

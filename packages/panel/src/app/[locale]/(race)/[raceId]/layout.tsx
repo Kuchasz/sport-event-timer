@@ -12,7 +12,6 @@ import { TooltipProvider } from "src/components/tooltip";
 export default async function PanelLayout(props: {
     children: React.ReactNode;
     breadcrumbs: React.ReactNode;
-    side: React.ReactNode;
     params: { locale: string; raceId: string };
 }) {
     await authenticate();
@@ -40,7 +39,7 @@ export default async function PanelLayout(props: {
                     <TrpcProvider toastConfirmations={true} enableSubscriptions={false}>
                         <SessionProvider session={session!}>
                             <TooltipProvider>
-                                <RacePageLayout raceId={props.params.raceId} breadcrumbs={props.breadcrumbs} side={props.side}>
+                                <RacePageLayout raceId={props.params.raceId} breadcrumbs={props.breadcrumbs}>
                                     {props.children}
                                 </RacePageLayout>
                             </TooltipProvider>
