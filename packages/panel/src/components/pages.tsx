@@ -2,7 +2,7 @@ export const SidePage = ({ side, content }: { side: React.ReactNode; content: Re
     return (
         <div className="flex flex-grow bg-gray-50">
             {side}
-            <div className="flex-grow overflow-y-scroll pr-12 pt-12">{content}</div>
+            <div className="flex-grow overflow-y-scroll p-12">{content}</div>
         </div>
     );
 };

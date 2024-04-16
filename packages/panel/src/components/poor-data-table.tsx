@@ -21,6 +21,7 @@ export type PoorDataTableColumn<T> = {
         sortable?: T[TField] extends Date ? false : boolean;
         cellRenderer?: React.FC<T>;
         hide?: boolean;
+        allowShrink?: boolean;
     };
 }[keyof T];
 
@@ -48,6 +49,37 @@ interface KeysResult<T> extends ReadonlyArray<Result> {
     readonly score: number;
     readonly obj: T;
 }
+
+export const PoorDataTableHeader = ({ headerName }: { headerName: string }) => (
+    <div className="m-2 flex cursor-default select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
+        <span>{headerName}</span>
+    </div>
+);
+
+export const PoorDataTableSortableHeader = <T,>({
+    c,
+    sortColumn,
+    handleSortClick,
+}: {
+    c: PoorDataTableColumn<T>;
+    sortColumn: SortState<T> | null;
+    handleSortClick: (c: PoorDataTableColumn<T>, sortColumn: SortState<T> | null) => void;
+}) => (
+    <div
+        onClick={() => handleSortClick(c, sortColumn)}
+        className="m-2 flex cursor-pointer select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors hover:bg-gray-100">
+        <span className="mr-2">{c.headerName}</span>
+        {c.field === sortColumn?.field ? (
+            sortColumn.order === "asc" ? (
+                <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
+            ) : (
+                <Icon className="text-gray-600" size={0.6} path={mdiArrowDown} />
+            )
+        ) : (
+            <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />
+        )}
+    </div>
+);
 
 export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const { gridName, data, columns, getRowId, getRowStyle, onRowDoubleClicked, searchFields, searchPlaceholder } = props;
@@ -96,6 +128,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const isFirstPage = currentPage + 1 <= 1;
     const isLastPage = currentPage + 1 >= numberOfPages;
 
+    const gridTemplateColumns = visibleColumns.map(c => (c.allowShrink ? "auto" : `minmax(auto, 1fr)`)).join(" ");
+
     function handleSortClick(c: PoorDataTableColumn<T>, sortColumn: SortState<T> | null): void {
         if (sortColumn?.field === c.field)
             if (sortColumn.order === "asc") sortOverColumn({ order: "desc", field: c.field });
@@ -137,31 +171,16 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                 <div
                     className="relative grid bg-white"
                     style={{
-                        gridTemplateColumns: `repeat(${visibleColumns.length}, minmax(auto, 1fr))`,
+                        gridTemplateColumns,
                         gridAutoRows: "auto",
                     }}>
                     <div className="contents text-xs font-bold">
                         {visibleColumns.map(c => (
                             <div className="sticky top-0 z-[9] flex border-b bg-white" key={c.headerName}>
                                 {c.sortable ? (
-                                    <div
-                                        onClick={() => handleSortClick(c, sortColumn)}
-                                        className="m-2 flex cursor-pointer select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors hover:bg-gray-100">
-                                        <span className="mr-2">{c.headerName}</span>
-                                        {c.field === sortColumn?.field ? (
-                                            sortColumn.order === "asc" ? (
-                                                <Icon className="text-gray-600" size={0.6} path={mdiArrowUp} />
-                                            ) : (
-                                                <Icon className="text-gray-600" size={0.6} path={mdiArrowDown} />
-                                            )
-                                        ) : (
-                                            <Icon className="text-gray-400" size={0.6} path={mdiUnfoldMoreHorizontal} />
-                                        )}
-                                    </div>
+                                    <PoorDataTableSortableHeader c={c} sortColumn={sortColumn} handleSortClick={handleSortClick} />
                                 ) : (
-                                    <div className="m-2 flex cursor-default select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
-                                        <span>{c.headerName}</span>
-                                    </div>
+                                    <PoorDataTableHeader headerName={c.headerName} />
                                 )}
                             </div>
                         ))}

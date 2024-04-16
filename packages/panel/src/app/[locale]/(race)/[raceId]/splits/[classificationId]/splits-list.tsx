@@ -6,9 +6,11 @@ import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { Button } from "src/components/button";
+import { SectionHeader } from "src/components/page-headers";
+import { PoorDataTable, PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorInput } from "src/components/poor-input";
 import { PoorSelect } from "src/components/poor-select";
-import { FormCard, Label } from "src/form";
+import { Label } from "src/form";
 import type { AppRouterOutputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
 
@@ -138,41 +140,70 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
         setNewSplits(newSplitsCopy);
     };
 
+    const cols: PoorDataTableColumn<Split>[] = [
+        { field: "name", headerName: "Name", sortable: false },
+        {
+            field: "timingPointId",
+            headerName: "TimingPoint",
+            sortable: false,
+        },
+        {
+            field: "name",
+            headerName: "Distance",
+            sortable: false,
+        },
+        {
+            field: "name",
+            allowShrink: true,
+            headerName: "",
+            sortable: false,
+            cellRenderer: () => <SplitButton onClick={() => {}} icon={mdiTrashCanOutline} />,
+        },
+    ];
+
     return (
-        <FormCard title={classificationName}>
-            <div className="">
-                <div className="mt-4 grid gap-2" style={{ gridTemplateColumns: "min-content 1fr 1fr 1fr min-content" }}>
-                    <div></div>
-                    <Label>Name</Label>
-                    <Label>Timing Point</Label>
-                    <Label>Distance</Label>
-                    <Label></Label>
-                    {splitsInOrder.map((s, index) => (
-                        <React.Fragment key={s.id}>
-                            <DropTarget onDrop={() => moveSplitToIndex(index, moveMode)} moveMode={moveMode} />
-                            <SplitRow
-                                split={s}
-                                onSplitChange={handleSplitChange}
-                                timingPoints={timingPoints}
-                                moveMode={moveMode}
-                                onEnableMoveMode={handleMoveMode}
-                                onDeleteSplit={handleDeleteSplit}
-                            />
-                            {index === splitsInOrder.length - 1 && (
-                                <DropTarget onDrop={() => moveSplitToIndex(index + 1, moveMode)} moveMode={moveMode} />
-                            )}
-                        </React.Fragment>
-                    ))}
-                    <div className="col-span-4 flex items-center justify-end"></div>
-                    <SplitButton icon={mdiPlus} onClick={addSplit} />
-                </div>
-                <div className="mt-4 flex">
-                    <Button outline>{t("shared.cancel")}</Button>
-                    <Button onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
-                        {t("shared.save")}
-                    </Button>
-                </div>
+        <div>
+            <SectionHeader title={classificationName} />
+
+            <PoorDataTable<Split>
+                hideColumnsChooser
+                hidePaging
+                gridName="time-penalties"
+                columns={cols}
+                data={splitsInOrder ?? []}
+                getRowId={p => p.id}></PoorDataTable>
+
+            <div className="mt-4 grid gap-2" style={{ gridTemplateColumns: "min-content 1fr 1fr 1fr min-content" }}>
+                <div></div>
+                <Label>Name</Label>
+                <Label>Timing Point</Label>
+                <Label>Distance</Label>
+                <Label></Label>
+                {splitsInOrder.map((s, index) => (
+                    <React.Fragment key={s.id}>
+                        <DropTarget onDrop={() => moveSplitToIndex(index, moveMode)} moveMode={moveMode} />
+                        <SplitRow
+                            split={s}
+                            onSplitChange={handleSplitChange}
+                            timingPoints={timingPoints}
+                            moveMode={moveMode}
+                            onEnableMoveMode={handleMoveMode}
+                            onDeleteSplit={handleDeleteSplit}
+                        />
+                        {index === splitsInOrder.length - 1 && (
+                            <DropTarget onDrop={() => moveSplitToIndex(index + 1, moveMode)} moveMode={moveMode} />
+                        )}
+                    </React.Fragment>
+                ))}
+                <div className="col-span-4 flex items-center justify-end"></div>
+                <SplitButton icon={mdiPlus} onClick={addSplit} />
             </div>
-        </FormCard>
+            <div className="mt-4 flex">
+                <Button outline>{t("shared.cancel")}</Button>
+                <Button onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
+                    {t("shared.save")}
+                </Button>
+            </div>
+        </div>
     );
 };
