@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Head from "next/head";
 import { authenticate } from "src/auth";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
-import { PageWithSide } from "src/components/pages";
+import { SidePage } from "src/components/pages";
 import { Classifications } from "./classifications";
 
 const SplitsGreeting = async () => {
@@ -30,7 +30,7 @@ export default async function ({ params: { raceId } }: { params: { raceId: strin
             <Head>
                 <title>{t("pages.timingPoints.header.title")}</title>
             </Head>
-            <PageWithSide side={<Classifications raceId={raceId} />} content={<SplitsGreeting />}></PageWithSide>
+            <SidePage side={<Classifications raceId={raceId} />} content={<SplitsGreeting />}></SidePage>
         </>
     );
 }

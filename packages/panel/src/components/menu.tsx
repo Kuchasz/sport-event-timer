@@ -17,7 +17,7 @@ type MenuGroup = {
 };
 
 export const MenuHeader = (n: { text: string }) => (
-    <div className={classNames("flex items-center px-6 py-2 text-sm font-semibold")}>{n.text}</div>
+    <div className={classNames("flex items-center px-6 pt-2 text-xs font-semibold uppercase opacity-50")}>{n.text}</div>
 );
 
 export const MenuButton = (n: {

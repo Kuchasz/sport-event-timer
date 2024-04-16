@@ -1,7 +1,7 @@
 import { authenticate } from "src/auth";
 import { SplitsList } from "./splits-list";
 import { trpcRSC } from "src/trpc-core-rsc";
-import { PageWithSide } from "src/components/pages";
+import { SidePage } from "src/components/pages";
 import { Classifications } from "../classifications";
 
 export default async function ({ params: { classificationId, raceId } }: { params: { raceId: string; classificationId?: string } }) {
@@ -16,7 +16,7 @@ export default async function ({ params: { classificationId, raceId } }: { param
     });
 
     return (
-        <PageWithSide
+        <SidePage
             side={<Classifications raceId={raceId} classificationId={classificationId} />}
             content={
                 <SplitsList
@@ -27,6 +27,6 @@ export default async function ({ params: { classificationId, raceId } }: { param
                     splits={splits}
                     timingPoints={timingPoints}
                 />
-            }></PageWithSide>
+            }></SidePage>
     );
 }

@@ -1,8 +1,16 @@
-export const PageWithSide = ({ side, content }: { side: React.ReactNode; content: React.ReactNode }) => {
+export const SidePage = ({ side, content }: { side: React.ReactNode; content: React.ReactNode }) => {
     return (
-        <div className="flex h-full w-full will-change-transform">
+        <div className="flex flex-grow bg-gray-50">
             {side}
-            <main className="flex h-full grow flex-col overflow-y-auto">{content}</main>
+            <div className="flex-grow overflow-y-scroll pr-12 pt-12">{content}</div>
+        </div>
+    );
+};
+
+export const StandardPage = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <div className="flex flex-grow bg-gray-50">
+            <div className="flex-grow overflow-y-scroll p-12">{children}</div>
         </div>
     );
 };

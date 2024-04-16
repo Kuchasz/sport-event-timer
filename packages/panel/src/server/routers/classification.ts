@@ -99,8 +99,6 @@ export const classificationRouter = router({
         const { id, ...data } = input;
         const { raceId: _raceId, ...classification } = data;
 
-        // const categories = subCategories.map(c => ({ where: { id: c.id ?? 0 }, create: c, update: c }));
-
         return await ctx.db.classification.update({
             where: { id: id! },
             data: {
@@ -132,6 +130,8 @@ export const classificationRouter = router({
         if (playersCount) throw classificationErrorKeys.PLAYERS_ASSIGNED_TO_CLASSIFICATION;
 
         await ctx.db.category.deleteMany({ where: { classificationId: input.classificationId } });
+
+        await ctx.db.split.deleteMany({ where: { classificationId: input.classificationId } });
         await ctx.db.splitOrder.delete({ where: { classificationId: input.classificationId } });
 
         return await ctx.db.classification.delete({ where: { id: input.classificationId } });
