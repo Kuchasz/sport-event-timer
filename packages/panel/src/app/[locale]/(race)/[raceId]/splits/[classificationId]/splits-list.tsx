@@ -162,7 +162,11 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
     return (
         <div>
             <SectionHeader title={classificationName} />
-            <div className="my-8 border">
+            <Button onClick={addSplit} outline>
+                <Icon size={0.8} path={mdiPlus} />
+                <span className="ml-2">Add split</span>
+            </Button>
+            <div className="my-4 border">
                 <table className="min-w-full bg-white">
                     <thead className="text-left text-xs">
                         <tr className="border-b">
@@ -174,16 +178,6 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colSpan={5} className="table-cell justify-end pb-2 pt-4">
-                                <div className="flex w-full items-center justify-end">
-                                    <div onClick={addSplit} className="flex cursor-pointer items-center justify-end pr-3 hover:underline">
-                                        <Icon path={mdiPlus} size={0.8}></Icon>
-                                        <span className="ml-1 text-sm">Add split</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
                         {splitsInOrder.map(s => (
                             <TableSplitRow
                                 key={s.id}
