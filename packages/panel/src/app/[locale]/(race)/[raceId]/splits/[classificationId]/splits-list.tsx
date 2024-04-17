@@ -18,7 +18,7 @@ type Split = AppRouterOutputs["split"]["splits"][0];
 const SplitButton = ({ className, onClick, icon }: { className?: string; onClick: () => void; icon: string }) => {
     return (
         <div
-            className={classNames("flex cursor-pointer items-center self-center rounded-full p-2 hover:bg-gray-100", className)}
+            className={classNames("inline-flex cursor-pointer items-center self-center rounded-full p-2 hover:bg-gray-100", className)}
             onClick={onClick}>
             <Icon size={0.8} path={icon} />
         </div>
@@ -50,17 +50,25 @@ const TableSplitRow = ({
         //     )}>
         <tr className={classNames("border-b")}>
             {/* <div className="absolute top-0 flex h-full items-center bg-red-500">awdawdaadawdadwadwadwawd</div> */}
-            <td className="relative p-2">
+            <td className="relative w-auto pl-2">
                 {moveMode && moveMode !== split.id ? (
                     <SplitButton onClick={() => onTriggerMove(split.id)} icon={mdiArrowRight} />
                 ) : (
                     <SplitButton onClick={() => onEnableMoveMode(split.id)} icon={mdiDrag} />
                 )}
             </td>
-            <td className={classNames("p-2 transition-opacity", moveMode && moveMode !== split.id && "pointer-events-none opacity-15")}>
+            <td
+                className={classNames(
+                    "w-1/3 p-2 transition-opacity",
+                    moveMode && moveMode !== split.id && "pointer-events-none opacity-15",
+                )}>
                 <PoorInput value={split.name} onChange={e => onSplitChange({ ...split, name: e.target.value })}></PoorInput>
             </td>
-            <td className={classNames("p-2 transition-opacity", moveMode && moveMode !== split.id && "pointer-events-none opacity-15")}>
+            <td
+                className={classNames(
+                    "w-1/3 p-2 transition-opacity",
+                    moveMode && moveMode !== split.id && "pointer-events-none opacity-15",
+                )}>
                 <PoorSelect
                     initialValue={split.timingPointId}
                     items={timingPoints}
@@ -69,10 +77,18 @@ const TableSplitRow = ({
                     valueKey="id"
                     onChange={e => onSplitChange({ ...split, timingPointId: e.target.value })}></PoorSelect>
             </td>
-            <td className={classNames("p-2 transition-opacity", moveMode && moveMode !== split.id && "pointer-events-none opacity-15")}>
+            <td
+                className={classNames(
+                    "w-1/3 p-2 transition-opacity",
+                    moveMode && moveMode !== split.id && "pointer-events-none opacity-15",
+                )}>
                 <PoorInput value={split.name} onChange={e => onSplitChange({ ...split, name: e.target.value })}></PoorInput>
             </td>
-            <td className={classNames("p-2 transition-opacity", moveMode && moveMode !== split.id && "pointer-events-none opacity-15")}>
+            <td
+                className={classNames(
+                    "w-auto pr-2 transition-opacity",
+                    moveMode && moveMode !== split.id && "pointer-events-none opacity-15",
+                )}>
                 <SplitButton onClick={() => onDeleteSplit(split.id)} icon={mdiTrashCanOutline} />
             </td>
         </tr>
@@ -90,7 +106,7 @@ type SplitsProps = {
 };
 
 const PoorTableHeader = ({ children }: { children: React.ReactNode }) => (
-    <th className="m-2 select-none whitespace-nowrap rounded-md bg-white px-2 py-3">{children}</th>
+    <th className="m-2 select-none whitespace-nowrap bg-white px-2 py-3">{children}</th>
 );
 
 export const SplitsList = ({ timingPoints, classificationId, classificationName, raceId, splits, splitsOrder }: SplitsProps) => {
@@ -170,7 +186,7 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
                 <table className="min-w-full bg-white">
                     <thead className="text-left text-xs">
                         <tr className="border-b">
-                            <PoorTableHeader> </PoorTableHeader>
+                            <th className="m-2 w-auto select-none whitespace-nowrap bg-white px-2 py-3"></th>
                             <PoorTableHeader>Name</PoorTableHeader>
                             <PoorTableHeader>Timing Point</PoorTableHeader>
                             <PoorTableHeader>Distance</PoorTableHeader>
