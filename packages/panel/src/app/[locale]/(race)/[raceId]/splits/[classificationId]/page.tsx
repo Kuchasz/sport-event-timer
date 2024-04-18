@@ -10,6 +10,7 @@ export default async function ({ params: { classificationId, raceId } }: { param
     const timingPoints = await trpcRSC.timingPoint.timingPoints.query({ raceId: Number(raceId) });
     const splits = await trpcRSC.split.splits.query({ raceId: Number(raceId), classificationId: Number(classificationId) });
     const splitsOrder = await trpcRSC.split.splitsOrder.query({ raceId: Number(raceId), classificationId: Number(classificationId) });
+    const classifications = await trpcRSC.classification.classifications.query({ raceId: Number(raceId) });
     const classification = await trpcRSC.classification.classification.query({
         raceId: Number(raceId),
         classificationId: Number(classificationId),
@@ -17,7 +18,7 @@ export default async function ({ params: { classificationId, raceId } }: { param
 
     return (
         <SidePage
-            side={<Classifications raceId={raceId} classificationId={classificationId} />}
+            side={<Classifications raceId={raceId} classificationId={classificationId} classifications={classifications} />}
             content={
                 <SplitsList
                     raceId={Number(raceId)}

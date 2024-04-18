@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { SectionHeader } from "src/components/page-headers";
-import { trpcRSC } from "src/trpc-core-rsc";
+import { SectionHeaderTitle } from "src/components/page-headers";
+import { type AppRouterOutputs } from "src/trpc";
+
+type Classifications = AppRouterOutputs["classification"]["classifications"];
 
 const getAbbreviation = (name: string) => {
     return name
@@ -11,12 +13,19 @@ const getAbbreviation = (name: string) => {
         .join("");
 };
 
-export const Classifications = async ({ raceId, classificationId }: { raceId: string; classificationId?: string }) => {
-    const classifications = await trpcRSC.classification.classifications.query({ raceId: Number(raceId) });
+export const Classifications = ({
+    raceId,
+    classificationId,
+    classifications,
+}: {
+    raceId: string;
+    classificationId?: string;
+    classifications: Classifications;
+}) => {
     return (
         <div className="flex w-64 shrink-0 flex-col border-r bg-white text-sm">
             <div className="pl-4 pt-4">
-                <SectionHeader title="Classifications"></SectionHeader>
+                <SectionHeaderTitle title="Classifications" />
             </div>
             {classifications.map(c => (
                 <Link
@@ -29,7 +38,7 @@ export const Classifications = async ({ raceId, classificationId }: { raceId: st
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-50 font-bold">
                         {getAbbreviation(c.name)}
                     </div>
-                    <div className="ml-2 w-full min-w-0">
+                    <div className="ml-4 w-full min-w-0">
                         <div className="truncate font-medium">{c.name}</div>
                         <div className={classNames("mt-1 flex items-center text-xs", !c.splitsNumber ? "text-red-500" : "")}>
                             <div className={classNames("font-medium capitalize", c.splitsNumber && "opacity-60")}>

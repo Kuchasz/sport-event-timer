@@ -1422,7 +1422,8 @@
     },
     "splits": {
       "header": {
-        "title": "Splits"
+        "title": "Splits",
+        "description": "Splits define which timing points and in what order must be passed by the players of a given classification. You can add any number of splits, change their order and assign them to timing points. Several split times can be recorded at the same timing point."
       }
     }
   },

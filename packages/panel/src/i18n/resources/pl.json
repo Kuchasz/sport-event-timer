@@ -1422,7 +1422,8 @@
     },
     "splits": {
       "header": {
-        "title": "Międzyczasy"
+        "title": "Międzyczasy",
+        "description": "Międzyczasy definiują które punkty pomiarowe oraz w jakiej kolejności muszą zostać pokonane przez zawodników danej klasyfikacji. Możesz dodać dowolną ilość międzyczasów, zmieniać ich kolejność oraz przypisywać do punktów pomiarowych. Kilka międzyczasów może być rejestrowanych w tym samym punkcie pomiarowym."
       }
     }
   },
