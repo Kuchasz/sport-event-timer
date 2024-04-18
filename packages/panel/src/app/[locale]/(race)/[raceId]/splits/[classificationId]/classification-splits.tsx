@@ -194,6 +194,11 @@ export const SplitsList = ({
         onSplitsListUpdated();
     };
 
+    const handleRejectChanges = () => {
+        setNewSplits(splits);
+        setNewSplitsOrder(splitsOrder);
+    };
+
     const handleMoveMode = (id: number) => {
         if (moveMode === id) {
             setMoveMode(0);
@@ -266,7 +271,9 @@ export const SplitsList = ({
             </div>
 
             <div className="mt-4 flex">
-                <Button outline>{t("shared.cancel")}</Button>
+                <Button onClick={handleRejectChanges} outline>
+                    {t("shared.cancel")}
+                </Button>
                 <Button onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
                     {t("shared.save")}
                 </Button>
