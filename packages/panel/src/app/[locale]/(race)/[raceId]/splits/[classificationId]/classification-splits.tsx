@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiArrowRight, mdiDrag, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
+import { mdiArrowRight, mdiDrag, mdiMagnify, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
@@ -254,18 +254,29 @@ export const SplitsList = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {splitsInOrder.map(s => (
-                            <TableSplitRow
-                                key={s.id}
-                                split={s}
-                                onSplitChange={handleSplitChange}
-                                timingPoints={timingPoints}
-                                moveMode={moveMode}
-                                onTriggerMove={handleTriggerMove}
-                                onEnableMoveMode={handleMoveMode}
-                                onDeleteSplit={handleDeleteSplit}
-                            />
-                        ))}
+                        {splitsInOrder.length > 0 ? (
+                            splitsInOrder.map(s => (
+                                <TableSplitRow
+                                    key={s.id}
+                                    split={s}
+                                    onSplitChange={handleSplitChange}
+                                    timingPoints={timingPoints}
+                                    moveMode={moveMode}
+                                    onTriggerMove={handleTriggerMove}
+                                    onEnableMoveMode={handleMoveMode}
+                                    onDeleteSplit={handleDeleteSplit}
+                                />
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={5}>
+                                    <div className="flex items-center justify-center p-8 text-sm">
+                                        <Icon className="mx-2" path={mdiMagnify} size={1}></Icon>
+                                        <span>{t("shared.dataTable.noRowsToShow")}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
