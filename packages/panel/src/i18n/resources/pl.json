@@ -66,11 +66,11 @@
       "required": "Wymagane"
     },
     "timingPoint": {
-      "description": {
-        "length": "Opis nie może zawierać więcej niż 100 znaków"
-      },
       "abbrev": {
         "length": "Nazwa skrócona nie może zawierać więcej niż 3 znaki"
+      },
+      "description": {
+        "length": "Opis nie może zawierać więcej niż 100 znaków"
       }
     }
   },
@@ -104,9 +104,9 @@
     "timeMeasurement": {
       "penalties": "Kary",
       "results": "Wyniki",
+      "splits": "Międzyczasy",
       "splitTimes": "Zmierzone czasy",
       "timingPoints": "Punkty Pomiarowe",
-      "splits": "Międzyczasy",
       "title": "Pomiar czasu",
       "tools": "Narzędzia"
     }
@@ -386,6 +386,12 @@
       "results": {
         "description": "Wyniki wydarzenia zostały pomyślnie potwierdzone.",
         "title": "Wyniki Potwierdzone"
+      }
+    },
+    "split": {
+      "updateSplits": {
+        "description": "Międzyczasy zostały pomyślnie zaktualizowane.",
+        "title": "Międzyczasy zaktualizowane"
       }
     },
     "splitTime": {
@@ -1209,6 +1215,12 @@
         "title": "Ustawienia"
       }
     },
+    "splits": {
+      "header": {
+        "description": "Międzyczasy definiują które punkty pomiarowe oraz w jakiej kolejności muszą zostać pokonane przez zawodników danej klasyfikacji. Możesz dodać dowolną ilość międzyczasów, zmieniać ich kolejność oraz przypisywać do punktów pomiarowych. Kilka międzyczasów może być rejestrowanych w tym samym punkcie pomiarowym.",
+        "title": "Międzyczasy"
+      }
+    },
     "splitTimes": {
       "edit": {
         "title": "Edytuj czas pomiaru"
@@ -1334,6 +1346,11 @@
         "title": "Edytuj punkt pomiarowy"
       },
       "form": {
+        "abbrev": {
+          "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków.",
+          "label": "Nazwa skrócona",
+          "placeholder": "Wpisz nazwę skróconą"
+        },
         "description": {
           "description": "Opcjonalny opis punktu pomiarowego wyświetlany w kilku miejscach w aplikacji.",
           "label": "Opis",
@@ -1348,11 +1365,6 @@
           "description": "Nazwa punktu pomiarowego wyświetlana w stoperze, liście czasów i liście wyników, np. start, meta, punkt kontrolny.",
           "label": "Nazwa Punktu Pomiarowego",
           "placeholder": "Wpisz nazwę Punktu Pomiarowego"
-        },
-        "abbrev": {
-          "description": "Nazwa skrócona punktu pomiarowego, wykorzystywana w miejscach gdzie pełna nazwa nie może się zmieścić, najlepiej ograniczyć ją do 2-3 znaków.",
-          "label": "Nazwa skrócona",
-          "placeholder": "Wpisz nazwę skróconą"
         }
       },
       "header": {
@@ -1418,12 +1430,6 @@
       "header": {
         "description": "Narzedzia przydatne w trakcie trwania wyścigu.",
         "title": "Narzędzia"
-      }
-    },
-    "splits": {
-      "header": {
-        "title": "Międzyczasy",
-        "description": "Międzyczasy definiują które punkty pomiarowe oraz w jakiej kolejności muszą zostać pokonane przez zawodników danej klasyfikacji. Możesz dodać dowolną ilość międzyczasów, zmieniać ich kolejność oraz przypisywać do punktów pomiarowych. Kilka międzyczasów może być rejestrowanych w tym samym punkcie pomiarowym."
       }
     }
   },
@@ -2130,15 +2136,15 @@
         }
       }
     },
+    "split": {
+      "errors": {
+        "orderArrayMustMatchSplitsDefinitions": "Kolejność międzyczasów musi odpowiadać definicjom międzyczasów"
+      }
+    },
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Wyścig musi posiadać conajmniej dwa punkty pomiarowe (start i metę).",
         "deleteNotAllowedWhenUsedInSplits": "Nie można usunąć punktu pomiarowego, który jest używany w międzyczasach. Najpierw usuń międzyczasy, które korzystają z tego punktu pomiarowego."
-      }
-    },
-    "split": {
-      "errors": {
-        "orderArrayMustMatchSplitsDefinitions": "Kolejność międzyczasów musi odpowiadać definicjom międzyczasów"
       }
     }
   }

@@ -7,13 +7,65 @@ import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { Button } from "src/components/button";
 import { SectionHeader } from "src/components/page-headers";
+import { SidePage } from "src/components/pages";
 import { PoorInput } from "src/components/poor-input";
 import { PoorSelect } from "src/components/poor-select";
-import type { AppRouterOutputs } from "src/trpc";
+import { type AppRouterOutputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
+import { Classifications } from "../classifications";
 
+type Classification = AppRouterOutputs["classification"]["classification"];
+type ClassificationListItem = AppRouterOutputs["classification"]["classifications"][0];
 type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
 type Split = AppRouterOutputs["split"]["splits"][0];
+type SplitsOrder = AppRouterOutputs["split"]["splitsOrder"];
+
+export const ClassificationSplits = ({
+    classification,
+    raceId,
+    timingPoints,
+    initialSplitsOrder,
+    initialSplits,
+    initialClassifications,
+}: {
+    raceId: number;
+    classification: Classification;
+    timingPoints: TimingPoint[];
+    initialSplitsOrder: SplitsOrder;
+    initialSplits: Split[];
+    initialClassifications: ClassificationListItem[];
+}) => {
+    const { data: splits } = trpc.split.splits.useQuery(
+        { raceId: Number(raceId), classificationId: classification.id },
+        { initialData: initialSplits },
+    );
+    const { data: splitsOrder } = trpc.split.splitsOrder.useQuery(
+        { raceId: Number(raceId), classificationId: classification.id },
+        { initialData: initialSplitsOrder },
+    );
+    const { data: classifications, refetch } = trpc.classification.classifications.useQuery(
+        { raceId: Number(raceId) },
+        { initialData: initialClassifications },
+    );
+
+    return (
+        <SidePage
+            side={
+                <Classifications raceId={String(raceId)} classificationId={String(classification.id)} classifications={classifications} />
+            }
+            content={
+                <SplitsList
+                    onSplitsListUpdated={refetch}
+                    raceId={Number(raceId)}
+                    classificationId={classification.id}
+                    classificationName={classification.name}
+                    splitsOrder={splitsOrder}
+                    splits={splits}
+                    timingPoints={timingPoints}
+                />
+            }></SidePage>
+    );
+};
 
 const SplitButton = ({ className, onClick, icon }: { className?: string; onClick: () => void; icon: string }) => {
     return (
@@ -43,13 +95,7 @@ const TableSplitRow = ({
     onDeleteSplit: (id: number) => void;
 }) => {
     return (
-        // <div
-        //     className={classNames(
-        //         "col-span-5 grid grid-cols-subgrid transition-opacity",
-        //         moveMode && moveMode !== split.id && "pointer-events-none opacity-25",
-        //     )}>
         <tr className={classNames("border-b")}>
-            {/* <div className="absolute top-0 flex h-full items-center bg-red-500">awdawdaadawdadwadwadwawd</div> */}
             <td className="relative w-auto pl-2">
                 {moveMode && moveMode !== split.id ? (
                     <SplitButton onClick={() => onTriggerMove(split.id)} icon={mdiArrowRight} />
@@ -92,24 +138,32 @@ const TableSplitRow = ({
                 <SplitButton onClick={() => onDeleteSplit(split.id)} icon={mdiTrashCanOutline} />
             </td>
         </tr>
-        // </div>
     );
 };
 
-type SplitsProps = {
+type SplitsListProps = {
     classificationId: number;
     classificationName: string;
     timingPoints: TimingPoint[];
     raceId: number;
     splits: Split[];
     splitsOrder: number[];
+    onSplitsListUpdated: () => void;
 };
 
 const PoorTableHeader = ({ children }: { children: React.ReactNode }) => (
     <th className="m-2 select-none whitespace-nowrap bg-white px-2 py-3">{children}</th>
 );
 
-export const SplitsList = ({ timingPoints, classificationId, classificationName, raceId, splits, splitsOrder }: SplitsProps) => {
+export const SplitsList = ({
+    timingPoints,
+    classificationId,
+    classificationName,
+    raceId,
+    splits,
+    splitsOrder,
+    onSplitsListUpdated,
+}: SplitsListProps) => {
     const [newSplits, setNewSplits] = useState<Split[]>(splits);
     const [newSplitsOrder, setNewSplitsOrder] = useState<number[]>(splitsOrder);
     const [moveMode, setMoveMode] = useState<number>(0);
@@ -137,6 +191,7 @@ export const SplitsList = ({ timingPoints, classificationId, classificationName,
 
     const handleSaveChanges = async () => {
         await updateSplitsMutation.mutateAsync({ classificationId, raceId, splits: newSplits, order: newSplitsOrder });
+        onSplitsListUpdated();
     };
 
     const handleMoveMode = (id: number) => {

@@ -66,11 +66,11 @@
       "required": "Required"
     },
     "timingPoint": {
-      "description": {
-        "length": "Description should not be longer than 100 characters"
-      },
       "abbrev": {
         "length": "Abbreviation should not be longer than 3 characters"
+      },
+      "description": {
+        "length": "Description should not be longer than 100 characters"
       }
     }
   },
@@ -104,9 +104,9 @@
     "timeMeasurement": {
       "penalties": "Penalties",
       "results": "Results",
+      "splits": "Splits",
       "splitTimes": "Split Times",
       "timingPoints": "Timing Points",
-      "splits": "Splits",
       "title": "Time measurement",
       "tools": "Tools"
     }
@@ -386,6 +386,12 @@
       "results": {
         "description": "Event results have been successfully confirmed.",
         "title": "Results Confirmed"
+      }
+    },
+    "split": {
+      "updateSplits": {
+        "description": "The splits have been successfully updated.",
+        "title": "Splits Updated"
       }
     },
     "splitTime": {
@@ -1209,6 +1215,12 @@
         "title": "Settings"
       }
     },
+    "splits": {
+      "header": {
+        "description": "Splits define which timing points and in what order must be passed by the players of a given classification. You can add any number of splits, change their order and assign them to timing points. Several split times can be recorded at the same timing point.",
+        "title": "Splits"
+      }
+    },
     "splitTimes": {
       "edit": {
         "title": "Edit split time"
@@ -1334,6 +1346,11 @@
         "title": "Edit timing point"
       },
       "form": {
+        "abbrev": {
+          "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters.",
+          "label": "Abbreviation",
+          "placeholder": "Enter abbreviation"
+        },
         "description": {
           "description": "Optional description of the timing point displayed in several places in the application.",
           "label": "Description",
@@ -1348,11 +1365,6 @@
           "description": "The name of the timing point displayed in the stopwatch, times list and result list, such as start, finish, checkpoint.",
           "label": "Timing Point Name",
           "placeholder": "Type Timing Point Name"
-        },
-        "abbrev": {
-          "description": "The abbreviated name of the timing point, used where the full name cannot fit, is best limited to 2-3 characters.",
-          "label": "Abbreviation",
-          "placeholder": "Enter abbreviation"
         }
       },
       "header": {
@@ -1418,12 +1430,6 @@
       "header": {
         "description": "Tools useful during the race.",
         "title": "Tools"
-      }
-    },
-    "splits": {
-      "header": {
-        "title": "Splits",
-        "description": "Splits define which timing points and in what order must be passed by the players of a given classification. You can add any number of splits, change their order and assign them to timing points. Several split times can be recorded at the same timing point."
       }
     }
   },
@@ -2130,15 +2136,15 @@
         }
       }
     },
+    "split": {
+      "errors": {
+        "orderArrayMustMatchSplitsDefinitions": "Order of splits and splits definitions must match"
+      }
+    },
     "timingPoint": {
       "errors": {
         "atLeastTwoTimingPointsRequired": "Race must have at least two timing points defined (start and finish)",
         "deleteNotAllowedWhenUsedInSplits": "It is not possible to delete a timing point that is used in the splits. First, remove the splits that use this timing point."
-      }
-    },
-    "split": {
-      "errors": {
-        "orderArrayMustMatchSplitsDefinitions": "Order of splits and splits definitions must match"
       }
     }
   }
