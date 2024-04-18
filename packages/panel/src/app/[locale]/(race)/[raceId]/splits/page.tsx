@@ -3,7 +3,7 @@ import Head from "next/head";
 import { authenticate } from "src/auth";
 import { PageHeader } from "src/components/page-headers";
 import { SidePage } from "src/components/pages";
-import { Classifications } from "./classifications";
+import { Classifications } from "../../../../../components/classifications";
 import { trpcRSC } from "src/trpc-core-rsc";
 
 const SplitsGreeting = async () => {

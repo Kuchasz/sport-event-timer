@@ -44,7 +44,7 @@ export const fromDeepEntries = <T>(nestedEntries: [string, T][]) => {
         });
     });
 
-    return nestedObject as Record<string, Record<number, Record<number, T>>>;
+    return nestedObject as Record<string, Record<number, T>>;
 };
 
 type Path = string;

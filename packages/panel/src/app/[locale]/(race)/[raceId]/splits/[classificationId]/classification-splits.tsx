@@ -12,7 +12,7 @@ import { PoorInput } from "src/components/poor-input";
 import { PoorSelect } from "src/components/poor-select";
 import { type AppRouterOutputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
-import { Classifications } from "../classifications";
+import { Classifications } from "../../../../../../components/classifications";
 
 type Classification = AppRouterOutputs["classification"]["classification"];
 type ClassificationListItem = AppRouterOutputs["classification"]["classifications"][0];

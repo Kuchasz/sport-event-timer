@@ -1,51 +1,54 @@
-import { createRange, hasUndefinedBetweenValues, isNotAscendingOrder } from "@set/utils/dist/array";
+import { hasUndefinedBetweenValues, isNotAscendingOrder } from "@set/utils/dist/array";
+import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
-import { fromDeepEntries } from "@set/utils/dist/object";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
 export const splitTimeRouter = router({
     splitTimes: protectedProcedure
-        .input(z.object({ raceId: z.number({ required_error: "raceId is required" }) }))
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                classificationId: z.number({ required_error: "classificationId is required" }),
+            }),
+        )
         .query(async ({ input, ctx }) => {
-            const raceId = input.raceId;
+            const { raceId, classificationId } = input;
 
-            const allPlayers = await ctx.db.player.findMany({
-                where: { raceId },
+            const classificationPlayers = await ctx.db.player.findMany({
+                where: { raceId, classificationId },
                 include: { profile: true },
             });
 
             const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId } });
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId } });
 
-            const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
-            //todo: should handle new timing points here
-            const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
-            const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
-            const startTimingPoint = timingPoints[0];
+            const unorderedSplits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
+
+            const splitOrder = await ctx.db.splitOrder.findUniqueOrThrow({ where: { raceId, classificationId } });
+            const splits = (JSON.parse(splitOrder.order) as number[]).map(p => unorderedSplits.find(s => s.id === p)!);
+            const startSplit = splits[0];
 
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
             const raceDateStart = race?.date.getTime();
 
             const splitTimesMap = splitTimes.map(
-                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: false }] as ResultEntry,
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: false }] as ResultEntry,
             );
             const manualSplitTimesMap = manualSplitTimes.map(
-                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, { time: Number(st.time), manual: true }] as ResultEntry,
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: true }] as ResultEntry,
             );
-            const startTimesMap = allPlayers.map(
-                p => [`${p.bibNumber}.${startTimingPoint.id}.0`, { time: raceDateStart + p.startTime!, manual: false }] as ResultEntry,
+            const startTimesMap = classificationPlayers.map(
+                p => [`${p.bibNumber}.${startSplit.id}`, { time: raceDateStart + p.startTime!, manual: false }] as ResultEntry,
             );
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
-            const timesInOrder = timingPoints.flatMap(tp =>
-                createRange({ from: 0, to: tp.laps }).map(lap => ({ timingPointId: tp.id, lap })),
-            );
+            const timesInOrder = splits;
 
-            const times = allPlayers
+            const times = classificationPlayers
                 .map(p => ({
                     bibNumber: p.bibNumber,
                     name: p.profile.name,
@@ -55,13 +58,11 @@ export const splitTimeRouter = router({
                 .map(t => ({
                     ...t,
                     hasError: isNotAscendingOrder(
-                        timesInOrder
-                            .filter(tio => t.times[tio.timingPointId]?.[tio.lap] !== undefined)
-                            .map(tio => t.times[tio.timingPointId]?.[tio.lap]),
+                        timesInOrder.filter(tio => t.times[tio.id] !== undefined).map(tio => t.times[tio.id]),
                         x => x.time,
                     ),
                     hasWarning: hasUndefinedBetweenValues(
-                        timesInOrder.map(tio => t.times[tio.timingPointId]?.[tio.lap]),
+                        timesInOrder.map(tio => t.times[tio.id]),
                         x => x?.time,
                     ),
                 }));
@@ -75,8 +76,7 @@ export const splitTimeRouter = router({
             where: {
                 raceId: splitTime.raceId,
                 bibNumber: splitTime.bibNumber,
-                timingPointId: splitTime.timingPointId,
-                lap: splitTime.lap,
+                splitId: splitTime.splitId,
             },
         });
 
@@ -85,10 +85,9 @@ export const splitTimeRouter = router({
         } else
             await ctx.db.manualSplitTime.update({
                 where: {
-                    timingPointId_lap_bibNumber: {
+                    splitId_bibNumber: {
                         bibNumber: splitTime.bibNumber,
-                        timingPointId: splitTime.timingPointId,
-                        lap: splitTime.lap,
+                        splitId: splitTime.splitId,
                     },
                 },
                 data: splitTime,
@@ -99,7 +98,7 @@ export const splitTimeRouter = router({
         .mutation(async ({ input, ctx }) => {
             const { ...data } = input;
             return await ctx.db.manualSplitTime.delete({
-                where: { timingPointId_lap_bibNumber: { bibNumber: data.bibNumber, timingPointId: data.timingPointId, lap: data.lap } },
+                where: { splitId_bibNumber: { bibNumber: data.bibNumber, splitId: data.timingPointId } },
             });
         }),
 });

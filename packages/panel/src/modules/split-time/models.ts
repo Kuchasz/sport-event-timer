@@ -5,7 +5,7 @@ export const splitTimeSchema = z.object({
     id: z.number().min(1).nullish(),
     bibNumber: z.string({ required_error: sharedErrorCodes.required }),
     time: z.number(),
-    timingPointId: z.number({ required_error: sharedErrorCodes.required }),
+    splitId: z.number({ required_error: sharedErrorCodes.required }),
     lap: z.number({ required_error: sharedErrorCodes.required }),
 });
 
