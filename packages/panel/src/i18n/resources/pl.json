@@ -1927,7 +1927,6 @@
     },
     "list": {
       "absent": "nieobecny",
-      "lap": "LAP",
       "title": {
         "text": "Lista zawodników"
       }

@@ -296,6 +296,7 @@ const createStopwatches = (
                     id: ids.splice(faker.number.int({ min: 1, max: ids.length }), 1)[0],
                     bibNumber: Number(p.bibNumber),
                     splitId: s.id,
+                    timingPointId: s.timingPointId,
                     time: faker.date
                         .between({
                             from: new Date(startTimeDate.getTime() + i * 3_600_000),

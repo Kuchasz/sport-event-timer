@@ -10,18 +10,17 @@ import { mdiAccountAlertOutline } from "@mdi/js";
 type PlayerWithTimeStamp = Player & {
     splitTime: SplitTime;
     absent?: Absence;
+    splitName?: string;
 };
 
 export const PlayerWithSplitTimeDisplay = ({
     padLeftBibNumber,
     playerWithSplitTime,
     onAssign,
-    displayLaps,
 }: {
     padLeftBibNumber: number;
     playerWithSplitTime: Partial<PlayerWithTimeStamp>;
     onAssign?: () => void;
-    displayLaps?: boolean;
 }) => {
     const previousTimeStamp = usePreviousValue(playerWithSplitTime.splitTime?.time);
     const previousAbsentState = usePreviousValue(playerWithSplitTime.absent);
@@ -57,11 +56,6 @@ export const PlayerWithSplitTimeDisplay = ({
                         ["max-h-0 opacity-0"]: lastTimeStamp == null,
                         ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
-                    {displayLaps && playerWithSplitTime.splitTime && (
-                        <span className="mr-2 text-xs opacity-50">
-                            {t("stopwatch.list.lap")} {playerWithSplitTime.splitTime.lap! + 1}
-                        </span>
-                    )}
                     <span>
                         {lastTimeStamp
                             ? formatTime(new Date(lastTimeStamp.time))
@@ -84,6 +78,7 @@ export const PlayerWithSplitTimeDisplay = ({
                         "font-medium text-zinc-400 transition-all",
                         lastTimeStamp || playerWithSplitTime.absent ? "text-xs" : "text-sm",
                     )}>
+                    {playerWithSplitTime.splitTime && <span className="mr-2 text-xs text-zinc-700">{playerWithSplitTime.splitName}</span>}
                     <span className="text-ellipsis">{playerWithSplitTime.name}</span> {playerWithSplitTime.lastName}
                 </div>
             </span>

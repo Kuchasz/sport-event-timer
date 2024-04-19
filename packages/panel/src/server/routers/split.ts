@@ -5,6 +5,21 @@ import { arraysMatches } from "@set/utils/dist/array";
 import { splitErrors } from "../../modules/split/errors";
 
 export const splitRouter = router({
+    byTimingPoint: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                timingPointId: z.number({ required_error: "timingPointId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, timingPointId } = input;
+            const splits = await ctx.db.split.findMany({
+                where: { raceId, timingPointId },
+            });
+
+            return splits;
+        }),
     splits: protectedProcedure
         .input(
             z.object({

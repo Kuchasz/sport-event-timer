@@ -1927,7 +1927,6 @@
     },
     "list": {
       "absent": "absent",
-      "lap": "LAP",
       "title": {
         "text": "Players list"
       }
