@@ -11,6 +11,25 @@ export const splitTimeRouter = router({
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId } = input;
+
+            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId }, include: { player: { include: { profile: true } } } });
+
+            return splitTimes.map(st => ({
+                id: st.id,
+                bibNumber: st.player.bibNumber,
+                name: st.player.profile.name,
+                lastName: st.player.profile.lastName,
+                time: st.time,
+            }));
+        }),
+    betterSplitTimes: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
                 classificationId: z.number({ required_error: "classificationId is required" }),
             }),
         )

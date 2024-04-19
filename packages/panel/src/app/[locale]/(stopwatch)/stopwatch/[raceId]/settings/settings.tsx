@@ -23,15 +23,6 @@ export const Settings = () => {
         },
     );
 
-    const { data: timingPointsOrder } = trpc.timingPoint.timingPointsOrder.useQuery(
-        { raceId: parseInt(raceId) },
-        {
-            initialData: [],
-        },
-    );
-
-    const sortedTimingPoints = timingPointsOrder.map(point => allTimingPoints.find(tp => point === tp.id)!);
-
     const setTimingPointId = (timingPointId: number) => {
         chooseTimingPoint(timingPointId);
     };
@@ -41,12 +32,12 @@ export const Settings = () => {
             <div className="flex h-full w-full flex-grow flex-col p-4">
                 <div className="font-semibold">{t("stopwatch.settings.selectTimingPoint.header")}</div>
                 <div className="mb-2 text-xs">{t("stopwatch.settings.selectTimingPoint.description")}</div>
-                {sortedTimingPoints.map((timingPoint, id) => (
+                {allTimingPoints.map((timingPoint, id) => (
                     <button
                         onClick={() => setTimingPointId(timingPoint.id)}
                         className="relative my-2 flex w-full items-center rounded-lg bg-white px-5 py-3 shadow-sm"
                         key={timingPoint.id}>
-                        <TimingPointIcon isFirst={id === 0} isLast={id === sortedTimingPoints.length - 1} />
+                        <TimingPointIcon isFirst={id === 0} isLast={id === allTimingPoints.length - 1} />
                         <div className="mx-4 flex flex-grow flex-col items-start">
                             <div className="">{timingPoint.name}</div>
                             <div className="text-xs leading-none opacity-75">{timingPoint.description}</div>

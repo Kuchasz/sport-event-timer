@@ -79,12 +79,11 @@ export const Status = ({ raceId }: { raceId: string }) => {
             initialData: [],
         },
     );
-    const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const [timingPointId] = useAtom(timingPointIdAtom);
     const [offset] = useAtom(timeOffsetAtom);
     const timingPoint = allTimingPoints.find(tk => tk.id === timingPointId);
 
-    const timingPointMissing = !timingPoint || !timingPointOrder.includes(timingPointId);
+    const timingPointMissing = !timingPoint;
 
     return (
         <div>

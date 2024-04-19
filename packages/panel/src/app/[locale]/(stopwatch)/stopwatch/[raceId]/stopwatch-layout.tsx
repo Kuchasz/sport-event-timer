@@ -104,10 +104,17 @@ export function StopwatchLayout({ children, title }: { children: React.ReactNode
     const { raceId } = useParams<{ raceId: string }>()!;
     const pathname = usePathname()!;
 
-    const { data: timingPointOrder } = trpc.timingPoint.timingPointsOrder.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
+    const { data: allTimingPoints } = trpc.timingPoint.timingPoints.useQuery(
+        { raceId: parseInt(raceId) },
+        {
+            initialData: [],
+        },
+    );
+
+    const timingPoint = allTimingPoints.find(tk => tk.id === timingPointId);
 
     const isOffline = connectionState !== "connected";
-    const timingPointMissing = !timingPointId || !timingPointOrder.includes(timingPointId);
+    const timingPointMissing = !timingPoint;
 
     const t = useTranslations();
 
