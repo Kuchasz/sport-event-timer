@@ -1383,7 +1383,7 @@
             "actions": "Akcje",
             "name": "Nazwa",
             "numberOfAccessUrls": "Linki dostępowe",
-            "shortName": "Skrót",
+            "abbrev": "Skrót",
             "splits": "Pomiary",
             "type": "Typ"
           },

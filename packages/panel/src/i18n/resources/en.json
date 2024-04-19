@@ -1383,7 +1383,7 @@
             "actions": "Actions",
             "name": "Name",
             "numberOfAccessUrls": "Access URLs",
-            "shortName": "Abbreviation",
+            "abbrev": "Abbreviation",
             "splits": "Splits",
             "type": "Type"
           },

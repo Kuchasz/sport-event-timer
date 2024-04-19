@@ -30,7 +30,7 @@ export const TimingPoints = () => {
         { field: "name", headerName: t("pages.timingPoints.sections.grid.columns.name"), sortable: true },
         {
             field: "abbrev",
-            headerName: t("pages.timingPoints.sections.grid.columns.shortName"),
+            headerName: t("pages.timingPoints.sections.grid.columns.abbrev"),
         },
         {
             field: "type",

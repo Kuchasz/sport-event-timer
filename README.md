@@ -118,7 +118,7 @@ Application for making time measurements
 | 07/02/2024 | Reduce middlewares bundle size                                        |                  :date:                   |
 | 07/02/2024 | Improve results list rendering performance                            |                  :date:                   |
 | 12/02/2024 | SSR react benchmarking                                                |                  :date:                   |
-| 28/03/2024 | Shortname to Abbreviation in timing point rework                      |                  :date:                   |
+| 28/03/2024 | Shortname to Abbreviation in timing point rework                      | <sup>:heavy_check_mark:(19/04/2024)</sup> |
 | 19/04/2024 | Prevent split modification once has any assigned times                |                  :date:                   |
 | 19/04/2024 | Hide split name in SW when only 1 split for timing point exists       |                  :date:                   |
 
