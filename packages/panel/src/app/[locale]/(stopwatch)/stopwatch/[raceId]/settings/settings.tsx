@@ -40,7 +40,7 @@ export const Settings = () => {
                         <TimingPointIcon isFirst={id === 0} isLast={id === allTimingPoints.length - 1} />
                         <div className="mx-4 flex flex-grow flex-col items-start">
                             <div className="">{timingPoint.name}</div>
-                            <div className="text-xs leading-none opacity-75">{timingPoint.description}</div>
+                            <div className="text-left text-xs leading-none opacity-75">{timingPoint.description}</div>
                         </div>
                         <div className="flex h-6 w-6 items-center justify-center">
                             <div
