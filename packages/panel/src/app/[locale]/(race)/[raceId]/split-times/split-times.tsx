@@ -34,13 +34,13 @@ export const SplitTimes = () => {
             sortable: true,
         },
         {
-            field: "splitName",
-            headerName: t("pages.splitTimes.grid.columns.splitName"),
+            field: "classificationName",
+            headerName: t("pages.splitTimes.grid.columns.classificationName"),
             sortable: true,
         },
         {
-            field: "classificationName",
-            headerName: t("pages.splitTimes.grid.columns.classificationName"),
+            field: "splitName",
+            headerName: t("pages.splitTimes.grid.columns.splitName"),
             sortable: true,
         },
         {
