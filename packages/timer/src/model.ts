@@ -26,6 +26,7 @@ export type SplitTime = {
 export type Absence = {
     id: number;
     bibNumber: number;
+    splitId: number;
     timingPointId: number;
 };
 

@@ -1,13 +1,11 @@
 import { db, stopwatchStateProvider } from "./db";
 import * as fastq from "fastq";
 
-type ActualSplitTime = { id: number; bibNumber: number; time: number; lap: number; timingPointId: number };
-type ExistingSplitTime = { id: number; bibNumber: string; time: bigint; lap: number; timingPointId: number };
+type ActualSplitTime = { id: number; bibNumber: number; time: number; splitId: number; timingPointId: number };
+type ExistingSplitTime = { id: number; bibNumber: string; time: bigint; splitId: number };
 
 const areSplitTimesEqual = (actual: ActualSplitTime, existing: ExistingSplitTime) =>
-    actual.bibNumber.toString() === existing.bibNumber &&
-    actual.time === Number(existing.time) &&
-    actual.timingPointId === existing.timingPointId;
+    actual.bibNumber.toString() === existing.bibNumber && actual.time === Number(existing.time) && actual.splitId === existing.splitId;
 
 type UpdateSplitTimesTask = {
     raceId: number;
@@ -45,10 +43,8 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             id,
             bibNumber: data!.bibNumber!.toString(),
             time: data!.time,
-            lap: data!.lap!,
             raceId,
-            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            timingPointId: data?.timingPointId!,
+            splitId: data!.splitId,
         }));
     const newAbsences = [...absences_toCreate]
         .map(id => ({ id, data: actualAbsencesMap.get(id) }))
@@ -56,8 +52,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             id,
             bibNumber: data!.bibNumber.toString(),
             raceId,
-            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            timingPointId: data?.timingPointId!,
+            splitId: data!.splitId!,
         }));
 
     const splitTimesToUpdate = [...splitTimes_toUpdate]
@@ -77,7 +72,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
         splitTimesToUpdate.map(data =>
             db.splitTime.update({
                 where: { id_raceId: { id: data.actual.id, raceId } },
-                data: { ...data.actual, lap: data.actual.lap, bibNumber: data.actual.bibNumber.toString() },
+                data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() },
             }),
         ),
     );
