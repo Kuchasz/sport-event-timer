@@ -35,6 +35,7 @@ const Item = <T extends string>({
     style,
     padBibNumber,
     isLast,
+    showSplitName,
 }: {
     t: SplitTimeWithPlayer;
     navigate: (path: Route<T> | URL) => void;
@@ -43,6 +44,7 @@ const Item = <T extends string>({
     style: CSSProperties;
     padBibNumber: number;
     isLast: boolean;
+    showSplitName: boolean;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -107,6 +109,7 @@ const Item = <T extends string>({
                         <Icon size={0.8} path={mdiDeleteOutline} />
                     </div>
                     <PlayerWithSplitTimeDisplay
+                        showSplitName={showSplitName}
                         playerWithSplitTime={{
                             splitTime: t,
                             bibNumber: t.player?.bibNumber,
@@ -223,6 +226,7 @@ export const PlayersTimes = () => {
                             raceId={parseInt(raceId)}
                             padBibNumber={highestBibNumber.toString().length}
                             isLast={index === arr.length - 1}
+                            showSplitName={splits.length > 1}
                         />
                     ))}
                 </div>

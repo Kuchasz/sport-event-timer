@@ -14,10 +14,12 @@ type PlayerWithTimeStamp = Player & {
 };
 
 export const PlayerWithSplitTimeDisplay = ({
+    showSplitName,
     padLeftBibNumber,
     playerWithSplitTime,
     onAssign,
 }: {
+    showSplitName: boolean;
     padLeftBibNumber: number;
     playerWithSplitTime: Partial<PlayerWithTimeStamp>;
     onAssign?: () => void;
@@ -78,7 +80,9 @@ export const PlayerWithSplitTimeDisplay = ({
                         "font-medium text-zinc-400 transition-all",
                         lastTimeStamp || playerWithSplitTime.absent ? "text-xs" : "text-sm",
                     )}>
-                    {playerWithSplitTime.splitTime && <span className="mr-2 text-xs text-zinc-700">{playerWithSplitTime.splitName}</span>}
+                    {showSplitName && playerWithSplitTime.splitTime && (
+                        <span className="mr-2 text-xs text-zinc-700">{playerWithSplitTime.splitName}</span>
+                    )}
                     <span className="text-ellipsis">{playerWithSplitTime.name}</span> {playerWithSplitTime.lastName}
                 </div>
             </span>
