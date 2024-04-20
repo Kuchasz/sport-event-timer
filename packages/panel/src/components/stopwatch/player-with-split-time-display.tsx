@@ -14,7 +14,7 @@ type PlayerWithTimeStamp = Player & {
 };
 
 export const PlayerWithSplitTimeDisplay = ({
-    showSplitName,
+    showSplitName = false,
     padLeftBibNumber,
     playerWithSplitTime,
     onAssign,
@@ -58,14 +58,22 @@ export const PlayerWithSplitTimeDisplay = ({
                         ["max-h-0 opacity-0"]: lastTimeStamp == null,
                         ["max-h-[18px] opacity-100"]: lastTimeStamp,
                     })}>
-                    <span>
+                    <span className="flex">
                         {lastTimeStamp
                             ? formatTime(new Date(lastTimeStamp.time))
                             : previousTimeStamp
                             ? formatTime(new Date(previousTimeStamp))
                             : null}
+
+                        {showSplitName && playerWithSplitTime.splitTime && (
+                            <span className="flex flex-grow items-center justify-end">
+                                <span className="block size-3 shrink-0 rounded-full bg-yellow-300"></span>
+                                <span className="ml-1 mr-2 text-xs text-zinc-700">{playerWithSplitTime.splitName}</span>
+                            </span>
+                        )}
                     </span>
                 </div>
+
                 <div
                     className={classNames("overflow-hidden text-sm font-semibold text-black transition-all duration-300", {
                         ["max-h-0 opacity-0"]: playerWithSplitTime.absent == null,
@@ -80,9 +88,6 @@ export const PlayerWithSplitTimeDisplay = ({
                         "font-medium text-zinc-400 transition-all",
                         lastTimeStamp || playerWithSplitTime.absent ? "text-xs" : "text-sm",
                     )}>
-                    {showSplitName && playerWithSplitTime.splitTime && (
-                        <span className="mr-2 text-xs text-zinc-700">{playerWithSplitTime.splitName}</span>
-                    )}
                     <span className="text-ellipsis">{playerWithSplitTime.name}</span> {playerWithSplitTime.lastName}
                 </div>
             </span>
