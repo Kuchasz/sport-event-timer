@@ -1246,10 +1246,13 @@
           "bibNumber": "Bib",
           "playerLastName": "Last Name",
           "playerName": "Name",
+          "splitName": "Split",
           "status": {
             "error": "Error, each subsequent time must be greater than the previous one.",
             "warning": "Warning, some time measurements are missing."
-          }
+          },
+          "time": "Time",
+          "classificationName": "Classification"
         },
         "search": {
           "placeholder": "Search split times..."

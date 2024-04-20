@@ -16,14 +16,19 @@ export const splitTimeRouter = router({
         .query(async ({ input, ctx }) => {
             const { raceId } = input;
 
-            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId }, include: { player: { include: { profile: true } } } });
+            const splitTimes = await ctx.db.splitTime.findMany({
+                where: { raceId },
+                include: { split: true, player: { include: { profile: true, classification: true } } },
+            });
 
             return splitTimes.map(st => ({
                 id: st.id,
                 bibNumber: st.player.bibNumber,
                 name: st.player.profile.name,
                 lastName: st.player.profile.lastName,
-                time: st.time,
+                time: Number(st.time),
+                splitName: st.split.name,
+                classificationName: st.player.classification.name,
             }));
         }),
     betterSplitTimes: protectedProcedure

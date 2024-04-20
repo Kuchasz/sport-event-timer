@@ -44,7 +44,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             bibNumber: data!.bibNumber!.toString(),
             time: data!.time,
             raceId,
-            splitId: data!.splitId,
+            splitId: data!.splitId!,
         }));
     const newAbsences = [...absences_toCreate]
         .map(id => ({ id, data: actualAbsencesMap.get(id) }))

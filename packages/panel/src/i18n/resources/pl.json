@@ -1249,7 +1249,10 @@
           "status": {
             "error": "Błąd, każdy następujący po sobie czas musi być większy niż poprzedni.",
             "warning": "Ostrzeżenie, brakuje niektórych pomiarów czasu."
-          }
+          },
+          "splitName": "Międzyczas",
+          "time": "Czas",
+          "classificationName": "Klasyfikacja"
         },
         "search": {
           "placeholder": "Szukaj czasów pomiarowych..."

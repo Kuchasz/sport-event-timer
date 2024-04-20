@@ -1,5 +1,6 @@
 "use client";
 
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { PageHeader } from "src/components/page-headers";
@@ -12,7 +13,7 @@ type SplitTime = AppRouterOutputs["splitTime"]["splitTimes"][0];
 
 export const SplitTimes = () => {
     const raceId = useCurrentRaceId();
-    const { data: splitTimes } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId }, { refetchInterval: 1000 });
+    const { data: splitTimes } = trpc.splitTime.splitTimes.useQuery({ raceId: raceId }, { refetchInterval: 5000 });
 
     const t = useTranslations();
 
@@ -31,6 +32,22 @@ export const SplitTimes = () => {
             field: "lastName",
             headerName: t("pages.splitTimes.grid.columns.playerLastName"),
             sortable: true,
+        },
+        {
+            field: "splitName",
+            headerName: t("pages.splitTimes.grid.columns.splitName"),
+            sortable: true,
+        },
+        {
+            field: "classificationName",
+            headerName: t("pages.splitTimes.grid.columns.classificationName"),
+            sortable: true,
+        },
+        {
+            field: "time",
+            headerName: t("pages.splitTimes.grid.columns.time"),
+            sortable: true,
+            cellRenderer: data => formatTimeWithMilliSec(data.time),
         },
     ];
 

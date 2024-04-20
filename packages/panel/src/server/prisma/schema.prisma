@@ -193,8 +193,8 @@ model SplitTime {
     time      BigInt
     race      Race   @relation(fields: [raceId], references: [id])
     raceId    Int
-    split     Split? @relation(fields: [splitId], references: [id])
-    splitId   Int?
+    split     Split  @relation(fields: [splitId], references: [id])
+    splitId   Int
 
     @@id([id, raceId])
     @@unique([splitId, bibNumber])
