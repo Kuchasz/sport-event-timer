@@ -24,7 +24,13 @@ export const resultRouter = router({
             });
 
             const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId, player: { classificationId } } });
+            const splitsOrderString = await ctx.db.splitOrder.findUniqueOrThrow({ where: { raceId, classificationId } });
+            const splits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
+            const splitsOrder = JSON.parse(splitsOrderString.order) as number[];
+
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId, player: { classificationId } } });
+
+            const splitsInOrder = splitsOrder.map(split => splits.find(s => split === s.id)!);
 
             const disqualifications = toMap(
                 await ctx.db.disqualification.findMany({
@@ -40,10 +46,7 @@ export const resultRouter = router({
                 p => ({ time: p.time, reason: p.reason, id: p.id }),
             );
 
-            const unorderTimingPoints = await ctx.db.timingPoint.findMany({ where: { raceId } });
             //todo: should handle new timing points here
-            const timingPointsOrder = await ctx.db.timingPointOrder.findUniqueOrThrow({ where: { raceId } });
-            const timingPoints = (JSON.parse(timingPointsOrder.order) as number[]).map(p => unorderTimingPoints.find(tp => tp.id === p)!);
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
             const classification = await ctx.db.classification.findFirstOrThrow({
@@ -53,16 +56,12 @@ export const resultRouter = router({
 
             const raceDateStart = race?.date.getTime();
 
-            const startTimingPoint = timingPoints.at(0)!;
-            const endTimingPoint = timingPoints.at(-1)!;
+            const startSplit = splitsInOrder.at(0)!;
+            const endSplit = splitsInOrder.at(-1)!;
 
-            const splitTimesMap = splitTimes.map(st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, Number(st.time)] as ResultEntry);
-            const manualSplitTimesMap = manualSplitTimes.map(
-                st => [`${st.bibNumber}.${st.timingPointId}.${st.lap}`, Number(st.time)] as ResultEntry,
-            );
-            const startTimesMap = allPlayers.map(
-                p => [`${p.bibNumber}.${startTimingPoint.id}.0`, raceDateStart + p.startTime!] as ResultEntry,
-            );
+            const splitTimesMap = splitTimes.map(st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as ResultEntry);
+            const manualSplitTimesMap = manualSplitTimes.map(st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as ResultEntry);
+            const startTimesMap = allPlayers.map(p => [`${p.bibNumber}.${startSplit.id}`, raceDateStart + p.startTime!] as ResultEntry);
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
@@ -98,10 +97,10 @@ export const resultRouter = router({
                 }));
 
             const absentPlayers = times
-                .filter(t => t.absences[startTimingPoint?.id] || t.absences[endTimingPoint?.id])
+                .filter(t => t.absences[startSplit?.id] || t.absences[endSplit?.id])
                 .map(t => ({
                     ...t,
-                    invalidState: t.absences[startTimingPoint.id] ? "dns" : t.absences[endTimingPoint.id] ? "dnf" : undefined,
+                    invalidState: t.absences[startSplit.id] ? "dns" : t.absences[endSplit.id] ? "dnf" : undefined,
                     start: undefined,
                     finish: undefined,
                     result: Number.MAX_VALUE,
@@ -110,12 +109,12 @@ export const resultRouter = router({
                 }));
 
             const results = times
-                .filter(t => t.times[startTimingPoint?.id]?.[0] && t.times[endTimingPoint?.id]?.[0])
+                .filter(t => t.times[startSplit?.id]?.[0] && t.times[endSplit?.id]?.[0])
                 .map(t => ({
                     ...t,
-                    start: t.times[startTimingPoint.id][0],
-                    finish: t.times[endTimingPoint.id][0],
-                    result: t.times[endTimingPoint.id][0] - t.times[startTimingPoint.id][0] + t.totalTimePenalty,
+                    start: t.times[startSplit.id][0],
+                    finish: t.times[endSplit.id][0],
+                    result: t.times[endSplit.id][0] - t.times[startSplit.id][0] + t.totalTimePenalty,
                     invalidState: undefined,
                 }));
 
