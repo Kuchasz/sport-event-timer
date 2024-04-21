@@ -1907,7 +1907,6 @@
       }
     },
     "checkIn": {
-      "lap": "LAP",
       "split": "SPLIT",
       "typeBibNumber": "Type player's bib number"
     },

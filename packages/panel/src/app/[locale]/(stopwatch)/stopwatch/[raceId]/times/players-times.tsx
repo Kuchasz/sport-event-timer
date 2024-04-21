@@ -35,7 +35,7 @@ const Item = <T extends string>({
     style,
     padBibNumber,
     isLast,
-    showSplitName,
+    showSplit,
 }: {
     t: SplitTimeWithPlayer;
     navigate: (path: Route<T> | URL) => void;
@@ -44,7 +44,7 @@ const Item = <T extends string>({
     style: CSSProperties;
     padBibNumber: number;
     isLast: boolean;
-    showSplitName: boolean;
+    showSplit: boolean;
 }) => {
     const touchStartX = useRef<number>(0);
     const touchStartY = useRef<number>(0);
@@ -109,7 +109,7 @@ const Item = <T extends string>({
                         <Icon size={0.8} path={mdiDeleteOutline} />
                     </div>
                     <PlayerWithSplitTimeDisplay
-                        showSplitName={showSplitName}
+                        showSplit={showSplit}
                         playerWithSplitTime={{
                             splitTime: t,
                             bibNumber: t.player?.bibNumber,
@@ -157,7 +157,7 @@ export const PlayersTimes = () => {
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: race } = trpc.race.raceInformation.useQuery({ raceId: parseInt(raceId) });
     // const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
-    const { data: splits } = trpc.split.byTimingPoint.useQuery({ raceId: parseInt(raceId), timingPointId }, { initialData: [] });
+    const { data: splits } = trpc.split.orderedByTimingPoint.useQuery({ raceId: parseInt(raceId), timingPointId }, { initialData: [] });
 
     const timingPointSplitTimes = sort(
         allSplitTimes.filter(s => s.timingPointId === timingPointId),
@@ -226,7 +226,7 @@ export const PlayersTimes = () => {
                             raceId={parseInt(raceId)}
                             padBibNumber={highestBibNumber.toString().length}
                             isLast={index === arr.length - 1}
-                            showSplitName={splits.length > 1}
+                            showSplit={splits.length > 1}
                         />
                     ))}
                 </div>

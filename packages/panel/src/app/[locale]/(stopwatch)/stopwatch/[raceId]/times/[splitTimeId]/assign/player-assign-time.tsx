@@ -20,7 +20,7 @@ export const PlayerAssignTime = () => {
         <PlayersCheckIn
             timeCritical={false}
             onPlayerCheckIn={player => {
-                dispatch(assign({ bibNumber: parseInt(player.bibNumber), lap: player.lap, id: parseInt(splitTimeId) }));
+                dispatch(assign({ bibNumber: parseInt(player.bibNumber), splitId: player.splitId, id: parseInt(splitTimeId) }));
                 back();
             }}
             timingPointId={timingPointId}

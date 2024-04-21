@@ -78,13 +78,13 @@ interface CheckInResult extends ReadonlyArray<Result> {
 
 type PlayerSuggestionProps = {
     timeCritical: boolean;
-    player: { bibNumber: string; name: string; nextLap: number; lastName: string };
+    player: { bibNumber: string; name: string; nextSplit: { name: string; id: number }; lastName: string };
     typeahead: string;
     onPlayerCheckIn: (bibNumber: string) => void;
     result: CheckInResult;
-    displayLaps: boolean;
+    showSplit: boolean;
 };
-export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, displayLaps }: PlayerSuggestionProps) => {
+export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, showSplit }: PlayerSuggestionProps) => {
     const t = useTranslations();
     return (
         <button
@@ -112,9 +112,9 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, d
                       ))
                     : player.bibNumber}
             </div>
-            {displayLaps && (
+            {showSplit && (
                 <div className={classNames("ml-2 text-xs font-medium", typeahead === player.bibNumber ? "" : "opacity-50")}>
-                    {t("stopwatch.checkIn.lap")} {player.nextLap + 1}
+                    {t("stopwatch.checkIn.split")} {player.nextSplit.name}
                 </div>
             )}
         </button>
@@ -123,7 +123,7 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, d
 
 type PlayersDialPadProps = {
     timeCritical: boolean;
-    onPlayerCheckIn: (params: { bibNumber: string; lap: number }) => void;
+    onPlayerCheckIn: (params: { bibNumber: string; splitId: number }) => void;
     timingPointId?: number;
 };
 
@@ -134,26 +134,33 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
     const t = useTranslations();
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
-    const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery(
+
+    const { data: splits } = trpc.split.orderedByTimingPoint.useQuery(
         { raceId: parseInt(raceId), timingPointId: timingPointId! },
-        { enabled: timingPointId !== undefined },
+        { enabled: timingPointId !== undefined, initialData: [] },
     );
 
     const allSplitTimes = useTimerSelector(x => x.splitTimes);
     const allAbsences = useTimerSelector(x => x.absences);
 
-    const maxSplitTimes = (timingPoint?.laps ?? 0) + 1;
+    const playersWithSplitTimes = allPlayers
+        .map(x => ({
+            ...x,
+            splitTimes: allSplitTimes.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            absences: allAbsences.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            applicableSplits: splits.filter(s => s.classificationId === x.classificationId && s.timingPointId === timingPointId),
+        }))
+        .map(x => ({ ...x, usedSplits: [...x.splitTimes.map(s => s.splitId!), ...x.absences.map(a => a.splitId!)] }))
+        .map(x => ({ ...x, nextSplit: x.applicableSplits.find(c => !x.usedSplits.includes(c.id)) }));
 
-    const playersWithSplitTime = allPlayers.map(x => ({
-        ...x,
-        splitTime: allSplitTimes.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
-        absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
-    }));
-
-    const nonAbsentPlayersWithoutsplitTime = playersWithSplitTime.filter(x => x.splitTime.length < maxSplitTimes && x.absent === undefined);
+    const nonAbsentPlayersWithoutSplitTime = playersWithSplitTimes.filter(p => p.nextSplit);
 
     const availablePlayers = sort(
-        nonAbsentPlayersWithoutsplitTime.map(a => ({ ...a, nextLap: a.splitTime.length, bibNumber: a.bibNumber.toString() })),
+        nonAbsentPlayersWithoutSplitTime.map(a => ({
+            ...a,
+            nextSplit: a.nextSplit!,
+            bibNumber: a.bibNumber.toString(),
+        })),
         p => parseInt(p.bibNumber),
     );
 
@@ -162,7 +169,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
 
     const canRecord = bestGuess?.bibNumber === playerNumber;
     const onRecord = () => {
-        onPlayerCheckIn({ bibNumber: bestGuess.bibNumber, lap: bestGuess.nextLap });
+        onPlayerCheckIn({ bibNumber: bestGuess.bibNumber, splitId: bestGuess.nextSplit.id });
         setPlayerNumber("");
     };
 
@@ -179,7 +186,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                         result={p}
                         typeahead={playerNumber}
                         player={p.obj}
-                        displayLaps={(timingPoint?.laps || 0) > 0}
+                        showSplit={splits.length > 1}
                     />
                 ))}
             </div>
@@ -201,9 +208,9 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                         "active:animate-pushInLittle flex items-center justify-center rounded-md bg-gradient-to-b from-orange-500 to-red-500 p-4 font-semibold text-white shadow-md transition-opacity",
                         canRecord ? "animate-wave" : "pointer-events-none opacity-20",
                     )}>
-                    {timingPoint?.laps && canRecord ? (
+                    {splits.length > 1 && canRecord ? (
                         <span>
-                            {t("stopwatch.checkIn.lap")} {bestGuess.splitTime?.length + 1}
+                            {t("stopwatch.checkIn.split")} {bestGuess.nextSplit.name}
                         </span>
                     ) : (
                         <span>{t("stopwatch.checkIn.split")}</span>

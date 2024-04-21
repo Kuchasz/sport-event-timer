@@ -20,7 +20,7 @@ export const PlayerReassignTime = () => {
         <PlayersCheckIn
             timeCritical={false}
             onPlayerCheckIn={player => {
-                dispatch(reassign({ bibNumber: parseInt(player.bibNumber), lap: player.lap, id: parseInt(splitTimeId) }));
+                dispatch(reassign({ bibNumber: parseInt(player.bibNumber), splitId: player.splitId, id: parseInt(splitTimeId) }));
                 back();
             }}
             timingPointId={timingPointId}

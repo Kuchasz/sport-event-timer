@@ -5,7 +5,7 @@ import { arraysMatches } from "@set/utils/dist/array";
 import { splitErrors } from "../../modules/split/errors";
 
 export const splitRouter = router({
-    byTimingPoint: protectedProcedure
+    orderedByTimingPoint: protectedProcedure
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),
@@ -18,7 +18,12 @@ export const splitRouter = router({
                 where: { raceId, timingPointId },
             });
 
-            return splits;
+            const splitsOrders = await ctx.db.splitOrder.findMany({ where: { raceId } });
+
+            return splitsOrders
+                .flatMap(s => JSON.parse(s.order) as number[])
+                .map(id => splits.find(s => s.id === id)!)
+                .filter(Boolean);
         }),
     splits: protectedProcedure
         .input(

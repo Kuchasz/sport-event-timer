@@ -10,6 +10,7 @@ const stopwatchPlayersSchema = z.array(
         lastName: z.string(),
         bibNumber: z.number(),
         startTime: z.number().optional(),
+        classificationId: z.number(),
     }),
 );
 
@@ -70,6 +71,7 @@ export const playerRouter = router({
                     },
                     bibNumber: true,
                     startTime: true,
+                    classificationId: true,
                 },
             });
             return players.map(p => ({ ...p.profile, ...p, bibNumber: Number(p.bibNumber) })) as z.TypeOf<typeof stopwatchPlayersSchema>;
