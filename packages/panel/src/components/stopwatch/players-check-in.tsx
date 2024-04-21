@@ -85,7 +85,6 @@ type PlayerSuggestionProps = {
     showSplit: boolean;
 };
 export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, showSplit }: PlayerSuggestionProps) => {
-    const t = useTranslations();
     return (
         <button
             onClick={() => onPlayerCheckIn(player.bibNumber)}
@@ -114,7 +113,7 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, s
             </div>
             {showSplit && (
                 <div className={classNames("ml-2 text-xs font-medium", typeahead === player.bibNumber ? "" : "opacity-50")}>
-                    {t("stopwatch.checkIn.split")} {player.nextSplit.name}
+                    {player.nextSplit.name}
                 </div>
             )}
         </button>
@@ -208,13 +207,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
                         "active:animate-pushInLittle flex items-center justify-center rounded-md bg-gradient-to-b from-orange-500 to-red-500 p-4 font-semibold text-white shadow-md transition-opacity",
                         canRecord ? "animate-wave" : "pointer-events-none opacity-20",
                     )}>
-                    {splits.length > 1 && canRecord ? (
-                        <span>
-                            {t("stopwatch.checkIn.split")} {bestGuess.nextSplit.name}
-                        </span>
-                    ) : (
-                        <span>{t("stopwatch.checkIn.split")}</span>
-                    )}
+                    {canRecord ? <span>{bestGuess.nextSplit.name}</span> : <span>{t("stopwatch.checkIn.split")}</span>}
                     <Icon className="ml-4" size={1.4} path={timeCritical ? mdiTimerPlusOutline : mdiCheck}></Icon>
                 </div>
             </div>

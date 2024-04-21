@@ -18,7 +18,6 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
         raceId,
         name: "",
         abbrev: "",
-        laps: 0,
     };
 
     const timingPointCreated = async (timingPoint: CreateTimingPoint) => {
@@ -32,7 +31,6 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
             onReject={onReject}
             onResolve={timingPointCreated}
             initialTimingPoint={timingPoint}
-            timingPointType="checkpoint"
         />
     );
 };

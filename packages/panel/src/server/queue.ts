@@ -60,7 +60,8 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             existing: existingSplitTimesMap.get(id)! as ExistingSplitTime,
             actual: actualSplitTimesMap.get(id) as ActualSplitTime,
         }))
-        .filter(({ actual, existing }) => !areSplitTimesEqual(actual, existing));
+        .filter(({ actual, existing }) => !areSplitTimesEqual(actual, existing))
+        .map(({ actual }) => actual);
 
     await db.$transaction([...splitTimes_toDelete].map(id => db.splitTime.delete({ where: { id_raceId: { id, raceId } } })));
     await db.$transaction([...absences_toDelete].map(id => db.absence.delete({ where: { id_raceId: { id, raceId } } })));
@@ -69,10 +70,10 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
     await db.$transaction(newAbsences.map(data => db.absence.create({ data })));
 
     await db.$transaction(
-        splitTimesToUpdate.map(data =>
+        splitTimesToUpdate.map(({ id, timingPointId: _, ...st }) =>
             db.splitTime.update({
-                where: { id_raceId: { id: data.actual.id, raceId } },
-                data: { ...data.actual, bibNumber: data.actual.bibNumber.toString() },
+                where: { id_raceId: { raceId, id } },
+                data: { ...st, bibNumber: st.bibNumber.toString() },
             }),
         ),
     );

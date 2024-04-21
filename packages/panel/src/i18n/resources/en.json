@@ -1359,11 +1359,6 @@
           "label": "Description",
           "placeholder": "Describe the timing point"
         },
-        "laps": {
-          "description": "Optional number of laps that can be measured at the timing point. Use only in races whose route includes laps.",
-          "label": "Number of laps",
-          "placeholder": "Enter number of laps"
-        },
         "name": {
           "description": "The name of the timing point displayed in the stopwatch, times list and result list, such as start, finish, checkpoint.",
           "label": "Timing Point Name",

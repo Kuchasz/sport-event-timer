@@ -6,7 +6,6 @@ export const splitTimeSchema = z.object({
     bibNumber: z.string({ required_error: sharedErrorCodes.required }),
     time: z.number(),
     splitId: z.number({ required_error: sharedErrorCodes.required }),
-    lap: z.number({ required_error: sharedErrorCodes.required }),
 });
 
 export const manualSplitTimeSchema = splitTimeSchema.extend({ raceId: z.number({ required_error: sharedErrorCodes.required }) });

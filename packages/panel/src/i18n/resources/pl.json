@@ -1359,11 +1359,6 @@
           "label": "Opis",
           "placeholder": "Opisz punkt pomiarowy"
         },
-        "laps": {
-          "description": "Opcjonalna ilość okrążeń możliwych do zmierzenia w punkcie pomiarowym. Używaj tylko w wyścigach których trasa zakłada okrążenia.",
-          "label": "Ilość okrążeń",
-          "placeholder": "Podaj ilość okrążeń"
-        },
         "name": {
           "description": "Nazwa punktu pomiarowego wyświetlana w stoperze, liście czasów i liście wyników, np. start, meta, punkt kontrolny.",
           "label": "Nazwa Punktu Pomiarowego",

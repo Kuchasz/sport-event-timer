@@ -20,12 +20,17 @@ export const PlayersList = () => {
 
     const { data: allPlayers } = trpc.player.stopwatchPlayers.useQuery({ raceId: parseInt(raceId) }, { initialData: [] });
     const { data: timingPoint } = trpc.timingPoint.timingPoint.useQuery({ raceId: parseInt(raceId), timingPointId });
+    const { data: splits } = trpc.split.orderedByTimingPoint.useQuery(
+        { raceId: parseInt(raceId), timingPointId },
+        { enabled: timingPointId !== undefined, initialData: [] },
+    );
 
     const onResetAbsence = (id: number) => dispatch(resetAbsence({ id }));
-    const onRecordAbsence = (bibNumber: number) =>
+    const onRecordAbsence = ({ bibNumber, splitId }: { bibNumber: number; splitId: number }) =>
         dispatch(
             addAbsence({
                 bibNumber,
+                splitId,
                 timingPointId: timingPointId,
             }),
         );
@@ -39,11 +44,11 @@ export const PlayersList = () => {
     const players = sort(
         allPlayers.map(x => ({
             ...x,
-            splitTime: sort(
-                allSplitTimes.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
-                t => t.lap!,
-            ).at(-1),
-            absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
+            lastSplitTime: splits
+                .filter(s => s.classificationId === x.classificationId && s.timingPointId === timingPointId)
+                .map(s => allSplitTimes.find(st => st.bibNumber === x.bibNumber && st.splitId === s.id))
+                .at(-1),
+            absent: allAbsences.find(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId), //todo: that is wrong it will find any absence
             onReset: onResetAbsence,
             onRecord: onRecordAbsence,
             push,
@@ -82,17 +87,17 @@ export const PlayersList = () => {
                             <PlayerWithSplitTimeDisplay
                                 padLeftBibNumber={highestBibNumber.toString().length}
                                 playerWithSplitTime={players[virtualRow.index]}
-                                displayLaps={(timingPoint?.laps || 0) > 0}
+                                showSplit={splits.length > 1}
                             />
-                            {allowAbsences && !players[virtualRow.index].splitTime && !players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].lastSplitTime && !players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccount}
                                     onClick={() => {
-                                        onRecordAbsence(players[virtualRow.index].bibNumber);
+                                        onRecordAbsence({ bibNumber: players[virtualRow.index].bibNumber, splitId: 0 }); //todo: split id here is wrong!!!
                                     }}
                                 />
                             )}
-                            {allowAbsences && !players[virtualRow.index].splitTime && players[virtualRow.index].absent && (
+                            {allowAbsences && !players[virtualRow.index].lastSplitTime && players[virtualRow.index].absent && (
                                 <ActionButton
                                     icon={mdiAccountOff}
                                     onClick={() => {
