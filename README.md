@@ -121,6 +121,7 @@ Application for making time measurements
 | 28/03/2024 | Shortname to Abbreviation in timing point rework                      | <sup>:heavy_check_mark:(19/04/2024)</sup> |
 | 19/04/2024 | Prevent split modification once has any assigned times                |                  :date:                   |
 | 19/04/2024 | Hide split name in SW when only 1 split for timing point exists       |                  :date:                   |
+| 22/04/2024 | Containerize the application                                          |                  :date:                   |
 
 ## TODO
 

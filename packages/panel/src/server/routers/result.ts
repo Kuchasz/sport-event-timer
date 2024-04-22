@@ -76,7 +76,7 @@ export const resultRouter = router({
                 age: calculateAge(p.profile.birthDate),
                 yearOfBirth: p.profile.birthDate.getFullYear(),
                 times: allTimesMap[p.bibNumber],
-                absences: Object.fromEntries(p.absence.map(a => [a.timingPointId, true])),
+                absences: Object.fromEntries(p.absence.map(a => [a.splitId, true])),
                 disqualification: disqualifications[p.bibNumber],
                 timePenalties: timePenalties[p.bibNumber] ?? [],
                 totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
@@ -109,12 +109,12 @@ export const resultRouter = router({
                 }));
 
             const results = times
-                .filter(t => t.times[startSplit?.id]?.[0] && t.times[endSplit?.id]?.[0])
+                .filter(t => t.times[startSplit?.id] && t.times[endSplit?.id])
                 .map(t => ({
                     ...t,
-                    start: t.times[startSplit.id][0],
-                    finish: t.times[endSplit.id][0],
-                    result: t.times[endSplit.id][0] - t.times[startSplit.id][0] + t.totalTimePenalty,
+                    start: t.times[startSplit.id],
+                    finish: t.times[endSplit.id],
+                    result: t.times[endSplit.id] - t.times[startSplit.id] + t.totalTimePenalty,
                     invalidState: undefined,
                 }));
 
