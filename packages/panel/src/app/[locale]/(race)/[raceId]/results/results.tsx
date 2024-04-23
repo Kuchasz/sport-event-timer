@@ -66,6 +66,14 @@ export const Results = () => {
         },
     );
 
+    const { data: splitsInOrder } = trpc.split.splitsInOrder.useQuery(
+        { raceId: raceId, classificationId: classificationId! },
+        {
+            enabled: classificationId !== undefined,
+            initialData: [],
+        },
+    );
+
     const { data: disqualifications, refetch: refetchDisqualifications } = trpc.disqualification.disqualifications.useQuery(
         {
             raceId: raceId,
@@ -92,6 +100,12 @@ export const Results = () => {
             sortable: true,
             headerName: t("pages.results.grid.columns.playerLastName"),
         },
+        ...splitsInOrder.map(split => ({
+            field: "id" as any,
+            headerName: split.name,
+            sortable: true,
+            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.times[split.id])}</span>,
+        })),
         {
             field: "start",
             headerName: t("pages.results.grid.columns.start"),

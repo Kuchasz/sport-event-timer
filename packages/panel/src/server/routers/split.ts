@@ -40,6 +40,24 @@ export const splitRouter = router({
 
             return splits;
         }),
+    splitsInOrder: protectedProcedure
+        .input(
+            z.object({
+                raceId: z.number({ required_error: "raceId is required" }),
+                classificationId: z.number({ required_error: "classificationId is required" }),
+            }),
+        )
+        .query(async ({ input, ctx }) => {
+            const { raceId, classificationId } = input;
+            const splits = await ctx.db.split.findMany({
+                where: { raceId, classificationId },
+            });
+
+            const splitsOrder = await ctx.db.splitOrder.findFirstOrThrow({ where: { raceId, classificationId } });
+            const order = JSON.parse(splitsOrder.order) as number[];
+
+            return order.map(id => splits.find(s => s.id === id)!);
+        }),
     updateSplits: protectedProcedure
         .input(
             z.object({
