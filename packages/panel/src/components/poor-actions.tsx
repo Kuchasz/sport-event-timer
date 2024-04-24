@@ -20,7 +20,7 @@ export const NewPoorActionsItem = ({ name, description, iconPath, href, onClick 
         {...(href ? { href } : null)}
         {...(onClick ? { onClick } : null)}
         className="-m-3 flex cursor-pointer items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-blue-100 text-white">
+        <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-blue-100 text-white">
             <Icon size={1} className="text-blue-700" path={iconPath} />
         </div>
         <div className="ml-4 text-sm font-medium">
@@ -58,7 +58,7 @@ export const PoorActions = ({ children }: { children: React.ReactNode }) => {
                 leave="transition ease-in duration-150"
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1">
-                <Popover.Button className="group inline-flex items-center rounded-full px-3 py-2 text-base font-medium text-white hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                <Popover.Button className="group flex size-8 items-center justify-center rounded-full text-base font-medium text-white hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <Icon className="text-black" size={0.8} path={mdiDotsHorizontal} />
                 </Popover.Button>
                 <Popover.Panel className="mt-3 w-screen max-w-sm px-4 sm:px-0">
