@@ -1141,11 +1141,9 @@
         "columns": {
           "actions": "Actions",
           "bibNumber": "Bib",
-          "finish": "Finish",
           "playerLastName": "Last Name",
           "playerName": "Name",
           "result": "Result",
-          "start": "Start",
           "totalTimePenalty": "Time penalty"
         },
         "search": {

@@ -129,18 +129,6 @@ export const Results = () => {
             cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.times[split.id])}</span>,
         })),
         {
-            field: "start",
-            headerName: t("pages.results.grid.columns.start"),
-            sortable: true,
-            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.start)}</span>,
-        },
-        {
-            field: "finish",
-            headerName: t("pages.results.grid.columns.finish"),
-            sortable: true,
-            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.finish)}</span>,
-        },
-        {
             field: "totalTimePenalty",
             headerName: t("pages.results.grid.columns.totalTimePenalty"),
             sortable: true,

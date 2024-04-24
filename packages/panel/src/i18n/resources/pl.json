@@ -1141,11 +1141,9 @@
         "columns": {
           "actions": "Akcje",
           "bibNumber": "Numer",
-          "finish": "Meta",
           "playerLastName": "Nazwisko",
           "playerName": "Imię",
           "result": "Wynik",
-          "start": "Start",
           "totalTimePenalty": "Kara czasowa"
         },
         "search": {
