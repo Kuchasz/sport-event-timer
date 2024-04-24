@@ -1,7 +1,7 @@
 import { daysFromNow } from "@set/utils/dist/datetime";
 import { z } from "zod";
 import { timingPointErrors } from "../../modules/timing-point/errors";
-import { timingPointAccessUrlSchema, timingPointSchema, type TimingPointType } from "../../modules/timing-point/models";
+import { timingPointAccessUrlSchema, timingPointSchema } from "../../modules/timing-point/models";
 import { protectedProcedure, router } from "../trpc";
 
 export const timingPointRouter = router({
@@ -14,11 +14,10 @@ export const timingPointRouter = router({
                 include: { _count: { select: { timingPointAccessUrl: true, split: true } } },
             });
 
-            return timingPoints.map(timingPoint => ({
+            return timingPoints.map(({ _count, ...timingPoint }) => ({
                 ...timingPoint,
-                type: timingPoint.type as TimingPointType,
-                splits: timingPoint._count.split,
-                numberOfAccessUrls: timingPoint._count.timingPointAccessUrl,
+                splits: _count.split,
+                numberOfAccessUrls: _count.timingPointAccessUrl,
             }));
         }),
     timingPoint: protectedProcedure
@@ -35,7 +34,6 @@ export const timingPointRouter = router({
             });
             return {
                 ...timingPoint,
-                type: timingPoint.type as TimingPointType,
             };
         }),
     addTimingPointAccessUrl: protectedProcedure.input(timingPointAccessUrlSchema).mutation(async ({ input, ctx }) => {

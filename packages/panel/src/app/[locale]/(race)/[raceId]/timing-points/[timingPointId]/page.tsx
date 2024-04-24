@@ -1,6 +1,7 @@
 import { authenticate } from "src/auth";
 import { TimingPoint } from "./timing-point";
 import { trpcRSC } from "src/trpc-core-rsc";
+import { StandardPage } from "src/components/pages";
 
 export default async function ({ params: { timingPointId, raceId } }: { params: { raceId: string; timingPointId: string } }) {
     await authenticate();
@@ -10,5 +11,9 @@ export default async function ({ params: { timingPointId, raceId } }: { params: 
         timingPointId: Number(timingPointId),
     });
 
-    return <TimingPoint initialTimingPointUrls={timingPointUrls} initialTimingPoint={timingPoint} />;
+    return (
+        <StandardPage>
+            <TimingPoint initialTimingPointUrls={timingPointUrls} initialTimingPoint={timingPoint} />
+        </StandardPage>
+    );
 }

@@ -1,7 +1,12 @@
 import { authenticate } from "src/auth";
 import { ClassificationCategories } from "./classification-categories";
+import { StandardPage } from "src/components/pages";
 
 export default async function () {
     await authenticate();
-    return <ClassificationCategories />;
+    return (
+        <StandardPage>
+            <ClassificationCategories />
+        </StandardPage>
+    );
 }

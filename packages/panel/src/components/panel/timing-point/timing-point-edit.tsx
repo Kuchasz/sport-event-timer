@@ -25,7 +25,6 @@ export const TimingPointEdit = ({ editedTimingPoint, onReject, onResolve }: Timi
             onReject={onReject}
             onResolve={timingPointEdited}
             initialTimingPoint={editedTimingPoint}
-            timingPointType={editedTimingPoint.type}
         />
     );
 };

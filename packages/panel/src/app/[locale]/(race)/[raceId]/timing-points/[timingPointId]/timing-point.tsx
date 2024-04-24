@@ -129,7 +129,7 @@ export const TimingPoint = ({
         },
     ];
 
-    const deleteTimingPoint = async (timingPoint: TimingPoint) => {
+    const deleteTimingPoint = async (timingPoint: EditTimingPoint) => {
         await deleteTimingPointMutation.mutateAsync(timingPoint);
         router.push(`/${raceId}/timing-points`);
     };
