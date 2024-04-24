@@ -59,7 +59,7 @@ export const Results = () => {
 
     const [classificationId, setClassificationId] = useState<number>();
 
-    const { data: results, refetch: refetchResults } = trpc.result.results.useQuery(
+    const { data: results, refetch: refetchResults } = trpc.result.fullResults.useQuery(
         { raceId: raceId, classificationId: classificationId! },
         {
             enabled: classificationId !== undefined,
