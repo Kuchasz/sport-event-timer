@@ -70,7 +70,7 @@ export const Classifications = () => {
         { field: "name", headerName: t("pages.classifications.grid.columns.name"), sortable: true },
         {
             headerName: t("pages.classifications.grid.columns.actions"),
-            field: "id",
+            field: "actions",
             cellRenderer: data => <ClassificationActions refetch={refetch} classification={data} />,
         },
     ];

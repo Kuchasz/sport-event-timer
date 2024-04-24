@@ -45,9 +45,8 @@ export const TimingPoints = () => {
             headerName: t("pages.timingPoints.sections.grid.columns.numberOfAccessUrls"),
         },
         {
-            field: "id",
+            field: "actions",
             headerName: t("pages.timingPoints.sections.grid.columns.actions"),
-            sortable: false,
             cellRenderer: d => (
                 <Button onClick={() => router.push(`/${raceId}/timing-points/${d.id}`)} small outline>
                     <Icon size={0.8} path={mdiFileDocumentArrowRightOutline} />

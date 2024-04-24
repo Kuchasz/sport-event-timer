@@ -72,7 +72,7 @@ export const BibNumbers = () => {
             headerName: t("pages.bibNumbers.grid.columns.bibNumber"),
         },
         {
-            field: "id",
+            field: "actions",
             headerName: t("pages.bibNumbers.grid.columns.actions"),
             cellRenderer: data => <BibNumberActions refetch={refetch} bibNumber={data} />,
         },

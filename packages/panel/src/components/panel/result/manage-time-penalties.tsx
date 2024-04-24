@@ -76,9 +76,8 @@ export const ManageTimePenalties = ({ onResolve, initialPenalties, bibNumber, ra
             cellRenderer: data => <span>{formatTimeWithMilliSecUTC(data.time)}</span>,
         },
         {
-            field: "time",
+            field: "actions",
             headerName: t("pages.results.manageTimePenalties.grid.columns.actions"),
-            sortable: false,
             cellRenderer: data => (
                 <TimePenaltyActions
                     name={name}

@@ -113,7 +113,7 @@ export const ClassificationCategories = () => {
             cellRenderer: CategoryIsSpecialRenderer,
         },
         {
-            field: "id",
+            field: "actions",
             headerName: t("pages.classifications.categories.grid.columns.actions"),
             cellRenderer: data => <CategoryActions category={data} refetch={async () => await refetch()} />,
         },

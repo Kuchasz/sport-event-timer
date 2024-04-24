@@ -230,8 +230,7 @@ export const PlayerRegistrations = () => {
             cellRenderer: data => <PlayerRegistrationPromotedToPlayer playerRegistration={data} />,
         },
         {
-            field: "id",
-            sortable: false,
+            field: "actions",
             headerName: t("pages.playerRegistrations.grid.columns.actions"),
             cellRenderer: data => <PlayerRegistrationActions refetch={refetch} playerRegistration={data} />,
         },

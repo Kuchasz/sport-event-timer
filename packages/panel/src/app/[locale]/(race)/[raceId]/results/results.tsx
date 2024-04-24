@@ -153,7 +153,7 @@ export const Results = () => {
             ),
         },
         {
-            field: "bibNumber",
+            field: "actions",
             headerName: t("pages.results.grid.columns.actions"),
             cellRenderer: (data: Result) => (
                 <PoorActions>

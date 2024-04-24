@@ -132,8 +132,7 @@ export const Penalties = () => {
         },
         {
             headerName: t("timeMeasurement.penalties.page.grid.columns.actions"),
-            field: "bibNumber",
-            sortable: false,
+            field: "actions",
             cellRenderer: data => <TimePenaltyActions refetch={refetchTimePenalties} penalty={data} />,
         },
     ];
@@ -156,8 +155,7 @@ export const Penalties = () => {
         },
         {
             headerName: t("timeMeasurement.penalties.page.grid.columns.actions"),
-            field: "bibNumber",
-            sortable: false,
+            field: "actions",
             cellRenderer: data => <DisqualificationActions refetch={refetchDisqualifications} disqualification={data} />,
         },
     ];

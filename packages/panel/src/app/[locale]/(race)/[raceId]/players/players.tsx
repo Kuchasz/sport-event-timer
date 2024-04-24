@@ -141,8 +141,7 @@ export const Players = () => {
         },
         {
             headerName: t("pages.players.grid.columns.actions"),
-            field: "bibNumber",
-            sortable: false,
+            field: "actions",
             cellRenderer: data => <PlayerActions refetch={refetch} player={data} />,
         },
     ];

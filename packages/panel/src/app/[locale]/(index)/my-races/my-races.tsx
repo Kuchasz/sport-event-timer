@@ -90,7 +90,7 @@ export const MyRaces = () => {
         },
         {
             headerName: t("pages.races.grid.columns.actions"),
-            field: "id",
+            field: "actions",
             cellRenderer: data => (
                 <PoorActions>
                     <PoorModal

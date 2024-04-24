@@ -89,9 +89,8 @@ export const TimingPoint = ({
             cellRenderer: d => (d.canAccessOthers ? "true" : "false"),
         },
         {
-            field: "id",
+            field: "actions",
             headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.actions"),
-            sortable: false,
             cellRenderer: d => (
                 <PoorActions>
                     <PoorModal

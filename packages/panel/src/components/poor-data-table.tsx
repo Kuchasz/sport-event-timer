@@ -14,16 +14,26 @@ import { ScrollArea, ScrollBar } from "./scroll-area";
 import { naturalSort } from "@set/utils/dist/array";
 import { getValueAtPath } from "@set/utils/dist/object";
 
-export type PoorDataTableColumn<T> = {
-    [TField in keyof T]: {
-        field: TField;
-        headerName: string;
-        sortable?: T[TField] extends Date ? false : boolean;
-        cellRenderer?: React.FC<T>;
-        hide?: boolean;
-        allowShrink?: boolean;
-    };
-}[keyof T];
+type PoorDataTableCustomColumn<T> = {
+    field: string;
+    headerName: string;
+    cellRenderer: React.FC<T>;
+    hide?: boolean;
+    allowShrink?: boolean;
+};
+
+export type PoorDataTableColumn<T> =
+    | {
+          [TField in keyof T]: {
+              field: TField;
+              headerName: string;
+              sortable?: T[TField] extends Date ? false : boolean;
+              cellRenderer?: React.FC<T>;
+              hide?: boolean;
+              allowShrink?: boolean;
+          };
+      }[keyof T]
+    | PoorDataTableCustomColumn<T>;
 
 type PoorDataTableProps<T> = {
     gridName: string;
