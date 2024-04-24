@@ -9,15 +9,16 @@ type SplitTimeEditProps = {
     onResolve: (splitTime: SplitTime) => void;
     editedSplitTime: SplitTime;
     raceId: number;
+    classificationId: number;
     raceDate: number;
 };
 
-export const SplitTimeEdit = ({ raceId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
-    const { data: timingPoints } = trpc.timingPoint.timingPoints.useQuery({ raceId: raceId });
-    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId: raceId });
+export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
+    const { data: splits } = trpc.split.splitsInOrder.useQuery({ raceId, classificationId });
+    const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
 
-    if (!timingPoints || !availableNumbers) return;
+    if (!splits || !availableNumbers) return;
 
     const editSplitTime = async (splitTime: SplitTime) => {
         await updateSplitTimeMutation.mutateAsync({ ...splitTime, raceId: raceId });
@@ -27,7 +28,7 @@ export const SplitTimeEdit = ({ raceId, raceDate, editedSplitTime, onReject, onR
     return (
         <SplitTimeForm
             isLoading={updateSplitTimeMutation.isLoading}
-            timingPoints={timingPoints}
+            splits={splits}
             raceDate={raceDate}
             onReject={onReject}
             onResolve={editSplitTime}

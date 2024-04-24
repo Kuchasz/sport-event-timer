@@ -1233,10 +1233,10 @@
           "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
           "label": "Time"
         },
-        "timingPoint": {
-          "description": "Timing point related to the split time.",
-          "label": "Timing Point",
-          "placeholder": "Choose timing point"
+        "split": {
+          "description": "Split related to the split time.",
+          "label": "Split",
+          "placeholder": "Choose split"
         }
       },
       "grid": {

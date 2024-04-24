@@ -250,7 +250,7 @@ export const Results = () => {
                             columns={cols}
                             searchPlaceholder={t("pages.results.grid.search.placeholder")}
                             getRowId={item => item.bibNumber}
-                            gridName="results"
+                            gridName={`results.${classificationId}`}
                             searchFields={["name", "lastName", "team", "bibNumber"]}
                         />
                     </div>

@@ -140,10 +140,9 @@ export const dayForLocale = (date: Date, weekdayFormat: WeekdayFormat = "short",
         new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())),
     );
 
-export const stripSeconds = (date: Date) => {
+export const stripTime = (date: Date) => {
     const d = new Date(date);
-    d.setSeconds(0);
-    d.setMilliseconds(0);
+    d.setHours(0, 0, 0, 0);
     return d;
 };
 

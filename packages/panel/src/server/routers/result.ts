@@ -246,8 +246,6 @@ export const resultRouter = router({
                 .map(t => ({
                     ...t,
                     invalidState: "dsq",
-                    start: undefined,
-                    finish: undefined,
                     result: Number.MAX_VALUE,
                     ageCategory: undefined,
                     openCategory: undefined,
@@ -258,8 +256,6 @@ export const resultRouter = router({
                 .map(t => ({
                     ...t,
                     invalidState: t.absences[startSplit.id] ? "dns" : t.absences[endSplit.id] ? "dnf" : undefined,
-                    start: undefined,
-                    finish: undefined,
                     result: Number.MAX_VALUE,
                     ageCategory: undefined,
                     openCategory: undefined,
@@ -269,8 +265,6 @@ export const resultRouter = router({
                 .filter(t => !t.disqualification && t.times[startSplit?.id] && t.times[endSplit?.id])
                 .map(t => ({
                     ...t,
-                    start: t.times[startSplit.id],
-                    finish: t.times[endSplit.id],
                     result: t.times[endSplit.id] - t.times[startSplit.id] + t.totalTimePenalty,
                     invalidState: undefined,
                     ageCategory: classification.categories

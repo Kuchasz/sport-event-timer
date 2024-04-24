@@ -20,14 +20,29 @@ export const splitTimeRouter = router({
                 where: { raceId },
                 include: { split: true, player: { include: { profile: true, classification: true } } },
             });
+            const manualSplitTimes = await ctx.db.manualSplitTime.findMany({
+                where: { raceId },
+                include: { split: true, player: { include: { profile: true, classification: true } } },
+            });
+
+            const splitTimesMap = splitTimes.map(
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: false }] as ResultEntry,
+            );
+            const manualSplitTimesMap = manualSplitTimes.map(
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: true }] as ResultEntry,
+            );
+
+            const allTimesMap = fromDeepEntries([...splitTimesMap, ...manualSplitTimesMap]);
 
             return splitTimes.map(st => ({
                 id: st.id,
                 bibNumber: st.player.bibNumber,
                 name: st.player.profile.name,
                 lastName: st.player.profile.lastName,
-                time: Number(st.time),
+                time: allTimesMap[st.bibNumber][st.splitId],
+                splitId: st.splitId,
                 splitName: st.split.name,
+                classificationId: st.player.classificationId,
                 classificationName: st.player.classification.name,
             }));
         }),
@@ -115,14 +130,12 @@ export const splitTimeRouter = router({
                 data: splitTime,
             });
     }),
-    revert: protectedProcedure
-        .input(z.object({ bibNumber: z.string(), timingPointId: z.number(), lap: z.number() }))
-        .mutation(async ({ input, ctx }) => {
-            const { ...data } = input;
-            return await ctx.db.manualSplitTime.delete({
-                where: { splitId_bibNumber: { bibNumber: data.bibNumber, splitId: data.timingPointId } },
-            });
-        }),
+    revert: protectedProcedure.input(z.object({ bibNumber: z.string(), splitId: z.number() })).mutation(async ({ input, ctx }) => {
+        const { ...data } = input;
+        return await ctx.db.manualSplitTime.delete({
+            where: { splitId_bibNumber: { bibNumber: data.bibNumber, splitId: data.splitId } },
+        });
+    }),
 });
 
 export type SplitTimeRouter = typeof splitTimeRouter;

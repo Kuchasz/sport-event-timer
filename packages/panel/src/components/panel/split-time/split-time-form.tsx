@@ -16,38 +16,30 @@ type SplitTimeFormProps = {
     bibNumbers: string[];
     raceDate: number;
     isLoading: boolean;
-    timingPoints: AppRouterOutputs["timingPoint"]["timingPoints"];
+    splits: AppRouterOutputs["split"]["splitsInOrder"];
 };
 
-export const SplitTimeForm = ({
-    onReject,
-    onResolve,
-    initialSplitTime,
-    bibNumbers,
-    isLoading,
-    raceDate,
-    timingPoints,
-}: SplitTimeFormProps) => {
+export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, bibNumbers, isLoading, raceDate, splits }: SplitTimeFormProps) => {
     const t = useTranslations();
 
     return (
         <Form<SplitTime> initialValues={initialSplitTime} validationSchema={splitTimeSchema} onSubmit={onResolve}>
-            {timingPoints?.length && (
-                <FormInput<SplitTime, "timingPointId">
-                    label={t("pages.splitTimes.form.timingPoint.label")}
-                    description={t("pages.splitTimes.form.timingPoint.description")}
+            {splits?.length && (
+                <FormInput<SplitTime, "splitId">
+                    label={t("pages.splitTimes.form.split.label")}
+                    description={t("pages.splitTimes.form.split.description")}
                     className="flex-1"
                     render={({ value, onChange }) => (
                         <PoorSelect
                             initialValue={value}
-                            items={timingPoints}
-                            placeholder={t("pages.splitTimes.form.timingPoint.placeholder")}
+                            items={splits}
+                            placeholder={t("pages.splitTimes.form.split.placeholder")}
                             nameKey="name"
                             valueKey="id"
                             onChange={onChange}
                         />
                     )}
-                    name="timingPointId"
+                    name="splitId"
                 />
             )}
             <div className="p-2"></div>

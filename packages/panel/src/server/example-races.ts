@@ -1,6 +1,3 @@
-import { createRange, fillArray, groupBy, toMap } from "@set/utils/dist/array";
-import { sportKinds } from "@set/utils/dist/sport-kind";
-import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import { fakerEN, fakerPL, type Faker } from "@faker-js/faker";
 import type {
     BibNumber,
@@ -10,12 +7,15 @@ import type {
     PlayerProfile,
     PlayerRegistration,
     Race,
-    TimingPoint,
-    SplitOrder,
     Split,
+    SplitOrder,
+    TimingPoint,
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
-import { daysFromNow, stripSeconds, subtractDaysFromDate } from "@set/utils/dist/datetime";
+import { createRange, fillArray, groupBy, toMap } from "@set/utils/dist/array";
+import { daysFromNow, stripTime, subtractDaysFromDate } from "@set/utils/dist/datetime";
+import { sportKinds } from "@set/utils/dist/sport-kind";
+import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import type { Locales } from "../i18n/locales";
 import { db } from "./db";
 
@@ -102,7 +102,7 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
 
 const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
     fillArray(numberOfRaces).map(() => {
-        const raceDate = stripSeconds(faker.date.future({ years: 1 }));
+        const raceDate = stripTime(faker.date.future({ years: 1 }));
         const registrationCutoff = subtractDaysFromDate(raceDate, faker.number.int({ min: 1, max: 7 }));
         return {
             date: raceDate,

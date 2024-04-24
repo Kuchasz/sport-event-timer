@@ -1233,10 +1233,10 @@
           "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany.",
           "label": "Czas"
         },
-        "timingPoint": {
-          "description": "Punkt pomiarowy którego dotyczy zarejestrowany czas.",
-          "label": "Punkt pomiarowy",
-          "placeholder": "Wybierz punkt pomiarowy"
+        "split": {
+          "description": "Międzyczas którego dotyczy zarejestrowany czas.",
+          "label": "Międzyczas",
+          "placeholder": "Wybierz międzyczas"
         }
       },
       "grid": {
