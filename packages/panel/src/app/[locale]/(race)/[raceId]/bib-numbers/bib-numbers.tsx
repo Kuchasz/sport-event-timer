@@ -73,6 +73,7 @@ export const BibNumbers = () => {
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.bibNumbers.grid.columns.actions"),
             cellRenderer: data => <BibNumberActions refetch={refetch} bibNumber={data} />,
         },

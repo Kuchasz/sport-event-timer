@@ -77,6 +77,7 @@ export const ManageTimePenalties = ({ onResolve, initialPenalties, bibNumber, ra
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.results.manageTimePenalties.grid.columns.actions"),
             cellRenderer: data => (
                 <TimePenaltyActions

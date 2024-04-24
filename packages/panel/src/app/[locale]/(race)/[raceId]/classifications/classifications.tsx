@@ -71,6 +71,7 @@ export const Classifications = () => {
         {
             headerName: t("pages.classifications.grid.columns.actions"),
             field: "actions",
+            allowShrink: true,
             cellRenderer: data => <ClassificationActions refetch={refetch} classification={data} />,
         },
     ];

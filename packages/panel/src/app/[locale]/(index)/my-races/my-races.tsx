@@ -91,6 +91,7 @@ export const MyRaces = () => {
         {
             headerName: t("pages.races.grid.columns.actions"),
             field: "actions",
+            allowShrink: true,
             cellRenderer: data => (
                 <PoorActions>
                     <PoorModal

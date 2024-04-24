@@ -20,6 +20,7 @@ type PoorDataTableCustomColumn<T> = {
     cellRenderer: React.FC<T>;
     hide?: boolean;
     allowShrink?: boolean;
+    sortable?: boolean;
 };
 
 export type PoorDataTableColumn<T> =
@@ -142,9 +143,9 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
 
     function handleSortClick(c: PoorDataTableColumn<T>, sortColumn: SortState<T> | null): void {
         if (sortColumn?.field === c.field)
-            if (sortColumn.order === "asc") sortOverColumn({ order: "desc", field: c.field });
+            if (sortColumn.order === "asc") sortOverColumn({ order: "desc", field: c.field as keyof T });
             else sortOverColumn(null);
-        else sortOverColumn({ order: "asc", field: c.field });
+        else sortOverColumn({ order: "asc", field: c.field as keyof T });
     }
 
     return (
@@ -214,12 +215,12 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                             ) : (
                                                 <div className="whitespace-nowrap">
                                                     {searchQuery &&
-                                                    usableSearchFields?.includes(c.field) &&
-                                                    d[usableSearchFields.indexOf(c.field)]
-                                                        ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field)], (m, i) => (
+                                                    usableSearchFields?.includes(c.field as keyof T) &&
+                                                    d[usableSearchFields.indexOf(c.field as keyof T)]
+                                                        ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field as keyof T)], (m, i) => (
                                                               <mark key={i}>{m}</mark>
                                                           ))
-                                                        : (d.obj[c.field] as any)}
+                                                        : (d.obj[c.field as keyof T] as any)}
                                                 </div>
                                             )}
                                         </div>

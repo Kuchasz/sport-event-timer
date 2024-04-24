@@ -90,6 +90,7 @@ export const TimingPoint = ({
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.timingPoint.sections.accessUrls.grid.columns.actions"),
             cellRenderer: d => (
                 <PoorActions>

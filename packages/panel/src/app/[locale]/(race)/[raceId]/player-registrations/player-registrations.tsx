@@ -231,6 +231,7 @@ export const PlayerRegistrations = () => {
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.playerRegistrations.grid.columns.actions"),
             cellRenderer: data => <PlayerRegistrationActions refetch={refetch} playerRegistration={data} />,
         },

@@ -133,6 +133,7 @@ export const Penalties = () => {
         {
             headerName: t("timeMeasurement.penalties.page.grid.columns.actions"),
             field: "actions",
+            allowShrink: true,
             cellRenderer: data => <TimePenaltyActions refetch={refetchTimePenalties} penalty={data} />,
         },
     ];
@@ -156,6 +157,7 @@ export const Penalties = () => {
         {
             headerName: t("timeMeasurement.penalties.page.grid.columns.actions"),
             field: "actions",
+            allowShrink: true,
             cellRenderer: data => <DisqualificationActions refetch={refetchDisqualifications} disqualification={data} />,
         },
     ];

@@ -142,6 +142,7 @@ export const Players = () => {
         {
             headerName: t("pages.players.grid.columns.actions"),
             field: "actions",
+            allowShrink: true,
             cellRenderer: data => <PlayerActions refetch={refetch} player={data} />,
         },
     ];

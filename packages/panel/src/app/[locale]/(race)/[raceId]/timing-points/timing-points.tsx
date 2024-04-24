@@ -46,6 +46,7 @@ export const TimingPoints = () => {
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.timingPoints.sections.grid.columns.actions"),
             cellRenderer: d => (
                 <Button onClick={() => router.push(`/${raceId}/timing-points/${d.id}`)} small outline>

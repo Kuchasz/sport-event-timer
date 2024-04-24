@@ -114,6 +114,7 @@ export const ClassificationCategories = () => {
         },
         {
             field: "actions",
+            allowShrink: true,
             headerName: t("pages.classifications.categories.grid.columns.actions"),
             cellRenderer: data => <CategoryActions category={data} refetch={async () => await refetch()} />,
         },

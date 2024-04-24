@@ -90,6 +90,7 @@ export const Results = () => {
             field: "hasError",
             headerName: "",
             sortable: false,
+            allowShrink: true,
             cellRenderer: (data: Result) =>
                 data.hasError ? (
                     <Tooltip>
@@ -123,9 +124,9 @@ export const Results = () => {
             headerName: t("pages.results.grid.columns.playerLastName"),
         },
         ...splitsInOrder.map(split => ({
-            field: "id" as any,
+            field: split.id.toString(),
             headerName: split.name,
-            sortable: true,
+            // sortable: true,
             cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.times[split.id])}</span>,
         })),
         {
@@ -155,6 +156,7 @@ export const Results = () => {
         {
             field: "actions",
             headerName: t("pages.results.grid.columns.actions"),
+            allowShrink: true,
             cellRenderer: (data: Result) => (
                 <PoorActions>
                     <PoorModal
