@@ -3,7 +3,7 @@ import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/di
 import type { AppRouterOutputs } from "src/trpc";
 import { trpc } from "../../../../../trpc-core";
 
-import { mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
+import { mdiAlertCircleOutline, mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
@@ -18,8 +18,9 @@ import Head from "next/head";
 import { useCurrentRaceId } from "../../../../../hooks";
 import { useState } from "react";
 import { PoorSelect } from "src/components/poor-select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "src/components/tooltip";
 
-type Result = AppRouterOutputs["result"]["results"][0];
+type Result = AppRouterOutputs["result"]["directorsResults"][0];
 
 const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result: Result; refetch: () => Promise<void> }) => {
     const t = useTranslations();
@@ -59,7 +60,7 @@ export const Results = () => {
 
     const [classificationId, setClassificationId] = useState<number>();
 
-    const { data: results, refetch: refetchResults } = trpc.result.fullResults.useQuery(
+    const { data: results, refetch: refetchResults } = trpc.result.directorsResults.useQuery(
         { raceId: raceId, classificationId: classificationId! },
         {
             enabled: classificationId !== undefined,
@@ -85,6 +86,27 @@ export const Results = () => {
     const t = useTranslations();
 
     const cols: PoorDataTableColumn<Result>[] = [
+        {
+            field: "hasError",
+            headerName: "",
+            sortable: false,
+            cellRenderer: (data: Result) =>
+                data.hasError ? (
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-red-100 text-red-500"></Icon>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("pages.splitTimes.grid.columns.status.error")}</TooltipContent>
+                    </Tooltip>
+                ) : data.hasWarning ? (
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Icon size={0.8} path={mdiAlertCircleOutline} className="rounded-full bg-orange-100 text-orange-500"></Icon>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("pages.splitTimes.grid.columns.status.warning")}</TooltipContent>
+                    </Tooltip>
+                ) : null,
+        },
         {
             field: "bibNumber",
             sortable: true,

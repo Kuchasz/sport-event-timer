@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { cacheMiddleware, protectedProcedure, publicProcedure, router } from "../trpc";
-import { groupBy, sort, toLookup, toMap } from "@set/utils/dist/array";
+import { groupBy, hasUndefinedBetweenValues, isNotAscendingOrder, sort, toLookup, toMap } from "@set/utils/dist/array";
 import { fromDeepEntries } from "@set/utils/dist/object";
 import { calculateAge } from "@set/utils/dist/datetime";
 
@@ -154,7 +154,7 @@ export const resultRouter = router({
 
             return result;
         }),
-    fullResults: protectedProcedure
+    directorsResults: protectedProcedure
         .use(cacheMiddleware)
         .input(
             z.object({
@@ -212,27 +212,37 @@ export const resultRouter = router({
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
-            const playersWithTimes = allPlayers.map(p => ({
-                id: p.id,
-                bibNumber: p.bibNumber,
-                name: p.profile.name,
-                lastName: p.profile.lastName,
-                classificationId: p.classificationId,
-                team: p.profile.team,
-                gender: p.profile.gender,
-                age: calculateAge(p.profile.birthDate),
-                yearOfBirth: p.profile.birthDate.getFullYear(),
-                times: allTimesMap[p.bibNumber],
-                absences: Object.fromEntries(p.absence.map(a => [a.splitId, true])),
-                disqualification: disqualifications[p.bibNumber],
-                timePenalties: timePenalties[p.bibNumber] ?? [],
-                totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
-            }));
-
-            const times = playersWithTimes.filter(p => !p.disqualification);
+            const playersWithTimes = allPlayers
+                .map(p => ({
+                    id: p.id,
+                    bibNumber: p.bibNumber,
+                    name: p.profile.name,
+                    lastName: p.profile.lastName,
+                    classificationId: p.classificationId,
+                    team: p.profile.team,
+                    gender: p.profile.gender,
+                    age: calculateAge(p.profile.birthDate),
+                    yearOfBirth: p.profile.birthDate.getFullYear(),
+                    times: allTimesMap[p.bibNumber],
+                    absences: Object.fromEntries(p.absence.map(a => [a.splitId, true])),
+                    disqualification: disqualifications[p.bibNumber],
+                    timePenalties: timePenalties[p.bibNumber] ?? [],
+                    totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
+                }))
+                .map(p => ({
+                    ...p,
+                    hasError: isNotAscendingOrder(
+                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id]),
+                        x => x,
+                    ),
+                    hasWarning: hasUndefinedBetweenValues(
+                        splitsInOrder.map(tio => p.times[tio.id]),
+                        x => x,
+                    ),
+                }));
 
             const disqualifiedPlayers = playersWithTimes
-                .filter(d => d.disqualification)
+                .filter(t => t.disqualification)
                 .map(t => ({
                     ...t,
                     invalidState: "dsq",
@@ -243,8 +253,8 @@ export const resultRouter = router({
                     openCategory: undefined,
                 }));
 
-            const absentPlayers = times
-                .filter(t => t.absences[startSplit?.id] || t.absences[endSplit?.id])
+            const absentPlayers = playersWithTimes
+                .filter(t => !t.disqualification && (t.absences[startSplit?.id] || t.absences[endSplit?.id]))
                 .map(t => ({
                     ...t,
                     invalidState: t.absences[startSplit.id] ? "dns" : t.absences[endSplit.id] ? "dnf" : undefined,
@@ -255,8 +265,8 @@ export const resultRouter = router({
                     openCategory: undefined,
                 }));
 
-            const classifiedPlayers = times
-                .filter(t => t.times[startSplit?.id] && t.times[endSplit?.id])
+            const classifiedPlayers = playersWithTimes
+                .filter(t => !t.disqualification && t.times[startSplit?.id] && t.times[endSplit?.id])
                 .map(t => ({
                     ...t,
                     start: t.times[startSplit.id],

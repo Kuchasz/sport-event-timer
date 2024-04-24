@@ -52,8 +52,8 @@ export const splitTimeRouter = router({
             const unorderedSplits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
 
             const splitOrder = await ctx.db.splitOrder.findUniqueOrThrow({ where: { raceId, classificationId } });
-            const splits = (JSON.parse(splitOrder.order) as number[]).map(p => unorderedSplits.find(s => s.id === p)!);
-            const startSplit = splits[0];
+            const splitsInOrder = (JSON.parse(splitOrder.order) as number[]).map(p => unorderedSplits.find(s => s.id === p)!);
+            const startSplit = splitsInOrder[0];
 
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
             const raceDateStart = race?.date.getTime();
@@ -70,8 +70,6 @@ export const splitTimeRouter = router({
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
-            const timesInOrder = splits;
-
             const times = classificationPlayers
                 .map(p => ({
                     bibNumber: p.bibNumber,
@@ -79,14 +77,14 @@ export const splitTimeRouter = router({
                     lastName: p.profile.lastName,
                     times: allTimesMap[p.bibNumber],
                 }))
-                .map(t => ({
-                    ...t,
+                .map(p => ({
+                    ...p,
                     hasError: isNotAscendingOrder(
-                        timesInOrder.filter(tio => t.times[tio.id] !== undefined).map(tio => t.times[tio.id]),
+                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id]),
                         x => x.time,
                     ),
                     hasWarning: hasUndefinedBetweenValues(
-                        timesInOrder.map(tio => t.times[tio.id]),
+                        splitsInOrder.map(tio => p.times[tio.id]),
                         x => x?.time,
                     ),
                 }));
