@@ -17,7 +17,7 @@ Application for making time measurements
 | 14/09/2023 | Allow example race customization                                      | <sup>:heavy_check_mark:(14/09/2023)</sup> |
 | 14/09/2023 | Country names localization                                            | <sup>:heavy_check_mark:(14/09/2023)</sup> |
 | 17/09/2023 | Fix grid reload on data changes <sup>(updated)</sup>                  | <sup>:heavy_check_mark:(18/09/2023)</sup> |
-| 19/09/2023 | Support for laps on timing point                                      |                  :date:                   |
+| 19/09/2023 | Support for laps on timing point                                      | <sup>:heavy_check_mark:(26/04/2024)</sup> |
 | 19/09/2023 | Add notifications to successful/failed actions                        | <sup>:heavy_check_mark:(04/01/2024)</sup> |
 | 25/09/2023 | Short name for Timing Points                                          | <sup>:heavy_check_mark:(25/09/2023)</sup> |
 | 01/10/2023 | Speed up application build and release times                          | <sup>:heavy_check_mark:(03/10/2023)</sup> |
