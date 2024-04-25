@@ -1229,28 +1229,29 @@
           "label": "Numer startowy",
           "placeholder": "Wpisz numer startowy"
         },
-        "time": {
-          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany.",
-          "label": "Czas"
-        },
         "split": {
           "description": "Międzyczas którego dotyczy zarejestrowany czas.",
           "label": "Międzyczas",
           "placeholder": "Wybierz międzyczas"
+        },
+        "time": {
+          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany.",
+          "label": "Czas"
         }
       },
       "grid": {
         "columns": {
           "bibNumber": "Numer",
+          "classificationName": "Klasyfikacja",
           "playerLastName": "Nazwisko",
           "playerName": "Imię",
+          "splitName": "Międzyczas",
           "status": {
             "error": "Błąd, każdy następujący po sobie czas musi być większy niż poprzedni.",
             "warning": "Ostrzeżenie, brakuje niektórych pomiarów czasu."
           },
-          "splitName": "Międzyczas",
           "time": "Czas",
-          "classificationName": "Klasyfikacja"
+          "timingPointName": "Punkt Pomiarowy"
         },
         "search": {
           "placeholder": "Szukaj czasów pomiarowych..."
@@ -1376,10 +1377,10 @@
         },
         "grid": {
           "columns": {
+            "abbrev": "Skrót",
             "actions": "Akcje",
             "name": "Nazwa",
             "numberOfAccessUrls": "Linki dostępowe",
-            "abbrev": "Skrót",
             "splits": "Pomiary",
             "type": "Typ"
           },

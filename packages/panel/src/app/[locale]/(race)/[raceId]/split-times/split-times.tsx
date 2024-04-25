@@ -125,6 +125,11 @@ export const SplitTimes = () => {
             sortable: true,
         },
         {
+            field: "timingPointName",
+            headerName: t("pages.splitTimes.grid.columns.timingPointName"),
+            sortable: true,
+        },
+        {
             field: "time",
             headerName: t("pages.splitTimes.grid.columns.time"),
             sortable: true,

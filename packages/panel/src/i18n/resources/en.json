@@ -1229,19 +1229,20 @@
           "label": "Bib number",
           "placeholder": "Enter bib number"
         },
-        "time": {
-          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
-          "label": "Time"
-        },
         "split": {
           "description": "Split related to the split time.",
           "label": "Split",
           "placeholder": "Choose split"
+        },
+        "time": {
+          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
+          "label": "Time"
         }
       },
       "grid": {
         "columns": {
           "bibNumber": "Bib",
+          "classificationName": "Classification",
           "playerLastName": "Last Name",
           "playerName": "Name",
           "splitName": "Split",
@@ -1250,7 +1251,7 @@
             "warning": "Warning, some time measurements are missing."
           },
           "time": "Time",
-          "classificationName": "Classification"
+          "timingPointName": "Timing Point"
         },
         "search": {
           "placeholder": "Search split times..."
@@ -1376,10 +1377,10 @@
         },
         "grid": {
           "columns": {
+            "abbrev": "Abbreviation",
             "actions": "Actions",
             "name": "Name",
             "numberOfAccessUrls": "Access URLs",
-            "abbrev": "Abbreviation",
             "splits": "Splits",
             "type": "Type"
           },

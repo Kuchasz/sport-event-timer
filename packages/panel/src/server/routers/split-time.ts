@@ -18,11 +18,11 @@ export const splitTimeRouter = router({
 
             const splitTimes = await ctx.db.splitTime.findMany({
                 where: { raceId },
-                include: { split: true, player: { include: { profile: true, classification: true } } },
+                include: { split: { include: { timingPoint: true } }, player: { include: { profile: true, classification: true } } },
             });
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({
                 where: { raceId },
-                include: { split: true, player: { include: { profile: true, classification: true } } },
+                include: { split: { include: { timingPoint: true } }, player: { include: { profile: true, classification: true } } },
             });
 
             const splitTimesMap = splitTimes.map(
@@ -44,6 +44,8 @@ export const splitTimeRouter = router({
                 splitName: st.split.name,
                 classificationId: st.player.classificationId,
                 classificationName: st.player.classification.name,
+                timimingPointId: st.split.timingPointId,
+                timingPointName: st.split.timingPoint.name,
             }));
         }),
     betterSplitTimes: protectedProcedure
