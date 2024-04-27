@@ -46,7 +46,6 @@ export const resultRouter = router({
                 p => ({ time: p.time, reason: p.reason, id: p.id }),
             );
 
-            //todo: should handle new timing points here
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
             const classification = await ctx.db.classification.findFirstOrThrow({
@@ -65,55 +64,59 @@ export const resultRouter = router({
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
-            const playersWithTimes = allPlayers.map(p => ({
-                id: p.id,
-                bibNumber: p.bibNumber,
-                name: p.profile.name,
-                lastName: p.profile.lastName,
-                classificationId: p.classificationId,
-                team: p.profile.team,
-                gender: p.profile.gender,
-                age: calculateAge(p.profile.birthDate),
-                yearOfBirth: p.profile.birthDate.getFullYear(),
-                times: allTimesMap[p.bibNumber],
-                absences: Object.fromEntries(p.absence.map(a => [a.splitId, true])),
-                disqualification: disqualifications[p.bibNumber],
-                timePenalties: timePenalties[p.bibNumber] ?? [],
-                totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
-            }));
-
-            const times = playersWithTimes.filter(p => !p.disqualification);
+            const playersWithTimes = allPlayers
+                .map(p => ({
+                    id: p.id,
+                    bibNumber: p.bibNumber,
+                    name: p.profile.name,
+                    lastName: p.profile.lastName,
+                    classificationId: p.classificationId,
+                    team: p.profile.team,
+                    gender: p.profile.gender,
+                    age: calculateAge(p.profile.birthDate),
+                    yearOfBirth: p.profile.birthDate.getFullYear(),
+                    times: allTimesMap[p.bibNumber],
+                    absences: Object.fromEntries(p.absence.map(a => [a.splitId, true])),
+                    disqualification: disqualifications[p.bibNumber],
+                    timePenalties: timePenalties[p.bibNumber] ?? [],
+                    totalTimePenalty: (timePenalties[p.bibNumber] ?? []).reduce((sum, curr) => sum + curr.time, 0),
+                }))
+                .map(p => ({
+                    ...p,
+                    hasError: isNotAscendingOrder(
+                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id]),
+                        x => x,
+                    ),
+                    hasWarning: hasUndefinedBetweenValues(
+                        splitsInOrder.map(tio => p.times[tio.id]),
+                        x => x,
+                    ),
+                }));
 
             const disqualifiedPlayers = playersWithTimes
-                .filter(d => d.disqualification)
+                .filter(t => t.disqualification)
                 .map(t => ({
                     ...t,
                     invalidState: "dsq",
-                    start: undefined,
-                    finish: undefined,
                     result: Number.MAX_VALUE,
                     ageCategory: undefined,
                     openCategory: undefined,
                 }));
 
-            const absentPlayers = times
-                .filter(t => t.absences[startSplit?.id] || t.absences[endSplit?.id])
+            const absentPlayers = playersWithTimes
+                .filter(t => !t.disqualification && (t.absences[startSplit?.id] || t.absences[endSplit?.id]))
                 .map(t => ({
                     ...t,
                     invalidState: t.absences[startSplit.id] ? "dns" : t.absences[endSplit.id] ? "dnf" : undefined,
-                    start: undefined,
-                    finish: undefined,
                     result: Number.MAX_VALUE,
                     ageCategory: undefined,
                     openCategory: undefined,
                 }));
 
-            const classifiedPlayers = times
-                .filter(t => t.times[startSplit?.id] && t.times[endSplit?.id])
+            const classifiedPlayers = playersWithTimes
+                .filter(t => !t.disqualification && t.times[startSplit?.id] && t.times[endSplit?.id])
                 .map(t => ({
                     ...t,
-                    start: t.times[startSplit.id],
-                    finish: t.times[endSplit.id],
                     result: t.times[endSplit.id] - t.times[startSplit.id] + t.totalTimePenalty,
                     invalidState: undefined,
                     ageCategory: classification.categories
@@ -193,7 +196,6 @@ export const resultRouter = router({
                 p => ({ time: p.time, reason: p.reason, id: p.id }),
             );
 
-            //todo: should handle new timing points here
             const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
 
             const classification = await ctx.db.classification.findFirstOrThrow({

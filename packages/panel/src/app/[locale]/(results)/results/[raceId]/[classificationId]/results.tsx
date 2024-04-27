@@ -14,6 +14,7 @@ import { trpc } from "src/trpc-core";
 
 type Results = AppRouterOutputs["result"]["results"];
 type Race = AppRouterOutputs["race"]["raceInformation"];
+type Split = AppRouterOutputs["split"]["splits"][0];
 
 const ResultsRow = ({
     i,
@@ -23,6 +24,7 @@ const ResultsRow = ({
     openCategoriesExist,
     highlightOpenCategories,
     ageCategoriesExist,
+    splitsNames,
 }: {
     i: number;
     result: Results[0];
@@ -31,6 +33,7 @@ const ResultsRow = ({
     openCategoriesExist: boolean;
     highlightOpenCategories: boolean;
     ageCategoriesExist: boolean;
+    splitsNames: Map<number, string>;
 }) => (
     <>
         <tr
@@ -81,11 +84,11 @@ const ResultsRow = ({
                 <Icon path={displayDetails ? mdiChevronDown : mdiChevronRight} size={0.8} />
             </td>
         </tr>
-        {displayDetails ? <RowDetails i={i} result={result} /> : null}
+        {displayDetails ? <RowDetails i={i} result={result} splitsNames={splitsNames} /> : null}
     </>
 );
 
-const RowDetails = ({ i, result }: { i: number; result: Results[0] }) => {
+const RowDetails = ({ i, result, splitsNames }: { i: number; result: Results[0]; splitsNames: Map<number, string> }) => {
     const t = useTranslations();
     return (
         <tr
@@ -154,9 +157,11 @@ export const Results = ({
     initialResults,
     race,
     highlightOpenCategories,
+    splits,
 }: {
     title: string;
     initialResults: Results;
+    splits: Split[];
     race: Race;
     highlightOpenCategories: boolean;
 }) => {
@@ -177,6 +182,8 @@ export const Results = ({
 
         setRowIds(newRowIds);
     };
+
+    const splitsNames = new Map<number, string>(splits.map(s => [s.id, s.name]));
 
     const openCategoriesExist = results.some(r => !!r.openCategory);
     const ageCategoriesExist = results.some(r => !!r.ageCategory);
@@ -233,6 +240,7 @@ export const Results = ({
                                             openCategoriesExist={openCategoriesExist}
                                             highlightOpenCategories={highlightOpenCategories}
                                             ageCategoriesExist={ageCategoriesExist}
+                                            splitsNames={splitsNames}
                                         />
                                     ))}
                                 </tbody>

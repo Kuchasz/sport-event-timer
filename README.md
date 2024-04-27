@@ -122,6 +122,7 @@ Application for making time measurements
 | 19/04/2024 | Prevent split modification once has any assigned times                |                  :date:                   |
 | 19/04/2024 | Hide split name in SW when only 1 split for timing point exists       |                  :date:                   |
 | 22/04/2024 | Containerize the application                                          |                  :date:                   |
+| 26/04/2024 | Classification based start times                                      |                  :date:                   |
 
 ## TODO
 
