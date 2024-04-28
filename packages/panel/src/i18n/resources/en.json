@@ -650,6 +650,10 @@
             "description": "Name displayed in many places like results list.",
             "label": "Name",
             "placeholder": "Enter category name"
+          },
+          "abbrev": {
+            "label": "Abbreviation",
+            "description": "Abbreviation displayed in many places like results list."
           }
         },
         "grid": {

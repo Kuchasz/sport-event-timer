@@ -36,6 +36,19 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                 name="name"
             />
             <div className="p-2"></div>
+            <FormInput<Category, "abbrev">
+                label={t("pages.classifications.categories.form.abbrev.label")}
+                description={t("pages.classifications.categories.form.abbrev.description")}
+                render={({ value, onChange }) => (
+                    <PoorInput
+                        placeholder={t("pages.classifications.categories.form.name.placeholder")}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+                name="abbrev"
+            />
+            <div className="p-2"></div>
             <FormInput<Category, "minAge">
                 className="grow basis-full"
                 label={t("pages.classifications.categories.form.minAge.label")}

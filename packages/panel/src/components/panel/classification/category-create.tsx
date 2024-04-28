@@ -16,6 +16,7 @@ export const CategoryCreate = ({ classificationId, onReject, onResolve }: Catego
     const category: CreateCategory = {
         classificationId,
         name: "",
+        abbrev: "",
         minAge: undefined,
         maxAge: undefined,
         isSpecial: false,

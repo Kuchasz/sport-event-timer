@@ -650,6 +650,10 @@
             "description": "Nazwa wyświetlana między innymi na liście wyników.",
             "label": "Nazwa",
             "placeholder": "Wpisz nazwę kategorii"
+          },
+          "abbrev": {
+            "label": "Nazwa skrócona",
+            "description": "Nazwa skrócona wyświetlana między innymi na liście wyników."
           }
         },
         "grid": {
