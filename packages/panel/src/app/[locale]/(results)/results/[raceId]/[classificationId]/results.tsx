@@ -113,14 +113,12 @@ const RowDetails = ({ i, result, splitsNames }: { i: number; result: Results[0];
                     <div className="table-cell py-0.5">{t("results.grid.columns.yearOfBirth")}:</div>
                     <div className="table-cell py-0.5 pl-2">{result.yearOfBirth}</div>
                 </div>
-                <div className="table-row">
-                    <div className="table-cell py-0.5">{t("results.grid.columns.start")}:</div>
-                    <div className="table-cell py-0.5 pl-2 font-mono">{!result.invalidState && formatTimeWithMilliSec(result.start)}</div>
-                </div>
-                <div className="table-row">
-                    <div className="table-cell py-0.5">{t("results.grid.columns.finish")}:</div>
-                    <div className="table-cell py-0.5 pl-2 font-mono">{!result.invalidState && formatTimeWithMilliSec(result.finish)}</div>
-                </div>
+                {Object.entries(result.times).map(([splitId, time]) => (
+                    <div className="table-row">
+                        <div className="table-cell py-0.5">{splitsNames.get(Number(splitId))}:</div>
+                        <div className="table-cell py-0.5 pl-2 font-mono">{!result.invalidState && formatTimeWithMilliSec(time)}</div>
+                    </div>
+                ))}
                 <div className="table-row font-semibold">
                     <div className="table-cell py-0.5">{t("results.grid.columns.result")}:</div>
                     <div className="table-cell py-0.5 pl-2 font-mono">

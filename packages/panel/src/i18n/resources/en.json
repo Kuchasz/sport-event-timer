@@ -1544,14 +1544,12 @@
       "columns": {
         "category": "Cat",
         "disqualifiaction": "Disqualification:",
-        "finish": "Finish",
         "gap": "Gap",
         "open": "Open",
         "penalties": "Penalties:",
         "place": "Loc",
         "player": "Player",
         "result": "Result",
-        "start": "Start",
         "team": "Team",
         "yearOfBirth": "YoB"
       }

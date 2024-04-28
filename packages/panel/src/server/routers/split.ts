@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { splitSchema } from "../../modules/split/model";
 import { arraysMatches } from "@set/utils/dist/array";
 import { splitErrors } from "../../modules/split/errors";
@@ -25,7 +25,7 @@ export const splitRouter = router({
                 .map(id => splits.find(s => s.id === id)!)
                 .filter(Boolean);
         }),
-    splits: protectedProcedure
+    splits: publicProcedure
         .input(
             z.object({
                 raceId: z.number({ required_error: "raceId is required" }),

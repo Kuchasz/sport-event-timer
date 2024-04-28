@@ -1544,14 +1544,12 @@
       "columns": {
         "category": "Kat",
         "disqualifiaction": "Dyskwalifikacja:",
-        "finish": "Meta",
         "gap": "Strata",
         "open": "Open",
         "penalties": "Kary:",
         "place": "Msc",
         "player": "Zawodnik",
         "result": "Wynik",
-        "start": "Start",
         "team": "Drużyna",
         "yearOfBirth": "YoB"
       }

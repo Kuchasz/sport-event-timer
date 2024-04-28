@@ -10,11 +10,14 @@ export default async function ({ params: { raceId, classificationId } }: { param
         publicTrpcRSC.result.results.query({ raceId: parseInt(raceId), classificationId: parseInt(classificationId) }),
     );
     const classificationsPromise = Task.tryCatch(publicTrpcRSC.classification.classifications.query({ raceId: parseInt(raceId) }));
+    const splitsPromise = Task.tryCatch(
+        publicTrpcRSC.split.splits.query({ raceId: parseInt(raceId), classificationId: parseInt(classificationId) }),
+    );
 
-    const data = await Promise.all([racePromise, resultsPromise, classificationsPromise]);
-    const [race, results, classifications] = data;
+    const data = await Promise.all([racePromise, resultsPromise, classificationsPromise, splitsPromise]);
+    const [race, results, classifications, splits] = data;
 
-    if ([race, results, classifications].some(r => r.type === "failure")) notFound();
+    if ([race, results, classifications, splits].some(r => r.type === "failure")) notFound();
 
     const t = await getTranslations();
 
@@ -24,6 +27,7 @@ export default async function ({ params: { raceId, classificationId } }: { param
             highlightOpenCategories={false}
             initialResults={results.result!}
             race={race.result!}
+            splits={splits.result!}
         />
     );
 }
