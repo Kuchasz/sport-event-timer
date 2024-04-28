@@ -90,6 +90,7 @@ model Classification {
 model Category {
     id               Int            @id @default(autoincrement())
     name             String
+    abbrev           String
     minAge           Int?
     maxAge           Int?
     gender           String?

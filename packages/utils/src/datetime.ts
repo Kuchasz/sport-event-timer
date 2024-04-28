@@ -151,3 +151,14 @@ export const subtractDaysFromDate = (originalDate: Date, daysToSubtract: number)
     newDate.setDate(originalDate.getDate() - daysToSubtract);
     return newDate;
 };
+
+export const getEpochDate = (hours: number, minutes: number, seconds: number) => {
+    const epochMilliseconds = hours * 3600 * 1000 + minutes * 60 * 1000 + seconds * 1000;
+    return new Date(epochMilliseconds);
+};
+
+export const addMinutesToDate = (date: Date, minutesToAdd: number) => {
+    const newDate = new Date(date);
+    newDate.setMinutes(newDate.getMinutes() + minutesToAdd);
+    return newDate;
+};

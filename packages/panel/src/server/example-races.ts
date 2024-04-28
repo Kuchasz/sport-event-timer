@@ -13,7 +13,7 @@ import type {
 } from "@prisma/client";
 import type { TimerState } from "@set/timer/dist/store";
 import { createRange, fillArray, groupBy, toMap } from "@set/utils/dist/array";
-import { daysFromNow, stripTime, subtractDaysFromDate } from "@set/utils/dist/datetime";
+import { addMinutesToDate, daysFromNow, getEpochDate, stripTime, subtractDaysFromDate } from "@set/utils/dist/datetime";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import type { Locales } from "../i18n/locales";
@@ -135,9 +135,11 @@ const createCategories = (faker: Faker, classifications: Classification[], gende
 
             const gender = faker.helpers.arrayElement(genders);
             const minAge = faker.number.int({ min: 18, max: 99 });
+            const name = faker.commerce.productName();
 
             return {
-                name: faker.commerce.productName(),
+                name,
+                abbrev: faker.hacker.abbreviation(),
                 classificationId: c.id,
                 isSpecial,
                 minAge,
@@ -191,15 +193,16 @@ const createPlayers = (
     classifications: Record<number, Classification[]>,
 ): Omit<Player, "id">[] => {
     const bibNumbers = createRange({ from: 1, to: 999 });
+    const startTime = getEpochDate(9, 0, 0);
 
     return playerRegistrations
         .filter(pr => pr.hasPaid)
-        .map(pr => ({
+        .map((pr, index) => ({
             promotedByUserId: userId,
             bibNumber: bibNumbers.splice(faker.number.int({ min: 0, max: bibNumbers.length }), 1)[0].toString(),
             classificationId: faker.helpers.arrayElement(classifications[pr.raceId]).id,
             raceId: pr.raceId,
-            startTime: Math.floor(faker.date.between({ from: 0, to: 24 * 60 * 60 * 1000 }).getTime() / 1000) * 1000,
+            startTime: addMinutesToDate(startTime, index).getTime(),
             playerRegistrationId: pr.id,
             playerProfileId: pr.playerProfileId,
         }));

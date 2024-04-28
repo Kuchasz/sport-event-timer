@@ -114,7 +114,7 @@ const RowDetails = ({ i, result, splitsNames }: { i: number; result: Results[0];
                     <div className="table-cell py-0.5 pl-2">{result.yearOfBirth}</div>
                 </div>
                 {Object.entries(result.times).map(([splitId, time]) => (
-                    <div className="table-row">
+                    <div key={splitId} className="table-row">
                         <div className="table-cell py-0.5">{splitsNames.get(Number(splitId))}:</div>
                         <div className="table-cell py-0.5 pl-2 font-mono">{!result.invalidState && formatTimeWithMilliSec(time)}</div>
                     </div>
