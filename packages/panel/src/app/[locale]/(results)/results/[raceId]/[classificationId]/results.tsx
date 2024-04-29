@@ -66,7 +66,7 @@ const ResultsRow = ({
                 <td className="px-1 py-2.5 text-center text-xs">
                     {result.ageCategory && (
                         <span className="flex justify-between">
-                            {result.ageCategory.name}
+                            {result.ageCategory.abbrev}
                             <p className="mx-0.5">/</p>
                             <p className="font-bold">{result.ageCategoryPlace}</p>
                         </span>
