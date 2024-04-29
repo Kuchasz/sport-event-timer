@@ -1,26 +1,51 @@
 "use client";
+
 import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import type { AppRouterOutputs } from "src/trpc";
-import { trpc } from "../../../../../trpc-core";
-
+import { trpc } from "../../../../../../trpc-core";
 import { mdiAlertCircleOutline, mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
+import { useTranslations } from "next-intl";
+import Head from "next/head";
 import { PageHeader } from "src/components/page-headers";
 import { ApplyTimePenalty } from "src/components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "src/components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "src/components/panel/result/manage-time-penalties";
-import { PoorActions, NewPoorActionsItem } from "src/components/poor-actions";
+import { NewPoorActionsItem, PoorActions } from "src/components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
-import { useTranslations } from "next-intl";
-import Head from "next/head";
-import { useCurrentRaceId } from "../../../../../hooks";
-import { useState } from "react";
-import { PoorSelect } from "src/components/poor-select";
+import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import { Tooltip, TooltipContent, TooltipTrigger } from "src/components/tooltip";
+import { useCurrentRaceId } from "../../../../../../hooks";
+import { SidePage } from "src/components/pages";
+import { Classifications } from "src/components/classifications";
 
 type Result = AppRouterOutputs["result"]["directorsResults"][0];
+type Classification = AppRouterOutputs["classification"]["classification"];
+type ClassificationListItem = AppRouterOutputs["classification"]["classifications"][0];
+
+export const ClassificationResults = ({
+    classification,
+    raceId,
+    initialClassifications,
+}: {
+    raceId: number;
+    classification: Classification;
+    initialClassifications: ClassificationListItem[];
+}) => {
+    const { data: classifications } = trpc.classification.classifications.useQuery(
+        { raceId: Number(raceId) },
+        { initialData: initialClassifications },
+    );
+
+    return (
+        <SidePage
+            side={
+                <Classifications raceId={String(raceId)} classificationId={String(classification.id)} classifications={classifications} />
+            }
+            content={<Results classificationId={classification.id} />}></SidePage>
+    );
+};
 
 const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result: Result; refetch: () => Promise<void> }) => {
     const t = useTranslations();
@@ -54,21 +79,18 @@ const PlayerTimePenalty = ({ raceId, result, refetch }: { raceId: number; result
     ) : null;
 };
 
-export const Results = () => {
+const Results = ({ classificationId }: { classificationId: number }) => {
     const raceId = useCurrentRaceId();
-    const { data: classifications } = trpc.classification.classifications.useQuery({ raceId: raceId }, { initialData: [] });
-
-    const [classificationId, setClassificationId] = useState<number>();
 
     const { data: results, refetch: refetchResults } = trpc.result.directorsResults.useQuery(
-        { raceId: raceId, classificationId: classificationId! },
+        { raceId: raceId, classificationId: classificationId },
         {
             enabled: classificationId !== undefined,
         },
     );
 
     const { data: splitsInOrder } = trpc.split.splitsInOrder.useQuery(
-        { raceId: raceId, classificationId: classificationId! },
+        { raceId: raceId, classificationId: classificationId },
         {
             enabled: classificationId !== undefined,
             initialData: [],
@@ -234,15 +256,6 @@ export const Results = () => {
             </Head>
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
-                <div className="my-2">
-                    <PoorSelect
-                        initialValue={classificationId}
-                        items={classifications}
-                        placeholder={t("pages.players.form.classification.placeholder")}
-                        nameKey="name"
-                        valueKey="id"
-                        onChange={e => setClassificationId(e.target.value)}></PoorSelect>
-                </div>
                 {results && (
                     <div className="flex-grow overflow-hidden">
                         <PoorDataTable
