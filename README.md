@@ -124,6 +124,7 @@ Application for making time measurements
 | 22/04/2024 | Containerize the application                                          |                  :date:                   |
 | 26/04/2024 | Classification based start times                                      |                  :date:                   |
 | 29/04/2024 | Manual players assignment to special categories                       |                  :date:                   |
+| 30/04/2024 | Save button disabled until any changes are made                       |                  :date:                   |
 
 ## TODO
 

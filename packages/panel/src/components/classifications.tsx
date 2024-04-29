@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { SectionHeaderTitle } from "src/components/page-headers";
 import { type AppRouterOutputs } from "src/trpc";
@@ -22,10 +23,11 @@ export const Classifications = ({
     classificationId?: string;
     classifications: Classifications;
 }) => {
+    const t = useTranslations();
     return (
         <div className="flex w-64 shrink-0 flex-col border-r bg-white text-sm">
             <div className="pl-4 pt-4">
-                <SectionHeaderTitle title="Classifications" />
+                <SectionHeaderTitle title={t("shared.classifications")} />
             </div>
             {classifications.map(c => (
                 <Link

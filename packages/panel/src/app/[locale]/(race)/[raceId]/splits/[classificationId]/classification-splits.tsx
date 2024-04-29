@@ -240,16 +240,16 @@ export const SplitsList = ({
             <SectionHeader title={classificationName} />
             <Button onClick={addSplit} outline>
                 <Icon size={0.8} path={mdiPlus} />
-                <span className="ml-2">Add split</span>
+                <span className="ml-2">{t("pages.splits.classificationSplits.addSplit")}</span>
             </Button>
             <div className="my-4 border">
                 <table className="min-w-full bg-white">
                     <thead className="text-left text-xs">
                         <tr className="border-b">
                             <th className="m-2 w-auto select-none whitespace-nowrap bg-white px-2 py-3"></th>
-                            <PoorTableHeader>Name</PoorTableHeader>
-                            <PoorTableHeader>Timing Point</PoorTableHeader>
-                            <PoorTableHeader>Distance</PoorTableHeader>
+                            <PoorTableHeader>{t("pages.splits.classificationSplits.grid.columns.name")}</PoorTableHeader>
+                            <PoorTableHeader>{t("pages.splits.classificationSplits.grid.columns.timingPoint")}</PoorTableHeader>
+                            <PoorTableHeader>{t("pages.splits.classificationSplits.grid.columns.distance")}</PoorTableHeader>
                             <PoorTableHeader> </PoorTableHeader>
                         </tr>
                     </thead>

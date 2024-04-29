@@ -623,6 +623,10 @@
           "title": "Edytuj kategorię"
         },
         "form": {
+          "abbrev": {
+            "description": "Nazwa skrócona wyświetlana między innymi na liście wyników.",
+            "label": "Nazwa skrócona"
+          },
           "gender": {
             "description": "Płeć wymagana do tego, żeby dany zawodnik został uwzględniony w danej kategorii.",
             "kind": {
@@ -650,10 +654,6 @@
             "description": "Nazwa wyświetlana między innymi na liście wyników.",
             "label": "Nazwa",
             "placeholder": "Wpisz nazwę kategorii"
-          },
-          "abbrev": {
-            "label": "Nazwa skrócona",
-            "description": "Nazwa skrócona wyświetlana między innymi na liście wyników."
           }
         },
         "grid": {
@@ -1218,6 +1218,16 @@
       }
     },
     "splits": {
+      "classificationSplits": {
+        "addSplit": "Dodaj międzyczas",
+        "grid": {
+          "columns": {
+            "distance": "Dystans",
+            "name": "Nazwa",
+            "timingPoint": "Punkt pomiarowy"
+          }
+        }
+      },
       "header": {
         "description": "Międzyczasy definiują które punkty pomiarowe oraz w jakiej kolejności muszą zostać pokonane przez zawodników danej klasyfikacji. Możesz dodać dowolną ilość międzyczasów, zmieniać ich kolejność oraz przypisywać do punktów pomiarowych. Kilka międzyczasów może być rejestrowanych w tym samym punkcie pomiarowym.",
         "title": "Międzyczasy"
@@ -1568,6 +1578,7 @@
   },
   "shared": {
     "cancel": "Anuluj",
+    "classifications": "Klasyfikacje",
     "close": "Zamknij",
     "countryCodes": {
       "AD": "Andora",

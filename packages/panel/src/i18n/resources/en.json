@@ -623,6 +623,10 @@
           "title": "Edit category"
         },
         "form": {
+          "abbrev": {
+            "description": "Abbreviation displayed in many places like results list.",
+            "label": "Abbreviation"
+          },
           "gender": {
             "description": "Gender required for the player to be included in the category.",
             "kind": {
@@ -650,10 +654,6 @@
             "description": "Name displayed in many places like results list.",
             "label": "Name",
             "placeholder": "Enter category name"
-          },
-          "abbrev": {
-            "label": "Abbreviation",
-            "description": "Abbreviation displayed in many places like results list."
           }
         },
         "grid": {
@@ -1218,6 +1218,16 @@
       }
     },
     "splits": {
+      "classificationSplits": {
+        "addSplit": "Add split",
+        "grid": {
+          "columns": {
+            "distance": "Distance",
+            "name": "Name",
+            "timingPoint": "Timing Point"
+          }
+        }
+      },
       "header": {
         "description": "Splits define which timing points and in what order must be passed by the players of a given classification. You can add any number of splits, change their order and assign them to timing points. Several split times can be recorded at the same timing point.",
         "title": "Splits"
@@ -1568,6 +1578,7 @@
   },
   "shared": {
     "cancel": "Cancel",
+    "classifications": "Classifications",
     "close": "Close",
     "countryCodes": {
       "AD": "Andorra",
