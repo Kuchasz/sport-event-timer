@@ -123,6 +123,7 @@ Application for making time measurements
 | 19/04/2024 | Hide split name in SW when only 1 split for timing point exists       |                  :date:                   |
 | 22/04/2024 | Containerize the application                                          |                  :date:                   |
 | 26/04/2024 | Classification based start times                                      |                  :date:                   |
+| 29/04/2024 | Manual players assignment to special categories                       |                  :date:                   |
 
 ## TODO
 
