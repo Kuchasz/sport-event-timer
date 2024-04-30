@@ -41,7 +41,12 @@ export const ClassificationResults = ({
     return (
         <SidePage
             side={
-                <Classifications raceId={String(raceId)} classificationId={String(classification.id)} classifications={classifications} />
+                <Classifications
+                    navigationPath="results"
+                    raceId={String(raceId)}
+                    classificationId={String(classification.id)}
+                    classifications={classifications}
+                />
             }
             content={<Results classificationId={classification.id} />}></SidePage>
     );

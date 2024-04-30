@@ -51,7 +51,12 @@ export const ClassificationSplits = ({
     return (
         <SidePage
             side={
-                <Classifications raceId={String(raceId)} classificationId={String(classification.id)} classifications={classifications} />
+                <Classifications
+                    navigationPath="splits"
+                    raceId={String(raceId)}
+                    classificationId={String(classification.id)}
+                    classifications={classifications}
+                />
             }
             content={
                 <SplitsList

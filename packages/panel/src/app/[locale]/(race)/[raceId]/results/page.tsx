@@ -28,7 +28,9 @@ export default async function ({ params: { raceId } }: { params: { raceId: strin
             <Head>
                 <title>{t("pages.splits.header.title")}</title>
             </Head>
-            <SidePage side={<Classifications classifications={classifications} raceId={raceId} />} content={<SplitsGreeting />}></SidePage>
+            <SidePage
+                side={<Classifications navigationPath="results" classifications={classifications} raceId={raceId} />}
+                content={<SplitsGreeting />}></SidePage>
         </>
     );
 }

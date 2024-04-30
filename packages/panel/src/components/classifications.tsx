@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { type Route } from "next";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { SectionHeaderTitle } from "src/components/page-headers";
@@ -18,10 +19,12 @@ export const Classifications = ({
     raceId,
     classificationId,
     classifications,
+    navigationPath,
 }: {
     raceId: string;
     classificationId?: string;
     classifications: Classifications;
+    navigationPath: string;
 }) => {
     const t = useTranslations();
     return (
@@ -35,7 +38,7 @@ export const Classifications = ({
                         "flex border-b p-4 ",
                         c.id === Number(classificationId) ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100",
                     )}
-                    href={`/${raceId}/splits/${c.id}`}
+                    href={`/${raceId}/${navigationPath}/${c.id}` as Route}
                     key={c.id}>
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-50 font-bold">
                         {getAbbreviation(c.name)}
