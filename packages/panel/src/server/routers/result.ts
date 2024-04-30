@@ -5,6 +5,7 @@ import { fromDeepEntries } from "@set/utils/dist/object";
 import { calculateAge } from "@set/utils/dist/datetime";
 
 type ResultEntry = [string, number];
+type DirectorResultEntry = [string, { time: number; manual: boolean }];
 
 export const resultRouter = router({
     results: publicProcedure
@@ -208,9 +209,15 @@ export const resultRouter = router({
             const startSplit = splitsInOrder.at(0)!;
             const endSplit = splitsInOrder.at(-1)!;
 
-            const splitTimesMap = splitTimes.map(st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as ResultEntry);
-            const manualSplitTimesMap = manualSplitTimes.map(st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as ResultEntry);
-            const startTimesMap = allPlayers.map(p => [`${p.bibNumber}.${startSplit.id}`, raceDateStart + p.startTime!] as ResultEntry);
+            const splitTimesMap = splitTimes.map(
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: false }] as DirectorResultEntry,
+            );
+            const manualSplitTimesMap = manualSplitTimes.map(
+                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: true }] as DirectorResultEntry,
+            );
+            const startTimesMap = allPlayers.map(
+                p => [`${p.bibNumber}.${startSplit.id}`, { time: raceDateStart + p.startTime!, manual: false }] as DirectorResultEntry,
+            );
 
             const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
 
@@ -234,12 +241,12 @@ export const resultRouter = router({
                 .map(p => ({
                     ...p,
                     hasError: isNotAscendingOrder(
-                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id]),
+                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id].time),
                         x => x,
                     ),
                     hasWarning: hasUndefinedBetweenValues(
                         splitsInOrder.map(tio => p.times[tio.id]),
-                        x => x,
+                        x => x?.time,
                     ),
                 }));
 
@@ -267,7 +274,7 @@ export const resultRouter = router({
                 .filter(t => !t.disqualification && t.times[startSplit?.id] && t.times[endSplit?.id])
                 .map(t => ({
                     ...t,
-                    result: t.times[endSplit.id] - t.times[startSplit.id] + t.totalTimePenalty,
+                    result: t.times[endSplit.id].time - t.times[startSplit.id].time + t.totalTimePenalty,
                     invalidState: undefined,
                     ageCategory: classification.categories
                         .filter(c => !!c.minAge && !!c.maxAge)

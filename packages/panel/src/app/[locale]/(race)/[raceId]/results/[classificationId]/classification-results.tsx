@@ -1,28 +1,30 @@
 "use client";
 
-import { formatTimeWithMilliSec, formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import type { AppRouterOutputs } from "src/trpc";
-import { trpc } from "../../../../../../trpc-core";
 import { mdiAlertCircleOutline, mdiAlertOutline, mdiCloseOctagonOutline, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
+import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
+import { Classifications } from "src/components/classifications";
 import { PageHeader } from "src/components/page-headers";
+import { SidePage } from "src/components/pages";
 import { ApplyTimePenalty } from "src/components/panel/result/apply-time-penalty";
 import { DisqualifyPlayer } from "src/components/panel/result/disqualify-player";
 import { ManageTimePenalties } from "src/components/panel/result/manage-time-penalties";
 import { NewPoorActionsItem, PoorActions } from "src/components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
+import { SplitTimeResult } from "src/components/split-time-result";
 import { Tooltip, TooltipContent, TooltipTrigger } from "src/components/tooltip";
+import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
 import { useCurrentRaceId } from "../../../../../../hooks";
-import { SidePage } from "src/components/pages";
-import { Classifications } from "src/components/classifications";
+import { trpc } from "../../../../../../trpc-core";
 
 type Result = AppRouterOutputs["result"]["directorsResults"][0];
 type Classification = AppRouterOutputs["classification"]["classification"];
 type ClassificationListItem = AppRouterOutputs["classification"]["classifications"][0];
+type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
 
 export const ClassificationResults = ({
     classification,
@@ -94,6 +96,10 @@ const Results = ({ classificationId }: { classificationId: number }) => {
         },
     );
 
+    const { data: race } = trpc.race.race.useQuery({ raceId: raceId });
+
+    const revertSplitTimeMutation = trpc.splitTime.revert.useMutation();
+
     const { data: splitsInOrder } = trpc.split.splitsInOrder.useQuery(
         { raceId: raceId, classificationId: classificationId },
         {
@@ -111,6 +117,11 @@ const Results = ({ classificationId }: { classificationId: number }) => {
 
     const revertDisqualificationMutation = trpc.disqualification.revert.useMutation();
     const t = useTranslations();
+
+    const revertManualSplitTime = async (editedSplitTime: RevertedSplitTime) => {
+        await revertSplitTimeMutation.mutateAsync(editedSplitTime);
+        await refetchResults();
+    };
 
     const cols: PoorDataTableColumn<Result>[] = [
         {
@@ -153,8 +164,19 @@ const Results = ({ classificationId }: { classificationId: number }) => {
         ...splitsInOrder.map(split => ({
             field: split.id.toString(),
             headerName: split.name,
-            // sortable: true,
-            cellRenderer: (data: Result) => <span>{formatTimeWithMilliSec(data.times[split.id])}</span>,
+            cellRenderer: (data: Result) => (
+                <SplitTimeResult
+                    refetch={() => refetchResults()}
+                    raceId={raceId}
+                    raceDate={race?.date ?? new Date()}
+                    openResetDialog={revertManualSplitTime}
+                    bibNumber={data.bibNumber}
+                    splitTime={data.times[split.id]}
+                    isLoading={revertSplitTimeMutation.isLoading}
+                    splitId={split.id}
+                    classificationId={data.classificationId}
+                />
+            ),
         })),
         {
             field: "totalTimePenalty",
