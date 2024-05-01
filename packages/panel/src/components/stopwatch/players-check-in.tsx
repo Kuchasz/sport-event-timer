@@ -149,7 +149,7 @@ export const PlayersCheckIn = ({ timeCritical, onPlayerCheckIn, timingPointId }:
             absences: allAbsences.filter(a => a.bibNumber === x.bibNumber && a.timingPointId === timingPointId),
             applicableSplits: splits.filter(s => s.classificationId === x.classificationId && s.timingPointId === timingPointId),
         }))
-        .map(x => ({ ...x, usedSplits: [...x.splitTimes.map(s => s.splitId!), ...x.absences.map(a => a.splitId!)] }))
+        .map(x => ({ ...x, usedSplits: [...x.splitTimes.map(s => s.splitId!), ...x.absences.map(a => a.splitId)] }))
         .map(x => ({ ...x, nextSplit: x.applicableSplits.find(c => !x.usedSplits.includes(c.id)) }));
 
     const nonAbsentPlayersWithoutSplitTime = playersWithSplitTimes.filter(p => p.nextSplit);

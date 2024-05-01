@@ -52,7 +52,7 @@ const updateSplitTimes = async ({ raceId }: UpdateSplitTimesTask) => {
             id,
             bibNumber: data!.bibNumber.toString(),
             raceId,
-            splitId: data!.splitId!,
+            splitId: data!.splitId,
         }));
 
     const splitTimesToUpdate = [...splitTimes_toUpdate]
