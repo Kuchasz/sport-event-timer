@@ -20,7 +20,7 @@ import { useCurrentRaceId } from "../../../../../../hooks";
 import { trpc } from "../../../../../../trpc-core";
 import { useRouter } from "next/navigation";
 
-type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoints"][0];
+type TimingPoint = AppRouterOutputs["timingPoint"]["timingPoint"];
 type AccessKeys = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"];
 type AccessKey = AppRouterOutputs["timingPoint"]["timingPointAccessUrls"][0];
 type EditTimingPoint = AppRouterInputs["timingPoint"]["update"];
