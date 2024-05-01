@@ -3,6 +3,7 @@ import { RaceForm } from "./race-form";
 import { trpc } from "src/trpc-core";
 import { useLocale } from "next-intl";
 import type { Locales } from "../../../i18n/locales";
+import { stripTime } from "@set/utils/dist/datetime";
 
 type CreateRace = AppRouterInputs["race"]["add"]["race"];
 
@@ -25,7 +26,7 @@ export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
         description: "",
         location: "",
         sportKind: "road-cycling",
-        date: new Date(),
+        date: stripTime(new Date()),
         registrationEnabled: false,
         useSampleData: false,
     };
