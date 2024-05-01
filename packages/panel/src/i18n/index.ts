@@ -33,4 +33,5 @@ type ExcludedKeys = Exclude<TrpcClientKeys, TranslationKeys>;
 
 type PotentialMissingTranslations = ExcludedKeys extends never ? "" : ExcludedKeys;
 
-export const potentialInvalidMissingTranslation: PotentialMissingTranslations = "";
+//left to throw an compilation error if there are missing translations
+export let potentialInvalidMissingTranslation: PotentialMissingTranslations;

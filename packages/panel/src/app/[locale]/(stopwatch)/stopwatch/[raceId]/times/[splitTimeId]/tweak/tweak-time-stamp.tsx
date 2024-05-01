@@ -81,7 +81,11 @@ export const TweakTimeStamp = () => {
         <div className="flex h-full flex-col items-center">
             <div className="flex grow flex-col items-center justify-center">
                 <div>
-                    <PlayerWithSplitTimeDisplay padLeftBibNumber={highestBibNumber.toString().length} playerWithSplitTime={p} />
+                    <PlayerWithSplitTimeDisplay
+                        showSplit={false}
+                        padLeftBibNumber={highestBibNumber.toString().length}
+                        playerWithSplitTime={p}
+                    />
                 </div>
                 <div className="mt-10 flex items-center">
                     <div className="flex flex-col items-center">
