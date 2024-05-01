@@ -18,6 +18,7 @@ import { sportKinds } from "@set/utils/dist/sport-kind";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import type { Locales } from "../i18n/locales";
 import { db } from "./db";
+import { updateSplitTimesQueue } from "./queue";
 
 type FakerLocales = Record<Locales, Faker>;
 
@@ -98,6 +99,10 @@ export const createExampleRaces = async (userId: string, numberOfRaces: number, 
     const _stopwatches = createStopwatches(faker, races, players, classifications, splits, splitsOrders);
 
     await db.$transaction(_stopwatches.map(data => db.stopwatch.create({ data })));
+
+    _stopwatches.forEach(async ({ raceId }) => {
+        await updateSplitTimesQueue.push({ raceId });
+    });
 };
 
 const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Omit<Race, "id">[] =>
@@ -286,7 +291,7 @@ const createStopwatches = (
             c => splitsOrdersForRace[c.id].map(splitId => splits.find(s => s.raceId === r.id && s.id === splitId)!),
         );
 
-        const chosenPlayersNumber = faker.number.int({ min: 0, max: playersForRace.length });
+        const chosenPlayersNumber = faker.number.int({ min: 0.66 * playersForRace.length, max: playersForRace.length });
 
         const startTimeDate = faker.date.between({ from: r.date, to: new Date(r.date.getTime() + 3_600_000) });
 
