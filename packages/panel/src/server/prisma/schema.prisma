@@ -140,14 +140,15 @@ model TimingPoint {
 }
 
 model Split {
-    id               Int            @id @default(autoincrement())
-    name             String
-    classification   Classification @relation(fields: [classificationId], references: [id])
-    classificationId Int
-    race             Race           @relation(fields: [raceId], references: [id])
-    raceId           Int
-    timingPoint      TimingPoint    @relation(fields: [timingPointId], references: [id])
-    timingPointId    Int
+    id                Int            @id @default(autoincrement())
+    name              String
+    classification    Classification @relation(fields: [classificationId], references: [id])
+    classificationId  Int
+    race              Race           @relation(fields: [raceId], references: [id])
+    raceId            Int
+    timingPoint       TimingPoint    @relation(fields: [timingPointId], references: [id])
+    timingPointId     Int
+    distanceFromStart Int?
 
     splitTime       SplitTime[]
     manualSplitTime ManualSplitTime[]

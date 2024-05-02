@@ -1222,7 +1222,7 @@
         "addSplit": "Dodaj międzyczas",
         "grid": {
           "columns": {
-            "distance": "Dystans",
+            "distance": "Dystans (metry)",
             "name": "Nazwa",
             "timingPoint": "Punkt pomiarowy"
           }

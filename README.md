@@ -125,6 +125,7 @@ Application for making time measurements
 | 26/04/2024 | Classification based start times                                      |                  :date:                   |
 | 29/04/2024 | Manual players assignment to special categories                       |                  :date:                   |
 | 30/04/2024 | Save button disabled until any changes are made                       |                  :date:                   |
+| 03/05/2024 | Support for imperial metric system                                    |                  :date:                   |
 
 ## TODO
 

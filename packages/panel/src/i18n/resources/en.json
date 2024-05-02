@@ -1222,7 +1222,7 @@
         "addSplit": "Add split",
         "grid": {
           "columns": {
-            "distance": "Distance",
+            "distance": "Distance (meters)",
             "name": "Name",
             "timingPoint": "Timing Point"
           }

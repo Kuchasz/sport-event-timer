@@ -13,6 +13,7 @@ import { PoorSelect } from "src/components/poor-select";
 import { type AppRouterOutputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
 import { Classifications } from "../../../../../../components/classifications";
+import { PoorNumberInput } from "src/components/poor-number-input";
 
 type Classification = AppRouterOutputs["classification"]["classification"];
 type ClassificationListItem = AppRouterOutputs["classification"]["classifications"][0];
@@ -133,7 +134,11 @@ const TableSplitRow = ({
                     "w-1/3 p-2 transition-opacity",
                     moveMode && moveMode !== split.id && "pointer-events-none opacity-15",
                 )}>
-                <PoorInput value={split.name} onChange={e => onSplitChange({ ...split, name: e.target.value })}></PoorInput>
+                <PoorNumberInput
+                    placeholder="distance from start (meters)"
+                    value={split.distanceFromStart}
+                    onChange={e => onSplitChange({ ...split, distanceFromStart: e.target.value })}
+                />
             </td>
             <td
                 className={classNames(
@@ -188,6 +193,7 @@ export const SplitsList = ({
                 name: "Split",
                 timingPointId: timingPoints[0].id,
                 raceId,
+                distanceFromStart: 0,
                 classificationId,
             },
         ]);
