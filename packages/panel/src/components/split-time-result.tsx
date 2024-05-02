@@ -1,6 +1,6 @@
 "use client";
 
-import { mdiClockEditOutline, mdiReload } from "@mdi/js";
+import { mdiClockEditOutline, mdiClockPlusOutline, mdiReload } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import classNames from "classnames";
@@ -58,6 +58,28 @@ export const SplitTimeResult = ({
                     }}>
                     <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
                         <Icon size={0.75} path={mdiClockEditOutline} />
+                    </span>
+                </PoorModal>
+            )}
+            {splitTime == null && (
+                <PoorModal
+                    onResolve={refetch}
+                    title={t("pages.splitTimes.edit.title")}
+                    component={SplitTimeEdit}
+                    componentProps={{
+                        editedSplitTime: {
+                            bibNumber,
+                            time: 0,
+                            splitId,
+                            raceId,
+                        },
+                        raceId,
+                        classificationId,
+                        raceDate: raceDate.getTime(),
+                        onReject: () => {},
+                    }}>
+                    <span className="ml-2 flex cursor-pointer items-center hover:text-red-600">
+                        <Icon size={0.75} path={mdiClockPlusOutline} />
                     </span>
                 </PoorModal>
             )}

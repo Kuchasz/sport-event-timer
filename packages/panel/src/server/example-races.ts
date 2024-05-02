@@ -312,7 +312,8 @@ const createStopwatches = (
                         })
                         .getTime(),
                 })),
-            );
+            )
+            .filter(() => faker.datatype.boolean(0.95)); //5% of split times will be missing
 
         const state = { splitTimes, actionsHistory: [], absences: [] } as TimerState;
 
