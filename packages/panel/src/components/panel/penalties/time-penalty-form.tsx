@@ -70,7 +70,6 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                     <PoorNumberInput
                         value={value}
                         placeholder={t("timeMeasurement.penalties.timePenalty.form.time.placeholder")}
-                        required
                         onChange={e => onChange({ target: { value: e.target.value ?? 0 } })}
                     />
                 )}
