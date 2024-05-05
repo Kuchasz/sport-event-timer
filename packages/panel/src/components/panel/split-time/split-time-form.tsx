@@ -62,7 +62,9 @@ export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, bibNumber
                 label={t("pages.splitTimes.form.time.label")}
                 description={t("pages.splitTimes.form.time.description")}
                 className="flex-1"
-                render={({ value, onChange }) => <PoorFullTimepicker date={raceDate} value={value} onChange={onChange} />}
+                render={({ value, onChange }) => (
+                    <PoorFullTimepicker className="font-mono" date={raceDate} value={value} onChange={onChange} />
+                )}
                 name="time"
             />
             <div className="mt-4 flex justify-between">

@@ -1108,7 +1108,7 @@
             "placeholder": "Wpisz powód zastosowania kary"
           },
           "time": {
-            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika.",
+            "description": "Ilość milisekund jaka zostanie doliczona do wyniku zawodnika.",
             "label": "Czas",
             "placeholder": "Wpisz karę czasową"
           }
@@ -1280,6 +1280,9 @@
           "text": "Próbujesz przywrócić ręcznie zmienione czasy pomiaru. Czy chcesz kontynuować?",
           "title": "Przywróć ręcznie zmieniony czas"
         }
+      },
+      "manual": {
+        "description": "Czas został ręcznie określony przez organizatora wyścigu."
       }
     },
     "timingPoint": {
@@ -2118,7 +2121,7 @@
             "placeholder": "Uzasadnij karę czasową"
           },
           "time": {
-            "description": "Ilość sekund jaka zostanie doliczona do wyniku zawodnika.",
+            "description": "Ilość milisekund jaka zostanie doliczona do wyniku zawodnika.",
             "label": "Czas",
             "placeholder": "Wpisz czas"
           }

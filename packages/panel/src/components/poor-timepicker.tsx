@@ -34,10 +34,12 @@ export const PoorTimepicker = ({
 };
 
 export const PoorFullTimepicker = ({
+    className,
     value: initialValue,
     onChange,
     date,
 }: {
+    className?: string;
     value?: number;
     date: number;
     onChange: (event: { target: { value: number } }) => void;
@@ -47,6 +49,7 @@ export const PoorFullTimepicker = ({
     const [value, setValue] = useState<string>(formatTimeWithMilliSec(initialValue));
     return (
         <Input
+            className={className}
             inputRef={inputRef}
             value={value}
             onChange={e => {

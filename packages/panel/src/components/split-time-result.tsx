@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { SplitTimeEdit } from "src/components/panel/split-time/split-time-edit";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import type { AppRouterInputs } from "src/trpc";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
 
@@ -36,8 +37,18 @@ export const SplitTimeResult = ({
 }: SplitTimeResultTypes) => {
     const t = useTranslations();
     return (
-        <div className={classNames("flex font-mono", splitTime?.manual ? "" : "")}>
-            <span>{formatTimeWithMilliSec(splitTime?.time)}</span>
+        <div className={classNames("flex font-mono font-medium", splitTime?.manual ? "" : "")}>
+            {splitTime?.manual ? (
+                <Tooltip>
+                    <TooltipTrigger>
+                        <span className="text-orange-500">{formatTimeWithMilliSec(splitTime?.time)}</span>
+                    </TooltipTrigger>
+                    <TooltipContent>{t("pages.splitTimes.manual.description")}</TooltipContent>
+                </Tooltip>
+            ) : (
+                <span className="text-gray-700">{formatTimeWithMilliSec(splitTime?.time)}</span>
+            )}
+
             <div className="flex-grow"></div>
             {splitTime && splitTime.time > 0 && (
                 <PoorModal

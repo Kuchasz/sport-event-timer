@@ -1108,7 +1108,7 @@
             "placeholder": "Type reason for penalty"
           },
           "time": {
-            "description": "The number of seconds that will be added to the player's score.",
+            "description": "The number of milliseconds that will be added to the player's score.",
             "label": "Time",
             "placeholder": "Enter time penalty"
           }
@@ -1252,6 +1252,9 @@
           "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
           "label": "Time"
         }
+      },
+      "manual": {
+        "description": "This split time has been manually defined by the race organizer."
       },
       "grid": {
         "columns": {
@@ -2118,7 +2121,7 @@
             "placeholder": "Reason the time penalty"
           },
           "time": {
-            "description": "The number of seconds that will be added to the player's score.",
+            "description": "The number of milliseconds that will be added to the player's score.",
             "label": "Time",
             "placeholder": "Enter time"
           }
