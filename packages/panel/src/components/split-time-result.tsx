@@ -96,6 +96,7 @@ export const SplitTimeResult = ({
             )}
             {splitTime?.manual == true ? (
                 <PoorConfirmation
+                    destructive
                     title={t("pages.splitTimes.revert.confirmation.title")}
                     message={t("pages.splitTimes.revert.confirmation.text")}
                     onAccept={() =>

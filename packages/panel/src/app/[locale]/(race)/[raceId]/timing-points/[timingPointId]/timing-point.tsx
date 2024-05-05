@@ -109,6 +109,7 @@ export const TimingPoint = ({
                             iconPath={mdiPencilOutline}></NewPoorActionsItem>
                     </PoorModal>
                     <PoorConfirmation
+                        destructive
                         onAccept={() => deleteAccessKey(d)}
                         title={t("pages.timingPoint.sections.accessUrls.delete.confirmation.title")}
                         message={t("pages.timingPoint.sections.accessUrls.delete.confirmation.text", { name: d.name })}
@@ -209,6 +210,7 @@ export const TimingPoint = ({
                                 description={t("pages.timingPoints.sections.delete.header.description")}
                             />
                             <PoorConfirmation
+                                destructive
                                 onAccept={() => deleteTimingPoint(timingPoint)}
                                 title={t("pages.timingPoints.delete.confirmation.title")}
                                 message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}

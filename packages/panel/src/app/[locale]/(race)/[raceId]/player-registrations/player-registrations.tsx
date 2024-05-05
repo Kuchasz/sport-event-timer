@@ -90,6 +90,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                     iconPath={mdiAccountPlusOutline}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 message={t("pages.playerRegistrations.delete.confirmation.text", {
                     name: playerRegistration.name,
                     lastName: playerRegistration.lastName,

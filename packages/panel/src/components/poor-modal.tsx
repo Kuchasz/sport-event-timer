@@ -14,9 +14,10 @@ type PoorConfirmationProps = {
     message: string;
     onAccept: () => Promise<void>;
     children: React.ReactElement;
+    destructive?: boolean;
 };
 
-export const PoorConfirmation = ({ onAccept, isLoading, title, description, message, children }: PoorConfirmationProps) => {
+export const PoorConfirmation = ({ onAccept, isLoading, title, description, destructive, message, children }: PoorConfirmationProps) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const t = useTranslations();
 
@@ -66,10 +67,14 @@ export const PoorConfirmation = ({ onAccept, isLoading, title, description, mess
                                                 <span>{message}</span>
                                             </div>
                                             <div className="mt-4 flex justify-between">
-                                                <Button onClick={() => setModalOpen(false)} outline>
+                                                <Button
+                                                    kind={destructive ? "delete" : "default"}
+                                                    onClick={() => setModalOpen(false)}
+                                                    outline>
                                                     {t("shared.cancel")}
                                                 </Button>
                                                 <Button
+                                                    kind={destructive ? "delete" : "default"}
                                                     loading={isLoading}
                                                     onClick={async () => {
                                                         await onAccept();

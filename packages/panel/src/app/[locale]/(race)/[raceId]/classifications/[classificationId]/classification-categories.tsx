@@ -58,6 +58,7 @@ const CategoryActions = ({ category, refetch }: { category: Category; refetch: (
                     iconPath={mdiAccountEditOutline}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 onAccept={deleteCategory}
                 message={t("pages.classifications.categories.delete.confirmation.text", { name: category.name })}
                 title={t("pages.classifications.categories.delete.confirmation.title")}

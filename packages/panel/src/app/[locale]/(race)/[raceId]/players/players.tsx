@@ -43,6 +43,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
                     iconPath={mdiHumanEdit}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 title={t("pages.players.delete.confirmation.title")}
                 message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
                 onAccept={deletePlayer}

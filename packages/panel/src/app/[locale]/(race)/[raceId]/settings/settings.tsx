@@ -69,6 +69,7 @@ export const Settings = () => {
                             </PoorModal>
 
                             <PoorConfirmation
+                                destructive
                                 title={t("pages.settings.apiKeys.delete.confirmation.title")}
                                 message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
                                 onAccept={() => deleteApiKey(key)}

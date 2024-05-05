@@ -43,6 +43,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
                     iconPath={mdiNumeric}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 title={t("pages.bibNumbers.delete.confirmation.title")}
                 message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
                 onAccept={deletebibNumber}
@@ -117,6 +118,7 @@ export const BibNumbers = () => {
                         </Button>
                     </PoorModal>
                     <PoorConfirmation
+                        destructive
                         title={t("pages.bibNumbers.deleteAll.confirmation.title")}
                         message={t("pages.bibNumbers.deleteAll.confirmation.text")}
                         onAccept={deleteAll}

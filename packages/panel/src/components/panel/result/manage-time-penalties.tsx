@@ -43,6 +43,7 @@ const TimePenaltyActions = ({
 
     return (
         <PoorConfirmation
+            destructive
             message={t("pages.results.manageTimePenalties.revertTimePenalty.confirmation.text", {
                 name: name,
                 lastName: lastName,

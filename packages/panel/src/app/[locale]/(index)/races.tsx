@@ -321,6 +321,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 iconPath={mdiCalendarEditOutline}></NewPoorActionsItem>
                                         </PoorModal>
                                         <PoorConfirmation
+                                            destructive
                                             title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                                             message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => wipeRaceData(r.obj)}
@@ -331,6 +332,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                                 iconPath={mdiRestore}></NewPoorActionsItem>
                                         </PoorConfirmation>
                                         <PoorConfirmation
+                                            destructive
                                             title={t("pages.races.deleteRacePopup.confirmation.title")}
                                             message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => deleteRace(r.obj)}

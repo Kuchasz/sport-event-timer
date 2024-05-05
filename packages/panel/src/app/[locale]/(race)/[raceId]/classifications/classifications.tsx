@@ -47,6 +47,7 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
                 iconPath={mdiAccountMultiple}
                 href={`/${classification.raceId}/classifications/${classification.id}` as Route}></NewPoorActionsItem>
             <PoorConfirmation
+                destructive
                 onAccept={deleteClassification}
                 message={t("pages.classifications.delete.confirmation.text", { name: classification.name })}
                 title={t("pages.classifications.delete.confirmation.title")}

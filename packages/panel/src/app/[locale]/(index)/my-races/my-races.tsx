@@ -123,6 +123,7 @@ export const MyRaces = () => {
                         </div>
                     )}
                     <PoorConfirmation
+                        destructive
                         title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                         message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: data.name })}
                         onAccept={() => wipeRaceData(data)}
@@ -133,6 +134,7 @@ export const MyRaces = () => {
                             iconPath={mdiRestore}></NewPoorActionsItem>
                     </PoorConfirmation>
                     <PoorConfirmation
+                        destructive
                         title={t("pages.races.deleteRacePopup.confirmation.title")}
                         message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: data.name })}
                         onAccept={() => deleteRace(data)}

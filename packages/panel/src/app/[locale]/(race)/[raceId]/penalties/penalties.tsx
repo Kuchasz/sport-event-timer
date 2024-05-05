@@ -45,6 +45,7 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
                     iconPath={mdiPencil}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 title={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.title")}
                 message={t("timeMeasurement.penalties.page.timePenalty.revert.confirmation.text", {
                     player: penalty.player,
@@ -85,6 +86,7 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
                     iconPath={mdiPencil}></NewPoorActionsItem>
             </PoorModal>
             <PoorConfirmation
+                destructive
                 title={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.title")}
                 message={t("timeMeasurement.penalties.page.disqualification.revert.confirmation.text", {
                     player: disqualification.player,

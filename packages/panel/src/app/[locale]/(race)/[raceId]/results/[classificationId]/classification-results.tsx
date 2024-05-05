@@ -228,6 +228,7 @@ const Results = ({ classificationId }: { classificationId: number }) => {
                     </PoorModal>
                     {disqualifications[data.bibNumber] ? (
                         <PoorConfirmation
+                            destructive
                             onAccept={() => revertDisqualification(data)}
                             title={t("pages.results.revertDisqualification.confirmation.title")}
                             message={t("pages.results.revertDisqualification.confirmation.text", {
