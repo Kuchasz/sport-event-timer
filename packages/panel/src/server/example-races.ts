@@ -239,12 +239,16 @@ const createTimingPointsAccessUrls = (timingPoints: TimingPoint[]) =>
 
 const createSplits = (timingPoints: TimingPoint[], classifications: Classification[]): Omit<Split, "id">[] =>
     classifications.flatMap(c =>
-        timingPoints.map(tp => ({
-            name: tp.name,
-            classificationId: c.id,
-            raceId: c.raceId,
-            timingPointId: tp.id,
-        })),
+        timingPoints.map(
+            (tp, index) =>
+                ({
+                    name: tp.name,
+                    classificationId: c.id,
+                    raceId: c.raceId,
+                    timingPointId: tp.id,
+                    distanceFromStart: index * 5_000,
+                }) satisfies Omit<Split, "id">,
+        ),
     );
 
 const createSplitsOrders = (ids: { raceId: number; classificationId: number }[], splits: Split[]): SplitOrder[] =>
