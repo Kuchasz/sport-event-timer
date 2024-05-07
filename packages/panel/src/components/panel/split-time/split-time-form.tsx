@@ -17,9 +17,19 @@ type SplitTimeFormProps = {
     raceDate: number;
     isLoading: boolean;
     splits: AppRouterOutputs["split"]["splitsInOrder"];
+    suggestedTimes: { time: number; name: string }[];
 };
 
-export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, bibNumbers, isLoading, raceDate, splits }: SplitTimeFormProps) => {
+export const SplitTimeForm = ({
+    onReject,
+    onResolve,
+    initialSplitTime,
+    bibNumbers,
+    isLoading,
+    raceDate,
+    splits,
+    suggestedTimes,
+}: SplitTimeFormProps) => {
     const t = useTranslations();
 
     return (
@@ -67,6 +77,20 @@ export const SplitTimeForm = ({ onReject, onResolve, initialSplitTime, bibNumber
                 )}
                 name="time"
             />
+
+            {suggestedTimes.length && (
+                <>
+                    <div className="p-2"></div>
+                    <div>
+                        {suggestedTimes.map(({ time, name }) => (
+                            <div>
+                                {name}: {time}
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
+
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}

@@ -1249,7 +1249,7 @@
           "placeholder": "Choose split"
         },
         "time": {
-          "description": "The exact time of the player's appearance at the timing point. There will be no information on the results page that the split time has been modified.",
+          "description": "The exact time of appearance of the player at the timing point. Modified split times will not be marked in any way on the results list.",
           "label": "Time"
         }
       },

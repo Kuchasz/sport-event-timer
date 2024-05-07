@@ -1249,7 +1249,7 @@
           "placeholder": "Wybierz międzyczas"
         },
         "time": {
-          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Na stronie wyników nie będzie informacji o tym, że zmierzony czas został zmodyfikowany.",
+          "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Zmodyfikowane czasy nie będą w żaden sposób oznaczone na liście wyników.",
           "label": "Czas"
         }
       },
