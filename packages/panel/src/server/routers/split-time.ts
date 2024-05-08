@@ -102,6 +102,19 @@ export const splitTimeRouter = router({
                     return [s.id, calculateMedian(times)];
                 }),
             );
+
+            const previousSplitIndex = splitsInOrder.findIndex(s => s.id === splitId) - 1;
+            if (previousSplitIndex < 0) return null;
+
+            const previousSplit = splitsInOrder[previousSplitIndex];
+            if (!previousSplit) return null;
+
+            const previousSplitTime = splitTimes.find(st => st.splitId === previousSplit.id && st.bibNumber === bibNumber);
+            if (!previousSplitTime) return null;
+
+            const previousSplitMedian = medians[previousSplit.id];
+            const previousSplitTimeMedianRatio = Number(previousSplitTime.time) / previousSplitMedian;
+            return previousSplitTimeMedianRatio * medians[splitId];
         }),
 });
 
