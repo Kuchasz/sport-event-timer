@@ -17,7 +17,8 @@ type SplitTimeFormProps = {
     raceDate: number;
     isLoading: boolean;
     splits: AppRouterOutputs["split"]["splitsInOrder"];
-    suggestedTimes: { time: number; name: string }[];
+    playersEstimatedTime?: number;
+    distanceEstimatedTime?: number;
 };
 
 export const SplitTimeForm = ({
@@ -28,7 +29,8 @@ export const SplitTimeForm = ({
     isLoading,
     raceDate,
     splits,
-    suggestedTimes,
+    playersEstimatedTime,
+    distanceEstimatedTime,
 }: SplitTimeFormProps) => {
     const t = useTranslations();
 
@@ -78,18 +80,15 @@ export const SplitTimeForm = ({
                 name="time"
             />
 
-            {suggestedTimes.length && (
+            {playersEstimatedTime || distanceEstimatedTime ? (
                 <>
                     <div className="p-2"></div>
                     <div>
-                        {suggestedTimes.map(({ time, name }) => (
-                            <div>
-                                {name}: {time}
-                            </div>
-                        ))}
+                        {playersEstimatedTime && <div>{playersEstimatedTime}</div>}
+                        {distanceEstimatedTime && <div>{distanceEstimatedTime}</div>}
                     </div>
                 </>
-            )}
+            ) : null}
 
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>

@@ -1,8 +1,8 @@
-import { hasUndefinedBetweenValues, isNotAscendingOrder } from "@set/utils/dist/array";
 import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
+import { calculateMedian } from "@set/utils/dist/number";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
@@ -48,66 +48,6 @@ export const splitTimeRouter = router({
                 timingPointName: st.split.timingPoint.name,
             }));
         }),
-    betterSplitTimes: protectedProcedure
-        .input(
-            z.object({
-                raceId: z.number({ required_error: "raceId is required" }),
-                classificationId: z.number({ required_error: "classificationId is required" }),
-            }),
-        )
-        .query(async ({ input, ctx }) => {
-            const { raceId, classificationId } = input;
-
-            const classificationPlayers = await ctx.db.player.findMany({
-                where: { raceId, classificationId },
-                include: { profile: true },
-            });
-
-            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId } });
-            const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId } });
-
-            const unorderedSplits = await ctx.db.split.findMany({ where: { raceId, classificationId } });
-
-            const splitOrder = await ctx.db.splitOrder.findUniqueOrThrow({ where: { raceId, classificationId } });
-            const splitsInOrder = (JSON.parse(splitOrder.order) as number[]).map(p => unorderedSplits.find(s => s.id === p)!);
-            const startSplit = splitsInOrder[0];
-
-            const race = await ctx.db.race.findFirstOrThrow({ where: { id: raceId }, select: { date: true } });
-            const raceDateStart = race?.date.getTime();
-
-            const splitTimesMap = splitTimes.map(
-                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: false }] as ResultEntry,
-            );
-            const manualSplitTimesMap = manualSplitTimes.map(
-                st => [`${st.bibNumber}.${st.splitId}`, { time: Number(st.time), manual: true }] as ResultEntry,
-            );
-            const startTimesMap = classificationPlayers.map(
-                p => [`${p.bibNumber}.${startSplit.id}`, { time: raceDateStart + p.startTime!, manual: false }] as ResultEntry,
-            );
-
-            const allTimesMap = fromDeepEntries([...startTimesMap, ...splitTimesMap, ...manualSplitTimesMap]);
-
-            const times = classificationPlayers
-                .map(p => ({
-                    bibNumber: p.bibNumber,
-                    name: p.profile.name,
-                    lastName: p.profile.lastName,
-                    times: allTimesMap[p.bibNumber],
-                }))
-                .map(p => ({
-                    ...p,
-                    hasError: isNotAscendingOrder(
-                        splitsInOrder.filter(tio => p.times[tio.id] !== undefined).map(tio => p.times[tio.id]),
-                        x => x.time,
-                    ),
-                    hasWarning: hasUndefinedBetweenValues(
-                        splitsInOrder.map(tio => p.times[tio.id]),
-                        x => x?.time,
-                    ),
-                }));
-
-            return times;
-        }),
     update: protectedProcedure.input(manualSplitTimeSchema).mutation(async ({ input, ctx }) => {
         const { id: _id, ...splitTime } = input;
 
@@ -138,6 +78,31 @@ export const splitTimeRouter = router({
             where: { splitId_bibNumber: { bibNumber: data.bibNumber, splitId: data.splitId } },
         });
     }),
+    playersEstimatedTime: protectedProcedure
+        .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
+        .query(async ({ input, ctx }) => {}),
+    distanceEstimatedTime: protectedProcedure
+        .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
+        .query(async ({ input, ctx }) => {
+            const { raceId, classificationId, bibNumber, splitId } = input;
+
+            const splits = await ctx.db.split.findMany({
+                where: { raceId, classificationId },
+            });
+            const splitsOrder = await ctx.db.splitOrder.findFirstOrThrow({ where: { raceId, classificationId } });
+            const order = JSON.parse(splitsOrder.order) as number[];
+
+            const splitsInOrder = order.map(id => splits.find(s => s.id === id)!);
+            const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId, splitId: { in: order } } });
+
+            const medians = Object.fromEntries(
+                splitsInOrder.map(s => {
+                    const splitTimesForSplit = splitTimes.filter(st => st.splitId === s.id);
+                    const times = splitTimesForSplit.map(st => Number(st.time));
+                    return [s.id, calculateMedian(times)];
+                }),
+            );
+        }),
 });
 
 export type SplitTimeRouter = typeof splitTimeRouter;

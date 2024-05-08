@@ -6,3 +6,16 @@ export const formatNumber = (n: number, precision = 2) =>
     n.toLocaleString("en-US", { minimumIntegerDigits: precision, useGrouping: false });
 
 export const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+export const calculateMedian = (numbers: number[]) => {
+    const sortedNumbers = numbers.slice().sort((a, b) => a - b);
+    const length = sortedNumbers.length;
+
+    if (length % 2 === 0) {
+        const middleIndex = length / 2;
+        return (sortedNumbers[middleIndex - 1] + sortedNumbers[middleIndex]) / 2;
+    } else {
+        const middleIndex = Math.floor(length / 2);
+        return sortedNumbers[middleIndex];
+    }
+};

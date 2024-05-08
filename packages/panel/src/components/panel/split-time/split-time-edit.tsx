@@ -16,6 +16,8 @@ type SplitTimeEditProps = {
 export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
     const { data: splits } = trpc.split.splitsInOrder.useQuery({ raceId, classificationId });
     const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
+    // const { data: playersEstimatedTime } = trpc.
+    // const { data: distanceEstimatedTime } = trpc.
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
 
     if (!splits || !availableNumbers) return;
