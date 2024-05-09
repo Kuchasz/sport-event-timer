@@ -78,10 +78,7 @@ export const splitTimeRouter = router({
             where: { splitId_bibNumber: { bibNumber: data.bibNumber, splitId: data.splitId } },
         });
     }),
-    playersEstimatedTime: protectedProcedure
-        .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
-        .query(async ({ input, ctx }) => {}),
-    distanceEstimatedTime: protectedProcedure
+    estimatedPlayerSplitTime: protectedProcedure
         .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
         .query(async ({ input, ctx }) => {
             const { raceId, classificationId, bibNumber, splitId } = input;
@@ -91,12 +88,14 @@ export const splitTimeRouter = router({
             });
             const splitsOrder = await ctx.db.splitOrder.findFirstOrThrow({ where: { raceId, classificationId } });
             const order = JSON.parse(splitsOrder.order) as number[];
-
             const splitsInOrder = order.map(id => splits.find(s => s.id === id)!);
+
             const splitTimes = await ctx.db.splitTime.findMany({ where: { raceId, splitId: { in: order } } });
 
             const medians = Object.fromEntries(
-                splitsInOrder.map(s => {
+                splitsInOrder.map((s, index) => {
+                    if (index === 0) return [s.id, 0];
+
                     const splitTimesForSplit = splitTimes.filter(st => st.splitId === s.id);
                     const times = splitTimesForSplit.map(st => Number(st.time));
                     return [s.id, calculateMedian(times)];
@@ -114,7 +113,9 @@ export const splitTimeRouter = router({
 
             const previousSplitMedian = medians[previousSplit.id];
             const previousSplitTimeMedianRatio = Number(previousSplitTime.time) / previousSplitMedian;
-            return previousSplitTimeMedianRatio * medians[splitId];
+            const playerEstimatedSplitTime = previousSplitTimeMedianRatio * medians[splitId];
+
+            return { playerEstimatedSplitTime };
         }),
 });
 
