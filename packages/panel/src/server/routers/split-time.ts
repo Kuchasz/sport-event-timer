@@ -90,6 +90,9 @@ export const splitTimeRouter = router({
             const order = JSON.parse(splitsOrder.order) as number[];
             const splitsInOrder = order.map(id => splits.find(s => s.id === id)!);
 
+            const splitsWithoutDistance = splitsInOrder.slice(1).filter(s => s.distanceFromStart === null);
+            if (splitsWithoutDistance.length > 0) return null;
+
             const measuredSplitTimes = await ctx.db.splitTime.findMany({ where: { raceId, splitId: { in: order } } });
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId, splitId: { in: order } } });
 
@@ -100,24 +103,9 @@ export const splitTimeRouter = router({
                 st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as [string, number],
             );
 
+            const splitTimes = [...measuredSplitTimes, ...manualSplitTimes];
+
             const splitTimesMap = fromDeepEntries([...measuredSplitTimesEntries, ...manualSplitTimesEntries]);
-
-            const medians = Object.fromEntries(
-                splitsInOrder.map((s, index) => {
-                    if (index === 0) return [s.id, 0];
-
-                    const previousSplit = splitsInOrder[index - 1];
-                    const splitTimesForPreviousSplit = splitTimes.filter(st => st.splitId === previousSplit.id);
-                    const previousSplitTimes = splitTimesForPreviousSplit.map(st => Number(st.time));
-                    const previousSplitTimesMedian = calculateMedian(previousSplitTimes);
-
-                    const splitTimesForSplit = splitTimes.filter(st => st.splitId === s.id);
-                    const times = splitTimesForSplit.map(st => Number(st.time));
-                    const timesMedian = calculateMedian(times);
-
-                    return [s.id, timesMedian - previousSplitTimesMedian];
-                }),
-            );
 
             const previousSplitIndex = splitsInOrder.findIndex(s => s.id === splitId) - 1;
             if (previousSplitIndex < 0) return null;
@@ -128,9 +116,15 @@ export const splitTimeRouter = router({
             const previousSplitTime = splitTimes.find(st => st.splitId === previousSplit.id && st.bibNumber === bibNumber);
             if (!previousSplitTime) return null;
 
-            const previousSplitMedian = medians[previousSplit.id];
-            const previousSplitTimeMedianRatio = Number(previousSplitTime.time) / previousSplitMedian;
-            const playerEstimatedSplitTime = previousSplitTimeMedianRatio * medians[splitId];
+            const previousLegTimes = Object.values(splitTimesMap)
+                .map(st => st[splitId] - st[previousSplit.id])
+                .filter(t => !isNaN(t));
+
+            if (previousLegTimes.length === 0) return null;
+
+            const median = calculateMedian(previousLegTimes);
+
+            const playerEstimatedSplitTime = Number(previousSplitTime.time) + median;
 
             return { playerEstimatedSplitTime };
         }),
