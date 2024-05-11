@@ -194,3 +194,13 @@ export const findCommonElements = <T>(arr1: T[], arr2: T[]): T[] => {
 export const arraysMatches = <T>(arr1: T[], arr2: T[]): boolean => {
     return arr2.every(element => arr1.includes(element)) && arr1.every(element => arr2.includes(element));
 };
+
+type Mapper<T, U> = (current: T, previous: T | undefined, index: number) => U;
+
+export const mapWithPrevious = <T, U>(array: T[], mapper: Mapper<T, U>): U[] => {
+    return array.reduce((acc: U[], current: T, index: number) => {
+        const previous = index > 0 ? array[index - 1] : undefined;
+        acc.push(mapper(current, previous, index));
+        return acc;
+    }, []);
+};
