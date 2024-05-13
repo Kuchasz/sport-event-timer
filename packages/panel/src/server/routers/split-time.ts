@@ -151,37 +151,48 @@ const estimateSplitTimeBasedOnLegsMedians = ({
     splitId: number;
     bibNumber: string;
 }) => {
-    const legsInOrder = mapWithPrevious(splitsInOrder, (current, previous) => [previous?.id, current.id] as [number | undefined, number]);
+    const legsInOrder = mapWithPrevious(splitsInOrder, (current, previous) => ({
+        previousSplitId: previous?.id,
+        currentSplitId: current.id,
+    }));
 
     const playersLegTimes = Object.entries(playersTimesMap).flatMap(([bibNumber, times]) =>
-        legsInOrder.map(
-            ([previous, current]) =>
-                [[bibNumber, previous, current], previous && times[current] && times[previous] ? times[current] - times[previous] : 0] as [
-                    [string, number | undefined, number],
-                    number,
-                ],
-        ),
+        legsInOrder.map(({ previousSplitId, currentSplitId }) => ({
+            bibNumber,
+            previousSplitId,
+            currentSplitId,
+            time: previousSplitId && times[currentSplitId] && times[previousSplitId] ? times[currentSplitId] - times[previousSplitId] : 0,
+        })),
     );
 
-    const legsMedians = Object.entries(groupBy(playersLegTimes, ([[, previousId, currentId]]) => `${previousId}.${currentId}`)).map(
-        ([key, legTimes]) => [key.split(".").map(Number), calculateMedian(legTimes.map(([, time]) => time))] as [[number, number], number],
-    );
+    const legsMedians = Object.entries(
+        groupBy(playersLegTimes, ({ previousSplitId, currentSplitId }) => `${previousSplitId}.${currentSplitId}`),
+    ).map(([key, legTimes]) => ({
+        previousSplitId: Number(key.split(".")[0]),
+        currentSplitId: Number(key.split(".")[1]),
+        time: calculateMedian(legTimes.map(({ time }) => time)),
+    }));
 
     if (legsMedians.length === 0) return null;
 
-    const playerLegTimes = playersLegTimes.filter(([[bn]]) => bn === bibNumber);
+    const playerLegTimes = playersLegTimes.filter(item => item.bibNumber === bibNumber);
 
-    const siblingPlayerLegTimes = playerLegTimes.filter(([[, s1, s2]]) => s1 === splitId || s2 === splitId);
+    const siblingPlayerLegTimes = playerLegTimes.filter(
+        ({ previousSplitId, currentSplitId }) => previousSplitId === splitId || currentSplitId === splitId,
+    );
 
-    const playerLegCandidate = siblingPlayerLegTimes.find(([, t]) => t !== 0) ?? playerLegTimes.find(([, t]) => t !== 0);
+    const playerLegCandidate = siblingPlayerLegTimes.find(({ time }) => time !== 0) ?? playerLegTimes.find(({ time }) => time !== 0);
 
     if (!playerLegCandidate) return 0;
 
-    const legMedianCandidate = legsMedians.find(([[s1, s2]]) => playerLegCandidate[0][1] === s1 && playerLegCandidate[0][2] === s2);
+    const legMedianCandidate = legsMedians.find(
+        ({ previousSplitId, currentSplitId }) =>
+            playerLegCandidate.previousSplitId === previousSplitId && playerLegCandidate.currentSplitId === currentSplitId,
+    );
 
-    const timeRatio = playerLegCandidate[1] / legMedianCandidate![1];
+    const timeRatio = playerLegCandidate.time / legMedianCandidate!.time;
 
-    return legsMedians.find(([[, s2]]) => s2 === splitId)![1] * timeRatio;
+    return legsMedians.find(({ currentSplitId }) => currentSplitId === splitId)!.time * timeRatio;
 };
 
 export type SplitTimeRouter = typeof splitTimeRouter;
