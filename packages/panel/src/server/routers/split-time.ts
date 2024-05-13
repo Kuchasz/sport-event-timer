@@ -3,7 +3,7 @@ import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
 import { calculateMedian } from "@set/utils/dist/number";
-import { mapWithPrevious } from "@set/utils/dist/array";
+import { distinctArray, groupBy, mapWithPrevious } from "@set/utils/dist/array";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
@@ -82,7 +82,8 @@ export const splitTimeRouter = router({
     estimatedPlayerSplitTime: protectedProcedure
         .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
         .query(async ({ input, ctx }) => {
-            const { raceId, classificationId, bibNumber, splitId } = input;
+            // const { raceId, classificationId, bibNumber, splitId } = input;
+            const { raceId, classificationId } = input;
 
             const splits = await ctx.db.split.findMany({
                 where: { raceId, classificationId },
@@ -90,9 +91,6 @@ export const splitTimeRouter = router({
             const splitsOrder = await ctx.db.splitOrder.findFirstOrThrow({ where: { raceId, classificationId } });
             const order = JSON.parse(splitsOrder.order) as number[];
             const splitsInOrder = order.map(id => splits.find(s => s.id === id)!);
-
-            const splitsWithoutDistance = splitsInOrder.slice(1).filter(s => s.distanceFromStart === null);
-            if (splitsWithoutDistance.length > 0) return null;
 
             const measuredSplitTimes = await ctx.db.splitTime.findMany({ where: { raceId, splitId: { in: order } } });
             const manualSplitTimes = await ctx.db.manualSplitTime.findMany({ where: { raceId, splitId: { in: order } } });
@@ -103,27 +101,61 @@ export const splitTimeRouter = router({
             const manualPlayersTimes = manualSplitTimes.map(st => [`${st.bibNumber}.${st.splitId}`, Number(st.time)] as [string, number]);
 
             const playersTimesMap = fromDeepEntries([...measuredPlayersTimes, ...manualPlayersTimes]);
-            const playersTimes = Object.values(playersTimesMap);
 
-            const startSplit = splitsInOrder[0];
+            const legsInOrder = mapWithPrevious(
+                splitsInOrder,
+                (current, previous) => [previous?.id, current.id] as [number | undefined, number],
+            );
 
-            // const medians = mapWithPrevious(splitsInOrder, (current, previous) => {
-            //     if (!previous) return [[current.id, undefined], 0];
+            const playersLegTimes = Object.entries(playersTimesMap).flatMap(([bibNumber, times]) =>
+                legsInOrder.map(
+                    ([previous, current]) =>
+                        [[bibNumber, previous, current], previous ? times[current] - times[previous] : 0] as [
+                            [string, number | undefined, number],
+                            number,
+                        ],
+                ),
+            );
 
-            //     const legTimes = playersTimes.map(st => st[current.id] - st[previous.id]).filter(t => !isNaN(t));
+            const legsMedians = Object.entries(groupBy(playersLegTimes, ([[, previousId, currentId]]) => `${previousId}.${currentId}`)).map(
+                ([key, legTimes]) =>
+                    [key.split(".").map(Number), calculateMedian(legTimes.map(([, time]) => time))] as [[number, number], number],
+            );
 
-            //     const legMedian = calculateMedian(legTimes);
+            const mediansForSplit = legsMedians.filter(([ids]) => ids.includes(input.splitId));
 
-            //     return [[current.id, previous.id], legMedian];
-            // });
+            if (mediansForSplit.length === 0) return null;
 
-            const split = splitsInOrder.find(s => s.id === splitId)!;
-            const previousSplit = splitsInOrder[splitsInOrder.indexOf(split) - 1];
-            const previousPreviousSplit = splitsInOrder[splitsInOrder.indexOf(split) - 2];
+            // const [medianSplits, median] = mediansForSplit[0];
 
-            const previousLegTime = playersTimesMap[bibNumber][previousSplit.id] - playersTimesMap[bibNumber][previousPreviousSplit.id];
+            // const mediansForPlayer =
 
-            return { playerEstimatedSplitTime };
+            const playerLegTimes = playersLegTimes.filter(([[bibNumber]]) => bibNumber === input.bibNumber);
+            const playerRegisteredSplits = distinctArray(
+                playerLegTimes.flatMap(([[, s1, s2]]) => [s1, s2]).filter(s => s !== undefined) as number[],
+            );
+
+            // const playerHas
+
+            // const startSplit = splitsInOrder[0];
+
+            // // const medians = mapWithPrevious(splitsInOrder, (current, previous) => {
+            // //     if (!previous) return [[current.id, undefined], 0];
+
+            // //     const legTimes = playersTimes.map(st => st[current.id] - st[previous.id]).filter(t => !isNaN(t));
+
+            // //     const legMedian = calculateMedian(legTimes);
+
+            // //     return [[current.id, previous.id], legMedian];
+            // // });
+
+            // const split = splitsInOrder.find(s => s.id === splitId)!;
+            // const previousSplit = splitsInOrder[splitsInOrder.indexOf(split) - 1];
+            // const previousPreviousSplit = splitsInOrder[splitsInOrder.indexOf(split) - 2];
+
+            // const previousLegTime = playersTimesMap[bibNumber][previousSplit.id] - playersTimesMap[bibNumber][previousPreviousSplit.id];
+
+            return { playerEstimatedSplitTime: 0, distanceEstimatedSplitTime: 0 };
         }),
 });
 

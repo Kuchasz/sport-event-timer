@@ -204,3 +204,7 @@ export const mapWithPrevious = <T, U>(array: T[], mapper: Mapper<T, U>): U[] => 
         return acc;
     }, []);
 };
+
+export const distinctArray = <T>(array: T[]): T[] => {
+    return Array.from(new Set(array));
+};

@@ -16,9 +16,16 @@ type SplitTimeEditProps = {
 export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitTime, onReject, onResolve }: SplitTimeEditProps) => {
     const { data: splits } = trpc.split.splitsInOrder.useQuery({ raceId, classificationId });
     const { data: availableNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
-    // const { data: playersEstimatedTime } = trpc.
+    const { data: estimatedPlayerSplitTime } = trpc.splitTime.estimatedPlayerSplitTime.useQuery({
+        bibNumber: editedSplitTime.bibNumber,
+        classificationId,
+        raceId,
+        splitId: editedSplitTime.splitId,
+    });
     // const { data: distanceEstimatedTime } = trpc.
     const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
+
+    console.log(estimatedPlayerSplitTime);
 
     if (!splits || !availableNumbers) return;
 
@@ -36,6 +43,8 @@ export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitT
             onResolve={editSplitTime}
             initialSplitTime={editedSplitTime}
             bibNumbers={availableNumbers}
+            distanceEstimatedTime={estimatedPlayerSplitTime?.distanceEstimatedSplitTime}
+            playersEstimatedTime={estimatedPlayerSplitTime?.playerEstimatedSplitTime}
         />
     );
 };
