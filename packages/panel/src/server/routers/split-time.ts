@@ -1,11 +1,11 @@
 import { type Split } from "@prisma/client";
-import { groupBy, mapWithPrevious } from "@set/utils/dist/array";
+import { groupBy } from "@set/utils/dist/array";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { calculateMedian } from "@set/utils/dist/number";
 import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
@@ -107,7 +107,7 @@ export const splitTimeRouter = router({
             const candidate = estimateSplitTimeBasedOnLegsMedians({
                 splitsInOrder,
                 playersTimesMap,
-                splitId: input.splitId,
+                targetSplitId: input.splitId,
                 bibNumber: input.bibNumber,
             });
 
@@ -144,63 +144,57 @@ export const splitTimeRouter = router({
 const estimateSplitTimeBasedOnLegsMedians = ({
     splitsInOrder,
     playersTimesMap,
-    splitId,
+    targetSplitId,
     bibNumber,
 }: {
     splitsInOrder: Split[];
     playersTimesMap: Record<string, Record<number, number>>;
-    splitId: number;
+    targetSplitId: number;
     bibNumber: string;
 }) => {
-    const legsInOrder = mapWithPrevious(splitsInOrder, (current, previous) => ({
-        fromSplit: previous?.id,
-        toSplit: current.id,
+    const legsInOrder = splitsInOrder.map(split => ({
+        splitId: split.id,
     }));
 
+    const startSplitId = legsInOrder[0].splitId;
+
     const playersLegTimes = Object.entries(playersTimesMap).flatMap(([bibNumber, times]) =>
-        legsInOrder.map(({ fromSplit, toSplit }) => ({
+        legsInOrder.map(({ splitId }) => ({
             bibNumber,
-            fromSplit,
-            toSplit,
-            time: fromSplit && times[toSplit] && times[fromSplit] ? times[toSplit] - times[fromSplit] : 0,
+            splitId,
+            time: times[splitId] && times[startSplitId] ? times[splitId] - times[startSplitId] : 0,
         })),
     );
 
-    const legsMedians = Object.entries(groupBy(playersLegTimes, ({ fromSplit, toSplit }) => `${fromSplit}.${toSplit}`)).map(
-        ([key, legTimes]) => ({
-            fromSplit: Number(key.split(".")[0]),
-            toSplit: Number(key.split(".")[1]),
-            time: calculateMedian(legTimes.map(({ time }) => time)),
-        }),
-    );
+    const legsMedians = Object.entries(groupBy(playersLegTimes, ({ splitId }) => splitId)).map(([key, legTimes]) => ({
+        splitId: Number(key),
+        time: calculateMedian(legTimes.map(({ time }) => time)),
+    }));
+
+    console.log(legsMedians);
 
     if (legsMedians.length === 0) return null;
 
     const playerLegTimes = playersLegTimes.filter(item => item.bibNumber === bibNumber);
 
-    const siblingPlayerLegTimes = playerLegTimes.filter(({ fromSplit, toSplit }) => fromSplit === splitId || toSplit === splitId);
+    console.log(playerLegTimes);
+
+    const siblingPlayerLegTimes = playerLegTimes.filter(({ splitId }) => splitId === targetSplitId);
 
     const playerLegCandidate = siblingPlayerLegTimes.find(({ time }) => time !== 0) ?? playerLegTimes.find(({ time }) => time !== 0);
 
+    console.log(playerLegCandidate);
+
     if (!playerLegCandidate) return 0;
 
-    const legMedianCandidate = legsMedians.find(
-        ({ fromSplit, toSplit }) => playerLegCandidate.fromSplit === fromSplit && playerLegCandidate.toSplit === toSplit,
-    );
+    const legMedianCandidate = legsMedians.find(({ splitId }) => playerLegCandidate.splitId === splitId);
 
     const timeRatio = playerLegCandidate.time / legMedianCandidate!.time;
-    const legMedian = legsMedians.find(({ toSplit, fromSplit }) => toSplit === splitId || fromSplit === splitId);
+    const legMedian = legsMedians.find(({ splitId }) => splitId === targetSplitId);
 
     const legTime = legMedian!.time * timeRatio;
 
-    // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~");
-    // console.log("legCandidate: ", legMedian?.fromSplit, legMedian?.toSplit);
-    // console.log("timeRatio: ", timeRatio);
-    // console.log("startTime: ", formatTimeWithMilliSec(playersTimesMap[bibNumber][splitsInOrder[0].id]));
-    // console.log("medianLegTime: ", formatTimeWithMilliSec(legMedian!.time));
-    // console.log("legTime: ", formatTimeWithMilliSec(legTime));
-
-    return playersTimesMap[bibNumber][splitsInOrder[0].id] + legTime;
+    return playersTimesMap[bibNumber][startSplitId] + legTime;
 };
 
 export type SplitTimeRouter = typeof splitTimeRouter;
