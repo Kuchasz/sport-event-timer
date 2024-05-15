@@ -208,3 +208,30 @@ export const mapWithPrevious = <T, U>(array: T[], mapper: Mapper<T, U>): U[] => 
 export const distinctArray = <T>(array: T[]): T[] => {
     return Array.from(new Set(array));
 };
+
+export const mapNeigbours = <T>(array: T[], itemId: number, idSelector: (item: T) => number): T[] => {
+    const index = array.findIndex(item => idSelector(item) === itemId);
+
+    if (index === -1) {
+        return [];
+    }
+
+    const result: T[] = [array[index]];
+
+    let leftIndex = index - 1;
+    let rightIndex = index + 1;
+
+    while (leftIndex >= 0 || rightIndex < array.length) {
+        if (leftIndex >= 0) {
+            result.push(array[leftIndex]);
+            leftIndex--;
+        }
+
+        if (rightIndex < array.length) {
+            result.push(array[rightIndex]);
+            rightIndex++;
+        }
+    }
+
+    return result;
+};

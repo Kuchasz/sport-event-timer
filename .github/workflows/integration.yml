@@ -135,3 +135,8 @@ jobs:
               run: |
                   cd ./packages/timer
                   bun run test
+
+            - name: Run tests
+              run: |
+                  cd ./packages/utils
+                  bun run test

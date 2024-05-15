@@ -193,8 +193,11 @@ const estimateSplitTimeBasedOnLegsMedians = ({
     const legMedian = legsMedians.find(({ splitId }) => splitId === targetSplitId);
 
     const legTime = legMedian!.time * timeRatio;
+    const fromStartTime = playersTimesMap[bibNumber][startSplitId] + legTime;
 
-    return playersTimesMap[bibNumber][startSplitId] + legTime;
+    console.log(timeRatio, legTime, fromStartTime);
+
+    return fromStartTime;
 };
 
 export type SplitTimeRouter = typeof splitTimeRouter;
