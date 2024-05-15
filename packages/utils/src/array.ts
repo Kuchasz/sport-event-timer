@@ -209,7 +209,7 @@ export const distinctArray = <T>(array: T[]): T[] => {
     return Array.from(new Set(array));
 };
 
-export const mapNeigbours = <T>(array: T[], itemId: number, idSelector: (item: T) => number): T[] => {
+export const mapNeighbours = <T>(array: T[], itemId: number, idSelector: (item: T) => number): T[] => {
     const index = array.findIndex(item => idSelector(item) === itemId);
 
     if (index === -1) {

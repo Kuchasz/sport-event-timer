@@ -14,7 +14,7 @@ import {
     groupBy,
     hasUndefinedBetweenValues,
     isNotAscendingOrder,
-    mapNeigbours,
+    mapNeighbours,
     limitOccurrences,
     mapWithCount,
     mapWithPrevious,
@@ -345,12 +345,12 @@ describe("distinctArray", () => {
     });
 });
 
-describe("mapNeigbours", () => {
+describe("mapNeighbours", () => {
     test("should return an array with the specified item and its neighbors", () => {
         const array = [1, 2, 3, 4, 5];
         const itemId = 3;
         const idSelector = (item: number) => item;
-        const result = mapNeigbours(array, itemId, idSelector);
+        const result = mapNeighbours(array, itemId, idSelector);
         expect(result).toEqual([3, 2, 4, 1, 5]);
     });
 
@@ -358,7 +358,7 @@ describe("mapNeigbours", () => {
         const array = [1, 2, 3, 4, 5];
         const itemId = 6;
         const idSelector = (item: number) => item;
-        const result = mapNeigbours(array, itemId, idSelector);
+        const result = mapNeighbours(array, itemId, idSelector);
         expect(result).toEqual([]);
     });
 });
