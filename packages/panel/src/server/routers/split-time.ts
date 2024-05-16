@@ -5,6 +5,7 @@ import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
@@ -117,7 +118,20 @@ export const splitTimeRouter = router({
                 bibNumber: input.bibNumber,
             });
 
-            return { basedOnSplitMedian, basedOnPlayerTimes };
+            const basedOnAverageSpeed = estimateSplitTimeBasedOnAverageSpeed({
+                splitsInOrder,
+                playersTimesMap,
+                targetSplitId: input.splitId,
+                bibNumber: input.bibNumber,
+            });
+
+            console.log(
+                formatTimeWithMilliSec(basedOnSplitMedian),
+                formatTimeWithMilliSec(basedOnPlayerTimes),
+                formatTimeWithMilliSec(basedOnAverageSpeed),
+            );
+
+            return { basedOnSplitMedian, basedOnPlayerTimes, basedOnAverageSpeed };
         }),
 });
 
@@ -134,7 +148,7 @@ const estimateSplitTimeBasedOnPlayerTimes = ({
 }) => {
     const startSplitId = splitsInOrder[0].id;
 
-    const playersLegTimes = Object.entries(playersTimesMap).flatMap(([bibNumber, times]) =>
+    const playersNetSplitTimes = Object.entries(playersTimesMap).flatMap(([bibNumber, times]) =>
         splitsInOrder.map(({ id: splitId }) => ({
             bibNumber,
             splitId,
@@ -142,30 +156,30 @@ const estimateSplitTimeBasedOnPlayerTimes = ({
         })),
     );
 
-    const legsMedians = Object.entries(groupBy(playersLegTimes, ({ splitId }) => splitId)).map(([key, legTimes]) => ({
+    const netSplitMedians = Object.entries(groupBy(playersNetSplitTimes, ({ splitId }) => splitId)).map(([key, legTimes]) => ({
         splitId: Number(key),
         time: calculateMedian(legTimes.map(({ time }) => time)),
     }));
 
-    if (legsMedians.length === 0) return 0;
+    if (netSplitMedians.length === 0) return 0;
 
-    const neighbourPlayerLegTimes = mapNeighbours(
-        playersLegTimes.filter(item => item.bibNumber === bibNumber),
+    const neighbourPlayerNetSplitTimes = mapNeighbours(
+        playersNetSplitTimes.filter(item => item.bibNumber === bibNumber),
         targetSplitId,
         ({ splitId }) => splitId,
     );
 
-    const playerLegCandidate = neighbourPlayerLegTimes.find(({ time }) => time !== 0);
+    const playerSplitCandidate = neighbourPlayerNetSplitTimes.find(({ time }) => time !== 0);
 
-    if (!playerLegCandidate) return 0;
+    if (!playerSplitCandidate) return 0;
 
-    const legMedianCandidate = legsMedians.find(({ splitId }) => playerLegCandidate.splitId === splitId);
+    const splitMedianCandidate = netSplitMedians.find(({ splitId }) => playerSplitCandidate.splitId === splitId);
 
-    const timeRatio = playerLegCandidate.time / legMedianCandidate!.time;
-    const legMedian = legsMedians.find(({ splitId }) => splitId === targetSplitId);
+    const timeRatio = playerSplitCandidate.time / splitMedianCandidate!.time;
+    const splitMedian = netSplitMedians.find(({ splitId }) => splitId === targetSplitId);
 
-    const legTime = legMedian!.time * timeRatio;
-    const fromStartTime = playersTimesMap[bibNumber][startSplitId] + legTime;
+    const splitTime = splitMedian!.time * timeRatio;
+    const fromStartTime = playersTimesMap[bibNumber][startSplitId] + splitTime;
 
     return fromStartTime;
 };
@@ -191,9 +205,37 @@ const estimateSplitTimeBasedOnSplitMedian = ({
 
     if (splitMedian === 0) return 0;
 
-    const fromStartTime = playersTimesMap[bibNumber][startSplitId] + splitMedian;
+    const result = playersTimesMap[bibNumber][startSplitId] + splitMedian;
 
-    return fromStartTime;
+    return result;
+};
+
+const estimateSplitTimeBasedOnAverageSpeed = ({
+    splitsInOrder,
+    playersTimesMap,
+    targetSplitId,
+    bibNumber,
+}: {
+    splitsInOrder: Split[];
+    playersTimesMap: Record<string, Record<number, number>>;
+    targetSplitId: number;
+    bibNumber: string;
+}) => {
+    const startSplitId = splitsInOrder[0].id;
+    const targetSplit = splitsInOrder.find(({ id }) => id === targetSplitId)!;
+
+    const playerTimes = playersTimesMap[bibNumber];
+
+    const splitsInReverseOrder = splitsInOrder.slice().reverse();
+    const lastSplitWithTime = splitsInReverseOrder.find(({ id }) => playerTimes[id] && targetSplitId !== id)!;
+
+    if (startSplitId === lastSplitWithTime.id) return 0;
+
+    const lastTime = playerTimes[lastSplitWithTime.id] - playerTimes[startSplitId];
+
+    const averageSpeed = lastSplitWithTime.distanceFromStart! / lastTime;
+
+    return playerTimes[startSplitId] + targetSplit.distanceFromStart! * (1 / averageSpeed);
 };
 
 export type SplitTimeRouter = typeof splitTimeRouter;
