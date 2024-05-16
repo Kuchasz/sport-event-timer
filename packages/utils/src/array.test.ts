@@ -354,6 +354,14 @@ describe("mapNeighbours", () => {
         expect(result).toEqual([3, 2, 4, 1, 5]);
     });
 
+    test("should return an array with the specified item and its neighbors even when not starting from center index", () => {
+        const array = [1, 2, 3, 4, 5];
+        const itemId = 2;
+        const idSelector = (item: number) => item;
+        const result = mapNeighbours(array, itemId, idSelector);
+        expect(result).toEqual([2, 1, 3, 4, 5]);
+    });
+
     test("should return an empty array if the specified item is not found in the array", () => {
         const array = [1, 2, 3, 4, 5];
         const itemId = 6;

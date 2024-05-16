@@ -1,6 +1,5 @@
 import { type Split } from "@prisma/client";
 import { groupBy, mapNeighbours } from "@set/utils/dist/array";
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { calculateMedian } from "@set/utils/dist/number";
 import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
@@ -104,28 +103,25 @@ export const splitTimeRouter = router({
 
             const playersTimesMap = fromDeepEntries([...measuredPlayersTimes, ...manualPlayersTimes]);
 
-            const candidate = estimateSplitTimeBasedOnSplitMedian({
+            const basedOnSplitMedian = estimateSplitTimeBasedOnSplitMedian({
                 splitsInOrder,
                 playersTimesMap,
                 targetSplitId: input.splitId,
                 bibNumber: input.bibNumber,
             });
 
-            const candidate2 = estimateSplitTimeBasedOnPlayersTimesAndSplitMedians({
+            const basedOnPlayerTimes = estimateSplitTimeBasedOnPlayerTimes({
                 splitsInOrder,
                 playersTimesMap,
                 targetSplitId: input.splitId,
                 bibNumber: input.bibNumber,
             });
 
-            console.log("candidate: ", formatTimeWithMilliSec(candidate));
-            console.log("candidate2: ", formatTimeWithMilliSec(candidate2));
-
-            return { playerEstimatedSplitTime: 0, distanceEstimatedSplitTime: 0 };
+            return { basedOnSplitMedian, basedOnPlayerTimes };
         }),
 });
 
-const estimateSplitTimeBasedOnPlayersTimesAndSplitMedians = ({
+const estimateSplitTimeBasedOnPlayerTimes = ({
     splitsInOrder,
     playersTimesMap,
     targetSplitId,
