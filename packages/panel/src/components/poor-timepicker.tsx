@@ -1,9 +1,8 @@
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
-import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "src/utils";
-import { milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { Input } from "./input";
-import { useState } from "react";
 import { useMask } from "@react-input/mask";
+import { formatTimeWithMilliSec, milisecondsToTimeString } from "@set/utils/dist/datetime";
+import { useState } from "react";
+import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "src/utils";
+import { Input } from "./input";
 
 export const PoorTimepicker = ({
     value: initialValue,
@@ -47,6 +46,7 @@ export const PoorFullTimepicker = ({
     const inputRef = useMask({ mask: "__:__:__.___", replacement: { _: /\d/ }, showMask: true });
 
     const [value, setValue] = useState<string>(formatTimeWithMilliSec(initialValue));
+
     return (
         <Input
             className={className}
