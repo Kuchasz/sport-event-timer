@@ -5,7 +5,6 @@ import { fromDeepEntries } from "@set/utils/dist/object";
 import { z } from "zod";
 import { manualSplitTimeSchema } from "../../modules/split-time/models";
 import { protectedProcedure, router } from "../trpc";
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 
 type ResultEntry = [string, { time: number; manual: boolean }];
 
@@ -84,7 +83,6 @@ export const splitTimeRouter = router({
     estimatedPlayerSplitTime: protectedProcedure
         .input(z.object({ raceId: z.number(), classificationId: z.number(), bibNumber: z.string(), splitId: z.number() }))
         .query(async ({ input, ctx }) => {
-            // const { raceId, classificationId, bibNumber, splitId } = input;
             const { raceId, classificationId } = input;
 
             const splits = await ctx.db.split.findMany({
@@ -124,12 +122,6 @@ export const splitTimeRouter = router({
                 targetSplitId: input.splitId,
                 bibNumber: input.bibNumber,
             });
-
-            console.log(
-                formatTimeWithMilliSec(basedOnSplitMedian),
-                formatTimeWithMilliSec(basedOnPlayerTimes),
-                formatTimeWithMilliSec(basedOnAverageSpeed),
-            );
 
             return { basedOnSplitMedian, basedOnPlayerTimes, basedOnAverageSpeed };
         }),
@@ -205,7 +197,11 @@ const estimateSplitTimeBasedOnSplitMedian = ({
 
     if (splitMedian === 0) return 0;
 
-    const result = playersTimesMap[bibNumber][startSplitId] + splitMedian;
+    const playerStartTime = playersTimesMap[bibNumber][startSplitId];
+
+    if (!playerStartTime) return 0;
+
+    const result = playerStartTime + splitMedian;
 
     return result;
 };
@@ -231,11 +227,15 @@ const estimateSplitTimeBasedOnAverageSpeed = ({
 
     if (startSplitId === lastSplitWithTime.id) return 0;
 
+    const playerStartTime = playerTimes[startSplitId];
+
+    if (!playerStartTime) return 0;
+
     const lastTime = playerTimes[lastSplitWithTime.id] - playerTimes[startSplitId];
 
     const averageSpeed = lastSplitWithTime.distanceFromStart! / lastTime;
 
-    return playerTimes[startSplitId] + targetSplit.distanceFromStart! * (1 / averageSpeed);
+    return playerStartTime + targetSplit.distanceFromStart! * (1 / averageSpeed);
 };
 
 export type SplitTimeRouter = typeof splitTimeRouter;

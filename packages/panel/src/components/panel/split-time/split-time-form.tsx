@@ -6,8 +6,17 @@ import { Form, FormInput } from "src/form";
 import { splitTimeSchema } from "src/modules/split-time/models";
 import { PoorCombo } from "src/components/poor-combo";
 import { useTranslations } from "next-intl";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
+
+const SuggestedSplitTime = ({ time }: { time?: number }) =>
+    !!time && (
+        <div>
+            <span>{formatTimeWithMilliSec(time)}</span>
+            <span>APPLY</span>
+        </div>
+    );
 
 type SplitTimeFormProps = {
     onReject: () => void;
@@ -17,8 +26,9 @@ type SplitTimeFormProps = {
     raceDate: number;
     isLoading: boolean;
     splits: AppRouterOutputs["split"]["splitsInOrder"];
-    playersEstimatedTime?: number;
-    distanceEstimatedTime?: number;
+    estimatedTimeBasedOnAverageSpeed?: number;
+    estimatedTimeBasedOnPlayerTimes?: number;
+    estimatedTimeBasedOnSplitMedian?: number;
 };
 
 export const SplitTimeForm = ({
@@ -29,8 +39,9 @@ export const SplitTimeForm = ({
     isLoading,
     raceDate,
     splits,
-    playersEstimatedTime,
-    distanceEstimatedTime,
+    estimatedTimeBasedOnAverageSpeed,
+    estimatedTimeBasedOnPlayerTimes,
+    estimatedTimeBasedOnSplitMedian,
 }: SplitTimeFormProps) => {
     const t = useTranslations();
 
@@ -69,6 +80,14 @@ export const SplitTimeForm = ({
                 )}
                 name="bibNumber"
             />
+            {(estimatedTimeBasedOnAverageSpeed || estimatedTimeBasedOnPlayerTimes || estimatedTimeBasedOnSplitMedian) && (
+                <>
+                    <div className="p-2"></div>
+                    <SuggestedSplitTime time={estimatedTimeBasedOnAverageSpeed} />
+                    <SuggestedSplitTime time={estimatedTimeBasedOnPlayerTimes} />
+                    <SuggestedSplitTime time={estimatedTimeBasedOnSplitMedian} />
+                </>
+            )}
             <div className="p-2"></div>
             <FormInput<SplitTime, "time">
                 label={t("pages.splitTimes.form.time.label")}
@@ -79,17 +98,6 @@ export const SplitTimeForm = ({
                 )}
                 name="time"
             />
-
-            {playersEstimatedTime || distanceEstimatedTime ? (
-                <>
-                    <div className="p-2"></div>
-                    <div>
-                        {playersEstimatedTime && <div>{playersEstimatedTime}</div>}
-                        {distanceEstimatedTime && <div>{distanceEstimatedTime}</div>}
-                    </div>
-                </>
-            ) : null}
-
             <div className="mt-4 flex justify-between">
                 <Button onClick={onReject} outline>
                     {t("shared.cancel")}

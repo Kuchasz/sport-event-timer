@@ -43,8 +43,9 @@ export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitT
             onResolve={editSplitTime}
             initialSplitTime={editedSplitTime}
             bibNumbers={availableNumbers}
-            distanceEstimatedTime={estimatedPlayerSplitTime?.distanceEstimatedSplitTime}
-            playersEstimatedTime={estimatedPlayerSplitTime?.playerEstimatedSplitTime}
+            estimatedTimeBasedOnAverageSpeed={estimatedPlayerSplitTime?.basedOnAverageSpeed}
+            estimatedTimeBasedOnPlayerTimes={estimatedPlayerSplitTime?.basedOnPlayerTimes}
+            estimatedTimeBasedOnSplitMedian={estimatedPlayerSplitTime?.basedOnSplitMedian}
         />
     );
 };
