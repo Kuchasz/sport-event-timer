@@ -1,20 +1,25 @@
-import { Button } from "../../button";
-import { PoorFullTimepicker } from "../../poor-timepicker";
-import { PoorSelect } from "../../poor-select";
-import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
+import { mdiTimerPlayOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
+import { useTranslations } from "next-intl";
+import { PoorCombo } from "src/components/poor-combo";
 import { Form, FormInput } from "src/form";
 import { splitTimeSchema } from "src/modules/split-time/models";
-import { PoorCombo } from "src/components/poor-combo";
-import { useTranslations } from "next-intl";
-import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
+import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
+import { Button } from "../../button";
+import { PoorSelect } from "../../poor-select";
+import { PoorFullTimepicker } from "../../poor-timepicker";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
 
-const SuggestedSplitTime = ({ time }: { time?: number }) =>
+const SuggestedSplitTime = ({ time, onApply }: { time?: number; onApply: (time: number) => void }) =>
     !!time && (
-        <div>
-            <span>{formatTimeWithMilliSec(time)}</span>
-            <span>APPLY</span>
+        <div onClick={() => onApply(time)} className="group flex cursor-pointer items-center transition-colors hover:text-orange-500">
+            <span className="text-sm">{formatTimeWithMilliSec(time)}</span>
+            <span className="ml-1 mr-3">
+                <Icon size={0.8} path={mdiTimerPlayOutline} />
+            </span>
+            <span className="font-semibold text-white transition-colors group-hover:text-orange-500">Use this time</span>
         </div>
     );
 
@@ -80,12 +85,25 @@ export const SplitTimeForm = ({
                 )}
                 name="bibNumber"
             />
-            {(estimatedTimeBasedOnAverageSpeed || estimatedTimeBasedOnPlayerTimes || estimatedTimeBasedOnSplitMedian) && (
+            {(!!estimatedTimeBasedOnAverageSpeed || !!estimatedTimeBasedOnPlayerTimes || !!estimatedTimeBasedOnSplitMedian) && (
                 <>
                     <div className="p-2"></div>
-                    <SuggestedSplitTime time={estimatedTimeBasedOnAverageSpeed} />
-                    <SuggestedSplitTime time={estimatedTimeBasedOnPlayerTimes} />
-                    <SuggestedSplitTime time={estimatedTimeBasedOnSplitMedian} />
+                    <FormInput<SplitTime, "time">
+                        label={t("pages.splitTimes.form.estimatedTime.label")}
+                        description={t("pages.splitTimes.form.estimatedTime.description")}
+                        className="flex-1"
+                        render={({ onChange }) => (
+                            <SuggestedSplitTime
+                                time={
+                                    estimatedTimeBasedOnPlayerTimes ?? estimatedTimeBasedOnSplitMedian ?? estimatedTimeBasedOnAverageSpeed
+                                }
+                                onApply={time => {
+                                    onChange({ target: { value: time } });
+                                }}
+                            />
+                        )}
+                        name="time"
+                    />
                 </>
             )}
             <div className="p-2"></div>

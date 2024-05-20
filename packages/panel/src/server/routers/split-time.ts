@@ -173,6 +173,8 @@ const estimateSplitTimeBasedOnPlayerTimes = ({
     const splitTime = splitMedian!.time * timeRatio;
     const fromStartTime = playersTimesMap[bibNumber][startSplitId] + splitTime;
 
+    if (fromStartTime === playerSplitCandidate.time) return 0;
+
     return fromStartTime;
 };
 

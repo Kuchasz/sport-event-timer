@@ -1251,6 +1251,10 @@
         "time": {
           "description": "Dokładna godzina pojawienia się zawodnika na punkcie pomiarowym. Zmodyfikowane czasy nie będą w żaden sposób oznaczone na liście wyników.",
           "label": "Czas"
+        },
+        "estimatedTime": {
+          "label": "Szacowany czas",
+          "description": "Czas szacowany na podstawie wielu różnych czynników. Możesz użyć tego czasu, jeśli rzeczywisty międzyczas nie został zmierzony."
         }
       },
       "grid": {

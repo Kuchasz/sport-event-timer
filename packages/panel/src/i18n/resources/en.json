@@ -1251,6 +1251,10 @@
         "time": {
           "description": "The exact time of appearance of the player at the timing point. Modified split times will not be marked in any way on the results list.",
           "label": "Time"
+        },
+        "estimatedTime": {
+          "label": "Estimated Times",
+          "description": "Time estimated based on many different conditions. You may use that time if real split time was not measured."
         }
       },
       "manual": {

@@ -22,10 +22,8 @@ export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitT
         raceId,
         splitId: editedSplitTime.splitId,
     });
-    // const { data: distanceEstimatedTime } = trpc.
-    const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
 
-    console.log(estimatedPlayerSplitTime);
+    const updateSplitTimeMutation = trpc.splitTime.update.useMutation();
 
     if (!splits || !availableNumbers) return;
 
