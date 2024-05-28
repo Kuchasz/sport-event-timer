@@ -12,15 +12,14 @@ import { PoorFullTimepicker } from "../../poor-timepicker";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
 
-const SuggestedSplitTime = ({ time, onApply }: { time?: number; onApply: (time: number) => void }) =>
-    !!time && (
-        <div className="group flex items-center text-blue-600 transition-colors">
-            <span className="rounded-sm bg-blue-50 px-1.5 py-0.5 font-mono font-semibold ">{formatTimeWithMilliSec(time)}</span>
-            <span onClick={() => onApply(time)} className="ml-1 mr-3 cursor-pointer rounded-full p-1 hover:bg-blue-50">
-                <Icon size={0.8} path={mdiExport} />
-            </span>
-        </div>
-    );
+const SuggestedSplitTime = ({ time, onApply }: { time?: number; onApply: (time: number) => void }) => (
+    <div className="group flex items-center text-blue-600 transition-colors">
+        <span className="rounded-sm bg-blue-50 px-1.5 py-0.5 font-mono font-semibold ">{formatTimeWithMilliSec(time)}</span>
+        <span onClick={() => onApply(time ?? 0)} className="ml-1 mr-3 cursor-pointer rounded-full p-1 hover:bg-blue-50">
+            <Icon size={0.8} path={mdiExport} />
+        </span>
+    </div>
+);
 
 type SplitTimeFormProps = {
     onReject: () => void;
@@ -30,9 +29,7 @@ type SplitTimeFormProps = {
     raceDate: number;
     isLoading: boolean;
     splits: AppRouterOutputs["split"]["splitsInOrder"];
-    estimatedTimeBasedOnAverageSpeed?: number;
-    estimatedTimeBasedOnPlayerTimes?: number;
-    estimatedTimeBasedOnSplitMedian?: number;
+    estimatedTime?: number;
 };
 
 export const SplitTimeForm = ({
@@ -43,9 +40,7 @@ export const SplitTimeForm = ({
     isLoading,
     raceDate,
     splits,
-    estimatedTimeBasedOnAverageSpeed,
-    estimatedTimeBasedOnPlayerTimes,
-    estimatedTimeBasedOnSplitMedian,
+    estimatedTime,
 }: SplitTimeFormProps) => {
     const t = useTranslations();
 
@@ -84,31 +79,21 @@ export const SplitTimeForm = ({
                 )}
                 name="bibNumber"
             />
-            {(!!estimatedTimeBasedOnAverageSpeed || !!estimatedTimeBasedOnPlayerTimes || !!estimatedTimeBasedOnSplitMedian) && (
-                <>
-                    <div className="p-2"></div>
-                    <FormInput<SplitTime, "time">
-                        label={t("pages.splitTimes.form.estimatedTime.label")}
-                        description={t("pages.splitTimes.form.estimatedTime.description")}
-                        className="flex-1"
-                        render={({ onChange }) => (
-                            <SuggestedSplitTime
-                                time={
-                                    [
-                                        estimatedTimeBasedOnPlayerTimes,
-                                        estimatedTimeBasedOnSplitMedian,
-                                        estimatedTimeBasedOnAverageSpeed,
-                                    ].filter(x => x)[0]
-                                }
-                                onApply={time => {
-                                    onChange({ target: { value: time } });
-                                }}
-                            />
-                        )}
-                        name="time"
+            <div className="p-2"></div>
+            <FormInput<SplitTime, "time">
+                label={t("pages.splitTimes.form.estimatedTime.label")}
+                description={t("pages.splitTimes.form.estimatedTime.description")}
+                className="flex-1"
+                render={({ onChange }) => (
+                    <SuggestedSplitTime
+                        time={estimatedTime}
+                        onApply={time => {
+                            onChange({ target: { value: time } });
+                        }}
                     />
-                </>
-            )}
+                )}
+                name="time"
+            />
             <div className="p-2"></div>
             <FormInput<SplitTime, "time">
                 label={t("pages.splitTimes.form.time.label")}

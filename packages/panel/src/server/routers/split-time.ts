@@ -123,7 +123,9 @@ export const splitTimeRouter = router({
                 bibNumber: input.bibNumber,
             });
 
-            return { basedOnSplitMedian, basedOnPlayerTimes, basedOnAverageSpeed };
+            const time = basedOnPlayerTimes.value ?? basedOnSplitMedian.value ?? basedOnAverageSpeed.value;
+
+            return Math.floor(time);
         }),
 });
 
