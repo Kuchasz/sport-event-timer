@@ -31,7 +31,7 @@ export const timeStringToMiliseconds = (timeString: string): ParseResult<number>
 };
 
 export const fullTimeStringToEpochMiliseconds = (timeString: string, date: number): ParseResult<number> => {
-    if (!/\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}/gm.test(timeString)) {
+    if (!/\d{2}:\d{2}:\d{2}\.\d{3}/gm.test(timeString)) {
         return { status: "Error", error: "Passed value does not match pattern HH:MM:SS.Ms" };
     }
 

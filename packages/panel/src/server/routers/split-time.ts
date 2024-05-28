@@ -102,26 +102,32 @@ export const splitTimeRouter = router({
 
             const playersTimesMap = fromDeepEntries([...measuredPlayersTimes, ...manualPlayersTimes]);
 
-            const basedOnSplitMedian = estimateSplitTimeBasedOnSplitMedian({
-                splitsInOrder,
-                playersTimesMap,
-                targetSplitId: input.splitId,
-                bibNumber: input.bibNumber,
-            });
+            const basedOnSplitMedian = Math.floor(
+                estimateSplitTimeBasedOnSplitMedian({
+                    splitsInOrder,
+                    playersTimesMap,
+                    targetSplitId: input.splitId,
+                    bibNumber: input.bibNumber,
+                }),
+            );
 
-            const basedOnPlayerTimes = estimateSplitTimeBasedOnPlayerTimes({
-                splitsInOrder,
-                playersTimesMap,
-                targetSplitId: input.splitId,
-                bibNumber: input.bibNumber,
-            });
+            const basedOnPlayerTimes = Math.floor(
+                estimateSplitTimeBasedOnPlayerTimes({
+                    splitsInOrder,
+                    playersTimesMap,
+                    targetSplitId: input.splitId,
+                    bibNumber: input.bibNumber,
+                }),
+            );
 
-            const basedOnAverageSpeed = estimateSplitTimeBasedOnAverageSpeed({
-                splitsInOrder,
-                playersTimesMap,
-                targetSplitId: input.splitId,
-                bibNumber: input.bibNumber,
-            });
+            const basedOnAverageSpeed = Math.floor(
+                estimateSplitTimeBasedOnAverageSpeed({
+                    splitsInOrder,
+                    playersTimesMap,
+                    targetSplitId: input.splitId,
+                    bibNumber: input.bibNumber,
+                }),
+            );
 
             return { basedOnSplitMedian, basedOnPlayerTimes, basedOnAverageSpeed };
         }),

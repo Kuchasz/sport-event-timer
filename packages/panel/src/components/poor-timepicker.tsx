@@ -1,6 +1,6 @@
 import { useMask } from "@react-input/mask";
 import { formatTimeWithMilliSec, milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "src/utils";
 import { Input } from "./input";
 
@@ -47,6 +47,10 @@ export const PoorFullTimepicker = ({
 
     const [value, setValue] = useState<string>(formatTimeWithMilliSec(initialValue));
 
+    useEffect(() => {
+        if (initialValue) setValue(formatTimeWithMilliSec(initialValue));
+    }, [initialValue]);
+
     return (
         <Input
             className={className}
@@ -55,7 +59,9 @@ export const PoorFullTimepicker = ({
             onChange={e => {
                 setValue(e.currentTarget.value);
                 const miliseconds = fullTimeStringToEpochMiliseconds(e.currentTarget.value, date);
-                if (miliseconds.status === "Success") onChange({ target: { value: miliseconds.value } });
+                if (miliseconds.status === "Success") {
+                    onChange({ target: { value: miliseconds.value } });
+                }
             }}
         />
     );

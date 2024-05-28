@@ -1,4 +1,4 @@
-import { mdiTimerPlayOutline } from "@mdi/js";
+import { mdiExport } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
@@ -14,12 +14,11 @@ type SplitTime = AppRouterInputs["splitTime"]["update"];
 
 const SuggestedSplitTime = ({ time, onApply }: { time?: number; onApply: (time: number) => void }) =>
     !!time && (
-        <div onClick={() => onApply(time)} className="group flex cursor-pointer items-center transition-colors hover:text-orange-500">
-            <span className="text-sm">{formatTimeWithMilliSec(time)}</span>
-            <span className="ml-1 mr-3">
-                <Icon size={0.8} path={mdiTimerPlayOutline} />
+        <div className="group flex items-center text-blue-600 transition-colors">
+            <span className="rounded-sm bg-blue-50 px-1.5 py-0.5 font-mono font-semibold ">{formatTimeWithMilliSec(time)}</span>
+            <span onClick={() => onApply(time)} className="ml-1 mr-3 cursor-pointer rounded-full p-1 hover:bg-blue-50">
+                <Icon size={0.8} path={mdiExport} />
             </span>
-            <span className="font-semibold text-white transition-colors group-hover:text-orange-500">Use this time</span>
         </div>
     );
 
