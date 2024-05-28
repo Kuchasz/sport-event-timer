@@ -94,7 +94,11 @@ export const SplitTimeForm = ({
                         render={({ onChange }) => (
                             <SuggestedSplitTime
                                 time={
-                                    estimatedTimeBasedOnPlayerTimes ?? estimatedTimeBasedOnSplitMedian ?? estimatedTimeBasedOnAverageSpeed
+                                    [
+                                        estimatedTimeBasedOnPlayerTimes,
+                                        estimatedTimeBasedOnSplitMedian,
+                                        estimatedTimeBasedOnAverageSpeed,
+                                    ].filter(x => x)[0]
                                 }
                                 onApply={time => {
                                     onChange({ target: { value: time } });

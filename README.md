@@ -23,7 +23,7 @@ Application for making time measurements
 | 01/10/2023 | Speed up application build and release times                          | <sup>:heavy_check_mark:(03/10/2023)</sup> |
 | 03/10/2023 | Start new race selection dashboard                                    | <sup>:heavy_check_mark:(17/10/2023)</sup> |
 | 17/10/2023 | Sport discipline specification                                        | <sup>:heavy_check_mark:(24/10/2023)</sup> |
-| 18/10/2023 | Missing split times interpolation                                     |                  :date:                   |
+| 18/10/2023 | Missing split times interpolation                                     | <sup>:heavy_check_mark:(28/05/2024)</sup> |
 | 19/10/2023 | Fix many jumping stuff on home page                                   | <sup>:heavy_check_mark:(21/10/2023)</sup> |
 | 20/10/2023 | Remove hard-coded application urls and ports                          | <sup>:heavy_check_mark:(29/10/2023)</sup> |
 | 20/10/2023 | Dates should use locale formats (use intl formatter)                  |                  :date:                   |
