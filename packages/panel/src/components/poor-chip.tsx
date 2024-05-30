@@ -7,10 +7,11 @@ const chipStyles = cva(["rounded-sm", "bg-blue-50", "px-1.5", "py-0.5", "font-mo
             orange: "bg-orange-50 text-orange-600",
             red: "bg-red-50 text-red-600",
             gray: "bg-gray-50 text-gray-600",
+            green: "bg-green-50 text-green-600",
         },
     },
 });
 
-export const PoorChip = ({ label, color }: { label: string; color: "blue" | "orange" | "red" | "gray" }) => {
+export const PoorChip = ({ label, color }: { label: string; color: "blue" | "orange" | "red" | "gray" | "green" }) => {
     return <span className={chipStyles({ color })}>{label}</span>;
 };

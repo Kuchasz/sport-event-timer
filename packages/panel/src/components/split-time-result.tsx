@@ -42,12 +42,14 @@ export const SplitTimeResult = ({
             {splitTime?.manual ? (
                 <Tooltip>
                     <TooltipTrigger>
-                        <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="orange" />
+                        <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="green" />
                     </TooltipTrigger>
                     <TooltipContent>{t("pages.splitTimes.manual.description")}</TooltipContent>
                 </Tooltip>
-            ) : (
+            ) : (splitTime?.time ?? 0) > 0 ? (
                 <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="gray" />
+            ) : (
+                <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="orange" />
             )}
 
             <div className="flex-grow"></div>
