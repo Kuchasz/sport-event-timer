@@ -9,6 +9,7 @@ import { SplitTimeEdit } from "src/components/panel/split-time/split-time-edit";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import type { AppRouterInputs } from "src/trpc";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
+import { PoorChip } from "./poor-chip";
 
 type RevertedSplitTime = AppRouterInputs["splitTime"]["revert"];
 
@@ -37,16 +38,16 @@ export const SplitTimeResult = ({
 }: SplitTimeResultTypes) => {
     const t = useTranslations();
     return (
-        <div className={classNames("flex font-mono font-medium", splitTime?.manual ? "" : "")}>
+        <div className={classNames("flex items-center font-mono font-medium", splitTime?.manual ? "" : "")}>
             {splitTime?.manual ? (
                 <Tooltip>
                     <TooltipTrigger>
-                        <span className="text-orange-500">{formatTimeWithMilliSec(splitTime?.time)}</span>
+                        <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="orange" />
                     </TooltipTrigger>
                     <TooltipContent>{t("pages.splitTimes.manual.description")}</TooltipContent>
                 </Tooltip>
             ) : (
-                <span className="text-gray-700">{formatTimeWithMilliSec(splitTime?.time)}</span>
+                <PoorChip label={formatTimeWithMilliSec(splitTime?.time)} color="gray" />
             )}
 
             <div className="flex-grow"></div>
@@ -111,7 +112,7 @@ export const SplitTimeResult = ({
                     </span>
                 </PoorConfirmation>
             ) : (
-                <span className="ml-2 flex opacity-10">
+                <span className="ml-2 flex items-center opacity-10">
                     <Icon size={0.75} path={mdiReload} />
                 </span>
             )}

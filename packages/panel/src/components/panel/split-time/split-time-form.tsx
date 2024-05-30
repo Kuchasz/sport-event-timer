@@ -9,12 +9,13 @@ import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
 import { Button } from "../../button";
 import { PoorSelect } from "../../poor-select";
 import { PoorFullTimepicker } from "../../poor-timepicker";
+import { PoorChip } from "src/components/poor-chip";
 
 type SplitTime = AppRouterInputs["splitTime"]["update"];
 
 const SuggestedSplitTime = ({ time, onApply }: { time?: number; onApply: (time: number) => void }) => (
     <div className="group flex items-center text-blue-600 transition-colors">
-        <span className="rounded-sm bg-blue-50 px-1.5 py-0.5 font-mono font-semibold ">{formatTimeWithMilliSec(time)}</span>
+        <PoorChip color="blue" label={formatTimeWithMilliSec(time)} />
         <span onClick={() => onApply(time ?? 0)} className="ml-1 mr-3 cursor-pointer rounded-full p-1 hover:bg-blue-50">
             <Icon size={0.8} path={mdiExport} />
         </span>
