@@ -11,7 +11,7 @@ import { Form, SmallFormInput } from "src/form";
 import Head from "next/head";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { PlayerRegistration } from "src/modules/player-registration/models";
 import { countryCodeEnum, playerRegistrationSchema } from "src/modules/player-registration/models";
 import { type AppRouterOutputs } from "src/trpc";
@@ -44,6 +44,7 @@ const RegistrationFormComponent = ({
     termsUrl: string | null;
 }) => {
     const t = useTranslations();
+    const locale = useLocale();
     const countries = countryCodeEnum.options.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
     const genderOptions = genderEnum.options.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
 
@@ -70,7 +71,12 @@ const RegistrationFormComponent = ({
                 <SmallFormInput<PlayerRegistration, "birthDate">
                     label={t("registration.fields.birthDate.label")}
                     render={({ value, onChange }) => (
-                        <PoorDatepicker placeholder={t("registration.fields.birthDate.placeholder")} value={value} onChange={onChange} />
+                        <PoorDatepicker
+                            placeholder={t("registration.fields.birthDate.placeholder")}
+                            value={value}
+                            onChange={onChange}
+                            locale={locale}
+                        />
                     )}
                     name="birthDate"
                 />

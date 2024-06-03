@@ -17,7 +17,7 @@ import {
     raceRegistrationSchema,
     raceRegulationsSchema,
 } from "src/modules/race/models";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type AppRouterInputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
 
@@ -38,6 +38,7 @@ export const BasicInfo = () => {
 
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
+    const locale = useLocale();
     const sportKindsOptions = sportKinds.map(sk => ({ name: sportKindTranslations(sk), value: sk }));
 
     const updateRaceInformation = async (raceInformation: RaceInformation) => {
@@ -109,6 +110,7 @@ export const BasicInfo = () => {
                                                     placeholder={t("pages.races.form.date.placeholder")}
                                                     value={value}
                                                     onChange={onChange}
+                                                    locale={locale}
                                                 />
                                             )}
                                             name="date"
@@ -208,6 +210,7 @@ export const BasicInfo = () => {
                                                     placeholder={t("pages.races.form.registrationCutoff.placeholder")}
                                                     value={value}
                                                     onChange={onChange}
+                                                    locale={locale}
                                                 />
                                             )}
                                             name="registrationCutoff"

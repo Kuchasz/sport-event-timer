@@ -1,18 +1,20 @@
 import { Input } from "./input";
 
-const toDateString = (date: Date) => date.toLocaleDateString("en-CA");
+const toDateString = (date: Date, locale: string) => date.toLocaleDateString(locale);
 const toDate = (dateString: string) => new Date(dateString);
 
 export const PoorDatepicker = ({
     value: initialValue,
     onChange,
     placeholder,
+    locale,
 }: {
     value?: Date;
     onChange: (event: { target: { value: Date } }) => void;
     placeholder?: string;
+    locale: string;
 }) => {
-    const value = initialValue ? toDateString(initialValue) : undefined;
+    const value = initialValue ? toDateString(initialValue, locale) : undefined;
 
     return (
         <Input
@@ -26,7 +28,6 @@ export const PoorDatepicker = ({
     );
 };
 
-const toDateStringUTC = (date: Date) => date.toLocaleDateString("en-CA");
 const toDateUTC = (dateString: string) => {
     if (!dateString) return null;
     const date = new Date(dateString);
@@ -42,20 +43,23 @@ export const PoorUTCDatepicker = ({
     value: initialValue,
     onChange,
     placeholder,
+    locale,
 }:
     | {
           required: true;
           value?: Date | null;
           onChange: (event: { target: { value: Date } }) => void;
           placeholder?: string;
+          locale: string;
       }
     | {
           required?: false;
           value?: Date | null;
           onChange: (event: { target: { value: Date | null } }) => void;
           placeholder?: string;
+          locale: string;
       }) => {
-    const value = initialValue ? toDateStringUTC(initialValue) : undefined;
+    const value = initialValue ? toDateString(initialValue, locale) : undefined;
 
     return (
         <Input

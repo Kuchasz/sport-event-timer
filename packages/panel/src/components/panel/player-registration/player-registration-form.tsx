@@ -1,7 +1,7 @@
 import { Form, SmallFormInput } from "src/form";
 import { useCurrentRaceId } from "src/hooks";
 import { countryCodeEnum, playerRegistrationSchema } from "src/modules/player-registration/models";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
 import { Button } from "../../button";
@@ -24,6 +24,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
     const raceId = useCurrentRaceId();
     const { data: teams } = trpc.playerRegistration.teams.useQuery({ raceId: Number(raceId) }, { enabled: !!raceId, initialData: [] });
     const t = useTranslations();
+    const locale = useLocale();
     const countries = countryCodeEnum.options.map(code => ({ code, name: t(`shared.countryCodes.${code}`) }));
     const genderOptions = genderEnum.options.map(gender => ({ gender, name: t(`shared.genders.${gender}`) }));
 
@@ -80,6 +81,7 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                             placeholder={t("pages.playerRegistrations.form.birthDate.placeholder")}
                             value={value}
                             onChange={onChange}
+                            locale={locale}
                         />
                     )}
                     name="birthDate"

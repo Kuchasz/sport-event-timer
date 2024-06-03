@@ -7,7 +7,7 @@ import { PoorCheckbox } from "../../poor-checkbox";
 import { PoorTextArea } from "../../poor-text-area";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { PoorSelect } from "src/components/poor-select";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Form, FormInput } from "src/form";
 import { raceSchema } from "src/modules/race/models";
 
@@ -23,6 +23,7 @@ type RaceFormProps = {
 export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFormProps) => {
     const sportKindTranslations = useTranslations("shared.sportKinds");
     const t = useTranslations();
+    const locale = useLocale();
     const sportKindsOptions = sportKinds.map(sk => ({ name: sportKindTranslations(sk), value: sk }));
 
     return (
@@ -42,7 +43,13 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                 description={t("pages.races.form.date.description")}
                 className="flex-1"
                 render={({ value, onChange }) => (
-                    <PoorUTCDatepicker required placeholder={t("pages.races.form.date.placeholder")} value={value} onChange={onChange} />
+                    <PoorUTCDatepicker
+                        required
+                        placeholder={t("pages.races.form.date.placeholder")}
+                        value={value}
+                        locale={locale}
+                        onChange={onChange}
+                    />
                 )}
                 name="date"
             />
@@ -93,6 +100,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                         placeholder={t("pages.races.form.registrationCutoff.placeholder")}
                         value={value}
                         onChange={onChange}
+                        locale={locale}
                     />
                 )}
                 name="registrationCutoff"
