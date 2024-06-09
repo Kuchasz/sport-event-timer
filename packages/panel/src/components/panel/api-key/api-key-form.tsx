@@ -1,7 +1,7 @@
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorInput } from "../../poor-input";
 import type { AppRouterInputs } from "src/trpc";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { apiKeySchema } from "src/modules/api-key/models";
 import { useTranslations } from "next-intl";
 
@@ -30,12 +30,12 @@ export const ApiKeyForm = ({ onReject, onResolve, initialApiKey, isLoading }: Ap
                 />
             </div>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

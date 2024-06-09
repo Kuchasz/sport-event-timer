@@ -1,10 +1,10 @@
-import { Form, SmallFormInput } from "src/form";
+import { Form, SmallFormInput } from "src/components/form";
 import { useCurrentRaceId } from "src/hooks";
 import { countryCodeEnum, playerRegistrationSchema } from "src/modules/player-registration/models";
 import { useLocale, useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorCombo } from "../../poor-combo";
 import { PoorDatepicker } from "../../poor-datepicker";
 import { PoorInput } from "../../poor-input";
@@ -164,12 +164,12 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                 />
             </div>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

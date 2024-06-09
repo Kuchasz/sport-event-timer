@@ -3,10 +3,10 @@ import Icon from "@mdi/react";
 import { formatTimeWithMilliSec } from "@set/utils/dist/datetime";
 import { useTranslations } from "next-intl";
 import { PoorCombo } from "src/components/poor-combo";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { splitTimeSchema } from "src/modules/split-time/models";
 import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorSelect } from "../../poor-select";
 import { PoorFullTimepicker } from "../../poor-timepicker";
 import { PoorChip } from "src/components/poor-chip";
@@ -106,12 +106,12 @@ export const SplitTimeForm = ({
                 name="time"
             />
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

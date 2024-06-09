@@ -7,13 +7,13 @@ import { PageHeader } from "src/components/page-headers";
 import { mdiClockFast, mdiClockOutline, mdiFlagCheckered, mdiOpenInNew, mdiPlaylistPlay, mdiQrcode, mdiTimer10 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import type { Route } from "next";
 import QR from "qrcode";
 import { sanitizeFileName, triggerBase64Download } from "@set/utils/dist/file";
 import { buildApplicationPath } from "src/utils";
 import { useRouter } from "next/navigation";
-import { FormCard } from "src/form";
+import { FormCard } from "src/components/form";
 
 type ApplicationCardProps = {
     href: Route;
@@ -48,14 +48,14 @@ const ApplicationCard = ({ href, qrFileName, name, description, icon }: Applicat
                 <div className="flex max-w-xl flex-col justify-between">
                     <div className="text-sm">{description}</div>
                     <div className="mt-2 flex justify-end gap-2">
-                        <Button onClick={generateQRCode}>
+                        <PoorButton onClick={generateQRCode}>
                             <Icon path={mdiQrcode} size={0.8} />
                             <span className="ml-2">{t("pages.tools.applications.buttons.getQrCode")}</span>
-                        </Button>
-                        <Button onClick={openApplication} outline>
+                        </PoorButton>
+                        <PoorButton onClick={openApplication} outline>
                             <Icon size={0.8} path={mdiOpenInNew} />
                             <span className="ml-2">{t("pages.tools.applications.buttons.open")}</span>
-                        </Button>
+                        </PoorButton>
                     </div>
                 </div>
             </div>

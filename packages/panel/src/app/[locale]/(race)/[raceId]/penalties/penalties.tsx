@@ -2,7 +2,7 @@
 import { mdiExport, mdiPencil, mdiPlus, mdiRestore } from "@mdi/js";
 import Icon from "@mdi/react";
 import { formatTimeWithMilliSecUTC } from "@set/utils/dist/datetime";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PageHeader } from "src/components/page-headers";
 import { DisqualificationCreate } from "src/components/panel/penalties/disqualification-create";
 import { DisqualificationEdit } from "src/components/panel/penalties/disqualification-edit";
@@ -184,12 +184,12 @@ export const Penalties = () => {
                         componentProps={{
                             onReject: () => {},
                         }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("timeMeasurement.penalties.timePenalty.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
-                    <Button
+                    <PoorButton
                         className="ml-2"
                         outline
                         onClick={() => {
@@ -200,7 +200,7 @@ export const Penalties = () => {
                         }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("timeMeasurement.penalties.page.export.button")}</span>
-                    </Button>
+                    </PoorButton>
                 </div>
 
                 {timePenalties && (
@@ -229,12 +229,12 @@ export const Penalties = () => {
                         componentProps={{
                             onReject: () => {},
                         }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("timeMeasurement.penalties.page.disqualification.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
-                    <Button
+                    <PoorButton
                         className="ml-2"
                         outline
                         onClick={() => {
@@ -242,7 +242,7 @@ export const Penalties = () => {
                         }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("timeMeasurement.penalties.page.disqualification.export.button")}</span>
-                    </Button>
+                    </PoorButton>
                 </div>
 
                 {disqualifications && (

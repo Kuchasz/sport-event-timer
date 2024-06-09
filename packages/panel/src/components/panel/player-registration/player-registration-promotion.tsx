@@ -1,11 +1,11 @@
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
 import { PoorSelect } from "../../poor-select";
 import { PoorTimepicker } from "../../poor-timepicker";
 import { trpc } from "src/trpc-core";
 import { playerPromotionSchema } from "src/modules/player/models";
 import { useTranslations } from "next-intl";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { PoorCombo } from "../../poor-combo";
 
 type PlayerPromotion = AppRouterInputs["player"]["promoteRegistration"]["player"];
@@ -72,12 +72,12 @@ const PlayerRegistrationPromotionForm = ({
             />
 
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

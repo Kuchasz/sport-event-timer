@@ -41,7 +41,7 @@ export const bibNumberRouter = router({
         .query(async ({ input, ctx }) => {
             const { raceId, bibNumber } = input;
             const playersBibNumbers = await ctx.db.player.findMany({
-                where: { OR: [{ raceId }, { bibNumber }] },
+                where: { AND: [{ raceId }, { NOT: { bibNumber } }] },
                 select: { bibNumber: true },
             });
 
@@ -50,10 +50,13 @@ export const bibNumberRouter = router({
                 select: { bibNumber: true },
             });
 
-            return excludeItems(
-                playersBibNumbers.map(p => p.bibNumber),
-                disqualifiedBibNumbers.map(d => d.bibNumber),
-            );
+            return [
+                ...(bibNumber ? [bibNumber] : []),
+                ...excludeItems(
+                    playersBibNumbers.map(p => p.bibNumber),
+                    disqualifiedBibNumbers.map(d => d.bibNumber),
+                ),
+            ];
         }),
     availableNumbers: protectedProcedure
         .input(

@@ -1,8 +1,8 @@
-import { Form, SmallFormInput } from "src/form";
+import { Form, SmallFormInput } from "src/components/form";
 import { bibNumberSchema } from "src/modules/bib-number/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorInput } from "../../poor-input";
 
 type BibNumber = AppRouterInputs["bibNumber"]["add"];
@@ -18,7 +18,7 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber, isLoading
     const t = useTranslations();
     return (
         <Form<BibNumber> validationSchema={bibNumberSchema} initialValues={initialBibNumber} onSubmit={onResolve}>
-            <div className="flex">
+            <div>
                 <SmallFormInput<BibNumber, "number">
                     label={t("pages.bibNumbers.form.number.label")}
                     className="flex-1"
@@ -29,12 +29,12 @@ export const BibNumberForm = ({ onReject, onResolve, initialBibNumber, isLoading
                 />
             </div>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

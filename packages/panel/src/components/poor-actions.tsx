@@ -1,10 +1,9 @@
 "use client";
 
-import { Float } from "@headlessui-float/react";
-import { Popover } from "@headlessui/react";
 import { mdiDotsHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type PoorActionProps = {
     name: string;
@@ -30,48 +29,31 @@ export const NewPoorActionsItem = ({ name, description, iconPath, href, onClick 
     </a>
 );
 
-const PoorActionsCloser = ({ close }: { close: () => void }) => {
-    useEffect(() => {
-        const handleClose = () => {
-            const anyDialogOpen = document.querySelector("[id^='headlessui-dialog-']");
-            if (!anyDialogOpen) close();
-        };
-        window.addEventListener("scroll", handleClose, true);
-        return () => {
-            window.removeEventListener("scroll", handleClose, true);
-        };
-    }, [close]);
-    return null;
-};
+// const PoorActionsCloser = ({ close }: { close: () => void }) => {
+//     useEffect(() => {
+//         const handleClose = () => {
+//             const anyDialogOpen = document.querySelector("[data-radix-popper-content-wrapper]");
+//             if (!anyDialogOpen) close();
+//         };
+//         window.addEventListener("scroll", handleClose, true);
+//         return () => {
+//             window.removeEventListener("scroll", handleClose, true);
+//         };
+//     }, [close]);
+//     return null;
+// };
 
 export const PoorActions = ({ children }: { children: React.ReactNode }) => {
+    const [open, setOpen] = useState<boolean>(false);
     return (
-        <Popover className="flex h-full items-center">
-            <Float
-                zIndex={10}
-                transform={false}
-                autoPlacement
-                portal
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1">
-                <Popover.Button className="group flex size-8 items-center justify-center rounded-full text-base font-medium text-white hover:bg-gray-100 hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    <Icon className="text-black" size={0.8} path={mdiDotsHorizontal} />
-                </Popover.Button>
-                <Popover.Panel className="mt-3 w-screen max-w-sm px-4 sm:px-0">
-                    {({ close }) => (
-                        <>
-                            <PoorActionsCloser close={close} />
-                            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                <div className="relative grid gap-8 bg-white p-7">{children}</div>
-                            </div>
-                        </>
-                    )}
-                </Popover.Panel>
-            </Float>
+        <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger>
+                <Icon className="text-black" size={0.8} path={mdiDotsHorizontal} />
+            </PopoverTrigger>
+            <PopoverContent>
+                {/* <PoorActionsCloser close={() => setOpen(false)} /> */}
+                <div className="flex flex-col gap-8 p-1">{children}</div>
+            </PopoverContent>
         </Popover>
     );
 };

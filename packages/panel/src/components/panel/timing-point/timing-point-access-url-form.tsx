@@ -1,8 +1,8 @@
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorInput } from "../../poor-input";
 import type { AppRouterInputs } from "src/trpc";
 import { PoorCheckbox } from "../../poor-checkbox";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { timingPointAccessUrlSchema } from "src/modules/timing-point/models";
 import { useTranslations } from "next-intl";
 
@@ -64,12 +64,12 @@ export const TimingPointAccessUrlForm = ({ onReject, onResolve, initialTimingPoi
             />
 
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

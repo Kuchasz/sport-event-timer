@@ -1,4 +1,4 @@
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorUTCDatepicker } from "../../poor-datepicker";
 import { PoorInput } from "../../poor-input";
 import type { AppRouterInputs } from "src/trpc";
@@ -8,7 +8,7 @@ import { PoorTextArea } from "../../poor-text-area";
 import { sportKinds } from "@set/utils/dist/sport-kind";
 import { PoorSelect } from "src/components/poor-select";
 import { useLocale, useTranslations } from "next-intl";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { raceSchema } from "src/modules/race/models";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
@@ -170,12 +170,12 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                 name="emailTemplate"
             />
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

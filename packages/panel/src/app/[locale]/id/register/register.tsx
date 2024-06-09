@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorInput } from "src/components/poor-input";
-import { Form, SmallFormInput } from "src/form";
+import { Form, SmallFormInput } from "src/components/form";
 import { registrationSchema, type UserRegistration } from "src/modules/user/models";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -72,9 +72,9 @@ export function RegisterPage() {
                         )}
                         name="confirmPassword"
                     />
-                    <Button className="mt-4 w-full" loading={registerMutation.isLoading} type="submit">
+                    <PoorButton className="mt-4 w-full" loading={registerMutation.isLoading} type="submit">
                         {t("auth.registration.form.submit")}
-                    </Button>
+                    </PoorButton>
                 </div>
             </Form>
             <div className="self-center text-sm">

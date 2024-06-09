@@ -1,4 +1,4 @@
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 
 type ErrorProps = {
     code: string;
@@ -16,8 +16,8 @@ export const SiteError = ({ code, title, description, goBack, goHome }: ErrorPro
                 <h2 className="pt-2 text-5xl font-semibold">{title}</h2>
                 <p className="py-6">{description}</p>
                 <div className="flex">
-                    <Button outline>{goBack}</Button>
-                    <Button className="ml-2">{goHome}</Button>
+                    <PoorButton outline>{goBack}</PoorButton>
+                    <PoorButton className="ml-2">{goHome}</PoorButton>
                 </div>
             </div>
             <img className="h-64 -scale-x-100" src="/assets/sad_dino.png"></img>

@@ -5,7 +5,7 @@ import Icon from "@mdi/react";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { SectionHeader } from "src/components/page-headers";
 import { SidePage } from "src/components/pages";
 import { PoorInput } from "src/components/poor-input";
@@ -249,10 +249,10 @@ export const SplitsList = ({
     return (
         <div>
             <SectionHeader title={classificationName} />
-            <Button onClick={addSplit} outline>
+            <PoorButton onClick={addSplit} outline>
                 <Icon size={0.8} path={mdiPlus} />
                 <span className="ml-2">{t("pages.splits.classificationSplits.addSplit")}</span>
-            </Button>
+            </PoorButton>
             <div className="my-4 border">
                 <table className="min-w-full bg-white">
                     <thead className="text-left text-xs">
@@ -293,12 +293,12 @@ export const SplitsList = ({
             </div>
 
             <div className="mt-4 flex">
-                <Button onClick={handleRejectChanges} outline>
+                <PoorButton onClick={handleRejectChanges} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
+                </PoorButton>
+                <PoorButton onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </div>
     );

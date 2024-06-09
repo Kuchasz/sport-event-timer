@@ -185,7 +185,7 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                         gridTemplateColumns,
                         gridAutoRows: "auto",
                     }}>
-                    <div className="contents text-xs font-bold">
+                    <div className="contents text-xs font-semibold">
                         {visibleColumns.map(c => (
                             <div className="sticky top-0 z-[9] flex border-b bg-white" key={c.headerName}>
                                 {c.sortable ? (

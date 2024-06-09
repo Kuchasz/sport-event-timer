@@ -4,6 +4,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 module.exports = {
     mode: "jit",
+    darkMode: ["class"],
     plugins: [require("tailwindcss-animate")],
     content: ["./src/pages/**/*.tsx", "./src/components/**/*.tsx", "./src/apps/**/*.tsx", "./src/app/**/*.tsx"],
     theme: {
@@ -52,10 +53,12 @@ module.exports = {
                 fadeIn: "fadeIn 0.2s",
                 fadeOut: "fadeOut 0.2s",
                 wave: "wave 1s infinite",
+                "accordion-down": "accordion-down 0.2s ease-out",
+                "accordion-up": "accordion-up 0.2s ease-out",
             },
             borderRadius: {
-                lg: `var(--radius)`,
-                md: `calc(var(--radius) - 2px)`,
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
             },
             colors: {
@@ -108,6 +111,14 @@ module.exports = {
                 128: "32rem",
             },
             keyframes: {
+                "accordion-down": {
+                    from: { height: "0" },
+                    to: { height: "var(--radix-accordion-content-height)" },
+                },
+                "accordion-up": {
+                    from: { height: "var(--radix-accordion-content-height)" },
+                    to: { height: "0" },
+                },
                 pushIn: {
                     "0%": { transform: "scale(1)" },
                     "25%": { transform: "scale(0.7)" },

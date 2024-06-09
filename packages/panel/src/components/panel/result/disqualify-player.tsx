@@ -1,6 +1,6 @@
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorCombo } from "src/components/poor-combo";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { disqualificationReasons, disqualificationSchema } from "src/modules/disqualification/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
@@ -55,12 +55,12 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
                 />
 
                 <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
+                    <PoorButton onClick={onReject} outline>
                         {t("shared.cancel")}
-                    </Button>
-                    <Button loading={disqualifyMutation.isLoading} type="submit">
+                    </PoorButton>
+                    <PoorButton loading={disqualifyMutation.isLoading} type="submit">
                         {t("shared.save")}
-                    </Button>
+                    </PoorButton>
                 </div>
             </div>
         </Form>

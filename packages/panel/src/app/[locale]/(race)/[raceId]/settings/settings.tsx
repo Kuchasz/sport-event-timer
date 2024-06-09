@@ -1,7 +1,7 @@
 "use client";
 import { mdiPen, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PageHeader } from "src/components/page-headers";
 import { ApiKeyCreate } from "src/components/panel/api-key/api-key-create";
 import { ApiKeyEdit } from "src/components/panel/api-key/api-key-edit";
@@ -43,10 +43,10 @@ export const Settings = () => {
                             raceId: raceId,
                             onReject: () => {},
                         }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.settings.apiKeys.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                 </div>
                 {apiKeys?.map(key => (
@@ -63,9 +63,9 @@ export const Settings = () => {
                                     editedApiKey: key,
                                     onReject: () => {},
                                 }}>
-                                <Button className="mr-2">
+                                <PoorButton className="mr-2">
                                     <Icon size={0.8} path={mdiPen} />
-                                </Button>
+                                </PoorButton>
                             </PoorModal>
 
                             <PoorConfirmation
@@ -74,9 +74,9 @@ export const Settings = () => {
                                 message={t("pages.settings.apiKeys.delete.confirmation.text", { name: key.name })}
                                 onAccept={() => deleteApiKey(key)}
                                 isLoading={deleteApiKeyMutation.isLoading}>
-                                <Button>
+                                <PoorButton>
                                     <Icon size={0.8} path={mdiTrashCanOutline} />
-                                </Button>
+                                </PoorButton>
                             </PoorConfirmation>
                         </div>
                     </div>

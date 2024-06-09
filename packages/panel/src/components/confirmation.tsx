@@ -1,5 +1,5 @@
 import { useTranslations } from "use-intl";
-import { Button } from "./button";
+import { PoorButton } from "./poor-button";
 
 type ConfirmationProps = {
     onReject: () => void;
@@ -15,10 +15,10 @@ export const Confirmation = ({ message, onReject, onResolve }: ConfirmationProps
                 <span>{message}</span>
             </div>
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button onClick={() => onResolve(true)}>{t("shared.ok")}</Button>
+                </PoorButton>
+                <PoorButton onClick={() => onResolve(true)}>{t("shared.ok")}</PoorButton>
             </div>
         </div>
     );

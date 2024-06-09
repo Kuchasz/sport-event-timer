@@ -3,7 +3,7 @@
 import { mdiCalendarEditOutline, mdiLockOpenVariantOutline, mdiLockOutline, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import { RaceCreate } from "src/components/panel/race/race-create";
 import { RaceEdit } from "src/components/panel/race/race-edit";
@@ -162,13 +162,13 @@ export const MyRaces = () => {
                         title={t("pages.races.createRace.title")}
                         component={RaceCreate}
                         componentProps={{ onReject: () => {} }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.races.addRace")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                 </div>
-                <div className="flex-grow overflow-hidden">
+                <div className="flex-grow">
                     <PoorDataTable
                         gridName="my-races"
                         columns={defaultColumns}

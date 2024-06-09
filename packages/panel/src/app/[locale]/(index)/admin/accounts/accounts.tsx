@@ -15,7 +15,7 @@ export const Accounts = () => {
     return (
         <>
             <PageHeader title="Accounts" description="Manage accounts having access to the races" />
-            <div className="flex-grow overflow-hidden">
+            <div className="flex-grow">
                 <PoorDataTable gridName="accounts" columns={defaultColumns} getRowId={item => item.email!} data={accounts}></PoorDataTable>
             </div>
         </>

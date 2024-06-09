@@ -3,7 +3,7 @@
 import { mdiNumeric, mdiPlus, mdiRestore, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { BibNumberCreateManyForm } from "src/components/bib-number-create-many";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PageHeader } from "src/components/page-headers";
 import { BibNumberCreate } from "src/components/panel/bib-number/bib-number-create";
 import { BibNumberEdit } from "src/components/panel/bib-number/bib-number-edit";
@@ -98,12 +98,11 @@ export const BibNumbers = () => {
                         title={t("pages.bibNumbers.create.title")}
                         component={BibNumberCreate}
                         componentProps={{ raceId: raceId, onReject: () => {} }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.bibNumbers.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
-
                     <PoorModal
                         onResolve={() => refetch()}
                         title={t("pages.bibNumbers.createMany.title")}
@@ -112,10 +111,10 @@ export const BibNumbers = () => {
                             initialConfig: { raceId: raceId, startNumber: 1, endNumber: 100, omitDuplicates: true },
                             onReject: () => {},
                         }}>
-                        <Button outline className="ml-2">
+                        <PoorButton outline className="ml-2">
                             <Icon size={0.8} path={mdiPlus} />
                             {t("pages.bibNumbers.createMany.button")}
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                     <PoorConfirmation
                         destructive
@@ -123,13 +122,13 @@ export const BibNumbers = () => {
                         message={t("pages.bibNumbers.deleteAll.confirmation.text")}
                         onAccept={deleteAll}
                         isLoading={deleteAllMutation.isLoading}>
-                        <Button outline className="ml-2">
+                        <PoorButton outline className="ml-2">
                             <Icon size={0.8} path={mdiRestore} className="mr-2" />
                             {t("pages.bibNumbers.deleteAll.button")}
-                        </Button>
+                        </PoorButton>
                     </PoorConfirmation>
                 </div>
-                <div className="flex-grow overflow-hidden">
+                <div className="flex-grow">
                     <PoorDataTable
                         data={bibNubers}
                         columns={defaultColumns}

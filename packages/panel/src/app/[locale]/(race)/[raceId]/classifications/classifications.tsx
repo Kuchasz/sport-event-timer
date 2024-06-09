@@ -1,7 +1,7 @@
 "use client";
 import { mdiAccountEditOutline, mdiAccountMultiple, mdiAccountMultiplePlusOutline, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
 import { PageHeader } from "src/components/page-headers";
 import { ClassificationCreate } from "src/components/panel/classification/classification-create";
@@ -90,18 +90,18 @@ export const Classifications = () => {
                         component={ClassificationCreate}
                         onResolve={() => refetch()}
                         componentProps={{ raceId: raceId, onReject: () => {} }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.classifications.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                     <div className="px-1"></div>
-                    <Button autoCapitalize="false" outline>
+                    <PoorButton autoCapitalize="false" outline>
                         <Icon size={0.8} path={mdiAccountMultiplePlusOutline} />
                         <span className="ml-2">{t("pages.classifications.load.button")}</span>
-                    </Button>
+                    </PoorButton>
                 </div>
-                <div className="flex-grow overflow-hidden">
+                <div className="flex-grow">
                     <PoorDataTable
                         data={classifications}
                         columns={defaultColumns}

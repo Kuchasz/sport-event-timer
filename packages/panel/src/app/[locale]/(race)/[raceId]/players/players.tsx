@@ -3,7 +3,7 @@ import { mdiExport, mdiHumanEdit, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import type { Gender } from "src/modules/shared/models";
 import { milisecondsToTimeString } from "@set/utils/dist/datetime";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { GenderIcon } from "src/components/gender-icon";
 import { PageHeader } from "src/components/page-headers";
 import { PlayerEdit } from "src/components/panel/player/player-edit";
@@ -157,7 +157,7 @@ export const Players = () => {
             <div className="border-1 flex h-full flex-col overflow-y-hidden border-solid border-gray-600">
                 <PageHeader title={t("pages.players.header.title")} description={t("pages.players.header.description")} />
                 <div className="mb-4 flex">
-                    <Button
+                    <PoorButton
                         outline
                         onClick={() => {
                             alert("It does not work now!");
@@ -167,11 +167,11 @@ export const Players = () => {
                         }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.players.export.button")}</span>
-                    </Button>
+                    </PoorButton>
                 </div>
 
                 {players && (
-                    <div className="flex-grow overflow-hidden">
+                    <div className="flex-grow">
                         <PoorDataTable
                             data={players}
                             columns={cols}

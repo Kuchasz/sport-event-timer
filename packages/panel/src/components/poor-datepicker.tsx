@@ -1,36 +1,35 @@
-import { Input } from "./input";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "src/utils";
+import { Button } from "./ui/button";
+import { Calendar } from "./ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
-const toDateString = (date: Date, locale: string) => date.toLocaleDateString(locale);
-const toDate = (dateString: string) => new Date(dateString);
+const DatePicker = ({ value, onChange }: { value?: Date; onChange: (arg: { target: { value?: Date } }) => void }) => (
+    <Popover>
+        <PopoverTrigger asChild>
+            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !value && "text-muted-foreground")}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {value ? format(value, "PPP") : <span>Pick a date</span>}
+            </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0">
+            <Calendar mode="single" selected={value} onSelect={val => onChange({ target: { value: val } })} initialFocus />
+        </PopoverContent>
+    </Popover>
+);
 
 export const PoorDatepicker = ({
     value: initialValue,
     onChange,
-    placeholder,
-    locale,
 }: {
     value?: Date;
     onChange: (event: { target: { value: Date } }) => void;
     placeholder?: string;
     locale: string;
-}) => {
-    const value = initialValue ? toDateString(initialValue, locale) : undefined;
+}) => <DatePicker value={initialValue} onChange={e => onChange({ target: { value: e.target.value ?? new Date() } })} />;
 
-    return (
-        <Input
-            placeholder={placeholder}
-            defaultValue={value}
-            onChange={e => {
-                onChange({ target: { value: toDate(e.currentTarget.value) ?? new Date() } });
-            }}
-            type="date"
-        />
-    );
-};
-
-const toDateUTC = (dateString: string) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
+const toDateUTC = (date: Date) => {
     const dateOffset = date.getTimezoneOffset();
 
     const finalDate = new Date(date.getTime() + dateOffset * 60_000);
@@ -39,11 +38,8 @@ const toDateUTC = (dateString: string) => {
 };
 
 export const PoorUTCDatepicker = ({
-    required,
     value: initialValue,
     onChange,
-    placeholder,
-    locale,
 }:
     | {
           required: true;
@@ -58,18 +54,11 @@ export const PoorUTCDatepicker = ({
           onChange: (event: { target: { value: Date | null } }) => void;
           placeholder?: string;
           locale: string;
-      }) => {
-    const value = initialValue ? toDateString(initialValue, locale) : undefined;
-
-    return (
-        <Input
-            required={required}
-            placeholder={placeholder}
-            defaultValue={value}
-            onChange={e => {
-                onChange({ target: { value: toDateUTC(e.currentTarget.value)! } });
-            }}
-            type="date"
-        />
-    );
-};
+      }) => (
+    <DatePicker
+        value={initialValue ?? new Date()}
+        onChange={e => {
+            onChange({ target: { value: toDateUTC(e.target.value ?? new Date())! } });
+        }}
+    />
+);

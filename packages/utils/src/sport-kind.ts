@@ -25,7 +25,6 @@ export const sportKinds = [
     "duathlon",
     "walking",
     "wakeboarding",
-    "snowboarding",
     "obstacle-course-run",
     "dog-sled-race",
     "kayaking",

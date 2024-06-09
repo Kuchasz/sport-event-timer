@@ -5,13 +5,13 @@ import Icon from "@mdi/react";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointAccessUrlCreate } from "src/components/panel/timing-point/timing-point-access-url-create-form";
 import { PoorConfirmation, PoorModal } from "src/components/poor-modal";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { TimingPointAccessUrlEdit } from "src/components/panel/timing-point/timing-point-access-url-edit-form";
 import { TimingPointForm } from "src/components/panel/timing-point/timing-point-form";
 import { NewPoorActionsItem, PoorActions } from "src/components/poor-actions";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { toast } from "src/components/use-toast";
-import { FormCard } from "src/form";
+import { FormCard } from "src/components/form";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import type { AppRouterInputs, AppRouterOutputs } from "src/trpc";
@@ -190,10 +190,10 @@ export const TimingPoint = ({
                                     raceId: timingPoint.raceId,
                                     onReject: () => {},
                                 }}>
-                                <Button outline>
+                                <PoorButton outline>
                                     <Icon size={0.8} path={mdiPlus} />
                                     <span className="ml-2">{t("pages.timingPoint.sections.accessUrls.create.button")}</span>
-                                </Button>
+                                </PoorButton>
                             </PoorModal>
                             <div className="p-2"></div>
                             <PoorDataTable
@@ -215,10 +215,10 @@ export const TimingPoint = ({
                                 title={t("pages.timingPoints.delete.confirmation.title")}
                                 message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
                                 isLoading={deleteTimingPointMutation.isLoading}>
-                                <Button className="self-start" type="submit" kind="delete">
+                                <PoorButton className="self-start" type="submit" kind="delete">
                                     <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                     <span className="ml-1">{t("shared.delete")}</span>
-                                </Button>
+                                </PoorButton>
                             </PoorConfirmation>
                         </div>
                     </div>

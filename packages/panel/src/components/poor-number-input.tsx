@@ -1,4 +1,4 @@
-import { Input } from "./input";
+import { Input } from "./ui/input";
 
 export const PoorNumberInput = <T extends number | null | undefined>({
     value,

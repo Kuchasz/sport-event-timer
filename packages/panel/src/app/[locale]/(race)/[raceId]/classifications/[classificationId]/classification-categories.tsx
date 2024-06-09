@@ -2,7 +2,7 @@
 import { mdiAccountEditOutline, mdiCheck, mdiClose, mdiPlus, mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { GenderIcon } from "src/components/gender-icon";
 import { PageHeader } from "src/components/page-headers";
 import { CategoryCreate } from "src/components/panel/classification/category-create";
@@ -137,14 +137,14 @@ export const ClassificationCategories = () => {
                         component={CategoryCreate}
                         componentProps={{ classificationId, onReject: () => {} }}
                         onResolve={() => refetch()}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.classifications.categories.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                 </div>
                 <div className="p-2"></div>
-                <div className="flex-grow overflow-hidden">
+                <div className="flex-grow">
                     <PoorDataTable
                         data={categories}
                         columns={defaultColumns}

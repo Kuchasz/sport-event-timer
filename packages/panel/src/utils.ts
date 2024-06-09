@@ -1,8 +1,14 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { createLogPrinter } from "@set/utils/dist/logger";
 import { mdiFlagCheckered, mdiRayStartArrow, mdiRayVertex } from "@mdi/js";
 import { formatNumber } from "@set/utils/dist/datetime";
 import { env } from "./env";
 import type { Route } from "next";
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 const secondMillis = 1_000;
 const minuteMillis = secondMillis * 60;

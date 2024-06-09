@@ -1,13 +1,13 @@
 "use client";
 
 import classNames from "classnames";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorCombo } from "src/components/poor-combo";
 import { PoorDatepicker } from "src/components/poor-datepicker";
 import { PoorInput } from "src/components/poor-input";
 import { PoorSelect } from "src/components/poor-select";
 import { trpc } from "src/trpc-core";
-import { Form, SmallFormInput } from "src/form";
+import { Form, SmallFormInput } from "src/components/form";
 import Head from "next/head";
 import React, { useState } from "react";
 import { dateFromYearsAgo } from "@set/utils/dist/datetime";
@@ -173,9 +173,9 @@ const RegistrationFormComponent = ({
                         </div>
                     </div>
                 </div>
-                <Button type="submit">
+                <PoorButton type="submit">
                     {registrationStatus === "progress" ? t("registration.buttons.pending") : t("registration.buttons.register")}
-                </Button>
+                </PoorButton>
             </Form>
         </div>
     );

@@ -1,9 +1,9 @@
 import { PoorCombo } from "src/components/poor-combo";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { disqualificationReasons, disqualificationSchema } from "src/modules/disqualification/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorSelect } from "../../poor-select";
 
 type Disqualification = AppRouterInputs["disqualification"]["update"];
@@ -68,12 +68,12 @@ export const DisqualificationForm = ({
                     />
                 </div>
                 <div className="mt-4 flex justify-between">
-                    <Button onClick={onReject} outline>
+                    <PoorButton onClick={onReject} outline>
                         {t("shared.cancel")}
-                    </Button>
-                    <Button loading={isLoading} type="submit">
+                    </PoorButton>
+                    <PoorButton loading={isLoading} type="submit">
                         {t("shared.save")}
-                    </Button>
+                    </PoorButton>
                 </div>
             </div>
         </Form>

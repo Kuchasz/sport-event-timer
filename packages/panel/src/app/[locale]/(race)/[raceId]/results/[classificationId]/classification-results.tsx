@@ -285,7 +285,7 @@ const Results = ({ classificationId }: { classificationId: number }) => {
             <div className="border-1 flex h-full flex-col border-solid border-gray-600">
                 <PageHeader title={t("pages.results.header.title")} description={t("pages.results.header.description")} />
                 {results && (
-                    <div className="flex-grow overflow-hidden">
+                    <div className="flex-grow">
                         <PoorDataTable
                             data={results}
                             columns={cols}

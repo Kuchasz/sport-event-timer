@@ -1,6 +1,6 @@
 import { mdiTrashCanOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorConfirmation } from "src/components/poor-modal";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
 import { useTranslations } from "next-intl";
@@ -104,9 +104,9 @@ export const ManageTimePenalties = ({ onResolve, initialPenalties, bibNumber, ra
                 data={penalties ?? []}
                 getRowId={p => p.id}></PoorDataTable>
             <div className="mt-4 flex justify-between">
-                <Button onClick={() => onResolve(penaltiesChanged)} outline>
+                <PoorButton onClick={() => onResolve(penaltiesChanged)} outline>
                     {t("shared.close")}
-                </Button>
+                </PoorButton>
             </div>
         </div>
     );

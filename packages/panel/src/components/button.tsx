@@ -1,8 +1,9 @@
 "use client";
 
-import { useDeferredValue } from "src/hooks";
-import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 import { cva, type VariantProps } from "cva";
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import React from "react";
+import { useDeferredValue } from "src/hooks";
 
 const buttonStyles = cva(
     [
@@ -74,23 +75,26 @@ type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HT
         loading?: boolean;
     };
 
-export const Button = ({ outline, small, children, loading, className, kind, ...props }: ButtonProps) => {
-    const isLoading = useDeferredValue(loading);
+export const PoorButton = React.forwardRef(
+    ({ outline, small, children, loading, className, kind, ...props }: ButtonProps, forwartedRef: React.LegacyRef<HTMLButtonElement>) => {
+        const isLoading = useDeferredValue(loading);
 
-    const loadingVisuals = isLoading ? "opacity-0 pointer-events-none" : "";
+        const loadingVisuals = isLoading ? "opacity-0 pointer-events-none" : "";
 
-    return (
-        <button
-            disabled={loading}
-            onClick={loading ? () => null : props.onClick}
-            type="button"
-            {...props}
-            className={`${buttonStyles({ kind, outline, small, isLoading })} ${className}`}>
-            {isLoading && <LoadingSpinner fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
-            <div className={`flex items-center transition-all ${loadingVisuals}`}>{children}</div>
-        </button>
-    );
-};
+        return (
+            <button
+                disabled={loading}
+                onClick={loading ? () => null : props.onClick}
+                type="button"
+                ref={forwartedRef}
+                {...props}
+                className={`${buttonStyles({ kind, outline, small, isLoading })} ${className}`}>
+                {isLoading && <LoadingSpinner fill={outline ? "#1e3a8a" : "white"} className="absolute h-6 w-full opacity-50" />}
+                <div className={`flex items-center transition-all ${loadingVisuals}`}>{children}</div>
+            </button>
+        );
+    },
+);
 
 const LoadingSpinner = ({ className, fill }: { className: string; fill: string }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill={fill}>

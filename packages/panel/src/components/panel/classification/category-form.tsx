@@ -1,13 +1,12 @@
-import { Button } from "../../button";
-import { PoorInput } from "../../poor-input";
-import type { AppRouterInputs } from "src/trpc";
-import { PoorNumberInput } from "../../poor-number-input";
-import { RadioGroup } from "@headlessui/react";
-import classNames from "classnames";
-import { categorySchema } from "src/modules/classification/models";
-import { Form, FormInput } from "src/form";
 import { useTranslations } from "next-intl";
+import { Form, FormInput } from "src/components/form";
 import { PoorCheckbox } from "src/components/poor-checkbox";
+import { PoorRadioGroup, PoorRadioGroupItem, PoorRadioGroupLabel, PoorRadioGroupOption } from "src/components/poor-radio-group";
+import { categorySchema } from "src/modules/classification/models";
+import type { AppRouterInputs } from "src/trpc";
+import { PoorButton } from "../../poor-button";
+import { PoorInput } from "../../poor-input";
+import { PoorNumberInput } from "../../poor-number-input";
 
 type Category = AppRouterInputs["classification"]["addCategory"];
 
@@ -82,29 +81,20 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                 label={t("pages.classifications.categories.form.gender.label")}
                 description={t("pages.classifications.categories.form.gender.description")}
                 render={({ value, onChange }) => (
-                    <RadioGroup value={value} onChange={e => onChange({ target: { value: e } })}>
-                        <RadioGroup.Option value={null}>
-                            {({ checked }) => (
-                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
-                                    {t("pages.classifications.categories.form.gender.kind.any")}
-                                </span>
-                            )}
-                        </RadioGroup.Option>
-                        <RadioGroup.Option value="male">
-                            {({ checked }) => (
-                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
-                                    {t("pages.classifications.categories.form.gender.kind.male")}
-                                </span>
-                            )}
-                        </RadioGroup.Option>
-                        <RadioGroup.Option value="female">
-                            {({ checked }) => (
-                                <span className={classNames("cursor-pointer rounded-md p-1 text-xs", { ["bg-blue-200"]: checked })}>
-                                    {t("pages.classifications.categories.form.gender.kind.female")}
-                                </span>
-                            )}
-                        </RadioGroup.Option>
-                    </RadioGroup>
+                    <PoorRadioGroup value={value} onChange={e => onChange({ target: { value: e.target.value } })}>
+                        <PoorRadioGroupItem>
+                            <PoorRadioGroupOption value={undefined}></PoorRadioGroupOption>
+                            <PoorRadioGroupLabel>{t("pages.classifications.categories.form.gender.kind.any")}</PoorRadioGroupLabel>
+                        </PoorRadioGroupItem>
+                        <PoorRadioGroupItem>
+                            <PoorRadioGroupOption value="male"></PoorRadioGroupOption>
+                            <PoorRadioGroupLabel>{t("pages.classifications.categories.form.gender.kind.male")}</PoorRadioGroupLabel>
+                        </PoorRadioGroupItem>
+                        <PoorRadioGroupItem>
+                            <PoorRadioGroupOption value="female"></PoorRadioGroupOption>
+                            <PoorRadioGroupLabel>{t("pages.classifications.categories.form.gender.kind.female")}</PoorRadioGroupLabel>
+                        </PoorRadioGroupItem>
+                    </PoorRadioGroup>
                 )}
                 name="gender"
             />
@@ -119,12 +109,12 @@ export const CategoryForm = ({ onReject, onResolve, initialCategory, isLoading }
                 name="isSpecial"
             />
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

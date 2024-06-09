@@ -13,7 +13,7 @@ import {
 import Icon from "@mdi/react";
 import type { Gender } from "src/modules/shared/models";
 import classNames from "classnames";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { GenderIcon } from "src/components/gender-icon";
 import { PageHeader } from "src/components/page-headers";
 import { PlayerRegistrationCreate } from "src/components/panel/player-registration/player-registration-create";
@@ -257,12 +257,12 @@ export const PlayerRegistrations = () => {
                             raceId: raceId,
                             onReject: () => {},
                         }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.playerRegistrations.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
-                    <Button
+                    <PoorButton
                         outline
                         className="ml-2"
                         onClick={() => {
@@ -277,9 +277,9 @@ export const PlayerRegistrations = () => {
                         }}>
                         <Icon size={0.8} path={mdiExport} />
                         <span className="ml-2">{t("pages.playerRegistrations.export.button")}</span>
-                    </Button>
+                    </PoorButton>
                 </div>
-                <div className="flex-grow overflow-hidden">
+                <div className="flex-grow">
                     <PoorDataTable
                         data={registrations}
                         columns={cols}

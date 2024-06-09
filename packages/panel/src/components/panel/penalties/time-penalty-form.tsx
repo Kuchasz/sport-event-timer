@@ -1,6 +1,6 @@
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import type { AppRouterInputs } from "src/trpc";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorSelect } from "../../poor-select";
 
 import { PoorCombo } from "src/components/poor-combo";
@@ -76,12 +76,12 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                 name="time"
             />
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

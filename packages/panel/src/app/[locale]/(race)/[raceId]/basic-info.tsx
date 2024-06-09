@@ -1,7 +1,7 @@
 "use client";
 
 import { sportKinds } from "@set/utils/dist/sport-kind";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PageHeader } from "src/components/page-headers";
 import { PoorCheckbox } from "src/components/poor-checkbox";
 import { PoorUTCDatepicker } from "src/components/poor-datepicker";
@@ -9,7 +9,7 @@ import { PoorInput } from "src/components/poor-input";
 import { PoorNumberInput } from "src/components/poor-number-input";
 import { PoorSelect } from "src/components/poor-select";
 import { PoorTextArea } from "src/components/poor-text-area";
-import { Form, FormCard, FormInput } from "src/form";
+import { Form, FormCard, FormInput } from "src/components/form";
 import { useCurrentRaceId } from "src/hooks";
 import {
     raceConfirmationEmailTemplateSchema,
@@ -175,9 +175,9 @@ export const BasicInfo = () => {
                                             name="websiteUrl"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <Button loading={updateRaceInformationMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceInformationMutation.isLoading} type="submit">
                                                 {t("shared.save")}
-                                            </Button>
+                                            </PoorButton>
                                         </div>
                                     </FormCard>
                                 </Form>
@@ -230,9 +230,9 @@ export const BasicInfo = () => {
                                             name="registrationEnabled"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <Button loading={updateRaceRegistrationMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceRegistrationMutation.isLoading} type="submit">
                                                 {t("shared.save")}
-                                            </Button>
+                                            </PoorButton>
                                         </div>
                                     </FormCard>
                                 </Form>
@@ -253,9 +253,9 @@ export const BasicInfo = () => {
                                             name="termsUrl"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <Button loading={updateRaceRegulationsMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceRegulationsMutation.isLoading} type="submit">
                                                 {t("shared.save")}
-                                            </Button>
+                                            </PoorButton>
                                         </div>
                                     </FormCard>
                                 </Form>
@@ -279,9 +279,9 @@ export const BasicInfo = () => {
                                             name="emailTemplate"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <Button loading={updateRaceConfirmationEmailTemplateMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceConfirmationEmailTemplateMutation.isLoading} type="submit">
                                                 {t("shared.save")}
-                                            </Button>
+                                            </PoorButton>
                                         </div>
                                     </FormCard>
                                 </Form>

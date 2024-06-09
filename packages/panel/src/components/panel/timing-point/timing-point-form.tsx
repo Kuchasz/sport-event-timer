@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { timingPointSchema } from "src/modules/timing-point/models";
 import type { AppRouterInputs } from "src/trpc";
-import { Button } from "../../button";
+import { PoorButton } from "../../poor-button";
 import { PoorInput } from "../../poor-input";
 type TimingPoint = AppRouterInputs["timingPoint"]["update"];
 
@@ -52,15 +52,15 @@ export const TimingPointForm = ({ onReject, onResolve, initialTimingPoint, isLoa
             </div>
             <div className="mt-4 flex justify-between">
                 {onReject ? (
-                    <Button onClick={onReject} outline>
+                    <PoorButton onClick={onReject} outline>
                         {t("shared.cancel")}
-                    </Button>
+                    </PoorButton>
                 ) : (
                     <div></div>
                 )}
-                <Button loading={isLoading} type="submit">
+                <PoorButton loading={isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

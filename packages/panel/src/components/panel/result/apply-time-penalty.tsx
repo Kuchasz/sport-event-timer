@@ -1,7 +1,7 @@
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PoorCombo } from "src/components/poor-combo";
 import { PoorNumberInput } from "src/components/poor-number-input";
-import { Form, FormInput } from "src/form";
+import { Form, FormInput } from "src/components/form";
 import { disqualificationReasons } from "src/modules/disqualification/models";
 import { timePenaltySchema } from "src/modules/time-penalty/models";
 import { useTranslations } from "next-intl";
@@ -67,12 +67,12 @@ export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: App
                 name="reason"
             />
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={applyTimePenaltyMutation.isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={applyTimePenaltyMutation.isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

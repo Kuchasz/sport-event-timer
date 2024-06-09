@@ -1,9 +1,9 @@
-import { Form, FormInput, SmallFormInput } from "src/form";
+import { Form, FormInput, SmallFormInput } from "src/components/form";
 import { addRangeBibNumberSchema } from "src/modules/bib-number/models";
 import { useTranslations } from "next-intl";
 import type { AppRouterInputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
-import { Button } from "./button";
+import { PoorButton } from "./poor-button";
 import { PoorCheckbox } from "./poor-checkbox";
 import { PoorNumberInput } from "./poor-number-input";
 
@@ -64,12 +64,12 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
             />
 
             <div className="mt-4 flex justify-between">
-                <Button onClick={onReject} outline>
+                <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
-                </Button>
-                <Button loading={addRangeBibNumberMutation.isLoading} type="submit">
+                </PoorButton>
+                <PoorButton loading={addRangeBibNumberMutation.isLoading} type="submit">
                     {t("shared.save")}
-                </Button>
+                </PoorButton>
             </div>
         </Form>
     );

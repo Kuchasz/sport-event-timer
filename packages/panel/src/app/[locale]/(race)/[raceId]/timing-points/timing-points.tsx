@@ -5,7 +5,7 @@ import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { Button } from "src/components/button";
+import { PoorButton } from "src/components/poor-button";
 import { PageHeader, SectionHeader } from "src/components/page-headers";
 import { TimingPointCreate } from "src/components/panel/timing-point/timing-point-create";
 import { PoorDataTable, type PoorDataTableColumn } from "src/components/poor-data-table";
@@ -49,10 +49,10 @@ export const TimingPoints = () => {
             allowShrink: true,
             headerName: t("pages.timingPoints.sections.grid.columns.actions"),
             cellRenderer: d => (
-                <Button onClick={() => router.push(`/${raceId}/timing-points/${d.id}`)} small outline>
+                <PoorButton onClick={() => router.push(`/${raceId}/timing-points/${d.id}`)} small outline>
                     <Icon size={0.8} path={mdiFileDocumentArrowRightOutline} />
                     <span className="ml-2">{t("shared.details")}</span>
-                </Button>
+                </PoorButton>
             ),
         },
     ];
@@ -91,10 +91,10 @@ export const TimingPoints = () => {
                         title={t("pages.timingPoints.create.title")}
                         component={TimingPointCreate}
                         componentProps={{ raceId: raceId, index: 0, onReject: () => {} }}>
-                        <Button outline>
+                        <PoorButton outline>
                             <Icon size={0.8} path={mdiPlus} />
                             <span className="ml-2">{t("pages.timingPoints.create.button")}</span>
-                        </Button>
+                        </PoorButton>
                     </PoorModal>
                     <div className="p-2"></div>
                     <PoorDataTable columns={cols} hideColumnsChooser getRowId={d => d.id} gridName="timing-points" data={timingPoints} />

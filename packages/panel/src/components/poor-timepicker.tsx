@@ -2,7 +2,7 @@ import { useMask } from "@react-input/mask";
 import { formatTimeWithMilliSec, milisecondsToTimeString } from "@set/utils/dist/datetime";
 import { useEffect, useState } from "react";
 import { fullTimeStringToEpochMiliseconds, timeStringToMiliseconds } from "src/utils";
-import { Input } from "./input";
+import { Input } from "./ui/input";
 
 export const PoorTimepicker = ({
     value: initialValue,
@@ -19,7 +19,7 @@ export const PoorTimepicker = ({
     const [value, setValue] = useState<string>(milisecondsToTimeString(initialValue));
     return (
         <Input
-            inputRef={inputRef}
+            ref={inputRef}
             value={value}
             onChange={e => {
                 setValue(e.currentTarget.value);
@@ -54,7 +54,7 @@ export const PoorFullTimepicker = ({
     return (
         <Input
             className={className}
-            inputRef={inputRef}
+            ref={inputRef}
             value={value}
             onChange={e => {
                 setValue(e.currentTarget.value);
