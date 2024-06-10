@@ -7,12 +7,12 @@ import { headers } from "next/headers";
 const url = `http://localhost:${env.API_PORT}`;
 
 export const trpcRSC = createTRPCProxyClient<AppRouter>({
-    transformer: superjson,
     links: [
         // loggerLink({
         //     enabled: op => process.env.NODE_ENV === "development" || (op.direction === "down" && op.result instanceof Error),
         // }),
         httpBatchLink({
+            transformer: superjson,
             url,
             headers() {
                 const { cookie } = Object.fromEntries(new Map(headers()));

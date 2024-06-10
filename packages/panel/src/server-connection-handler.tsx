@@ -33,13 +33,11 @@ export const ServerConnectionHandler = ({
 
     const systemTime = useSystemTime(allowedLatency, ntpMutation.mutateAsync);
 
-    const { refetch: refetchState } = trpc.action.state.useQuery(
-        { raceId },
-        {
-            enabled: false,
-            onSuccess: state => dispatch(replaceState(state)),
-        },
-    );
+    const { refetch: refetchState, data: state } = trpc.action.state.useQuery({ raceId }, { enabled: false });
+
+    useEffect(() => {
+        if (state) dispatch(replaceState(state));
+    }, [state]);
 
     const setTimeOffset = useSetAtom(timeOffsetAtom);
     const setConnectionState = useSetAtom(connectionStateAtom);

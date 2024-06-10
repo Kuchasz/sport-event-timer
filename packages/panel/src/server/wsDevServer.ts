@@ -17,7 +17,7 @@ const dev = process.env.NODE_ENV !== "production";
 
 const protocol = dev ? "http" : "https";
 
-const { server, listen } = createHTTPServer({
+const server = createHTTPServer({
     // middleware: cors({
     //     origin: `${protocol}://${env.NEXT_PUBLIC_APP_URL}:${appPort}`,
     // }),
@@ -33,7 +33,7 @@ const wss = new WebSocketServer({ server });
 const handler = applyWSSHandler<AppRouter>({
     wss,
     router: appRouter,
-    createContext: createContextWs,
+    createContext: opts => createContextWs(opts as any),
 });
 
 process.on("SIGTERM", () => {
@@ -41,5 +41,5 @@ process.on("SIGTERM", () => {
     handler.broadcastReconnectNotification();
 });
 
-listen(port);
+server.listen(port);
 logger.log(`> Server listening at ${protocol}://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);

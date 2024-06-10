@@ -6,12 +6,12 @@ import { env } from "./env";
 const url = `http://localhost:${env.API_PORT}`;
 
 export const publicTrpcRSC = createTRPCProxyClient<AppRouter>({
-    transformer: superjson,
     links: [
         // loggerLink({
         //     enabled: op => process.env.NODE_ENV === "development" || (op.direction === "down" && op.result instanceof Error),
         // }),
         httpBatchLink({
+            transformer: superjson,
             fetch: (req, options) => fetch(req, { ...options, next: { revalidate: 10 } }),
             url,
         }),

@@ -131,7 +131,9 @@ const middlewareMarker = "middlewareMarker" as "middlewareMarker" & {
     __brand: "middlewareMarker";
 };
 
-export const cacheMiddleware = t.middleware(async ({ ctx, next, path, type, rawInput }) => {
+export const cacheMiddleware = t.middleware(async ({ ctx, next, path, type, getRawInput }) => {
+    const rawInput = await getRawInput();
+
     if (type !== "query" || !cachedProcedures.has(path)) {
         return next();
     }
