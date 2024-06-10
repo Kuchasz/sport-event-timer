@@ -58,7 +58,7 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
                     <PoorButton onClick={onReject} outline>
                         {t("shared.cancel")}
                     </PoorButton>
-                    <PoorButton loading={disqualifyMutation.isLoading} type="submit">
+                    <PoorButton loading={disqualifyMutation.isPending} type="submit">
                         {t("shared.save")}
                     </PoorButton>
                 </div>

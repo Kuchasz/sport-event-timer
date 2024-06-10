@@ -20,5 +20,5 @@ export const ApiKeyEdit = ({ editedApiKey, onReject, onResolve }: ApiKeyEditProp
         onResolve(editedApiKey);
     };
 
-    return <ApiKeyForm isLoading={editApiKeyMutation.isLoading} onReject={onReject} onResolve={editApiKey} initialApiKey={editedApiKey} />;
+    return <ApiKeyForm isLoading={editApiKeyMutation.isPending} onReject={onReject} onResolve={editApiKey} initialApiKey={editedApiKey} />;
 };

@@ -175,7 +175,7 @@ export const BasicInfo = () => {
                                             name="websiteUrl"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <PoorButton loading={updateRaceInformationMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceInformationMutation.isPending} type="submit">
                                                 {t("shared.save")}
                                             </PoorButton>
                                         </div>
@@ -230,7 +230,7 @@ export const BasicInfo = () => {
                                             name="registrationEnabled"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <PoorButton loading={updateRaceRegistrationMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceRegistrationMutation.isPending} type="submit">
                                                 {t("shared.save")}
                                             </PoorButton>
                                         </div>
@@ -253,7 +253,7 @@ export const BasicInfo = () => {
                                             name="termsUrl"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <PoorButton loading={updateRaceRegulationsMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceRegulationsMutation.isPending} type="submit">
                                                 {t("shared.save")}
                                             </PoorButton>
                                         </div>
@@ -279,7 +279,7 @@ export const BasicInfo = () => {
                                             name="emailTemplate"
                                         />
                                         <div className="mt-4 flex justify-between">
-                                            <PoorButton loading={updateRaceConfirmationEmailTemplateMutation.isLoading} type="submit">
+                                            <PoorButton loading={updateRaceConfirmationEmailTemplateMutation.isPending} type="submit">
                                                 {t("shared.save")}
                                             </PoorButton>
                                         </div>

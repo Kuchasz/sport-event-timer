@@ -51,7 +51,7 @@ const TimePenaltyActions = ({ penalty, refetch }: { penalty: TimePenalty; refetc
                     player: penalty.player,
                 })}
                 onAccept={revertTimePenalty}
-                isLoading={revertTimePenaltyMutation.isLoading}>
+                isLoading={revertTimePenaltyMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.timePenalty.revert.name")}
                     description={t("timeMeasurement.penalties.page.timePenalty.revert.description")}
@@ -92,7 +92,7 @@ const DisqualificationActions = ({ disqualification, refetch }: { disqualificati
                     player: disqualification.player,
                 })}
                 onAccept={revertDisqualification}
-                isLoading={revertDisqualificationMutation.isLoading}>
+                isLoading={revertDisqualificationMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("timeMeasurement.penalties.page.disqualification.revert.name")}
                     description={t("timeMeasurement.penalties.page.disqualification.revert.description")}

@@ -47,15 +47,15 @@ const getWsClient = () => {
             url: wsUrl,
         });
 
-        registerStateChangeHandlers(websocketClient.getConnection());
+        registerStateChangeHandlers(websocketClient.connection!.ws!);
     }
     return websocketClient;
 };
 
-export const getConnection = () => getWsClient()?.getConnection();
+export const getConnection = () => getWsClient()!.connection!.ws!; //?.getConnection();
 
 export const connectionConfig = (enableSubscriptions: boolean): CreateTRPCClientOptions<AppRouter> => ({
-    transformer: superjson,
+    // transformer: superjson,
     // queryClient,
     links: [
         // loggerLink({
@@ -69,9 +69,11 @@ export const connectionConfig = (enableSubscriptions: boolean): CreateTRPCClient
                       return getWsClient() !== null && (op.type === "subscription" || op.path === "action.dispatch");
                   },
                   true: wsLink({
+                      transformer: superjson,
                       client: getWsClient()!,
                   }),
                   false: httpBatchLink({
+                      transformer: superjson,
                       url: httpUrl,
                       fetch(url, options) {
                           return fetch(url, {
@@ -84,6 +86,7 @@ export const connectionConfig = (enableSubscriptions: boolean): CreateTRPCClient
                   }),
               })
             : httpBatchLink({
+                  transformer: superjson,
                   url: httpUrl,
                   fetch(url, options) {
                       return fetch(url, { ...options, credentials: "include" });

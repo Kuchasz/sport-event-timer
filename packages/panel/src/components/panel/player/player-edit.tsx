@@ -32,7 +32,7 @@ export const PlayerEdit = ({ raceId, editedPlayer, onReject, onResolve }: Player
 
     return (
         <PlayerForm
-            isLoading={editPlayerMutation.isLoading}
+            isLoading={editPlayerMutation.isPending}
             onReject={onReject}
             onResolve={editPlayer}
             classifications={classifications}

@@ -72,7 +72,7 @@ export function RegisterPage() {
                         )}
                         name="confirmPassword"
                     />
-                    <PoorButton className="mt-4 w-full" loading={registerMutation.isLoading} type="submit">
+                    <PoorButton className="mt-4 w-full" loading={registerMutation.isPending} type="submit">
                         {t("auth.registration.form.submit")}
                     </PoorButton>
                 </div>

@@ -51,7 +51,7 @@ const ClassificationActions = ({ classification, refetch }: { classification: Cl
                 onAccept={deleteClassification}
                 message={t("pages.classifications.delete.confirmation.text", { name: classification.name })}
                 title={t("pages.classifications.delete.confirmation.title")}
-                isLoading={deleteClassificationMutation.isLoading}>
+                isLoading={deleteClassificationMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("pages.classifications.delete.name")}
                     description={t("pages.classifications.delete.description")}

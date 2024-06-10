@@ -296,7 +296,7 @@ export const SplitsList = ({
                 <PoorButton onClick={handleRejectChanges} outline>
                     {t("shared.cancel")}
                 </PoorButton>
-                <PoorButton onClick={handleSaveChanges} loading={updateSplitsMutation.isLoading} className="ml-2" type="submit">
+                <PoorButton onClick={handleSaveChanges} loading={updateSplitsMutation.isPending} className="ml-2" type="submit">
                     {t("shared.save")}
                 </PoorButton>
             </div>

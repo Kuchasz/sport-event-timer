@@ -47,7 +47,7 @@ export default function ({ searchParams }: { searchParams: { email?: string } })
                         )}
                         name="password"
                     />
-                    <PoorButton className="mt-4 w-full" loading={loginMutation.isLoading} type="submit">
+                    <PoorButton className="mt-4 w-full" loading={loginMutation.isPending} type="submit">
                         {t("auth.login.form.submit")}
                     </PoorButton>
                 </div>

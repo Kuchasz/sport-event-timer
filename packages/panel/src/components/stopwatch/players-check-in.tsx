@@ -69,19 +69,14 @@ export const TypedPlayer = ({ reset, playerNumber }: TypedPlayerProps) => {
     );
 };
 
-type Result = { score: number; target: string };
 type CheckInPlayer = { bibNumber: string; name: string; lastName: string };
-interface CheckInResult extends ReadonlyArray<Result> {
-    readonly score: number;
-    readonly obj: CheckInPlayer;
-}
 
 type PlayerSuggestionProps = {
     timeCritical: boolean;
     player: { bibNumber: string; name: string; nextSplit: { name: string; id: number }; lastName: string };
     typeahead: string;
     onPlayerCheckIn: (bibNumber: string) => void;
-    result: CheckInResult;
+    result: Fuzzysort.KeysResult<CheckInPlayer>;
     showSplit: boolean;
 };
 export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, showSplit }: PlayerSuggestionProps) => {
@@ -104,7 +99,7 @@ export const PlayerSuggestion = ({ result, typeahead, player, onPlayerCheckIn, s
             <div className="flex-grow"></div>
             <div className=" font-semibold">
                 {typeahead
-                    ? fuzzysort.highlight(result[0], (m, i) => (
+                    ? result[0].highlight((m, i) => (
                           <mark className={classNames("bg-transparent text-orange-500")} key={i}>
                               {m}
                           </mark>

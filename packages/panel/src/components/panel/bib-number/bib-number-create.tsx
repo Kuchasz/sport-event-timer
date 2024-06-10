@@ -26,7 +26,7 @@ export const BibNumberCreate = ({ raceId, onReject, onResolve }: BibNumberCreate
 
     return (
         <BibNumberForm
-            isLoading={addBibNumberMutation.isLoading}
+            isLoading={addBibNumberMutation.isPending}
             onReject={onReject}
             onResolve={createBibNumber}
             initialBibNumber={BibNumber}

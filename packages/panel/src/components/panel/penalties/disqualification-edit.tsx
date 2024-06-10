@@ -34,7 +34,7 @@ export const DisqualificationEdit = ({ editedDisqualification, onReject, onResol
 
     return (
         <DisqualificationForm
-            isLoading={updateDisqualificationMutation.isLoading}
+            isLoading={updateDisqualificationMutation.isPending}
             onReject={onReject}
             onResolve={processDisqualificationEdit}
             initialDisqualification={disqualification}

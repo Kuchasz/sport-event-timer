@@ -27,7 +27,7 @@ export const TimingPointCreate = ({ raceId, index, onReject, onResolve }: Timing
 
     return (
         <TimingPointForm
-            isLoading={addTimingPointMutation.isLoading}
+            isLoading={addTimingPointMutation.isPending}
             onReject={onReject}
             onResolve={timingPointCreated}
             initialTimingPoint={timingPoint}

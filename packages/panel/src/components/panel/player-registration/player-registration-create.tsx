@@ -33,7 +33,7 @@ export const PlayerRegistrationCreate = ({ onReject, onResolve }: PlayerRegistra
 
     return (
         <PlayerRegistrationForm
-            isLoading={addPlayerRegistrationMutation.isLoading}
+            isLoading={addPlayerRegistrationMutation.isPending}
             onReject={onReject}
             onResolve={processPlayerRegistrationCreate}
             initialPlayerRegistration={playerRegistration}

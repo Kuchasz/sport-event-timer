@@ -63,7 +63,7 @@ export const SplitTimes = () => {
                     openResetDialog={revertManualSplitTime}
                     bibNumber={data.bibNumber}
                     splitTime={data.time}
-                    isLoading={revertSplitTimeMutation.isLoading}
+                    isLoading={revertSplitTimeMutation.isPending}
                     splitId={data.splitId}
                     classificationId={data.classificationId}
                 />

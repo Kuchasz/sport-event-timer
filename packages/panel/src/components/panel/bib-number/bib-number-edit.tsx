@@ -21,7 +21,7 @@ export const BibNumberEdit = ({ editedBibNumber, onReject, onResolve }: BibNumbe
 
     return (
         <BibNumberForm
-            isLoading={updateBibNumberMutation.isLoading}
+            isLoading={updateBibNumberMutation.isPending}
             onReject={onReject}
             onResolve={editBibNumber}
             initialBibNumber={editedBibNumber}

@@ -30,7 +30,7 @@ export const TimePenaltyCreate = ({ onReject, onResolve }: TimePenaltyCreateProp
 
     return (
         <TimePenaltyForm
-            isLoading={addTimePenaltyMutation.isLoading}
+            isLoading={addTimePenaltyMutation.isPending}
             onReject={onReject}
             onResolve={processTimePenaltyCreate}
             initialTimePenalty={timePenalty}

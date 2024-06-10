@@ -172,7 +172,7 @@ const Results = ({ classificationId }: { classificationId: number }) => {
                     openResetDialog={revertManualSplitTime}
                     bibNumber={data.bibNumber}
                     splitTime={data.times[split.id]}
-                    isLoading={revertSplitTimeMutation.isLoading}
+                    isLoading={revertSplitTimeMutation.isPending}
                     splitId={split.id}
                     classificationId={data.classificationId}
                 />
@@ -235,7 +235,7 @@ const Results = ({ classificationId }: { classificationId: number }) => {
                                 name: data.name,
                                 lastName: data.lastName,
                             })}
-                            isLoading={revertDisqualificationMutation.isLoading}>
+                            isLoading={revertDisqualificationMutation.isPending}>
                             <NewPoorActionsItem
                                 name={t("pages.results.revertDisqualification.title")}
                                 description={t("pages.results.revertDisqualification.description")}

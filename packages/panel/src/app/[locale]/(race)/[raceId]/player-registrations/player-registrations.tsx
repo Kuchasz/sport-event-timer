@@ -97,7 +97,7 @@ const PlayerRegistrationActions = ({ playerRegistration, refetch }: { playerRegi
                 })}
                 title={t("pages.playerRegistrations.delete.confirmation.title")}
                 onAccept={() => deletePlayerRegistration()}
-                isLoading={deletePlayerMutation.isLoading}>
+                isLoading={deletePlayerMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("pages.playerRegistrations.delete.title")}
                     description={t("pages.playerRegistrations.delete.description")}
@@ -133,7 +133,7 @@ const PlayerRegistrationPayment = ({
                     : t("pages.playerRegistrations.payment.status.paid"),
             })}
             onAccept={togglePlayerPayment}
-            isLoading={setPaymentStatusMutation.isLoading}>
+            isLoading={setPaymentStatusMutation.isPending}>
             <span
                 className={classNames("flex h-full cursor-pointer items-center hover:text-black", {
                     ["font-semibold text-green-600"]: playerRegistration.paymentDate !== null,

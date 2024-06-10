@@ -38,7 +38,7 @@ export const TimingPointAccessUrlEdit = ({
 
     return (
         <TimingPointAccessUrlForm
-            isLoading={editTimingPointAccessKeyMutation.isLoading}
+            isLoading={editTimingPointAccessKeyMutation.isPending}
             onReject={onReject}
             onResolve={editAccessKey}
             initialTimingPointAccessUrl={timingPointAccessKey}

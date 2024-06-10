@@ -26,7 +26,7 @@ export const ClassificationCreate = ({ raceId, onReject, onResolve }: Classifica
 
     return (
         <ClassificationForm
-            isLoading={addClassifiationMutation.isLoading}
+            isLoading={addClassifiationMutation.isPending}
             onReject={onReject}
             onResolve={createClassification}
             initialClassification={classification}

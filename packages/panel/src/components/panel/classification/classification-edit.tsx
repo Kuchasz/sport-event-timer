@@ -21,7 +21,7 @@ export const ClassificationEdit = ({ editedClassification, onReject, onResolve }
 
     return (
         <ClassificationForm
-            isLoading={updateClassificationMutation.isLoading}
+            isLoading={updateClassificationMutation.isPending}
             onReject={onReject}
             onResolve={editClassification}
             initialClassification={editedClassification}

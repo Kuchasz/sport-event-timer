@@ -31,5 +31,5 @@ export const RaceCreate = ({ onReject, onResolve }: RaceCreateProps) => {
         useSampleData: false,
     };
 
-    return <RaceForm isLoading={addRaceMutation.isLoading} onReject={onReject} onResolve={processRaceCreate} initialRace={race} />;
+    return <RaceForm isLoading={addRaceMutation.isPending} onReject={onReject} onResolve={processRaceCreate} initialRace={race} />;
 };

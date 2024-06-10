@@ -95,7 +95,7 @@ export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onRe
     const { data: initialBibNumber } = trpc.player.lastAvailableBibNumber.useQuery({ raceId });
     const { data: initialStartTime } = trpc.player.lastAvailableStartTime.useQuery({ raceId });
     const { data: bibNumbers } = trpc.bibNumber.availableNumbers.useQuery({ raceId });
-    const promotePlayerRegistration = trpc.player.promoteRegistration.useMutation();
+    const promotePlayerRegistrationMutation = trpc.player.promoteRegistration.useMutation();
 
     const utils = trpc.useUtils();
     if (!classifications || !bibNumbers) return;
@@ -107,7 +107,7 @@ export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onRe
     };
 
     const promoteToPlayer = async (player: PlayerPromotion) => {
-        await promotePlayerRegistration.mutateAsync({ raceId: raceId, registrationId: playerRegistrationId, player });
+        await promotePlayerRegistrationMutation.mutateAsync({ raceId: raceId, registrationId: playerRegistrationId, player });
 
         onResolve(player);
 
@@ -117,7 +117,7 @@ export const PlayerRegistrationPromotion = ({ raceId, playerRegistrationId, onRe
 
     return (
         <PlayerRegistrationPromotionForm
-            isLoading={promotePlayerRegistration.isLoading}
+            isLoading={promotePlayerRegistrationMutation.isPending}
             onReject={onReject}
             onResolve={promoteToPlayer}
             classifications={classifications}

@@ -325,7 +325,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                             title={t("pages.races.wipeStopwatchPopup.confirmation.title")}
                                             message={t("pages.races.wipeStopwatchPopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => wipeRaceData(r.obj)}
-                                            isLoading={wipeRaceMutation.isLoading}>
+                                            isLoading={wipeRaceMutation.isPending}>
                                             <NewPoorActionsItem
                                                 name={t("pages.races.wipeStopwatchPopup.title")}
                                                 description={t("pages.races.wipeStopwatchPopup.description")}
@@ -336,7 +336,7 @@ export const Races = ({ initialData }: RacesProps) => {
                                             title={t("pages.races.deleteRacePopup.confirmation.title")}
                                             message={t("pages.races.deleteRacePopup.confirmation.text", { raceName: r.obj.name })}
                                             onAccept={() => deleteRace(r.obj)}
-                                            isLoading={deleteRaceMutation.isLoading}>
+                                            isLoading={deleteRaceMutation.isPending}>
                                             <NewPoorActionsItem
                                                 name={t("pages.races.deleteRacePopup.title")}
                                                 description={t("pages.races.deleteRacePopup.description")}

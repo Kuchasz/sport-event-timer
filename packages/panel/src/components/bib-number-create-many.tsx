@@ -67,7 +67,7 @@ export const BibNumberCreateManyForm = ({ onReject, onResolve, initialConfig }: 
                 <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
                 </PoorButton>
-                <PoorButton loading={addRangeBibNumberMutation.isLoading} type="submit">
+                <PoorButton loading={addRangeBibNumberMutation.isPending} type="submit">
                     {t("shared.save")}
                 </PoorButton>
             </div>

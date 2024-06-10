@@ -21,7 +21,7 @@ export const CategoryEdit = ({ editedCategory, onReject, onResolve }: CategoryEd
 
     return (
         <CategoryForm
-            isLoading={editCategoryMutation.isLoading}
+            isLoading={editCategoryMutation.isPending}
             onReject={onReject}
             onResolve={editCategory}
             initialCategory={editedCategory}

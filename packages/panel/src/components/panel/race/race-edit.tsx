@@ -19,5 +19,5 @@ export const RaceEdit = ({ editedRace, onReject, onResolve }: RaceEditProps) => 
         onResolve(race);
     };
 
-    return <RaceForm isLoading={updateRaceMutation.isLoading} onReject={onReject} onResolve={processRaceEdit} initialRace={editedRace} />;
+    return <RaceForm isLoading={updateRaceMutation.isPending} onReject={onReject} onResolve={processRaceEdit} initialRace={editedRace} />;
 };

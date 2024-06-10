@@ -47,7 +47,7 @@ const BibNumberActions = ({ refetch, bibNumber }: { refetch: () => void; bibNumb
                 title={t("pages.bibNumbers.delete.confirmation.title")}
                 message={t("pages.bibNumbers.delete.confirmation.text", { bibNumber: bibNumber.number })}
                 onAccept={deletebibNumber}
-                isLoading={deletebibNumberMutation.isLoading}>
+                isLoading={deletebibNumberMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("pages.bibNumbers.delete.name")}
                     description={t("pages.bibNumbers.delete.description")}
@@ -121,7 +121,7 @@ export const BibNumbers = () => {
                         title={t("pages.bibNumbers.deleteAll.confirmation.title")}
                         message={t("pages.bibNumbers.deleteAll.confirmation.text")}
                         onAccept={deleteAll}
-                        isLoading={deleteAllMutation.isLoading}>
+                        isLoading={deleteAllMutation.isPending}>
                         <PoorButton outline className="ml-2">
                             <Icon size={0.8} path={mdiRestore} className="mr-2" />
                             {t("pages.bibNumbers.deleteAll.button")}

@@ -29,7 +29,7 @@ export const DisqualificationCreate = ({ onReject, onResolve }: Disqualification
 
     return (
         <DisqualificationForm
-            isLoading={addDisqualificationMutation.isLoading}
+            isLoading={addDisqualificationMutation.isPending}
             onReject={onReject}
             onResolve={processDisqualificationCreate}
             initialDisqualification={Disqualification}

@@ -47,7 +47,7 @@ const PlayerActions = ({ player, refetch }: { player: Player; refetch: () => voi
                 title={t("pages.players.delete.confirmation.title")}
                 message={t("pages.players.delete.confirmation.text", { name: player.name, lastName: player.lastName })}
                 onAccept={deletePlayer}
-                isLoading={deletePlayerMutation.isLoading}>
+                isLoading={deletePlayerMutation.isPending}>
                 <NewPoorActionsItem
                     name={t("pages.players.delete.name")}
                     description={t("pages.players.delete.description")}

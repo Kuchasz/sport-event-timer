@@ -38,7 +38,7 @@ export const PlayerRegistrationEdit = ({ editedPlayerRegistration, onReject, onR
 
     return (
         <PlayerRegistrationForm
-            isLoading={editPlayerRegistrationMutation.isLoading}
+            isLoading={editPlayerRegistrationMutation.isPending}
             onReject={onReject}
             onResolve={processPlayerRegistrationEdit}
             initialPlayerRegistration={playerRegistration}

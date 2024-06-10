@@ -113,7 +113,7 @@ export const TimingPoint = ({
                         onAccept={() => deleteAccessKey(d)}
                         title={t("pages.timingPoint.sections.accessUrls.delete.confirmation.title")}
                         message={t("pages.timingPoint.sections.accessUrls.delete.confirmation.text", { name: d.name })}
-                        isLoading={deleteTimingPointAccessKeyMutation.isLoading}>
+                        isLoading={deleteTimingPointAccessKeyMutation.isPending}>
                         <NewPoorActionsItem
                             name={t("pages.timingPoint.sections.accessUrls.delete.title")}
                             description={t("pages.timingPoint.sections.accessUrls.delete.description")}
@@ -152,7 +152,7 @@ export const TimingPoint = ({
                         <FormCard title={t("pages.timingPoint.sections.base.title")}>
                             <TimingPointForm
                                 initialTimingPoint={timingPoint}
-                                isLoading={updateTimingPointMutation.isLoading}
+                                isLoading={updateTimingPointMutation.isPending}
                                 onResolve={timingPointEdited}></TimingPointForm>
                         </FormCard>
                         {/* <div className="flex flex-grow rounded-lg bg-gray-50 p-6">
@@ -214,7 +214,7 @@ export const TimingPoint = ({
                                 onAccept={() => deleteTimingPoint(timingPoint)}
                                 title={t("pages.timingPoints.delete.confirmation.title")}
                                 message={t("pages.timingPoints.delete.confirmation.text", { name: timingPoint.name })}
-                                isLoading={deleteTimingPointMutation.isLoading}>
+                                isLoading={deleteTimingPointMutation.isPending}>
                                 <PoorButton className="self-start" type="submit" kind="delete">
                                     <Icon path={mdiTrashCanOutline} size={0.8}></Icon>
                                     <span className="ml-1">{t("shared.delete")}</span>

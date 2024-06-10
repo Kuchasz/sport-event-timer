@@ -32,7 +32,7 @@ export const TimePenaltyEdit = ({ editedTimePenalty, onReject, onResolve }: Time
 
     return (
         <TimePenaltyForm
-            isLoading={updateTimePenaltyMutation.isLoading}
+            isLoading={updateTimePenaltyMutation.isPending}
             onReject={onReject}
             onResolve={processTimePenaltyEdit}
             initialTimePenalty={timePenalty}

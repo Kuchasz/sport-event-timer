@@ -51,15 +51,15 @@ type PoorDataTableProps<T> = {
 
 type SortState<T> = { field: keyof T; order: "desc" | "asc" };
 
-interface Result {
-    readonly score: number;
-    readonly target: string;
-}
+// interface Result {
+//     readonly score: number;
+//     readonly target: string;
+// }
 
-interface KeysResult<T> extends ReadonlyArray<Result> {
-    readonly score: number;
-    readonly obj: T;
-}
+// interface KeysResult<T> extends ReadonlyArray<Result> {
+//     readonly score: number;
+//     readonly obj: T;
+// }
 
 export const PoorDataTableHeader = ({ headerName }: { headerName: string }) => (
     <div className="m-2 flex cursor-default select-none items-center justify-start whitespace-nowrap rounded-md bg-white px-2 py-1 transition-colors">
@@ -120,8 +120,8 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
     const rowsPerPage = 25;
 
     const filteredData = usableSearchFields?.length
-        ? (fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] }) as readonly KeysResult<T>[])
-        : (data.map(d => ({ obj: d, field: "", score: 0 })) as unknown as readonly KeysResult<T>[]);
+        ? fuzzysort.go(searchQuery, data, { all: true, keys: usableSearchFields as string[] })
+        : data.map(d => ({ obj: d, field: "", score: 0 }));
 
     const sortedFilteredData = sortColumn
         ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -216,10 +216,10 @@ export const PoorDataTable = <T,>(props: PoorDataTableProps<T>) => {
                                                 <div className="whitespace-nowrap">
                                                     {searchQuery &&
                                                     usableSearchFields?.includes(c.field as keyof T) &&
-                                                    d[usableSearchFields.indexOf(c.field as keyof T)]
-                                                        ? fuzzysort.highlight(d[usableSearchFields.indexOf(c.field as keyof T)], (m, i) => (
-                                                              <mark key={i}>{m}</mark>
-                                                          ))
+                                                    (d as Fuzzysort.KeysResult<T>)[usableSearchFields.indexOf(c.field as keyof T)]
+                                                        ? (d as Fuzzysort.KeysResult<T>)[
+                                                              usableSearchFields.indexOf(c.field as keyof T)
+                                                          ].highlight((m, i) => <mark key={i}>{m}</mark>)
                                                         : (d.obj[c.field as keyof T] as any)}
                                                 </div>
                                             )}

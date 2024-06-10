@@ -34,7 +34,7 @@ export const SplitTimeEdit = ({ raceId, classificationId, raceDate, editedSplitT
 
     return (
         <SplitTimeForm
-            isLoading={updateSplitTimeMutation.isLoading}
+            isLoading={updateSplitTimeMutation.isPending}
             splits={splits}
             raceDate={raceDate}
             onReject={onReject}

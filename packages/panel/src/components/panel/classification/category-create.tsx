@@ -29,6 +29,6 @@ export const CategoryCreate = ({ classificationId, onReject, onResolve }: Catego
     };
 
     return (
-        <CategoryForm isLoading={addCategoryMutation.isLoading} onReject={onReject} onResolve={createCategory} initialCategory={category} />
+        <CategoryForm isLoading={addCategoryMutation.isPending} onReject={onReject} onResolve={createCategory} initialCategory={category} />
     );
 };

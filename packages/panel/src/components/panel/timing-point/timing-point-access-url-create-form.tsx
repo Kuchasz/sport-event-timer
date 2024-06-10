@@ -29,7 +29,7 @@ export const TimingPointAccessUrlCreate = ({ raceId, timingPointId, onReject, on
 
     return (
         <TimingPointAccessUrlForm
-            isLoading={createTimingPointAccessKeyMutation.isLoading}
+            isLoading={createTimingPointAccessKeyMutation.isPending}
             onReject={onReject}
             onResolve={createAccessKey}
             initialTimingPointAccessUrl={timingPointAccessKey}

@@ -23,5 +23,5 @@ export const ApiKeyCreate = ({ onReject, onResolve }: ApiKeyCreateProps) => {
         onResolve(apiKey);
     };
 
-    return <ApiKeyForm isLoading={addKeyMutation.isLoading} onReject={onReject} onResolve={createApiKey} initialApiKey={apiKey} />;
+    return <ApiKeyForm isLoading={addKeyMutation.isPending} onReject={onReject} onResolve={createApiKey} initialApiKey={apiKey} />;
 };

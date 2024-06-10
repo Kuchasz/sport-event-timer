@@ -21,7 +21,7 @@ export const TimingPointEdit = ({ editedTimingPoint, onReject, onResolve }: Timi
 
     return (
         <TimingPointForm
-            isLoading={updateTimingPointMutation.isLoading}
+            isLoading={updateTimingPointMutation.isPending}
             onReject={onReject}
             onResolve={timingPointEdited}
             initialTimingPoint={editedTimingPoint}

@@ -70,7 +70,7 @@ export const ApplyTimePenalty = ({ raceId, bibNumber, onReject, onResolve }: App
                 <PoorButton onClick={onReject} outline>
                     {t("shared.cancel")}
                 </PoorButton>
-                <PoorButton loading={applyTimePenaltyMutation.isLoading} type="submit">
+                <PoorButton loading={applyTimePenaltyMutation.isPending} type="submit">
                     {t("shared.save")}
                 </PoorButton>
             </div>
