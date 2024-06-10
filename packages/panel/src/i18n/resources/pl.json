@@ -1847,7 +1847,8 @@
       },
       "search": {
         "placeholder": "Szukaj..."
-      }
+      },
+      "toggleColumns": "Wybierz kolumny"
     },
     "delete": "Usuń",
     "details": "Szczegóły",
