@@ -58,6 +58,8 @@ const PlayerRegistrationPromotionForm = ({
                         placeholder={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.placeholder")}
                         items={bibNumbers}
                         onChange={onChange}
+                        allowCustomValue
+                        notFoundMessage={t("pages.playerRegistrations.promoteToPlayer.form.bibNumber.notFoundMessage")}
                     />
                 )}
                 name="bibNumber"

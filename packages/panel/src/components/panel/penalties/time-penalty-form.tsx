@@ -57,6 +57,8 @@ export const TimePenaltyForm = ({ onReject, onResolve, initialTimePenalty, bibNu
                         placeholder={t("timeMeasurement.penalties.timePenalty.form.reason.placeholder")}
                         items={reasons}
                         onChange={onChange}
+                        allowCustomValue
+                        notFoundMessage={t("timeMeasurement.penalties.timePenalty.form.reason.notFoundMessage")}
                     />
                 )}
                 name="reason"

@@ -76,6 +76,8 @@ export const SplitTimeForm = ({
                         placeholder={t("pages.splitTimes.form.bibNumber.placeholder")}
                         items={bibNumbers}
                         onChange={onChange}
+                        allowCustomValue
+                        notFoundMessage={t("pages.splitTimes.form.bibNumber.notFoundMessage")}
                     />
                 )}
                 name="bibNumber"

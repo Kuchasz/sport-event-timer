@@ -174,8 +174,8 @@ const createPlayerProfiles = (
                 raceId: raceId,
                 country: faker.location.countryCode(),
                 email: faker.internet.email(),
-                icePhoneNumber: faker.phone.number("###-###-###"),
-                phoneNumber: faker.phone.number("###-###-###"),
+                icePhoneNumber: faker.helpers.fromRegExp("###-###-###"),
+                phoneNumber: faker.helpers.fromRegExp("###-###-###"),
                 team: faker.company.name(),
             };
         });

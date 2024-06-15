@@ -49,6 +49,8 @@ export const PlayerForm = ({ onReject, onResolve, initialPlayer, classifications
                         placeholder={t("pages.players.form.bibNumber.placeholder")}
                         items={bibNumbers}
                         onChange={onChange}
+                        allowCustomValue
+                        notFoundMessage={t("pages.players.form.bibNumber.notFoundMessage")}
                     />
                 )}
                 name="bibNumber"

@@ -96,6 +96,8 @@ export const PlayerRegistrationForm = ({ onReject, onResolve, initialPlayerRegis
                             initialValue={value}
                             items={teams}
                             onChange={onChange}
+                            allowCustomValue
+                            notFoundMessage={t("pages.playerRegistrations.form.team.notFoundMessage")}
                         />
                     )}
                     name="team"

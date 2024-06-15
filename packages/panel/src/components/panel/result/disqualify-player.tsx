@@ -49,6 +49,8 @@ export const DisqualifyPlayer = ({ raceId, bibNumber, onReject, onResolve }: App
                             placeholder={t("pages.result.disqualify.form.reason.placeholder")}
                             items={reasons}
                             onChange={onChange}
+                            allowCustomValue
+                            notFoundMessage={t("pages.result.disqualify.form.reason.notFoundMessage")}
                         />
                     )}
                     name="reason"

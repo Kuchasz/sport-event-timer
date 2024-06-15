@@ -62,6 +62,8 @@ export const DisqualificationForm = ({
                                 placeholder={t("timeMeasurement.penalties.disqualification.form.reason.placeholder")}
                                 items={reasons}
                                 onChange={onChange}
+                                notFoundMessage={t("timeMeasurement.penalties.disqualification.form.reason.notFoundMessage")}
+                                allowCustomValue
                             />
                         )}
                         name="reason"

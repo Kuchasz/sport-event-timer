@@ -807,7 +807,8 @@
         },
         "team": {
           "label": "Team",
-          "placeholder": "Team"
+          "placeholder": "Team",
+          "notFoundMessage": "Team not found"
         }
       },
       "grid": {
@@ -850,7 +851,8 @@
           "bibNumber": {
             "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it.",
             "label": "Bib number",
-            "placeholder": "Enter bib number"
+            "placeholder": "Enter bib number",
+            "notFoundMessage": "Bib number for found"
           },
           "classification": {
             "description": "Each player must be assigned to a classification.",
@@ -896,7 +898,8 @@
         "bibNumber": {
           "description": "Unique bib number is necessary to measure the time for the player. Timing system is based upon it.",
           "label": "Bib Number",
-          "placeholder": "bib number"
+          "placeholder": "bib number",
+          "notFoundMessage": "Bib number not found"
         },
         "birthDate": {
           "placeholder": "Birth Date"
@@ -1112,7 +1115,8 @@
           "reason": {
             "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Type reason for penalty"
+            "placeholder": "Type reason for penalty",
+            "notFoundMessage": "Time penalty reason not found"
           },
           "time": {
             "description": "The number of milliseconds that will be added to the player's score.",
@@ -1126,7 +1130,8 @@
           "reason": {
             "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Type reason for disqualification"
+            "placeholder": "Type reason for disqualification",
+            "notFoundMessage": "Disqualification reason not found"
           }
         }
       }
@@ -1249,7 +1254,8 @@
         "bibNumber": {
           "description": "The bib number for which the split time was recorded.",
           "label": "Bib number",
-          "placeholder": "Enter bib number"
+          "placeholder": "Enter bib number",
+          "notFoundMessage": "Bib number not found"
         },
         "split": {
           "description": "Split related to the split time.",
@@ -1535,7 +1541,8 @@
       },
       "team": {
         "label": "Team (optional)",
-        "placeholder": "Your team"
+        "placeholder": "Your team",
+        "notFoundMessage": "Team not found"
       },
       "terms": {
         "agree": "I agree with the",
@@ -2029,7 +2036,8 @@
           "reason": {
             "description": "Reason for disqualification, you can refer to the points of the regulations. The reason for disqualification will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Reason the disqualification"
+            "placeholder": "Reason the disqualification",
+            "notFoundMessage": "Disqualification reason not found"
           }
         }
       },
@@ -2131,7 +2139,8 @@
           "reason": {
             "description": "The reason for the penalty, you can refer to the points of the regulations, the reason for the penalty will be displayed in the list of results.",
             "label": "Reason",
-            "placeholder": "Reason the time penalty"
+            "placeholder": "Reason the time penalty",
+            "notFoundMessage": "Time penalty reason not found"
           },
           "time": {
             "description": "The number of milliseconds that will be added to the player's score.",

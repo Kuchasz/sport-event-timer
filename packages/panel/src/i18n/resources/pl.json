@@ -807,7 +807,8 @@
         },
         "team": {
           "label": "Drużyna",
-          "placeholder": "Drużyna"
+          "placeholder": "Drużyna",
+          "notFoundMessage": "Nie znaleziono drużyny"
         }
       },
       "grid": {
@@ -850,7 +851,8 @@
           "bibNumber": {
             "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu.",
             "label": "Numer startowy",
-            "placeholder": "Wpisz numer startowy"
+            "placeholder": "Wpisz numer startowy",
+            "notFoundMessage": "Nie znaleziono numeru startowego"
           },
           "classification": {
             "description": "Każdy zawodnik musi być przypisany do klasyfikacji.",
@@ -896,7 +898,8 @@
         "bibNumber": {
           "description": "Unikalny numer startowy jest niezbędny do zmierzenia czasu dla zawodnika. Bazuje na nim system pomiaru czasu.",
           "label": "Numer startowy",
-          "placeholder": "Numer startowy"
+          "placeholder": "Numer startowy",
+          "notFoundMessage": "Nie znaleziono numeru startowego"
         },
         "birthDate": {
           "placeholder": "Data urodzenia"
@@ -1112,7 +1115,8 @@
           "reason": {
             "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Wpisz powód zastosowania kary"
+            "placeholder": "Wpisz powód zastosowania kary",
+            "notFoundMessage": "Nie znaleziono powodu nałożenia kary czasowej"
           },
           "time": {
             "description": "Ilość milisekund jaka zostanie doliczona do wyniku zawodnika.",
@@ -1126,7 +1130,8 @@
           "reason": {
             "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Wpisz powód dyskwalifikacji"
+            "placeholder": "Wpisz powód dyskwalifikacji",
+            "notFoundMessage": "Nie znaleziono powodu dyskwalifikacji"
           }
         }
       }
@@ -1249,7 +1254,8 @@
         "bibNumber": {
           "description": "Numer startowy dla którego zarejestrowano czas.",
           "label": "Numer startowy",
-          "placeholder": "Wpisz numer startowy"
+          "placeholder": "Wpisz numer startowy",
+          "notFoundMessage": "Nie znaleziono numeru startowego"
         },
         "split": {
           "description": "Międzyczas którego dotyczy zarejestrowany czas.",
@@ -1535,7 +1541,8 @@
       },
       "team": {
         "label": "Drużyna (opcjonalnie)",
-        "placeholder": "Twoja drużyna"
+        "placeholder": "Twoja drużyna",
+        "notFoundMessage": "Nie znaleziono drużyny"
       },
       "terms": {
         "agree": "Zgadzam się z",
@@ -2029,7 +2036,8 @@
           "reason": {
             "description": "Powód dyskwalifikacji, możesz powołać się na punkty regulaminu, powód dyskwalifikacji będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Uzasadnij dyskwalifikację"
+            "placeholder": "Uzasadnij dyskwalifikację",
+            "notFoundMessage": "Nie znaleziono powodu dyskwalifikacji"
           }
         }
       },
@@ -2131,7 +2139,8 @@
           "reason": {
             "description": "Powód nałożenia kary, możesz powołać się na punkty regulaminu, powód nałożenia kary będzie wyświetlony na liście wyników.",
             "label": "Powód",
-            "placeholder": "Uzasadnij karę czasową"
+            "placeholder": "Uzasadnij karę czasową",
+            "notFoundMessage": "Nie znaleziono powodu nałożenia kary czasowej"
           },
           "time": {
             "description": "Ilość milisekund jaka zostanie doliczona do wyniku zawodnika.",

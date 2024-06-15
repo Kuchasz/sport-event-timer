@@ -102,6 +102,8 @@ const RegistrationFormComponent = ({
                             initialValue={value}
                             items={teams}
                             onChange={onChange}
+                            allowCustomValue
+                            notFoundMessage={t("registration.fields.team.notFoundMessage")}
                         />
                     )}
                     name="team"
