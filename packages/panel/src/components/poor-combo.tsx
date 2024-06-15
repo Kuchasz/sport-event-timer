@@ -14,18 +14,22 @@ export const PoorCombo = ({
     initialValue,
     onChange,
     placeholder,
+    notFoundMessage,
+    allowCustomValue = false,
 }: {
     initialValue: string | undefined | null;
     items: string[];
+    notFoundMessage: string;
     onChange: (event: { target: { value: string } }) => void;
     placeholder?: string;
+    allowCustomValue?: boolean;
 }) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(initialValue ?? "");
 
     const handleValueChange = (currentValue: string) => {
         const val = currentValue === value ? "" : currentValue;
-        console.log(val);
+
         setValue(val);
         onChange({ target: { value: val } });
     };
@@ -42,7 +46,7 @@ export const PoorCombo = ({
                 <Command>
                     <CommandInput
                         onInput={e => {
-                            handleValueChange((e.target as HTMLInputElement).value);
+                            allowCustomValue && handleValueChange((e.target as HTMLInputElement).value);
                         }}
                         onKeyUp={e => {
                             if (e.key === "Enter") {
@@ -52,7 +56,7 @@ export const PoorCombo = ({
                         placeholder={placeholder}
                     />
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>{notFoundMessage}</CommandEmpty>
                         <CommandGroup>
                             {items.map(item => (
                                 <CommandItem

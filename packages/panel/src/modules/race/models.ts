@@ -11,9 +11,10 @@ export const registrationStatesEnum = z.enum(["enabled", "disabled", "limit-reac
 
 export const raceInformationSchema = z.object({
     id: z.number().min(1).nullish(),
-    name: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
+    name: z.string({ required_error: sharedErrorCodes.required }).min(1),
     description: z.string({ required_error: sharedErrorCodes.required }),
-    location: z.string({ required_error: sharedErrorCodes.required }).nonempty(),
+    timeZone: z.string({ required_error: sharedErrorCodes.required }).min(1),
+    location: z.string({ required_error: sharedErrorCodes.required }).min(1),
     sportKind: sportKindEnum,
     date: z.date({ required_error: sharedErrorCodes.required }),
     websiteUrl: z.string().url().nullish(),

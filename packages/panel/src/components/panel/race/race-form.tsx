@@ -10,6 +10,8 @@ import { PoorSelect } from "src/components/poor-select";
 import { useLocale, useTranslations } from "next-intl";
 import { Form, FormInput } from "src/components/form";
 import { raceSchema } from "src/modules/race/models";
+import { timeZones } from "@set/utils/dist/time-zone";
+import { PoorCombo } from "src/components/poor-combo";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
 
@@ -79,6 +81,22 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
                     <PoorInput placeholder={t("pages.races.form.location.placeholder")} value={value} onChange={onChange} />
                 )}
                 name="location"
+            />
+            <div className="p-2"></div>
+            <FormInput<Race, "timeZone">
+                label={t("pages.races.form.timeZone.label")}
+                description={t("pages.races.form.timeZone.description")}
+                className="flex-1"
+                render={({ value, onChange }) => (
+                    <PoorCombo
+                        placeholder={t("pages.races.form.timeZone.placeholder")}
+                        onChange={onChange}
+                        initialValue={value}
+                        items={timeZones}
+                        notFoundMessage={t("pages.races.form.timeZone.notFoundMessage")}
+                    />
+                )}
+                name="timeZone"
             />
             <div className="p-2"></div>
             <FormInput<Race, "playersLimit">

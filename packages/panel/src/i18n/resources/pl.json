@@ -1055,6 +1055,12 @@
           "description": "Adres strony internetowej Twojego wyścigu, wyświetlany na stronie wyścigu.",
           "label": "Oficjalna strona internetowa",
           "placeholder": "Wpisz oficjalną stronę wydarzenia"
+        },
+        "timeZone": {
+          "label": "Strefa czasowa",
+          "placeholder": "Wybierz strefę czasową",
+          "description": "Określ strefę czasową, w której odbędzie się wyścig, aby zapewnić dokładne planowanie i koordynację dla wszystkich uczestników.",
+          "notFoundMessage": "Nie znaleziono strefy czasowej"
         }
       },
       "grid": {

@@ -85,7 +85,7 @@ Application for making time measurements
 | 06/12/2023 | Registration form confirmation message                                 |                  :date:                   |
 | 06/12/2023 | Universal requests error handling                                      | <sup>:heavy_check_mark:(13/12/2023)</sup> |
 | 09/12/2023 | Fix server url in trpc session fetching                                |                  :date:                   |
-| 12/12/2023 | Specify timezone for race                                              |                  :date:                   |
+| 12/12/2023 | Specify timezone for race                                              | <sup>:heavy_check_mark:(15/06/2024)</sup> |
 | 15/12/2023 | Templating engine for registration email message                       |                  :date:                   |
 | 19/12/2023 | Terms document upload                                                  |                  :date:                   |
 | 24/12/2023 | Separate APP and API to separate environments                          | <sup>:heavy_check_mark:(30/12/2023)</sup> |
@@ -127,7 +127,7 @@ Application for making time measurements
 | 30/04/2024 | Save button disabled until any changes are made                        |                  :date:                   |
 | 03/05/2024 | Support for imperial metric system                                     |                  :date:                   |
 | 03/06/2024 | Replace HeadlessUI components with RadixUI                             |                  :date:                   |
-| 10/06/2024 | Fix labels highlight on error plceholder click                         |                  :date:                   |
+| 10/06/2024 | Fix labels highlight on error placeholder click                        |                  :date:                   |
 
 ## TODO
 

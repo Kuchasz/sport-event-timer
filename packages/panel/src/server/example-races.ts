@@ -18,6 +18,7 @@ import { sportKinds } from "@set/utils/dist/sport-kind";
 import { capitalizeFirstLetter } from "@set/utils/dist/string";
 import type { Locales } from "../i18n/locales";
 import { db } from "./db";
+import { timeZones } from "@set/utils/dist/time-zone";
 import { updateSplitTimesQueue } from "./queue";
 
 type FakerLocales = Record<Locales, Faker>;
@@ -111,6 +112,7 @@ const createRaces = (faker: Faker, numberOfRaces: number, options?: Options): Om
         const registrationCutoff = subtractDaysFromDate(raceDate, faker.number.int({ min: 1, max: 7 }));
         return {
             date: raceDate,
+            timeZone: faker.helpers.arrayElement(timeZones),
             name: faker.company.name(),
             description: faker.lorem.words({ min: 5, max: 15 }),
             sportKind: faker.helpers.arrayElement(sportKinds),

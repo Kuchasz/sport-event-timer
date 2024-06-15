@@ -39,6 +39,7 @@ model Race {
     playersLimit         Int?
     registrationEnabled  Boolean
     registrationCutoff   DateTime?
+    timeZone             String
     classifications      Classification[]
     timeKeeper           TimingPoint[]
     player               Player[]

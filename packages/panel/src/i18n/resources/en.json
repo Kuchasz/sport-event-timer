@@ -1055,6 +1055,12 @@
           "description": "Your race website address, displayed on the race page.",
           "label": "Official website",
           "placeholder": "Enter official website url"
+        },
+        "timeZone": {
+          "label": "Time Zone",
+          "placeholder": "Choose time zone",
+          "description": "Specify the timezone in which the race will take place to ensure accurate scheduling and coordination for all participants.",
+          "notFoundMessage": "Time Zone not found"
         }
       },
       "grid": {

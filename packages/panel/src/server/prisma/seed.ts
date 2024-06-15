@@ -3,7 +3,7 @@ import { createExampleRaces } from "../example-races";
 import { db } from "../db";
 
 function main() {
-    const userId = faker.datatype.uuid();
+    const userId = faker.string.uuid();
     return createExampleRaces(userId, faker.number.int({ min: 10, max: 20 }), "en");
 }
 

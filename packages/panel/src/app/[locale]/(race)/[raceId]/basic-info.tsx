@@ -20,6 +20,8 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { type AppRouterInputs } from "src/trpc";
 import { trpc } from "src/trpc-core";
+import { PoorCombo } from "src/components/poor-combo";
+import { timeZones } from "@set/utils/dist/time-zone";
 
 type Race = AppRouterInputs["race"]["add"]["race"];
 type RaceInformation = AppRouterInputs["race"]["updateRaceInformation"];
@@ -128,6 +130,22 @@ export const BasicInfo = () => {
                                                 />
                                             )}
                                             name="location"
+                                        />
+                                        <div className="p-2"></div>
+                                        <FormInput<Race, "timeZone">
+                                            label={t("pages.races.form.timeZone.label")}
+                                            description={t("pages.races.form.timeZone.description")}
+                                            className="flex-1"
+                                            render={({ value, onChange }) => (
+                                                <PoorCombo
+                                                    placeholder={t("pages.races.form.timeZone.placeholder")}
+                                                    onChange={onChange}
+                                                    initialValue={value}
+                                                    items={timeZones}
+                                                    notFoundMessage={t("pages.races.form.timeZone.notFoundMessage")}
+                                                />
+                                            )}
+                                            name="timeZone"
                                         />
                                         <div className="p-2"></div>
                                         <FormInput<Race, "sportKind">
