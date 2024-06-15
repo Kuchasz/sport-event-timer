@@ -39,6 +39,7 @@ export const raceRouter = router({
             sportKind: r.sportKind as SportKind,
             location: r.location,
             date: r.date,
+            timeZone: r.timeZone,
             emailTemplate: r.emailTemplate,
             termsUrl: r.termsUrl,
             websiteUrl: r.websiteUrl,
