@@ -127,7 +127,7 @@ Application for making time measurements
 | 30/04/2024 | Save button disabled until any changes are made                        |                  :date:                   |
 | 03/05/2024 | Support for imperial metric system                                     |                  :date:                   |
 | 03/06/2024 | Replace HeadlessUI components with RadixUI                             |                  :date:                   |
-| 10/06/2024 | Fix labels highlight on error placeholder click                        |                  :date:                   |
+| 10/06/2024 | Fix labels highlight on error placeholder click                        | <sup>:heavy_check_mark:(15/06/2024)</sup> |
 
 ## TODO
 

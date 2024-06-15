@@ -80,14 +80,14 @@ export const SmallFormInput = <TItem, TKey extends keyof TItem>({
     return (
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
-                <div className={`flex items-center ${className ?? ""}`}>
+                <div className={`flex flex-col ${className ?? ""}`}>
                     <Label>
                         {label}
                         {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
-                        <div className="text-right text-xs font-medium text-red-600 opacity-75">
-                            {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
-                        </div>
                     </Label>
+                    <div className="text-right text-xs font-medium text-red-600 opacity-75">
+                        {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
+                    </div>
                 </div>
             )}
         </FormContext.Consumer>
