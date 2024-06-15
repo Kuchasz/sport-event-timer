@@ -126,7 +126,7 @@ const Results = ({ classificationId }: { classificationId: number }) => {
     const cols: PoorDataTableColumn<Result>[] = [
         {
             field: "hasError",
-            headerName: "",
+            headerName: t("pages.results.grid.columns.hasError"),
             sortable: false,
             allowShrink: true,
             cellRenderer: (data: Result) =>

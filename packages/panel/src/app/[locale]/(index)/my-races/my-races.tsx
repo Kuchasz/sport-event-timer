@@ -63,7 +63,7 @@ export const MyRaces = () => {
 
     const defaultColumns: PoorDataTableColumn<Race>[] = [
         {
-            headerName: "",
+            headerName: t("pages.races.grid.columns.id"),
             sortable: false,
             field: "id",
         },

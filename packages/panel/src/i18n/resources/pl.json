@@ -1063,7 +1063,8 @@
           "date": "Data",
           "name": "Nazwa",
           "registeredPlayers": "Zarejestrowani",
-          "registrationEnabled": "Rejestracja"
+          "registrationEnabled": "Rejestracja",
+          "id": "Id"
         }
       },
       "list": {
@@ -1148,7 +1149,8 @@
           "playerLastName": "Nazwisko",
           "playerName": "Imię",
           "result": "Wynik",
-          "totalTimePenalty": "Kara czasowa"
+          "totalTimePenalty": "Kara czasowa",
+          "hasError": "Błędy"
         },
         "search": {
           "placeholder": "Szukaj wyników..."
