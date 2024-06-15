@@ -75,8 +75,6 @@ export const bibNumberRouter = router({
             const allBibNumbers = bibNumbers.map(x => x.number);
             const allPlayersBibNumbers = new Set(playersBibNumbers.map(x => x.bibNumber));
 
-            console.log(allBibNumbers.toSorted(), allPlayersBibNumbers);
-
             return allBibNumbers.filter(n => !allPlayersBibNumbers.has(n)).map(x => x.toString());
         }),
     delete: protectedProcedure.input(z.object({ bibNumberId: z.number() })).mutation(async ({ input, ctx }) => {
