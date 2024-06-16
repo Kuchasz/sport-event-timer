@@ -63,7 +63,8 @@
       "email": "Invalid email address",
       "minLength": "Too short",
       "passwordMatch": "Passwords don't match",
-      "required": "Required"
+      "required": "Required",
+      "url": "Invalid URL"
     },
     "timingPoint": {
       "abbrev": {

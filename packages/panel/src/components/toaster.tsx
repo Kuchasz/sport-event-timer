@@ -2,9 +2,9 @@
 
 import { mdiAlertCircleOutline, mdiAlertOutline, mdiCheckCircleOutline, mdiInformationSlabCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport, getColorFromVariant } from "./toast";
-import { useToast } from "./use-toast";
 import classNames from "classnames";
+import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport, toastVariants } from "./toast";
+import { useToast } from "./use-toast";
 
 const getIconFromVariant = (variant: "default" | "destructive" | "dangerous" | "positive") => {
     if (variant === "default") return mdiInformationSlabCircleOutline;
@@ -23,7 +23,7 @@ export function Toaster() {
                     <Toast key={id} {...props}>
                         <div className="grid gap-1" style={{ gridTemplateColumns: "auto minmax(0, 1fr)" }}>
                             <span className="row-span-2 mr-4 flex items-center">
-                                <span className={classNames("rounded-md p-1", getColorFromVariant(props.variant ?? "default"))}>
+                                <span className={classNames("rounded-md p-1", toastVariants({ variant: props.variant }))}>
                                     <Icon
                                         className="box-border text-white"
                                         path={getIconFromVariant(props.variant ?? "default")}

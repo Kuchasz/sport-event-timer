@@ -7,12 +7,12 @@ export const countryCodeEnum = z.enum(countryCodes, { required_error: sharedErro
 
 export const playerRegistrationSchema = z.object({
     id: z.number().nullish(),
-    name: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
-    lastName: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
+    name: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
+    lastName: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
     gender: genderEnum,
     birthDate: z.date({ required_error: sharedErrorCodes.required }),
     country: countryCodeEnum,
-    city: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
+    city: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
     team: z.string().nullish(),
     email: z.string({ required_error: sharedErrorCodes.required }).email(sharedErrorCodes.email),
     phoneNumber: z.string({ required_error: sharedErrorCodes.required }).min(8, sharedErrorCodes.required),

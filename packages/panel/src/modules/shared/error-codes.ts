@@ -3,4 +3,5 @@ export default {
     minLength: "errorCodes.shared.minLength",
     email: "errorCodes.shared.email",
     passwordMatch: "errorCodes.shared.passwordMatch",
+    url: "errorCodes.shared.url",
 };

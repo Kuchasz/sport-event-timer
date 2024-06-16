@@ -63,7 +63,8 @@
       "email": "Nieprawidłowy adres email",
       "minLength": "Zbyt krótkie",
       "passwordMatch": "Hasła nie są takie same",
-      "required": "Wymagane"
+      "required": "Wymagane",
+      "url": "Nieprawidłowy adres URL"
     },
     "timingPoint": {
       "abbrev": {

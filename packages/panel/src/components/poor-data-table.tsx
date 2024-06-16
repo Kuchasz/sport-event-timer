@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { getGridColumnVisibilityStateAtom } from "src/states/grid-states";
 import { PoorColumnChooser } from "./poor-column-chooser";
 import { PoorInput } from "./poor-input";
-import { ScrollArea, ScrollBar } from "./scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { naturalSort } from "@set/utils/dist/array";
 import { getValueAtPath } from "@set/utils/dist/object";
 

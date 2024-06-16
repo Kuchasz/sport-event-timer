@@ -19,6 +19,7 @@ export const useForm = <TItem,>({ initialValues, onSubmit, validationSchema }: F
         if (!validationResult.success) {
             setFormErrors(validationResult.error.flatten().fieldErrors as FormErrors<TItem>);
         } else {
+            if (!validationResult.error) setFormErrors({} as FormErrors<TItem>);
             onSubmit(formValues);
         }
     };

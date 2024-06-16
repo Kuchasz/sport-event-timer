@@ -4,8 +4,8 @@ import sharedErrorCodes from "../shared/error-codes";
 
 export const playerProfileSchema = z.object({
     id: z.number().nullish(),
-    name: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
-    lastName: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
+    name: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
+    lastName: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
     gender: genderEnum,
     birthDate: z.date({ required_error: sharedErrorCodes.required }),
     country: z.string().nullish(),

@@ -49,7 +49,7 @@ Application for making time measurements
 | 29/10/2023 | Fees configuration                                                     |                  :date:                   |
 | 29/10/2023 | Localized example race data                                            | <sup>:heavy_check_mark:(30/10/2023)</sup> |
 | 29/10/2023 | Refactor all useFormState<T> hook usages                               | <sup>:heavy_check_mark:(29/10/2023)</sup> |
-| 30/10/2023 | Simple api links returning some daa (eg start list)                    |                  :date:                   |
+| 30/10/2023 | Simple api links returning some data (eg start list)                   |                  :date:                   |
 | 04/11/2023 | Display classification name instead of just id                         | <sup>:heavy_check_mark:(04/11/2023)</sup> |
 | 04/11/2023 | Add translation to Gender                                              | <sup>:heavy_check_mark:(05/11/2023)</sup> |
 | 05/11/2023 | Add custom hideable scrollbar to side menu                             | <sup>:heavy_check_mark:(05/11/2023)</sup> |

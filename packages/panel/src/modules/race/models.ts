@@ -17,7 +17,7 @@ export const raceInformationSchema = z.object({
     location: z.string({ required_error: sharedErrorCodes.required }).min(1),
     sportKind: sportKindEnum,
     date: z.date({ required_error: sharedErrorCodes.required }),
-    websiteUrl: z.string().url().nullish(),
+    websiteUrl: z.string().url(sharedErrorCodes.url).nullish(),
 });
 
 export const raceRegistrationSchema = z.object({
@@ -29,7 +29,7 @@ export const raceRegistrationSchema = z.object({
 
 export const raceRegulationsSchema = z.object({
     id: z.number().min(1).nullish(),
-    termsUrl: z.string().nullish(),
+    termsUrl: z.string().url(sharedErrorCodes.url).nullish(),
 });
 
 export const raceConfirmationEmailTemplateSchema = z.object({

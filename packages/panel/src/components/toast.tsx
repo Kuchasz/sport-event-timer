@@ -5,13 +5,6 @@ import classnames from "classnames";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 
-export const getColorFromVariant = (variant: "default" | "destructive" | "dangerous" | "positive") => {
-    if (variant === "default") return "bg-blue-500";
-    if (variant === "destructive") return "bg-red-500";
-    if (variant === "dangerous") return "bg-orange-500";
-    return "bg-green-500";
-};
-
 const ToastProvider = ToastPrimitives.Provider;
 
 const ToastViewport = React.forwardRef<
@@ -29,13 +22,13 @@ const ToastViewport = React.forwardRef<
 ));
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
-const toastVariants = cva("", {
+export const toastVariants = cva("", {
     variants: {
         variant: {
-            default: "",
-            destructive: "",
-            dangerous: "",
-            positive: "",
+            default: "bg-blue-500",
+            destructive: "bg-red-500",
+            dangerous: "bg-orange-500",
+            positive: "bg-green-500",
         },
     },
     defaultVariants: {
@@ -56,7 +49,7 @@ const Toast = React.forwardRef<
             )}
             {...props}>
             <div className="flex">
-                <div className={classnames("mr-4 min-h-full w-1 text-transparent", getColorFromVariant(props.variant ?? "default"))}></div>
+                <div className={classnames("mr-4 min-h-full w-1 text-transparent", toastVariants({ variant: props.variant }))}></div>
                 <div className="py-4">{children}</div>
             </div>
         </ToastPrimitives.Root>

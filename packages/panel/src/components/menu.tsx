@@ -6,7 +6,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ScrollArea } from "./scroll-area";
+import { ScrollArea } from "./ui/scroll-area";
 
 type MenuGroup = {
     name: string;

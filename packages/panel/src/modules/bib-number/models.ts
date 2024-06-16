@@ -5,7 +5,7 @@ import errorCodes from "./error-codes";
 export const bibNumberSchema = z.object({
     id: z.number().nullish(),
     raceId: z.number({ required_error: sharedErrorCodes.required }).min(1),
-    number: z.string({ required_error: sharedErrorCodes.required }).nonempty(sharedErrorCodes.required),
+    number: z.string({ required_error: sharedErrorCodes.required }).min(1, sharedErrorCodes.required),
 });
 
 export const addRangeBibNumberSchema = z
