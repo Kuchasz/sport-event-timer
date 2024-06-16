@@ -51,13 +51,15 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
         <FormContext.Consumer>
             {({ formValues, formErrors, handleChange }) => (
                 <div className={`flex items-center ${className ?? ""}`}>
-                    <Label>
-                        <div className="mb-0.5 font-semibold">{label}</div>
-                        {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                    <div className="flex flex-1 flex-col">
+                        <Label>
+                            <div className="mb-0.5 font-semibold">{label}</div>
+                            {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
+                        </Label>
                         <div className="text-right text-xs font-medium text-red-600 opacity-75">
                             {formErrors[name]?.map(err => t(err as any, { path: label }))}&nbsp;
                         </div>
-                    </Label>
+                    </div>
                     <p className="mx-4 flex-1 text-xs font-medium text-zinc-400">{description}</p>
                 </div>
             )}
@@ -110,7 +112,7 @@ export function Form<TItem extends object>({
     const { formValues, formErrors, handleSubmit, handleChange } = useForm({ initialValues, onSubmit, validationSchema });
 
     return (
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="flex w-full flex-grow flex-col overflow-y-hidden" onSubmit={handleSubmit}>
             <FormContext.Provider value={{ formValues, formErrors, handleChange }}>{children}</FormContext.Provider>
         </form>
     );

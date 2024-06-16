@@ -159,7 +159,7 @@ export const PoorModal = <T, P>({ onResolve, title, description, children, compo
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogOverlay>
-                <DialogContent className="sm:max-w-2xl">
+                <DialogContent className="flex max-h-full flex-col sm:max-w-2xl">
                     <DialogHeader>
                         <DialogTitle>{title}</DialogTitle>
                         <DialogDescription>{description}</DialogDescription>
