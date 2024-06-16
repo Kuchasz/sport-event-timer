@@ -26,7 +26,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
     return (
         <>
             <Meta />
-            <div className="relative h-full">
+            <div className="relative h-full overflow-hidden">
                 <div className="flex h-full w-full will-change-transform">
                     <div className="flex flex-grow overflow-y-hidden shadow-md">
                         <nav className="z-20 flex h-full w-64 shrink-0 flex-col overflow-hidden shadow-lg">
@@ -39,7 +39,7 @@ export const RacePageLayout = async ({ raceId, breadcrumbs, children }: Props) =
                             <RaceMenu raceId={raceId} totalPlayers={totalPlayers} totalRegistrations={totalRegistrations} />
                         </nav>
 
-                        <main className="flex h-full grow flex-col overflow-y-auto">
+                        <main className="flex h-full grow flex-col overflow-hidden">
                             <Status breadcrumbs={breadcrumbs} />
                             {/* <div className="flex flex-grow bg-gray-50">
                                 <div className="flex-grow overflow-y-scroll px-12 py-12">{children}</div>
