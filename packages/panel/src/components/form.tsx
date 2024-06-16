@@ -27,7 +27,7 @@ type LabelProps = HTMLProps<HTMLLabelElement>;
 
 export const Label = ({ children, className, ...props }: LabelProps) => {
     return (
-        <label {...props} className={classNames("block w-full flex-1 text-xs leading-loose", className)}>
+        <label {...props} className={classNames("block w-full flex-1 text-xs", className)}>
             {children}
         </label>
     );
@@ -53,7 +53,7 @@ export const FormInput = <TItem, TKey extends keyof TItem>({
                 <div className={`flex items-center ${className ?? ""}`}>
                     <div className="flex flex-1 flex-col">
                         <Label>
-                            <div className="mb-0.5 font-semibold">{label}</div>
+                            <div className="mb-1 font-semibold">{label}</div>
                             {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
                         </Label>
                         <div className="text-right text-xs font-medium text-red-600 opacity-75">
@@ -84,7 +84,7 @@ export const SmallFormInput = <TItem, TKey extends keyof TItem>({
             {({ formValues, formErrors, handleChange }) => (
                 <div className={`flex flex-col ${className ?? ""}`}>
                     <Label>
-                        {label}
+                        <div className="mb-1 font-semibold">{label}</div>
                         {render({ name, onChange: e => handleChange(name, e.target.value), value: formValues[name] })}
                     </Label>
                     <div className="text-right text-xs font-medium text-red-600 opacity-75">
@@ -112,7 +112,7 @@ export function Form<TItem extends object>({
     const { formValues, formErrors, handleSubmit, handleChange } = useForm({ initialValues, onSubmit, validationSchema });
 
     return (
-        <form className="flex w-full flex-grow flex-col overflow-y-hidden" onSubmit={handleSubmit}>
+        <form className="flex w-full flex-grow flex-col overflow-y-hidden px-1" onSubmit={handleSubmit}>
             <FormContext.Provider value={{ formValues, formErrors, handleChange }}>{children}</FormContext.Provider>
         </form>
     );

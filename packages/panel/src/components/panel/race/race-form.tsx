@@ -30,7 +30,7 @@ export const RaceForm = ({ onReject, onResolve, initialRace, isLoading }: RaceFo
 
     return (
         <Form<Race> initialValues={initialRace} validationSchema={raceSchema} onSubmit={onResolve}>
-            <div className="flex-grow overflow-y-auto">
+            <div className="flex-grow overflow-x-visible overflow-y-scroll">
                 <FormInput<Race, "name">
                     label={t("pages.races.form.name.label")}
                     description={t("pages.races.form.name.description")}
